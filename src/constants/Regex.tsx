@@ -1,0 +1,18 @@
+export const regex = {
+  mobile: /^\d{8,15}$/,
+  password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/,
+  email: /^[a-zA-Z._][a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,5}$/,
+  fullName: /^([a-zA-Z]+\s?)*$/,
+  state: /^([a-zA-Z]+\s?)*$/,
+  number: /^\d*$/,
+  firstname: /^[a-zA-Z]*$/,
+  lastname: /^[a-zA-Z]*$/,
+  alphaNumeric: /^[a-zA-Z0-9]*$/,
+  alphaNumericWithDash: /^[a-zA-Z\-0-9]*$/,
+  alphaNumericWithOneSpace: /^([a-zA-Z0-9]+\s?)*$/,
+  floatingNumber: /^\d+(\.\d*)?$/,
+  zero: /^0+$/,
+  address: /^([a-z0-9A-Z\-\.\/\,]+\s?)*$/,
+  alphaNumericCaptial: /^[A-Z0-9]*$/,
+  ifscCode: /^[A-Z]{4}0[A-Z0-9]{6}$/,
+};

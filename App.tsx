@@ -1,45 +1,25 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import MainNavigation from './src/navigators/stackNavigator';
+import { ScreenNames } from './src/constants/AppConstants';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './src/localization/i18n/i18n.config';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
+  const [initialRouteName, setInitialRouteName] = useState<string | null>(
+    ScreenNames.ONBOARDINGCONTAINER,
+  );
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <KeyboardProvider statusBarTranslucent>
+      <I18nextProvider i18n={i18n}>
+        <View style={{ flex: 1 }}>
+          <MainNavigation initialRouteName={initialRouteName} />
+        </View>
+      </I18nextProvider>
+    </KeyboardProvider>
   );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+};
 
 export default App;

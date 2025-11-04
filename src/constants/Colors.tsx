@@ -1,0 +1,46 @@
+export const Colors = {
+  white: '#FFFFFF',
+  black:'#000000',
+
+  lightBlurE4: '#E4EEFD',
+  blue1C: '#1C58CA',
+  blue17: '#17408C',
+  blue3C: '#3C78E8',
+  blue94: '#94B8F5',
+  blue0D: '#0D1F40',
+  blueD9: '#D9E7FC',
+  
+  gray0F: '#0F0F0F',
+  gray55: '#555556',
+  grayD8: '#D8D8DE',
+  gray75: '#757578',
+  gray2A: '#2A2A2B',
+  grayE7: '#E7E7EB',
+  grayF3: '#F3F3F5',
+  grayAD: '#ADADB4',
+  grayED: '#EDEDF0',
+  
+  greenD9: '#D9FCE0',
+  green0D: '#0D4018',
+  green1C: '#1CCA47',
+  greenCF: '#CFFBD8',
+  green17: '#178C33',
+  green3C: '#3CE865',
+  
+  redCA: '#CA1C2E',
+  redFD: '#FDE4E7',
+  redFC: '#FCD9DE',
+  red40: '#400D14',
+  redF5: '#F5949F',
+  red8C: '#8C1725',
+  redF9: '#F9B6BE',
+  
+  goldenE8: '#E8C83C',
+  goldenFC: '#FCF5D9',
+  goldenEF: '#EFD66B',
+  goldenCA: '#CAAA1C',
+  goldenFD: '#FDF8E4',
+  goldenF9: '#F9ECB6',
+  
+  blackBlue04: '#040912',
+};

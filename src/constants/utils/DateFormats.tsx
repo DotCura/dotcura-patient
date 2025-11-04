@@ -1,0 +1,108 @@
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(customParseFormat);
+dayjs.extend(advancedFormat);
+
+export const DateFormatsManager = {
+  // Params
+  DateFormats: {
+    YYYYMMDD: 'YYYY-MM-DD', // 2025-04-15
+    DDMMYYYY: 'DD-MM-YYYY', // 15-04-2025
+    DDMMYYYY_SLASH: 'DD/MM/YYYY', // 15/04/2025
+    MMDDYYYY: 'MM-DD-YYYY', // 04-15-2025
+    MMDDYYYY_SLASH: 'MM/DD/YYYY', // 04/15/2025
+    DoMMYYYY: 'D MMM YYYY', // 15 Apr 2025 (ordinal suffix like '15th' not supported)
+    ddddMMMMDoYYYY: 'dddd, MMMM D YYYY', // Tuesday, April 15 2025
+    ddMMMYYYY: 'DD MMM, YYYY', // 06 Feb, 2025
+    ddMMMYYYY_WithoutComma: 'DD MMM YYYY', // 12 Oct 2025
+    dMMMYYYY: 'D MMM, YYYY', // 6 Feb, 2025
+    dddDDMM: 'ddd, DD/MM', // Sat, 17/03
+    dddd: 'dddd', // Tuesday
+    YYYY: 'YYYY', // 2025,
+    MMMMYYYY: 'MMMM, YYYY', // April, 2025
+    DD_MM_YYYY: 'DD MMM YYYY', // 01 may 2025
+    DDMMM: 'DD MMMM', // 14 July
+    MMMMDDYYYY: 'MMMM DD, YYYY', // May 05, 2025
+    DDMMYYYY_Comma: 'DD MMMM, YYYY', // 05 May, 2025
+    MMMDDYYYY: 'MMM DD, YYYY', // May 05, 2025
+    MMMMDDYYYYWOCharacter: 'MMMM DD YYYY', // July 16 1995
+  },
+
+  TimeFormats: {
+    HHmm: 'HH:mm', // 14:30 (24-hour)
+    hhmmA: 'hh:mm A', // 02:30 PM
+    HHmmss: 'HH:mm:ss', // 14:30:45
+    hhmmssA: 'hh:mm:ss A', // 02:30:45 PM
+    HH_mm: 'HH.mm',
+  },
+
+  DateTimeFormatsWithTimezone: {
+    YYYYMMDDTHHmmssZ: 'YYYY-MM-DDTHH:mm:ss[Z]', // 2025-04-15T14:30:00Z
+    YYYYMMDDTHHmmssSSSZ: 'YYYY-MM-DDTHH:mm:ss.SSS[Z]', // 2025-04-15T14:30:00.000Z
+    dddhAinz: 'ddd, hA', // Tue, 2PM (timezone abbrev like 'IST' not supported natively)
+  },
+
+  DateTimeFormatWithoutTimezone: {
+    YYYYMMDDHHmmss: 'YYYY-MM-DD HH:mm:ss', // 2025-04-15 14:30:59
+    MMMDoYYYYhmmA: 'MMM D YYYY, h:mm A', // Apr 15 2025, 2:30 PM
+    ddddMMMMDoYYYYhmmssA: 'dddd, MMMM D YYYY, h:mm:ss A', // Tuesday, April 15 2025, 2:30:59 PM
+    MMDDYYYYhmmssA: 'MM/DD/YYYY, h:mm:ss A', // 04/15/2025, 2:30:59 PM
+  },
+
+  // Functions
+  formatDate: (
+    date: string | number | Date,
+    outputFormat: string,
+    inputFormat?: string,
+  ): string => {
+    let dayjsObj;
+
+    if (typeof date === 'string' && inputFormat) {
+      dayjsObj = dayjs(date, inputFormat, true); // strict parsing
+    } else {
+      dayjsObj = dayjs(date);
+    }
+
+    return dayjsObj.isValid() ? dayjsObj.format(outputFormat) : 'Invalid Date';
+  },
+
+  formatTime: (time: string, outputFormat: string = 'hh:mm A'): string => {
+    const parsedTime = dayjs(`1970-01-01T${time}`);
+    return parsedTime.isValid()
+      ? parsedTime.format(outputFormat)
+      : 'Invalid Time';
+  },
+
+  convertLocalToUTC: (
+    date: string | number | Date,
+    outputFormat?: string,
+  ): string => {
+    const d = dayjs(date);
+    return d.isValid()
+      ? d.utc().format(outputFormat ?? 'YYYY-MM-DDTHH:mm:ss[Z]')
+      : 'Invalid Date';
+  },
+
+  convertUTCToLocal: (
+    date: string | number | Date,
+    outputFormat?: string,
+  ): string => {
+    const d = dayjs.utc(date);
+    return d.isValid()
+      ? d.local().format(outputFormat ?? 'YYYY-MM-DDTHH:mm:ssZ')
+      : 'Invalid Date';
+  },
+
+  formatTimeWithPeriod: (timeStr: string) => {
+    const localTime = dayjs.utc(timeStr, 'HH:mm:ss').local();
+    const time = localTime.format('hh:mm');
+    const period = localTime.format('A');
+    return {time, period};
+  },
+};
