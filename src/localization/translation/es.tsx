@@ -31,6 +31,13 @@ export default {
   gender1:"Uomo",
   gender2:"Donna",
 
+  //INFORMATIONCONSATNT
+  infotitle:"Informativa e consenso",
+  infosubtitle:"Per proseguire devi accettare.",
+  constant1:"Acconsento al trattamento dei miei dati personali per la creazione e gestione del mio account, secondo quanto descritto ",
+  constant2:"nell’informativa",
+  constant3:"Acconsento a ricevere comunicazioni promozionali e aggiornamenti sui prodotti e servizi.",
+
   //PERMISSIONS
   allowTitle: 'Permitir',
   allowSubtitleForCamera:

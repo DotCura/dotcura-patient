@@ -7,8 +7,9 @@ import {
 } from '../../../constants/TextInputConstant';
 import { regex } from '../../../constants/Regex';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
+import { ScreenNames } from '../../../constants/AppConstants';
 
-const CompleteProfileContainer = () => {
+const CompleteProfileContainer = ({navigation}:any) => {
   const insets = useSafeAreaInsets();
 
   const [headerArray, setHeaderArray] = useState([
@@ -86,6 +87,7 @@ const CompleteProfileContainer = () => {
       return;
     } else {
       console.log('✅ Profile completed successfully');
+      navigation.navigate(ScreenNames.INFOATIONCONASATNTCONTAINER)
       // Proceed to next screen or API call
     }
   };
