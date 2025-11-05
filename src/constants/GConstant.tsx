@@ -2,11 +2,7 @@ import {Alert, I18nManager, Platform, StatusBar} from 'react-native';
 import {getTranslation} from '../localization/i18n/i18n.config';
 import emojiRegex from 'emoji-regex';
 import {showMessage} from 'react-native-flash-message';
-import {colors} from './Colors';
-import {fontsfamily} from './FontFamily';
-import {fontSize} from './FontSizes';
 import {PlatformVersion} from './utils/Platform';
-import {getWidth} from './utils/Dimensions';
 import {
   checkMultiple,
   openSettings,
@@ -15,6 +11,10 @@ import {
   RESULTS,
 } from 'react-native-permissions';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
+import { Colors } from './Colors';
+import { fontsfamily } from './FontFamily';
+import { fontSize } from './FontSizes';
+import { getWidth } from './utils/Dimensions';
 
 export const appName = getTranslation('DotCura') || 'DotCura';
 
@@ -36,22 +36,28 @@ export const activityOpacity = 0.8;
 export const hitSlop = 10;
 export const currencySymbol = 'KWD';
 
+let flashMessageRef;
+
+export function setFlashMessageRef(ref:any) {
+  flashMessageRef = ref;
+}
+
 // Flash Messages
 export const flashMessageSucess = (message: string | null) => {
   showMessage({
     message: message || '',
     type: 'success',
-    backgroundColor: colors.blue81,
-    color: colors.white,
+    backgroundColor: Colors.green17,
+    color: Colors.white,
     duration: 3000,
     icon: 'success',
-    iconProps: {tintColor: colors.white},
+    iconProps: {tintColor: Colors.white},
     style: {
       marginTop: StatusBar.currentHeight,
       zIndex: 1,
     },
     titleStyle: {
-      fontFamily: fontsfamily.semibold,
+      fontFamily: fontsfamily.semiBold,
       fontSize: fontSize.size16,
       lineHeight: getWidth(20),
       textAlign: 'left',
@@ -62,8 +68,8 @@ export const flashMessageSucess = (message: string | null) => {
 export const flashMessageWarning = (message: string | null) => {
   showMessage({
     message: message || '',
-    backgroundColor: colors.blue81,
-    color: colors.white,
+    backgroundColor: Colors.redCA,
+    color: Colors.white,
     duration: 3000,
     icon: 'none',
     style: {
@@ -71,7 +77,7 @@ export const flashMessageWarning = (message: string | null) => {
       zIndex: 1,
     },
     titleStyle: {
-      fontFamily: fontsfamily.semibold,
+      fontFamily: fontsfamily.semiBold,
       fontSize: fontSize.size16,
       lineHeight: getWidth(20),
       textAlign: 'left',

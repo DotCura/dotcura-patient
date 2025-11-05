@@ -1,19 +1,40 @@
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import { getHeight, getWidth } from '../../constants/StylesConstants';
 import { Colors } from '../../constants/Colors';
-import { FontSize } from '../../constants/FontSize';
-import { FontFamily } from '../../constants/FontFamily';
+import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { fontSize } from '../../constants/FontSizes';
+import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
-  verticalLine:{
+  vwError:{
+    marginTop:getHeight(6),
+    gap:getWidth(4),
+    alignItems:'center',
+    flexDirection:'row'
+  },
+  lablWarning:{
+    color: Colors.red8C ,
+    fontSize: fontSize.size12,
+    fontFamily: fontsfamily.medium,
+  },
+  lblTitleInput:{
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.semiBold,
+    color: Colors.gray55,
+    marginBottom: getHeight(6),
+  },
+  verticalLine: {
     width: 1,
-    backgroundColor: Colors.black30,
+    backgroundColor: Colors.black,
     height: getHeight(34),
     alignSelf: 'center',
-    marginLeft:getWidth(16),
-    marginRight:getWidth(18)
+    marginLeft: getWidth(16),
+    marginRight: getWidth(18),
   },
-  imgLeftIcon: { alignSelf: 'center',height:getHeight(30),width:getWidth(30)},
+  imgLeftIcon: {
+    alignSelf: 'center',
+    height: getHeight(30),
+    width: getWidth(30),
+  },
   vwTextInputAndIcon: {
     flexDirection: 'row',
     gap: getWidth(12),
@@ -21,26 +42,23 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
-    // gap: getWidth(12),
-    borderRadius: 50,
-    height: getHeight(60),
-    borderWidth:1,
-    borderColor:Colors.black30,
-    flex: 1,
-    paddingHorizontal: getWidth(27),
+    borderRadius: 12,
+    height: getHeight(56),
+    borderWidth: 2,
+    borderColor: Colors.grayD8,
+    paddingHorizontal: getWidth(12),
   },
   multilineContainer: {
     height: getWidth(135),
-    borderRadius: getWidth(35),
-    borderWidth:1,
-    borderColor:Colors.black30,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: Colors.grayD8,
   },
   label: {
     color: Colors.white,
     zIndex: 1,
-    fontSize: FontSize.size12,
-    fontFamily: FontFamily.Regular,
-    paddingTop: getWidth(Platform.OS == 'ios' ? 8 : 9),
+    fontSize: fontSize.size12,
+    fontFamily: fontsfamily.regular,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -49,16 +67,15 @@ export const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: FontSize.size17,
-    fontFamily: FontFamily.Regular,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
     color: Colors.black,
     paddingLeft: 0,
     margin: 0,
     padding: 0,
   },
   multilineInput: {
-    textAlignVertical: 'top', // Aligns the text to the top for multiline
+    textAlignVertical: 'top', 
     height: '100%',
-    // backgroundColor:'red',
   },
 });

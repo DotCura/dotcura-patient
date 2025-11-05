@@ -1,69 +1,103 @@
-import {View, Text, ImageSourcePropType, Image} from 'react-native';
+import {
+  View,
+  Text,
+  ImageSourcePropType,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
-import {getWidth} from '../../constants/utils/Dimensions';
-import BackButton from '../BackButton';
-import {images} from '../../constants/Images';
-import {constnatStyles} from '../../constants/Styles';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {colors} from '../../constants/Colors';
-import {styles} from './styles';
+import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { images } from '../../constants/Images';
+
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { styles } from './styles';
+import { constnatStyles } from '../../constants/Styles';
+import { Colors } from '../../constants/Colors';
+import { activityOpacity } from '../../constants/GConstant';
+import { getTranslation } from '../../localization/i18n/i18n.config';
 
 interface PropsType {
   dontShowStartBtn?: boolean;
   showTitle?: boolean;
   showEndBtn?: boolean;
   startBtnTitle?: string;
+  centerSubTitle?: string | null;
   startBtnOnPress?: () => void;
   isBlackLeftBtn?: boolean;
+  isSaveIcon?: boolean;
   isWhiteLeftBtn?: boolean;
+  isHelpIcon?: boolean;
+  showSubTitle?: boolean;
   endBtnTitle?: string;
   endBtnOnPress?: () => void;
   centerTitle?: string | null;
   endBtnImage?: ImageSourcePropType;
+  headerTextStyle?: object;
+  headerSubTextStyle?: object;
 }
 
 const AppHeader = (props: PropsType) => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.vwMain, {paddingTop: insets.top + 10}]}>
+    <View style={[styles.vwMain, { paddingTop: insets.top + 10 }]}>
       {/* Start Button */}
       {props?.dontShowStartBtn ? (
-        <Image source={images.back} style={{opacity: 0}} />
+        <Image source={images.imgDelete} style={{ opacity: 0 }} />
       ) : (
-        <BackButton
-          onPress={props?.startBtnOnPress ? props?.startBtnOnPress : () => {}}
-          isBlack={props?.isBlackLeftBtn}
-          isWhite={props?.isWhiteLeftBtn}
-        />
+        <TouchableOpacity style={styles.btnBack}>
+          <Image source={images.imgLeftArrow} />
+        </TouchableOpacity>
       )}
 
       {/* Center Title */}
       {props?.showTitle ? (
-        <Text
-          style={[
-            constnatStyles.lblHeaderTitle,
-            {
-              lineHeight: getWidth(24),
-              color: props?.isBlackLeftBtn ? colors.black33 : colors.blue81,
-            },
-          ]}
-          numberOfLines={2}>
-          {props?.centerTitle}
-        </Text>
+        <View>
+          <Text
+            style={[constnatStyles.lblHeaderTitle, props?.headerTextStyle]}
+            numberOfLines={2}
+          >
+            {props?.centerTitle}
+          </Text>
+          {props?.showSubTitle ? (
+            <Text
+              style={[
+                constnatStyles.lblSubHeaderTitle,
+                props?.headerSubTextStyle,
+              ]}
+              numberOfLines={2}
+            >
+              {props?.centerSubTitle}
+            </Text>
+          ) : null}
+        </View>
       ) : (
         <View />
       )}
 
       {/* End Button */}
       {props?.showEndBtn ? (
-        <BackButton
-          onPress={props?.endBtnOnPress ? props?.endBtnOnPress : () => {}}
-          image={props?.endBtnImage ? props?.endBtnImage : undefined}
-          dontRotate
-        />
+        <>
+          {props.isSaveIcon && (
+            <TouchableOpacity
+              style={styles.vwSave}
+              activeOpacity={activityOpacity}
+            >
+              <Text style={styles.lblSave}>{getTranslation("save")}</Text>
+            </TouchableOpacity>
+          )}
+          {props.isHelpIcon && (
+            <TouchableOpacity
+              style={styles.vwHelp}
+              activeOpacity={activityOpacity}
+            >
+              <Image source={images.imgHelp} />
+              <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
+            </TouchableOpacity>
+          )}
+        </>
       ) : (
-        <Image source={images.back} style={{opacity: 0}} />
+        <Image source={images.imgDelete} style={{ opacity: 0 }} />
       )}
     </View>
   );

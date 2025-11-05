@@ -1,24 +1,30 @@
 import { StyleSheet } from 'react-native';
-import { getHeight, getWidth } from '../../constants/StylesConstants';
 import { Colors } from '../../constants/Colors';
-import { FontFamily } from '../../constants/FontFamily';
-import { FontSize } from '../../constants/FontSize';
+import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { fontSize } from '../../constants/FontSizes';
+import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  vwBtn: { flexDirection: 'row', gap: getWidth(6), alignItems: 'center' },
   btn: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: getWidth(50),
-    height: getHeight(60),
+    borderRadius:20,
+    height: getHeight(48),
     alignSelf: 'center',
-    backgroundColor: Colors.blue00,
+    backgroundColor: Colors.blue1C,
     width: '100%',
-
+  },
+  imgIcon: {
+    marginTop:1,
+    alignSelf: 'center',
+    resizeMode: 'center',
+    height: getHeight(20),
+    aspectRatio: 1,
   },
   lblTitle: {
-    marginTop:2,
-    fontSize: FontSize.size18,
-    fontFamily: FontFamily.Medium,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.medium,
     color: Colors.white,
   },
 });

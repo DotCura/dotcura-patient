@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { styles } from './styles';
 import CountryPicker, { DARK_THEME } from 'react-native-country-picker-modal';
-import { getWidth, opacity } from '../../constants/StylesConstants';
-import { ImageConstants } from '../../constants/ImageConstants';
 import { Colors } from '../../constants/Colors';
-import { FontFamily } from '../../constants/FontFamily';
+import { getWidth } from '../../constants/utils/Dimensions';
+import { activityOpacity } from '../../constants/GConstant';
+import { images } from '../../constants/Images';
 
 const PrimaryTitleMoblieNumber = ({
   label,
@@ -28,11 +28,16 @@ const PrimaryTitleMoblieNumber = ({
   blur,
   focusnext,
   isBorder,
+  errorMessage,
+  setErrorMessage, 
+  onFocus,
+  onBlur,
   ...props
 }: any) => {
-  const [isFocused, setIsFocused] = useState(false);
   const [multiline, setMultiline] = useState(isMultiline);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [internalError, setInternalError] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
 
   //formoblienumber
   const [countryCode, setCountryCode] = useState<any>('US');
@@ -41,6 +46,67 @@ const PrimaryTitleMoblieNumber = ({
   const [withAlphaFilter, setWithAlphaFilter] = useState(true);
   const [withCallingCode, setWithCallingCode] = useState(true);
   const [visible, setVisible] = useState(false);
+  
+  const inputRef = useRef<TextInput>(null);
+
+  
+  useImperativeHandle(refs, () => ({
+    focus: () => {
+      // Focus logic if needed
+      inputRef.current?.focus(); 
+
+    },
+    setError: (error: string) => {
+      setInternalError(error);
+    },
+    clearError: () => {
+      setInternalError('');
+    },
+  }));
+
+  
+  const displayError = errorMessage || internalError;
+
+
+
+
+  const getBorderColor = () => {
+    if (displayError) return Colors.red8C; 
+    if (isFocused) return Colors.blue1C; 
+    return Colors.grayD8; 
+  };
+
+  const getBackgroundColor = () => {
+    if (displayError) return Colors.redFD; 
+    return Colors.white; 
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+   
+    if (internalError) {
+      setInternalError('');
+    }
+    onFocus?.();
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    onBlur?.();
+  };
+
+  const handleChangeText = (text: string) => {
+   
+    if (internalError) {
+      setInternalError('');
+    }
+    
+    if (errorMessage && setErrorMessage) {
+      setErrorMessage('');
+    }
+
+    onChangeFun(text); 
+  };
 
   const onSelect = (country: any) => {
     props.setCallingCode(country.callingCode[0]);
@@ -48,7 +114,7 @@ const PrimaryTitleMoblieNumber = ({
   };
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{}}>
       {visible && (
         <CountryPicker
           {...{
@@ -64,6 +130,8 @@ const PrimaryTitleMoblieNumber = ({
           onClose={() => setVisible(false)}
         />
       )}
+{props.inputLabel&&
+      <Text style={styles.lblTitleInput}>{props.inputLabel}</Text>}
 
       <View
         style={[
@@ -72,50 +140,65 @@ const PrimaryTitleMoblieNumber = ({
           multiline && {
             paddingVertical: getWidth(8),
           },
+          {
+            borderColor: getBorderColor(),
+            backgroundColor: getBackgroundColor(),
+          },
         ]}
       >
         <View style={styles.vwTextInputAndIcon}>
-          <Image source={props.fieldIcon} style={styles.imgLeftIcon}></Image>
-          <View
-          style={styles.verticalLine}
-        ></View>
+          {props.leftIcon && (
+            <Image source={props.fieldIcon} style={styles.imgLeftIcon}></Image>
+          )}
           <TouchableOpacity
             onPress={() => setVisible(true)}
             style={styles.vwCountryCode}
-            activeOpacity={opacity}
+            activeOpacity={activityOpacity}
           >
             <Text style={styles.lblCountryCode}>+{props.callingCode}</Text>
             <Image
-              source={ImageConstants.imgArrowDown}
-              style={{ marginTop: -4 }}
+              source={images.imgLeftArrow}
+              style={{
+                transform: [{ rotate: '270deg' }],
+                tintColor: Colors.gray0F,
+              }}
             ></Image>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>
           <TextInput
             keyboardAppearance="dark"
-            selectionColor={Colors.black}
+            selectionColor={Colors.gray75}
+            cursorColor={Colors.gray75}
             returnKeyType={focusnext ? 'next' : 'default'}
             keyboardType="phone-pad"
             blurOnSubmit={blur ? true : false}
-            ref={refs}
+            ref={inputRef}
             onSubmitEditing={focusnext}
             value={value}
             placeholder={label}
-            placeholderTextColor={Colors.black30}
-            onChangeText={onChangeFun}
+            placeholderTextColor={Colors.gray75}
+            onChangeText={handleChangeText}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             style={[
               styles.input,
 
               {
-                fontFamily: value.length>0?FontFamily.Medium:FontFamily.Regular,
-                marginTop: !isMultiline && 3,
+              
               },
             ]}
             {...props}
           />
         </View>
       </View>
+      {/* Error Message */}
+      {displayError && (
+        <View style={styles.vwError}>
+          <Image source={images.imgWarning} />
+          <Text style={styles.lablWarning}>{displayError}</Text>
+        </View>
+      )}
     </View>
   );
 };

@@ -1,47 +1,53 @@
 import { Platform, StyleSheet, Text, View } from 'react-native';
 
-import { getHeight, getWidth } from '../../constants/StylesConstants';
 import { Colors } from '../../constants/Colors';
-import { FontFamily } from '../../constants/FontFamily';
-import { FontSize } from '../../constants/FontSize';
+import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { fontSize } from '../../constants/FontSizes';
+import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
-  verticalLine:{
-    width: 1,
-    backgroundColor: Colors.black30,
-    height: getHeight(34),
-    alignSelf: 'center',
-    marginLeft:getWidth(16),
-    marginRight:getWidth(18)
+  vwError:{
+    marginTop:getHeight(6),
+    gap:getWidth(4),
+    alignItems:'center',
+    flexDirection:'row'
+  },
+  lablWarning:{
+    color: Colors.red8C ,
+    fontSize: fontSize.size12,
+    fontFamily: fontsfamily.medium,
+  },
+  lblTitleInput:{
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.semiBold,
+    color: Colors.gray55,
+    marginBottom: getHeight(6),
   },
   vwCountryCode: {
     marginRight:getWidth(8),
     flexDirection: 'row',
-    gap:5,
+    gap:2,
     alignItems: 'center',
-    paddingTop: getHeight(5),
   },
   lblCountryCode: {
-    fontSize: FontSize.size18,
-    fontFamily: FontFamily.Medium,
-    color: Colors.black,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
+    color: Colors.gray0F,
   },
   imgLeftIcon: { alignSelf: 'center',height:getHeight(30),width:getWidth(30)},
   vwTextInputAndIcon: {
     flexDirection: 'row',
-    // paddingBottom: 10,
     alignItems: 'center',
   },
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 50,
+    borderRadius: 12,
     height: getHeight(60),
-    borderWidth:1,
-    borderColor:Colors.black30,
-    flex: 1,
-    paddingHorizontal: getWidth(27),
+    borderWidth: 2,
+    borderColor: Colors.grayD8,
+    paddingHorizontal: getWidth(12),
   },
   multilineContainer: {
     height: getWidth(135),
@@ -50,8 +56,8 @@ export const styles = StyleSheet.create({
   label: {
     color: Colors.white,
     zIndex: 1,
-    fontSize: FontSize.size16,
-    fontFamily: FontFamily.Regular,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
     paddingTop: getWidth(Platform.OS == 'ios' ? 8 : 9),
   },
   inputContainer: {
@@ -61,8 +67,8 @@ export const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: FontSize.size18,
-    fontFamily: FontFamily.Regular,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
     color: Colors.black,
     paddingLeft: 0,
     margin: 0,

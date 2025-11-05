@@ -1,9 +1,9 @@
-import { Image, TextInput, View } from 'react-native';
-import React, { useState } from 'react';
+import { Image, Text, TextInput, View } from 'react-native';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import { styles } from './styles';
-import { getHeight, getWidth } from '../../constants/StylesConstants';
+import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { Colors } from '../../constants/Colors';
-import { FontFamily } from '../../constants/FontFamily';
+import { images } from '../../constants/Images';
 
 const PrimaryTitleTextInput = ({
   label,
@@ -18,19 +18,87 @@ const PrimaryTitleTextInput = ({
   blur,
   isBorder,
   focusnext,
+  errorMessage, 
+  setErrorMessage, 
+  onFocus,
+  onBlur,
   ...props
 }: any) => {
   const [multiline, setMultiline] = useState(isMultiline);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [internalError, setInternalError] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef<TextInput>(null);
+
+ 
+  useImperativeHandle(refs, () => ({
+    focus: () => {
+      
+      inputRef.current?.focus(); 
+    },
+    setError: (error: string) => {
+      setInternalError(error);
+    },
+    clearError: () => {
+      setInternalError('');
+    },
+  }));
+
+  
+  const displayError = errorMessage || internalError;
+
+
+  const getBorderColor = () => {
+    if (displayError) return Colors.red8C;
+    if (isFocused) return Colors.blue1C; 
+    return Colors.grayD8; 
+  };
+
+  const getBackgroundColor = () => {
+    if (displayError) return Colors.redFD; 
+    return Colors.white; 
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    
+    if (internalError) {
+      setInternalError('');
+    }
+    onFocus?.();
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    onBlur?.();
+  };
+
+  const handleChangeText = (text: string) => {
+
+    if (internalError) {
+      setInternalError('');
+    }
+    if (errorMessage && setErrorMessage) {
+      setErrorMessage('');
+    }
+
+    onChangeFun(text); 
+  };
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <View style={{}}>
+      {props.inputLabel&&
+      <Text style={styles.lblTitleInput}>{props.inputLabel}</Text>}
       <View
         style={[
           styles.container,
           multiline && styles.multilineContainer,
           multiline && {
             paddingVertical: getWidth(16),
+          },
+          {
+            borderColor: getBorderColor(),
+            backgroundColor: getBackgroundColor(),
           },
         ]}
       >
@@ -48,36 +116,31 @@ const PrimaryTitleTextInput = ({
           </View>
         )}
 
-        
-        <View
-          style={[styles.verticalLine,{alignSelf:isMultiline?'flex-start':'center'}]}
-        ></View>
-
         <View style={{ flex: 1 }}>
           <TextInput
-            
+            ref={inputRef}
             keyboardAppearance="dark"
-            selectionColor={Colors.black}
+            selectionColor={Colors.gray75}
+            cursorColor={Colors.gray75}
             editable={props.editable}
             keyboardType={props.keyaboardType}
             autoCapitalize={props.autoCapitalize ? 'none' : 'sentences'}
             maxLength={props.maxlength}
             returnKeyType={focusnext ? 'next' : 'default'}
             blurOnSubmit={blur ? true : false}
-            ref={refs}
             onSubmitEditing={focusnext}
             scrollEnabled={multiline}
             value={value}
             placeholder={label}
-            placeholderTextColor={Colors.black30}
-            onChangeText={onChangeFun}
+            placeholderTextColor={Colors.gray75}
+            onChangeText={handleChangeText}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             style={[
               styles.input,
               multiline && styles.multilineInput,
               {
-                marginTop: !isMultiline && getHeight(3),
-                fontFamily:
-                  value.length > 0 ? FontFamily.Medium : FontFamily.Regular,
+                
               },
             ]}
             multiline={multiline}
@@ -87,6 +150,13 @@ const PrimaryTitleTextInput = ({
           />
         </View>
       </View>
+      {/* Error Message */}
+      {displayError && (
+        <View style={styles.vwError}>
+          <Image source={images.imgWarning} />
+          <Text style={styles.lablWarning}>{displayError}</Text>
+        </View>
+      )}
     </View>
   );
 };

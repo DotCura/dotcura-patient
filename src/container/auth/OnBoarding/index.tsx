@@ -1,14 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { styles } from './styles'
-import OnBoardingComponent from '../../../components/auth/OnBoarding'
+import React from 'react';
 
+import OnBoardingComponent from '../../../components/auth/OnBoarding';
 
-const OnBoardingContainer = ({navigation}:any) => {
-  return (
-   <OnBoardingComponent
-   navigation={navigation}/>
-  )
-}
+const OnBoardingContainer = ({ navigation }: any) => {
+  return <OnBoardingComponent />;
+};
 
-export default OnBoardingContainer
+export default OnBoardingContainer;

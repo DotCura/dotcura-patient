@@ -1,15 +1,12 @@
-import {StyleSheet} from 'react-native';
-import {fontSize} from './FontSizes';
-import {fontsfamily} from './FontFamily';
-import {colors} from './Colors';
-import {getWidth} from './utils/Dimensions';
+import { StyleSheet } from 'react-native';
+import { Colors } from './Colors';
+import { getHeight, getWidth } from './utils/Dimensions';
+import { fontSize } from './FontSizes';
+import { fontsfamily } from './FontFamily';
 
 export const constnatStyles = StyleSheet.create({
-  vwNoDataCenter: {flex: 1, justifyContent: 'center', alignItems: 'center'},
-  vwSkin: {
-    flex: 1,
-    backgroundColor: colors.skinED,
-  },
+  vwNoDataCenter: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+
   vwFlashMessage: {
     zIndex: 1000,
     elevation: 1000,
@@ -21,32 +18,37 @@ export const constnatStyles = StyleSheet.create({
   },
   keyboardContainer: {
     flexGrow: 1,
-    backgroundColor: colors.skinED,
+    backgroundColor: Colors.white,
     paddingHorizontal: getWidth(16),
   },
-  vwTitleSubtitles: {gap: getWidth(10), marginHorizontal: getWidth(20)},
+  vwTitleSubtitles: { gap: getWidth(4), marginHorizontal: getWidth(16) },
   lblHeaderTitle: {
-    fontSize: fontSize.size18,
-    fontFamily: fontsfamily.semibold,
-    color: colors.blue81,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.bold,
+    color: Colors.gray0F,
+    textAlign: 'center',
+  },
+  lblSubHeaderTitle: {
+    marginTop: getHeight(1),
+    fontSize: fontSize.size12,
+    fontFamily: fontsfamily.regular,
+    color: Colors.gray55,
     textAlign: 'center',
   },
   lblNoData: {
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.medium,
-    color: colors.blue81,
+    color: Colors.black,
     textAlign: 'center',
   },
   lblMainTitle: {
-    color: colors.blue81,
-    fontSize: fontSize.size22,
+    color: Colors.gray0F,
+    fontSize: fontSize.size28,
     fontFamily: fontsfamily.bold,
-    textAlign: 'center',
   },
   lblMainSubtitle: {
-    color: colors.black33,
-    fontSize: fontSize.size14,
+    color: Colors.gray55,
+    fontSize: fontSize.size16,
     fontFamily: fontsfamily.regular,
-    textAlign: 'center',
   },
 });
