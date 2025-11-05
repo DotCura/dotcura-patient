@@ -2,6 +2,14 @@ export default {
   //APPNAME
   appname: 'DotCura',
 
+  //ONBOARDING
+  onboardingtitle1: 'Ut in tristique vestibulum.',
+  onboardingdes1: 'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
+  onboardingtitle2: 'Ut in tristique vestibulum.',
+  onboardingdes2: 'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
+  onboardingtitle3: 'Ut in tristique vestibulum.',
+  onboardingdes3: 'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
+
   //LOGIN
   logintitle: 'Inserisci il numero di telefono',
   loginsubtitle: 'Il numero di telefono è indispensabile per accedere all’app',
