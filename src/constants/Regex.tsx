@@ -15,4 +15,5 @@ export const regex = {
   address: /^([a-z0-9A-Z\-\.\/\,]+\s?)*$/,
   alphaNumericCaptial: /^[A-Z0-9]*$/,
   ifscCode: /^[A-Z]{4}0[A-Z0-9]{6}$/,
+  mobliedesh: /^(\d{3} ?\d{3} ?\d{2,4} ?\d{0,5})$/,
 };

@@ -20,6 +20,7 @@ export const ScreenNames = {
   //customer
   ONBOARDINGCONTAINER: "OnBoardingContainer",
   LOGINCONTAINER:"LoginContainer",
+  OTPCONTAINER:"OTPContainer",
 
 };
 

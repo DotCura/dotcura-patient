@@ -77,7 +77,7 @@ export const formatPhoneNumber = (input: any) => {
   let formatted = "";
   for (let i = 0; i < sliced.length; i++) {
     if (i === 3 || i === 6 || i === 10) {
-      formatted += "-";
+      formatted += " ";
     }
     formatted += sliced[i];
   }

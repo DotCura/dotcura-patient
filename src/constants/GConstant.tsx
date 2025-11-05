@@ -16,7 +16,7 @@ import { fontsfamily } from './FontFamily';
 import { fontSize } from './FontSizes';
 import { getWidth } from './utils/Dimensions';
 
-export const appName = getTranslation('DotCura') || 'DotCura';
+export const appName = getTranslation('appname') || 'DotCura';
 
 // RTL Support
 export const isRTLSupport = I18nManager.isRTL;

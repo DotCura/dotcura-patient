@@ -29,7 +29,7 @@ const PrimaryTitleMoblieNumber = ({
   focusnext,
   isBorder,
   errorMessage,
-  setErrorMessage, 
+  setErrorMessage,
   onFocus,
   onBlur,
   ...props
@@ -46,15 +46,13 @@ const PrimaryTitleMoblieNumber = ({
   const [withAlphaFilter, setWithAlphaFilter] = useState(true);
   const [withCallingCode, setWithCallingCode] = useState(true);
   const [visible, setVisible] = useState(false);
-  
+
   const inputRef = useRef<TextInput>(null);
 
-  
   useImperativeHandle(refs, () => ({
     focus: () => {
       // Focus logic if needed
-      inputRef.current?.focus(); 
-
+      inputRef.current?.focus();
     },
     setError: (error: string) => {
       setInternalError(error);
@@ -64,26 +62,22 @@ const PrimaryTitleMoblieNumber = ({
     },
   }));
 
-  
   const displayError = errorMessage || internalError;
 
-
-
-
   const getBorderColor = () => {
-    if (displayError) return Colors.red8C; 
-    if (isFocused) return Colors.blue1C; 
-    return Colors.grayD8; 
+    if (displayError) return Colors.red8C;
+    if (isFocused) return Colors.blue1C;
+    return Colors.grayD8;
   };
 
   const getBackgroundColor = () => {
-    if (displayError) return Colors.redFD; 
-    return Colors.white; 
+    if (displayError) return Colors.redFD;
+    return Colors.white;
   };
 
   const handleFocus = () => {
     setIsFocused(true);
-   
+
     if (internalError) {
       setInternalError('');
     }
@@ -96,16 +90,15 @@ const PrimaryTitleMoblieNumber = ({
   };
 
   const handleChangeText = (text: string) => {
-   
     if (internalError) {
       setInternalError('');
     }
-    
+
     if (errorMessage && setErrorMessage) {
       setErrorMessage('');
     }
 
-    onChangeFun(text); 
+    onChangeFun(text);
   };
 
   const onSelect = (country: any) => {
@@ -130,8 +123,9 @@ const PrimaryTitleMoblieNumber = ({
           onClose={() => setVisible(false)}
         />
       )}
-{props.inputLabel&&
-      <Text style={styles.lblTitleInput}>{props.inputLabel}</Text>}
+      {props.inputLabel && (
+        <Text style={styles.lblTitleInput}>{props.inputLabel}</Text>
+      )}
 
       <View
         style={[
@@ -176,18 +170,12 @@ const PrimaryTitleMoblieNumber = ({
             ref={inputRef}
             onSubmitEditing={focusnext}
             value={value}
-            placeholder={label}
+            placeholder={props.placHolderLabel}
             placeholderTextColor={Colors.gray75}
             onChangeText={handleChangeText}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            style={[
-              styles.input,
-
-              {
-              
-              },
-            ]}
+            style={[styles.input, {}]}
             {...props}
           />
         </View>

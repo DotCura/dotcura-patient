@@ -21,7 +21,7 @@ export const constnatStyles = StyleSheet.create({
     backgroundColor: Colors.white,
     paddingHorizontal: getWidth(16),
   },
-  vwTitleSubtitles: { gap: getWidth(4), marginHorizontal: getWidth(16) },
+  vwTitleSubtitles: { gap: getWidth(4) },
   lblHeaderTitle: {
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.bold,

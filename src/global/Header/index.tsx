@@ -45,7 +45,7 @@ const AppHeader = (props: PropsType) => {
       {props?.dontShowStartBtn ? (
         <Image source={images.imgDelete} style={{ opacity: 0 }} />
       ) : (
-        <TouchableOpacity style={styles.btnBack}>
+        <TouchableOpacity style={styles.btnBack} onPress={props.startBtnOnPress}>
           <Image source={images.imgLeftArrow} />
         </TouchableOpacity>
       )}
