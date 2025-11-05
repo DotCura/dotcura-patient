@@ -7,12 +7,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingBottom: getHeight(10),
   },
-  btnBack:{
+  btnBack: {
     backgroundColor: Colors.white,
     height: getHeight(36),
     width: getWidth(36),
-    borderRadius:20,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',

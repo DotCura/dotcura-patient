@@ -5,6 +5,7 @@ import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { formatPhoneNumber } from '../../../constants/TextInputConstant';
 import { regex } from '../../../constants/Regex';
+import { ScreenNames } from '../../../constants/AppConstants';
 
 const LoginContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -44,6 +45,7 @@ const LoginContainer = ({ navigation }: any) => {
       return;
     } else {
       console.log('login done');
+      navigation.navigate(ScreenNames.OTPCONTAINER);
     }
   };
 

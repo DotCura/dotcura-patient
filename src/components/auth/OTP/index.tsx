@@ -1,14 +1,110 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { styles } from './styles'
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React from 'react';
+import { styles } from './styles';
+import CustomButton from '../../../global/Buttons';
+import { getTranslation } from '../../../localization/i18n/i18n.config';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { constnatStyles } from '../../../constants/Styles';
+import { getHeight } from '../../../constants/utils/Dimensions';
+import { Colors } from '../../../constants/Colors';
+import { activityOpacity } from '../../../constants/GConstant';
 
-
-const OTPComponent = () => {
+const OTPComponent = (props: any) => {
   return (
-    <View>
-      <Text>OTPComponent</Text>
-    </View>
-  )
-}
+    <KeyboardAwareScrollView
+      contentContainerStyle={[constnatStyles.keyboardContainer]}
+      keyboardShouldPersistTaps="handled"
+    >
+      <View style={{ flex: 1 }}>
+        {/* HeaderView */}
+        <View style={styles.vwHeader}>
+          <View style={constnatStyles.vwTitleSubtitles}>
+            <Text style={constnatStyles.lblMainTitle}>
+              {getTranslation('otptitle')}
+            </Text>
+            <Text style={constnatStyles.lblMainSubtitle}>
+              {getTranslation('otpsubtitle1')}{' '}
+              <Text style={styles.lblPhoneNumber}>+39 333 966 1234.</Text>{' '}
+              {getTranslation('otpsubtitle2')}
+            </Text>
+          </View>
+        </View>
 
-export default OTPComponent
+        {/* inputView */}
+        <View style={styles.vwOtpMain}>
+          {props?.otpArray?.map((item: any, index: any) => {
+            return (
+              <View style={styles.vwTxtInput} key={index}>
+                <TextInput
+                  maxLength={1}
+                  placeholderTextColor={Colors.blue17}
+                  selectionColor={Colors.gray75}
+                  cursorColor={Colors.gray75}
+                  inputMode="numeric"
+                  style={styles.txtInput}
+                  value={item?.value}
+                  ref={item?.ref}
+                  blurOnSubmit={index == props?.otpArray?.length - 1}
+                  returnKeyType={
+                    index == props?.otpArray?.length - 1 ? 'default' : 'next'
+                  }
+                  onChangeText={text => {
+                    props.handleOnChangeText(text, index);
+                  }}
+                  onKeyPress={nativeEvent => {
+                    props.handleOnKeyPress(nativeEvent, item, index);
+                  }}
+                  onSubmitEditing={() => {
+                    props?.handleOnSubmit(index);
+                  }}
+                />
+              </View>
+            );
+          })}
+        </View>
+        <Text style={styles.lblResendWarning}>
+          {getTranslation("otpwarning1")} {props.OTPTIMING} {getTranslation("otpwarning2")}
+        </Text>
+      </View>
+
+      {/* vwBottomBtn */}
+      <View
+        style={[
+          styles.vwBottom,
+          { marginBottom: props.insets.bottom + getHeight(16) },
+        ]}
+      >
+        <CustomButton
+          btnPress={props.handleOnPressNext}
+          btnTitle={getTranslation('next')}
+        />
+        <TouchableOpacity
+          activeOpacity={activityOpacity}
+          disabled={props.resendOtp}
+          onPress={props.handleOnPressResendOtp}
+          style={{ marginTop: getHeight(21) }}
+        >
+          {!props.resendOtp ? (
+            <Text style={styles.lblResendOtp}>
+              {getTranslation('resendcode')}
+            </Text>
+          ) : (
+            <Text style={styles.lblDidntgetOtp}>
+              {/* {getTranslation('ifYouDidntReceiveCodeTitle')}{' '} */}
+              <Text style={styles.lblResendOtp}>
+                00:{props?.otp?.toString().padStart(2, '0')}
+              </Text>
+            </Text>
+          )}
+        </TouchableOpacity>
+      </View>
+    </KeyboardAwareScrollView>
+  );
+};
+
+export default OTPComponent;

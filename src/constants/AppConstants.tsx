@@ -21,6 +21,7 @@ export const ScreenNames = {
   ONBOARDINGCONTAINER: "OnBoardingContainer",
   LOGINCONTAINER:"LoginContainer",
   OTPCONTAINER:"OTPContainer",
+  COMPLETEPROFILECONTAINER:"CompleteProfileContainer",
 
 };
 

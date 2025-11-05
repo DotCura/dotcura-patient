@@ -5,7 +5,8 @@ import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { Colors } from '../../constants/Colors';
 import { images } from '../../constants/Images'; // update path if needed
 import { styles } from './styles';
-
+import { fontsfamily } from '../../constants/FontFamily';
+import { fontSize } from '../../constants/FontSizes';
 
 type TopBarProps = {
   array: any[];
@@ -31,8 +32,8 @@ const TopBar: React.FC<TopBarProps> = ({
       {/* Back Button */}
       {showBack ? (
         <TouchableOpacity style={styles.btnBack} onPress={onClickBack}>
-        <Image source={images.imgLeftArrow} />
-      </TouchableOpacity>
+          <Image source={images.imgLeftArrow} />
+        </TouchableOpacity>
       ) : (
         <View style={styles.btnBackPlaceholder} />
       )}
@@ -43,7 +44,8 @@ const TopBar: React.FC<TopBarProps> = ({
           const isPast = index < currentIndex;
           const isCurrent = index === currentIndex;
 
-          const barBackgroundColor = isPast || isCurrent ? Colors.blue1C : Colors.grayF3;
+          const barBackgroundColor =
+            isPast || isCurrent ? Colors.blue1C : Colors.grayF3;
           const textColor = isPast || isCurrent ? Colors.white : Colors.gray0F;
 
           return (
@@ -69,7 +71,15 @@ const TopBar: React.FC<TopBarProps> = ({
                     resizeMode="contain"
                   />
                 ) : (
-                  <Text style={{ color: textColor }}>{item.id}</Text>
+                  <Text
+                    style={{
+                      color: textColor,
+                      fontFamily: fontsfamily.medium,
+                      fontSize: fontSize.size16,
+                    }}
+                  >
+                    {item.id}
+                  </Text>
                 )}
               </View>
             </View>

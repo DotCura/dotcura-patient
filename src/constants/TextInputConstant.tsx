@@ -1,3 +1,5 @@
+import { regex } from "./Regex";
+
 // <============================== Validation Constant ==============================>
 export const ValidationConstant = {
   maxMobileDigit: 18,
@@ -9,26 +11,32 @@ export const ValidationConstant = {
 
   maxPassword: 6,
   minPassword: 8,
+
+  maxTaxCode:16
 };
 
 export const InputTypesEnum = {
-  FIRSTNAME: "firstName",
-  LASTNAME: "lastName",
-  USERNAME: "userName",
-  NAME: "name",
-  EMAIL: "email",
-  MOBILE: "mobile",
-  PASSWORD: "password",
-  ONCHANGEPASSWORD: "onChangePassword",
-  ONCHANGEEMAIL: "onChangeEmail",
-  ADDRESS: "address",
-  CITY: "city",
-  ZIPCODE: "zipCode",
-  COUNTRY: "country",
-  EXPERIENCE: "experience",
+  FULLNAME: 'fullName',
+  FIRSTNAME: 'firstName',
+  LASTNAME: 'lastName',
+  USERNAME: 'userName',
+  NAME: 'name',
+  EMAIL: 'email',
+  MOBILE: 'mobile',
+  PASSWORD: 'password',
+  ONCHANGEPASSWORD: 'onChangePassword',
+  ONCHANGEEMAIL: 'onChangeEmail',
+  ADDRESS: 'address',
+  CITY: 'city',
+  ZIPCODE: 'zipCode',
+  COUNTRY: 'country',
+  EXPERIENCE: 'experience',
 };
 
-export const isValidInput = (inputType: keyof typeof InputTypesEnum, text: string) => {
+export const isValidInput = (
+  inputType: keyof typeof InputTypesEnum,
+  text: string,
+) => {
   var pattern = /^[A-Za-z]+$/;
 
   if (
@@ -36,6 +44,8 @@ export const isValidInput = (inputType: keyof typeof InputTypesEnum, text: strin
     inputType === InputTypesEnum.LASTNAME
   ) {
     pattern = /^[A-Za-z]+$/;
+  } else if (inputType === InputTypesEnum.FULLNAME) {
+    pattern = /^([a-zA-Z]+\s?)*$/;
   } else if (inputType === InputTypesEnum.USERNAME) {
     pattern = /^[A-Za-z0-9_.]+$/;
   } else if (inputType === InputTypesEnum.EMAIL) {
@@ -63,21 +73,21 @@ export const isValidInput = (inputType: keyof typeof InputTypesEnum, text: strin
     pattern = /^[0-9.]{0,5}$/;
   }
 
-  return pattern.test(text) || text === "";
+  return pattern.test(text) || text === '';
 };
 
 export const formatPhoneNumber = (input: any) => {
   // Remove all non-digit characters
-  const cleaned = input?.replace(/\D/g, "");
+  const cleaned = input?.replace(/\D/g, '');
 
   // Slice to at most 10 digits
   const sliced = cleaned.slice(0, 18);
 
   // Format the phone number as (XXX) XXX-XXXX
-  let formatted = "";
+  let formatted = '';
   for (let i = 0; i < sliced.length; i++) {
     if (i === 3 || i === 6 || i === 10) {
-      formatted += " ";
+      formatted += ' ';
     }
     formatted += sliced[i];
   }
@@ -93,10 +103,10 @@ export const formatPhoneNumberForApi = (input: any) => {
   const sliced = input.slice(0, 18);
 
   // Format the phone number as (XXX) XXX-XXXX
-  let formatted = "";
+  let formatted = '';
   for (let i = 0; i < sliced.length; i++) {
     if (i === 3 || i === 6 || i === 10) {
-      formatted += "-";
+      formatted += '-';
     }
     formatted += sliced[i];
   }
@@ -105,5 +115,5 @@ export const formatPhoneNumberForApi = (input: any) => {
 };
 
 export const getOrgMobileNumber = (number: any) => {
-  return number.replace(/-/g, "");
+  return number.replace(/-/g, '');
 };

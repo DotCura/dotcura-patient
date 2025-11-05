@@ -8,6 +8,29 @@ export default {
   next: 'Avanti',
   moblieno: 'Telefono',
 
+  //OTP
+  otptitle: 'Codice a 6 cifre',
+  otpsubtitle1: 'Codice inviato al numero',
+  otpsubtitle2: 'Inseriscilo qui per verificare il tuo accoun.',
+  otpResendSuccessfully: 'OTP reenviado con éxito',
+  resendcode: 'Reinvia codice',
+  ifYouDidntReceiveCodeTitle: 'If you don’t received code',
+  otpwarning1: 'Rinvio codice possibile tra',
+  otpwarning2: 'secondi',
+
+  //COMPLETEPROFILE
+  completeprofiletitle: 'Completa il tuo profilo',
+  completeprofilesubtitle: 'Aggiungi il tuo nome e numero di telefono.',
+  continue: 'Continua',
+  fullnameplaceholder: 'Giovanni Carnevale',
+  emailplaceholder: 'giovanni@email.com',
+  taxcodeplaceholder: 'AAAVVBA000000000',
+  fullnametitle: 'Nome completo',
+  emailtitle: 'Email',
+  taxcodetitle: 'Codice fiscale',
+  gender1:"Uomo",
+  gender2:"Donna",
+
   //PERMISSIONS
   allowTitle: 'Permitir',
   allowSubtitleForCamera:
@@ -47,4 +70,6 @@ export default {
   errorMessageIFSC: 'Por favor, introduzca el código IFSC.',
   errorMessageIFSCValid:
     'Por favor, introduzca un código IFSC válido (por ejemplo, HDFC0001234).',
+  errorMessageTaxCodeRequired: 'Por favor, introduzca su código fiscal',
+  errorMessageTaxCodeValid: 'El código fiscal debe tener 16 caracteres',
 };
