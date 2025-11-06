@@ -42,6 +42,7 @@ const MainNavigation = props => {
         {_addScreen(ScreenNames.OTPCONTAINER, {}, { headerShown: true })}
         {_addScreen(ScreenNames.COMPLETEPROFILECONTAINER, {}, { headerShown: false })}
         {_addScreen(ScreenNames.INFOATIONCONASATNTCONTAINER, {}, { headerShown: false })}
+        {_addScreen(ScreenNames.ADDCARDCONTAINER, {}, { headerShown: false })}
       
 
       </Stack.Navigator>

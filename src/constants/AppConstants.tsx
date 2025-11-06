@@ -22,7 +22,8 @@ export const ScreenNames = {
   LOGINCONTAINER:"LoginContainer",
   OTPCONTAINER:"OTPContainer",
   COMPLETEPROFILECONTAINER:"CompleteProfileContainer",
-  INFOATIONCONASATNTCONTAINER:"InformationConasantContainer"
+  INFOATIONCONASATNTCONTAINER:"InformationConasantContainer",
+  ADDCARDCONTAINER:"AddCardContainer"
 
 };
 

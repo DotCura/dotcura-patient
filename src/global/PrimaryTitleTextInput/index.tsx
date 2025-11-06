@@ -18,8 +18,8 @@ const PrimaryTitleTextInput = ({
   blur,
   isBorder,
   focusnext,
-  errorMessage, 
-  setErrorMessage, 
+  errorMessage,
+  setErrorMessage,
   onFocus,
   onBlur,
   ...props
@@ -30,11 +30,9 @@ const PrimaryTitleTextInput = ({
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
 
- 
   useImperativeHandle(refs, () => ({
     focus: () => {
-      
-      inputRef.current?.focus(); 
+      inputRef.current?.focus();
     },
     setError: (error: string) => {
       setInternalError(error);
@@ -44,24 +42,22 @@ const PrimaryTitleTextInput = ({
     },
   }));
 
-  
   const displayError = errorMessage || internalError;
-
 
   const getBorderColor = () => {
     if (displayError) return Colors.red8C;
-    if (isFocused) return Colors.blue1C; 
-    return Colors.grayD8; 
+    if (isFocused) return Colors.blue1C;
+    return Colors.grayD8;
   };
 
   const getBackgroundColor = () => {
-    if (displayError) return Colors.redFD; 
-    return Colors.white; 
+    if (displayError) return Colors.redFD;
+    return Colors.white;
   };
 
   const handleFocus = () => {
     setIsFocused(true);
-    
+
     if (internalError) {
       setInternalError('');
     }
@@ -74,7 +70,6 @@ const PrimaryTitleTextInput = ({
   };
 
   const handleChangeText = (text: string) => {
-
     if (internalError) {
       setInternalError('');
     }
@@ -82,13 +77,16 @@ const PrimaryTitleTextInput = ({
       setErrorMessage('');
     }
 
-    onChangeFun(text); 
+    onChangeFun(text);
   };
 
   return (
-    <View style={{}}>
-      {props.inputLabel&&
-      <Text style={styles.lblTitleInput}>{props.inputLabel}</Text>}
+    <View style={{ flex: 1, alignSelf: props.isflexstart && 'flex-start' }}>
+      {props.inputLabel && (
+        <Text style={styles.lblTitleInput} numberOfLines={1}>
+          {props.inputLabel}
+        </Text>
+      )}
       <View
         style={[
           styles.container,
@@ -99,6 +97,7 @@ const PrimaryTitleTextInput = ({
           {
             borderColor: getBorderColor(),
             backgroundColor: getBackgroundColor(),
+            // flex: props?.flex ? props?.flex : 0,
           },
         ]}
       >
@@ -136,13 +135,7 @@ const PrimaryTitleTextInput = ({
             onChangeText={handleChangeText}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            style={[
-              styles.input,
-              multiline && styles.multilineInput,
-              {
-                
-              },
-            ]}
+            style={[styles.input, multiline && styles.multilineInput, {}]}
             multiline={multiline}
             numberOfLines={multiline ? 0 : 4}
             secureTextEntry={isPassword && !isPasswordVisible}

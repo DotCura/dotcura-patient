@@ -10,7 +10,7 @@ import { setFlashMessageRef } from './src/constants/GConstant';
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.ONBOARDINGCONTAINER,
+    ScreenNames.ADDCARDCONTAINER,
   );
   const flashMessageRef = useRef(null);
   setFlashMessageRef(flashMessageRef);

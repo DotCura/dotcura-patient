@@ -4,13 +4,16 @@ export default {
 
   //ONBOARDING
   onboardingtitle1: 'Ut in tristique vestibulum.',
-  onboardingdes1: 'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
+  onboardingdes1:
+    'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
   onboardingtitle2: 'Ut in tristique vestibulum.',
-  onboardingdes2: 'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
+  onboardingdes2:
+    'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
   onboardingtitle3: 'Ut in tristique vestibulum.',
-  onboardingdes3: 'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
-  skip:"Salta",
-  
+  onboardingdes3:
+    'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
+  skip: 'Salta',
+
   //LOGIN
   logintitle: 'Inserisci il numero di telefono',
   loginsubtitle: 'Il numero di telefono è indispensabile per accedere all’app',
@@ -37,15 +40,32 @@ export default {
   fullnametitle: 'Nome completo',
   emailtitle: 'Email',
   taxcodetitle: 'Codice fiscale',
-  gender1:"Uomo",
-  gender2:"Donna",
+  gender1: 'Uomo',
+  gender2: 'Donna',
 
   //INFORMATIONCONSATNT
-  infotitle:"Informativa e consenso",
-  infosubtitle:"Per proseguire devi accettare.",
-  constant1:"Acconsento al trattamento dei miei dati personali per la creazione e gestione del mio account, secondo quanto descritto ",
-  constant2:"nell’informativa",
-  constant3:"Acconsento a ricevere comunicazioni promozionali e aggiornamenti sui prodotti e servizi.",
+  infotitle: 'Informativa e consenso',
+  infosubtitle: 'Per proseguire devi accettare.',
+  constant1:
+    'Acconsento al trattamento dei miei dati personali per la creazione e gestione del mio account, secondo quanto descritto ',
+  constant2: 'nell’informativa',
+  constant3:
+    'Acconsento a ricevere comunicazioni promozionali e aggiornamenti sui prodotti e servizi.',
+
+  //ADDCARD
+  addcardtitle: 'Aggiungi carta',
+  addcardsubtitle:
+    'Questa carta di creditosarà salvata e disponibile per futuri pagamenti.',
+  cardnumberinputlabel: 'Numero',
+  cardnumberplaceholder: '0000 0000 0000 0000',
+  expiredateinput: 'Scadenza',
+  expiredateplaceholder: '00 / 00',
+  cvvinputlabel: 'CVV',
+  cvvplaceholder: '000',
+  cardholdernameinputlabel: 'Nome sulla carta',
+  cardholdernameplaceholder: 'eg. Giovanni Rossi',
+  cardconfirmation: 'Salva come carta predefinita',
+  switchlabel:"Salva come carta predefinita",
 
   //PERMISSIONS
   allowTitle: 'Permitir',
@@ -88,4 +108,17 @@ export default {
     'Por favor, introduzca un código IFSC válido (por ejemplo, HDFC0001234).',
   errorMessageTaxCodeRequired: 'Por favor, introduzca su código fiscal',
   errorMessageTaxCodeValid: 'El código fiscal debe tener 16 caracteres',
+  emptyCardNumber: 'Por favor, introduzca el número de la tarjeta',
+  invalidCardNumber: 'Por favor, introduzca un número de tarjeta válido',
+  emptyCardHolderName:
+    'Por favor, introduzca el nombre del titular de la tarjeta',
+  emptyExpiryDate: 'Por favor, introduzca la fecha de vencimiento',
+  invalidExpiryMonth: 'Por favor, introduzca un mes de vencimiento válido',
+  invalidExpiryYear: 'Por favor, introduzca un año de vencimiento válido',
+  invalidExpiryDate: 'Por favor, introduzca una fecha de vencimiento válida',
+  emptyCVV: 'Por favor, introduzca el CVV',
+  invalidCVV: 'Por favor, introduzca un CVV válido',
+  emptyPostalCode: 'Por favor, introduzca el código postal',
+  invalidPostalCode: 'Por favor, introduzca un código postal válido',
+  cardNumberZero: '',
 };
