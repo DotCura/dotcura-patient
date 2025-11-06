@@ -3,7 +3,11 @@ import React, { useRef, useState } from 'react';
 import OnBoardingComponent from '../../../components/auth/OnBoarding';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import {
+  FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+} from 'react-native';
 import { ScreenDimensions } from '../../../constants/utils/Dimensions';
 import { ScreenNames } from '../../../constants/AppConstants';
 
@@ -28,8 +32,7 @@ const OnBoardingContainer = ({ navigation }: any) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
-
-     // Detect page index
+  // Detect page index
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const index = Math.round(offsetX / ScreenDimensions.screenWidth);
@@ -46,15 +49,23 @@ const OnBoardingContainer = ({ navigation }: any) => {
     }
   };
 
-  return <OnBoardingComponent 
-  insets={insets}
-  onBoardingArrData={onBoardingArrData}
-  currentIndex={currentIndex}
-  setCurrentIndex={setCurrentIndex}
-  handleScroll={handleScroll}
-  handleNext={handleNext}
-  flatListRef={flatListRef}
-  navigation={navigation}/>;
+  const handleSkip = () => {
+    navigation.navigate(ScreenNames.LOGINCONTAINER);
+  };
+
+  return (
+    <OnBoardingComponent
+      insets={insets}
+      onBoardingArrData={onBoardingArrData}
+      currentIndex={currentIndex}
+      setCurrentIndex={setCurrentIndex}
+      handleScroll={handleScroll}
+      handleNext={handleNext}
+      flatListRef={flatListRef}
+      navigation={navigation}
+      handleSkip={handleSkip}
+    />
+  );
 };
 
 export default OnBoardingContainer;

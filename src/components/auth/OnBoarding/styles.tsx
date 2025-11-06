@@ -24,7 +24,8 @@ export const styles = StyleSheet.create({
   vwImgOnboarding: {
     width: ScreenDimensions.screenWidth,
     alignItems: 'center',
-    justifyContent: 'flex-end', 
+    justifyContent: 'flex-end',
+    marginBottom: getHeight(101),
   },
   imageContainer: {
     marginTop: getHeight(130),
@@ -38,7 +39,6 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     alignItems: 'center',
-
   },
   txtTitle: {
     fontSize: fontSize.size28,
@@ -77,12 +77,13 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.grayF3,
   },
   buttonContainer: {
-    position: 'absolute',
+    // position: 'absolute',
+    gap:8,
     marginHorizontal: getWidth(20),
-    bottom: 0,
-    left: 0,
-    right: 0,
-    paddingBottom: getHeight(40),
-    backgroundColor: 'transparent',
+    // bottom: 0,
+    // left: 0,
+    // right: 0,
+    // paddingBottom: getHeight(40),
+    // backgroundColor: 'transparent',
   },
 });

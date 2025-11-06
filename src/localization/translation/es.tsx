@@ -9,7 +9,8 @@ export default {
   onboardingdes2: 'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
   onboardingtitle3: 'Ut in tristique vestibulum.',
   onboardingdes3: 'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
-
+  skip:"Salta",
+  
   //LOGIN
   logintitle: 'Inserisci il numero di telefono',
   loginsubtitle: 'Il numero di telefono è indispensabile per accedere all’app',

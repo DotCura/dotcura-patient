@@ -17,6 +17,8 @@ const CompleteProfileComponent = (props: any) => {
     <KeyboardAwareScrollView
       contentContainerStyle={[constnatStyles.keyboardContainer]}
       keyboardShouldPersistTaps="handled"
+      bounces={false}
+      showsVerticalScrollIndicator={false}
     >
       <View style={{ flex: 1 }}>
         {/* TopBar */}

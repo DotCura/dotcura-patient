@@ -11,6 +11,7 @@ import { styles } from './styles';
 import CustomButton from '../../../global/Buttons';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { getHeight } from '../../../constants/utils/Dimensions';
+import { Colors } from '../../../constants/Colors';
 
 const OnBoardingComponent = (props: any) => {
   return (
@@ -89,7 +90,7 @@ const OnBoardingComponent = (props: any) => {
       <View
         style={[
           styles.buttonContainer,
-          { paddingBottom: props.insets.bottom + getHeight(20) },
+          { paddingBottom: props.insets.bottom + getHeight(16) },
         ]}
       >
         <CustomButton
@@ -99,6 +100,12 @@ const OnBoardingComponent = (props: any) => {
               ? getTranslation('next')
               : getTranslation('next')
           }
+        />
+        <CustomButton
+          style={{ backgroundColor: Colors.white }}
+          textStyle={{ color: Colors.gray0F }}
+          btnPress={props.handleSkip}
+          btnTitle={getTranslation('skip')}
         />
       </View>
     </View>
