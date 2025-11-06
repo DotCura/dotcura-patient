@@ -12,6 +12,8 @@ export HomeContainer from "./container/bottomTabs/Home";
 export GetTestedContainer from "./container/bottomTabs/GetTested";
 export YourProfileContainer from "./container/bottomTabs/YourProfile";
 export BottomTabsNavigation from "./navigators/bottomTabNavigator";
+export AllSetContainer from "./container/auth/AllSet";
+export WelcomeContainer from "./container/auth/Welcome"
 
 
 

@@ -12,7 +12,7 @@ const CustomBottomTabsComponent = (props: any) => {
       style={[
         styles.vwTabs,
         {
-          marginBottom: insets.bottom + getHeight(5),
+          marginBottom: insets.bottom + getHeight(5), 
         },
         ,
       ]}

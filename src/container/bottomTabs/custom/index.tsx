@@ -85,7 +85,6 @@ const CustomBottomTabsContainer = ({ navigation, state, descriptors }: any) => {
           {logosArray[index].tabName}
         </Text>
 
-        {/* {isFocused && <View style={styles.vwTopCirle} />} */}
       </TouchableOpacity>
     );
   };
@@ -94,6 +93,7 @@ const CustomBottomTabsContainer = ({ navigation, state, descriptors }: any) => {
     <CustomBottomTabsComponent
       tabs={bottomTabs}
       onPressBottomTab={onPressBottomTab}
+      state={state} // 👈 important
     />
   );
 };

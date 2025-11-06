@@ -65,7 +65,19 @@ export default {
   cardholdernameinputlabel: 'Nome sulla carta',
   cardholdernameplaceholder: 'eg. Giovanni Rossi',
   cardconfirmation: 'Salva come carta predefinita',
-  switchlabel:"Salva come carta predefinita",
+  switchlabel: 'Salva come carta predefinita',
+
+  // All set
+  gototheapp: 'Vai all’app',
+  allready: 'Tutto pronto!',
+  youarereadytostart: 'Sei pronto per iniziare ad usare Doctura.',
+
+  //Welcome
+  applyasnurse: 'Applica come infermiere',
+  icantaccess: 'Non riesco ad accedere',
+  termsandconditiondisc:
+    'Questo è un testo per spiegare i termini e le condizioni del servizio + tutta la questione del GDPR.',
+  Enter: 'Entra',
 
   //PERMISSIONS
   allowTitle: 'Permitir',
@@ -76,9 +88,9 @@ export default {
   allowSubtitleForDocuments: '¿usar tus documentos?',
 
   //BOOTOMTAB
-  home:"Home",
-  gettested:"Fai analisi",
-  yourprofile:"Il tuo quadro",
+  home: 'Home',
+  gettested: 'Fai analisi',
+  yourprofile: 'Il tuo quadro',
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',
@@ -125,5 +137,5 @@ export default {
   invalidCVV: 'Por favor, introduzca un CVV válido',
   emptyPostalCode: 'Por favor, introduzca el código postal',
   invalidPostalCode: 'Por favor, introduzca un código postal válido',
-  cardNumberZero: '',
+  cardNumberZero: 'El número de la tarjeta no debe ser cero',
 };

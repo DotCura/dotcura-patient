@@ -7,13 +7,13 @@ import {
   View,
 } from 'react-native';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import OTPComponent from '../../../components/auth/OTP';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AppHeader from '../../../global/Header';
 import { regex } from '../../../constants/Regex';
 import { flashMessageSucess, flashMessageWarning } from '../../../constants/GConstant';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { OTPManager } from '../../../constants/utils/OTP';
+import OTPComponent from '../../../components/auth/OTP';
 
 interface OtpArray {
   value: string;

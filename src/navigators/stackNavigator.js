@@ -60,6 +60,8 @@ const MainNavigation = props => {
           { headerShown: false },
         )}
         {_addScreen(ScreenNames.ADDCARDCONTAINER, {}, { headerShown: false })}
+        {_addScreen(ScreenNames.ALLSETCONATINER, {}, { headerShown: false })}
+        {_addScreen(ScreenNames.WELCOMECONTAINER, {}, { headerShown: false })}
       </Stack.Navigator>
     );
   };
