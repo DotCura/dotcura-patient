@@ -2,9 +2,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { StatusBar, View } from 'react-native';
-import * as Screen from '../index';
 import { ScreenNames } from '../constants/AppConstants';
 import { Colors } from '../constants/Colors';
+import * as Screen from '../index';
 
 const Stack = createNativeStackNavigator();
 const ModalStack = createNativeStackNavigator();
@@ -37,14 +37,29 @@ const MainNavigation = props => {
           orientation: 'portrait',
         }}
       >
-        {_addScreen(ScreenNames.ONBOARDINGCONTAINER, {}, { headerShown: false })}
+        {_addScreen(
+          ScreenNames.BOTTOMTABNAVIGATION,
+          {},
+          { headerShown: false, gestureEnabled: false },
+        )}
+        {_addScreen(
+          ScreenNames.ONBOARDINGCONTAINER,
+          {},
+          { headerShown: false },
+        )}
         {_addScreen(ScreenNames.LOGINCONTAINER, {}, { headerShown: true })}
         {_addScreen(ScreenNames.OTPCONTAINER, {}, { headerShown: true })}
-        {_addScreen(ScreenNames.COMPLETEPROFILECONTAINER, {}, { headerShown: false })}
-        {_addScreen(ScreenNames.INFOATIONCONASATNTCONTAINER, {}, { headerShown: false })}
+        {_addScreen(
+          ScreenNames.COMPLETEPROFILECONTAINER,
+          {},
+          { headerShown: false },
+        )}
+        {_addScreen(
+          ScreenNames.INFOATIONCONASATNTCONTAINER,
+          {},
+          { headerShown: false },
+        )}
         {_addScreen(ScreenNames.ADDCARDCONTAINER, {}, { headerShown: false })}
-      
-
       </Stack.Navigator>
     );
   };

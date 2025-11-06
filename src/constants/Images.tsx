@@ -8,6 +8,16 @@ export const images = {
   imgSelectRadio: require('../assets/images/selectRadio.png'),
   imgUnselectRadio: require('../assets/images/unselectRadio.png'),
 
+  //BOTTOMTAB
+  imgFocusGetTested: require('../assets/images/gettested-active.png'),
+  imgFocusHome: require('../assets/images/Home-active.png'),
+  imgFocusProfile: require('../assets/images/profile-active.png'),
+  imgUnFocusProfile: require('../assets/images/profile-inactive.png'),
+  imgUnFocusGetTested: require('../assets/images/gettested-inactive.png'),
+  imgUnFocusHome: require('../assets/images/Home-inactive.png'),
+
+
+
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),
  

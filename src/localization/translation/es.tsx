@@ -75,6 +75,11 @@ export default {
     '¿usar tu galería para tu foto de perfil y documentos?',
   allowSubtitleForDocuments: '¿usar tus documentos?',
 
+  //BOOTOMTAB
+  home:"Home",
+  gettested:"Fai analisi",
+  yourprofile:"Il tuo quadro",
+
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',
   errorMessageInvalidOtp: 'Código OTP no válido',
