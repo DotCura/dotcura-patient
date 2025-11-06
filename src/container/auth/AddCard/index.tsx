@@ -42,8 +42,6 @@ const AddCardContainer = ({ navigation }: any) => {
       newText = newText.replace(/\s{2,}/g, ' ');
       setCardHolderName(newText);
     } else if (type === 'expiryDate') {
-      console.log('expiry date');
-
       let cleaned = text.replace(/[^\d]/g, '');
       if (cleaned.length > 2) {
         cleaned = cleaned.slice(0, 2) + '/' + cleaned.slice(2, 4);
@@ -103,7 +101,7 @@ const AddCardContainer = ({ navigation }: any) => {
     }
   };
 
-  const toggleSwitch = () => setIsEnabled((prev) => !prev);
+  const toggleSwitch = () => setIsEnabled(prev => !prev);
 
   return (
     <AddCardComponent
