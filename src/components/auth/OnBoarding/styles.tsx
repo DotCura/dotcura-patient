@@ -80,10 +80,5 @@ export const styles = StyleSheet.create({
     // position: 'absolute',
     gap:8,
     marginHorizontal: getWidth(20),
-    // bottom: 0,
-    // left: 0,
-    // right: 0,
-    // paddingBottom: getHeight(40),
-    // backgroundColor: 'transparent',
   },
 });
