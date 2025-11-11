@@ -93,7 +93,6 @@ const HomeComponent = (props: any) => {
             paddingBottom: getHeight(250),
           },
         ]}
-        bounces={false}
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}
       >
