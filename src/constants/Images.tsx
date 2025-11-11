@@ -16,9 +16,18 @@ export const images = {
   imgUnFocusGetTested: require('../assets/images/gettested-inactive.png'),
   imgUnFocusHome: require('../assets/images/Home-inactive.png'),
 
+  //HOME1
+  imgCartHome: require('../assets/images/cart.png'),
+  imgUserHome: require('../assets/images/user.png'),
+  imgRightBlack: require('../assets/images/rightblack.png'),
+  imgPlusBlack: require('../assets/images/plusBlack.png'),
+  imgFavUnfiled: require('../assets/images/fav.png'),
+  imgFavFilled: require('../assets/images/fav-filled.png'),
 
+  //GETTESTED
+  imgSearchBlack: require('../assets/images/search.png'),
+  imgClose: require('../assets/images/close.png'),
 
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),
- 
 };

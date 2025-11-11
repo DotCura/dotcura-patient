@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { LogBox, StyleSheet, Text, View } from 'react-native';
 import React, { useRef, useState } from 'react';
 import MainNavigation from './src/navigators/stackNavigator';
 import { ScreenNames } from './src/constants/AppConstants';
@@ -8,9 +8,11 @@ import i18n from './src/localization/i18n/i18n.config';
 import FlashMessage from 'react-native-flash-message';
 import { setFlashMessageRef } from './src/constants/GConstant';
 
+LogBox.ignoreAllLogs();
+
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.OTPCONTAINER,
+    ScreenNames.BOTTOMTABNAVIGATION,
   );
   const flashMessageRef = useRef(null);
   setFlashMessageRef(flashMessageRef);

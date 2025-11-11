@@ -92,6 +92,25 @@ export default {
   gettested: 'Fai analisi',
   yourprofile: 'Il tuo quadro',
 
+  //HOMESCREEN
+  emptytitle: 'Ordina la tua prima analisi',
+  emptysubtitle:
+    'Tieni sotto controllo i tuoi valori, prenota un’analisi con noi e vedrai i risultati e i trend qui nella home page.',
+  booktext: 'Prenota',
+  outdatedtitle: 'Analisi non aggiornate',
+  outdatedsubtitle:
+    'L’ultimo rilievo é datato, prenota un analisi per tenere sotto controllo la tua glicemia.',
+  latestvalue: 'Ultimi valori',
+  lastvalue:"Ultimo valore:",
+  recommandanalysis:"Analisi consigliate",
+  invitefriendtitle:"Invita un amico!",
+  invitefriendsubtitle:"Guadagna 5 euro di sconto sul prossimo ordine per ogni amico invitato su Dotcura.",
+  invitefriend:"Invita amico",
+  familymemberanlaysisvalue:"I valori dell’analisi di",
+
+  //GETTESTED
+  kitavailable:"kit disponibili",
+
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',
   errorMessageInvalidOtp: 'Código OTP no válido',

@@ -1,6 +1,10 @@
 export const Colors = {
   white: '#FFFFFF',
+  white36:"#FFFFFF5C",
+
   black:'#000000',
+  black12: '#120F04',
+  black04:"#040912",
 
   lightBlurE4: '#E4EEFD',
   blue1C: '#1C58CA',
@@ -19,6 +23,9 @@ export const Colors = {
   grayF3: '#F3F3F5',
   grayAD: '#ADADB4',
   grayED: '#EDEDF0',
+  grey40:"#40360D",
+  grey29:"#929298",
+  greyf324:"#F3F3F53D",
   
   greenD9: '#D9FCE0',
   green0D: '#0D4018',
@@ -41,6 +48,7 @@ export const Colors = {
   goldenCA: '#CAAA1C',
   goldenFD: '#FDF8E4',
   goldenF9: '#F9ECB6',
+  goldeenF5:"#F5E294",
   
   blackBlue04: '#040912',
 };

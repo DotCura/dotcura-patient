@@ -21,6 +21,11 @@ export const constnatStyles = StyleSheet.create({
     backgroundColor: Colors.white,
     paddingHorizontal: getWidth(16),
   },
+  vwContainer:{
+    flexGrow: 1,
+    backgroundColor: Colors.white,
+    paddingHorizontal: getWidth(16),
+  },
   vwTitleSubtitles: { gap: getWidth(4) },
   lblHeaderTitle: {
     fontSize: fontSize.size16,

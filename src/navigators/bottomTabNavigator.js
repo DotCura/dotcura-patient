@@ -4,7 +4,8 @@ import CustomBottomTabsContainer from '../container/bottomTabs/custom';
 import { createNativeBottomTabNavigator } from '@bottom-tabs/react-navigation';
 import { ScreenNames } from '../constants/AppConstants';
 import { Colors } from '../constants/Colors';
-import * as Screen from '../index';
+// import * as Screen from '../index';
+import * as Screen from '../index'
 
 const BottomTabsNavigation = () => {
   const BottomTabs = createNativeBottomTabNavigator();
@@ -28,10 +29,14 @@ const BottomTabsNavigation = () => {
     <BottomTabs.Navigator
       tabBar={props => <CustomBottomTabsContainer {...props} />}
     >
-      {handleBottomTabsScreens({
+      {/* {handleBottomTabsScreens({
         screenName: ScreenNames.HOMECONTAINER,
         component: Screen[ScreenNames.HOMECONTAINER],
-      })}
+      })} */}
+      <BottomTabs.Screen
+      name={ScreenNames.HOMECONTAINER}
+      component={Screen[ScreenNames.HOMECONTAINER]}
+      />
 
       {handleBottomTabsScreens({
         screenName: ScreenNames.GETTESTEDCONTAINER,
@@ -40,7 +45,7 @@ const BottomTabsNavigation = () => {
 
       {handleBottomTabsScreens({
         screenName: ScreenNames.YOURPROFILECONAINER,
-        component:Screen[ScreenNames.YOURPROFILECONAINER],
+        component: Screen[ScreenNames.YOURPROFILECONAINER],
       })}
     </BottomTabs.Navigator>
   );

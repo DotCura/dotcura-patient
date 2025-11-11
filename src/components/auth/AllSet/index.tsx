@@ -17,23 +17,21 @@ import TitleSubtitle from '../../../global/TitleSubtitle';
 const AllSetComponent = (props: any) => {
   return (
     <View style={styles.vwMain}>
-      
-        <View style={styles.vwMain}>
-
-
-        <Text style={styles.lblMainTitle}>{getTranslation("allready")}</Text>
-        <Text style={styles.lblMainSubtitle}>{getTranslation("youarereadytostart")}</Text>
-        </View>
+      <View style={styles.vwMain}>
+        <Text style={styles.lblMainTitle}>{getTranslation('allready')}</Text>
+        <Text style={styles.lblMainSubtitle}>
+          {getTranslation('youarereadytostart')}
+        </Text>
+      </View>
       <CustomButton
-        style={{ marginBottom: props.insets.bottom + getHeight(16),alignSelf:"flex-end"  }}
+        style={{
+          marginBottom: props.insets.bottom + getHeight(16),
+          alignSelf: 'flex-end',
+        }}
         btnPress={props.onPressContinue}
         btnTitle={getTranslation('gototheapp')}
         btnicon={false}
       />
-     
-  
-
-     
     </View>
   );
 };

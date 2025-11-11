@@ -1,3 +1,147 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
+import { Colors } from '../../../constants/Colors';
+import { fontSize } from '../../../constants/FontSizes';
+import { fontsfamily } from '../../../constants/FontFamily';
+import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
-export const styles = StyleSheet.create({})
+export const styles = StyleSheet.create({
+  lblFirstChar:{
+    color: Colors.grey29,
+    fontFamily: fontsfamily.regular,
+    fontSize: fontSize.size6,
+  },
+  lblFamilyMember:{
+    color: Colors.gray2A,
+    fontFamily: fontsfamily.bold,
+    fontSize: fontSize.size20,
+  },
+  vwFamilyMemberReport: {
+    marginTop:getHeight(32),
+    gap:getHeight(32),
+    marginHorizontal: getWidth(16),
+  },
+  lblFamilyMemberAnlaysisTitle: {
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.bold,
+    fontSize: fontSize.size20,
+  },
+  btnInviteFriend: {
+    backgroundColor: Colors.white36,
+    paddingVertical: getHeight(9),
+    paddingHorizontal: getWidth(12),
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    borderRadius: 20,
+    marginTop: getHeight(16),
+  },
+  vwInviteDetails: {
+    marginHorizontal: getWidth(16),
+    gap: getWidth(6),
+    marginTop: getHeight(24),
+    backgroundColor: Colors.blueD9,
+    borderRadius: 28,
+    flexDirection: 'row',
+    paddingHorizontal: getWidth(16),
+    paddingVertical: getHeight(16),
+  },
+  vwLatestValue: {
+    marginTop: getHeight(32),
+    gap: getHeight(12),
+  },
+  vwwarningDetails: {
+    marginHorizontal: getWidth(16),
+    gap: getWidth(6),
+    marginTop: getHeight(24),
+    backgroundColor: Colors.goldenFC,
+    borderRadius: 28,
+    flexDirection: 'row',
+    paddingHorizontal: getWidth(16),
+    paddingVertical: getHeight(16),
+  },
+  vwImage: {
+    flexDirection: 'row',
+  },
+  txtBankDetails: {
+    color: Colors.black12,
+    fontFamily: fontsfamily.bold,
+    fontSize: fontSize.size16,
+  },
+  txtWeCanNot: {
+    color: Colors.grey40,
+    fontFamily: fontsfamily.regular,
+    fontSize: fontSize.size14,
+  },
+  txtinvitefriendTitle: {
+    color: Colors.black04,
+    fontFamily: fontsfamily.bold,
+    fontSize: fontSize.size16,
+  },
+  txtInvoteFriendSubtitle: {
+    letterSpacing: 0.1,
+    color: Colors.blue0D,
+    fontFamily: fontsfamily.regular,
+    fontSize: fontSize.size14,
+    marginRight: getWidth(12),
+  },
+  vwBottom: {},
+  vwInBank: { gap: getHeight(2), flex: 1 },
+  vwHeaderRight: { flexDirection: 'row', gap: getWidth(8) },
+  vwHeaderbtn: {
+    backgroundColor: Colors.white,
+    borderRadius: 20,
+    height: getHeight(36),
+    aspectRatio: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  vwHeaderText: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  vwEmpty: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: getHeight(24),
+  },
+  vwMain: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: getWidth(15),
+    backgroundColor: Colors.white,
+    paddingHorizontal: getWidth(12),
+    paddingBottom: getWidth(10),
+  },
+  lblHeaderTitle: {
+    color: Colors.gray0F,
+    fontSize: fontSize.size24,
+    fontFamily: fontsfamily.bold,
+  },
+  emptyTitle: {
+    color: Colors.gray0F,
+    fontSize: fontSize.size24,
+    fontFamily: fontsfamily.bold,
+    textAlign: 'center',
+  },
+  emptySubtitle: {
+    color: Colors.gray55,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
+    textAlign: 'center',
+  },
+  lblLatestValue: {
+    color: Colors.gray0F,
+    fontSize: fontSize.size20,
+    fontFamily: fontsfamily.bold,
+  },
+});

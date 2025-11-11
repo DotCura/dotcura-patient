@@ -1,8 +1,8 @@
-import {Alert, I18nManager, Platform, StatusBar} from 'react-native';
-import {getTranslation} from '../localization/i18n/i18n.config';
+import { Alert, I18nManager, Platform, StatusBar } from 'react-native';
+import { getTranslation } from '../localization/i18n/i18n.config';
 import emojiRegex from 'emoji-regex';
-import {showMessage} from 'react-native-flash-message';
-import {PlatformVersion} from './utils/Platform';
+import { showMessage } from 'react-native-flash-message';
+import { PlatformVersion } from './utils/Platform';
 import {
   checkMultiple,
   openSettings,
@@ -10,7 +10,7 @@ import {
   requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
-import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
+import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { Colors } from './Colors';
 import { fontsfamily } from './FontFamily';
 import { fontSize } from './FontSizes';
@@ -21,10 +21,12 @@ export const appName = getTranslation('appname') || 'DotCura';
 // RTL Support
 export const isRTLSupport = I18nManager.isRTL;
 
+export const currency = '€';
+
 // Image Transform
 export const imageTransform = isRTLSupport
-  ? [{rotate: '180deg'}]
-  : [{rotate: '0deg'}];
+  ? [{ rotate: '180deg' }]
+  : [{ rotate: '0deg' }];
 
 // Alert
 export const showAlert = (message: string) => {
@@ -38,7 +40,7 @@ export const currencySymbol = 'KWD';
 
 let flashMessageRef;
 
-export function setFlashMessageRef(ref:any) {
+export function setFlashMessageRef(ref: any) {
   flashMessageRef = ref;
 }
 
@@ -51,7 +53,7 @@ export const flashMessageSucess = (message: string | null) => {
     color: Colors.white,
     duration: 3000,
     icon: 'success',
-    iconProps: {tintColor: Colors.white},
+    iconProps: { tintColor: Colors.white },
     style: {
       marginTop: StatusBar.currentHeight,
       zIndex: 1,
@@ -135,7 +137,7 @@ export const checkPermission = (permission: any, message: string) => {
                     onPress: () => openSettings(),
                   },
                 ],
-                {cancelable: false},
+                { cancelable: false },
               );
             }
           });
@@ -154,7 +156,7 @@ export const checkPermission = (permission: any, message: string) => {
                 onPress: () => openSettings(),
               },
             ],
-            {cancelable: false},
+            { cancelable: false },
           );
           callback(false);
         } else {
@@ -250,4 +252,21 @@ export const formatDuration = (minutes: number): string => {
         : getTranslation('minTitle')
     }`;
   }
+};
+
+export const getInitials = (name: any) => {
+  const parts = name.trim().split(' ');
+  const first = parts[0]?.charAt(0).toUpperCase() || '';
+  return first;
+};
+
+export const getRandomTheme = () => {
+  const themes = [
+    { backgroundColor: '#FCD9DE', textColor: '#400D14' }, // 1. Pink tone
+    { backgroundColor: '#D9E7FC', textColor: '#0D1F40' }, // 2. Blue tone
+    { backgroundColor: '#D9FCE0', textColor: '#0D4018' }, // 3. Green tone
+  ];
+
+  const randomIndex = Math.floor(Math.random() * themes.length);
+  return themes[randomIndex];
 };
