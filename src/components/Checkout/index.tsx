@@ -2,8 +2,6 @@ import {
   FlatList,
   Image,
   ImageBackground,
-  ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -19,7 +17,8 @@ import { getTranslation } from '../../localization/i18n/i18n.config';
 import { Colors } from '../../constants/Colors';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { fontsfamily } from '../../constants/FontFamily';
-import { fontSize } from '../../constants/FontSizes';
+import CustomDropdown from '../../global/DropDown/CustomDropDown';
+import CustomButton from '../../global/Buttons';
 
 const CheckoutComponent = (props: any) => {
   return (
@@ -55,11 +54,12 @@ const CheckoutComponent = (props: any) => {
 
       {/* scrollContent */}
       <KeyboardAwareScrollView
+        style={{ flex: 1 }}
         contentContainerStyle={[
           constnatStyles.keyboardContainer,
           {
             paddingHorizontal: 0,
-            paddingBottom: getHeight(250),
+            paddingBottom: getHeight(130),
           },
         ]}
         showsVerticalScrollIndicator={false}
@@ -72,6 +72,24 @@ const CheckoutComponent = (props: any) => {
             {getTranslation('yourordersubtitle')}
           </Text>
         </View>
+
+        {/* dropdownfamilymember */}
+        <View style={{ marginTop: getHeight(24) }}>
+          <Text style={styles.lblwhodothetest}>
+            {getTranslation('whoshoulddotest')}
+          </Text>
+          <View style={{ marginTop: getHeight(6) }}>
+            <CustomDropdown
+              data={props.familyMemberData}
+              value={props.familymemberValue}
+              onChange={item => props.handleSetFamilyMember(item)}
+              placeholder={getTranslation('selectfamilymember') || ''}
+              dropdownPosition="auto"
+              isRenderLeftIcon={true}
+            />
+          </View>
+        </View>
+
         {/* vwkitList */}
         <View>
           <FlatList
@@ -87,7 +105,10 @@ const CheckoutComponent = (props: any) => {
               marginTop: getHeight(24),
             }}
           />
-          <TouchableOpacity style={styles.btnEdit}>
+          <TouchableOpacity
+            style={styles.btnEdit}
+            activeOpacity={activityOpacity}
+          >
             <Image source={images.pencilblue} />
             <Text style={styles.lblEdit}>{getTranslation('edit')}</Text>
           </TouchableOpacity>
@@ -98,25 +119,8 @@ const CheckoutComponent = (props: any) => {
           <Text style={styles.lblHomeService}>
             {getTranslation('homesevice')}
           </Text>
-          <View
-            style={{
-              backgroundColor: Colors.redFC,
-              padding: 4,
-              borderRadius: 20,
-              marginTop: getHeight(4),
-            }}
-          >
-            <View
-              style={{
-                flexDirection: 'row',
-                borderWidth: 2,
-                borderColor: Colors.redCA,
-                borderRadius: 20,
-                paddingVertical: getHeight(12),
-                paddingHorizontal: getWidth(16),
-                backgroundColor: Colors.white,
-              }}
-            >
+          <View style={styles.vwDateTimeMain}>
+            <View style={styles.vwDateTimeInner}>
               <View style={{ flex: 1 }}>
                 <Text style={styles.lblDateAndTime}>
                   {getTranslation('dateandtime')}
@@ -125,7 +129,10 @@ const CheckoutComponent = (props: any) => {
                   Domani entro le 10:00
                 </Text>
               </View>
-              <TouchableOpacity style={styles.btnAdd}>
+              <TouchableOpacity
+                style={styles.btnAdd}
+                activeOpacity={activityOpacity}
+              >
                 <Text style={styles.lblChnage}>{getTranslation('add')}</Text>
               </TouchableOpacity>
             </View>
@@ -135,13 +142,7 @@ const CheckoutComponent = (props: any) => {
         {/* vwAddress */}
         <ImageBackground
           source={images.imgAddessManager}
-          style={{
-            height: getHeight(167),
-            marginTop: getHeight(12),
-            borderRadius: 24,
-            padding: 16,
-            overflow: 'hidden',
-          }}
+          style={styles.vwImgBack}
         >
           <View
             style={{
@@ -156,7 +157,10 @@ const CheckoutComponent = (props: any) => {
                 Via Roma, 31 - Napoli
               </Text>
             </View>
-            <TouchableOpacity style={styles.btnChange}>
+            <TouchableOpacity
+              style={styles.btnChange}
+              activeOpacity={activityOpacity}
+            >
               <Text style={styles.lblChnage}>{getTranslation('change')}</Text>
             </TouchableOpacity>
           </View>
@@ -274,6 +278,30 @@ const CheckoutComponent = (props: any) => {
           </View>
         </View>
       </KeyboardAwareScrollView>
+      {/* Fixed Bottom Button */}
+      <View
+        style={{
+          position: 'absolute',
+          bottom: props.insets.bottom || 0,
+          left: 0,
+          right: 0,
+          marginHorizontal: getWidth(16),
+          gap: getHeight(8),
+        }}
+      >
+        <CustomButton
+          btnTitle={getTranslation('savechnages')}
+          // onPress={props.onProceedToPayment}
+        />
+        <CustomButton
+          btnTitle={getTranslation('canclebooking')}
+          style={{ backgroundColor: Colors.white }}
+          btnicon={true}
+          btnImage={images.imgDelete}
+          textStyle={{ color: Colors.red8C }}
+          // onPress={props.onProceedToPayment}
+        />
+      </View>
     </View>
   );
 };

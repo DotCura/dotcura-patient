@@ -1,12 +1,12 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
-import { FontFamily } from '../../constants/FontFamily';
-import { getHeight, getWidth } from '../../constants/StylesConstants';
-import { FontSize } from '../../constants/FontSize';
+import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { fontsfamily } from '../../constants/FontFamily';
+import { fontSize } from '../../constants/FontSizes';
 import { Colors } from '../../constants/Colors';
-import { ImageConstants } from '../../constants/ImageConstants';
-
+import { images } from '../../constants/Images';
+import { getInitialShortName } from '../../constants/GConstant';
 
 type BaseProps = {
   data: { label: string; value: string }[];
@@ -14,6 +14,7 @@ type BaseProps = {
   onChange: (val: any) => void;
   placeholder?: string;
   search?: boolean;
+  isRenderLeftIcon?: boolean;
   dropdownPosition?: 'auto' | 'top' | 'bottom';
   multiple?: boolean; // 👈 decide single vs multi
 };
@@ -23,9 +24,10 @@ const CustomDropdown: React.FC<BaseProps> = ({
   value,
   onChange,
   placeholder = 'Select item(s)',
-  search = true,
+  search = false,
   dropdownPosition = 'auto',
   multiple = false,
+  isRenderLeftIcon=false,
 }) => {
   if (multiple) {
     return (
@@ -55,14 +57,15 @@ const CustomDropdown: React.FC<BaseProps> = ({
       dropdownPosition={dropdownPosition}
       search={search}
       selectedTextStyle={{
-        fontFamily: FontFamily.SemiBold,
+        fontFamily: fontsfamily.regular,
+        fontSize: fontSize.size16,
+        color: Colors.gray0F,
         marginTop: getHeight(1),
       }}
       placeholderStyle={{
-        fontSize: FontSize.size18,
-        fontFamily: FontFamily.Regular,
-        color: Colors.black30,
-        marginTop:getHeight(4)
+        fontSize: fontSize.size16,
+        fontFamily: fontsfamily.regular,
+        color: Colors.gray75,
       }}
       selectedTextProps={{
         numberOfLines: 1,
@@ -70,18 +73,19 @@ const CustomDropdown: React.FC<BaseProps> = ({
       containerStyle={{
         backgroundColor: Colors.white,
         borderRadius: 10,
+          
       }}
       maxHeight={220}
-      itemContainerStyle={
-        {
-          // backgroundColor: 'pink',
-        }
-      }
-      itemTextStyle={{
-        fontSize: FontSize.size16,
-        color: Colors.black33,
+      itemContainerStyle={{
+        // backgroundColor: 'pink',
+        borderRadius: 10,
       }}
-      activeColor={Colors.grey5E}
+      itemTextStyle={{
+        fontSize: fontSize.size16,
+        color: Colors.gray0F,
+        fontFamily: fontsfamily.regular,
+      }}
+      activeColor={Colors.grayE7}
       inputSearchStyle={{
         height: 40,
         borderRadius: 10,
@@ -90,38 +94,64 @@ const CustomDropdown: React.FC<BaseProps> = ({
       searchPlaceholderTextColor={Colors.black}
       autoScroll={true}
       showsVerticalScrollIndicator={false}
+      
       renderLeftIcon={() => (
-        <View style={{flexDirection:'row'}}>
-          <Image
-            source={ImageConstants.imgEmail}
-            style={{ }}
-          />
-            <View
-          style={styles.verticalLine}
-        ></View>
+        isRenderLeftIcon &&
+        <View
+          style={{
+            height: getHeight(32),
+            aspectRatio: 1,
+            borderRadius: 799,
+            backgroundColor: Colors.grayE7,
+            marginRight: getWidth(8),
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              fontSize: fontSize.size13,
+              fontFamily: fontsfamily.regular,
+              letterSpacing: 0.1,
+              color: Colors.grayAD,
+            }}
+          >
+            {getInitialShortName(
+              data.find(item => item.value === value)?.label || '',
+            )}
+          </Text>
         </View>
       )}
-      renderRightIcon={() => <Image source={ImageConstants.imgArrowDown} style={{height:getHeight(25),aspectRatio:1}} />}
+      renderRightIcon={() => (
+        <Image
+          source={images.imgLeftArrow}
+          style={{
+            height: getHeight(20),
+            aspectRatio: 1,
+            transform: [{ rotate: '270deg' }],
+          }}
+        />
+      )}
     />
   );
 };
 
 const styles = StyleSheet.create({
-  verticalLine:{
+  verticalLine: {
     width: 1,
-    backgroundColor: Colors.black30,
+    backgroundColor: Colors.black,
     height: getHeight(34),
     alignSelf: 'center',
-    marginLeft:getWidth(16),
-    marginRight:getWidth(18)
+    marginLeft: getWidth(16),
+    marginRight: getWidth(18),
   },
   dropdown: {
-    height: getHeight(60),
-    borderRadius: 50,
-    paddingHorizontal: getWidth(27),
+    height: getHeight(56),
+    borderRadius: 12,
+    paddingHorizontal: getWidth(12),
     overflow: 'hidden',
-    borderWidth:1,
-    borderColor:Colors.black30
+    borderWidth: 2,
+    borderColor: Colors.grayD8,
   },
 });
 

@@ -5,6 +5,34 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  lblwhodothetest: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.medium,
+    letterSpacing: 0.1,
+    color: Colors.gray55,
+  },
+  vwImgBack: {
+    height: getHeight(167),
+    marginTop: getHeight(12),
+    borderRadius: 24,
+    padding: 16,
+    overflow: 'hidden',
+  },
+  vwDateTimeMain: {
+    backgroundColor: Colors.redFC,
+    padding: 4,
+    borderRadius: 20,
+    marginTop: getHeight(4),
+  },
+  vwDateTimeInner: {
+    flexDirection: 'row',
+    borderWidth: 2,
+    borderColor: Colors.redCA,
+    borderRadius: 20,
+    paddingVertical: getHeight(12),
+    paddingHorizontal: getWidth(16),
+    backgroundColor: Colors.white,
+  },
   vwInputDiscountInner: {
     flex: 1,
     margin: 0,

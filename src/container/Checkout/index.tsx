@@ -39,10 +39,19 @@ const CheckoutContainer = () => {
     },
   ];
 
+  const familymembers = [
+    { label: 'You', value: '1' },
+    { label: 'Maria', value: '2' },
+    { label: 'Pasquale', value: '3' },
+  ];
+
   const [testkitsData, setTestsKitData] = useState(testKits);
   const [manageAddress, setManageAddress] = useState('');
   const [discountCode, setDiscountCode] = useState('');
   const [discountValue, setDiscountValue] = useState(0);
+  const [familyMemberData,setFamilyMemberData] = useState(familymembers);
+  const [familymemberValue, setFamilyMemberValue] = useState<string | null>('1');
+  
 
   const homeServiceCharge = 20;
 
@@ -63,6 +72,10 @@ const CheckoutContainer = () => {
     } else {
       setDiscountValue(0);
     }
+  };
+
+  const handleSetFamilyMember = (item: any) => {
+    setFamilyMemberValue(item.value);
   };
 
   const onChnageManageAddress = (text: any) => {
@@ -107,6 +120,10 @@ const CheckoutContainer = () => {
       homeServiceCharge={homeServiceCharge}
       discountValue={discountValue}
       onChangeDiscountCode={onChangeDiscountCode}
+      setFamilyMemberValue={setFamilyMemberValue}
+      familymemberValue={familymemberValue}
+      familyMemberData={familyMemberData}
+      handleSetFamilyMember={handleSetFamilyMember}
     />
   );
 };

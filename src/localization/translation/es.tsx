@@ -146,7 +146,6 @@ export default {
   change:"Cambia",
   add:"Aggiungi",
   savechnages:"Salva modifiche",
-  canclebooking:"Salva modifiche",
   testincluded:"Analisi incluse:",
   homesevice:"Servizio a domicilio",
   dateandtime:"Data e ora",
@@ -161,6 +160,9 @@ export default {
   total:"Totale",
   haveyoucoupans:"Hai un codice sconto?",
   placholdercoupans:"AA00000",
+  whoshoulddotest:"Chi deve fare le analisi?",
+  selectfamilymember:"Selezionare chi dovrebbe eseguire i test",
+  canclebooking:"cancelar reserva",
 
 
   //ERROR
