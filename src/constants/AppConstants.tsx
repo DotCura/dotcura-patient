@@ -32,6 +32,8 @@ export const ScreenNames = {
   GETTESTEDCONTAINER: 'GetTestedContainer',
   YOURPROFILECONAINER: 'YourProfileContainer',
   BOTTOMTABNAVIGATION: 'BottomTabsNavigation',
+
+  KITDETAILSCONTAINER: 'KitDetailsContainer',
 };
 
 // <============================== IOS Condition ==============================>

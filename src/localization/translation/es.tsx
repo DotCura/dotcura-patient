@@ -79,6 +79,9 @@ export default {
     'Questo è un testo per spiegare i termini e le condizioni del servizio + tutta la questione del GDPR.',
   Enter: 'Entra',
 
+  //BOTTOMTAB
+  support:"Supporto",
+
   //PERMISSIONS
   allowTitle: 'Permitir',
   allowSubtitleForCamera:
@@ -101,15 +104,40 @@ export default {
   outdatedsubtitle:
     'L’ultimo rilievo é datato, prenota un analisi per tenere sotto controllo la tua glicemia.',
   latestvalue: 'Ultimi valori',
-  lastvalue:"Ultimo valore:",
-  recommandanalysis:"Analisi consigliate",
-  invitefriendtitle:"Invita un amico!",
-  invitefriendsubtitle:"Guadagna 5 euro di sconto sul prossimo ordine per ogni amico invitato su Dotcura.",
-  invitefriend:"Invita amico",
-  familymemberanlaysisvalue:"I valori dell’analisi di",
+  lastvalue: 'Ultimo valore:',
+  recommandanalysis: 'Analisi consigliate',
+  invitefriendtitle: 'Invita un amico!',
+  invitefriendsubtitle:
+    'Guadagna 5 euro di sconto sul prossimo ordine per ogni amico invitato su Dotcura.',
+  invitefriend: 'Invita amico',
+  familymemberanlaysisvalue: 'I valori dell’analisi di',
 
   //GETTESTED
-  kitavailable:"kit disponibili",
+  kitavailable: 'kit disponibili',
+
+  //KITDETAILS
+  analytesinthekit: 'Analiti nel kit',
+  betterinmorning: 'Meglio al mattino!',
+  betterinmorningsubtitle: 'I prelievi vanno fatti a stomaco vuoto.',
+  analytics: 'Analiti',
+  selectall: 'Aggiungi tutto',
+  desellectall: 'Deseleziona tutto',
+  usefullif: 'Utile se...',
+  howtoprepare: 'Come prepararsi',
+  usefullifsubtitle1: 'Ti senti spesso',
+  usefullifsubtitle2: 'stanco',
+  usefullifsubtitle3: ' debole',
+  usefullifsubtitle4: 'o',
+  usefullifsubtitle5: 'senza energie : ',
+  usefullifsubtitle6:
+    'con un’analisi del sangue puoi scoprire se hai l’anemia, capire la causa e intervenire subito con la cura giusta.',
+  howtopreparesubtitle1:"Presentati a digiuno da almeno",
+  howtopreparesubtitle2:" 8 ore ",
+  howtopreparesubtitle3:"(puoi bere solo acqua),",
+  howtopreparesubtitle4:"evita alcol e sforzi intensi",
+  howtopreparesubtitle5:" il giorno prima e cerca di riposare bene.",
+  gotocart:"Vai al carrello",
+
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',

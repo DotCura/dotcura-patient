@@ -17,6 +17,9 @@ export AllSetContainer from "./container/auth/AllSet";
 export WelcomeContainer from "./container/auth/Welcome";
 
 
+export KitDetailsContainer from "./container/KitDetails";
+
+
 
 
 

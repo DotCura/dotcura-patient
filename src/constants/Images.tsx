@@ -15,6 +15,7 @@ export const images = {
   imgUnFocusProfile: require('../assets/images/profile-inactive.png'),
   imgUnFocusGetTested: require('../assets/images/gettested-inactive.png'),
   imgUnFocusHome: require('../assets/images/Home-inactive.png'),
+  imgSupport: require('../assets/images/Call.png'),
 
   //HOME1
   imgCartHome: require('../assets/images/cart.png'),
@@ -27,6 +28,9 @@ export const images = {
   //GETTESTED
   imgSearchBlack: require('../assets/images/search.png'),
   imgClose: require('../assets/images/close.png'),
+
+  //KITDETAILS
+  addblue: require('../assets/images/plusBlue.png'),
 
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),

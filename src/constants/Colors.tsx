@@ -49,6 +49,7 @@ export const Colors = {
   goldenFD: '#FDF8E4',
   goldenF9: '#F9ECB6',
   goldeenF5:"#F5E294",
+  golden40:"#40360D",
   
   blackBlue04: '#040912',
 };
