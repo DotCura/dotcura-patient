@@ -12,7 +12,7 @@ LogBox.ignoreAllLogs();
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.BOTTOMTABNAVIGATION,
+    ScreenNames.CHECKOUTCONTAINER,
   );
   const flashMessageRef = useRef(null);
   setFlashMessageRef(flashMessageRef);

@@ -138,6 +138,30 @@ export default {
   howtopreparesubtitle5:" il giorno prima e cerca di riposare bene.",
   gotocart:"Vai al carrello",
 
+  //CHECKOUT
+  help:"Aiuto",
+  edit:"Modifica",
+  yourorder:"Il tuo ordine",
+  yourordersubtitle:"Controlla e procedi",
+  change:"Cambia",
+  add:"Aggiungi",
+  savechnages:"Salva modifiche",
+  canclebooking:"Salva modifiche",
+  testincluded:"Analisi incluse:",
+  homesevice:"Servizio a domicilio",
+  dateandtime:"Data e ora",
+  address:"Indirizzo",
+  additionalinstructions:"Instruzioni aggiuntive",
+  manageaddressplaceholder:"e.g. Citofonare Gargiulo",
+  discount:"Sconto",
+  service:"Servizio a domicilio",
+  subtotal:"Subtotale",
+  summarytitle:"Sommario",
+  summarysubtitle:"IVA inclusa",
+  total:"Totale",
+  haveyoucoupans:"Hai un codice sconto?",
+  placholdercoupans:"AA00000",
+
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',

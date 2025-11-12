@@ -31,6 +31,10 @@ export const images = {
 
   //KITDETAILS
   addblue: require('../assets/images/plusBlue.png'),
+  pencilblue: require('../assets/images/pencilBlue.png'),
+
+  //CHECKOUT
+  imgAddessManager: require('../assets/images/Addressmanager.png'),
 
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),

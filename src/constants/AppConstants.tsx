@@ -34,6 +34,7 @@ export const ScreenNames = {
   BOTTOMTABNAVIGATION: 'BottomTabsNavigation',
 
   KITDETAILSCONTAINER: 'KitDetailsContainer',
+  CHECKOUTCONTAINER: 'CheckoutContainer',
 };
 
 // <============================== IOS Condition ==============================>
