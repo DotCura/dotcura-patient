@@ -2,6 +2,7 @@ export const Colors = {
   white: '#FFFFFF',
   white36:"#FFFFFF5C",
   white64:"#FFFFFFA3",
+  white08:"#FFFFFF14",
 
   black:'#000000',
   black12: '#120F04',
@@ -27,6 +28,7 @@ export const Colors = {
   grey40:"#40360D",
   grey29:"#929298",
   greyf324:"#F3F3F53D",
+  greyC5:"#C5C5CB",
   
   greenD9: '#D9FCE0',
   green0D: '#0D4018',

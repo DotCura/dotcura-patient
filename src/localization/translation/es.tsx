@@ -167,6 +167,10 @@ export default {
   selectfamilymember:"Selezionare chi dovrebbe eseguire i test",
   canclebooking:"cancelar reserva",
 
+  //ORDERSTATYS
+  ordersent:"Ordine inviato",
+  ordersentsubtitle:"La tua richiesta é stata registrata.Stiamo cercando un infermiere per te...",
+  editorder:"Modifica ordine",
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',

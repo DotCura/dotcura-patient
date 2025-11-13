@@ -7,25 +7,33 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './src/localization/i18n/i18n.config';
 import FlashMessage from 'react-native-flash-message';
 import { setFlashMessageRef } from './src/constants/GConstant';
+import AppLayout from './src/global/AppLayout';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 LogBox.ignoreAllLogs();
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.CHECKOUTCONTAINER,
+    ScreenNames.BOTTOMTABNAVIGATION,
   );
+  const [isOrderPlaced] = useState(true);
+
   const flashMessageRef = useRef(null);
   setFlashMessageRef(flashMessageRef);
 
   return (
-    <KeyboardProvider statusBarTranslucent>
-      <I18nextProvider i18n={i18n}>
-        <View style={{ flex: 1 }}>
-          <MainNavigation initialRouteName={initialRouteName} />
-        </View>
-        <FlashMessage ref={flashMessageRef} position="top" floating={true} />
-      </I18nextProvider>
-    </KeyboardProvider>
+    <SafeAreaProvider>
+      <KeyboardProvider statusBarTranslucent>
+        <I18nextProvider i18n={i18n}>
+          <View style={{ flex: 1 }}>
+            <AppLayout isOrderPlaced={isOrderPlaced}>
+              <MainNavigation initialRouteName={initialRouteName} />
+            </AppLayout>
+          </View>
+          <FlashMessage ref={flashMessageRef} position="top" floating={true} />
+        </I18nextProvider>
+      </KeyboardProvider>
+    </SafeAreaProvider>
   );
 };
 

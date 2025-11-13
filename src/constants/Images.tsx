@@ -36,6 +36,9 @@ export const images = {
   //CHECKOUT
   imgAddessManager: require('../assets/images/Addressmanager.png'),
 
+  // APPLAYOUT
+  imgStepper: require('../assets/images/Stepper.png'),
+
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),
 };
