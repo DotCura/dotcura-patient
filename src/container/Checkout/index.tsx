@@ -1,12 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useMemo, useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
 import CheckoutComponent from '../../components/Checkout';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
-import { currency } from '../../constants/GConstant';
+import { activityOpacity, currency } from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
+import { images } from '../../constants/Images';
+import { getWidth } from '../../constants/utils/Dimensions';
 
-const CheckoutContainer = () => {
+const CheckoutContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
   const testKits = [
     {
@@ -49,9 +51,22 @@ const CheckoutContainer = () => {
   const [manageAddress, setManageAddress] = useState('');
   const [discountCode, setDiscountCode] = useState('');
   const [discountValue, setDiscountValue] = useState(0);
-  const [familyMemberData,setFamilyMemberData] = useState(familymembers);
-  const [familymemberValue, setFamilyMemberValue] = useState<string | null>('1');
-  
+  const [familyMemberData, setFamilyMemberData] = useState(familymembers);
+  const [familymemberValue, setFamilyMemberValue] = useState<string | null>(
+    '1',
+  );
+  const [showPicker, setShowPicker] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState<{ day: string; time: string } | null>(null);
+  const [selectedDate, setSelectedDate] = useState('Oggi');
+const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
+
+const handleBookSlot = () => {
+  if (selectedDate && selectedTime) {
+    setSelectedSlot({ day: selectedDate, time: selectedTime });
+    setShowPicker(false);
+  }
+};
+
 
   const homeServiceCharge = 20;
 
@@ -105,6 +120,44 @@ const CheckoutContainer = () => {
     );
   };
 
+  const header = () => {
+    navigation.setOptions({
+      header: () => (
+        <View style={{ }}>
+          <View style={[styles.vwMain, { paddingTop: insets.top + 10 }]}>
+            <View style={styles.vwHeaderLeft}>
+              <TouchableOpacity
+                activeOpacity={activityOpacity}
+                style={styles.btnBack}
+                // onPress={startBtnOnPress}
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.vwHelp}
+                activeOpacity={activityOpacity}
+              >
+                <Image source={images.imgHelp} />
+                <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity
+              style={styles.vwSave}
+              activeOpacity={activityOpacity}
+            >
+              <Text style={styles.lblSave}>{getTranslation('edit')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ),
+    });
+  };
+
+  useEffect(() => {
+    header();
+  }, []);
+
   return (
     <CheckoutComponent
       insets={insets}
@@ -124,6 +177,14 @@ const CheckoutContainer = () => {
       familymemberValue={familymemberValue}
       familyMemberData={familyMemberData}
       handleSetFamilyMember={handleSetFamilyMember}
+      showPicker={showPicker}
+      setShowPicker={setShowPicker}
+      selectedSlot={selectedSlot}
+      selectedDate={selectedDate}
+      selectedTime={selectedTime}
+      setSelectedDate={setSelectedDate}
+      setSelectedTime={setSelectedTime}
+      onBookSlot={handleBookSlot}
     />
   );
 };

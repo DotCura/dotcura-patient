@@ -82,6 +82,9 @@ export default {
   //BOTTOMTAB
   support:"Supporto",
 
+  //BOOKING ANALYSIS 
+  bookanlaysis:"Prenota analisi",
+
   //PERMISSIONS
   allowTitle: 'Permitir',
   allowSubtitleForCamera:

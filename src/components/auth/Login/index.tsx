@@ -18,34 +18,34 @@ const LoginComponent = (props: any) => {
       bounces={false}
       showsVerticalScrollIndicator={false}
     >
-      <View style={{flex:1}}>
-      {/* HeaderView */}
-      <View style={styles.vwHeader}>
-        <TitleSubtitle
-          title={getTranslation('logintitle')}
-          subtitle={getTranslation('loginsubtitle')}
-        />
-      </View>
+      <View style={{ flex: 1 }}>
+        {/* HeaderView */}
+        <View style={styles.vwHeader}>
+          <TitleSubtitle
+            title={getTranslation('logintitle')}
+            subtitle={getTranslation('loginsubtitle')}
+          />
+        </View>
 
-      {/* inputView */}
-      <View style={styles.vwInput}>
-        <PrimaryTitleMoblieNumber
-          blur={false}
-          label={getTranslation('moblieno')}
-          value={props.phoneNumber}
-          onChangeFun={(text: any) => props.changeInput('Phone Number', text)}
-          maxLength={ValidationConstant.maxMobileDigit}
-          callingCode={props.callingCode}
-          setCallingCode={props.setCallingCode}
-          refs={props.moblieNoRef}
-          inputLabel={getTranslation('moblieno')}
-          errorMessage={props.phoneNumberError}
-          setErrorMessage={props.setPhoneNumberError}
-          leftIcon={false}
-          isBorder={false}
-          placHolderLabel={"333 000 000"}
-        />
-      </View>
+        {/* inputView */}
+        <View style={styles.vwInput}>
+          <PrimaryTitleMoblieNumber
+            blur={false}
+            label={getTranslation('moblieno')}
+            value={props.phoneNumber}
+            onChangeFun={(text: any) => props.changeInput('Phone Number', text)}
+            maxLength={ValidationConstant.maxMobileDigit}
+            callingCode={props.callingCode}
+            setCallingCode={props.setCallingCode}
+            refs={props.moblieNoRef}
+            inputLabel={getTranslation('moblieno')}
+            errorMessage={props.phoneNumberError}
+            setErrorMessage={props.setPhoneNumberError}
+            leftIcon={false}
+            isBorder={false}
+            placHolderLabel={'333 000 000'}
+          />
+        </View>
       </View>
 
       {/* vwBottomBtn */}

@@ -2,12 +2,14 @@ import {
   FlatList,
   Image,
   ImageBackground,
+  Modal,
+  Pressable,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { constnatStyles } from '../../constants/Styles';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { styles } from './styles';
@@ -19,51 +21,20 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { fontsfamily } from '../../constants/FontFamily';
 import CustomDropdown from '../../global/DropDown/CustomDropDown';
 import CustomButton from '../../global/Buttons';
+import TimeSlotPicker from '../../global/TimeSlotPicker';
 
 const CheckoutComponent = (props: any) => {
   return (
-    <View style={[constnatStyles.vwContainer]}>
-      {/* vwHeader */}
-      <View style={{}}>
-        <View style={[styles.vwMain, { paddingTop: props.insets.top + 10 }]}>
-          <View style={styles.vwHeaderLeft}>
-            <TouchableOpacity
-              activeOpacity={activityOpacity}
-              style={styles.btnBack}
-              onPress={props.startBtnOnPress}
-            >
-              <Image source={images.imgLeftArrow} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.vwHelp}
-              activeOpacity={activityOpacity}
-            >
-              <Image source={images.imgHelp} />
-              <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity
-            style={styles.vwSave}
-            activeOpacity={activityOpacity}
-          >
-            <Text style={styles.lblSave}>{getTranslation('edit')}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* scrollContent */}
+    <>
       <KeyboardAwareScrollView
-        style={{ flex: 1 }}
         contentContainerStyle={[
           constnatStyles.keyboardContainer,
           {
-            paddingHorizontal: 0,
-            paddingBottom: getHeight(130),
+            paddingBottom: getHeight(200),
           },
         ]}
+        bounces={false}
         showsVerticalScrollIndicator={false}
-        nestedScrollEnabled={true}
       >
         {/* vwHeaderTitle */}
         <View style={{ marginTop: getHeight(24) }}>
@@ -126,14 +97,22 @@ const CheckoutComponent = (props: any) => {
                   {getTranslation('dateandtime')}
                 </Text>
                 <Text style={styles.lblDateAndTimeValue}>
-                  Domani entro le 10:00
+                  {props.selectedSlot
+                    ? `${props.selectedSlot.day} ${props.selectedSlot.time}`
+                    : 'Domani entro le 10:00'}
                 </Text>
               </View>
               <TouchableOpacity
                 style={styles.btnAdd}
                 activeOpacity={activityOpacity}
+                onPress={() => props.setShowPicker(true)} // 👈 open picker modal
               >
-                <Text style={styles.lblChnage}>{getTranslation('add')}</Text>
+                <Text style={styles.lblChnage}>
+                  {' '}
+                  {props.selectedSlot
+                    ? getTranslation('change')
+                    : getTranslation('add')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -278,17 +257,9 @@ const CheckoutComponent = (props: any) => {
           </View>
         </View>
       </KeyboardAwareScrollView>
-      {/* Fixed Bottom Button */}
-      <View
-        style={{
-          position: 'absolute',
-          bottom: props.insets.bottom || 0,
-          left: 0,
-          right: 0,
-          marginHorizontal: getWidth(16),
-          gap: getHeight(8),
-        }}
-      >
+
+      {/* bottom button */}
+      <View style={[styles.vwBottomBtn, { bottom: props.insets.bottom }]}>
         <CustomButton
           btnTitle={getTranslation('savechnages')}
           // onPress={props.onProceedToPayment}
@@ -302,7 +273,85 @@ const CheckoutComponent = (props: any) => {
           // onPress={props.onProceedToPayment}
         />
       </View>
-    </View>
+
+      {/* datetimeslotmodel */}
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={props.showPicker}
+        statusBarTranslucent={true}
+        onRequestClose={() => props.setShowPicker(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#00000060',
+          }}
+        >
+          <Pressable
+            style={{ flex: 1 }}
+            onPress={() => props.setShowPicker(false)}
+          />
+
+          <View
+            style={{
+              backgroundColor: Colors.white,
+              borderTopLeftRadius: getHeight(20),
+              borderTopRightRadius: getHeight(20),
+              maxHeight: '60%',
+            }}
+          >
+            {/* Header */}
+            <View style={styles.vwHeadingLine} />
+            <View style={[styles.vwMainModelHeader]}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                // onPress={props.startBtnOnPress}
+                onPress={() => props.setShowPicker(false)} // close modal
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+
+              <View>
+                <Text
+                  style={[
+                    constnatStyles.lblHeaderTitle,
+                    {
+                      letterSpacing: 0.2,
+                    },
+                  ]}
+                  numberOfLines={2}
+                >
+                  {getTranslation('bookanlaysis')}
+                </Text>
+              </View>
+
+              <Image source={images.imgDelete} style={{ opacity: 0 }} />
+            </View>
+
+            <TimeSlotPicker
+              selectedDate={props.selectedDate}
+              selectedTime={props.selectedTime}
+              onDateChange={props.setSelectedDate}
+              onTimeChange={props.setSelectedTime}
+              showPicker={props.showPicker}
+            />
+            <View
+              style={{
+                marginTop: getHeight(32),
+                marginHorizontal: getWidth(16),
+                marginBottom: props.insets.bottom + getHeight(16),
+              }}
+            >
+              <CustomButton
+                btnTitle={getTranslation('booktext')}
+                btnPress={props.onBookSlot}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };
 

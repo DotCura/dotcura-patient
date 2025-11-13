@@ -5,6 +5,13 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  vwBottomBtn: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    marginHorizontal: getWidth(16),
+    gap: getHeight(8),
+  },
   lblwhodothetest: {
     fontSize: fontSize.size14,
     fontFamily: fontsfamily.medium,
@@ -101,6 +108,15 @@ export const styles = StyleSheet.create({
   vwHeaderLeft: {
     flexDirection: 'row',
     gap: getWidth(8),
+  },
+  vwMainModelHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: getWidth(15),
+    marginTop: getHeight(5),
+    marginHorizontal: getWidth(12),
+    paddingBottom: getWidth(10),
   },
   vwMain: {
     flexDirection: 'row',
@@ -264,5 +280,25 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.medium,
     color: Colors.blue17,
+  },
+  //model
+  overlay: {
+    flex: 1,
+    backgroundColor: '#0F0F0F99',
+    justifyContent: 'flex-end',
+  },
+  modalContainer: {
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: 34,
+    borderTopRightRadius: 34,
+    height: '50%',
+  },
+  vwHeadingLine: {
+    height: getHeight(4),
+    width: getWidth(40),
+    backgroundColor: Colors.grayED,
+    borderRadius: 10,
+    alignSelf: 'center',
+    marginTop: getHeight(6),
   },
 });
