@@ -172,6 +172,10 @@ export default {
   ordersentsubtitle:"La tua richiesta é stata registrata.Stiamo cercando un infermiere per te...",
   editorder:"Modifica ordine",
 
+  //YOURPROFILE
+  searchprofile:"Cerca",
+  latestanalysis:"Ultime analisi",
+
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',
   errorMessageInvalidOtp: 'Código OTP no válido',
