@@ -1,5 +1,5 @@
-import UsertypeStore from "./userType";
+import OrderstatusStore from './orderStatus';
 
 export const ZustandStores = {
-    UsertypeStore
-}
+  OrderstatusStore,
+};

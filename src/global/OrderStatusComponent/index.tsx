@@ -8,7 +8,7 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 
-const OrderStatusComponent = () => {
+const OrderStatusComponent = (props: any) => {
   const insets = useSafeAreaInsets();
   const [showBigView, setShowBigView] = useState(false);
 
@@ -38,7 +38,11 @@ const OrderStatusComponent = () => {
           <View style={styles.headerRow}>
             <View style={{ flex: 1 }}>
               <Text style={styles.titleOrderStatus}>
-                {getTranslation('ordersent')}
+                {props.orderStatus === 'order_sent'
+                  ? getTranslation('ordersent')
+                  : props.orderStatus === 'order_confirm'
+                  ? 'orderconfirm'
+                  : null}
               </Text>
               <Text style={styles.titleOrderStatusDes}>
                 {getTranslation('ordersentsubtitle')}

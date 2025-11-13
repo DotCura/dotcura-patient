@@ -6,10 +6,17 @@ import { styles } from './styles';
 import { activityOpacity, currency } from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { images } from '../../constants/Images';
-import { getWidth } from '../../constants/utils/Dimensions';
+import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { ZustandStores } from '../../store';
+import { ScreenNames } from '../../constants/AppConstants';
+import RNRestart from 'react-native-restart';
 
 const CheckoutContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+  const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
+  console.log("orderStatus in CheckoutContainer.tsx:", orderStatus);
+  
+
   const testKits = [
     {
       id: '1',
@@ -56,17 +63,19 @@ const CheckoutContainer = ({ navigation }: any) => {
     '1',
   );
   const [showPicker, setShowPicker] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState<{ day: string; time: string } | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<{
+    day: string;
+    time: string;
+  } | null>(null);
   const [selectedDate, setSelectedDate] = useState('Oggi');
-const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
+  const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
 
-const handleBookSlot = () => {
-  if (selectedDate && selectedTime) {
-    setSelectedSlot({ day: selectedDate, time: selectedTime });
-    setShowPicker(false);
-  }
-};
-
+  const handleBookSlot = () => {
+    if (selectedDate && selectedTime) {
+      setSelectedSlot({ day: selectedDate, time: selectedTime });
+      setShowPicker(false);
+    }
+  };
 
   const homeServiceCharge = 20;
 
@@ -120,11 +129,23 @@ const handleBookSlot = () => {
     );
   };
 
+  const handleOnPressSaveChanges = () => {
+    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION);
+    setOrderStatus('order_sent');
+  };
+
   const header = () => {
     navigation.setOptions({
       header: () => (
-        <View style={{ }}>
-          <View style={[styles.vwMain, { paddingTop: insets.top + 10 }]}>
+        <View style={{}}>
+          <View
+            style={[
+              styles.vwMain,
+              {
+                paddingTop: orderStatus == '' ? insets.top + 10 : getHeight(25),
+              },
+            ]}
+          >
             <View style={styles.vwHeaderLeft}>
               <TouchableOpacity
                 activeOpacity={activityOpacity}
@@ -185,6 +206,7 @@ const handleBookSlot = () => {
       setSelectedDate={setSelectedDate}
       setSelectedTime={setSelectedTime}
       onBookSlot={handleBookSlot}
+      handleOnPressSaveChanges={handleOnPressSaveChanges}
     />
   );
 };

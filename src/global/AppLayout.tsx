@@ -5,7 +5,7 @@ import { Colors } from '../constants/Colors';
 
 interface AppLayoutProps {
   children: ReactNode;
-  isOrderPlaced: boolean;
+  isOrderPlaced: string;
 }
 
 const AppLayout = ({ children, isOrderPlaced }: AppLayoutProps) => {
@@ -14,7 +14,7 @@ const AppLayout = ({ children, isOrderPlaced }: AppLayoutProps) => {
       {/* Header / Order Status */}
       {isOrderPlaced && (
         <View>
-          <OrderStatusComponent />
+          <OrderStatusComponent orderStatus={isOrderPlaced}/>
         </View>
       )}
 

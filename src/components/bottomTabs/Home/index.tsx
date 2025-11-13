@@ -23,6 +23,7 @@ import { activityOpacity, getInitials } from '../../../constants/GConstant';
 import { fontsfamily } from '../../../constants/FontFamily';
 import { fontSize } from '../../../constants/FontSizes';
 import BarChartComponent from '../../../global/BloodCountGraph';
+import { ZustandStores } from '../../../store';
 
 {
   /* veEmpty */
@@ -47,6 +48,7 @@ import BarChartComponent from '../../../global/BloodCountGraph';
 }
 
 const HomeComponent = (props: any) => {
+  const {orderStatus} = ZustandStores.OrderstatusStore();
   return (
     <View
       style={[
@@ -58,7 +60,7 @@ const HomeComponent = (props: any) => {
     >
       {/* vwHeader */}
       <View style={{ marginHorizontal: getWidth(16) }}>
-        <View style={[styles.vwMain, { paddingTop: props.insets.top + 10 }]}>
+        <View style={[styles.vwMain, { paddingTop: orderStatus == '' ? props.insets.top + 10 : getHeight(25) }]}>
           <View style={styles.vwHeaderText}>
             <Text style={styles.lblHeaderTitle} numberOfLines={1}>
               Hello Giovanni!

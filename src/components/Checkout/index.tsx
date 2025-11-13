@@ -262,7 +262,7 @@ const CheckoutComponent = (props: any) => {
       <View style={[styles.vwBottomBtn, { bottom: props.insets.bottom }]}>
         <CustomButton
           btnTitle={getTranslation('savechnages')}
-          // onPress={props.onProceedToPayment}
+          btnPress={props.handleOnPressSaveChanges}
         />
         <CustomButton
           btnTitle={getTranslation('canclebooking')}
