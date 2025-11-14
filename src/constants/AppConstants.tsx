@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import KitAnalysisComponent from '../components/KitAnlaysis';
 
 // <============================== App State Keys ==============================>
 
@@ -24,8 +25,8 @@ export const ScreenNames = {
   COMPLETEPROFILECONTAINER: 'CompleteProfileContainer',
   INFOATIONCONASATNTCONTAINER: 'InformationConasantContainer',
   ADDCARDCONTAINER: 'AddCardContainer',
-  WELCOMECONTAINER: "WelcomeContainer",
-  ALLSETCONATINER: "AllSetContainer",
+  WELCOMECONTAINER: 'WelcomeContainer',
+  ALLSETCONATINER: 'AllSetContainer',
 
   //BOTTOMTAB
   HOMECONTAINER: 'HomeContainer',
@@ -35,7 +36,8 @@ export const ScreenNames = {
 
   KITDETAILSCONTAINER: 'KitDetailsContainer',
   CHECKOUTCONTAINER: 'CheckoutContainer',
-  ORDERHISTORYCONTAINER:"OrderHistoryContainer",
+  ORDERHISTORYCONTAINER: 'OrderHistoryContainer',
+  KITANALYSISCONTAINER: 'KitAnalysisContainer',
 };
 
 // <============================== IOS Condition ==============================>

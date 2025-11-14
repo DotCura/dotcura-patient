@@ -219,6 +219,7 @@ const OrderHistoryContainer = ({ navigation }: any) => {
   useEffect(() => {
     header();
   }, []);
+  
   return (
     <OrderHistoryComponent
       insets={insets}

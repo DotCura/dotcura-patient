@@ -66,7 +66,16 @@ const MainNavigation = props => {
 
         {_addScreen(ScreenNames.KITDETAILSCONTAINER, {}, { headerShown: true })}
         {_addScreen(ScreenNames.CHECKOUTCONTAINER, {}, { headerShown: true })}
-        {_addScreen(ScreenNames.ORDERHISTORYCONTAINER, {}, { headerShown: true })}
+        {_addScreen(
+          ScreenNames.ORDERHISTORYCONTAINER,
+          {},
+          { headerShown: true },
+        )}
+        {_addScreen(
+          ScreenNames.KITANALYSISCONTAINER,
+          {},
+          { headerShown: false },
+        )}
       </Stack.Navigator>
     );
   };

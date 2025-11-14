@@ -42,7 +42,10 @@ export const images = {
   //YOURPROFILE
   imgStarFill: require('../assets/images/Staricon.png'),
   imgNurseUser: require('../assets/images/nurseuser.png'),
-
+  
+  imgLebo: require('../assets/images/leboratry.png'),
+  imgCalender:require('../assets/images/calender.png'),
+  imgfolder:require('../assets/images/folder.png')
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),
 };

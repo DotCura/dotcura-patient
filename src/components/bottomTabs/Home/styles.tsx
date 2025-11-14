@@ -5,6 +5,7 @@ import { fontsfamily } from '../../../constants/FontFamily';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
+  
   lblFirstChar:{
     color: Colors.grey29,
     fontFamily: fontsfamily.regular,
