@@ -175,6 +175,10 @@ export default {
   //YOURPROFILE
   searchprofile:"Cerca",
   latestanalysis:"Ultime analisi",
+  seeall:"Vedi tutte",
+  waitingforresultof:"Waiting for results of:",
+  appointmentbook:"Appointment booked",
+  orderhistory:"Storico ordini",
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',

@@ -39,6 +39,10 @@ export const images = {
   // APPLAYOUT
   imgStepper: require('../assets/images/Stepper.png'),
 
+  //YOURPROFILE
+  imgStarFill: require('../assets/images/Staricon.png'),
+  imgNurseUser: require('../assets/images/nurseuser.png'),
+
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),
 };

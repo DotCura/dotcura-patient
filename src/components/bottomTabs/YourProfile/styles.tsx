@@ -5,6 +5,44 @@ import { fontSize } from '../../../constants/FontSizes';
 import { fontsfamily } from '../../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  lblWaitingForResult: {
+    color: Colors.gray0F,
+    fontSize: fontSize.size20,
+    fontFamily: fontsfamily.bold,
+  },
+  textinputsearch: {
+    margin: 0,
+    padding: 0,
+    flex: 1,
+    color: Colors.gray0F,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
+  },
+  vwTextinputIcon: {
+    backgroundColor: Colors.white,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    paddingHorizontal: getWidth(12),
+    height: getHeight(36),
+    alignItems: 'center',
+    borderRadius: 999,
+    elevation: 4,
+    flex: 1,
+    flexDirection: 'row',
+    gap: getWidth(8),
+  },
+  btnClose: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.grayED,
+    padding: 8,
+    borderRadius: 20,
+  },
   vwMain: {
     flexDirection: 'row',
     alignItems: 'center',

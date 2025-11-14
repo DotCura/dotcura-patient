@@ -14,8 +14,7 @@ import RNRestart from 'react-native-restart';
 const CheckoutContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  console.log("orderStatus in CheckoutContainer.tsx:", orderStatus);
-  
+  console.log('orderStatus in CheckoutContainer.tsx:', orderStatus);
 
   const testKits = [
     {
@@ -142,7 +141,7 @@ const CheckoutContainer = ({ navigation }: any) => {
             style={[
               styles.vwMain,
               {
-                paddingTop: orderStatus == '' ? insets.top + 10 : getHeight(25),
+                paddingTop: orderStatus =='' ? insets.top + 10 : getHeight(25),
               },
             ]}
           >

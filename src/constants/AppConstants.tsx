@@ -35,6 +35,7 @@ export const ScreenNames = {
 
   KITDETAILSCONTAINER: 'KitDetailsContainer',
   CHECKOUTCONTAINER: 'CheckoutContainer',
+  ORDERHISTORYCONTAINER:"OrderHistoryContainer",
 };
 
 // <============================== IOS Condition ==============================>

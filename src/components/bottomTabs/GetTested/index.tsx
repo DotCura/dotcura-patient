@@ -18,8 +18,10 @@ import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { Colors } from '../../../constants/Colors';
 import { fontSize } from '../../../constants/FontSizes';
 import { fontsfamily } from '../../../constants/FontFamily';
+import { ZustandStores } from '../../../store';
 
 const GetTestedComponent = (props: any) => {
+  const {orderStatus} = ZustandStores.OrderstatusStore();
   return (
     <View
       style={[
@@ -30,7 +32,8 @@ const GetTestedComponent = (props: any) => {
       {/* vwHeader */}
       <View style={{ paddingHorizontal: getWidth(16) }}>
         {props.searchVisible ? null : (
-          <View style={[styles.vwMain, { paddingTop: props.insets.top + 10 }]}>
+          <View style={[styles.vwMain, {paddingTop:
+            orderStatus =='' ? props.insets.top + 10 : getHeight(25),}]}>
             <View style={styles.vwHeaderText}>
               <Text style={styles.lblHeaderTitle} numberOfLines={1}>
                 {props.kitCount} {getTranslation('kitavailable')}
@@ -63,7 +66,8 @@ const GetTestedComponent = (props: any) => {
           </View>
         )}
         {props.searchVisible ? (
-          <View style={[styles.vwMain, { paddingTop: props.insets.top + 10 }]}>
+          <View style={[styles.vwMain, { paddingTop:
+            orderStatus ? props.insets.top + 10 : getHeight(25), }]}>
             <View style={styles.vwTextinputIcon}>
               <Image source={images.imgSearchBlack} />
               <TextInput

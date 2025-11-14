@@ -1,11 +1,534 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 import YourProfileComponent from '../../../components/bottomTabs/YourProfile';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { styles } from './styles';
+import { activityOpacity } from '../../../constants/GConstant';
+import { getTranslation } from '../../../localization/i18n/i18n.config';
+import { images } from '../../../constants/Images';
+import { Colors } from '../../../constants/Colors';
+import {
+  getHeight,
+  getWidth,
+  ScreenDimensions,
+} from '../../../constants/utils/Dimensions';
+import VerticalBarChartProfile from '../../../global/VerticalBarChartProfile';
 
-const YourProfileContainer = () => {
+const YourProfileContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
-  return <YourProfileComponent insets={insets} />;
+  const analysisArray = [
+    {
+      id: '1',
+      reportname: 'Diabetes',
+      date: '8/8/2025',
+    },
+    {
+      id: '2',
+      reportname: 'Anemia',
+      date: '8/8/2025',
+    },
+    {
+      id: '3',
+      reportname: 'Diabetes',
+      date: '8/8/2025',
+    },
+    {
+      id: '4',
+      reportname: 'Anemia',
+      date: '8/8/2025',
+    },
+    {
+      id: '5',
+      reportname: 'Anemia',
+      date: '8/8/2025',
+    },
+    {
+      id: '6',
+      reportname: 'Diabetes',
+      date: '8/8/2025',
+    },
+    {
+      id: '7',
+      reportname: 'Anemia',
+      date: '8/8/2025',
+    },
+  ];
+
+  const userReport = [
+    {
+      id: '1',
+      chartData: [
+        { value: 1800, date: 'Set 23', color: Colors.goldenCA },
+        { value: 0.14, date: 'Set 24', color: Colors.redCA },
+        { value: 0.1, date: 'Dic 24', color: Colors.goldenCA },
+        { value: 0.26, date: 'Gen 25', color: Colors.goldenCA },
+        { value: 0.37, date: 'Set 25', color: Colors.goldenCA },
+      ],
+      maxvalue: 0.54,
+      minvalue: 0.14,
+      reporttitle: 'Glicemia',
+      reportlastValue: 0.37,
+      status: '',
+    },
+    {
+      id: '2',
+      chartData: [
+        { value: 1800, date: 'Set 23', color: Colors.goldenCA },
+        { value: 0.14, date: 'Set 24', color: Colors.redCA },
+        { value: 0.1, date: 'Dic 24', color: Colors.goldenCA },
+        { value: 0.26, date: 'Gen 25', color: Colors.goldenCA },
+        { value: 0.37, date: 'Set 25', color: Colors.goldenCA },
+      ],
+      maxvalue: 0.54,
+      minvalue: 0.14,
+      reporttitle: 'Emoglobulina A2',
+      reportlastValue: 0.37,
+      status: 'Nuovo',
+    },
+    {
+      id: '3',
+      chartData: [
+        { value: 1800, date: 'Set 23', color: Colors.goldenCA },
+        { value: 0.14, date: 'Set 24', color: Colors.redCA },
+        { value: 0.1, date: 'Dic 24', color: Colors.goldenCA },
+        { value: 0.26, date: 'Gen 25', color: Colors.goldenCA },
+        { value: 0.37, date: 'Set 25', color: Colors.goldenCA },
+      ],
+      maxvalue: 0.54,
+      minvalue: 0.14,
+      reporttitle: 'Creatininemia',
+      reportlastValue: 0.37,
+      status: 'Dati non aggiornati',
+    },
+    {
+      id: '4',
+      chartData: [
+        { value: 1800, date: 'Set 23', color: Colors.goldenCA },
+        { value: 0.14, date: 'Set 24', color: Colors.redCA },
+        { value: 0.1, date: 'Dic 24', color: Colors.goldenCA },
+        { value: 0.26, date: 'Gen 25', color: Colors.goldenCA },
+        { value: 0.37, date: 'Set 25', color: Colors.goldenCA },
+      ],
+      maxvalue: 0.54,
+      minvalue: 0.14,
+      reporttitle: 'Ferritina',
+      reportlastValue: 0.37,
+      status: 'Nuovo',
+    },
+  ];
+
+  const appointments = [
+    {
+      id: '1',
+      orderid: '#121314',
+      title: 'Diabetes',
+      status: 'waiting',
+      date: '8/8/2025',
+      tags: [
+        'Urine',
+        'Blood sugar',
+        'Urine',
+        'Blood sugar',
+        'Urine',
+        'Blood sugar',
+      ],
+      doctor: {
+        name: 'Federica S.',
+        rating: 3,
+        image: images.imgNurseUser,
+      },
+    },
+    {
+      id: '2',
+      orderid: '#121314',
+      title: 'Diabetes',
+      status: 'waiting',
+      date: '8/8/2025',
+      tags: [
+        'Urine',
+        'Blood sugar',
+        'Urine',
+        'Blood sugar',
+        'Urine',
+        'Blood sugar',
+      ],
+      doctor: {
+        name: 'Federica S.',
+        rating: 3,
+        image: images.imgNurseUser,
+      },
+    },
+    {
+      id: '3',
+      orderid: '#889900',
+      title: 'Diabetes',
+      status: 'booked',
+      tags: [
+        'Urine',
+        'Blood sugar',
+        'Urine',
+        'Blood sugar',
+        'Urine',
+        'Blood sugar',
+        'Urine',
+        'Blood sugar',
+      ],
+      appointmentMessage:
+        'The appointment is confirmed for Wednesday 10/8 by 10:00',
+      totalStatus: 4,
+      completedStatus: 2,
+    },
+  ];
+
+  // const familyMember = []
+
+  const [latestanalysisData, setLatestanalysisData] = useState(analysisArray);
+  const [userReportData, setUserReportData] = useState(userReport);
+  const [appointmentsData, setAppointmentsData] = useState(appointments);
+  const [searchVisible, setSearchVisible] = useState(false);
+  const [showAllTags, setShowAllTags] = useState(false);
+  const [showAllTagsBooked, setShowAllTagsBooked] = useState(false);
+
+  const totalStars = 5;
+  const limitedData = latestanalysisData.slice(0, 4);
+  const modifiedData =
+    latestanalysisData.length > 4
+      ? [...limitedData, { id: 'see_all', type: 'see_all' }]
+      : limitedData;
+
+  const ProgressBar = ({ currentStep, totalSteps = 4 }: any) => {
+    const steps = Array.from({ length: totalSteps }, (_, i) => i + 1);
+
+    return (
+      <View style={styles.progressBarContainer}>
+        {steps.map((step, index) => (
+          <View
+            key={index}
+            style={[
+              styles.progressStep,
+              index <= currentStep && styles.progressStepActive,
+            ]}
+          />
+        ))}
+      </View>
+    );
+  };
+
+  const renderItemLatestAnalysis = ({ item, index }: any) => {
+    if (item.type === 'see_all') {
+      return (
+        <TouchableOpacity
+          activeOpacity={activityOpacity}
+          onPress={() => {
+            console.log('See All clicked');
+          }}
+          style={[
+            styles.vwReportDate,
+            {
+              flexDirection: 'row',
+            },
+          ]}
+        >
+          <Text style={[styles.lblReportName]}>{getTranslation('seeall')}</Text>
+          <Image source={images.imgRightBlack} />
+        </TouchableOpacity>
+      );
+    }
+    return (
+      <TouchableOpacity
+        activeOpacity={activityOpacity}
+        key={index}
+        style={styles.vwReportDate}
+      >
+        <Text style={styles.lblReportName}>{item.reportname}</Text>
+        <Text style={styles.lblDate}>{item.date}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderUserReportData = ({ item, index }: any) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={activityOpacity}
+        style={{
+          borderWidth: 2,
+          borderColor: Colors.grayED,
+          borderRadius: 20,
+          padding: 16,
+          gap: getHeight(6),
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.lblReportTitle}>{item.reporttitle}</Text>
+            <Text style={styles.lblLastValue}>
+              {getTranslation('lastvalue')} {item.reportlastValue}
+            </Text>
+          </View>
+          <View
+            style={{
+              alignSelf: 'flex-start',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: getWidth(8),
+            }}
+          >
+            {item.status && (
+              <View style={styles.vwstatusReport}>
+                <Text style={styles.lblStatus}>{item.status}</Text>
+              </View>
+            )}
+            <Image source={images.imgRightBlack} />
+          </View>
+        </View>
+        {/* chartView */}
+        <VerticalBarChartProfile
+          data={item.chartData}
+          chartMaxValue={item.maxvalue}
+          chartMinValue={item.minvalue}
+          navigation={navigation}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const renderItemAppointment = ({ item, index }: any) => { 
+    const visibleTags = showAllTags ? item.tags : item.tags.slice(0, 2);
+    const extraCount = item.tags.length - 2;
+
+    const visibleTagsAppoint = showAllTagsBooked
+      ? item.tags
+      : item.tags.slice(0, 2);
+    const extraCountAppoint = item.tags.length - 2;
+    return (
+      <>
+        {/* {item.status === 'waiting' ? (
+          <Text style={styles.lblWaitingForResult}>
+            {getTranslation('waitingforresultof')}
+          </Text>
+        ) : (
+          <Text style={styles.lblWaitingForResult}>
+            {getTranslation('appointmentbook')}
+          </Text>
+        )} */}
+        {item.status === 'waiting' && (
+          <TouchableOpacity
+            activeOpacity={activityOpacity}
+            style={{
+              backgroundColor: Colors.blue1C04,
+              padding: 4,
+              borderRadius: 20,
+              marginTop: getHeight(3),
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: Colors.blue1C08,
+                padding: 4,
+                borderRadius: 20,
+              }}
+            >
+              <View
+                style={{
+                  gap: getHeight(8),
+                  backgroundColor: Colors.white,
+                  borderRadius: 20,
+                  borderWidth: 2,
+                  borderColor: Colors.blue6B,
+                  paddingHorizontal: getWidth(16),
+                  paddingTop: getHeight(16),
+                  paddingBottom: getHeight(12),
+                }}
+              >
+                {/* orderDetailsView */}
+                <View style={styles.vwMainOrderDetails}>
+                  <View style={{ flex: 1, gap: getHeight(2) }}>
+                    <Text style={styles.lblOrderTitle}>{item.title}</Text>
+                    <Text style={styles.lblOrderDate}>{item.date}</Text>
+                    <Text style={styles.lblOrderID}>{item.orderid}</Text>
+                  </View>
+                  <TouchableOpacity>
+                    <Image source={images.imgRightBlack} />
+                  </TouchableOpacity>
+                </View>
+                {/* tags */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    gap: getHeight(5),
+                  }}
+                >
+                  {visibleTags.map((tag: any, index: any) => (
+                    <View
+                      key={index}
+                      style={{
+                        backgroundColor: Colors.grayF3,
+                        paddingHorizontal: getWidth(8),
+                        height: getHeight(24),
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 999,
+                        marginRight: getWidth(2),
+                      }}
+                    >
+                      <Text style={styles.lblTag}>{tag}</Text>
+                    </View>
+                  ))}
+
+                  {/* Show +count only when collapsed */}
+                  {!showAllTags && extraCount > 0 && (
+                    <TouchableOpacity
+                      onPress={() => setShowAllTags(true)}
+                      style={{
+                        backgroundColor: Colors.grayF3,
+                        paddingHorizontal: getWidth(8),
+                        paddingVertical: getHeight(4),
+                        borderRadius: 999,
+                        marginRight: getWidth(2),
+                      }}
+                    >
+                      <Text style={styles.lblTag}>+{extraCount}</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+                {/* nurseView */}
+                <View style={styles.nurseview}>
+                  <Image source={item.doctor.image} />
+                  <Text>{item.doctor.name}</Text>
+
+                  <View style={styles.starRow}>
+                    {[...Array(totalStars)].map((_, index) => {
+                      const isFilled = index < item.doctor.rating; // fill up to ratingStar
+                      const iconName = isFilled && images.imgStarFill;
+
+                      return <Image key={index} source={iconName} />;
+                    })}
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        )}
+        {item.status === 'booked' && (
+          <TouchableOpacity
+            activeOpacity={activityOpacity}
+            style={{
+              marginTop: getHeight(8),
+              gap: getHeight(14),
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              backgroundColor: Colors.black04,
+              borderRadius: 20,
+              padding: 16,
+            }}
+          >
+            {/* orderDetailsView */}
+            <View style={styles.vwMainOrderDetails}>
+              <View
+                style={{
+                  flex: 1,
+                  gap: getHeight(2),
+                  marginRight: getWidth(15),
+                }}
+              >
+                <Text style={styles.lblOrderTitleBooked}>{item.title}</Text>
+                <Text style={styles.lblOrderDesBooked}>
+                  {item.appointmentMessage}
+                </Text>
+              </View>
+              <TouchableOpacity>
+                <Image source={images.imgRightBlack} tintColor={Colors.white} />
+              </TouchableOpacity>
+            </View>
+            {/* tags */}
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                gap: getHeight(5),
+              }}
+            >
+              {visibleTagsAppoint.map((tag: any, index: any) => (
+                <View
+                  key={index}
+                  style={{
+                    backgroundColor: Colors.white08,
+                    paddingHorizontal: getWidth(8),
+                    height: getHeight(24),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 999,
+                    marginRight: getWidth(2),
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.lblTag,
+                      {
+                        color: Colors.white,
+                      },
+                    ]}
+                  >
+                    {tag}
+                  </Text>
+                </View>
+              ))}
+
+              {/* Show +count only when collapsed */}
+              {!showAllTagsBooked && extraCountAppoint > 0 && (
+                <TouchableOpacity
+                  onPress={() => setShowAllTagsBooked(true)}
+                  style={{
+                    backgroundColor: Colors.white08,
+                    paddingHorizontal: getWidth(8),
+                    height: getHeight(24),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 999,
+                    marginRight: getWidth(2),
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.lblTag,
+                      {
+                        color: Colors.white,
+                      },
+                    ]}
+                  >
+                    +{extraCount}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <ProgressBar currentStep={1} />
+          </TouchableOpacity>
+        )}
+      </>
+    );
+  };
+
+  return (
+    <YourProfileComponent
+      insets={insets}
+      latestanalysisData={latestanalysisData}
+      renderItemLatestAnalysis={renderItemLatestAnalysis}
+      modifiedData={modifiedData}
+      userReportData={userReportData}
+      renderUserReportData={renderUserReportData}
+      setSearchVisible={setSearchVisible}
+      searchVisible={searchVisible}
+      renderItemAppointment={renderItemAppointment}
+      appointmentsData={appointmentsData}
+    />
+  );
 };
 
 export default YourProfileContainer;

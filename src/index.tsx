@@ -20,6 +20,8 @@ export WelcomeContainer from "./container/auth/Welcome";
 
 export KitDetailsContainer from "./container/KitDetails";
 export CheckoutContainer from "./container/Checkout";
+export OrderHistoryContainer from "./container/OrderHistory";
+
 
 
 
