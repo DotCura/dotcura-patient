@@ -148,17 +148,7 @@ const OrderHistoryContainer = ({ navigation }: any) => {
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
-        style={{
-          padding: 4,
-          borderRadius: 20,
-          gap: getHeight(8),
-          backgroundColor: Colors.white,
-          borderWidth: 2,
-          borderColor: Colors.grayE7,
-          paddingHorizontal: getWidth(16),
-          paddingTop: getHeight(16),
-          paddingBottom: getHeight(12),
-        }}
+        style={styles.btnOrderHistory}
       >
         {/* orderDetailsView */}
         <View style={styles.vwMainOrderDetails}>
@@ -172,26 +162,9 @@ const OrderHistoryContainer = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
         {/* tags */}
-        <View
-          style={{
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            gap: getHeight(5),
-          }}
-        >
+        <View style={styles.vwTagMain}>
           {visibleTags.map((tag: any, index: any) => (
-            <View
-              key={index}
-              style={{
-                backgroundColor: Colors.grayF3,
-                paddingHorizontal: getWidth(8),
-                height: getHeight(24),
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 999,
-                marginRight: getWidth(2),
-              }}
-            >
+            <View key={index} style={styles.vwTagInner}>
               <Text style={styles.lblTag}>{tag}</Text>
             </View>
           ))}
@@ -202,13 +175,7 @@ const OrderHistoryContainer = ({ navigation }: any) => {
               onPress={() => {
                 setExpandedItems(prev => [...prev, index]); // add index to expanded list
               }}
-              style={{
-                backgroundColor: Colors.grayF3,
-                paddingHorizontal: getWidth(8),
-                paddingVertical: getHeight(4),
-                borderRadius: 999,
-                marginRight: getWidth(2),
-              }}
+              style={styles.btnExtraCount}
             >
               <Text style={styles.lblTag}>+{extraCount}</Text>
             </TouchableOpacity>
