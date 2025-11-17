@@ -3,6 +3,7 @@ export const fontsfamily = {
   medium: 'SFProDisplay-Medium',
   semiBold: 'SFProDisplay-Semibold',
   bold: 'SFProDisplay-Bold',
+  heavy:"SFProDisplay-Heavy",
   
 };
 

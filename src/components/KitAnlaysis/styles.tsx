@@ -5,11 +5,11 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
-    lblOpenMap:{
-        color: Colors.black04,
-        fontFamily: fontsfamily.medium,
-        fontSize: fontSize.size14,
-    },
+  lblOpenMap: {
+    color: Colors.black04,
+    fontFamily: fontsfamily.medium,
+    fontSize: fontSize.size14,
+  },
   lblLeboName: {
     color: Colors.blue0D,
     fontFamily: fontsfamily.bold,
@@ -106,5 +106,11 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.regular,
     color: Colors.gray55,
+  },
+  lblDataSaveDes: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.medium,
+    color: Colors.gray2A,
+    letterSpacing: 0.1,
   },
 });

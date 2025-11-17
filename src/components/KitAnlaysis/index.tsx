@@ -64,11 +64,12 @@ const KitAnalysisComponent = (props: any) => {
           constnatStyles.keyboardContainer,
           {
             paddingHorizontal: getWidth(16),
-            paddingBottom: getHeight(250),
+            paddingBottom: getHeight(110),
           },
         ]}
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}
+        style={{ flex: 1 }}
       >
         {/* orderDeatislName */}
         <View style={{ marginTop: getHeight(32) }}>
@@ -227,7 +228,7 @@ const KitAnalysisComponent = (props: any) => {
           </View>
         </View>
 
-        <View>
+        <View style={{ marginTop: getHeight(24), gap: getHeight(24) }}>
           <CustomButton
             btnTitle={getTranslation('savepdf')}
             style={{ backgroundColor: Colors.grayED }}
@@ -237,8 +238,30 @@ const KitAnalysisComponent = (props: any) => {
               fontSize: fontSize.size16,
             }}
           />
+          <Text style={styles.lblDataSaveDes}>
+            {getTranslation('datasavedes1')}
+            <Text style={{ fontFamily: fontsfamily.heavy }}>
+              {getTranslation('datasavedes2')}
+            </Text>
+          </Text>
         </View>
       </ScrollView>
+      <View
+        style={{
+          marginBottom: props.insets.bottom,
+          marginHorizontal: getWidth(16),
+        }}
+      >
+        <CustomButton
+          btnTitle={getTranslation('savedata')}
+          // style={{ backgroundColor: Colors.grayED }}
+          // textStyle={{
+          //   color: Colors.gray0F,
+          //   fontFamily: fontsfamily.bold,
+          //   fontSize: fontSize.size16,
+          // }}
+        />
+      </View>
     </View>
   );
 };

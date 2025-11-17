@@ -191,6 +191,9 @@ export default {
   collectondes:"Puoi ritirare le analisi in formato cartaceo presso il ",
   openmap:"Apri mappa",
   savepdf:"Stampa PDF",
+  datasavedes1:"Accettando di salvare i tuoi dati, potrai conservarli in Dotcuraapp indefinitavamente. Senza il tuo consenso, le analisi verranno cancellate in",
+  datasavedes2:" 45 giorni.",
+  savedata:"Salva dati",
 
 
   //ERROR

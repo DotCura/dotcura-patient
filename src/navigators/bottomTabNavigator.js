@@ -29,10 +29,6 @@ const BottomTabsNavigation = () => {
     <BottomTabs.Navigator
       tabBar={props => <CustomBottomTabsContainer {...props} />}
     >
-      {/* {handleBottomTabsScreens({
-        screenName: ScreenNames.HOMECONTAINER,
-        component: Screen[ScreenNames.HOMECONTAINER],
-      })} */}
       <BottomTabs.Screen
       name={ScreenNames.HOMECONTAINER}
       component={Screen[ScreenNames.HOMECONTAINER]}
