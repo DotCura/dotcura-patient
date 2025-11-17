@@ -3,10 +3,18 @@ import React, { useEffect, useMemo, useState } from 'react';
 import CheckoutComponent from '../../components/Checkout';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
-import { activityOpacity, currency } from '../../constants/GConstant';
+import {
+  activityOpacity,
+  currency,
+  getRandomTheme,
+} from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { images } from '../../constants/Images';
-import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import {
+  getHeight,
+  getWidth,
+  ScreenDimensions,
+} from '../../constants/utils/Dimensions';
 import { ZustandStores } from '../../store';
 import { ScreenNames } from '../../constants/AppConstants';
 import RNRestart from 'react-native-restart';
@@ -14,7 +22,7 @@ import RNRestart from 'react-native-restart';
 const CheckoutContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  console.log('orderStatus in CheckoutContainer.tsx:', orderStatus);
+  // console.log('orderStatus in CheckoutContainer.tsx:', orderStatus);
 
   const testKits = [
     {
@@ -47,6 +55,84 @@ const CheckoutContainer = ({ navigation }: any) => {
     },
   ];
 
+  const kitListInCart = [
+    {
+      id: '1',
+      title: 'Diabete',
+      description: 'Controllo glicemia e zuccheri',
+      price: '35.00',
+      isLiked: false,
+      isAdded: false,
+      status: 'Alta richiesta',
+    },
+    {
+      id: '2',
+      title: 'Anemia',
+      description: 'Controllo ferro e globuli rossi',
+      price: '35.00',
+      isLiked: false,
+      isAdded: false,
+      status: 'Subito disponibile',
+    },
+    {
+      id: '3',
+      title: 'Anemia',
+      description: 'Controllo ferro e globuli rossi',
+      price: '35.00',
+      isLiked: false,
+      isAdded: false,
+      status: 'Subito disponibile',
+    },
+  ];
+
+  const kitListAddMore = [
+    {
+      id: '1',
+      title: 'Diabete',
+      description: 'Controllo glicemia e zuccheri',
+      price: '35.00',
+      isLiked: false,
+      isAdded: false,
+      status: 'Alta richiesta',
+    },
+    {
+      id: '2',
+      title: 'Anemia',
+      description: 'Controllo ferro e globuli rossi',
+      price: '35.00',
+      isLiked: false,
+      isAdded: false,
+      status: 'Subito disponibile',
+    },
+    {
+      id: '3',
+      title: 'Anemia',
+      description: 'Controllo ferro e globuli rossi',
+      price: '35.00',
+      isLiked: false,
+      isAdded: false,
+      status: 'Subito disponibile',
+    },
+    {
+      id: '4',
+      title: 'Anemia',
+      description: 'Controllo ferro e globuli rossi',
+      price: '35.00',
+      isLiked: false,
+      isAdded: false,
+      status: 'Subito disponibile',
+    },
+    {
+      id: '5',
+      title: 'Anemia',
+      description: 'Controllo ferro e globuli rossi',
+      price: '35.00',
+      isLiked: false,
+      isAdded: false,
+      status: 'Subito disponibile',
+    },
+  ];
+
   const familymembers = [
     { label: 'You', value: '1' },
     { label: 'Maria', value: '2' },
@@ -54,6 +140,8 @@ const CheckoutContainer = ({ navigation }: any) => {
   ];
 
   const [testkitsData, setTestsKitData] = useState(testKits);
+  const [kitDataInCart, setKitDataInCart] = useState(kitListInCart);
+  const [kitDataAddMore, setKitDataAddMore] = useState(kitListAddMore);
   const [manageAddress, setManageAddress] = useState('');
   const [discountCode, setDiscountCode] = useState('');
   const [discountValue, setDiscountValue] = useState(0);
@@ -68,6 +156,7 @@ const CheckoutContainer = ({ navigation }: any) => {
   } | null>(null);
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
+  const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
 
   const handleBookSlot = () => {
     if (selectedDate && selectedTime) {
@@ -95,6 +184,14 @@ const CheckoutContainer = ({ navigation }: any) => {
     } else {
       setDiscountValue(0);
     }
+  };
+
+  const funOpenIsModifyOrder = () => {
+    setShowIsModifyOrder(true);
+  };
+
+  const funCloseIsModifyOrder = () => {
+    setShowIsModifyOrder(false);
   };
 
   const handleSetFamilyMember = (item: any) => {
@@ -128,6 +225,130 @@ const CheckoutContainer = ({ navigation }: any) => {
     );
   };
 
+  const renderKitDataInCart = ({ item, index }: any) => {
+    const { backgroundColor, textColor } = getRandomTheme();
+    return (
+      <TouchableOpacity
+        activeOpacity={activityOpacity}
+        style={{
+          width: ScreenDimensions.screenWidth / 2 - getWidth(32),
+          borderRadius: 20,
+          marginRight: 12,
+        }}
+      >
+        <View style={{ gap: getHeight(8) }}>
+          <View style={styles.vwGrey}>
+            <TouchableOpacity style={styles.btnPlusBlack}>
+              <Image source={images.imgPlusBlack} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnFav}>
+              <Image source={images.imgFavFilled} />
+            </TouchableOpacity>
+            {item.status != null && (
+              <View
+                style={{
+                  backgroundColor: backgroundColor,
+                  position: 'absolute',
+                  bottom: 8,
+                  left: 8,
+                  paddingVertical: getHeight(4),
+                  paddingHorizontal: getWidth(8),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 999,
+                  marginRight: getWidth(20),
+                }}
+              >
+                <Text
+                  style={[styles.lblStatus, { color: textColor }]}
+                  numberOfLines={2}
+                >
+                  {item.status}
+                </Text>
+              </View>
+            )}
+          </View>
+
+          {/* veProductDetails */}
+          <View>
+            <Text style={styles.lblPrice} numberOfLines={1}>
+              {currency}
+              {item.price}
+            </Text>
+            <Text style={styles.lblTitle} numberOfLines={1}>
+              {item.title}
+            </Text>
+            <Text style={styles.lblDescription} numberOfLines={3}>
+              {item.description}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderKitDataAddMore = ({ item, index }: any) => {
+    const { backgroundColor, textColor } = getRandomTheme();
+    return (
+      <TouchableOpacity
+        activeOpacity={activityOpacity}
+        style={{
+          width: ScreenDimensions.screenWidth / 2 - getWidth(24),
+          borderRadius: 20,
+          // marginRight: 12,
+        }}
+      >
+        <View style={{ gap: getHeight(8) }}>
+          <View style={styles.vwGrey}>
+            <TouchableOpacity style={styles.btnPlusBlack}>
+              <Image source={images.imgPlusBlack} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnFav}>
+              <Image source={images.imgFavFilled} />
+            </TouchableOpacity>
+            {item.status != null && (
+              <View
+                style={{
+                  backgroundColor: backgroundColor,
+                  position: 'absolute',
+                  bottom: 8,
+                  left: 8,
+                  paddingVertical: getHeight(4),
+                  paddingHorizontal: getWidth(8),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 999,
+                  marginRight: getWidth(20),
+                }}
+              >
+                <Text
+                  style={[styles.lblStatus, { color: textColor }]}
+                  numberOfLines={2}
+                >
+                  {item.status}
+                </Text>
+              </View>
+            )}
+          </View>
+
+          {/* veProductDetails */}
+          <View>
+            <Text style={styles.lblPrice} numberOfLines={1}>
+              {currency}
+              {item.price}
+            </Text>
+            <Text style={styles.lblTitle} numberOfLines={1}>
+              {item.title}
+            </Text>
+            <Text style={styles.lblDescription} numberOfLines={3}>
+              {item.description}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   const handleOnPressSaveChanges = () => {
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION);
     setOrderStatus('order_sent');
@@ -141,7 +362,7 @@ const CheckoutContainer = ({ navigation }: any) => {
             style={[
               styles.vwMain,
               {
-                paddingTop: orderStatus =='' ? insets.top + 10 : getHeight(25),
+                paddingTop: orderStatus == '' ? insets.top + 10 : getHeight(25),
               },
             ]}
           >
@@ -206,6 +427,13 @@ const CheckoutContainer = ({ navigation }: any) => {
       setSelectedTime={setSelectedTime}
       onBookSlot={handleBookSlot}
       handleOnPressSaveChanges={handleOnPressSaveChanges}
+      funOpenIsModifyOrder={funOpenIsModifyOrder}
+      funCloseIsModifyOrder={funCloseIsModifyOrder}
+      showIsModifyOrder={showIsModifyOrder}
+      renderKitDataInCart={renderKitDataInCart}
+      kitDataInCart={kitDataInCart}
+      kitDataAddMore={kitDataAddMore}
+      renderKitDataAddMore={renderKitDataAddMore}
     />
   );
 };

@@ -1,10 +1,55 @@
 import { StyleSheet } from 'react-native';
-import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { getHeight, getWidth, ScreenDimensions } from '../../constants/utils/Dimensions';
 import { Colors } from '../../constants/Colors';
 import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  lblGoToCart: {
+    fontFamily: fontsfamily.medium,
+    fontSize: fontSize.size16,
+    color: Colors.white,
+  },
+  vwCartImage: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    gap: getWidth(8),
+  },
+  vwPrice: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: getWidth(5),
+  },
+  vwGoToCart: {
+    width: ScreenDimensions.screenWidth - getWidth(32),
+    alignSelf: 'center',
+    borderRadius: 20,
+    alignItems: 'center',
+    position: 'absolute',
+    height: getHeight(48),
+    paddingHorizontal: getWidth(16),
+    backgroundColor: Colors.blue1C,
+    flexDirection: 'row',
+  },
+  disprice: {
+    fontFamily: fontsfamily.regular,
+    fontSize: fontSize.size16,
+    color: Colors.white36,
+    textDecorationLine: 'line-through',
+  },
+  totalprice: {
+    fontFamily: fontsfamily.regular,
+    fontSize: fontSize.size16,
+    color: Colors.white,
+  },
+  lblInTheCart: {
+    fontSize: fontSize.size24,
+    fontFamily: fontsfamily.bold,
+    color: Colors.gray0F,
+    marginHorizontal: getWidth(16),
+    marginBottom: getHeight(12),
+  },
   vwBottomBtn: {
     position: 'absolute',
     left: 0,

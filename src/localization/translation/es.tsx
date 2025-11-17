@@ -195,9 +195,9 @@ export default {
     'Accettando di salvare i tuoi dati, potrai conservarli in Dotcuraapp indefinitavamente. Senza il tuo consenso, le analisi verranno cancellate in',
   datasavedes2: ' 45 giorni.',
   savedata: 'Salva dati',
-  emptytitleprofile:"Nessuna analisi",
-  emptysubtitleprofile:"Prenota la tua prima analisi.",
-  bookorder:"Ordina analisi",
+  emptytitleprofile: 'Nessuna analisi',
+  emptysubtitleprofile: 'Prenota la tua prima analisi.',
+  bookorder: 'Ordina analisi',
 
   //TEST DETAILS
   thevalueis: 'Il valore della',
@@ -210,9 +210,22 @@ export default {
   querysub:
     'I valori ottimali possono variare da persona a persona: se il tuo medico li considera normali, non li segnaleremo più come allarmanti.',
   changequery: 'Cambia valori ottimali',
-  note:"Note",
-  placeholdernote:"e.g. Portare analisi al medico di famiglia",
-  trend:"Trend",
+  note: 'Note',
+  placeholdernote: 'e.g. Portare analisi al medico di famiglia',
+  trend: 'Trend',
+
+  //FAMILY
+  family: 'Famiglia',
+  emptyaddfamilytitle: 'Aggiungi famigliari',
+  emptyaddfamilysubtitle:
+    'Gestisci la salute dei tuoi cari direttamente da un’unica app. Potrai prenotare e controllare i dati direttamente da qua.',
+  addfamilybtn: 'Aggiungi famigliare',
+  remove: 'Rimuovi',
+
+  //CHECKOUT
+  modifyorder: 'Modifica ordine',
+  inthecart: 'Nel carrello',
+  addmoretext: 'Aggiungi altri',
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',

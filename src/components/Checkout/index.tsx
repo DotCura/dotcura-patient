@@ -79,6 +79,7 @@ const CheckoutComponent = (props: any) => {
           <TouchableOpacity
             style={styles.btnEdit}
             activeOpacity={activityOpacity}
+            onPress={props.funOpenIsModifyOrder}
           >
             <Image source={images.pencilblue} />
             <Text style={styles.lblEdit}>{getTranslation('edit')}</Text>
@@ -348,6 +349,135 @@ const CheckoutComponent = (props: any) => {
                 btnPress={props.onBookSlot}
               />
             </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* editmodifyordermodel */}
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={props.showIsModifyOrder}
+        statusBarTranslucent={true}
+        onRequestClose={props.funCloseIsModifyOrder}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#00000060',
+          }}
+        >
+          <Pressable
+            style={{ flex: 1 }}
+            onPress={props.funCloseIsModifyOrder}
+          />
+
+          <View
+            style={{
+              backgroundColor: Colors.white,
+              borderTopLeftRadius: getHeight(20),
+              borderTopRightRadius: getHeight(20),
+              maxHeight: '92%',
+            }}
+          >
+            {/* Header */}
+            <View style={styles.vwHeadingLine} />
+            <View style={[styles.vwMainModelHeader]}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                onPress={props.funCloseIsModifyOrder} // close modal
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+
+              <View>
+                <Text
+                  style={[
+                    constnatStyles.lblHeaderTitle,
+                    {
+                      letterSpacing: 0.2,
+                    },
+                  ]}
+                  numberOfLines={2}
+                >
+                  {getTranslation('modifyorder')}
+                </Text>
+              </View>
+
+              <Image source={images.imgDelete} style={{ opacity: 0 }} />
+            </View>
+
+            {/* vwinthecart */}
+            <View style={{ marginTop: getHeight(30) }}>
+              <Text style={styles.lblInTheCart}>
+                {getTranslation('inthecart')}
+              </Text>
+              <FlatList
+                onEndReached={() => {
+                  console.log('callend');
+                }}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={props.kitDataInCart}
+                renderItem={props.renderKitDataInCart}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={item => item.id.toString()}
+                contentContainerStyle={{
+                  marginLeft: getWidth(16),
+                  marginRight: getWidth(16),
+                  alignSelf: 'center',
+                }}
+              />
+            </View>
+            {/* vwAddMore */}
+            <View style={{ marginTop: getHeight(42) }}>
+              <Text style={styles.lblInTheCart}>
+                {getTranslation('addmoretext')}
+              </Text>
+              <View>
+                <FlatList
+                  onEndReached={() => {
+                    console.log('callend');
+                  }}
+                  numColumns={2}
+                  data={props.kitDataAddMore}
+                  renderItem={props.renderKitDataAddMore}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={item => item.id.toString()}
+                  columnWrapperStyle={{
+                    gap: getWidth(12),
+                  }}
+                  contentContainerStyle={{
+                    gap: getWidth(12),
+                    alignSelf: 'center',
+                    paddingBottom: 550,
+                  }}
+                />
+              </View>
+            </View>
+
+            {/* vwGotoCart */}
+            <TouchableOpacity
+              style={[styles.vwGoToCart, { bottom: props.insets.bottom }]}
+              activeOpacity={activityOpacity}
+              onPress={props.funCloseIsModifyOrder}
+            >
+              <View style={styles.vwCartImage}>
+                <Image source={images.imgCartHome} tintColor={Colors.white} />
+                <Text style={styles.lblGoToCart}>
+                  {getTranslation('gotocart')}
+                </Text>
+              </View>
+              <View style={styles.vwPrice}>
+                {/* {props.selectedTests.length === props.kitsArrayData.length && (
+            <Text style={styles.disprice}>{currency}0.54</Text>
+          )} */}
+                <Text style={styles.totalprice}>
+                  {currency}
+                  {props.total.toFixed(2)}
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>

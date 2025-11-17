@@ -38,7 +38,8 @@ export const ScreenNames = {
   CHECKOUTCONTAINER: 'CheckoutContainer',
   ORDERHISTORYCONTAINER: 'OrderHistoryContainer',
   KITANALYSISCONTAINER: 'KitAnalysisContainer',
-  TESTDETAILSCONTAINER:"TestDetailsContainer"
+  TESTDETAILSCONTAINER:"TestDetailsContainer",
+  ADDFAMILYMEMBERCONTAINER:"AddFamilyContainer",
 };
 
 // <============================== IOS Condition ==============================>
