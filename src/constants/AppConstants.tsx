@@ -39,6 +39,9 @@ export const ScreenNames = {
   ORDERHISTORYCONTAINER: 'OrderHistoryContainer',
   KITANALYSISCONTAINER: 'KitAnalysisContainer',
   TESTDETAILSCONTAINER:"TestDetailsContainer",
+  
+  //FAMILY
+  CONFIRMIDENTITYCONTAINER:"ConfrimIdentityContainer",
   ADDFAMILYMEMBERCONTAINER:"AddFamilyContainer",
 };
 

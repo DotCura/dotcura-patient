@@ -481,6 +481,107 @@ const CheckoutComponent = (props: any) => {
           </View>
         </View>
       </Modal>
+
+      {/* editkitTestDetails */}
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={props.showIsKitTestDetails}
+        statusBarTranslucent={true}
+        onRequestClose={props.funCloseIsKitTestDetails}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#00000060',
+          }}
+        >
+          <Pressable
+            style={{ flex: 1 }}
+            onPress={props.funCloseIsKitTestDetails}
+          />
+
+          <View
+            style={{
+              backgroundColor: Colors.white,
+              borderTopLeftRadius: getHeight(20),
+              borderTopRightRadius: getHeight(20),
+              maxHeight: '80%',
+            }}
+          >
+            {/* Header */}
+            <View style={styles.vwHeadingLine} />
+            <View style={[styles.vwMainModelHeader]}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                onPress={props.funCloseIsKitTestDetails} // close modal
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+
+              <View>
+                <Text
+                  style={[
+                    constnatStyles.lblHeaderTitle,
+                    {
+                      letterSpacing: 0.2,
+                    },
+                  ]}
+                  numberOfLines={2}
+                >
+                  Anemia
+                </Text>
+                <Text
+                  style={[constnatStyles.lblSubHeaderTitle]}
+                  numberOfLines={2}
+                >
+                  1 {getTranslation('selected')}
+                </Text>
+              </View>
+
+              <Image source={images.imgDelete} style={{ opacity: 0 }} />
+            </View>
+            <View style={{ marginHorizontal: getWidth(16) }}>
+              <FlatList
+                onEndReached={() => {
+                  console.log('callend');
+                }}
+                data={props.kitsArrayData}
+                renderItem={props.renderItemKitsData}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={item => item.id.toString()}
+                contentContainerStyle={{
+                  marginTop: getHeight(16),
+                  gap: getHeight(20),
+                  paddingBottom: getHeight(155),
+                }}
+              />
+            </View>
+            {/* vwGotoCart */}
+            <TouchableOpacity
+              style={[styles.vwGoToCart, { bottom: props.insets.bottom }]}
+              activeOpacity={activityOpacity}
+              onPress={props.funCloseIsKitTestDetails}
+            >
+              <View style={styles.vwCartImage}>
+                <Image source={images.imgCartHome} tintColor={Colors.white} />
+                <Text style={styles.lblGoToCart}>
+                  {getTranslation('gotocart')}
+                </Text>
+              </View>
+              <View style={styles.vwPrice}>
+                {props.selectedTests.length === props.kitsArrayData.length && (
+                  <Text style={styles.disprice}>{currency}0.54</Text>
+                )}
+                <Text style={styles.totalprice}>
+                  {currency}
+                  {props.totalPrice.toFixed(2)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };

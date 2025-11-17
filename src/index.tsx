@@ -23,6 +23,8 @@ export OrderHistoryContainer from "./container/OrderHistory";
 export KitAnalysisContainer from "./container/KitAnlaysis";
 export TestDetailsContainer from "./container/TestDetails";
 export AddFamilyContainer from "./container/AddFamily";
+export ConfrimIdentityContainer from "./container/ConfrimIdentity";
+
 
 
 

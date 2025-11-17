@@ -18,6 +18,7 @@ import {
 import { ZustandStores } from '../../store';
 import { ScreenNames } from '../../constants/AppConstants';
 import RNRestart from 'react-native-restart';
+import { Colors } from '../../constants/Colors';
 
 const CheckoutContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -139,9 +140,65 @@ const CheckoutContainer = ({ navigation }: any) => {
     { label: 'Pasquale', value: '3' },
   ];
 
+  const kitsData = [
+    {
+      id: '1',
+      name: 'Emocromo',
+      desc: 'Conteggio completo delle cellule del sangue',
+      price: 7.0,
+      status: null,
+    },
+    {
+      id: '2',
+      name: 'Sideremia',
+      desc: 'Livello di ferro nel sangue',
+      price: 6.0,
+      status: null,
+    },
+    {
+      id: '3',
+      name: 'Ferritina',
+      desc: 'Riserve di ferro nell’organismo',
+      price: 6.0,
+      status: 'Da fare',
+    },
+    {
+      id: '4',
+      name: 'Emoglobulina A2',
+      desc: 'Proteina che trasporta il ferro',
+      price: 11.0,
+      status: null,
+    },
+    {
+      id: '5',
+      name: 'Vitamina B12',
+      desc: 'Vitamina essenziale per la produzione di globuli rossi',
+      price: 10.0,
+      status: null,
+    },
+    {
+      id: '6',
+      name: 'Sangue occulto',
+      desc: 'Ricerca di sangue nascosto nelle feci',
+      price: 12.0,
+      status: 'Deal',
+    },
+    {
+      id: '7',
+      name: 'Anticorpi transglutaminasi',
+      desc: 'Test per escludere celiachia',
+      price: 10,
+      status: null,
+    },
+  ];
+
   const [testkitsData, setTestsKitData] = useState(testKits);
   const [kitDataInCart, setKitDataInCart] = useState(kitListInCart);
   const [kitDataAddMore, setKitDataAddMore] = useState(kitListAddMore);
+  const [kitsArrayData, setKitsArraysData] = useState(kitsData);
+  const [selectedTests, setSelectedTests] = useState<string[]>(
+    kitsArrayData.map(t => t.id),
+  );
   const [manageAddress, setManageAddress] = useState('');
   const [discountCode, setDiscountCode] = useState('');
   const [discountValue, setDiscountValue] = useState(0);
@@ -157,6 +214,7 @@ const CheckoutContainer = ({ navigation }: any) => {
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
+  const [showIsKitTestDetails, setShowIsKitTestDetails] = useState(false);
 
   const handleBookSlot = () => {
     if (selectedDate && selectedTime) {
@@ -176,6 +234,88 @@ const CheckoutContainer = ({ navigation }: any) => {
     return subtotal + homeServiceCharge - discountValue;
   }, [subtotal, discountValue]);
 
+  // console.log('selectedTests', selectedTests);
+
+  const toggleSelect = (id: string) => {
+    setSelectedTests(prev =>
+      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id],
+    );
+  };
+
+  const selectAll = () => {
+    if (selectedTests.length === kitsArrayData.length) {
+      setSelectedTests([]);
+    } else {
+      setSelectedTests(kitsArrayData.map(t => t.id));
+    }
+  };
+
+  const totalPrice = kitsArrayData
+    .filter(t => selectedTests.includes(t.id))
+    .reduce((sum, t) => sum + t.price, 0);
+
+  const renderItemKitsData = ({ item, index }: { item: any; index: any }) => {
+    const selected = selectedTests.includes(item.id);
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            alignItems: 'center',
+            gap: getWidth(12),
+          }}
+        >
+          <TouchableOpacity onPress={() => toggleSelect(item.id)}>
+            <Image
+              source={
+                selected ? images.imgSelectRadio : images.imgUnselectRadio
+              }
+            />
+          </TouchableOpacity>
+          <View style={{ flex: 1, marginRight: getWidth(20) }}>
+            <Text style={styles.lblTestName} numberOfLines={2}>
+              {item.name}{' '}
+              <View style={{ alignItems: 'center',marginTop:3 }}>
+                <Text
+                  style={[
+                    styles.lblStatusKitDetails,
+                    {
+                      backgroundColor:
+                        index == 2
+                          ? Colors.greenD9
+                          : index == 5
+                          ? Colors.redFC
+                          : Colors.white,
+                      color:
+                        index == 2
+                          ? Colors.green0D
+                          : index == 5
+                          ? Colors.red40
+                          : Colors.white,
+                    },
+                  ]}
+                >
+                  {item.status}
+                </Text>
+              </View>
+            </Text>
+
+            <Text style={styles.lblDesc} numberOfLines={3}>
+              {item.desc}
+            </Text>
+          </View>
+        </View>
+        <View>
+          <Text style={styles.lblCurrency}>
+            + {currency}
+            {item.price.toFixed(2)}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
   const handleApplyDiscount = () => {
     // Just a sample logic
     if (discountCode === 'AA000000') {
@@ -192,6 +332,16 @@ const CheckoutContainer = ({ navigation }: any) => {
 
   const funCloseIsModifyOrder = () => {
     setShowIsModifyOrder(false);
+  };
+
+  const funOpenIsKitTestDetails = () => {
+    setShowIsModifyOrder(false);
+    setShowIsKitTestDetails(true);
+  };
+
+  const funCloseIsKitTestDetails = () => {
+    setShowIsKitTestDetails(false);
+    setShowIsModifyOrder(true);
   };
 
   const handleSetFamilyMember = (item: any) => {
@@ -235,6 +385,7 @@ const CheckoutContainer = ({ navigation }: any) => {
           borderRadius: 20,
           marginRight: 12,
         }}
+        onPress={funOpenIsKitTestDetails}
       >
         <View style={{ gap: getHeight(8) }}>
           <View style={styles.vwGrey}>
@@ -291,6 +442,7 @@ const CheckoutContainer = ({ navigation }: any) => {
     const { backgroundColor, textColor } = getRandomTheme();
     return (
       <TouchableOpacity
+        onPress={funOpenIsKitTestDetails}
         activeOpacity={activityOpacity}
         style={{
           width: ScreenDimensions.screenWidth / 2 - getWidth(24),
@@ -434,6 +586,16 @@ const CheckoutContainer = ({ navigation }: any) => {
       kitDataInCart={kitDataInCart}
       kitDataAddMore={kitDataAddMore}
       renderKitDataAddMore={renderKitDataAddMore}
+      funOpenIsKitTestDetails={funOpenIsKitTestDetails}
+      funCloseIsKitTestDetails={funCloseIsKitTestDetails}
+      showIsKitTestDetails={showIsKitTestDetails}
+      setShowIsKitTestDetails={setShowIsKitTestDetails}
+      //kittestdetails
+      kitsArrayData={kitsArrayData}
+      renderItemKitsData={renderItemKitsData}
+      selectAll={selectAll}
+      totalPrice={totalPrice}
+      selectedTests={selectedTests}
     />
   );
 };

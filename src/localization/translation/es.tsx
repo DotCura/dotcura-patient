@@ -166,6 +166,10 @@ export default {
   whoshoulddotest: 'Chi deve fare le analisi?',
   selectfamilymember: 'Selezionare chi dovrebbe eseguire i test',
   canclebooking: 'cancelar reserva',
+  selected: 'selezionato',
+  modifyorder: 'Modifica ordine',
+  inthecart: 'Nel carrello',
+  addmoretext: 'Aggiungi altri',
 
   //ORDERSTATYS
   ordersent: 'Ordine inviato',
@@ -222,10 +226,20 @@ export default {
   addfamilybtn: 'Aggiungi famigliare',
   remove: 'Rimuovi',
 
-  //CHECKOUT
-  modifyorder: 'Modifica ordine',
-  inthecart: 'Nel carrello',
-  addmoretext: 'Aggiungi altri',
+  // CONFIRMIDENTITY
+  confrimaccount: 'Conferma account',
+  enteryourdetails: 'Inserisci i tuoi dati professionali',
+  atecocode: 'Codice ATECO',
+  document: 'Documento',
+  selectdocument: 'Seleccionar documento',
+  passport: 'Passaporto',
+  electronicsidcard: "Carta d'identità",
+  uploadfronsidedoc: 'Carica la parte frontale del documento',
+  uploadbacksidedoc: 'Carica il retro del documento',
+  upload: 'Carica',
+  confirmidentitytitle:"Conferma identità",
+  confirmidentitysubtutlee:"Inserisci i tuoi documenti",
+  
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',
@@ -273,4 +287,6 @@ export default {
   emptyPostalCode: 'Por favor, introduzca el código postal',
   invalidPostalCode: 'Por favor, introduzca un código postal válido',
   cardNumberZero: 'El número de la tarjeta no debe ser cero',
+  pleaseselectdocument:"Por favor, selecciona el documento.",
+pleaseuploadfrontandbackside:"Por favor, carga fotos de tu documento por ambos lados (frontal y posterior)",
 };

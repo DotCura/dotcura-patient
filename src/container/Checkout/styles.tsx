@@ -161,4 +161,30 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size14,
     fontFamily: fontsfamily.regular,
   },
+  //kittestdetails
+  lblStatusKitDetails: {
+    paddingVertical: getHeight(2),
+    paddingHorizontal: getWidth(8),
+    borderRadius: 999,
+    marginLeft: getWidth(4),
+    fontFamily: fontsfamily.medium,
+    fontSize: fontSize.size12,
+  },
+  lblCurrency: {
+    color: Colors.gray75,
+    fontFamily: fontsfamily.regular,
+    fontSize: fontSize.size14,
+  },
+  lblTestName: {
+    // flex: 1,
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.medium,
+    fontSize: fontSize.size16,
+  },
+  lblDesc: {
+    color: Colors.gray75,
+    fontFamily: fontsfamily.regular,
+    fontSize: fontSize.size14,
+    letterSpacing: 0.1,
+  },
 });

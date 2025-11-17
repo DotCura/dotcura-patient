@@ -46,7 +46,8 @@ export const images = {
   imgLebo: require('../assets/images/leboratry.png'),
   imgCalender:require('../assets/images/calender.png'),
   imgfolder:require('../assets/images/folder.png'),
-  imgRightTickBlack:require('../assets/images/checkBlack.png')
+  imgRightTickBlack:require('../assets/images/checkBlack.png'),
+  upload:require('../assets/images/upload.png')
 
   
   // Static Images
