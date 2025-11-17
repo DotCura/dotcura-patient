@@ -187,14 +187,29 @@ export default {
   samletakeuser: 'Infermiere:',
   diagnose: 'Diagnose:',
   seeorder: 'Vedi ordine',
-  needpaper:"Bisogno del cartaceo?",
-  collectondes:"Puoi ritirare le analisi in formato cartaceo presso il ",
-  openmap:"Apri mappa",
-  savepdf:"Stampa PDF",
-  datasavedes1:"Accettando di salvare i tuoi dati, potrai conservarli in Dotcuraapp indefinitavamente. Senza il tuo consenso, le analisi verranno cancellate in",
-  datasavedes2:" 45 giorni.",
-  savedata:"Salva dati",
+  needpaper: 'Bisogno del cartaceo?',
+  collectondes: 'Puoi ritirare le analisi in formato cartaceo presso il ',
+  openmap: 'Apri mappa',
+  savepdf: 'Stampa PDF',
+  datasavedes1:
+    'Accettando di salvare i tuoi dati, potrai conservarli in Dotcuraapp indefinitavamente. Senza il tuo consenso, le analisi verranno cancellate in',
+  datasavedes2: ' 45 giorni.',
+  savedata: 'Salva dati',
 
+  //TEST DETAILS
+  thevalueis: 'Il valore della',
+  lowethen: 'è più basso del riferimento.',
+  percentage: 'Precedente',
+  valueoptimal: 'Valore ottimale',
+  high: 'Alta',
+  low: 'Bassa',
+  querytitle: 'Questi valori sono ok?',
+  querysub:
+    'I valori ottimali possono variare da persona a persona: se il tuo medico li considera normali, non li segnaleremo più come allarmanti.',
+  changequery: 'Cambia valori ottimali',
+  note:"Note",
+  placeholdernote:"e.g. Portare analisi al medico di famiglia",
+  trend:"Trend",
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',
