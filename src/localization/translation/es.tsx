@@ -195,6 +195,9 @@ export default {
     'Accettando di salvare i tuoi dati, potrai conservarli in Dotcuraapp indefinitavamente. Senza il tuo consenso, le analisi verranno cancellate in',
   datasavedes2: ' 45 giorni.',
   savedata: 'Salva dati',
+  emptytitleprofile:"Nessuna analisi",
+  emptysubtitleprofile:"Prenota la tua prima analisi.",
+  bookorder:"Ordina analisi",
 
   //TEST DETAILS
   thevalueis: 'Il valore della',

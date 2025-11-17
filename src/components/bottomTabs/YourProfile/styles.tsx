@@ -5,6 +5,50 @@ import { fontSize } from '../../../constants/FontSizes';
 import { fontsfamily } from '../../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  vwEmpty: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: getHeight(24),
+    marginHorizontal: getWidth(16),
+  },
+  emptyTitle: {
+    color: Colors.gray0F,
+    fontSize: fontSize.size24,
+    fontFamily: fontsfamily.bold,
+    textAlign: 'center',
+  },
+  emptySubtitle: {
+    letterSpacing:0.2,
+    color: Colors.gray55,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
+    textAlign: 'center',
+  },
+  itemRow: {
+    flexDirection: 'row',
+    padding: 6,
+    gap: getWidth(6),
+    width: getWidth(146),
+  },
+  selectedRow: {
+    borderRadius: 8,
+    paddingHorizontal: getWidth(10),
+    paddingVertical: getHeight(8),
+    backgroundColor: Colors.grayED,
+  },
+  itemText: {
+    textAlign: 'left',
+    color: Colors.gray2A,
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.medium,
+  },
+  selectedText: {
+    textAlign: 'left',
+    color: Colors.gray2A,
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.medium,
+  },
   lblWaitingForResult: {
     color: Colors.gray0F,
     fontSize: fontSize.size20,

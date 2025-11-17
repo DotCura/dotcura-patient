@@ -67,7 +67,7 @@ const GetTestedComponent = (props: any) => {
         )}
         {props.searchVisible ? (
           <View style={[styles.vwMain, { paddingTop:
-            orderStatus ? props.insets.top + 10 : getHeight(25), }]}>
+            orderStatus == '' ? props.insets.top + 10 : getHeight(25), }]}>
             <View style={styles.vwTextinputIcon}>
               <Image source={images.imgSearchBlack} />
               <TextInput

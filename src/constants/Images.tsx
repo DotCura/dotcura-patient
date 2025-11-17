@@ -45,7 +45,10 @@ export const images = {
   
   imgLebo: require('../assets/images/leboratry.png'),
   imgCalender:require('../assets/images/calender.png'),
-  imgfolder:require('../assets/images/folder.png')
+  imgfolder:require('../assets/images/folder.png'),
+  imgRightTickBlack:require('../assets/images/checkBlack.png')
+
+  
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),
 };

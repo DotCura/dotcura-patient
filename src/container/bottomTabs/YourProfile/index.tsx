@@ -180,14 +180,30 @@ const YourProfileContainer = ({ navigation }: any) => {
     },
   ];
 
-  // const familyMember = []
+  const familyMember = [
+    {
+      id:'1',
+      familymembername: 'Giovanni (tu)',
+    },
+    {
+      id:'2',
+      familymembername: 'Pasquale',
+    },
+    {
+      id:'3',
+      familymembername: 'Maria',
+    },
+  ];
 
   const [latestanalysisData, setLatestanalysisData] = useState(analysisArray);
   const [userReportData, setUserReportData] = useState(userReport);
   const [appointmentsData, setAppointmentsData] = useState(appointments);
+  const [familyMembersData, setFamilyMembersData] = useState(familyMember);
   const [searchVisible, setSearchVisible] = useState(false);
   const [showAllTags, setShowAllTags] = useState(false);
   const [showAllTagsBooked, setShowAllTagsBooked] = useState(false);
+  const [selectedName, setSelectedName] = useState('Giovanni (tu)');
+  const [showPopup, setShowPopup] = useState(false);
 
   const totalStars = 5;
   const limitedData = latestanalysisData.slice(0, 4);
@@ -292,7 +308,7 @@ const YourProfileContainer = ({ navigation }: any) => {
     );
   };
 
-  const renderItemAppointment = ({ item, index }: any) => { 
+  const renderItemAppointment = ({ item, index }: any) => {
     const visibleTags = showAllTags ? item.tags : item.tags.slice(0, 2);
     const extraCount = item.tags.length - 2;
 
@@ -527,6 +543,11 @@ const YourProfileContainer = ({ navigation }: any) => {
       searchVisible={searchVisible}
       renderItemAppointment={renderItemAppointment}
       appointmentsData={appointmentsData}
+      familyMembersData={familyMembersData}
+      selectedName={selectedName}
+      setSelectedName={setSelectedName}
+      showPopup={showPopup}
+      setShowPopup={setShowPopup}
     />
   );
 };
