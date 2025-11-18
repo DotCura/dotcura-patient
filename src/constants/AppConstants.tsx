@@ -47,6 +47,7 @@ export const ScreenNames = {
 
   //ADDRESS
   ADDADDRESSCONTAINER:"AddAddressContainer",
+  COMPLETEADDRESSCONTAINER:"CompleteAddressContainer",
 };
 
 // <============================== IOS Condition ==============================>

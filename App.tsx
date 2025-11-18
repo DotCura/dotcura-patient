@@ -15,11 +15,11 @@ LogBox.ignoreAllLogs();
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.ADDADDRESSCONTAINER,
+    ScreenNames.COMPLETEADDRESSCONTAINER,
   );
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
   // console.log('orderStatus in App.tsx:', orderStatus);
-  
+
   const flashMessageRef = useRef(null);
   setFlashMessageRef(flashMessageRef);
 

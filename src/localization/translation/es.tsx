@@ -232,7 +232,21 @@ export default {
     'Questo indirizzo sarà salvato e disponibile per future visite a domicilio.',
   searchaddress: 'Cerca indirizzo',
   addaddressplacholder: 'Via, piazza, strada...',
-  errorselectaddress:"Por favor, elija una dirección",
+  errorselectaddress: 'Por favor, elija una dirección',
+
+  //COMPLETEADDRESS
+  completeaddresstitle: 'Completa l’indirizzo',
+  completeaddressssubtitle:
+    'Aggiungi dettagli e istruzioni per facilitare l’accesso all’infermiere.',
+  type: 'Tipo',
+  florr: 'Piano',
+  stairs: 'Scala',
+  instruction: 'Instruzioni',
+  instructionplaceholder:
+    'e.g. Sta una scala a chiocciola, state attenti che ve gir a cap e jat abbasc’',
+  stairsplaceholder: 'e.g. B',
+  florrplaceholder: 'e.g. 2',
+  typeplaceholder: 'e.g. Home',
 
   //PROFILE
   membersince: 'Membro dal',
