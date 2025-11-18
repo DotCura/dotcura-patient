@@ -47,7 +47,19 @@ export const images = {
   imgCalender:require('../assets/images/calender.png'),
   imgfolder:require('../assets/images/folder.png'),
   imgRightTickBlack:require('../assets/images/checkBlack.png'),
-  upload:require('../assets/images/upload.png')
+  upload:require('../assets/images/upload.png'),
+
+  //PORFILE
+  imgUserProfile:require('../assets/images/userProfile.png'),
+  imgBell:require('../assets/images/bell.png'),
+  imgHelpProfile:require('../assets/images/helpProfile.png'),
+  imgCard:require('../assets/images/card.png'),
+  imgPin:require('../assets/images/pin.png'),
+  imgBackProfile:require('../assets/images/backProfile.png'),
+  imgDeleteRed:require('../assets/images/deleteRed.png'),
+  imgFamily:require('../assets/images/family.png'),
+  imgWarningProfile:require('../assets/images/warningProfile.png'),
+  imginsta:require('../assets/images/insta.png'),
 
   
   // Static Images

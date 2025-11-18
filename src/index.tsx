@@ -1,5 +1,6 @@
 
 
+
 //AUTH
 export LoginContainer from "./container/auth/Login";
 export OnBoardingContainer from "./container/auth/OnBoarding";
@@ -24,6 +25,7 @@ export KitAnalysisContainer from "./container/KitAnlaysis";
 export TestDetailsContainer from "./container/TestDetails";
 export AddFamilyContainer from "./container/AddFamily";
 export ConfrimIdentityContainer from "./container/ConfrimIdentity";
+export ProfileContainer from "./container/Profile";
 
 
 

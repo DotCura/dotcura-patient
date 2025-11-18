@@ -260,6 +260,13 @@ export const getInitials = (name: any) => {
   return first;
 };
 
+export const getInitialsTwoDigit = name => {
+  const parts = name.trim().split(' ');
+  const first = parts[0]?.charAt(0).toUpperCase() || '';
+  const last = parts[parts.length - 1]?.charAt(0).toUpperCase() || '';
+  return first + last;
+};
+
 export const getRandomTheme = () => {
   const themes = [
     { backgroundColor: '#FCD9DE', textColor: '#400D14' }, // 1. Pink tone

@@ -226,6 +226,26 @@ export default {
   addfamilybtn: 'Aggiungi famigliare',
   remove: 'Rimuovi',
 
+  //PROFILE
+  membersince: 'Membro dal',
+  notifications: 'Notifiche',
+  emailnotification: 'Notifiche email',
+  receivedatemail: 'Ricevute all’email',
+  exit: 'Esci',
+  deleteaccountanddata: 'Elimina account e dati',
+  personal: 'Personale',
+  orderhistoryprofile:"Storico ordini",
+  notificationsprofile:"Notifiche",
+  access:"Accessi",
+  paymentmethod:"Metodi di pagamento",
+  addresss:"Indirizzi",
+  rateapp:"Valuta l’app",
+  termsandconditions:"Termini e condizioni",
+  privacypolicy:"Informativa sulla privacy",
+  supportprofile:"Supporto",
+  favourite:"Preferiti",
+
+
   // CONFIRMIDENTITY
   confrimaccount: 'Conferma account',
   enteryourdetails: 'Inserisci i tuoi dati professionali',
@@ -237,9 +257,8 @@ export default {
   uploadfronsidedoc: 'Carica la parte frontale del documento',
   uploadbacksidedoc: 'Carica il retro del documento',
   upload: 'Carica',
-  confirmidentitytitle:"Conferma identità",
-  confirmidentitysubtutlee:"Inserisci i tuoi documenti",
-  
+  confirmidentitytitle: 'Conferma identità',
+  confirmidentitysubtutlee: 'Inserisci i tuoi documenti',
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',
@@ -287,6 +306,7 @@ export default {
   emptyPostalCode: 'Por favor, introduzca el código postal',
   invalidPostalCode: 'Por favor, introduzca un código postal válido',
   cardNumberZero: 'El número de la tarjeta no debe ser cero',
-  pleaseselectdocument:"Por favor, selecciona el documento.",
-pleaseuploadfrontandbackside:"Por favor, carga fotos de tu documento por ambos lados (frontal y posterior)",
+  pleaseselectdocument: 'Por favor, selecciona el documento.',
+  pleaseuploadfrontandbackside:
+    'Por favor, carga fotos de tu documento por ambos lados (frontal y posterior)',
 };

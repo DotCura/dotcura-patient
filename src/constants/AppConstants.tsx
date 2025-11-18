@@ -43,6 +43,7 @@ export const ScreenNames = {
   //FAMILY
   CONFIRMIDENTITYCONTAINER:"ConfrimIdentityContainer",
   ADDFAMILYMEMBERCONTAINER:"AddFamilyContainer",
+  PROFILECONTAINER :"ProfileContainer",
 };
 
 // <============================== IOS Condition ==============================>
