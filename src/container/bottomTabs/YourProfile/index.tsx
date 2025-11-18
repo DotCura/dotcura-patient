@@ -182,15 +182,15 @@ const YourProfileContainer = ({ navigation }: any) => {
 
   const familyMember = [
     {
-      id:'1',
+      id: '1',
       familymembername: 'Giovanni (tu)',
     },
     {
-      id:'2',
+      id: '2',
       familymembername: 'Pasquale',
     },
     {
-      id:'3',
+      id: '3',
       familymembername: 'Maria',
     },
   ];
@@ -272,6 +272,7 @@ const YourProfileContainer = ({ navigation }: any) => {
           borderRadius: 20,
           padding: 16,
           gap: getHeight(6),
+          marginHorizontal: getWidth(16),
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

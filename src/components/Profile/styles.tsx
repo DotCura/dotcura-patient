@@ -9,6 +9,133 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  summaryContainer: {
+    marginTop: getHeight(24),
+  },
+  summaryInnerContainer: {
+    backgroundColor: Colors.grayF3,
+    padding: 20,
+    marginTop: getHeight(10),
+    borderRadius: 20,
+    gap: getHeight(8),
+  },
+  summaryTitle: {
+    fontSize: fontSize.size20,
+    fontFamily: fontsfamily.bold,
+    letterSpacing: 0.3,
+    color: Colors.gray0F,
+  },
+  summarySubtitle: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.regular,
+    letterSpacing: 0.1,
+    color: Colors.gray55,
+  },
+  summaryItemRow: {
+    flexDirection: 'row',
+    // justifyContent: 'space-between',
+  },
+  summaryLabel: {
+    flex: 1,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
+    letterSpacing: 0.2,
+    color: Colors.gray55,
+  },
+  summaryValue: {
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
+    letterSpacing: 0.2,
+    color: Colors.gray0F,
+  },
+  lblChnage: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.medium,
+    color: Colors.blue17,
+    letterSpacing: 0.1,
+  },
+  btnChange: {
+    backgroundColor: Colors.white64,
+    paddingVertical: getHeight(9),
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: getWidth(12),
+  },
+  lblDateAndTime: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.regular,
+    color: Colors.gray75,
+  },
+  lblDateAndTimeValue: {
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.medium,
+    color: Colors.gray0F,
+  },
+  vwImgBack: {
+    height: getHeight(71),
+    marginTop: getHeight(12),
+    borderRadius: 24,
+    padding: 16,
+    overflow: 'hidden',
+  },
+  lblYourOrder: {
+    fontSize: fontSize.size28,
+    fontFamily: fontsfamily.bold,
+    color: Colors.gray0F,
+  },
+  lblYourOrderSubtitle: {
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
+    color: Colors.gray55,
+    letterSpacing: 0.2,
+  },
+  lblHelp: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.medium,
+    color: Colors.gray0F,
+  },
+  vwHelp: {
+    backgroundColor: Colors.white,
+
+    height: getHeight(36),
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: getWidth(13),
+    borderRadius: 20,
+    flexDirection: 'row',
+    gap: 6,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+  itemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: getWidth(16),
+    paddingVertical: getHeight(6),
+  },
+  itemLabel: {
+    flex: 1,
+    color: Colors.gray0F,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.regular,
+    marginRight: 10,
+  },
+  vwMainModelHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: getWidth(15),
+    marginTop: getHeight(5),
+    marginHorizontal: getWidth(12),
+    paddingBottom: getWidth(10),
+  },
   lblLatestValue: {
     color: Colors.gray0F,
     fontSize: fontSize.size20,

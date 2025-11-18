@@ -5,20 +5,20 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
-  vwError:{
-    marginTop:getHeight(6),
-    gap:getWidth(4),
-    alignItems:'center',
-    flexDirection:'row'
+  vwError: {
+    marginTop: getHeight(6),
+    gap: getWidth(4),
+    alignItems: 'center',
+    flexDirection: 'row',
   },
-  lablWarning:{
-    color: Colors.red8C ,
+  lablWarning: {
+    color: Colors.red8C,
     fontSize: fontSize.size12,
     fontFamily: fontsfamily.medium,
   },
-  lblTitleInput:{
+  lblTitleInput: {
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.semiBold,
+    fontFamily: fontsfamily.medium,
     color: Colors.gray55,
     marginBottom: getHeight(6),
   },
@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
     padding: 0,
   },
   multilineInput: {
-    textAlignVertical: 'top', 
+    textAlignVertical: 'top',
     height: '100%',
   },
 });

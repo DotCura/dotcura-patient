@@ -6,27 +6,27 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
-  vwError:{
-    marginTop:getHeight(6),
-    gap:getWidth(4),
-    alignItems:'center',
-    flexDirection:'row'
+  vwError: {
+    marginTop: getHeight(6),
+    gap: getWidth(4),
+    alignItems: 'center',
+    flexDirection: 'row',
   },
-  lablWarning:{
-    color: Colors.red8C ,
+  lablWarning: {
+    color: Colors.red8C,
     fontSize: fontSize.size12,
     fontFamily: fontsfamily.medium,
   },
-  lblTitleInput:{
+  lblTitleInput: {
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.semiBold,
+    fontFamily: fontsfamily.medium,
     color: Colors.gray55,
     marginBottom: getHeight(6),
   },
   vwCountryCode: {
-    marginRight:getWidth(8),
+    marginRight: getWidth(8),
     flexDirection: 'row',
-    gap:2,
+    gap: 2,
     alignItems: 'center',
   },
   lblCountryCode: {
@@ -34,7 +34,11 @@ export const styles = StyleSheet.create({
     fontFamily: fontsfamily.regular,
     color: Colors.gray0F,
   },
-  imgLeftIcon: { alignSelf: 'center',height:getHeight(30),width:getWidth(30)},
+  imgLeftIcon: {
+    alignSelf: 'center',
+    height: getHeight(30),
+    width: getWidth(30),
+  },
   vwTextInputAndIcon: {
     flexDirection: 'row',
     alignItems: 'center',

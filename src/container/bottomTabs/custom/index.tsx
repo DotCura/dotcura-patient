@@ -61,7 +61,7 @@ const CustomBottomTabsContainer = ({ navigation, state, descriptors }: any) => {
         key={index}
         style={[
           styles.btn,
-          { backgroundColor: isFocused ? Colors.grayED : '' },
+          { backgroundColor: isFocused ? Colors.grayED : Colors.white },
         ]}
         activeOpacity={0.9}
         hitSlop={hitSlop}

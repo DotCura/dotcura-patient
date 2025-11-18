@@ -23,7 +23,7 @@ import { Colors } from '../../constants/Colors';
 const CheckoutContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  // console.log('orderStatus in CheckoutContainer.tsx:', orderStatus);
+  console.log('orderStatus in CheckoutContainer.tsx:', orderStatus);
 
   const testKits = [
     {

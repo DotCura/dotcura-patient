@@ -21,7 +21,7 @@ export const constnatStyles = StyleSheet.create({
     backgroundColor: Colors.white,
     paddingHorizontal: getWidth(16),
   },
-  vwContainer:{
+  vwContainer: {
     flexGrow: 1,
     backgroundColor: Colors.white,
     paddingHorizontal: getWidth(16),
@@ -55,5 +55,17 @@ export const constnatStyles = StyleSheet.create({
     color: Colors.gray55,
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.regular,
+  },
+  lblModalTitle: {
+    fontSize: fontSize.size20,
+    fontFamily: fontsfamily.bold,
+    color: Colors.gray0F,
+    marginLeft: getWidth(15),
+  },
+  lblModalSubTitle: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.regular,
+    color: Colors.gray55,
+    marginLeft: getWidth(15),
   },
 });
