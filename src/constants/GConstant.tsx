@@ -14,7 +14,7 @@ import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { Colors } from './Colors';
 import { fontsfamily } from './FontFamily';
 import { fontSize } from './FontSizes';
-import { getWidth } from './utils/Dimensions';
+import { getHeight, getWidth } from './utils/Dimensions';
 
 export const appName = getTranslation('appname') || 'DotCura';
 
@@ -277,3 +277,5 @@ export const getRandomTheme = () => {
   const randomIndex = Math.floor(Math.random() * themes.length);
   return themes[randomIndex];
 };
+
+

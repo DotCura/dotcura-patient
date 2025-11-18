@@ -92,6 +92,11 @@ const MainNavigation = props => {
           { headerShown: false },
         )}
         {_addScreen(ScreenNames.PROFILECONTAINER, {}, { headerShown: true })}
+        {_addScreen(
+          ScreenNames.ADDADDRESSCONTAINER,
+          {},
+          { headerShown: false },
+        )}
       </Stack.Navigator>
     );
   };

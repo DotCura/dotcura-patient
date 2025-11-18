@@ -226,6 +226,14 @@ export default {
   addfamilybtn: 'Aggiungi famigliare',
   remove: 'Rimuovi',
 
+  //ADDADDRESS
+  addaddresstitle: 'Aggiungi un indirizzo',
+  addaddresssubtitle:
+    'Questo indirizzo sarà salvato e disponibile per future visite a domicilio.',
+  searchaddress: 'Cerca indirizzo',
+  addaddressplacholder: 'Via, piazza, strada...',
+  errorselectaddress:"Por favor, elija una dirección",
+
   //PROFILE
   membersince: 'Membro dal',
   notifications: 'Notifiche',
@@ -249,26 +257,25 @@ export default {
   notificationsms: 'Notifiche SMS',
   notificationsmssubtitle: 'Ricevute al numero',
   notificationpush: 'Notifiche push',
-  emailswitch1:"Promemoria appuntamento (24h prima)",
-  emailswitch2:"Risultati esami disponibili",
-  emailswitch3:"Offerte e promozioni sui servizi",
-  emailswitch4:"Consigli per la salute settimanali",
-  emailswitch5:"Aggiornamenti piattaforma e nuovi servizi",
-  smsswitch1:"L'infermiere è in arrivo (10 min prima)",
-  smsswitch2:"Appuntamento confermato",
-  smsswitch3:"Promemoria controlli periodici",
-  smsswitch4:"Offerte flash (sconti limitati)",
-  smsswitch5:"Emergenze e comunicazioni urgenti",
-  pushswitch1:"Promemoria appuntamento (1h prima)",
-  pushswitch2:"Tracking infermiere in tempo reale",
-  pushswitch3:"Risultati pronti per il download",
-  pushswitch4:"Suggerimenti personalizzati sui controlli",
-  pushswitch5:"Tip salute giornalieri personalizzati",
+  emailswitch1: 'Promemoria appuntamento (24h prima)',
+  emailswitch2: 'Risultati esami disponibili',
+  emailswitch3: 'Offerte e promozioni sui servizi',
+  emailswitch4: 'Consigli per la salute settimanali',
+  emailswitch5: 'Aggiornamenti piattaforma e nuovi servizi',
+  smsswitch1: "L'infermiere è in arrivo (10 min prima)",
+  smsswitch2: 'Appuntamento confermato',
+  smsswitch3: 'Promemoria controlli periodici',
+  smsswitch4: 'Offerte flash (sconti limitati)',
+  smsswitch5: 'Emergenze e comunicazioni urgenti',
+  pushswitch1: 'Promemoria appuntamento (1h prima)',
+  pushswitch2: 'Tracking infermiere in tempo reale',
+  pushswitch3: 'Risultati pronti per il download',
+  pushswitch4: 'Suggerimenti personalizzati sui controlli',
+  pushswitch5: 'Tip salute giornalieri personalizzati',
 
   //ORDERHSITORYPOPUP
-  pickup:"Prelevato il",
-  downloadreceipt:"Scarica ricevuta",
-
+  pickup: 'Prelevato il',
+  downloadreceipt: 'Scarica ricevuta',
 
   // CONFIRMIDENTITY
   confrimaccount: 'Conferma account',
