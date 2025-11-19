@@ -137,7 +137,7 @@ const KitDetailsComponent = (props: any) => {
 
       {/* vwGotoCart */}
       <TouchableOpacity
-        style={[styles.vwGoToCart, { bottom: props.insets.bottom }]}
+        style={[styles.vwGoToCart, { bottom: props.insets.bottom>0?props.insets.bottom:props.insets.bottom+getHeight(20) }]}
         activeOpacity={activityOpacity}
         onPress={props.handleNavigateCheckout}
       >

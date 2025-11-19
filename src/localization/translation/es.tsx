@@ -252,20 +252,19 @@ export default {
   invalidFloor: 'El piso debe contener solo números.',
   invalidStairs: 'Las escaleras deben contener solo letras.',
   instructionTooLong: 'La instrucción es demasiado larga.',
-  emptyStairs: "Por favor ingrese el nombre de las escaleras.",
-  emptyInstructions: "Por favor ingrese las instrucciones.",
+  emptyStairs: 'Por favor ingrese el nombre de las escaleras.',
+  emptyInstructions: 'Por favor ingrese las instrucciones.',
 
   //LOGOUT
-  logoutText:"¿Estás seguro de que deseas cerrar sesión?",
-  deleteText:"Esta acción es irreversible. ¿Realmente deseas eliminar tu cuenta?",
-  
-  
+  logoutText: '¿Estás seguro de que deseas cerrar sesión?',
+  deleteText:
+    'Esta acción es irreversible. ¿Realmente deseas eliminar tu cuenta?',
 
+  dateofbirth: 'Data di nascita',
 
+  account: 'Account',
 
-
-
-
+  save: 'Salva',
 
   //PROFILE
   membersince: 'Membro dal',

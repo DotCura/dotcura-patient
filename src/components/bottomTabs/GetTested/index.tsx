@@ -54,6 +54,7 @@ const GetTestedComponent = (props: any) => {
                 }}
                 activeOpacity={activityOpacity}
                 style={styles.vwHeaderbtn}
+                hitSlop={20}
               >
                 <Image source={images.imgSearchBlack} />
               </TouchableOpacity>
@@ -62,6 +63,7 @@ const GetTestedComponent = (props: any) => {
                   onPress={props.handleNavigateCheckout}
                   activeOpacity={activityOpacity}
                   style={styles.vwHeaderbtn}
+                  hitSlop={20}
                 >
                   <Image source={images.imgCartHome} />
                 </TouchableOpacity>

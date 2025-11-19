@@ -102,6 +102,8 @@ const MainNavigation = props => {
           {},
           { headerShown: false },
         )}
+            {_addScreen(ScreenNames.ACCOUNTCONTAINER, {}, { headerShown: true })}
+ 
       </Stack.Navigator>
     );
   };

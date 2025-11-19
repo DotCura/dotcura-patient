@@ -80,6 +80,7 @@ const HomeComponent = (props: any) => {
               onPress={props.handleNavigateProfileScreen}
               activeOpacity={activityOpacity}
               style={styles.vwHeaderbtn}
+              hitSlop={20}
             >
               <Image source={images.imgUserHome} />
             </TouchableOpacity>
@@ -88,6 +89,7 @@ const HomeComponent = (props: any) => {
                 onPress={props.handleNavigateCheckoutScreen}
                 activeOpacity={activityOpacity}
                 style={styles.vwHeaderbtn}
+                hitSlop={20}
               >
                 <Image source={images.imgCartHome} />
               </TouchableOpacity>

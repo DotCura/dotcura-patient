@@ -11,6 +11,7 @@ import { activityOpacity } from '../../../constants/GConstant';
 
 const CustomBottomTabsComponent = (props: any) => {
   const insets = useSafeAreaInsets();
+  console.log('insetsbottom', insets.bottom);
 
   return (
     <View
@@ -26,7 +27,10 @@ const CustomBottomTabsComponent = (props: any) => {
         style={[
           styles.vwTabs,
           {
-            marginBottom: insets.bottom + getHeight(5),
+            marginBottom:
+              insets.bottom > 0
+                ? insets.bottom + getHeight(5)
+                : insets.bottom + getHeight(10),
           },
           ,
         ]}
@@ -37,10 +41,10 @@ const CustomBottomTabsComponent = (props: any) => {
       </View>
       {props.state.index === 1 && (
         <TouchableOpacity
-        activeOpacity={activityOpacity}
+          activeOpacity={activityOpacity}
           style={{
-            paddingVertical:getHeight(8),
-            paddingHorizontal:getWidth(18),
+            paddingVertical: getHeight(8),
+            paddingHorizontal: getWidth(18),
             backgroundColor: Colors.white,
             alignItems: 'center',
             alignSelf: 'center',
@@ -53,25 +57,21 @@ const CustomBottomTabsComponent = (props: any) => {
             elevation: 8,
             gap: getWidth(4),
             borderRadius: 999,
-            justifyContent:'center',
+            justifyContent: 'center',
           }}
         >
-          <Image
-          source={
-            images.imgSupport
-          }
-        />
-        <Text
-          style={[
-            styles.lbl,
-            {
-              color: Colors.gray75,
-              fontFamily:  fontsfamily.medium,
-            },
-          ]}
-        >
-          {getTranslation("support")}
-        </Text>
+          <Image source={images.imgSupport} />
+          <Text
+            style={[
+              styles.lbl,
+              {
+                color: Colors.gray75,
+                fontFamily: fontsfamily.medium,
+              },
+            ]}
+          >
+            {getTranslation('support')}
+          </Text>
         </TouchableOpacity>
       )}
     </View>

@@ -134,6 +134,7 @@ const YourProfileComponent = (props: any) => {
                 onPress={props.handlePressCheckout}
                 activeOpacity={activityOpacity}
                 style={styles.vwHeaderbtn}
+                hitSlop={20}
               >
                 <Image source={images.imgCartHome} />
               </TouchableOpacity>

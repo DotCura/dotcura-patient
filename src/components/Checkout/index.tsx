@@ -459,7 +459,15 @@ const CheckoutComponent = (props: any) => {
 
             {/* vwGotoCart */}
             <TouchableOpacity
-              style={[styles.vwGoToCart, { bottom: props.insets.bottom }]}
+              style={[
+                styles.vwGoToCart,
+                {
+                  bottom:
+                    props.insets.bottom > 0
+                      ? props.insets.bottom
+                      : props.insets.bottom + getHeight(16),
+                },
+              ]}
               activeOpacity={activityOpacity}
               onPress={props.funCloseIsModifyOrder}
             >
@@ -560,7 +568,15 @@ const CheckoutComponent = (props: any) => {
             </View>
             {/* vwGotoCart */}
             <TouchableOpacity
-              style={[styles.vwGoToCart, { bottom: props.insets.bottom }]}
+              style={[
+                styles.vwGoToCart,
+                {
+                  bottom:
+                    props.insets.bottom > 0
+                      ? props.insets.bottom
+                      : props.insets.bottom + getHeight(16),
+                },
+              ]}
               activeOpacity={activityOpacity}
               onPress={props.funCloseIsKitTestDetails}
             >
