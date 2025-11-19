@@ -37,19 +37,18 @@ const CompleteAddressComponent = (props: any) => {
         <View style={styles.vwInputsMain}>
           <PrimaryTitleTextInput
             placHolderLabel={getTranslation('typeplaceholder')}
-            refs={props.cardNumberRef}
-            focusnext={() => props.expiryDateRef.current?.focus()}
+            refs={props.typeRef}
+            focusnext={() => props.floorRef.current?.focus()}
             inputLabel={getTranslation('type')}
             blur={false}
             leftIcon={false}
-            keyaboardType={'number-pad'}
-            value={props.cardNumber}
+            keyaboardType={'default'}
+            value={props.type}
             onChangeFun={(text: any) =>
-              props.handleOnChangeText(text, 'cardNumber')
+              props.handleOnChangeText(text, 'address')
             }
-            errorMessage={props.cardNumberError}
-            setErrorMessage={props.setCardNumberError}
-            maxlength={19}
+            errorMessage={props.typeError}
+            setErrorMessage={props.setTypeError}
             isMultiline={false}
             isBorder={false}
           />
@@ -58,19 +57,18 @@ const CompleteAddressComponent = (props: any) => {
             <PrimaryTitleTextInput
               flex={1}
               placHolderLabel={getTranslation('florrplaceholder')}
-              refs={props.expiryDateRef}
-              focusnext={() => props.cvvRef.current?.focus()}
+              refs={props.floorRef}
+              focusnext={() => props.stairsRef.current?.focus()}
               inputLabel={getTranslation('florr')}
               blur={false}
               leftIcon={false}
-              keyaboardType={'number-pad'}
-              value={props.expiryDate}
+              keyaboardType={'default'}
+              value={props.floor}
               onChangeFun={(text: any) =>
-                props.handleOnChangeText(text, 'expiryDate')
+                props.handleOnChangeText(text, 'floor')
               }
-              errorMessage={props.expiryDateError}
-              setErrorMessage={props.setExpiryDateError}
-              maxlength={5}
+              errorMessage={props.floorError}
+              setErrorMessage={props.setFloorError}
               isMultiline={false}
               isBorder={false}
               isflexstart={true}
@@ -79,16 +77,15 @@ const CompleteAddressComponent = (props: any) => {
               flex={1}
               placHolderLabel={getTranslation('stairsplaceholder')}
               inputLabel={getTranslation('stairs')}
-              refs={props.cvvRef}
-              focusnext={() => props.cardHolderNameRef.current?.focus()}
+              refs={props.stairsRef}
+              focusnext={() => props.instructionRef.current?.focus()}
               blur={false}
               leftIcon={false}
-              keyaboardType={'number-pad'}
-              value={props.cvv}
-              onChangeFun={(text: any) => props.handleOnChangeText(text, 'cvv')}
-              errorMessage={props.cvvError}
-              setErrorMessage={props.setCvvError}
-              maxlength={3}
+              keyaboardType={'default'}
+              value={props.stairs}
+              onChangeFun={(text: any) => props.handleOnChangeText(text, 'stairs')}
+              errorMessage={props.stairsError}
+              setErrorMessage={props.setStairsError}
               isflexstart={true}
               isMultiline={false}
               isBorder={false}
@@ -97,18 +94,17 @@ const CompleteAddressComponent = (props: any) => {
 
           <PrimaryTitleTextInput
             placHolderLabel={getTranslation('instructionplaceholder')}
-            refs={props.cardHolderNameRef}
+            refs={props.instructionRef}
             inputLabel={getTranslation('instruction')}
             blur={true}
             leftIcon={false}
             keyaboardType={'default'}
-            value={props.cardHolderName}
+            value={props.instructions}
             onChangeFun={(text: any) =>
-              props.handleOnChangeText(text, 'cardHolderName')
+              props.handleOnChangeText(text, 'instruction')
             }
-            errorMessage={props.cardHolderNameError}
-            setErrorMessage={props.setCardHolderNameError}
-            maxlength={200}
+            errorMessage={props.instructionsError}
+            setErrorMessage={props.setInstructionNameError}
             isMultiline={false}
             isBorder={false}
           />
@@ -123,7 +119,7 @@ const CompleteAddressComponent = (props: any) => {
         ]}
       >
         <CustomButton
-          btnPress={props.handleOnPressAddCard}
+          btnPress={props.handleOnPressSaveAddress}
           btnTitle={getTranslation('continue')}
         />
       </View>

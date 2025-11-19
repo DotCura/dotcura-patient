@@ -247,6 +247,21 @@ export default {
   stairsplaceholder: 'e.g. B',
   florrplaceholder: 'e.g. 2',
   typeplaceholder: 'e.g. Home',
+  emptyHomeType: 'Por favor ingrese el tipo de vivienda.',
+  emptyFloor: 'Por favor ingrese el número de piso.',
+  invalidFloor: 'El piso debe contener solo números.',
+  invalidStairs: 'Las escaleras deben contener solo letras.',
+  instructionTooLong: 'La instrucción es demasiado larga.',
+  emptyStairs: "Por favor ingrese el nombre de las escaleras.",
+  emptyInstructions: "Por favor ingrese las instrucciones.",
+
+
+
+
+
+
+
+
 
   //PROFILE
   membersince: 'Membro dal',
