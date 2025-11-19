@@ -5,6 +5,24 @@ import { fontsfamily } from '../../../constants/FontFamily';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
+  vwTextCount: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.redCA,
+    borderRadius: 999,
+    // height: getHeight(16),
+    paddingVertical:getHeight(1.5),
+    paddingHorizontal:getWidth(4.5),
+    position: 'absolute',
+    right: -2,
+    top: -4,
+    aspectRatio: 1,
+  },
+  labelTextCount: {
+    color: Colors.white,
+    fontSize: fontSize.size10,
+    fontFamily: fontsfamily.medium,
+  },
   
   lblFirstChar:{
     color: Colors.grey29,

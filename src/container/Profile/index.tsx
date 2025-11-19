@@ -4,8 +4,8 @@ import { images } from '../../constants/Images';
 import AppHeader from '../../global/Header';
 import ProfileComponent from '../../components/Profile';
 import { getTranslation } from '../../localization/i18n/i18n.config';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { activityOpacity, currency } from '../../constants/GConstant';
+import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import { activityOpacity, appName, currency } from '../../constants/GConstant';
 import {
   getHeight,
   getWidth,
@@ -15,10 +15,11 @@ import { styles } from './styles';
 import { Colors } from '../../constants/Colors';
 import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
+import { ScreenNames } from '../../constants/AppConstants';
 
 const ProfileContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
-  
+
   const recommandAnalysis = [
     {
       id: '1',
@@ -347,12 +348,39 @@ const ProfileContainer = ({ navigation }: any) => {
     setIsShowOrderHistoryDetailsModel(false);
   };
 
+  const handleNavigateAddFamily = () => {
+    navigation.navigate(ScreenNames.ADDFAMILYMEMBERCONTAINER);
+  };
+
+  const handlePressLogout = () => {
+    Alert.alert(appName, getTranslation('logoutText') || '|| ', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
+
+  const handlePressDeleteAccount = () => {
+    Alert.alert(appName, getTranslation('deleteText') || '', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
+
   const header = () => {
     navigation.setOptions({
       header: () => (
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
+            navigation.goBack();
           }}
           dontShowStartBtn={false}
           showTitle={false}
@@ -369,6 +397,8 @@ const ProfileContainer = ({ navigation }: any) => {
 
   return (
     <ProfileComponent
+      handlePressDeleteAccount={handlePressDeleteAccount}
+      handlePressLogout={handlePressLogout}
       fullName={fullName}
       memberSince={memberSince}
       data={data}
@@ -376,6 +406,7 @@ const ProfileContainer = ({ navigation }: any) => {
       insets={insets}
       renderRecommandAnlaysisData={renderRecommandAnlaysisData}
       recommandAnalysisData={recommandAnalysisData}
+      handleNavigateAddFamily={handleNavigateAddFamily}
       //switchmodel
       funOpenSwitchModel={funOpenSwitchModel}
       funCloseSwitchModel={funCloseSwitchModel}

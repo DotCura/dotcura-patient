@@ -14,8 +14,9 @@ import {
   ScreenDimensions,
 } from '../../../constants/utils/Dimensions';
 import { images } from '../../../constants/Images';
+import { ScreenNames } from '../../../constants/AppConstants';
 
-const GetTestedContainer = () => {
+const GetTestedContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
   const kitList = [
     {
@@ -145,6 +146,7 @@ const GetTestedContainer = () => {
     const { backgroundColor, textColor } = getRandomTheme();
     return (
       <TouchableOpacity
+        onPress={handleNavigateKitDetails}
         activeOpacity={activityOpacity}
         style={{
           width: ScreenDimensions.screenWidth / 2 - getWidth(32),
@@ -203,6 +205,14 @@ const GetTestedContainer = () => {
     );
   };
 
+  const handleNavigateCheckout = () => {
+    navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+  };
+
+  const handleNavigateKitDetails = () => {
+    navigation.navigate(ScreenNames.KITDETAILSCONTAINER);
+  };
+
   return (
     <GetTestedComponent
       insets={insets}
@@ -211,6 +221,7 @@ const GetTestedContainer = () => {
       renderKitData={renderKitData}
       searchVisible={searchVisible}
       setSearchVisible={setSearchVisible}
+      handleNavigateCheckout={handleNavigateCheckout}
     />
   );
 };

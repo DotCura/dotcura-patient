@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { regex } from '../../../constants/Regex';
 import { flashMessageWarning } from '../../../constants/GConstant';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
+import { ScreenNames } from '../../../constants/AppConstants';
 
 const AddCardContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -98,6 +99,7 @@ const AddCardContainer = ({ navigation }: any) => {
       setCardHolderNameError(getTranslation('emptyCardHolderName'));
     } else {
       // handleApiAddCard();
+      navigation.navigate(ScreenNames.ALLSETCONATINER);
     }
   };
 
@@ -127,6 +129,7 @@ const AddCardContainer = ({ navigation }: any) => {
       setExpiryDateError={setExpiryDateError}
       isEnabled={isEnabled}
       toggleSwitch={toggleSwitch}
+      navigation={navigation}
     />
   );
 };

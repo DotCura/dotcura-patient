@@ -15,7 +15,7 @@ LogBox.ignoreAllLogs();
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.ONBOARDINGCONTAINER,
+    ScreenNames.BOTTOMTABNAVIGATION,
   );
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
   // console.log('orderStatus in App.tsx:', orderStatus);

@@ -48,7 +48,7 @@ import { ZustandStores } from '../../../store';
 }
 
 const HomeComponent = (props: any) => {
-  const {orderStatus} = ZustandStores.OrderstatusStore();
+  const { orderStatus } = ZustandStores.OrderstatusStore();
   return (
     <View
       style={[
@@ -60,7 +60,15 @@ const HomeComponent = (props: any) => {
     >
       {/* vwHeader */}
       <View style={{ marginHorizontal: getWidth(16) }}>
-        <View style={[styles.vwMain, { paddingTop: orderStatus == '' ? props.insets.top + 10 : getHeight(25) }]}>
+        <View
+          style={[
+            styles.vwMain,
+            {
+              paddingTop:
+                orderStatus == '' ? props.insets.top + 10 : getHeight(25),
+            },
+          ]}
+        >
           <View style={styles.vwHeaderText}>
             <Text style={styles.lblHeaderTitle} numberOfLines={1}>
               Hello Giovanni!
@@ -69,19 +77,24 @@ const HomeComponent = (props: any) => {
 
           <View style={styles.vwHeaderRight}>
             <TouchableOpacity
-              onPress={() => {}}
+              onPress={props.handleNavigateProfileScreen}
               activeOpacity={activityOpacity}
               style={styles.vwHeaderbtn}
             >
               <Image source={images.imgUserHome} />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {}}
-              activeOpacity={activityOpacity}
-              style={styles.vwHeaderbtn}
-            >
-              <Image source={images.imgCartHome} />
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                onPress={props.handleNavigateCheckoutScreen}
+                activeOpacity={activityOpacity}
+                style={styles.vwHeaderbtn}
+              >
+                <Image source={images.imgCartHome} />
+              </TouchableOpacity>
+              <View style={styles.vwTextCount}>
+                <Text style={styles.labelTextCount}>2</Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -220,7 +233,7 @@ const HomeComponent = (props: any) => {
                       paddingVertical: getHeight(3),
                       paddingHorizontal: getWidth(4),
                       borderRadius: 999,
-                      marginLeft:getWidth(3)
+                      marginLeft: getWidth(3),
                     }}
                   >
                     <View

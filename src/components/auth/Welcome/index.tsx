@@ -24,7 +24,7 @@ const WelcomeComponent = (props: any) => {
       ></ScrollView>
       <CustomButton
         style={{ marginBottom: getHeight(8) }}
-        btnPress={props.onPressContinue}
+        btnPress={props.handleNavigateLogin}
         btnTitle={getTranslation('applyasnurse')}
         btnicon={false}
       />
@@ -34,7 +34,7 @@ const WelcomeComponent = (props: any) => {
           marginBottom: getHeight(8),
           backgroundColor: Colors.lightBlurE4,
         }}
-        btnPress={props.onPressContinue}
+        btnPress={props.handleNavigateLogin}
         btnTitle={getTranslation('Enter')}
         btnicon={false}
       />
@@ -44,7 +44,7 @@ const WelcomeComponent = (props: any) => {
           marginBottom: getWidth(42),
           backgroundColor: Colors.white,
         }}
-        btnPress={props.onPressContinue}
+        btnPress={props.handleNavigateLogin}
         btnTitle={getTranslation('icantaccess')}
         btnicon={false}
       />

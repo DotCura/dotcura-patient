@@ -51,7 +51,7 @@ const KitAnalysisComponent = (props: any) => {
         >
           <TouchableOpacity
             style={styles.btnBack}
-            onPress={props.startBtnOnPress}
+            onPress={props.handleNavigationGoBack}
           >
             <Image source={images.imgLeftArrow} />
           </TouchableOpacity>
@@ -254,6 +254,7 @@ const KitAnalysisComponent = (props: any) => {
       >
         <CustomButton
           btnTitle={getTranslation('savedata')}
+          btnPress={props.handleNavigationGoBack}
           // style={{ backgroundColor: Colors.grayED }}
           // textStyle={{
           //   color: Colors.gray0F,

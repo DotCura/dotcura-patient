@@ -15,6 +15,7 @@ const AddFamilyContainer = ({ navigation }: any) => {
   ];
 
   const [familyMembersData, setFamilyMembersData] = useState(familyMember);
+  const [showEmpty, setShowEmpty] = useState(true);
 
   const renderItemFamilyMember = ({ item }: any) => {
     return (
@@ -55,6 +56,7 @@ const AddFamilyContainer = ({ navigation }: any) => {
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
+            navigation.goBack();
           }}
           dontShowStartBtn={false}
           showTitle={true}
@@ -74,6 +76,8 @@ const AddFamilyContainer = ({ navigation }: any) => {
       insets={insets}
       familyMembersData={familyMembersData}
       renderItemFamilyMember={renderItemFamilyMember}
+      showEmpty={showEmpty}
+      setShowEmpty={setShowEmpty}
     />
   );
 };

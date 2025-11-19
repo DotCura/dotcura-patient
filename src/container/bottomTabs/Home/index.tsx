@@ -12,6 +12,7 @@ import {
 import { Colors } from '../../../constants/Colors';
 import VerticalBarChart from '../../../global/VerticalBarChartHome';
 import { activityOpacity, currency } from '../../../constants/GConstant';
+import { ScreenNames } from '../../../constants/AppConstants';
 
 const HomeContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -124,7 +125,7 @@ const HomeContainer = ({ navigation }: any) => {
       familyMemberName: 'Maria',
       familyMemberReport: [
         {
-          id:'1',
+          id: '1',
           reportname: 'Urine',
           reportValue: 'pH: 2.2',
           currentvalue: 11000,
@@ -138,7 +139,7 @@ const HomeContainer = ({ navigation }: any) => {
       familyMemberName: 'Pasquale',
       familyMemberReport: [
         {
-          id:'1',
+          id: '1',
           reportname: 'Urine',
           reportValue: 'pH: 2.2',
           currentvalue: 2000,
@@ -146,7 +147,7 @@ const HomeContainer = ({ navigation }: any) => {
           maxvalue: 10000,
         },
         {
-          id:'2',
+          id: '2',
           reportname: 'Urine',
           reportValue: 'pH: 2.2',
           currentvalue: 1,
@@ -167,6 +168,7 @@ const HomeContainer = ({ navigation }: any) => {
   const renderLatestAnlaysisData = ({ item, index }: any) => {
     return (
       <TouchableOpacity
+        onPress={handleNavigateTestDetailsScreen}
         activeOpacity={activityOpacity}
         style={{
           width: ScreenDimensions.screenWidth * 0.75,
@@ -236,6 +238,17 @@ const HomeContainer = ({ navigation }: any) => {
     );
   };
 
+  const handleNavigateProfileScreen = () => {
+    navigation.navigate(ScreenNames.PROFILECONTAINER);
+  };
+  const handleNavigateCheckoutScreen = () => {
+    navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+  };
+
+  const handleNavigateTestDetailsScreen = () => {
+    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+  };
+
   return (
     <HomeComponent
       insets={insets}
@@ -245,6 +258,9 @@ const HomeContainer = ({ navigation }: any) => {
       recommandAnalysisData={recommandAnalysisData}
       renderRecommandAnlaysisData={renderRecommandAnlaysisData}
       familyMemberAnalysisData={familyMemberAnalysisData}
+      handleNavigateProfileScreen={handleNavigateProfileScreen}
+      handleNavigateCheckoutScreen={handleNavigateCheckoutScreen}
+      handleNavigateTestDetailsScreen={handleNavigateTestDetailsScreen}
     />
   );
 };

@@ -40,6 +40,7 @@ const TestDetailsContainer = ({ navigation }: any) => {
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
+            navigation.goBack();
           }}
           dontShowStartBtn={false}
           showTitle={true}

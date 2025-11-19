@@ -9,6 +9,7 @@ import { activityOpacity } from '../../constants/GConstant';
 import { Colors } from '../../constants/Colors';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { styles } from './styles';
+import { ScreenNames } from '../../constants/AppConstants';
 
 const OrderHistoryContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -149,6 +150,9 @@ const OrderHistoryContainer = ({ navigation }: any) => {
       <TouchableOpacity
         activeOpacity={activityOpacity}
         style={styles.btnOrderHistory}
+        onPress={() => {
+          navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+        }}
       >
         {/* orderDetailsView */}
         <View style={styles.vwMainOrderDetails}>
@@ -205,6 +209,7 @@ const OrderHistoryContainer = ({ navigation }: any) => {
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
+            navigation.goBack();
           }}
           dontShowStartBtn={false}
           showTitle={true}
@@ -219,7 +224,7 @@ const OrderHistoryContainer = ({ navigation }: any) => {
   useEffect(() => {
     header();
   }, []);
-  
+
   return (
     <OrderHistoryComponent
       insets={insets}

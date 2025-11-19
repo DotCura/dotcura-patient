@@ -2,8 +2,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import InformationConasantComponent from '../../../components/auth/InformationConasant';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ScreenNames } from '../../../constants/AppConstants';
 
-const InformationConasantContainer = ({navigation}:any) => {
+const InformationConasantContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
   const [headerArray, setHeaderArray] = useState([
@@ -15,9 +16,9 @@ const InformationConasantContainer = ({navigation}:any) => {
   const [selectedInfo, setSelectedInfo] = useState(1);
 
   const handlePressContinue = () => {
-    console.log("hy");
-    
-  }
+    console.log('hy');
+    navigation.navigate(ScreenNames.ADDCARDCONTAINER);
+  };
 
   return (
     <InformationConasantComponent

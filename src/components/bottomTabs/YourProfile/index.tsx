@@ -131,7 +131,7 @@ const YourProfileComponent = (props: any) => {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={props.handlePressCheckout}
                 activeOpacity={activityOpacity}
                 style={styles.vwHeaderbtn}
               >

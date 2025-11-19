@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     gap: getWidth(4),
     alignItems: 'center',
     flexDirection: 'row',
+    marginRight:getWidth(16)
   },
   lablWarning: {
     color: Colors.red8C,

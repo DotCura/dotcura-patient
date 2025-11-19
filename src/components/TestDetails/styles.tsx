@@ -15,8 +15,8 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: getHeight(16),
   },
-  lblTrade:{
-    marginTop:getHeight(24),
+  lblTrade: {
+    marginTop: getHeight(24),
     color: Colors.gray0F,
     fontFamily: fontsfamily.bold,
     fontSize: fontSize.size20,
@@ -116,6 +116,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: getWidth(2),
   },
   vwTestDes: {
+    marginTop: getHeight(20),
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignSelf: 'center',

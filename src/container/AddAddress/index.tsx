@@ -2,8 +2,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { useRef, useState } from 'react';
 import AddAddressComponent from '../../components/AddAddress';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ScreenNames } from '../../constants/AppConstants';
 
-const AddAddressContainer = () => {
+const AddAddressContainer = ({navigation}:any) => {
   const insets = useSafeAreaInsets();
 
   const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
@@ -74,12 +75,18 @@ const AddAddressContainer = () => {
     //   }
     // }
   };
+
+  const handleNavigateConmpleAddress = () => {
+    navigation.navigate(ScreenNames.COMPLETEADDRESSCONTAINER)
+  }
   return (
     <AddAddressComponent
       insets={insets}
       headerArray={headerArray}
       searchRef={searchRef}
       handlePlaceSelect={handlePlaceSelect}
+      navigation={navigation}
+      handleNavigateConmpleAddress={handleNavigateConmpleAddress}
     />
   );
 };

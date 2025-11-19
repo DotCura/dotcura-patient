@@ -255,7 +255,11 @@ export default {
   emptyStairs: "Por favor ingrese el nombre de las escaleras.",
   emptyInstructions: "Por favor ingrese las instrucciones.",
 
-
+  //LOGOUT
+  logoutText:"¿Estás seguro de que deseas cerrar sesión?",
+  deleteText:"Esta acción es irreversible. ¿Realmente deseas eliminar tu cuenta?",
+  
+  
 
 
 

@@ -55,6 +55,7 @@ const LoginContainer = ({ navigation }: any) => {
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
+            navigation.goBack();
           }}
           dontShowStartBtn={false}
           showTitle={false}

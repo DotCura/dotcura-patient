@@ -57,7 +57,11 @@ const AddAddressComponent = (props: any) => {
       contentContainerStyle={[constnatStyles.keyboardContainer]}
       style={{ flex: 1, backgroundColor: Colors.white }}
     >
-      <TopBar array={props.headerArray} currentIndex={0} />
+      <TopBar
+        array={props.headerArray}
+        currentIndex={0}
+        onClickBack={() => props.navigation.goBack()}
+      />
       {/* HeaderView */}
       <View style={styles.vwHeader}>
         <TitleSubtitle
@@ -87,7 +91,7 @@ const AddAddressComponent = (props: any) => {
       </View>
       <View style={{ marginBottom: props.insets.bottom + getHeight(16) }}>
         <CustomButton
-          //  btnPress={props.handlePressLoginFun}
+          btnPress={props.handleNavigateConmpleAddress}
           btnTitle={getTranslation('continue')}
         />
       </View>

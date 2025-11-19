@@ -140,6 +140,7 @@ const CheckoutComponent = (props: any) => {
             <TouchableOpacity
               style={styles.btnChange}
               activeOpacity={activityOpacity}
+              onPress={props.handleNavigateAddAddress}
             >
               <Text style={styles.lblChnage}>{getTranslation('change')}</Text>
             </TouchableOpacity>

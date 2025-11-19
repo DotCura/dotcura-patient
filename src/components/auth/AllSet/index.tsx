@@ -28,7 +28,7 @@ const AllSetComponent = (props: any) => {
           marginBottom: props.insets.bottom + getHeight(16),
           alignSelf: 'flex-end',
         }}
-        btnPress={props.onPressContinue}
+        btnPress={props.handleNavigateToBottomTab}
         btnTitle={getTranslation('gototheapp')}
         btnicon={false}
       />

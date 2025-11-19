@@ -134,11 +134,12 @@ const KitDetailsComponent = (props: any) => {
           </View>
         </View>
       </ScrollView>
-      
+
       {/* vwGotoCart */}
       <TouchableOpacity
         style={[styles.vwGoToCart, { bottom: props.insets.bottom }]}
         activeOpacity={activityOpacity}
+        onPress={props.handleNavigateCheckout}
       >
         <View style={styles.vwCartImage}>
           <Image source={images.imgCartHome} tintColor={Colors.white} />

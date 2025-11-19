@@ -10,10 +10,14 @@ import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AppHeader from '../../../global/Header';
 import { regex } from '../../../constants/Regex';
-import { flashMessageSucess, flashMessageWarning } from '../../../constants/GConstant';
+import {
+  flashMessageSucess,
+  flashMessageWarning,
+} from '../../../constants/GConstant';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { OTPManager } from '../../../constants/utils/OTP';
 import OTPComponent from '../../../components/auth/OTP';
+import { ScreenNames } from '../../../constants/AppConstants';
 
 interface OtpArray {
   value: string;
@@ -21,7 +25,6 @@ interface OtpArray {
 }
 
 const OTPContainer = ({ navigation }: any) => {
-  
   const insets = useSafeAreaInsets();
   const [otpArray, setOtpArray] = useState<OtpArray[]>([
     {
@@ -51,9 +54,7 @@ const OTPContainer = ({ navigation }: any) => {
   ]);
   const [fullOtp, setFullOtp] = useState<string | number>('');
   const [otp, setOtp] = useState<number>(30);
-  const [validateOtp, setValidateOtp] = useState<string>(
-    "123456" || '',
-  );
+  const [validateOtp, setValidateOtp] = useState<string>('123456' || '');
   const [resendOtp, setResendOtp] = useState(true);
   const timerRef = useRef<any>(null);
   const startTimeRef = useRef<number>(0);
@@ -122,17 +123,16 @@ const OTPContainer = ({ navigation }: any) => {
     } else if (fullOtp != validateOtp.toString()) {
       flashMessageWarning(getTranslation('errorMessageInvalidOtp'));
     } else {
-      return
+      navigation.navigate(ScreenNames.COMPLETEPROFILECONTAINER);
     }
   };
-
 
   const header = () => {
     navigation.setOptions({
       header: () => (
         <AppHeader
           startBtnOnPress={() => {
-            console.log('hy');
+            navigation.goBack();
           }}
           dontShowStartBtn={false}
           showTitle={false}

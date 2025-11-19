@@ -27,7 +27,11 @@ const InformationConasantComponent = (props: any) => {
     >
       <View style={{ flex: 1 }}>
         {/* TopBar */}
-        <TopBar array={props.headerArray} currentIndex={1} onClickBack={()=>props.navigation.goBack()}/>
+        <TopBar
+          array={props.headerArray}
+          currentIndex={1}
+          onClickBack={() => props.navigation.goBack()}
+        />
 
         {/* HeaderView */}
         <View style={styles.vwHeader}>

@@ -10,6 +10,7 @@ import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { Colors } from '../../constants/Colors';
 import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
+import { ScreenNames } from '../../constants/AppConstants';
 
 const KitDetailsContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -113,7 +114,7 @@ const KitDetailsContainer = ({ navigation }: any) => {
           <View style={{ flex: 1, marginRight: getWidth(20) }}>
             <Text style={styles.lblTestName} numberOfLines={2}>
               {item.name}{' '}
-              <View style={{ alignItems: 'center',marginTop:3 }}>
+              <View style={{ alignItems: 'center', marginTop: 3 }}>
                 <Text
                   style={[
                     styles.lblStatus,
@@ -153,12 +154,17 @@ const KitDetailsContainer = ({ navigation }: any) => {
     );
   };
 
+  const handleNavigateCheckout = () => {
+    navigation.navigate(ScreenNames.CHECKOUTCONTAINER)
+  }
+
   const header = () => {
     navigation.setOptions({
       header: () => (
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
+            navigation.goBack();
           }}
           dontShowStartBtn={false}
           centerTitle={'Anaemia'}
@@ -181,6 +187,7 @@ const KitDetailsContainer = ({ navigation }: any) => {
       selectAll={selectAll}
       totalPrice={totalPrice}
       selectedTests={selectedTests}
+      handleNavigateCheckout={handleNavigateCheckout}
     />
   );
 };

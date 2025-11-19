@@ -276,7 +276,7 @@ const CheckoutContainer = ({ navigation }: any) => {
           <View style={{ flex: 1, marginRight: getWidth(20) }}>
             <Text style={styles.lblTestName} numberOfLines={2}>
               {item.name}{' '}
-              <View style={{ alignItems: 'center',marginTop:3 }}>
+              <View style={{ alignItems: 'center', marginTop: 3 }}>
                 <Text
                   style={[
                     styles.lblStatusKitDetails,
@@ -506,6 +506,10 @@ const CheckoutContainer = ({ navigation }: any) => {
     setOrderStatus('order_sent');
   };
 
+  const handleNavigateAddAddress = () => {
+    navigation.navigate(ScreenNames.ADDADDRESSCONTAINER);
+  };
+
   const header = () => {
     navigation.setOptions({
       header: () => (
@@ -522,7 +526,9 @@ const CheckoutContainer = ({ navigation }: any) => {
               <TouchableOpacity
                 activeOpacity={activityOpacity}
                 style={styles.btnBack}
-                // onPress={startBtnOnPress}
+                onPress={() => {
+                  navigation.goBack();
+                }}
               >
                 <Image source={images.imgLeftArrow} />
               </TouchableOpacity>
@@ -553,6 +559,7 @@ const CheckoutContainer = ({ navigation }: any) => {
 
   return (
     <CheckoutComponent
+      handleNavigateAddAddress={handleNavigateAddAddress}
       insets={insets}
       testkitsData={testkitsData}
       renderItemTestKits={renderItemTestKits}

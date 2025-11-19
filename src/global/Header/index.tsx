@@ -15,6 +15,7 @@ import { constnatStyles } from '../../constants/Styles';
 import { Colors } from '../../constants/Colors';
 import { activityOpacity } from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
+import { ZustandStores } from '../../store';
 
 interface PropsType {
   dontShowStartBtn?: boolean;
@@ -38,14 +39,25 @@ interface PropsType {
 
 const AppHeader = (props: PropsType) => {
   const insets = useSafeAreaInsets();
+  const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
 
   return (
-    <View style={[styles.vwMain, { paddingTop: insets.top + 10 }]}>
+    <View
+      style={[
+        styles.vwMain,
+        {
+          paddingTop: orderStatus == '' ? insets.top + 10 : getHeight(25),
+        },
+      ]}
+    >
       {/* Start Button */}
       {props?.dontShowStartBtn ? (
         <Image source={images.imgDelete} style={{ opacity: 0 }} />
       ) : (
-        <TouchableOpacity style={styles.btnBack} onPress={props.startBtnOnPress}>
+        <TouchableOpacity
+          style={styles.btnBack}
+          onPress={props.startBtnOnPress}
+        >
           <Image source={images.imgLeftArrow} />
         </TouchableOpacity>
       )}
@@ -83,7 +95,7 @@ const AppHeader = (props: PropsType) => {
               style={styles.vwSave}
               activeOpacity={activityOpacity}
             >
-              <Text style={styles.lblSave}>{getTranslation("save")}</Text>
+              <Text style={styles.lblSave}>{getTranslation('save')}</Text>
             </TouchableOpacity>
           )}
           {props.isHelpIcon && (

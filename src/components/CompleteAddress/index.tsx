@@ -23,7 +23,7 @@ const CompleteAddressComponent = (props: any) => {
         <TopBar
           array={props.headerArray}
           currentIndex={1}
-          // onClickBack={() => props.navigation.goBack()}
+          onClickBack={() => props.navigation.goBack()}
         />
 
         {/* HeaderView */}

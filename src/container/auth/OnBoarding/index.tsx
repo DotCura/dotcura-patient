@@ -45,12 +45,12 @@ const OnBoardingContainer = ({ navigation }: any) => {
     if (currentIndex < onBoardingArr.length - 1) {
       flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
     } else {
-      navigation.navigate(ScreenNames.LOGINCONTAINER);
+      navigation.navigate(ScreenNames.WELCOMECONTAINER);
     }
   };
 
   const handleSkip = () => {
-    navigation.navigate(ScreenNames.LOGINCONTAINER);
+    navigation.navigate(ScreenNames.WELCOMECONTAINER);
   };
 
   return (

@@ -103,7 +103,10 @@ const ProfileComponent = (props: any) => {
           </View>
           <Text style={styles.txtAvability}>{getTranslation('personal')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.vwAvablity}>
+        <TouchableOpacity
+          style={styles.vwAvablity}
+          onPress={props.handleNavigateAddFamily}
+        >
           <View style={styles.vwInAva}>
             <Image source={images.imgFamily}></Image>
           </View>
@@ -170,7 +173,7 @@ const ProfileComponent = (props: any) => {
         <CustomButton
           style={{ backgroundColor: Colors.redFD, marginTop: getHeight(16) }}
           textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}
-          btnPress={props.handlePressLoginFun}
+          btnPress={props.handlePressLogout}
           btnTitle={getTranslation('exit')}
         />
 
@@ -179,7 +182,7 @@ const ProfileComponent = (props: any) => {
           btnicon={true}
           style={{ backgroundColor: Colors.white, marginTop: getHeight(10) }}
           textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}
-          btnPress={props.handlePressLoginFun}
+          btnPress={props.handlePressDeleteAccount}
           btnTitle={getTranslation('deleteaccountanddata')}
         />
       </View>

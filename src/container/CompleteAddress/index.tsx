@@ -3,8 +3,9 @@ import React, { useRef, useState } from 'react';
 import CompleteAddressComponent from '../../components/CompleteAddress';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getTranslation } from '../../localization/i18n/i18n.config';
+import { ScreenNames } from '../../constants/AppConstants';
 
-const CompleteAddressContainer = () => {
+const CompleteAddressContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
   const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
@@ -73,10 +74,8 @@ const CompleteAddressContainer = () => {
       setInstructionNameError(getTranslation('emptyInstructions'));
       return;
     } else {
+      navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
     }
-
-    // If all good → call API
-    // handleApiSaveAddress();
   };
 
   return (
@@ -101,6 +100,7 @@ const CompleteAddressContainer = () => {
       setStairsError={setStairsError}
       instructionsError={instructionsError}
       setInstructionNameError={setInstructionNameError}
+      navigation={navigation}
     />
   );
 };

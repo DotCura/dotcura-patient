@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { styles } from './styles';
 import KitAnalysisComponent from '../../components/KitAnlaysis';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ScreenNames } from '../../constants/AppConstants';
 
-const KitAnalysisContainer = () => {
+const KitAnalysisContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
   const KitAnalysis = {
@@ -76,14 +77,24 @@ const KitAnalysisContainer = () => {
       rating: 5,
     },
     deliverdatetime: '8/8/2025 alle 17:09',
-    leboname:"Centro Diagnostico San Ciro",
-    address:"Via Lamazza, 14B - Napoli",
+    leboname: 'Centro Diagnostico San Ciro',
+    address: 'Via Lamazza, 14B - Napoli',
   };
 
   const [KitAnalysisData, setKitAnalysisData] = useState(KitAnalysis);
 
+  const handleNavigationGoBack = () => {
+    navigation.goBack();
+  };
+
+ 
+
   return (
-    <KitAnalysisComponent insets={insets} KitAnalysisData={KitAnalysisData} />
+    <KitAnalysisComponent
+      insets={insets}
+      KitAnalysisData={KitAnalysisData}
+      handleNavigationGoBack={handleNavigationGoBack}
+    />
   );
 };
 

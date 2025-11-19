@@ -13,6 +13,7 @@ import {
   ScreenDimensions,
 } from '../../../constants/utils/Dimensions';
 import VerticalBarChartProfile from '../../../global/VerticalBarChartProfile';
+import { ScreenNames } from '../../../constants/AppConstants';
 
 const YourProfileContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -235,9 +236,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       return (
         <TouchableOpacity
           activeOpacity={activityOpacity}
-          onPress={() => {
-            console.log('See All clicked');
-          }}
+          onPress={handleNavigateOrderHistory}
           style={[
             styles.vwReportDate,
             {
@@ -255,6 +254,7 @@ const YourProfileContainer = ({ navigation }: any) => {
         activeOpacity={activityOpacity}
         key={index}
         style={styles.vwReportDate}
+        onPress={hanldeNavigateKitAnalysis}
       >
         <Text style={styles.lblReportName}>{item.reportname}</Text>
         <Text style={styles.lblDate}>{item.date}</Text>
@@ -274,6 +274,7 @@ const YourProfileContainer = ({ navigation }: any) => {
           gap: getHeight(6),
           marginHorizontal: getWidth(16),
         }}
+        onPress={() => navigation.navigate(ScreenNames.TESTDETAILSCONTAINER)}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ flex: 1 }}>
@@ -532,6 +533,18 @@ const YourProfileContainer = ({ navigation }: any) => {
     );
   };
 
+  const handlePressCheckout = () => {
+    navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+  };
+
+  const hanldeNavigateKitAnalysis = () => {
+    navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+  };
+
+  const handleNavigateOrderHistory = () => {
+    navigation.navigate(ScreenNames.ORDERHISTORYCONTAINER);
+  };
+
   return (
     <YourProfileComponent
       insets={insets}
@@ -549,6 +562,8 @@ const YourProfileContainer = ({ navigation }: any) => {
       setSelectedName={setSelectedName}
       showPopup={showPopup}
       setShowPopup={setShowPopup}
+      handlePressCheckout={handlePressCheckout}
+      hanldeNavigateKitAnalysis={hanldeNavigateKitAnalysis}
     />
   );
 };

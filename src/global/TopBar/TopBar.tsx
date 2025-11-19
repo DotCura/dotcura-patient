@@ -7,6 +7,7 @@ import { images } from '../../constants/Images'; // update path if needed
 import { styles } from './styles';
 import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
+import { ZustandStores } from '../../store';
 
 type TopBarProps = {
   array: any[];
@@ -26,9 +27,15 @@ const TopBar: React.FC<TopBarProps> = ({
   showDelete = false,
 }) => {
   const insets = useSafeAreaInsets();
+  const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
 
   return (
-    <View style={[styles.vwMain, { paddingTop: insets.top + 10 }]}>
+    <View
+      style={[
+        styles.vwMain,
+        { paddingTop: orderStatus == '' ? insets.top + 10 : getHeight(25) },
+      ]}
+    >
       {/* Back Button */}
       {showBack ? (
         <TouchableOpacity style={styles.btnBack} onPress={onClickBack}>
