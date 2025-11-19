@@ -33,8 +33,8 @@ export const styles = StyleSheet.create({
   },
   imgLeftIcon: {
     alignSelf: 'center',
-    height: getHeight(30),
-    width: getWidth(30),
+    height: getHeight(20),
+    width: getWidth(20),
   },
   vwTextInputAndIcon: {
     flexDirection: 'row',
@@ -45,6 +45,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
     height: getHeight(56),
+    gap:getWidth(8),
     borderWidth: 2,
     borderColor: Colors.grayD8,
     paddingHorizontal: getWidth(12),

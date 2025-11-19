@@ -13,6 +13,7 @@ export default {
   onboardingdes3:
     'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
   skip: 'Salta',
+  creteanacoount: 'Crea un account',
 
   //LOGIN
   logintitle: 'Inserisci il numero di telefono',
@@ -260,11 +261,16 @@ export default {
   deleteText:
     'Esta acción es irreversible. ¿Realmente deseas eliminar tu cuenta?',
 
+  //ACCOUNT
   dateofbirth: 'Data di nascita',
-
   account: 'Account',
-
   save: 'Salva',
+  pleaseselectdateofbirth: 'Por favor seleccione su fecha de nacimiento.',
+  medica: 'Medicazioni',
+  pato: 'Patologie',
+  allergie: 'Allergie',
+  addgg: 'Aggiungi',
+  searchplaceholder:"Cerca...",
 
   //PROFILE
   membersince: 'Membro dal',

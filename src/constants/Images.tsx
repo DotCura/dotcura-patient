@@ -60,6 +60,8 @@ export const images = {
   imgFamily:require('../assets/images/family.png'),
   imgWarningProfile:require('../assets/images/warningProfile.png'),
   imginsta:require('../assets/images/insta.png'),
+  imgDeleteRound:require('../assets/images/deleteRound.png'),
+  imgSearchModel:require('../assets/images/searchModel.png'),
 
   
   // Static Images

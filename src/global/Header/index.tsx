@@ -35,6 +35,7 @@ interface PropsType {
   endBtnImage?: ImageSourcePropType;
   headerTextStyle?: object;
   headerSubTextStyle?: object;
+  onClickSave?: () => void;
 }
 
 const AppHeader = (props: PropsType) => {
@@ -94,6 +95,7 @@ const AppHeader = (props: PropsType) => {
             <TouchableOpacity
               style={styles.vwSave}
               activeOpacity={activityOpacity}
+              onPress={props.onClickSave}
             >
               <Text style={styles.lblSave}>{getTranslation('save')}</Text>
             </TouchableOpacity>

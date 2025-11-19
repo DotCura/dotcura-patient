@@ -25,7 +25,7 @@ const WelcomeComponent = (props: any) => {
       <CustomButton
         style={{ marginBottom: getHeight(8) }}
         btnPress={props.handleNavigateLogin}
-        btnTitle={getTranslation('applyasnurse')}
+        btnTitle={getTranslation('creteanacoount')}
         btnicon={false}
       />
       <CustomButton
