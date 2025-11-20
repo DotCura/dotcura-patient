@@ -205,7 +205,7 @@ const AccountComponent = (props: any) => {
               </TouchableOpacity>
             </View>
             <View style={{ gap: getHeight(8) }}>
-              {props.allergie.map(item => (
+              {props.allergie.map((item:any) => (
                 // <Text key={item}>• {item}</Text>
                 <View style={styles.vwCategory}>
                   <Text style={styles.lblCategory}>{item.name}</Text>

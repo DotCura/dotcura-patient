@@ -19,7 +19,11 @@ import { Colors } from '../../constants/Colors';
 const AddFamilyComponent = (props: any) => {
   const renderListFooter = () => {
     return (
-      <TouchableOpacity style={styles.addBtn} activeOpacity={activityOpacity}>
+      <TouchableOpacity
+        style={styles.addBtn}
+        activeOpacity={activityOpacity}
+        onPress={props.handleNavigateFamilyMember}
+      >
         <Image source={images.addblue} />
         <Text style={styles.addText}>Aggiungi familiare</Text>
       </TouchableOpacity>
@@ -46,7 +50,7 @@ const AddFamilyComponent = (props: any) => {
             </Text>
           </View>
           <CustomButton
-             btnPress={()=>props.setShowEmpty(false)}
+            btnPress={() => props.setShowEmpty(false)}
             btnTitle={getTranslation('addfamilybtn')}
             style={{
               backgroundColor: Colors.lightBlurE4,

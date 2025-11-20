@@ -4,8 +4,9 @@ import { getTranslation } from '../../localization/i18n/i18n.config';
 import { ImagePickerManager } from '../../constants/utils/NativeImagePicker';
 import ConfrimIdentityComponent from '../../components/ConfrimIdentity';
 import { flashMessageWarning } from '../../constants/GConstant';
+import { ScreenNames } from '../../constants/AppConstants';
 
-const ConfrimIdentityContainer = () => {
+const ConfrimIdentityContainer = ({ navigation }: any) => {
   const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
   const [appTypeValue, setAppTypeValue] = useState<any>('');
   const [frontSide, setFrontSide] = useState(undefined);
@@ -29,6 +30,7 @@ const ConfrimIdentityContainer = () => {
       flashMessageWarning(getTranslation('pleaseuploadfrontandbackside'));
     } else {
       console.log('hy');
+      navigation.navigate(ScreenNames.ADDFAMILYCONTAINER);
     }
   };
 
@@ -76,12 +78,13 @@ const ConfrimIdentityContainer = () => {
       backImageAdd={backImageAdd}
       onPressFrontSide={pickImage}
       onPressBackSide={pickBackImage}
-      AppTypeData={AppTypeData}
       insets={insets}
+      AppTypeData={AppTypeData}
       appTypeValue={appTypeValue}
       handleSetRole={handleSetRole}
       handleSubmit={handleSubmit}
       headerArray={headerArray}
+      navigation={navigation}
     />
   );
 };

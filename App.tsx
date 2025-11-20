@@ -15,7 +15,7 @@ LogBox.ignoreAllLogs();
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.ACCOUNTCONTAINER,
+    ScreenNames.PROFILECONTAINER,
   );
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
   // console.log('orderStatus in App.tsx:', orderStatus);

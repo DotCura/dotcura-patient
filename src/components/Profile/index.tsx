@@ -95,7 +95,7 @@ const ProfileComponent = (props: any) => {
       {/* vwFamilyPersonal */}
       <View style={styles.vwAvabilityWorkArea}>
         <TouchableOpacity
-          onPress={props.onPressDisponia}
+          onPress={props.handleNavigateAccount}
           style={styles.vwAvablity}
         >
           <View style={styles.vwInAva}>

@@ -6,6 +6,7 @@ import AddFamilyComponent from '../../components/AddFamily';
 import AppHeader from '../../global/Header';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ScreenNames } from '../../constants/AppConstants';
 
 const AddFamilyContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -50,6 +51,10 @@ const AddFamilyContainer = ({ navigation }: any) => {
     );
   };
 
+  const handleNavigateFamilyMember = () => {
+    navigation.navigate(ScreenNames.ADDFAMILYMEMBERSCONTAINER);
+  };
+
   const header = () => {
     navigation.setOptions({
       header: () => (
@@ -78,6 +83,7 @@ const AddFamilyContainer = ({ navigation }: any) => {
       renderItemFamilyMember={renderItemFamilyMember}
       showEmpty={showEmpty}
       setShowEmpty={setShowEmpty}
+      handleNavigateFamilyMember={handleNavigateFamilyMember}
     />
   );
 };

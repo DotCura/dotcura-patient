@@ -349,7 +349,10 @@ const ProfileContainer = ({ navigation }: any) => {
   };
 
   const handleNavigateAddFamily = () => {
-    navigation.navigate(ScreenNames.ADDFAMILYMEMBERCONTAINER);
+    navigation.navigate(ScreenNames.ADDFAMILYCONTAINER);
+  };
+  const handleNavigateAccount = () => {
+    navigation.navigate(ScreenNames.ACCOUNTCONTAINER);
   };
 
   const handlePressLogout = () => {
@@ -397,6 +400,7 @@ const ProfileContainer = ({ navigation }: any) => {
 
   return (
     <ProfileComponent
+    handleNavigateAccount={handleNavigateAccount}
       handlePressDeleteAccount={handlePressDeleteAccount}
       handlePressLogout={handlePressLogout}
       fullName={fullName}

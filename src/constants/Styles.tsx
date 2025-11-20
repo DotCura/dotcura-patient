@@ -32,7 +32,6 @@ export const constnatStyles = StyleSheet.create({
     fontFamily: fontsfamily.bold,
     color: Colors.gray0F,
     textAlign: 'center',
-    marginLeft:getWidth(20)
   },
   lblSubHeaderTitle: {
     marginTop: getHeight(1),

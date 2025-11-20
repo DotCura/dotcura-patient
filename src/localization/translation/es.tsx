@@ -329,6 +329,13 @@ export default {
   confirmidentitytitle: 'Conferma identità',
   confirmidentitysubtutlee: 'Inserisci i tuoi documenti',
 
+  //FAMILYMEMEBR
+  addfamilymembertitle:"Aggiungi familiare",
+  addfamilymembersubtitle:"Aggiungi le informazioni della persona che vuoi aggiungere alla tua famiglia",
+  typeofrelationship:"Tipo di relazione",
+  typeofrelationshipplaceholder:"Seleccione el tipo de relación",
+  pleaseselecttypeofrelationship:"Por favor seleccione el tipo de relación",
+
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',
   errorMessageInvalidOtp: 'Código OTP no válido',

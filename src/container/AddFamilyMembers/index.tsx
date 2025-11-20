@@ -4,19 +4,22 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { flashMessageWarning } from '../../constants/GConstant';
-import { ScreenNames } from '../../constants/AppConstants';
 import AppHeader from '../../global/Header';
-import AccountComponent from '../../components/Account';
+import AddFamilyMemberComponent from '../../components/AddFamilyMembers';
+import TopBar from '../../global/TopBar/TopBar';
+import { ScreenNames } from '../../constants/AppConstants';
 
-const AccountContainer = ({ navigation }: any) => {
+const AddFamilyMemberContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
   const genders = [
     { id: 1, label: getTranslation('gender1') },
     { id: 2, label: getTranslation('gender2') },
   ];
+  const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
 
   const [fullName, setFullName] = useState<any>('');
+  const [appTypeValue, setAppTypeValue] = useState<any>('');
   console.log(fullName, 'fullName =====');
 
   const [taxCode, setTaxCode] = useState<any>('');
@@ -29,6 +32,18 @@ const AccountContainer = ({ navigation }: any) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
   const [formatedDateForApi, setFormatedDateForApi] = useState('');
+
+  const AppTypeData = [
+    { label: 'Padre', value: '1' },
+    { label: 'Madre', value: '2' },
+    { label: 'Hermano', value: '3' },
+    { label: 'Hermana', value: '4' },
+    { label: 'Esposa', value: '5' },
+  ];
+
+  const handleSetRole = (item: any) => {
+    setAppTypeValue(item.value);
+  };
 
   const fullNameRef = useRef<any>(null);
   const taxCodeRef = useRef<any>(null);
@@ -55,7 +70,9 @@ const AccountContainer = ({ navigation }: any) => {
     setFullNameError('');
     setTaxCodeError('');
 
-    if (!fullName.trim()) {
+    if (appTypeValue == '') {
+      flashMessageWarning(getTranslation('pleaseselecttypeofrelationship'));
+    } else if (!fullName.trim()) {
       setFullNameError(getTranslation('errorMessageFullNameRequired'));
       return;
     } else if (fullName.trim().length < 2) {
@@ -73,7 +90,9 @@ const AccountContainer = ({ navigation }: any) => {
     } else {
       console.log('✅ Profile completed successfully');
 
-      navigation.goBack();
+      navigation.navigate(ScreenNames.CONFIRMIDENTITYCONTAINER);
+
+      // Proceed to next screen or API call
     }
   };
 
@@ -98,32 +117,6 @@ const AccountContainer = ({ navigation }: any) => {
 
     hideDatePicker();
   };
-
-  const header = () => {
-    navigation.setOptions({
-      header: () => (
-        <AppHeader
-          startBtnOnPress={() => {
-            navigation.pop();
-          }}
-          centerTitle={getTranslation('account')}
-          dontShowStartBtn={false}
-          showTitle={true}
-          showSubTitle={true}
-          centerSubTitle={'Giovanni (tu)'}
-          showEndBtn={true}
-          isSaveIcon={true}
-          onClickSave={handlePressContinue}
-        />
-      ),
-    });
-  };
-
-  useEffect(() => {
-    console.log('hy');
-
-    header();
-  });
 
   //model
   const [patologie, setPatologie] = useState([
@@ -199,16 +192,16 @@ const AccountContainer = ({ navigation }: any) => {
     }
 
     if (type === 'medicazioni') {
-      setMedicazioni(prev => prev.filter((item: any) => item.id !== id));
+      setMedicazioni(prev => prev.filter((item:any) => item.id !== id));
     }
 
     if (type === 'allergie') {
-      setAllergie(prev => prev.filter((item: any) => item.id !== id));
+      setAllergie(prev => prev.filter((item:any) => item.id !== id));
     }
   };
 
   return (
-    <AccountComponent
+    <AddFamilyMemberComponent
       formattedDate={formattedDate}
       insets={insets}
       fullName={fullName}
@@ -246,8 +239,13 @@ const AccountContainer = ({ navigation }: any) => {
       setModalVisible={setModalVisible}
       modalType={modalType}
       handleDeleteItem={handleDeleteItem}
+      headerArray={headerArray}
+      AppTypeData={AppTypeData}
+      appTypeValue={appTypeValue}
+      handleSetRole={handleSetRole}
+      navigation={navigation}
     />
   );
 };
 
-export default AccountContainer;
+export default AddFamilyMemberContainer;
