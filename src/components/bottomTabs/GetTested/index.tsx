@@ -1,6 +1,8 @@
 import {
   FlatList,
   Image,
+  Modal,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -19,6 +21,7 @@ import { Colors } from '../../../constants/Colors';
 import { fontSize } from '../../../constants/FontSizes';
 import { fontsfamily } from '../../../constants/FontFamily';
 import { ZustandStores } from '../../../store';
+import CustomButton from '../../../global/Buttons';
 
 const GetTestedComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
@@ -122,6 +125,186 @@ const GetTestedComponent = (props: any) => {
           }}
         />
       </View>
+
+      {/* filterModel */}
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={props.isFilterModelVisible}
+        statusBarTranslucent={true}
+        onRequestClose={props.handleFunCloseFilterModel}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#00000060',
+          }}
+        >
+          <Pressable
+            style={{ flex: 1 }}
+            onPress={props.handleFunCloseFilterModel}
+          />
+
+          <View
+            style={{
+              backgroundColor: Colors.white,
+              borderTopLeftRadius: getHeight(20),
+              borderTopRightRadius: getHeight(20),
+              maxHeight: '90%',
+            }}
+          >
+            {/* Header */}
+            <View style={styles.vwHeadingLine} />
+            <View style={[styles.vwMainModelHeader]}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                onPress={props.funCloseCancleOrder} // close modal
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+              <View>
+                <Text
+                  style={[
+                    constnatStyles.lblHeaderTitle,
+                    {
+                      letterSpacing: 0.2,
+                    },
+                  ]}
+                  numberOfLines={2}
+                >
+                  {getTranslation('filter')}
+                </Text>
+              </View>
+
+              <Image source={images.imgDelete} style={{ opacity: 0 }} />
+            </View>
+            <View
+              style={{
+                marginHorizontal: getWidth(16),
+                marginTop: getHeight(25),
+                gap: getHeight(24),
+              }}
+            >
+              {/* Categories */}
+              <View>
+                <Text style={styles.heading}>Categories</Text>
+                <View style={styles.row}>
+                  {props.categoryData.map((item: any) => {
+                    const isSelected = props.selectedCategories.includes(
+                      item.id,
+                    );
+                    return (
+                      <TouchableOpacity
+                        key={item.id}
+                        onPress={() => props.toggleCategory(item.id)}
+                        style={[styles.chip, isSelected && styles.chipSelected]}
+                      >
+                        <Text
+                          style={[
+                            styles.chipText,
+                            isSelected && styles.chipTextSel,
+                          ]}
+                        >
+                          {item.name}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </View>
+              <View>
+                {/* Gender */}
+                <Text style={styles.heading}>Gender</Text>
+                <View style={styles.row}>
+                  {props.genderData.map((item: any) => {
+                    const isSelected = props.selectedGender === item.id;
+                    return (
+                      <TouchableOpacity
+                        key={item.id}
+                        onPress={() => props.toggleGender(item.id)}
+                        style={[styles.chip, isSelected && styles.chipSelected]}
+                      >
+                        <Text
+                          style={[
+                            styles.chipText,
+                            isSelected && styles.chipTextSel,
+                          ]}
+                        >
+                          {item.name}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </View>
+              <View>
+                {/* Age */}
+                <Text style={styles.heading}>Age</Text>
+                <View style={styles.row}>
+                  {props.ageData.map((item: any) => {
+                    const isSelected = props.selectedAge === item.id;
+                    return (
+                      <TouchableOpacity
+                        key={item.id}
+                        onPress={() => props.toggleAge(item.id)}
+                        style={[styles.chip, isSelected && styles.chipSelected]}
+                      >
+                        <Text
+                          style={[
+                            styles.chipText,
+                            isSelected && styles.chipTextSel,
+                          ]}
+                        >
+                          {item.name}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </View>
+            </View>
+
+            {/* Apply Button
+            <TouchableOpacity style={styles.applyBtn}>
+              <Text style={styles.applyText}>
+                {props.totalFilters > 0
+                  ? `Apply ${props.totalFilters} filters`
+                  : 'Apply'}
+              </Text>
+            </TouchableOpacity>
+
+            Reset
+            <TouchableOpacity onPress={props.resetFilters}>
+              <Text style={styles.resetText}>Reset</Text>
+            </TouchableOpacity> */}
+            <View
+              style={{
+                marginHorizontal: getWidth(16),
+                marginTop: getHeight(164),
+                marginBottom:
+                  props.insets.bottom > 0
+                    ? props.insets.bottom
+                    : props.insets.bottom + getHeight(16),
+              }}
+            >
+              <CustomButton
+                btnTitle={
+                  props.totalFilters > 0
+                    ? `Apply ${props.totalFilters} filters`
+                    : 'Apply'
+                }
+                btnPress={props.handleFunCloseFilterModel}
+              />
+              <CustomButton
+                btnTitle={'Reset'}
+                style={{ backgroundColor: Colors.white }}
+                textStyle={{ color: Colors.gray0F }}
+                btnPress={props.resetFilters}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

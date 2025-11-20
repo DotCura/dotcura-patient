@@ -12,7 +12,10 @@ const ResultOpenUpComponents = (props: any) => {
   return (
     <View style={constnatStyles.vwContainer}>
       <View style={{ flex: 1 }}>
-        <Image source={images.imgFolderOpen} style={{ alignSelf: 'center',marginTop:'55%' }} />
+        <Image
+          source={images.imgFolderOpen}
+          style={{ alignSelf: 'center', marginTop: '55%' }}
+        />
         <View style={{ marginTop: getHeight(16), gap: getHeight(4) }}>
           <Text style={styles.lblResultOpenTitle} numberOfLines={2}>
             {getTranslation('resultopentitle')}

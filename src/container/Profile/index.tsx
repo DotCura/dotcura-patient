@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../../constants/Images';
 import AppHeader from '../../global/Header';
@@ -16,6 +16,8 @@ import { Colors } from '../../constants/Colors';
 import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 import { ScreenNames } from '../../constants/AppConstants';
+import { formatPhoneNumber } from '../../constants/TextInputConstant';
+import { regex } from '../../constants/Regex';
 
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -83,6 +85,9 @@ const ProfileContainer = ({ navigation, route }: any) => {
       id: '3',
       title: getTranslation('access'),
       image: images.imgWarningProfile,
+      onpressfun: () => {
+        setVisibleAccessModel(true);
+      },
     },
     { id: '4', title: getTranslation('paymentmethod'), image: images.imgCard },
     {
@@ -222,13 +227,22 @@ const ProfileContainer = ({ navigation, route }: any) => {
   const [AddressData, setAddressData] = useState(addressList);
   const [addressPopupVisible, setAddressPopupVisible] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  console.log('selectedAddress', selectedAddress);
+
+  const [phoneNumber, setPhoneNumber] = useState<any>('');
+  const [callingCode, setCallingCode] = useState<any>('39');
+  const [email, setEmail] = useState<any>('');
+
+  const [phoneNumberError, setPhoneNumberError] = useState<any>('');
+  const [emailError, setEmailError] = useState<any>('');
+
+  const moblieNoRef = useRef<any>(null);
 
   //ModelVariables
   const [isShowSwitchModel, setIsShowSwitchModel] = useState(false);
   const [isShowOrderHistoryModel, setIsShowOrderHistoryModel] = useState(false);
   const [isShowOrderHistoryDetailsModel, setIsShowOrderHistoryDetailsModel] =
     useState(false);
+  const [visibleAccessModel, setVisibleAccessModel] = useState(false);
 
   const toggleSwitchModel = (key: string) =>
     setSettingsSwitch({ ...settingsSwitch, [key]: !settingsSwitch[key] });
@@ -394,6 +408,46 @@ const ProfileContainer = ({ navigation, route }: any) => {
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
   };
+  //onChange
+  const changeInput = (inputFieldName: any, text: any) => {
+    switch (inputFieldName) {
+      case 'Phone Number':
+        setPhoneNumber(formatPhoneNumber(text));
+        break;
+      default:
+        break;
+    }
+  };
+
+  const onChangeEmail = (text: any) => {
+    const formatted = text
+      .replace(/^\s+/, '')
+      .replace(/\s+/g, '')
+      .replace(/[^a-zA-Z0-9@._-]/g, '');
+    setEmail(formatted);
+  };
+
+  const handleSaveAccess = () => {
+    const plainText = phoneNumber.replace(/-/g, '');
+    if (!email.trim()) {
+      setEmailError(getTranslation('errorMessageEmail'));
+      return;
+    } else if (!regex.email.test(email.trim())) {
+      setEmailError(getTranslation('errorMessageValidEmail'));
+      return;
+    } else if (!phoneNumber) {
+      setPhoneNumberError(getTranslation('errorMessagePhoneNumber'));
+      return;
+    } else if (/^0+$/.test(plainText)) {
+      setPhoneNumberError(getTranslation('errorMessageAllZero'));
+      return;
+    } else if (!regex.mobliedesh.test(phoneNumber)) {
+      setPhoneNumberError(getTranslation('errorMesaageValidPhoenNumber'));
+      return;
+    } else {
+      setVisibleAccessModel(false);
+    }
+  };
 
   const header = () => {
     navigation.setOptions({
@@ -461,6 +515,24 @@ const ProfileContainer = ({ navigation, route }: any) => {
       setAddressPopupVisible={setAddressPopupVisible}
       selectedAddress={selectedAddress}
       setSelectedAddress={setSelectedAddress}
+      //accessModel
+      visibleAccessModel={visibleAccessModel}
+      phoneNumber={phoneNumber}
+      setPhoneNumber={setPhoneNumber}
+      callingCode={callingCode}
+      setCallingCode={setCallingCode}
+      phoneNumberError={phoneNumberError}
+      setPhoneNumberError={setPhoneNumberError}
+      moblieNoRef={moblieNoRef}
+      changeInput={changeInput}
+      emailError={emailError}
+      setEmailError={setEmailError}
+      email={email}
+      onChangeEmail={onChangeEmail}
+      handleSaveAccess={handleSaveAccess}
+      onPressAccessModal={() => {
+        setVisibleAccessModel(false);
+      }}
     />
   );
 };

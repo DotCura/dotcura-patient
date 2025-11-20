@@ -118,6 +118,7 @@ export default {
 
   //GETTESTED
   kitavailable: 'kit disponibili',
+  filter:"Filtros",
 
   //KITDETAILS
   analytesinthekit: 'Analiti nel kit',

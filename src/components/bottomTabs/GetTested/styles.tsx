@@ -5,14 +5,48 @@ import { fontsfamily } from '../../../constants/FontFamily';
 import { fontSize } from '../../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  vwMainModelHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: getWidth(15),
+    marginTop: getHeight(5),
+    marginHorizontal: getWidth(12),
+    paddingBottom: getWidth(10),
+  },
+  btnBack: {
+    backgroundColor: Colors.white,
+    height: getHeight(36),
+    width: getWidth(36),
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
+  },
+  vwHeadingLine: {
+    height: getHeight(4),
+    width: getWidth(40),
+    backgroundColor: Colors.grayED,
+    borderRadius: 10,
+    alignSelf: 'center',
+    marginTop: getHeight(6),
+  },
   vwTextCount: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.redCA,
     borderRadius: 999,
     // height: getHeight(16),
-    paddingVertical:getHeight(1.5),
-    paddingHorizontal:getWidth(4.5),
+    paddingVertical: getHeight(1.5),
+    paddingHorizontal: getWidth(4.5),
     position: 'absolute',
     right: -2,
     top: -4,
@@ -89,5 +123,45 @@ export const styles = StyleSheet.create({
     color: Colors.gray0F,
     fontSize: fontSize.size24,
     fontFamily: fontsfamily.bold,
+  },
+  //filters
+  heading: {
+    color: Colors.gray0F,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.bold,
+    marginBottom: getHeight(12),
+  },
+  row: { flexDirection: 'row', flexWrap: 'wrap', gap: getWidth(8) },
+  chip: {
+    paddingHorizontal: getWidth(16),
+    paddingVertical: getHeight(9),
+    borderRadius: 999,
+    backgroundColor: Colors.grayF3,
+  },
+  chipSelected: {
+    backgroundColor: Colors.lightBlurE4,
+  },
+  chipText: {
+    color: Colors.gray0F,
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.medium,
+  },
+  chipTextSel: { color:Colors.blue0D},
+
+  applyBtn: {
+    marginTop: 40,
+    backgroundColor: '#1A73E8',
+    paddingVertical: 14,
+    borderRadius: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  applyText: { color: 'white', fontSize: 16, fontWeight: '600' },
+
+  resetText: {
+    textAlign: 'center',
+    marginTop: 12,
+    color: '#7A7A7A',
+    fontSize: 15,
   },
 });

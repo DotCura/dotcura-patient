@@ -31,6 +31,10 @@ import ModalTitleSubtitle from '../../global/TitleSubtitleModel';
 import { fontsfamily } from '../../constants/FontFamily';
 import AddressModel from '../../global/AddressModel/AddressModel';
 import { ScreenNames } from '../../constants/AppConstants';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
+import PrimaryTitleMoblieNumber from '../../global/PrimaryTitleMoblieNumber';
+import { ValidationConstant } from '../../constants/TextInputConstant';
 
 const ProfileComponent = (props: any) => {
   const Item = ({ item, onPress }: any) => (
@@ -670,6 +674,97 @@ const ProfileComponent = (props: any) => {
         }}
         onClose={() => props.setAddressPopupVisible(false)}
       />
+
+      {/* accessModel */}
+      {/* Access Model */}
+      <Modal
+        visible={props.visibleAccessModel}
+        transparent
+        animationType="slide"
+      >
+        <View style={[styles.overlay, { height: '60%' }]}>
+          <View style={styles.modalContainer}>
+            {/* Header */}
+            <View style={styles.vwHeadingLine} />
+            <View style={[styles.header, { justifyContent: 'space-between' }]}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                onPress={props.onPressAccessModal}
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+              <Text
+                style={[
+                  styles.txtOrderHistory,
+                  { marginLeft: getWidth(20), alignSelf: 'center' },
+                ]}
+              >
+                {getTranslation('access')}
+              </Text>
+              <TouchableOpacity
+                style={styles.vwSave}
+                activeOpacity={0.8}
+                onPress={props.handleSaveAccess}
+              >
+                <Text style={styles.lblSave}>{getTranslation('save')}</Text>
+              </TouchableOpacity>
+            </View>
+            <KeyboardAwareScrollView
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+            >
+              <View
+                style={{
+                  marginTop: getHeight(20),
+                  paddingHorizontal: getWidth(15),
+                }}
+              >
+                <Text style={[styles.txtAccess]}>
+                  {getTranslation('access')}
+                </Text>
+                <View style={{ marginTop: getHeight(44) }}>
+                  <PrimaryTitleTextInput
+                    placHolderLabel={getTranslation('emailplaceholder')}
+                    refs={props.emailRef}
+                    focusnext={() => props.taxCodeRef.current?.focus()}
+                    inputLabel={getTranslation('emailtitle')}
+                    blur={false}
+                    leftIcon={false}
+                    keyaboardType={'email-address'}
+                    value={props.email}
+                    onChangeFun={props.onChangeEmail}
+                    autoCapitalize={'none'}
+                    errorMessage={props.emailError}
+                    setErrorMessage={props.setEmailError}
+                    isMultiline={false}
+                    isBorder={true}
+                  />
+                  <View style={{ marginTop: getHeight(16) }}>
+                    <PrimaryTitleMoblieNumber
+                      blur={false}
+                      label={getTranslation('moblieno')}
+                      value={props.phoneNumber}
+                      onChangeFun={(text: any) =>
+                        props.changeInput('Phone Number', text)
+                      }
+                      maxLength={ValidationConstant.maxMobileDigit}
+                      callingCode={props.callingCode}
+                      setCallingCode={props.setCallingCode}
+                      refs={props.moblieNoRef}
+                      inputLabel={getTranslation('moblieno')}
+                      errorMessage={props.phoneNumberError}
+                      setErrorMessage={props.setPhoneNumberError}
+                      leftIcon={false}
+                      isBorder={false}
+                      placHolderLabel={'333 000 000'}
+                    />
+                  </View>
+                </View>
+              </View>
+            </KeyboardAwareScrollView>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };

@@ -138,9 +138,37 @@ const GetTestedContainer = ({ navigation }: any) => {
     },
   ];
 
+  const categoriesList = [
+    { id: 1, name: 'Routine checks' },
+    { id: 2, name: 'Specific conditions' },
+    { id: 3, name: 'MST and sexual health' },
+    { id: 4, name: 'Intolerances' },
+    { id: 5, name: 'Fertility and conception' },
+    { id: 6, name: 'Metabolism' },
+  ];
+
+  const genderList = [
+    { id: 1, name: 'Male' },
+    { id: 2, name: 'Female' },
+  ];
+
+  const ageList = [
+    { id: 1, name: 'Under 40' },
+    { id: 2, name: 'Over 40' },
+  ];
+
   const [kitCount, setkitCount] = useState(31);
   const [kitData, setKitData] = useState(kitList);
   const [searchVisible, setSearchVisible] = useState(false);
+  const [isFilterModelVisible, setIsFilterModelVisible] = useState(false);
+
+  const [categoryData, setCategoryData] = useState(categoriesList);
+  const [genderData, setGenderData] = useState(genderList);
+  const [ageData, setAgeData] = useState(ageList);
+
+  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+  const [selectedGender, setSelectedGender] = useState<number | null>(null);
+  const [selectedAge, setSelectedAge] = useState<number | null>(null);
 
   const renderKitData = ({ item, index }: any) => {
     const { backgroundColor, textColor } = getRandomTheme();
@@ -213,6 +241,39 @@ const GetTestedContainer = ({ navigation }: any) => {
     navigation.navigate(ScreenNames.KITDETAILSCONTAINER);
   };
 
+  const handleFunOpenFilterModel = () => {
+    setIsFilterModelVisible(true);
+  };
+
+  const handleFunCloseFilterModel = () => {
+    setIsFilterModelVisible(false);
+  };
+
+  const toggleCategory = (id: number) => {
+    setSelectedCategories(prev =>
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id],
+    );
+  };
+
+  const toggleGender = (id: number) => {
+    setSelectedGender(prev => (prev === id ? null : id));
+  };
+
+  const toggleAge = (id: number) => {
+    setSelectedAge(prev => (prev === id ? null : id));
+  };
+
+  const resetFilters = () => {
+    setSelectedCategories([]);
+    setSelectedGender(null);
+    setSelectedAge(null);
+  };
+
+  const totalFilters =
+    selectedCategories.length +
+    (selectedGender ? 1 : 0) +
+    (selectedAge ? 1 : 0);
+
   return (
     <GetTestedComponent
       insets={insets}
@@ -222,6 +283,20 @@ const GetTestedContainer = ({ navigation }: any) => {
       searchVisible={searchVisible}
       setSearchVisible={setSearchVisible}
       handleNavigateCheckout={handleNavigateCheckout}
+      isFilterModelVisible={isFilterModelVisible}
+      handleFunOpenFilterModel={handleFunOpenFilterModel}
+      handleFunCloseFilterModel={handleFunCloseFilterModel}
+      categoryData={categoryData}
+      ageData={ageData}
+      genderData={genderData}
+      toggleCategory={toggleCategory}
+      toggleGender={toggleGender}
+      toggleAge={toggleAge}
+      resetFilters={resetFilters}
+      totalFilters={totalFilters}
+      selectedCategories={selectedCategories}
+      selectedGender={selectedGender}
+      selectedAge={selectedAge}
     />
   );
 };

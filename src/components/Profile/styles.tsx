@@ -9,6 +9,12 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  txtAccess: {
+    fontSize: fontSize.size20,
+    fontFamily: fontsfamily.bold,
+    color: Colors.gray0F,
+    marginTop:getHeight(27)
+  },
   summaryContainer: {
     marginTop: getHeight(24),
   },

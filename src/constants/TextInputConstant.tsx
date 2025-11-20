@@ -2,7 +2,7 @@ import { regex } from "./Regex";
 
 // <============================== Validation Constant ==============================>
 export const ValidationConstant = {
-  maxMobileDigit: 18,
+  maxMobileDigit: 11,
   minMobileDigit: 8,
 
   minNameCharacters: 2,
