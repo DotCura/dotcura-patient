@@ -104,6 +104,11 @@ const MainNavigation = props => {
           {},
           { headerShown: false },
         )}
+        {_addScreen(
+          ScreenNames.RESULTOPENUPCONTAINER,
+          {},
+          { headerShown: false },
+        )}
       </Stack.Navigator>
     );
   };

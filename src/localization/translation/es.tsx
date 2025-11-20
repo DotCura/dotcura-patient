@@ -171,6 +171,18 @@ export default {
   modifyorder: 'Modifica ordine',
   inthecart: 'Nel carrello',
   addmoretext: 'Aggiungi altri',
+  cancleordertitle: '¿Quieres cancelar el pedido?',
+  cancleordersubtitle:
+    'El reembolso se procesará a tu método de pago en un plazo de 3 a 5 días laborables.',
+  cancletext: 'Cancelar',
+  cancletextnoback: 'No, volver',
+
+  //RESULTOPENUP
+  resultopentitle: 'Los resultados han llegado.',
+  resultopenupsubtitle:
+    'Al continuar, aceptas guardar tus datos personales dentro de DotCura; de lo contrario, serán eliminados en un plazo de 45 días.',
+  iunderstand: 'Entiendo',
+  continuewithoutsaving: 'Continuar sin guardar',
 
   //ORDERSTATYS
   ordersent: 'Ordine inviato',
@@ -270,7 +282,7 @@ export default {
   pato: 'Patologie',
   allergie: 'Allergie',
   addgg: 'Aggiungi',
-  searchplaceholder:"Cerca...",
+  searchplaceholder: 'Cerca...',
 
   //PROFILE
   membersince: 'Membro dal',
@@ -310,7 +322,7 @@ export default {
   pushswitch3: 'Risultati pronti per il download',
   pushswitch4: 'Suggerimenti personalizzati sui controlli',
   pushswitch5: 'Tip salute giornalieri personalizzati',
-  addaddresspopupbtn:"Aggiungi indirizzo",
+  addaddresspopupbtn: 'Aggiungi indirizzo',
 
   //ORDERHSITORYPOPUP
   pickup: 'Prelevato il',
@@ -331,11 +343,12 @@ export default {
   confirmidentitysubtutlee: 'Inserisci i tuoi documenti',
 
   //FAMILYMEMEBR
-  addfamilymembertitle:"Aggiungi familiare",
-  addfamilymembersubtitle:"Aggiungi le informazioni della persona che vuoi aggiungere alla tua famiglia",
-  typeofrelationship:"Tipo di relazione",
-  typeofrelationshipplaceholder:"Seleccione el tipo de relación",
-  pleaseselecttypeofrelationship:"Por favor seleccione el tipo de relación",
+  addfamilymembertitle: 'Aggiungi familiare',
+  addfamilymembersubtitle:
+    'Aggiungi le informazioni della persona che vuoi aggiungere alla tua famiglia',
+  typeofrelationship: 'Tipo di relazione',
+  typeofrelationshipplaceholder: 'Seleccione el tipo de relación',
+  pleaseselecttypeofrelationship: 'Por favor seleccione el tipo de relación',
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',

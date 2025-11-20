@@ -42,28 +42,28 @@ export const images = {
   //YOURPROFILE
   imgStarFill: require('../assets/images/Staricon.png'),
   imgNurseUser: require('../assets/images/nurseuser.png'),
-  
+
   imgLebo: require('../assets/images/leboratry.png'),
-  imgCalender:require('../assets/images/calender.png'),
-  imgfolder:require('../assets/images/folder.png'),
-  imgRightTickBlack:require('../assets/images/checkBlack.png'),
-  upload:require('../assets/images/upload.png'),
+  imgCalender: require('../assets/images/calender.png'),
+  imgfolder: require('../assets/images/folder.png'),
+  imgRightTickBlack: require('../assets/images/checkBlack.png'),
+  upload: require('../assets/images/upload.png'),
 
   //PORFILE
-  imgUserProfile:require('../assets/images/userProfile.png'),
-  imgBell:require('../assets/images/bell.png'),
-  imgHelpProfile:require('../assets/images/helpProfile.png'),
-  imgCard:require('../assets/images/card.png'),
-  imgPin:require('../assets/images/pin.png'),
-  imgBackProfile:require('../assets/images/backProfile.png'),
-  imgDeleteRed:require('../assets/images/deleteRed.png'),
-  imgFamily:require('../assets/images/family.png'),
-  imgWarningProfile:require('../assets/images/warningProfile.png'),
-  imginsta:require('../assets/images/insta.png'),
-  imgDeleteRound:require('../assets/images/deleteRound.png'),
-  imgSearchModel:require('../assets/images/searchModel.png'),
+  imgUserProfile: require('../assets/images/userProfile.png'),
+  imgBell: require('../assets/images/bell.png'),
+  imgHelpProfile: require('../assets/images/helpProfile.png'),
+  imgCard: require('../assets/images/card.png'),
+  imgPin: require('../assets/images/pin.png'),
+  imgBackProfile: require('../assets/images/backProfile.png'),
+  imgDeleteRed: require('../assets/images/deleteRed.png'),
+  imgFamily: require('../assets/images/family.png'),
+  imgWarningProfile: require('../assets/images/warningProfile.png'),
+  imginsta: require('../assets/images/insta.png'),
+  imgDeleteRound: require('../assets/images/deleteRound.png'),
+  imgSearchModel: require('../assets/images/searchModel.png'),
+  imgFolderOpen: require('../assets/images/folderOpen.png'),
 
-  
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),
 };

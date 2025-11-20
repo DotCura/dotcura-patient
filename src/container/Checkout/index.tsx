@@ -223,8 +223,9 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [showIsKitTestDetails, setShowIsKitTestDetails] = useState(false);
   const [AddressData, setAddressData] = useState(addressList);
   const [addressPopupVisible, setAddressPopupVisible] = useState(false);
+  const [cancleOrderVisible, setCancleOrderVisible] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  
+
   console.log('selectedAddress', selectedAddress);
 
   const handleBookSlot = () => {
@@ -343,6 +344,14 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const funCloseIsModifyOrder = () => {
     setShowIsModifyOrder(false);
+  };
+
+  const funOpenCancleOrder = () => {
+    setCancleOrderVisible(true);
+  };
+
+  const funCloseCancleOrder = () => {
+    setCancleOrderVisible(false);
   };
 
   const funOpenIsKitTestDetails = () => {
@@ -521,6 +530,13 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     setAddressPopupVisible(true);
   };
 
+  const handleNavigateHome = () => {
+    setCancleOrderVisible(false);
+    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+      screen: ScreenNames.GETTESTEDCONTAINER,
+    });
+  };
+
   const header = () => {
     navigation.setOptions({
       header: () => (
@@ -628,6 +644,12 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       setAddressPopupVisible={setAddressPopupVisible}
       selectedAddress={selectedAddress}
       setSelectedAddress={setSelectedAddress}
+      //CancleModel
+      cancleOrderVisible={cancleOrderVisible}
+      setCancleOrderVisible={setCancleOrderVisible}
+      funOpenCancleOrder={funOpenCancleOrder}
+      funCloseCancleOrder={funCloseCancleOrder}
+      handleNavigateHome={handleNavigateHome}
     />
   );
 };

@@ -24,6 +24,7 @@ import CustomButton from '../../global/Buttons';
 import TimeSlotPicker from '../../global/TimeSlotPicker';
 import AddressModel from '../../global/AddressModel/AddressModel';
 import { ScreenNames } from '../../constants/AppConstants';
+import TitleSubtitle from '../../global/TitleSubtitle';
 
 const CheckoutComponent = (props: any) => {
   return (
@@ -276,7 +277,7 @@ const CheckoutComponent = (props: any) => {
           btnicon={true}
           btnImage={images.imgDelete}
           textStyle={{ color: Colors.red8C }}
-          // onPress={props.onProceedToPayment}
+          btnPress={props.funOpenCancleOrder}
         />
       </View>
 
@@ -618,6 +619,77 @@ const CheckoutComponent = (props: any) => {
         }}
         onClose={() => props.setAddressPopupVisible(false)}
       />
+
+      {/* CancleModel */}
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={props.cancleOrderVisible}
+        statusBarTranslucent={true}
+        onRequestClose={props.funCloseCancleOrder}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#00000060',
+          }}
+        >
+          <Pressable style={{ flex: 1 }} onPress={props.funCloseCancleOrder} />
+
+          <View
+            style={{
+              backgroundColor: Colors.white,
+              borderTopLeftRadius: getHeight(20),
+              borderTopRightRadius: getHeight(20),
+              maxHeight: '80%',
+            }}
+          >
+            {/* Header */}
+            <View style={styles.vwHeadingLine} />
+            <View style={[styles.vwMainModelHeader]}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                onPress={props.funCloseCancleOrder} // close modal
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                marginHorizontal: getWidth(16),
+                marginTop: getHeight(24),
+              }}
+            >
+              <TitleSubtitle
+                title={getTranslation('cancleordertitle')}
+                subtitle={getTranslation('cancleordersubtitle')}
+              />
+              <View
+                style={{
+                  marginTop: getHeight(140),
+                  marginBottom:
+                    props.insets.bottom > 0
+                      ? props.insets.bottom
+                      : props.insets.bottom + getHeight(16),
+                }}
+              >
+                <CustomButton
+                  btnTitle={getTranslation('cancletext')}
+                  btnPress={props.handleNavigateHome}
+                  style={{ backgroundColor: Colors.redFD }}
+                  textStyle={{ color: Colors.red40 }}
+                />
+                <CustomButton
+                  btnTitle={getTranslation('cancletextnoback')}
+                  style={{ backgroundColor: Colors.white }}
+                  textStyle={{ color: Colors.gray0F }}
+                  btnPress={props.funCloseCancleOrder}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };

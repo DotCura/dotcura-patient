@@ -30,6 +30,7 @@ export AddAddressContainer from "./container/AddAddress";
 export CompleteAddressContainer from "./container/CompleteAddress";
 export AccountContainer from "./container/Account";
 export AddFamilyMemberContainer from "./container/AddFamilyMembers";
+export ResultOpenUpContainers from "./container/ResultOpenUp";
 
 
 

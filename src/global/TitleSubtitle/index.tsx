@@ -10,7 +10,7 @@ interface PropsType {
 const TitleSubtitle = (props: PropsType) => {
   return (
     <View style={constnatStyles.vwTitleSubtitles}>
-      <Text style={constnatStyles.lblMainTitle} numberOfLines={1}>
+      <Text style={constnatStyles.lblMainTitle} numberOfLines={2}>
         {props?.title}
       </Text>
       <Text style={constnatStyles.lblMainSubtitle} numberOfLines={4}>

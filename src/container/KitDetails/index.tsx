@@ -112,9 +112,11 @@ const KitDetailsContainer = ({ navigation }: any) => {
             />
           </TouchableOpacity>
           <View style={{ flex: 1, marginRight: getWidth(20) }}>
-            <Text style={styles.lblTestName} numberOfLines={2}>
-              {item.name}{' '}
-              <View style={{ alignItems: 'center', marginTop: 3 }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.lblTestName} numberOfLines={2}>
+                {item.name}{' '}
+              </Text>
+              <View style={{ alignItems: 'center' }}>
                 <Text
                   style={[
                     styles.lblStatus,
@@ -137,7 +139,7 @@ const KitDetailsContainer = ({ navigation }: any) => {
                   {item.status}
                 </Text>
               </View>
-            </Text>
+            </View>
 
             <Text style={styles.lblDesc} numberOfLines={3}>
               {item.desc}
@@ -155,8 +157,8 @@ const KitDetailsContainer = ({ navigation }: any) => {
   };
 
   const handleNavigateCheckout = () => {
-    navigation.navigate(ScreenNames.CHECKOUTCONTAINER)
-  }
+    navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+  };
 
   const header = () => {
     navigation.setOptions({

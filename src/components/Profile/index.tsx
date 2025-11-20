@@ -97,6 +97,7 @@ const ProfileComponent = (props: any) => {
       {/* vwFamilyPersonal */}
       <View style={styles.vwAvabilityWorkArea}>
         <TouchableOpacity
+          activeOpacity={activityOpacity}
           onPress={props.handleNavigateAccount}
           style={styles.vwAvablity}
         >
@@ -106,6 +107,7 @@ const ProfileComponent = (props: any) => {
           <Text style={styles.txtAvability}>{getTranslation('personal')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          activeOpacity={activityOpacity}
           style={styles.vwAvablity}
           onPress={props.handleNavigateAddFamily}
         >

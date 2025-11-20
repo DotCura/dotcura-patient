@@ -38,18 +38,19 @@ export const ScreenNames = {
   CHECKOUTCONTAINER: 'CheckoutContainer',
   ORDERHISTORYCONTAINER: 'OrderHistoryContainer',
   KITANALYSISCONTAINER: 'KitAnalysisContainer',
-  TESTDETAILSCONTAINER:"TestDetailsContainer",
-  
+  TESTDETAILSCONTAINER: 'TestDetailsContainer',
+
   //FAMILY
-  CONFIRMIDENTITYCONTAINER:"ConfrimIdentityContainer",
-  ADDFAMILYCONTAINER:"AddFamilyContainer",
-  PROFILECONTAINER :"ProfileContainer",
+  CONFIRMIDENTITYCONTAINER: 'ConfrimIdentityContainer',
+  ADDFAMILYCONTAINER: 'AddFamilyContainer',
+  PROFILECONTAINER: 'ProfileContainer',
 
   //ADDRESS
-  ADDADDRESSCONTAINER:"AddAddressContainer",
-  COMPLETEADDRESSCONTAINER:"CompleteAddressContainer",
-  ACCOUNTCONTAINER:"AccountContainer",
-  ADDFAMILYMEMBERSCONTAINER:"AddFamilyMemberContainer"
+  ADDADDRESSCONTAINER: 'AddAddressContainer',
+  COMPLETEADDRESSCONTAINER: 'CompleteAddressContainer',
+  ACCOUNTCONTAINER: 'AccountContainer',
+  ADDFAMILYMEMBERSCONTAINER: 'AddFamilyMemberContainer',
+  RESULTOPENUPCONTAINER: 'ResultOpenUpContainers',
 };
 
 // <============================== IOS Condition ==============================>
