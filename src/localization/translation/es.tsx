@@ -284,6 +284,9 @@ export default {
   allergie: 'Allergie',
   addgg: 'Aggiungi',
   searchplaceholder: 'Cerca...',
+  savedcards:"Carte salvate",
+  savedcardssubtitle:"Le tue carte di credito o debito",
+  paymentmethodmodel:"Altri metodi",
 
   //PROFILE
   membersince: 'Membro dal',

@@ -675,15 +675,30 @@ const ProfileComponent = (props: any) => {
         onClose={() => props.setAddressPopupVisible(false)}
       />
 
-      {/* accessModel */}
       {/* Access Model */}
       <Modal
-        visible={props.visibleAccessModel}
-        transparent
+        transparent={true}
         animationType="slide"
+        visible={props.visibleAccessModel}
+        statusBarTranslucent={true}
+        onRequestClose={props.onPressAccessModal}
       >
-        <View style={[styles.overlay, { height: '60%' }]}>
-          <View style={styles.modalContainer}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#00000060',
+          }}
+        >
+          <Pressable style={{ flex: 1 }} onPress={props.onPressAccessModal} />
+
+          <View
+            style={{
+              backgroundColor: Colors.white,
+              borderTopLeftRadius: getHeight(20),
+              borderTopRightRadius: getHeight(20),
+              height: '90%',
+            }}
+          >
             {/* Header */}
             <View style={styles.vwHeadingLine} />
             <View style={[styles.header, { justifyContent: 'space-between' }]}>
@@ -762,6 +777,195 @@ const ProfileComponent = (props: any) => {
                 </View>
               </View>
             </KeyboardAwareScrollView>
+          </View>
+        </View>
+      </Modal>
+
+      {/* PaymentMethodModel */}
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={props.visiblePaymentMethodModel}
+        statusBarTranslucent={true}
+        onRequestClose={props.funClosePaymentMethodModel}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#00000060',
+          }}
+        >
+          <Pressable
+            style={{ flex: 1 }}
+            onPress={props.funClosePaymentMethodModel}
+          />
+
+          <View
+            style={{
+              backgroundColor: Colors.white,
+              borderTopLeftRadius: getHeight(20),
+              borderTopRightRadius: getHeight(20),
+              height: '90%',
+            }}
+          >
+            {/* Header */}
+            <View style={styles.vwHeadingLine} />
+            <View style={[styles.header, { justifyContent: 'space-between' }]}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                onPress={props.funClosePaymentMethodModel}
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+              <Text
+                style={[
+                  styles.txtOrderHistory,
+                  { marginLeft: getWidth(20), alignSelf: 'center' },
+                ]}
+              >
+                {getTranslation('paymentmethod')}
+              </Text>
+              <TouchableOpacity
+                style={styles.vwSave}
+                activeOpacity={0.8}
+                // onPress={props.handleSaveAccess}
+              >
+                <Text style={styles.lblSave}>{getTranslation('save')}</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ marginTop: getHeight(26) }}>
+              <ModalTitleSubtitle
+                title={getTranslation('savedcards')}
+                subtitle={getTranslation('savedcardssubtitle')}
+              />
+              <View>
+                <FlatList
+                  data={props.cardData}
+                  keyExtractor={item => item.id.toString()}
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{
+                    marginHorizontal: getWidth(16.5),
+                    marginTop: getHeight(24),
+                  }}
+                  renderItem={({ item }) => {
+                    const isSelected = props?.selectedCards?.id === item.id;
+
+                    return (
+                      <TouchableOpacity
+                        style={[
+                          styles.itemBox,
+                          {
+                            borderColor: isSelected
+                              ? Colors.blue1C
+                              : Colors.grayE7,
+                            backgroundColor: isSelected
+                              ? Colors.lightBlurE4
+                              : Colors.white,
+                          },
+                        ]}
+                        onPress={() => props.setSelectedCards(item)}
+                      >
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: getWidth(12),
+                          }}
+                        >
+                          <View>
+                            {/* Tick / Untick icon */}
+                            <Image
+                              source={
+                                isSelected
+                                  ? images.imgSelectRadio
+                                  : images.imgUnselectRadio
+                              }
+                            />
+                          </View>
+                          <View style={{ flex: 1 }}>
+                            <Text style={styles.itemTitle}>{item.title}</Text>
+
+                            {item.subtitle ? (
+                              <Text
+                                style={[
+                                  styles.itemSubtitle,
+                                  {
+                                    color: isSelected
+                                      ? Colors.blue1C
+                                      : Colors.gray75,
+                                  },
+                                ]}
+                              >
+                                {item.subtitle}
+                              </Text>
+                            ) : null}
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  }}
+                />
+              </View>
+              <View style={{ marginTop: getHeight(24) }}>
+                <ModalTitleSubtitle
+                  title={getTranslation('paymentmethodmodel')}
+                  subtitle={''}
+                />
+                <View>
+                  <FlatList
+                    data={props.payData}
+                    keyExtractor={item => item.id.toString()}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                      marginHorizontal: getWidth(16.5),
+                      marginTop: getHeight(24),
+                    }}
+                    renderItem={({ item }) => {
+                      const isSelected = props?.selectedPays?.id === item.id;
+
+                      return (
+                        <TouchableOpacity
+                          style={[
+                            styles.itemBox,
+                            {
+                              borderColor: isSelected
+                                ? Colors.blue1C
+                                : Colors.grayE7,
+                              backgroundColor: isSelected
+                                ? Colors.lightBlurE4
+                                : Colors.white,
+                            },
+                          ]}
+                          onPress={() => props.setSelectedPays(item)}
+                        >
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              gap: getWidth(12),
+                            }}
+                          >
+                            <View>
+                              {/* Tick / Untick icon */}
+                              <Image
+                                source={
+                                  isSelected
+                                    ? images.imgSelectRadio
+                                    : images.imgUnselectRadio
+                                }
+                              />
+                            </View>
+                            <View style={{ flex: 1 }}>
+                              <Text style={styles.itemTitle}>{item.title}</Text>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    }}
+                  />
+                </View>
+              </View>
+            </View>
           </View>
         </View>
       </Modal>

@@ -9,6 +9,26 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  itemTitle: {
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.medium,
+    color: Colors.gray0F,
+  },
+  itemSubtitle: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.regular,
+    color: Colors.gray75,
+    marginTop: getHeight(2),
+  },
+  itemBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 2,
+    paddingVertical: getHeight(12),
+    paddingHorizontal: getWidth(16),
+    borderRadius: 20,
+    marginBottom: getHeight(8),
+  },
   txtAccess: {
     fontSize: fontSize.size20,
     fontFamily: fontsfamily.bold,

@@ -89,7 +89,14 @@ const ProfileContainer = ({ navigation, route }: any) => {
         setVisibleAccessModel(true);
       },
     },
-    { id: '4', title: getTranslation('paymentmethod'), image: images.imgCard },
+    {
+      id: '4',
+      title: getTranslation('paymentmethod'),
+      image: images.imgCard,
+      onpressfun: () => {
+        setVisiblePaymentMethodModel(true);
+      },
+    },
     {
       id: '5',
       title: getTranslation('addresss'),
@@ -197,6 +204,15 @@ const ProfileContainer = ({ navigation, route }: any) => {
     { id: 2, title: 'Home', subtitle: 'Via Roma, 31 – Naples' },
     { id: 3, title: 'Apartment', subtitle: 'Piazzale Napoli, 21 – Rome' },
   ];
+  const cardList = [
+    { id: 1, title: '•••• 6666', subtitle: 'Visa' },
+    { id: 2, title: '•••• 1234', subtitle: 'Mastercard' },
+  ];
+  const payList = [
+    { id: 1, title: 'Apple Pay' },
+    { id: 2, title: 'Klarna' },
+    { id: 3, title: 'PayPal' },
+  ];
 
   const [settingsSwitch, setSettingsSwitch] = useState<any>({
     email_24h: true,
@@ -225,8 +241,12 @@ const ProfileContainer = ({ navigation, route }: any) => {
   const [testkitsData, setTestsKitData] = useState(testKits);
   const [orderHistoryData, setOrderHistoryData] = useState(orderHistory);
   const [AddressData, setAddressData] = useState(addressList);
+  const [cardData, setCardData] = useState(cardList);
+  const [payData, setPayData] = useState(payList);
   const [addressPopupVisible, setAddressPopupVisible] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [selectedCards, setSelectedCards] = useState(null);
+  const [selectedPays, setSelectedPays] = useState(null);
 
   const [phoneNumber, setPhoneNumber] = useState<any>('');
   const [callingCode, setCallingCode] = useState<any>('39');
@@ -243,6 +263,8 @@ const ProfileContainer = ({ navigation, route }: any) => {
   const [isShowOrderHistoryDetailsModel, setIsShowOrderHistoryDetailsModel] =
     useState(false);
   const [visibleAccessModel, setVisibleAccessModel] = useState(false);
+  const [visiblePaymentMethodModel, setVisiblePaymentMethodModel] =
+    useState(false);
 
   const toggleSwitchModel = (key: string) =>
     setSettingsSwitch({ ...settingsSwitch, [key]: !settingsSwitch[key] });
@@ -377,6 +399,14 @@ const ProfileContainer = ({ navigation, route }: any) => {
   const funCloseOrderHistoryDetailsModel = () => {
     setIsShowOrderHistoryModel(true);
     setIsShowOrderHistoryDetailsModel(false);
+  };
+
+  const funOpenPaymentMethodModel = () => {
+    setVisiblePaymentMethodModel(true);
+  };
+
+  const funClosePaymentMethodModel = () => {
+    setVisiblePaymentMethodModel(false);
   };
 
   const handleNavigateAddFamily = () => {
@@ -533,6 +563,16 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onPressAccessModal={() => {
         setVisibleAccessModel(false);
       }}
+      //PaymentMethodModel
+      visiblePaymentMethodModel={visiblePaymentMethodModel}
+      funOpenPaymentMethodModel={funOpenPaymentMethodModel}
+      funClosePaymentMethodModel={funClosePaymentMethodModel}
+      cardData={cardData}
+      selectedCards={selectedCards}
+      setSelectedCards={setSelectedCards}
+      payData={payData}
+      selectedPays={selectedPays}
+      setSelectedPays={setSelectedPays}
     />
   );
 };
