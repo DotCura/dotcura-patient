@@ -310,6 +310,7 @@ export default {
   pushswitch3: 'Risultati pronti per il download',
   pushswitch4: 'Suggerimenti personalizzati sui controlli',
   pushswitch5: 'Tip salute giornalieri personalizzati',
+  addaddresspopupbtn:"Aggiungi indirizzo",
 
   //ORDERHSITORYPOPUP
   pickup: 'Prelevato il',

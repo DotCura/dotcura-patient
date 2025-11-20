@@ -22,6 +22,8 @@ import { fontsfamily } from '../../constants/FontFamily';
 import CustomDropdown from '../../global/DropDown/CustomDropDown';
 import CustomButton from '../../global/Buttons';
 import TimeSlotPicker from '../../global/TimeSlotPicker';
+import AddressModel from '../../global/AddressModel/AddressModel';
+import { ScreenNames } from '../../constants/AppConstants';
 
 const CheckoutComponent = (props: any) => {
   return (
@@ -134,7 +136,9 @@ const CheckoutComponent = (props: any) => {
                 {getTranslation('address')}
               </Text>
               <Text style={styles.lblDateAndTimeValue}>
-                Via Roma, 31 - Napoli
+                {props.selectedAddress
+                  ? `${props.selectedAddress.title} - ${props.selectedAddress.subtitle}`
+                  : 'Via Roma, 31 - Napoli'}
               </Text>
             </View>
             <TouchableOpacity
@@ -599,6 +603,21 @@ const CheckoutComponent = (props: any) => {
           </View>
         </View>
       </Modal>
+
+      {/* AddressModel */}
+      <AddressModel
+        visible={props.addressPopupVisible}
+        addresses={props.AddressData}
+        selectedId={props?.selectedAddress?.id}
+        onSelect={(item: any) => props.setSelectedAddress(item)}
+        onAddAddress={() => {
+          props.setAddressPopupVisible(false);
+          props.navigation.navigate(ScreenNames.ADDADDRESSCONTAINER, {
+            isfromcheckout: true,
+          });
+        }}
+        onClose={() => props.setAddressPopupVisible(false)}
+      />
     </>
   );
 };

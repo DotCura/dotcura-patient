@@ -5,8 +5,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { ScreenNames } from '../../constants/AppConstants';
 
-const CompleteAddressContainer = ({ navigation }: any) => {
+const CompleteAddressContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
+  const isfromcheckout = route?.params?.isfromcheckout;
 
   const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
   const [type, setType] = useState<string>('');
@@ -74,7 +75,15 @@ const CompleteAddressContainer = ({ navigation }: any) => {
       setInstructionNameError(getTranslation('emptyInstructions'));
       return;
     } else {
-      navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+      if (isfromcheckout) {
+        navigation.navigate(ScreenNames.CHECKOUTCONTAINER, {
+          ismodelfromCheckout: true,
+        });
+      } else {
+        navigation.navigate(ScreenNames.PROFILECONTAINER, {
+          ismodelfromProfile: true,
+        });
+      }
     }
   };
 

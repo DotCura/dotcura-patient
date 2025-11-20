@@ -29,6 +29,8 @@ import { constnatStyles } from '../../constants/Styles';
 import AppHeader from '../../global/Header';
 import ModalTitleSubtitle from '../../global/TitleSubtitleModel';
 import { fontsfamily } from '../../constants/FontFamily';
+import AddressModel from '../../global/AddressModel/AddressModel';
+import { ScreenNames } from '../../constants/AppConstants';
 
 const ProfileComponent = (props: any) => {
   const Item = ({ item, onPress }: any) => (
@@ -440,6 +442,7 @@ const ProfileComponent = (props: any) => {
           </View>
         </View>
       </Modal>
+
       {/* OrderHistoryDetailsModel */}
       <Modal
         transparent={true}
@@ -652,6 +655,19 @@ const ProfileComponent = (props: any) => {
           </View>
         </View>
       </Modal>
+
+      {/* AddressModel */}
+      <AddressModel
+        visible={props.addressPopupVisible}
+        addresses={props.AddressData}
+        selectedId={props?.selectedAddress?.id}
+        onSelect={(item: any) => props.setSelectedAddress(item)}
+        onAddAddress={() => {
+          props.setAddressPopupVisible(false);
+          props.navigation.navigate(ScreenNames.ADDADDRESSCONTAINER);
+        }}
+        onClose={() => props.setAddressPopupVisible(false)}
+      />
     </ScrollView>
   );
 };

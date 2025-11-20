@@ -20,7 +20,7 @@ import { ScreenNames } from '../../constants/AppConstants';
 import RNRestart from 'react-native-restart';
 import { Colors } from '../../constants/Colors';
 
-const CheckoutContainer = ({ navigation }: any) => {
+const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
   console.log('orderStatus in CheckoutContainer.tsx:', orderStatus);
@@ -192,6 +192,12 @@ const CheckoutContainer = ({ navigation }: any) => {
     },
   ];
 
+  const addressList = [
+    { id: 1, title: 'Use my location', subtitle: 'Allow geolocation' },
+    { id: 2, title: 'Home', subtitle: 'Via Roma, 31 – Naples' },
+    { id: 3, title: 'Apartment', subtitle: 'Piazzale Napoli, 21 – Rome' },
+  ];
+
   const [testkitsData, setTestsKitData] = useState(testKits);
   const [kitDataInCart, setKitDataInCart] = useState(kitListInCart);
   const [kitDataAddMore, setKitDataAddMore] = useState(kitListAddMore);
@@ -215,6 +221,11 @@ const CheckoutContainer = ({ navigation }: any) => {
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
   const [showIsKitTestDetails, setShowIsKitTestDetails] = useState(false);
+  const [AddressData, setAddressData] = useState(addressList);
+  const [addressPopupVisible, setAddressPopupVisible] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  
+  console.log('selectedAddress', selectedAddress);
 
   const handleBookSlot = () => {
     if (selectedDate && selectedTime) {
@@ -507,7 +518,7 @@ const CheckoutContainer = ({ navigation }: any) => {
   };
 
   const handleNavigateAddAddress = () => {
-    navigation.navigate(ScreenNames.ADDADDRESSCONTAINER);
+    setAddressPopupVisible(true);
   };
 
   const header = () => {
@@ -557,8 +568,16 @@ const CheckoutContainer = ({ navigation }: any) => {
     header();
   }, []);
 
+  useEffect(() => {
+    console.log('route', route?.params?.ismodelfromCheckout);
+    if (route?.params?.ismodelfromCheckout) {
+      setAddressPopupVisible(true);
+    }
+  }, [route?.params]);
+
   return (
     <CheckoutComponent
+      navigation={navigation}
       handleNavigateAddAddress={handleNavigateAddAddress}
       insets={insets}
       testkitsData={testkitsData}
@@ -603,6 +622,12 @@ const CheckoutContainer = ({ navigation }: any) => {
       selectAll={selectAll}
       totalPrice={totalPrice}
       selectedTests={selectedTests}
+      //AddressModel
+      AddressData={AddressData}
+      addressPopupVisible={addressPopupVisible}
+      setAddressPopupVisible={setAddressPopupVisible}
+      selectedAddress={selectedAddress}
+      setSelectedAddress={setSelectedAddress}
     />
   );
 };

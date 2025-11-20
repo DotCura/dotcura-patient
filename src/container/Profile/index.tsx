@@ -17,7 +17,7 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 import { ScreenNames } from '../../constants/AppConstants';
 
-const ProfileContainer = ({ navigation }: any) => {
+const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
   const recommandAnalysis = [
@@ -85,7 +85,14 @@ const ProfileContainer = ({ navigation }: any) => {
       image: images.imgWarningProfile,
     },
     { id: '4', title: getTranslation('paymentmethod'), image: images.imgCard },
-    { id: '5', title: getTranslation('addresss'), image: images.imgPin },
+    {
+      id: '5',
+      title: getTranslation('addresss'),
+      image: images.imgPin,
+      onpressfun: () => {
+        setAddressPopupVisible(true);
+      },
+    },
   ];
   const dataTwo = [
     { id: '1', title: getTranslation('rateapp'), image: images.imgUserProfile },
@@ -180,6 +187,12 @@ const ProfileContainer = ({ navigation }: any) => {
       price: 35,
     },
   ];
+  const addressList = [
+    { id: 1, title: 'Use my location', subtitle: 'Allow geolocation' },
+    { id: 2, title: 'Home', subtitle: 'Via Roma, 31 – Naples' },
+    { id: 3, title: 'Apartment', subtitle: 'Piazzale Napoli, 21 – Rome' },
+  ];
+
   const [settingsSwitch, setSettingsSwitch] = useState<any>({
     email_24h: true,
     email_results: false,
@@ -206,6 +219,10 @@ const ProfileContainer = ({ navigation }: any) => {
   const [memberSince, setMemberSince] = useState('2025');
   const [testkitsData, setTestsKitData] = useState(testKits);
   const [orderHistoryData, setOrderHistoryData] = useState(orderHistory);
+  const [AddressData, setAddressData] = useState(addressList);
+  const [addressPopupVisible, setAddressPopupVisible] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  console.log('selectedAddress', selectedAddress);
 
   //ModelVariables
   const [isShowSwitchModel, setIsShowSwitchModel] = useState(false);
@@ -351,6 +368,7 @@ const ProfileContainer = ({ navigation }: any) => {
   const handleNavigateAddFamily = () => {
     navigation.navigate(ScreenNames.ADDFAMILYCONTAINER);
   };
+
   const handleNavigateAccount = () => {
     navigation.navigate(ScreenNames.ACCOUNTCONTAINER);
   };
@@ -398,9 +416,17 @@ const ProfileContainer = ({ navigation }: any) => {
     header();
   }, []);
 
+  useEffect(() => {
+    console.log('route', route?.params?.ismodelfromProfile);
+    if (route?.params?.ismodelfromProfile) {
+      setAddressPopupVisible(true);
+    }
+  }, [route?.params]);
+
   return (
     <ProfileComponent
-    handleNavigateAccount={handleNavigateAccount}
+      navigation={navigation}
+      handleNavigateAccount={handleNavigateAccount}
       handlePressDeleteAccount={handlePressDeleteAccount}
       handlePressLogout={handlePressLogout}
       fullName={fullName}
@@ -429,6 +455,12 @@ const ProfileContainer = ({ navigation }: any) => {
       funCloseOrderHistoryModel={funCloseOrderHistoryModel}
       renderItemOrderHistory={renderItemOrderHistory}
       orderHistoryData={orderHistoryData}
+      //AddressModel
+      AddressData={AddressData}
+      addressPopupVisible={addressPopupVisible}
+      setAddressPopupVisible={setAddressPopupVisible}
+      selectedAddress={selectedAddress}
+      setSelectedAddress={setSelectedAddress}
     />
   );
 };

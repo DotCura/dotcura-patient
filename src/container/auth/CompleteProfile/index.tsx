@@ -9,7 +9,7 @@ import { regex } from '../../../constants/Regex';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { ScreenNames } from '../../../constants/AppConstants';
 
-const CompleteProfileContainer = ({navigation}:any) => {
+const CompleteProfileContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
   const [headerArray, setHeaderArray] = useState([
@@ -26,7 +26,6 @@ const CompleteProfileContainer = ({navigation}:any) => {
   const [email, setEmail] = useState<any>('');
   const [taxCode, setTaxCode] = useState<any>('');
   const [selectedGender, setSelectedGender] = useState(1);
-
 
   const [fullNameError, setFullNameError] = useState<any>('');
   const [emailError, setEmailError] = useState<any>('');
@@ -87,7 +86,7 @@ const CompleteProfileContainer = ({navigation}:any) => {
       return;
     } else {
       console.log('✅ Profile completed successfully');
-      navigation.navigate(ScreenNames.INFOATIONCONASATNTCONTAINER)
+      navigation.navigate(ScreenNames.INFOATIONCONASATNTCONTAINER);
       // Proceed to next screen or API call
     }
   };

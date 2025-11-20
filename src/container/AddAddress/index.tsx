@@ -4,7 +4,7 @@ import AddAddressComponent from '../../components/AddAddress';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenNames } from '../../constants/AppConstants';
 
-const AddAddressContainer = ({navigation}:any) => {
+const AddAddressContainer = ({navigation,route}:any) => {
   const insets = useSafeAreaInsets();
 
   const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
@@ -77,7 +77,9 @@ const AddAddressContainer = ({navigation}:any) => {
   };
 
   const handleNavigateConmpleAddress = () => {
-    navigation.navigate(ScreenNames.COMPLETEADDRESSCONTAINER)
+    navigation.navigate(ScreenNames.COMPLETEADDRESSCONTAINER,{
+      isfromcheckout:route?.params?.isfromcheckout
+    })
   }
   return (
     <AddAddressComponent
