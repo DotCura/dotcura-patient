@@ -145,9 +145,9 @@ const AccountComponent = (props: any) => {
                 // <Text key={item}>• {item}</Text>
                 <View style={styles.vwCategory}>
                   <Text style={styles.lblCategory} numberOfLines={1}>
-                    {item}
+                    {item.name}
                   </Text>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => props.handleDeleteItem('medicazioni', item.id)}>
                     <Image source={images.imgDeleteRound} />
                   </TouchableOpacity>
                 </View>
@@ -177,9 +177,9 @@ const AccountComponent = (props: any) => {
                 // <Text key={item}>• {item}</Text>
                 <View style={styles.vwCategory}>
                   <Text style={styles.lblCategory} numberOfLines={1}>
-                    {item}
+                    {item.name}
                   </Text>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => props.handleDeleteItem('patologie', item.id)}>
                     <Image source={images.imgDeleteRound} />
                   </TouchableOpacity>
                 </View>
@@ -208,8 +208,8 @@ const AccountComponent = (props: any) => {
               {props.allergie.map(item => (
                 // <Text key={item}>• {item}</Text>
                 <View style={styles.vwCategory}>
-                  <Text style={styles.lblCategory}>{item}</Text>
-                  <TouchableOpacity>
+                  <Text style={styles.lblCategory}>{item.name}</Text>
+                  <TouchableOpacity onPress={() => props.handleDeleteItem('allergie', item.id)}>
                     <Image source={images.imgDeleteRound} />
                   </TouchableOpacity>
                 </View>

@@ -42,15 +42,21 @@ const AddItemModal = ({
   }, [visible]);
 
   const filteredData = data.filter((item: any) =>
-    item.toLowerCase().includes(search.toLowerCase()),
+    item.name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const toggleSelect = (item: any) => {
-    if (localSelected.includes(item)) {
-      setLocalSelected(localSelected.filter((i: any) => i !== item));
+  const toggleSelect = (item:any) => {
+    const exists = localSelected.some((i:any) => i.id === item.id);
+
+    if (exists) {
+      setLocalSelected(localSelected.filter((i:any) => i.id !== item.id));
     } else {
       setLocalSelected([...localSelected, item]);
     }
+  };
+
+  const isSelected = (id:any) => {
+    return localSelected.some((i:any) => i.id === id);
   };
 
   return (
@@ -165,7 +171,7 @@ const AddItemModal = ({
                         flexDirection: 'row',
                         alignItems: 'center',
                         height: getHeight(32),
-                        backgroundColor: localSelected.includes(item)
+                        backgroundColor: isSelected(item.id)
                           ? Colors.grayED
                           : Colors.white,
                         padding: 6,
@@ -173,8 +179,8 @@ const AddItemModal = ({
                         borderRadius: 8,
                       }}
                     >
-                      {localSelected.includes(item) && <Text>✓</Text>}
-                      <Text style={styles.lblItemInner}>{item}</Text>
+                      {isSelected(item.id) && <Image source={images.imgRightTickBlack}/>}
+                      <Text style={styles.lblItemInner}>{item.name}</Text>
                     </TouchableOpacity>
                   </View>
                 )}

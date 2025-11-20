@@ -132,53 +132,87 @@ const AccountContainer = ({ navigation, route }: any) => {
   });
 
   //model
-  const [patologie, setPatologie] = useState(["Disordine renale"]);
+  const [patologie, setPatologie] = useState([
+    {
+      id: 1,
+      name: 'Disordine alimentare',
+    },
+  ]);
   const [medicazioni, setMedicazioni] = useState([]);
   const [allergie, setAllergie] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalTitle, setModalTitle] = useState<any>("");
+  const [modalTitle, setModalTitle] = useState<any>('');
   const [modalData, setModalData] = useState<any>([]);
   const [modalSelected, setModalSelected] = useState<any>([]);
-  const [modalType, setModalType] = useState<any>("");
+  const [modalType, setModalType] = useState<any>('');
 
-  const openModal = (type:any) => {
+  const patologieData = [
+    { id: 1, name: 'Disordine alimentare' },
+    { id: 2, name: 'Disordine renale' },
+    { id: 3, name: 'Disordine del fegato' },
+    { id: 4, name: 'Disordine di alterazione mentale' },
+  ];
+
+  const allergieData = [
+    { id: 10, name: 'Polline' },
+    { id: 11, name: 'Polvere' },
+    { id: 12, name: 'Lattosio' },
+    { id: 13, name: 'Glutine' },
+  ];
+  const medicazioneData = [
+    { id: 14, name: 'Aspirina' },
+    { id: 15, name: 'Ibuprofene' },
+    { id: 16, name: 'Paracetamolo' },
+  ];
+
+  const openModal = (type: any) => {
     setModalType(type);
 
-    if (type === "patologie") {
-      setModalTitle("Aggiungi patologia");
-      setModalData([
-        "Disordine alimentare",
-        "Disordine renale",
-        "Disordine del fegato",
-        "Disordine di alterazione mentale",
-      ]);
+    if (type === 'patologie') {
+      setModalTitle('Aggiungi patologia');
+      setModalData(patologieData);
       setModalSelected(patologie);
     }
 
-    if (type === "medicazioni") {
-      setModalTitle("Aggiungi medicazione");
-      setModalData(["Aspirina", "Ibuprofene", "Paracetamolo"]);
+    if (type === 'medicazioni') {
+      setModalTitle('Aggiungi medicazione');
+      setModalData(medicazioneData);
       setModalSelected(medicazioni);
     }
 
-    if (type === "allergie") {
-      setModalTitle("Aggiungi allergia");
-      setModalData(["Polline", "Polvere", "Lattosio", "Glutine"]);
+    if (type === 'allergie') {
+      setModalTitle('Aggiungi allergia');
+      setModalData(allergieData);
       setModalSelected(allergie);
     }
 
     setModalVisible(true);
   };
 
-  const handleSave = (selected) => {
-    if (modalType === "patologie") setPatologie(selected);
+  const handleSave = (selected: any) => {
+    if (modalType === 'patologie') setPatologie(selected);
 
-    if (modalType === "medicazioni") setMedicazioni(selected);
+    if (modalType === 'medicazioni') setMedicazioni(selected);
 
-    if (modalType === "allergie") setAllergie(selected);
+    if (modalType === 'allergie') setAllergie(selected);
 
     setModalVisible(false);
   };
+
+  const handleDeleteItem = (type: any, id: any) => {
+    if (type === 'patologie') {
+      setPatologie(prev => prev.filter(item => item.id !== id));
+    }
+  
+    if (type === 'medicazioni') {
+      setMedicazioni(prev => prev.filter(item => item.id !== id));
+    }
+  
+    if (type === 'allergie') {
+      setAllergie(prev => prev.filter(item => item.id !== id));
+    }
+  };
+  
 
   return (
     <AccountComponent
@@ -218,6 +252,7 @@ const AccountContainer = ({ navigation, route }: any) => {
       modalSelected={modalSelected}
       setModalVisible={setModalVisible}
       modalType={modalType}
+      handleDeleteItem={handleDeleteItem}
     />
   );
 };
