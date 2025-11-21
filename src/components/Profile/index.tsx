@@ -833,7 +833,7 @@ const ProfileComponent = (props: any) => {
                 <Text style={styles.lblSave}>{getTranslation('save')}</Text>
               </TouchableOpacity>
             </View>
-            <View style={{ marginTop: getHeight(26) }}>
+            <View style={{ marginTop: getHeight(26), flex: 1 }}>
               <ModalTitleSubtitle
                 title={getTranslation('savedcards')}
                 subtitle={getTranslation('savedcardssubtitle')}
@@ -989,6 +989,23 @@ const ProfileComponent = (props: any) => {
                   />
                 </View>
               </View>
+            </View>
+            <View
+              style={{
+                marginHorizontal: getWidth(16),
+                marginBottom:
+                  props.insets.bottom > 0
+                    ? props.insets.bottom
+                    : props.insets.bottom + getHeight(16),
+              }}
+            >
+              <CustomButton
+                btnicon={true}
+                btnImage={images.imgPlusBlack}
+                imgstyle={{ tintColor: Colors.white }}
+                btnTitle={getTranslation('addcardtext')}
+                btnPress={props.handlePressAddCardProfile}
+              />
             </View>
           </View>
         </View>

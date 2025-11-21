@@ -445,6 +445,11 @@ const ProfileContainer = ({ navigation, route }: any) => {
     ]);
   };
 
+  const handlePressAddCardProfile = () => {
+    setVisiblePaymentMethodModel(false);
+    navigation.navigate(ScreenNames.ADDCARDPROFILECONTAINER);
+  };
+
   const handlePressDeleteAccount = () => {
     Alert.alert(appName, getTranslation('deleteText') || '', [
       {
@@ -455,6 +460,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       { text: 'OK', onPress: handleNavigation },
     ]);
   };
+
   //onChange
   const changeInput = (inputFieldName: any, text: any) => {
     switch (inputFieldName) {
@@ -529,6 +535,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       navigation={navigation}
       handleNavigateAccount={handleNavigateAccount}
       handlePressDeleteAccount={handlePressDeleteAccount}
+      handlePressAddCardProfile={handlePressAddCardProfile}
       handlePressLogout={handlePressLogout}
       fullName={fullName}
       memberSince={memberSince}

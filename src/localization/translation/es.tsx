@@ -327,6 +327,7 @@ export default {
   pushswitch4: 'Suggerimenti personalizzati sui controlli',
   pushswitch5: 'Tip salute giornalieri personalizzati',
   addaddresspopupbtn: 'Aggiungi indirizzo',
+  addcardtext:"Agregar tarjeta",
 
   //ORDERHSITORYPOPUP
   pickup: 'Prelevato il',

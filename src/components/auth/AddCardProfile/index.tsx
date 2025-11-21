@@ -11,17 +11,9 @@ import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 import PrimaryTitleTextInput from '../../../global/PrimaryTitleTextInput';
 import { Colors } from '../../../constants/Colors';
 
-const AddCardComponent = (props: any) => {
+const AddCardProfileComponent = (props: any) => {
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      {/* TopBar */}
-      <View style={{ marginHorizontal: getWidth(16) }}>
-        <TopBar
-          array={props.headerArray}
-          currentIndex={2}
-          onClickBack={() => props.navigation.goBack()}
-        />
-      </View>
       <KeyboardAwareScrollView
         contentContainerStyle={[constnatStyles.keyboardContainer]}
         keyboardShouldPersistTaps="handled"
@@ -152,4 +144,4 @@ const AddCardComponent = (props: any) => {
   );
 };
 
-export default AddCardComponent;
+export default AddCardProfileComponent;

@@ -8,122 +8,128 @@ import { styles } from './styles';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
 import CustomButton from '../../global/Buttons';
-import { getHeight } from '../../constants/utils/Dimensions';
+import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { Colors } from '../../constants/Colors';
 
 const CompleteAddressComponent = (props: any) => {
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={[constnatStyles.keyboardContainer]}
-      keyboardShouldPersistTaps="handled"
-      bounces={false}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: Colors.white }}>
+      <View style={{ marginHorizontal: getWidth(16) }}>
         {/* TopBar */}
         <TopBar
           array={props.headerArray}
           currentIndex={1}
           onClickBack={() => props.navigation.goBack()}
         />
+      </View>
+      <KeyboardAwareScrollView
+        contentContainerStyle={[constnatStyles.keyboardContainer]}
+        keyboardShouldPersistTaps="handled"
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{ flex: 1 }}>
+          {/* HeaderView */}
+          <View style={styles.vwHeader}>
+            <TitleSubtitle
+              title={getTranslation('completeaddresstitle')}
+              subtitle={getTranslation('completeaddressssubtitle')}
+            />
+          </View>
 
-        {/* HeaderView */}
-        <View style={styles.vwHeader}>
-          <TitleSubtitle
-            title={getTranslation('completeaddresstitle')}
-            subtitle={getTranslation('completeaddressssubtitle')}
-          />
-        </View>
-
-        <View style={styles.vwInputsMain}>
-          <PrimaryTitleTextInput
-            placHolderLabel={getTranslation('typeplaceholder')}
-            refs={props.typeRef}
-            focusnext={() => props.floorRef.current?.focus()}
-            inputLabel={getTranslation('type')}
-            blur={false}
-            leftIcon={false}
-            keyaboardType={'default'}
-            value={props.type}
-            onChangeFun={(text: any) =>
-              props.handleOnChangeText(text, 'address')
-            }
-            errorMessage={props.typeError}
-            setErrorMessage={props.setTypeError}
-            isMultiline={false}
-            isBorder={false}
-          />
-
-          <View style={styles.vwInputsInner}>
+          <View style={styles.vwInputsMain}>
             <PrimaryTitleTextInput
-              flex={1}
-              placHolderLabel={getTranslation('florrplaceholder')}
-              refs={props.floorRef}
-              focusnext={() => props.stairsRef.current?.focus()}
-              inputLabel={getTranslation('florr')}
+              placHolderLabel={getTranslation('typeplaceholder')}
+              refs={props.typeRef}
+              focusnext={() => props.floorRef.current?.focus()}
+              inputLabel={getTranslation('type')}
               blur={false}
               leftIcon={false}
               keyaboardType={'default'}
-              value={props.floor}
+              value={props.type}
               onChangeFun={(text: any) =>
-                props.handleOnChangeText(text, 'floor')
+                props.handleOnChangeText(text, 'address')
               }
-              errorMessage={props.floorError}
-              setErrorMessage={props.setFloorError}
+              errorMessage={props.typeError}
+              setErrorMessage={props.setTypeError}
               isMultiline={false}
               isBorder={false}
-              isflexstart={true}
             />
+
+            <View style={styles.vwInputsInner}>
+              <PrimaryTitleTextInput
+                flex={1}
+                placHolderLabel={getTranslation('florrplaceholder')}
+                refs={props.floorRef}
+                focusnext={() => props.stairsRef.current?.focus()}
+                inputLabel={getTranslation('florr')}
+                blur={false}
+                leftIcon={false}
+                keyaboardType={'default'}
+                value={props.floor}
+                onChangeFun={(text: any) =>
+                  props.handleOnChangeText(text, 'floor')
+                }
+                errorMessage={props.floorError}
+                setErrorMessage={props.setFloorError}
+                isMultiline={false}
+                isBorder={false}
+                isflexstart={true}
+              />
+              <PrimaryTitleTextInput
+                flex={1}
+                placHolderLabel={getTranslation('stairsplaceholder')}
+                inputLabel={getTranslation('stairs')}
+                refs={props.stairsRef}
+                focusnext={() => props.instructionRef.current?.focus()}
+                blur={false}
+                leftIcon={false}
+                keyaboardType={'default'}
+                value={props.stairs}
+                onChangeFun={(text: any) =>
+                  props.handleOnChangeText(text, 'stairs')
+                }
+                errorMessage={props.stairsError}
+                setErrorMessage={props.setStairsError}
+                isflexstart={true}
+                isMultiline={false}
+                isBorder={false}
+              />
+            </View>
+
             <PrimaryTitleTextInput
-              flex={1}
-              placHolderLabel={getTranslation('stairsplaceholder')}
-              inputLabel={getTranslation('stairs')}
-              refs={props.stairsRef}
-              focusnext={() => props.instructionRef.current?.focus()}
-              blur={false}
+              placHolderLabel={getTranslation('instructionplaceholder')}
+              refs={props.instructionRef}
+              inputLabel={getTranslation('instruction')}
+              blur={true}
               leftIcon={false}
               keyaboardType={'default'}
-              value={props.stairs}
-              onChangeFun={(text: any) => props.handleOnChangeText(text, 'stairs')}
-              errorMessage={props.stairsError}
-              setErrorMessage={props.setStairsError}
-              isflexstart={true}
+              value={props.instructions}
+              onChangeFun={(text: any) =>
+                props.handleOnChangeText(text, 'instruction')
+              }
+              errorMessage={props.instructionsError}
+              setErrorMessage={props.setInstructionNameError}
               isMultiline={false}
               isBorder={false}
             />
           </View>
+        </View>
 
-          <PrimaryTitleTextInput
-            placHolderLabel={getTranslation('instructionplaceholder')}
-            refs={props.instructionRef}
-            inputLabel={getTranslation('instruction')}
-            blur={true}
-            leftIcon={false}
-            keyaboardType={'default'}
-            value={props.instructions}
-            onChangeFun={(text: any) =>
-              props.handleOnChangeText(text, 'instruction')
-            }
-            errorMessage={props.instructionsError}
-            setErrorMessage={props.setInstructionNameError}
-            isMultiline={false}
-            isBorder={false}
+        {/* vwBottomBtn */}
+        <View
+          style={[
+            styles.vwBottom,
+            { marginBottom: props.insets.bottom + getHeight(16) },
+          ]}
+        >
+          <CustomButton
+            btnPress={props.handleOnPressSaveAddress}
+            btnTitle={getTranslation('continue')}
           />
         </View>
-      </View>
-
-      {/* vwBottomBtn */}
-      <View
-        style={[
-          styles.vwBottom,
-          { marginBottom: props.insets.bottom + getHeight(16) },
-        ]}
-      >
-        <CustomButton
-          btnPress={props.handleOnPressSaveAddress}
-          btnTitle={getTranslation('continue')}
-        />
-      </View>
-    </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView>
+    </View>
   );
 };
 

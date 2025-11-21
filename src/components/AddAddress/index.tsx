@@ -50,52 +50,56 @@ const AddAddressComponent = (props: any) => {
   };
 
   return (
-    <ScrollView
-      scrollEnabled
-      showsVerticalScrollIndicator={false}
-      bounces={true}
-      contentContainerStyle={[constnatStyles.keyboardContainer]}
-      style={{ flex: 1, backgroundColor: Colors.white }}
-    >
-      <TopBar
-        array={props.headerArray}
-        currentIndex={0}
-        onClickBack={() => props.navigation.goBack()}
-      />
-      {/* HeaderView */}
-      <View style={styles.vwHeader}>
-        <TitleSubtitle
-          title={getTranslation('addaddresstitle')}
-          subtitle={getTranslation('addaddresssubtitle')}
+    <View style={{ flex: 1, backgroundColor: Colors.white }}>
+      <View style={{ marginHorizontal: getWidth(16) }}>
+        <TopBar
+          array={props.headerArray}
+          currentIndex={0}
+          onClickBack={() => props.navigation.goBack()}
         />
       </View>
-
-      <View style={{ marginTop: getHeight(43), flex: 1 }}>
-        <Text style={styles.lblTitleInput} numberOfLines={1}>
-          {getTranslation('searchaddress')}
-        </Text>
-        <View style={{ marginTop: 1 }}>
-          <GooglePlacesTextInput
-            ref={props.searchRef}
-            apiKey={''}
-            placeHolderText={getTranslation('addaddressplacholder') || ''}
-            onPlaceSelect={props.handlePlaceSelect}
-            languageCode="en"
-            style={customStylesTextInput}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            showClearButton={false}
-            showLoadingIndicator={false}
+      <ScrollView
+        scrollEnabled
+        showsVerticalScrollIndicator={false}
+        bounces={true}
+        contentContainerStyle={[constnatStyles.keyboardContainer]}
+        style={{ flex: 1, backgroundColor: Colors.white }}
+      >
+        {/* HeaderView */}
+        <View style={styles.vwHeader}>
+          <TitleSubtitle
+            title={getTranslation('addaddresstitle')}
+            subtitle={getTranslation('addaddresssubtitle')}
           />
         </View>
-      </View>
-      <View style={{ marginBottom: props.insets.bottom + getHeight(16) }}>
-        <CustomButton
-          btnPress={props.handleNavigateConmpleAddress}
-          btnTitle={getTranslation('continue')}
-        />
-      </View>
-    </ScrollView>
+
+        <View style={{ marginTop: getHeight(43), flex: 1 }}>
+          <Text style={styles.lblTitleInput} numberOfLines={1}>
+            {getTranslation('searchaddress')}
+          </Text>
+          <View style={{ marginTop: 1 }}>
+            <GooglePlacesTextInput
+              ref={props.searchRef}
+              apiKey={''}
+              placeHolderText={getTranslation('addaddressplacholder') || ''}
+              onPlaceSelect={props.handlePlaceSelect}
+              languageCode="en"
+              style={customStylesTextInput}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              showClearButton={false}
+              showLoadingIndicator={false}
+            />
+          </View>
+        </View>
+        <View style={{ marginBottom: props.insets.bottom + getHeight(16) }}>
+          <CustomButton
+            btnPress={props.handleNavigateConmpleAddress}
+            btnTitle={getTranslation('continue')}
+          />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 

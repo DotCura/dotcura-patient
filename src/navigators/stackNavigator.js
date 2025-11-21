@@ -109,6 +109,11 @@ const MainNavigation = props => {
           {},
           { headerShown: false },
         )}
+        {_addScreen(
+          ScreenNames.ADDCARDPROFILECONTAINER,
+          {},
+          { headerShown: true },
+        )}
       </Stack.Navigator>
     );
   };

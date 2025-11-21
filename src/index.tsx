@@ -31,6 +31,8 @@ export CompleteAddressContainer from "./container/CompleteAddress";
 export AccountContainer from "./container/Account";
 export AddFamilyMemberContainer from "./container/AddFamilyMembers";
 export ResultOpenUpContainers from "./container/ResultOpenUp";
+export AddCardProfileContainer from "./container/auth/AddCardProfile";
+
 
 
 
