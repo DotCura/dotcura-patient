@@ -863,43 +863,55 @@ const ProfileComponent = (props: any) => {
                               : Colors.white,
                           },
                         ]}
-                        onPress={() => props.setSelectedCards(item)}
+                        onPress={() => {
+                          props.setSelectedCards(item);
+                          props.setSelectedPays(null);
+                        }}
                       >
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            gap: getWidth(12),
-                          }}
-                        >
-                          <View>
-                            {/* Tick / Untick icon */}
-                            <Image
-                              source={
-                                isSelected
-                                  ? images.imgSelectRadio
-                                  : images.imgUnselectRadio
-                              }
-                            />
-                          </View>
-                          <View style={{ flex: 1 }}>
-                            <Text style={styles.itemTitle}>{item.title}</Text>
-
-                            {item.subtitle ? (
-                              <Text
-                                style={[
-                                  styles.itemSubtitle,
-                                  {
-                                    color: isSelected
-                                      ? Colors.blue1C
-                                      : Colors.gray75,
-                                  },
-                                ]}
-                              >
-                                {item.subtitle}
+                        <View style={{ flexDirection: 'row' }}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              gap: getWidth(12),
+                              flex: 1,
+                            }}
+                          >
+                            <View>
+                              {/* Tick / Untick icon */}
+                              <Image
+                                source={
+                                  isSelected
+                                    ? images.imgSelectRadio
+                                    : images.imgUnselectRadio
+                                }
+                              />
+                            </View>
+                            <View style={{ flex: 1 }}>
+                              <Text style={styles.itemTitle} numberOfLines={1}>
+                                {item.title}
                               </Text>
-                            ) : null}
+
+                              {item.subtitle ? (
+                                <Text
+                                  style={[
+                                    styles.itemSubtitle,
+                                    {
+                                      color: isSelected
+                                        ? Colors.blue1C
+                                        : Colors.gray75,
+                                    },
+                                  ]}
+                                >
+                                  {item.subtitle}
+                                </Text>
+                              ) : null}
+                            </View>
                           </View>
+                          <Image
+                            source={item.images}
+                            style={{ alignSelf: 'center' }}
+                          />
                         </View>
                       </TouchableOpacity>
                     );
@@ -936,28 +948,40 @@ const ProfileComponent = (props: any) => {
                                 : Colors.white,
                             },
                           ]}
-                          onPress={() => props.setSelectedPays(item)}
+                          onPress={() => {
+                            props.setSelectedCards(null);
+                            props.setSelectedPays(item);
+                          }}
                         >
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                              gap: getWidth(12),
-                            }}
-                          >
-                            <View>
-                              {/* Tick / Untick icon */}
-                              <Image
-                                source={
-                                  isSelected
-                                    ? images.imgSelectRadio
-                                    : images.imgUnselectRadio
-                                }
-                              />
+                          <View style={{ flexDirection: 'row' }}>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                gap: getWidth(12),
+                                flex: 1,
+                              }}
+                            >
+                              <View>
+                                {/* Tick / Untick icon */}
+                                <Image
+                                  source={
+                                    isSelected
+                                      ? images.imgSelectRadio
+                                      : images.imgUnselectRadio
+                                  }
+                                />
+                              </View>
+                              <View style={{ flex: 1 }}>
+                                <Text
+                                  style={styles.itemTitle}
+                                  numberOfLines={1}
+                                >
+                                  {item.title}
+                                </Text>
+                              </View>
                             </View>
-                            <View style={{ flex: 1 }}>
-                              <Text style={styles.itemTitle}>{item.title}</Text>
-                            </View>
+                            <Image source={item.images} />
                           </View>
                         </TouchableOpacity>
                       );

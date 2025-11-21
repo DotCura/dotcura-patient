@@ -63,6 +63,11 @@ export const images = {
   imgDeleteRound: require('../assets/images/deleteRound.png'),
   imgSearchModel: require('../assets/images/searchModel.png'),
   imgFolderOpen: require('../assets/images/folderOpen.png'),
+  imgvisa:require('../assets/images/visa.png'),
+  imgmastercard:require('../assets/images/mastercard.png'),
+  imgapplepay:require('../assets/images/applepay.png'),
+  imgkalrnapay:require('../assets/images/klarnapay.png'),
+  imgpaypal:require('../assets/images/paypalpay.png'),
 
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),

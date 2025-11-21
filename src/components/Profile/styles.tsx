@@ -10,6 +10,7 @@ import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
   itemTitle: {
+    
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.medium,
     color: Colors.gray0F,

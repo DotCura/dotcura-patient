@@ -205,13 +205,18 @@ const ProfileContainer = ({ navigation, route }: any) => {
     { id: 3, title: 'Apartment', subtitle: 'Piazzale Napoli, 21 – Rome' },
   ];
   const cardList = [
-    { id: 1, title: '•••• 6666', subtitle: 'Visa' },
-    { id: 2, title: '•••• 1234', subtitle: 'Mastercard' },
+    { id: 1, title: '•••• 6666', subtitle: 'Visa', images: images.imgvisa },
+    {
+      id: 2,
+      title: '•••• 1234',
+      subtitle: 'Mastercard',
+      images: images.imgmastercard,
+    },
   ];
   const payList = [
-    { id: 1, title: 'Apple Pay' },
-    { id: 2, title: 'Klarna' },
-    { id: 3, title: 'PayPal' },
+    { id: 1, title: 'Apple Pay', images: images.imgapplepay },
+    { id: 2, title: 'Klarna', images: images.imgkalrnapay },
+    { id: 3, title: 'PayPal', images: images.imgpaypal },
   ];
 
   const [settingsSwitch, setSettingsSwitch] = useState<any>({
