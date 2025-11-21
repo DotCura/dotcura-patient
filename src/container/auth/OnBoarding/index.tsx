@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { ScreenDimensions } from '../../../constants/utils/Dimensions';
 import { ScreenNames } from '../../../constants/AppConstants';
+import { MmkvManager } from '../../../constants/utils/MmkvManager';
 
 const OnBoardingContainer = ({ navigation }: any) => {
   const onBoardingArr = [
@@ -46,11 +47,15 @@ const OnBoardingContainer = ({ navigation }: any) => {
       flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
     } else {
       navigation.navigate(ScreenNames.WELCOMECONTAINER);
+      MmkvManager.setData(MmkvManager.Keys.isOnBoardingVisisted, 'true');
+
     }
   };
 
   const handleSkip = () => {
     navigation.navigate(ScreenNames.WELCOMECONTAINER);
+    MmkvManager.setData(MmkvManager.Keys.isOnBoardingVisisted, 'true');
+
   };
 
   return (

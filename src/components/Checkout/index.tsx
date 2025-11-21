@@ -210,7 +210,7 @@ const CheckoutComponent = (props: any) => {
               </Text>
             </View>
 
-            {props.discountValue > 0 && (
+            {/* {props.discountValue > 0 && ( */}
               <View style={styles.summaryItemRow}>
                 <Text style={[styles.summaryLabel]}>
                   {getTranslation('discount')}
@@ -219,7 +219,7 @@ const CheckoutComponent = (props: any) => {
                   -{currency} {props.discountValue.toFixed(2)}
                 </Text>
               </View>
-            )}
+            {/* // )} */}
 
             <View style={[styles.summaryItemRow]}>
               <Text

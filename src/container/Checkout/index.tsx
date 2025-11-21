@@ -207,7 +207,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   );
   const [manageAddress, setManageAddress] = useState('');
   const [discountCode, setDiscountCode] = useState('');
-  const [discountValue, setDiscountValue] = useState(0);
+  const [discountValue, setDiscountValue] = useState(20);
   const [familyMemberData, setFamilyMemberData] = useState(familymembers);
   const [familymemberValue, setFamilyMemberValue] = useState<string | null>(
     '1',

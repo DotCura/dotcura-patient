@@ -1,5 +1,5 @@
 import { LogBox, StyleSheet, Text, View } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MainNavigation from './src/navigators/stackNavigator';
 import { ScreenNames } from './src/constants/AppConstants';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
@@ -10,13 +10,33 @@ import { setFlashMessageRef } from './src/constants/GConstant';
 import AppLayout from './src/global/AppLayout';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ZustandStores } from './src/store';
+import { MmkvManager } from './src/constants/utils/MmkvManager';
 
 LogBox.ignoreAllLogs();
 
 const App = () => {
-  const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.PROFILECONTAINER,
-  );
+  const [initialRouteName, setInitialRouteName] = useState<string | null>(null);
+
+  useEffect(() => {
+    MmkvManager.getData(
+      MmkvManager.Keys.isOnBoardingVisisted,
+      isOnBoardingVisited => {
+        if (isOnBoardingVisited) {
+          // Onboarding visited → check login
+          MmkvManager.getData(MmkvManager.Keys.isLoggedIn, isLoginVisited => {
+            if (isLoginVisited) {
+              setInitialRouteName(ScreenNames.BOTTOMTABNAVIGATION); // Logged in
+            } else {
+              setInitialRouteName(ScreenNames.WELCOMECONTAINER); // Not logged in
+            }
+          });
+        } else {
+          setInitialRouteName(ScreenNames.ONBOARDINGCONTAINER); // Onboarding not visited
+        }
+      },
+    );
+  }, []);
+
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
   // console.log('orderStatus in App.tsx:', orderStatus);
 

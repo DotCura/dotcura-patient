@@ -18,6 +18,8 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { ScreenNames } from '../../constants/AppConstants';
 import { formatPhoneNumber } from '../../constants/TextInputConstant';
 import { regex } from '../../constants/Regex';
+import { MmkvManager } from '../../constants/utils/MmkvManager';
+import { CommonActions } from '@react-navigation/native';
 
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -274,6 +276,16 @@ const ProfileContainer = ({ navigation, route }: any) => {
   const toggleSwitchModel = (key: string) =>
     setSettingsSwitch({ ...settingsSwitch, [key]: !settingsSwitch[key] });
 
+  const handleNavigation = () => {
+    MmkvManager.clearAllExcept([MmkvManager.Keys.isOnBoardingVisisted]);
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: ScreenNames.LOGINCONTAINER }],
+      }),
+    );
+  };
+
   const renderRecommandAnlaysisData = ({ item, index }: any) => {
     return (
       <TouchableOpacity
@@ -429,7 +441,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
+      { text: 'OK', onPress: handleNavigation },
     ]);
   };
 
@@ -440,7 +452,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
+      { text: 'OK', onPress: handleNavigation },
     ]);
   };
   //onChange

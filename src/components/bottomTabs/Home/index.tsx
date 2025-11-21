@@ -59,7 +59,7 @@ const HomeComponent = (props: any) => {
       ]}
     >
       {/* vwHeader */}
-      <View style={{ marginHorizontal: getWidth(16) }}>
+      <View style={{ }}>
         <View
           style={[
             styles.vwMain,
