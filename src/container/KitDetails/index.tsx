@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import KitDetailsComponent from '../../components/KitDetails';
 import AppHeader from '../../global/Header';
 import { images } from '../../constants/Images';
-import { currency } from '../../constants/GConstant';
+import { activityOpacity, currency } from '../../constants/GConstant';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
@@ -95,7 +95,7 @@ const KitDetailsContainer = ({ navigation }: any) => {
   const renderItemKitsData = ({ item, index }: { item: any; index: any }) => {
     const selected = selectedTests.includes(item.id);
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <TouchableOpacity activeOpacity={activityOpacity} onPress={() => toggleSelect(item.id)} style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View
           style={{
             flexDirection: 'row',
@@ -152,7 +152,7 @@ const KitDetailsContainer = ({ navigation }: any) => {
             {item.price.toFixed(2)}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

@@ -56,7 +56,7 @@ const OrderStatusComponent = (props: any) => {
               <Image
                 source={images.imgLeftArrow}
                 tintColor={Colors.white}
-                style={{ transform: [{ rotate: '270deg' }] }}
+                style={{ transform: [{ rotate: '90deg' }] }}
               />
             </TouchableOpacity>
           </View>
@@ -91,7 +91,7 @@ const OrderStatusComponent = (props: any) => {
               <Image
                 source={images.imgLeftArrow}
                 tintColor={Colors.white}
-                style={{ transform: [{ rotate: '90deg' }] }}
+                style={{ transform: [{ rotate: '270deg' }] }}
               />
             </TouchableOpacity>
           </View>

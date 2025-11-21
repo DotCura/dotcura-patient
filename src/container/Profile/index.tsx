@@ -20,9 +20,11 @@ import { formatPhoneNumber } from '../../constants/TextInputConstant';
 import { regex } from '../../constants/Regex';
 import { MmkvManager } from '../../constants/utils/MmkvManager';
 import { CommonActions } from '@react-navigation/native';
+import { ZustandStores } from '../../store';
 
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
+  const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
 
   const recommandAnalysis = [
     {
@@ -277,6 +279,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
     setSettingsSwitch({ ...settingsSwitch, [key]: !settingsSwitch[key] });
 
   const handleNavigation = () => {
+    setOrderStatus('')
     MmkvManager.clearAllExcept([MmkvManager.Keys.isOnBoardingVisisted]);
     navigation.dispatch(
       CommonActions.reset({

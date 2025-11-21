@@ -236,6 +236,7 @@ const HomeComponent = (props: any) => {
                       paddingHorizontal: getWidth(4),
                       borderRadius: 999,
                       marginLeft: getWidth(3),
+                      gap:getWidth(2)
                     }}
                   >
                     <View

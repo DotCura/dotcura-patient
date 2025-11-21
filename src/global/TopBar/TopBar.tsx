@@ -8,6 +8,7 @@ import { styles } from './styles';
 import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 import { ZustandStores } from '../../store';
+import { activityOpacity } from '../../constants/GConstant';
 
 type TopBarProps = {
   array: any[];
@@ -38,7 +39,7 @@ const TopBar: React.FC<TopBarProps> = ({
     >
       {/* Back Button */}
       {showBack ? (
-        <TouchableOpacity style={styles.btnBack} onPress={onClickBack}>
+        <TouchableOpacity style={styles.btnBack} onPress={onClickBack} activeOpacity={activityOpacity}>
           <Image source={images.imgLeftArrow} />
         </TouchableOpacity>
       ) : (

@@ -58,6 +58,7 @@ const AppHeader = (props: PropsType) => {
         <TouchableOpacity
           style={styles.btnBack}
           onPress={props.startBtnOnPress}
+          activeOpacity={activityOpacity}
         >
           <Image source={images.imgLeftArrow} />
         </TouchableOpacity>

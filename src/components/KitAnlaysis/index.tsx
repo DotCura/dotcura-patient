@@ -248,7 +248,7 @@ const KitAnalysisComponent = (props: any) => {
       </ScrollView>
       <View
         style={{
-          marginBottom: props.insets.bottom,
+          marginBottom: props.insets.bottom>0?props.insets.bottom: props.insets.bottom+getHeight(16),
           marginHorizontal: getWidth(16),
         }}
       >

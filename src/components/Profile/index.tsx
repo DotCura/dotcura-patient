@@ -39,7 +39,7 @@ import { ValidationConstant } from '../../constants/TextInputConstant';
 const ProfileComponent = (props: any) => {
   const Item = ({ item, onPress }: any) => (
     <TouchableOpacity style={styles.itemContainer} onPress={item.onpressfun}>
-      <Image source={item.image} />
+      <Image source={item.image} style={{alignSelf:'center',marginTop:1}}/>
       <Text style={styles.title}>{item.title}</Text>
     </TouchableOpacity>
   );

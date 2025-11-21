@@ -155,6 +155,7 @@ const PrimaryTitleMoblieNumber = ({
               style={{
                 transform: [{ rotate: '270deg' }],
                 tintColor: Colors.gray0F,
+                marginTop:2
               }}
             ></Image>
           </TouchableOpacity>

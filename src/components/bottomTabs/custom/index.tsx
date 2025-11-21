@@ -48,7 +48,10 @@ const CustomBottomTabsComponent = (props: any) => {
             backgroundColor: Colors.white,
             alignItems: 'center',
             alignSelf: 'center',
-            marginBottom: insets.bottom + getHeight(5),
+            marginBottom:
+            insets.bottom > 0
+              ? insets.bottom + getHeight(5)
+              : insets.bottom + getHeight(10),
             marginLeft: getWidth(20),
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 4 },

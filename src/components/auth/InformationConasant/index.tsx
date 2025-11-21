@@ -49,7 +49,7 @@ const InformationConasantComponent = (props: any) => {
             <View style={styles.option}>
               <TouchableOpacity
                 onPress={() => props.setSelectedInfo(1)}
-                style={{ alignSelf: 'flex-start', marginTop: 1 }}
+                style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
               >
                 <Image
                   source={
@@ -77,7 +77,7 @@ const InformationConasantComponent = (props: any) => {
             <View style={styles.option}>
               <TouchableOpacity
                 onPress={() => props.setSelectedInfo(2)}
-                style={{ alignSelf: 'flex-start', marginTop: 1 }}
+                style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
               >
                 <Image
                   source={

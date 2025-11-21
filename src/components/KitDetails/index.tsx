@@ -146,9 +146,9 @@ const KitDetailsComponent = (props: any) => {
           <Text style={styles.lblGoToCart}>{getTranslation('gotocart')}</Text>
         </View>
         <View style={styles.vwPrice}>
-          {props.selectedTests.length === props.kitsArrayData.length && (
+          {/* {props.selectedTests.length === props.kitsArrayData.length && (
             <Text style={styles.disprice}>{currency}0.54</Text>
-          )}
+          )} */}
           <Text style={styles.totalprice}>
             {currency}
             {props.totalPrice.toFixed(2)}

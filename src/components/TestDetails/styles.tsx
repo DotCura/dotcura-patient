@@ -102,7 +102,6 @@ export const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    height: getHeight(208),
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
 
@@ -112,8 +111,8 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.goldenFB,
     borderRadius: 999,
     paddingHorizontal: getWidth(4),
-    height: getHeight(32),
     marginHorizontal: getWidth(2),
+    paddingVertical:getHeight(2)
   },
   vwTestDes: {
     marginTop: getHeight(20),
