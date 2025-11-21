@@ -1,7 +1,6 @@
 import React from 'react';
 import { MyScreens } from '.';
 import CustomBottomTabsContainer from '../container/bottomTabs/custom';
-import { createNativeBottomTabNavigator } from '@bottom-tabs/react-navigation';
 import { ScreenNames } from '../constants/AppConstants';
 import { Colors } from '../constants/Colors';
 // import * as Screen from '../index';

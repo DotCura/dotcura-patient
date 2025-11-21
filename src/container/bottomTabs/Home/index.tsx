@@ -128,7 +128,7 @@ const HomeContainer = ({ navigation }: any) => {
           id: '1',
           reportname: 'Urine',
           reportValue: 'pH: 2.2',
-          currentvalue: 11000,
+          currentvalue: 10000,
           minValue: 1000,
           maxvalue: 10000,
         },

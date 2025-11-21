@@ -31,10 +31,19 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+<string>La aplicación Doctura necesita acceso a la cámara para tomar fotos.</string>
+ 
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>La aplicación Doctura necesita acceso a tu ubicación mientras la usas.</string>
+ 
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>La aplicación Doctura necesita permiso para guardar fotos en tu biblioteca.</string>
+ 
+<key>NSPhotoLibraryUsageDescription</key>
+<string>La aplicación Doctura necesita acceso a tu biblioteca de fotos.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SFProDisplay-Black.otf</string>

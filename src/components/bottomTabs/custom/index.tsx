@@ -11,7 +11,6 @@ import { activityOpacity } from '../../../constants/GConstant';
 
 const CustomBottomTabsComponent = (props: any) => {
   const insets = useSafeAreaInsets();
-  console.log('insetsbottom', insets.bottom);
 
   return (
     <View
@@ -41,7 +40,7 @@ const CustomBottomTabsComponent = (props: any) => {
       </View>
       {props.state.index === 1 && (
         <TouchableOpacity
-          activeOpacity={activityOpacity}
+          activeOpacity={0.9}
           style={{
             paddingVertical: getHeight(8),
             paddingHorizontal: getWidth(18),
@@ -49,9 +48,9 @@ const CustomBottomTabsComponent = (props: any) => {
             alignItems: 'center',
             alignSelf: 'center',
             marginBottom:
-            insets.bottom > 0
-              ? insets.bottom + getHeight(5)
-              : insets.bottom + getHeight(10),
+              insets.bottom > 0
+                ? insets.bottom + getHeight(5)
+                : insets.bottom + getHeight(10),
             marginLeft: getWidth(20),
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 4 },
