@@ -115,7 +115,6 @@ const TestDetailsComponents = (props: any) => {
             data={props.userReportData.chartData}
             chartMaxValue={props.userReportData.maxvalue}
             chartMinValue={props.userReportData.minvalue}
-            navigation={props.navigation}
           />
         </View>
       </View>

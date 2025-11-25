@@ -8,14 +8,15 @@ import { Colors } from '../../constants/Colors';
 
 const TestDetailsContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+  
   const userReport = {
     id: '1',
     chartData: [
-      { value: 1800, date: 'Set 23', color: Colors.goldenCA },
-      { value: 0.14, date: 'Set 24', color: Colors.redCA },
-      { value: 0.1, date: 'Dic 24', color: Colors.goldenCA },
-      { value: 0.26, date: 'Gen 25', color: Colors.goldenCA },
-      { value: 0.37, date: 'Set 25', color: Colors.goldenCA },
+      { value: 1800, date: 'Set 23'},
+      { value: 0.14, date: 'Set 24' },
+      { value: 0.1, date: 'Dic 24' },
+      { value: 0.26, date: 'Gen 25' },
+      { value: 0.37, date: 'Set 25' },
     ],
     maxvalue: 0.54,
     minvalue: 0.14,
@@ -60,7 +61,7 @@ const TestDetailsContainer = ({ navigation }: any) => {
     <TestDetailsComponents
       insets={insets}
       note={note}
-      setNote={setNote}
+
       onChangeNotes={onChangeNotes}
       noteError={noteError}
       setNoteError={setNoteError}

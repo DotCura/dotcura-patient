@@ -59,11 +59,11 @@ const YourProfileContainer = ({ navigation }: any) => {
     {
       id: '1',
       chartData: [
-        { value: 1800, date: 'Set 23', color: Colors.goldenCA },
-        { value: 0.14, date: 'Set 24', color: Colors.redCA },
-        { value: 0.1, date: 'Dic 24', color: Colors.goldenCA },
-        { value: 0.26, date: 'Gen 25', color: Colors.goldenCA },
-        { value: 0.37, date: 'Set 25', color: Colors.goldenCA },
+        { value: 1800, date: 'Set 23'},
+        { value: 0.14, date: 'Set 24'},
+        { value: 0.1, date: 'Dic 24'},
+        { value: 0.26, date: 'Gen 25'},
+        { value: 0.37, date: 'Set 25'},
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -74,11 +74,11 @@ const YourProfileContainer = ({ navigation }: any) => {
     {
       id: '2',
       chartData: [
-        { value: 1800, date: 'Set 23', color: Colors.goldenCA },
-        { value: 0.14, date: 'Set 24', color: Colors.redCA },
-        { value: 0.1, date: 'Dic 24', color: Colors.goldenCA },
-        { value: 0.26, date: 'Gen 25', color: Colors.goldenCA },
-        { value: 0.37, date: 'Set 25', color: Colors.goldenCA },
+        { value: 1800, date: 'Set 23'},
+        { value: 0.14, date: 'Set 24'},
+        { value: 0.1, date: 'Dic 24'},
+        { value: 0.26, date: 'Gen 25'},
+        { value: 0.37, date: 'Set 25'},
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -89,11 +89,11 @@ const YourProfileContainer = ({ navigation }: any) => {
     {
       id: '3',
       chartData: [
-        { value: 1800, date: 'Set 23', color: Colors.goldenCA },
-        { value: 0.14, date: 'Set 24', color: Colors.redCA },
-        { value: 0.1, date: 'Dic 24', color: Colors.goldenCA },
-        { value: 0.26, date: 'Gen 25', color: Colors.goldenCA },
-        { value: 0.37, date: 'Set 25', color: Colors.goldenCA },
+        { value: 1800, date: 'Set 23'},
+        { value: 0.14, date: 'Set 24'},
+        { value: 0.1, date: 'Dic 24'},
+        { value: 0.26, date: 'Gen 25'},
+        { value: 0.37, date: 'Set 25'},
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -104,11 +104,11 @@ const YourProfileContainer = ({ navigation }: any) => {
     {
       id: '4',
       chartData: [
-        { value: 1800, date: 'Set 23', color: Colors.goldenCA },
-        { value: 0.14, date: 'Set 24', color: Colors.redCA },
-        { value: 0.1, date: 'Dic 24', color: Colors.goldenCA },
-        { value: 0.26, date: 'Gen 25', color: Colors.goldenCA },
-        { value: 0.37, date: 'Set 25', color: Colors.goldenCA },
+        { value: 1800, date: 'Set 23'},
+        { value: 0.14, date: 'Set 24'},
+        { value: 0.1, date: 'Dic 24'},
+        { value: 0.26, date: 'Gen 25'},
+        { value: 0.37, date: 'Set 25'},
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -304,7 +304,6 @@ const YourProfileContainer = ({ navigation }: any) => {
           data={item.chartData}
           chartMaxValue={item.maxvalue}
           chartMinValue={item.minvalue}
-          navigation={navigation}
         />
       </TouchableOpacity>
     );
