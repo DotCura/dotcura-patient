@@ -279,7 +279,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
     setSettingsSwitch({ ...settingsSwitch, [key]: !settingsSwitch[key] });
 
   const handleNavigation = () => {
-    setOrderStatus('')
+    setOrderStatus('');
     MmkvManager.clearAllExcept([MmkvManager.Keys.isOnBoardingVisisted]);
     navigation.dispatch(
       CommonActions.reset({
@@ -511,7 +511,9 @@ const ProfileContainer = ({ navigation, route }: any) => {
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
-            navigation.goBack();
+            navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+              screen: ScreenNames.HOMECONTAINER,
+            });
           }}
           dontShowStartBtn={false}
           showTitle={false}
