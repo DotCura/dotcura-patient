@@ -7,15 +7,14 @@ import { fontsfamily } from '../../../constants/FontFamily';
 export const styles = StyleSheet.create({
   vwMain: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whiteF2,
     paddingHorizontal: getWidth(16),
   },
 
   lblDes: {
     color: Colors.gray55,
     fontSize: fontSize.size12,
-    fontFamily: fontsfamily.regular,
-    marginHorizontal:getWidth(16),
-    letterSpacing:1,
+    fontFamily: fontsfamily.gregular,
+    letterSpacing: 1,
   },
 });

@@ -13,6 +13,9 @@ export const images = {
   imgOmBoarding4: require('../assets/images/onboarding4.png'),
   imgOmBoarding5: require('../assets/images/onBoarding5.png'),
 
+  //WELCOME
+  imgapplogo:require('../assets/images/applogo.png'),
+
   //BOTTOMTAB
   imgFocusGetTested: require('../assets/images/gettested-active.png'),
   imgFocusHome: require('../assets/images/Home-active.png'),

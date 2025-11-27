@@ -13,6 +13,7 @@ import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import CustomButton from '../../../global/Buttons';
 import { Colors } from '../../../constants/Colors';
+import { images } from '../../../constants/Images';
 const WelcomeComponent = (props: any) => {
   return (
     <View style={styles.vwMain}>
@@ -20,8 +21,15 @@ const WelcomeComponent = (props: any) => {
         scrollEnabled
         showsVerticalScrollIndicator={false}
         bounces={false}
+        contentContainerStyle={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexGrow: 1,
+        }}
         style={{ flex: 1 }}
-      ></ScrollView>
+      >
+        <Image source={images.imgapplogo} />
+      </ScrollView>
       <CustomButton
         style={{ marginBottom: getHeight(8) }}
         btnPress={props.handleNavigateLogin}
@@ -29,10 +37,10 @@ const WelcomeComponent = (props: any) => {
         btnicon={false}
       />
       <CustomButton
-        textStyle={{ color: Colors.blue17 }}
+        textStyle={{ color: Colors.blue002 }}
         style={{
           marginBottom: getHeight(8),
-          backgroundColor: Colors.lightBlurE4,
+          backgroundColor: Colors.blueD1,
         }}
         btnPress={props.handleNavigateLogin}
         btnTitle={getTranslation('Enter')}
@@ -42,7 +50,7 @@ const WelcomeComponent = (props: any) => {
         textStyle={{ color: Colors.gray0F }}
         style={{
           marginBottom: getWidth(42),
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.whiteF2,
         }}
         btnPress={props.handleNavigateLogin}
         btnTitle={getTranslation('icantaccess')}
