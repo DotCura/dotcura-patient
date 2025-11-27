@@ -1,9 +1,4 @@
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { styles } from './styles';
 import CustomButton from '../../../global/Buttons';
@@ -15,6 +10,9 @@ import { Colors } from '../../../constants/Colors';
 import { activityOpacity } from '../../../constants/GConstant';
 
 const OTPComponent = (props: any) => {
+  const masked = props.phoneNumber
+    .replace(/\d(?=\d{4})/g, '*')
+    .replace(/(\*+)(\d{4})/, '$1 $2');
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={[constnatStyles.keyboardContainer]}
@@ -31,7 +29,9 @@ const OTPComponent = (props: any) => {
             </Text>
             <Text style={constnatStyles.lblMainSubtitle}>
               {getTranslation('otpsubtitle1')}{' '}
-              <Text style={styles.lblPhoneNumber}>+39 333 966 1234.</Text>{' '}
+              <Text style={styles.lblPhoneNumber}>
+                {props.countrycode} {masked}.
+              </Text>{' '}
               {getTranslation('otpsubtitle2')}
             </Text>
           </View>
@@ -70,7 +70,8 @@ const OTPComponent = (props: any) => {
           })}
         </View>
         <Text style={styles.lblResendWarning}>
-          {getTranslation("otpwarning1")} {props.OTPTIMING} {getTranslation("otpwarning2")}
+          {getTranslation('otpwarning1')} {props.OTPTIMING}{' '}
+          {getTranslation('otpwarning2')}
         </Text>
       </View>
 
@@ -98,7 +99,7 @@ const OTPComponent = (props: any) => {
           ) : (
             <Text style={styles.lblDidntgetOtp}>
               {/* {getTranslation('ifYouDidntReceiveCodeTitle')}{' '} */}
-              <Text style={styles.lblResendOtp}>
+              <Text style={[styles.lblResendOtp, { color: Colors.blue002 }]}>
                 00:{props?.otp?.toString().padStart(2, '0')}
               </Text>
             </Text>

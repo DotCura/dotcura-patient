@@ -20,9 +20,9 @@ export const styles = StyleSheet.create({
   },
   vwBottom: {},
   lblPhoneNumber: {
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     fontSize: fontSize.size16,
-    color: Colors.blue1C,
+    color: Colors.blue002,
   },
   vwTxtInput: {
     height: getWidth(56),
@@ -37,17 +37,17 @@ export const styles = StyleSheet.create({
   txtInput: {
     textAlign: 'center',
     borderRadius: 12,
-    color: Colors.gray0F,
-    fontSize: fontSize.size17,
-    fontFamily: fontsfamily.semiBold,
+    color: Colors.black,
+    fontSize: fontSize.size26,
+    fontFamily: fontsfamily.gregular,
     height: getWidth(56),
     width: getWidth(56),
     marginBottom: 2,
   },
   lblResendOtp: {
-    fontSize: fontSize.size14,
-    color: Colors.blue1C,
-    fontFamily: fontsfamily.semiBold,
+    fontSize: fontSize.size16,
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gregular,
     textAlign: 'center',
   },
   lblDidntgetOtp: {
@@ -57,8 +57,8 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   lblResendWarning:{
-    fontSize: fontSize.size14,
-    fontFamily: fontsfamily.regular,
+    fontSize: fontSize.size12,
+    fontFamily: fontsfamily.gregular,
     color: Colors.gray55,
   }
 });

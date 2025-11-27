@@ -26,6 +26,8 @@ interface OtpArray {
 
 const OTPContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+  const [countrycode,setCountryCode] = useState("+39");
+  const [phoneNumber,setPhoneNumber] = useState("1234561234");
   const [otpArray, setOtpArray] = useState<OtpArray[]>([
     {
       value: '',
@@ -169,6 +171,8 @@ const OTPContainer = ({ navigation }: any) => {
   return (
     <OTPComponent
       otpArray={otpArray}
+      countrycode={countrycode}
+      phoneNumber={phoneNumber}
       insets={insets}
       handleOnChangeText={handleOnChangeText}
       handleOnSubmit={handleOnSubmit}

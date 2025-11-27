@@ -34,7 +34,7 @@ const LoginComponent = (props: any) => {
             label={getTranslation('moblieno')}
             value={props.phoneNumber}
             onChangeFun={(text: any) => props.changeInput('Phone Number', text)}
-            maxLength={11}
+            maxLength={12}
             callingCode={props.callingCode}
             setCallingCode={props.setCallingCode}
             refs={props.moblieNoRef}
