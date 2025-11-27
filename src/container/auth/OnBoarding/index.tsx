@@ -11,20 +11,29 @@ import {
 import { ScreenDimensions } from '../../../constants/utils/Dimensions';
 import { ScreenNames } from '../../../constants/AppConstants';
 import { MmkvManager } from '../../../constants/utils/MmkvManager';
+import { images } from '../../../constants/Images';
 
 const OnBoardingContainer = ({ navigation }: any) => {
   const onBoardingArr = [
     {
       title: getTranslation('onboardingtitle1'),
       subtitle: getTranslation('onboardingdes1'),
+      image: images.imgOmBoarding2,
     },
     {
       title: getTranslation('onboardingtitle2'),
       subtitle: getTranslation('onboardingdes2'),
+      image: images.imgOmBoarding3,
     },
     {
       title: getTranslation('onboardingtitle3'),
       subtitle: getTranslation('onboardingdes3'),
+      image: images.imgOmBoarding4,
+    },
+    {
+      title: getTranslation('onboardingtitle4'),
+      subtitle: getTranslation('onboardingdes4'),
+      image: images.imgOmBoarding5,
     },
   ];
 
@@ -48,14 +57,22 @@ const OnBoardingContainer = ({ navigation }: any) => {
     } else {
       navigation.navigate(ScreenNames.WELCOMECONTAINER);
       MmkvManager.setData(MmkvManager.Keys.isOnBoardingVisisted, 'true');
+    }
+  };
 
+  const handleBack = () => {
+    if (currentIndex > 0) {
+      flatListRef.current?.scrollToIndex({ index: currentIndex - 1 });
+    } else {
+      console.log('back');
+
+      navigation.goBack();
     }
   };
 
   const handleSkip = () => {
     navigation.navigate(ScreenNames.WELCOMECONTAINER);
     MmkvManager.setData(MmkvManager.Keys.isOnBoardingVisisted, 'true');
-
   };
 
   return (
@@ -69,6 +86,7 @@ const OnBoardingContainer = ({ navigation }: any) => {
       flatListRef={flatListRef}
       navigation={navigation}
       handleSkip={handleSkip}
+      handleBack={handleBack}
     />
   );
 };

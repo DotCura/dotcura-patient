@@ -10,12 +10,15 @@ import React from 'react';
 import { styles } from './styles';
 import CustomButton from '../../../global/Buttons';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
-import { getHeight } from '../../../constants/utils/Dimensions';
+import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 import { Colors } from '../../../constants/Colors';
+import { activityOpacity } from '../../../constants/GConstant';
+import { images } from '../../../constants/Images';
 
 const OnBoardingComponent = (props: any) => {
   return (
     <View style={styles.container}>
+      {/* header */}
       <View
         style={[
           styles.indicatorContainer,
@@ -24,30 +27,39 @@ const OnBoardingComponent = (props: any) => {
           },
         ]}
       >
-        {props.onBoardingArrData.map((_: any, index: any) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => {
-              props.flatListRef.current?.scrollToIndex({
-                index,
-                animated: true,
-              });
-              props.setCurrentIndex(index);
-            }}
-            activeOpacity={0.7}
-          >
-            <View
-              style={[
-                styles.indicator,
-                props.currentIndex === index
-                  ? styles.activeIndicator
-                  : styles.inactiveIndicator,
-              ]}
-            />
-          </TouchableOpacity>
-        ))}
+        <TouchableOpacity
+          style={styles.btnBack}
+          onPress={props.handleBack}
+          activeOpacity={activityOpacity}
+        >
+          <Image source={images.imgLeftArrow} />
+        </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginRight: getWidth(14),
+            gap: getWidth(4),
+          }}
+        >
+          {props.onBoardingArrData.map((_: any, index: any) => (
+            <TouchableOpacity key={index} activeOpacity={1}>
+              <View
+                style={[
+                  styles.indicator,
+                  index === props.currentIndex
+                    ? styles.activeIndicator 
+                    : index < props.currentIndex
+                    ? styles.completedIndicator
+                    : styles.inactiveIndicator, 
+                ]}
+              />
+            </TouchableOpacity>
+          ))}
+        </View>
+        <Image source={images.imgDelete} style={{ opacity: 0 }} />
       </View>
 
+      {/* centerview */}
       <View style={{ flex: 1 }}>
         {/* fltOnboarding */}
 
@@ -68,10 +80,33 @@ const OnBoardingComponent = (props: any) => {
           }}
           renderItem={({ item, index }: any) => {
             return (
-              <View style={styles.vwImgOnboarding} key={index}>
-                {/* <View style={[styles.imageContainer]}>
-                  <Image source={item.image} style={styles.onboardingImage} />
-                </View> */}
+              <View
+                style={[
+                  styles.vwImgOnboarding,
+                  {
+                    marginBottom: index == 2 ? getHeight(40) : getHeight(58),
+                  },
+                ]}
+                key={index}
+              >
+                <View
+                  style={[
+                    styles.imageContainer,
+                    {
+                      marginTop: index == 2 ? getHeight(26) : getHeight(70),
+                    },
+                  ]}
+                >
+                  <Image
+                    source={item.image}
+                    style={[
+                      styles.onboardingImage,
+                      {
+                        resizeMode: index == 0 ? 'cover' : 'contain',
+                      },
+                    ]}
+                  />
+                </View>
 
                 <View style={[styles.contentContainer]}>
                   <Text style={styles.txtTitle} numberOfLines={2}>
@@ -90,23 +125,30 @@ const OnBoardingComponent = (props: any) => {
       <View
         style={[
           styles.buttonContainer,
-          { paddingBottom: props.insets.bottom + getHeight(16) },
+          {
+            paddingBottom:
+              props.insets.bottom > 0
+                ? props.insets.bottom
+                : props.insets.bottom + getHeight(16),
+          },
         ]}
       >
         <CustomButton
           btnPress={props.handleNext}
           btnTitle={
             props.currentIndex === props.onBoardingArrData.length - 1
-              ? getTranslation('next')
-              : getTranslation('next')
+              ? getTranslation('startlabel')
+              : getTranslation('continue')
           }
         />
-        <CustomButton
-          style={{ backgroundColor: Colors.white }}
-          textStyle={{ color: Colors.gray0F }}
-          btnPress={props.handleSkip}
-          btnTitle={getTranslation('skip')}
-        />
+        {props.currentIndex !== props.onBoardingArrData.length - 1 && (
+          <CustomButton
+            style={{ backgroundColor: Colors.blueDC }}
+            textStyle={{ color: Colors.gray0F }}
+            btnPress={props.handleSkip}
+            btnTitle={getTranslation('skip')}
+          />
+        )}
       </View>
     </View>
   );

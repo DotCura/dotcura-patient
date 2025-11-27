@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     borderRadius:20,
     height: getHeight(48),
     alignSelf: 'center',
-    backgroundColor: Colors.blue1C,
+    backgroundColor: Colors.blue002,
     width: '100%',
   },
   imgIcon: {
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   },
   lblTitle: {
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     color: Colors.white,
   },
 });

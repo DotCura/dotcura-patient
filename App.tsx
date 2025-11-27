@@ -15,27 +15,27 @@ import { MmkvManager } from './src/constants/utils/MmkvManager';
 LogBox.ignoreAllLogs();
 
 const App = () => {
-  const [initialRouteName, setInitialRouteName] = useState<string | null>(null);
+  const [initialRouteName, setInitialRouteName] = useState<string | null>(ScreenNames.INTROCONTAINER);
 
-  useEffect(() => {
-    MmkvManager.getData(
-      MmkvManager.Keys.isOnBoardingVisisted,
-      isOnBoardingVisited => {
-        if (isOnBoardingVisited) {
-          // Onboarding visited → check login
-          MmkvManager.getData(MmkvManager.Keys.isLoggedIn, isLoginVisited => {
-            if (isLoginVisited) {
-              setInitialRouteName(ScreenNames.BOTTOMTABNAVIGATION); // Logged in
-            } else {
-              setInitialRouteName(ScreenNames.WELCOMECONTAINER); // Not logged in
-            }
-          });
-        } else {
-          setInitialRouteName(ScreenNames.ONBOARDINGCONTAINER); // Onboarding not visited
-        }
-      },
-    );
-  }, []);
+  // useEffect(() => {
+  //   MmkvManager.getData(
+  //     MmkvManager.Keys.isOnBoardingVisisted,
+  //     isOnBoardingVisited => {
+  //       if (isOnBoardingVisited) {
+  //         // Onboarding visited → check login
+  //         MmkvManager.getData(MmkvManager.Keys.isLoggedIn, isLoginVisited => {
+  //           if (isLoginVisited) {
+  //             setInitialRouteName(ScreenNames.BOTTOMTABNAVIGATION); // Logged in
+  //           } else {
+  //             setInitialRouteName(ScreenNames.WELCOMECONTAINER); // Not logged in
+  //           }
+  //         });
+  //       } else {
+  //         setInitialRouteName(ScreenNames.ONBOARDINGCONTAINER); // Onboarding not visited
+  //       }
+  //     },
+  //   );
+  // }, []);
 
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
   // console.log('orderStatus in App.tsx:', orderStatus);

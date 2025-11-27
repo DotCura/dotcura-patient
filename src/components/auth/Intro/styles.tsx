@@ -39,6 +39,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   vwImgOnboarding: {
+    flex: 1,
     width: ScreenDimensions.screenWidth,
   },
   imageContainer: {
@@ -49,9 +50,10 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   contentContainer: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
     flex: 1,
+    marginBottom: getHeight(40),
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   txtTitle: {
     fontSize: fontSize.size28,
@@ -66,8 +68,8 @@ export const styles = StyleSheet.create({
     fontFamily: fontsfamily.regular,
     color: Colors.gray55,
     textAlign: 'center',
-    marginHorizontal: getWidth(58),
-    letterSpacing:0.2,
+    marginHorizontal: getWidth(16),
+    letterSpacing: 0.2,
   },
   indicatorContainer: {
     marginHorizontal: getWidth(16),

@@ -7,6 +7,11 @@ export const images = {
   imgWarning: require('../assets/images/warning.png'),
   imgSelectRadio: require('../assets/images/selectRadio.png'),
   imgUnselectRadio: require('../assets/images/unselectRadio.png'),
+  imgOmBoarding1: require('../assets/images/onboarding1.png'),
+  imgOmBoarding2: require('../assets/images/onboarding2.png'),
+  imgOmBoarding3: require('../assets/images/onboarding3.png'),
+  imgOmBoarding4: require('../assets/images/onboarding4.png'),
+  imgOmBoarding5: require('../assets/images/onBoarding5.png'),
 
   //BOTTOMTAB
   imgFocusGetTested: require('../assets/images/gettested-active.png'),
@@ -63,11 +68,11 @@ export const images = {
   imgDeleteRound: require('../assets/images/deleteRound.png'),
   imgSearchModel: require('../assets/images/searchModel.png'),
   imgFolderOpen: require('../assets/images/folderOpen.png'),
-  imgvisa:require('../assets/images/visa.png'),
-  imgmastercard:require('../assets/images/mastercard.png'),
-  imgapplepay:require('../assets/images/applepay.png'),
-  imgkalrnapay:require('../assets/images/klarnapay.png'),
-  imgpaypal:require('../assets/images/paypalpay.png'),
+  imgvisa: require('../assets/images/visa.png'),
+  imgmastercard: require('../assets/images/mastercard.png'),
+  imgapplepay: require('../assets/images/applepay.png'),
+  imgkalrnapay: require('../assets/images/klarnapay.png'),
+  imgpaypal: require('../assets/images/paypalpay.png'),
 
   // Static Images
   // specialOffers: require('../assets/images/Static/specialOffers.png'),

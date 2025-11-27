@@ -2,18 +2,25 @@ export default {
   //APPNAME
   appname: 'DotCura',
 
+  //INTRO
+  introtitle: 'Benvenuto in dotCura',
+  introsubtitle:
+    'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet.',
+
   //ONBOARDING
-  onboardingtitle1: 'Ut in tristique vestibulum.',
+  onboardingtitle1: 'Esami a domicilio, easy',
   onboardingdes1:
-    'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
-  onboardingtitle2: 'Ut in tristique vestibulum.',
-  onboardingdes2:
-    'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
-  onboardingtitle3: 'Ut in tristique vestibulum.',
+    "Prenota, fai le analisi e ricevi i risultati.Tutto dall'app.",
+  onboardingtitle2: 'Fate largo all’operatore',
+  onboardingdes2: 'Fatti trovare pronto.Sai sempre quando arriva',
+  onboardingtitle3: 'Risultati in 24 ore',
   onboardingdes3:
-    'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet. ',
+    'Sull’app riceverai i risultati delle analisi. Salvali, scaricali o condividili con il medico.Tutto digitale e sicuro.',
+  onboardingtitle4: 'I tuoi dati sono al sicuro',
+  onboardingdes4: 'La privacy è un diritto. E noi la rispettiamo',
   skip: 'Salta',
   creteanacoount: 'Crea un account',
+  startlabel: 'Inizia ora',
 
   //LOGIN
   logintitle: 'Inserisci il numero di telefono',
@@ -118,7 +125,7 @@ export default {
 
   //GETTESTED
   kitavailable: 'kit disponibili',
-  filter:"Filtros",
+  filter: 'Filtros',
 
   //KITDETAILS
   analytesinthekit: 'Analiti nel kit',
@@ -284,9 +291,9 @@ export default {
   allergie: 'Allergie',
   addgg: 'Aggiungi',
   searchplaceholder: 'Cerca...',
-  savedcards:"Carte salvate",
-  savedcardssubtitle:"Le tue carte di credito o debito",
-  paymentmethodmodel:"Altri metodi",
+  savedcards: 'Carte salvate',
+  savedcardssubtitle: 'Le tue carte di credito o debito',
+  paymentmethodmodel: 'Altri metodi',
 
   //PROFILE
   membersince: 'Membro dal',
@@ -327,7 +334,7 @@ export default {
   pushswitch4: 'Suggerimenti personalizzati sui controlli',
   pushswitch5: 'Tip salute giornalieri personalizzati',
   addaddresspopupbtn: 'Aggiungi indirizzo',
-  addcardtext:"Agregar tarjeta",
+  addcardtext: 'Agregar tarjeta',
 
   //ORDERHSITORYPOPUP
   pickup: 'Prelevato il',
