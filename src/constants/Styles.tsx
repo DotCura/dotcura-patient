@@ -18,7 +18,7 @@ export const constnatStyles = StyleSheet.create({
   },
   keyboardContainer: {
     flexGrow: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whiteF2,
     paddingHorizontal: getWidth(16),
   },
   vwContainer: {
@@ -49,12 +49,12 @@ export const constnatStyles = StyleSheet.create({
   lblMainTitle: {
     color: Colors.gray0F,
     fontSize: fontSize.size28,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gmedium,
   },
   lblMainSubtitle: {
     color: Colors.gray55,
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
   },
   lblModalTitle: {
     fontSize: fontSize.size20,

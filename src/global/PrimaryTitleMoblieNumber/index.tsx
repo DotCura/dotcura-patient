@@ -66,7 +66,7 @@ const PrimaryTitleMoblieNumber = ({
 
   const getBorderColor = () => {
     if (displayError) return Colors.red8C;
-    if (isFocused) return Colors.blue1C;
+    if (isFocused) return Colors.blue002;
     return Colors.grayD8;
   };
 
