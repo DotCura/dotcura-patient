@@ -119,8 +119,8 @@ const PrimaryTitleTextInput = ({
           <TextInput
             ref={inputRef}
             keyboardAppearance="dark"
-            selectionColor={Colors.gray75}
-            cursorColor={Colors.gray75}
+            selectionColor={Colors.blue002}
+            cursorColor={Colors.blue002}
             editable={props.editable}
             keyboardType={props.keyaboardType}
             autoCapitalize={props.autoCapitalize ? 'none' : 'sentences'}

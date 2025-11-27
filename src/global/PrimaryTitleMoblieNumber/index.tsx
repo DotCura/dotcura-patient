@@ -163,8 +163,8 @@ const PrimaryTitleMoblieNumber = ({
         <View style={{ flex: 1 }}>
           <TextInput
             keyboardAppearance="dark"
-            selectionColor={Colors.gray75}
-            cursorColor={Colors.gray75}
+            selectionColor={Colors.blue002}
+            cursorColor={Colors.blue002}
             returnKeyType={focusnext ? 'next' : 'default'}
             keyboardType="phone-pad"
             blurOnSubmit={blur ? true : false}

@@ -47,7 +47,7 @@ const TopBar: React.FC<TopBarProps> = ({
       )}
 
       {/* Steps */}
-      <View style={{ flexDirection: 'row', gap: getWidth(4) }}>
+      {/* <View style={{ flexDirection: 'row', gap: getWidth(4) }}>
         {array.map((item: any, index: number) => {
           const isPast = index < currentIndex;
           const isCurrent = index === currentIndex;
@@ -93,7 +93,34 @@ const TopBar: React.FC<TopBarProps> = ({
             </View>
           );
         })}
+      </View> */}
+        <View style={{ flexDirection: 'row', gap: getWidth(4) }}>
+        {array.map((item: any, index: number) => {
+          const isPast = index < currentIndex;
+          const isCurrent = index === currentIndex;
+ 
+          const barBackgroundColor =
+            isPast || isCurrent ? Colors.blue002 : Colors.purpleB3;
+ 
+          return (
+            <View key={index} style={{ flexDirection: 'row' }}>
+              <View
+                style={{
+                  backgroundColor: barBackgroundColor,
+                  height: getHeight(14),
+                  width: isCurrent ? getWidth(52) : getWidth(14),
+                  borderRadius: 1000,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+               
+              </View>
+            </View>
+          );
+        })}
       </View>
+ 
 
       {showDelete ? (
         <TouchableOpacity>

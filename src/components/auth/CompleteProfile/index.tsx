@@ -18,7 +18,7 @@ const CompleteProfileComponent = (props: any) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.whiteF2,
       }}
     >
       <View style={{ marginHorizontal: getWidth(16) }}>

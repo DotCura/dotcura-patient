@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     color: Colors.black,
     paddingLeft: 0,
     margin: 0,

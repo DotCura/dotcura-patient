@@ -15,7 +15,7 @@ import { MmkvManager } from './src/constants/utils/MmkvManager';
 LogBox.ignoreAllLogs();
 
 const App = () => {
-  const [initialRouteName, setInitialRouteName] = useState<string | null>(ScreenNames.OTPCONTAINER);
+  const [initialRouteName, setInitialRouteName] = useState<string | null>(ScreenNames.COMPLETEPROFILECONTAINER);
 
   // useEffect(() => {
   //   MmkvManager.getData(

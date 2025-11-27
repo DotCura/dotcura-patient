@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingBottom: getHeight(10),
+    backgroundColor: Colors.whiteF2,
   },
   btnBack: {
     backgroundColor: Colors.white,
