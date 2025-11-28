@@ -29,14 +29,13 @@ export const constnatStyles = StyleSheet.create({
   vwTitleSubtitles: { gap: getWidth(4) },
   lblHeaderTitle: {
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gbold,
     color: Colors.gray0F,
     textAlign: 'center',
   },
   lblSubHeaderTitle: {
-    marginTop: getHeight(1),
     fontSize: fontSize.size12,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     color: Colors.gray55,
     textAlign: 'center',
   },

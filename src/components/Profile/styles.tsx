@@ -10,7 +10,6 @@ import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
   itemTitle: {
-    
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.medium,
     color: Colors.gray0F,
@@ -34,7 +33,7 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size20,
     fontFamily: fontsfamily.bold,
     color: Colors.gray0F,
-    marginTop:getHeight(27)
+    marginTop: getHeight(27),
   },
   summaryContainer: {
     marginTop: getHeight(24),
@@ -166,7 +165,7 @@ export const styles = StyleSheet.create({
   lblLatestValue: {
     color: Colors.gray0F,
     fontSize: fontSize.size20,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gsemiBold,
   },
   vwLatestValue: {
     marginTop: getHeight(24),
@@ -186,16 +185,17 @@ export const styles = StyleSheet.create({
   vwName: {
     height: getHeight(56),
     aspectRatio: 1,
-    backgroundColor: Colors.grayE7,
+    backgroundColor: Colors.grayD8,
     borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   txtFirstCharacter: {
     alignSelf: 'center',
-    color: Colors.grayAD,
+    color: Colors.gray75,
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.regular,
-    fontWeight: '400',
-    marginTop: getHeight(18),
+    fontFamily: fontsfamily.gregular,
+    letterSpacing: 0.2,
   },
   vwInsta: {
     position: 'absolute',
@@ -222,15 +222,15 @@ export const styles = StyleSheet.create({
   },
   txtFullName: {
     color: Colors.gray0F,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gsemiBold,
     fontSize: fontSize.size20,
+    letterSpacing: 0.3,
   },
   txtMember: {
     color: Colors.gray55,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     fontSize: fontSize.size14,
     letterSpacing: 0.1,
-    marginTop: getHeight(2),
   },
   vwAvabilityWorkArea: {
     alignSelf: 'center',
@@ -239,8 +239,7 @@ export const styles = StyleSheet.create({
     gap: getWidth(8),
   },
   vwAvablity: {
-    borderWidth: 2,
-    borderColor: Colors.grayE7,
+    backgroundColor: Colors.white,
     height: getHeight(91),
     borderRadius: 20,
     width: ScreenDimensions.screenWidth / 2 - getWidth(16),
@@ -248,7 +247,7 @@ export const styles = StyleSheet.create({
   vwInAva: {
     height: getHeight(40),
     aspectRatio: 1,
-    backgroundColor: Colors.grayF3,
+    backgroundColor: Colors.purpleE0,
     alignSelf: 'center',
     marginTop: getHeight(12),
     borderRadius: 100,
@@ -257,7 +256,7 @@ export const styles = StyleSheet.create({
   },
   txtAvability: {
     color: Colors.gray0F,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     marginTop: getHeight(6),
     fontSize: fontSize.size16,
     alignSelf: 'center',
@@ -292,8 +291,12 @@ export const styles = StyleSheet.create({
     marginLeft: getWidth(25),
   },
   container: {
-    marginTop: getHeight(32),
+    marginTop: getHeight(24),
     marginHorizontal: getWidth(16),
+    backgroundColor: Colors.white,
+    paddingHorizontal: getWidth(8),
+    paddingVertical: getHeight(16),
+    borderRadius: 20,
   },
   containerTwo: {
     marginHorizontal: getWidth(16),
@@ -361,17 +364,15 @@ export const styles = StyleSheet.create({
     marginTop: getHeight(24),
     color: Colors.gray55,
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     alignSelf: 'center',
+    letterSpacing: 0.1,
   },
   itemContainer: {
     flexDirection: 'row', // image + text horizontally
     alignItems: 'center',
-    backgroundColor: Colors.grayED,
-    borderRadius: 20,
     paddingHorizontal: getWidth(16),
     paddingVertical: getHeight(14),
-    marginBottom: getHeight(8),
   },
   vwSupport: {
     marginHorizontal: getWidth(16),
@@ -386,8 +387,8 @@ export const styles = StyleSheet.create({
 
   title: {
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.medium,
-    fontWeight: '500',
+    fontFamily: fontsfamily.gmedium,
+    letterSpacing: 0.2,
     marginLeft: getWidth(8),
     color: Colors.gray0F,
   },

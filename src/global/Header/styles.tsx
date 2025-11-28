@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     elevation: 6,
   },
   vwSave: {
-    backgroundColor: Colors.lightBlurE4,
+    backgroundColor: Colors.blueD1,
     height: getHeight(36),
     justifyContent: 'center',
     alignItems: 'center',
@@ -60,8 +60,8 @@ export const styles = StyleSheet.create({
   },
   lblSave: {
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.medium,
-    color: Colors.blue17,
+    fontFamily: fontsfamily.gmedium,
+    color: Colors.blue002,
   },
   lblHelp: {
     fontSize: fontSize.size14,

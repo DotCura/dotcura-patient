@@ -73,6 +73,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.grayF3,
     height: getHeight(143),
     borderRadius: 20,
+    overflow: 'hidden',
   },
   btnPlusBlack: {
     backgroundColor: Colors.white,
@@ -81,17 +82,9 @@ export const styles = StyleSheet.create({
     height: getHeight(36),
     aspectRatio: 1,
     borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
     position: 'absolute',
     left: getWidth(8),
     top: getHeight(8),
-    elevation: 6,
   },
   btnFav: {
     position: 'absolute',
@@ -100,17 +93,18 @@ export const styles = StyleSheet.create({
   },
   lblPrice: {
     color: Colors.gray0F,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     fontSize: fontSize.size16,
+    marginTop: getHeight(4),
   },
   lblTitle: {
     color: Colors.gray0F,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gbold,
     fontSize: fontSize.size16,
   },
   lblDescription: {
     color: Colors.gray2A,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     fontSize: fontSize.size14,
   },
 });

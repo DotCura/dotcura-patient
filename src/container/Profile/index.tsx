@@ -4,7 +4,14 @@ import { images } from '../../constants/Images';
 import AppHeader from '../../global/Header';
 import ProfileComponent from '../../components/Profile';
 import { getTranslation } from '../../localization/i18n/i18n.config';
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { activityOpacity, appName, currency } from '../../constants/GConstant';
 import {
   getHeight,
@@ -32,6 +39,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       title: 'Diabete',
       description: 'Controllo glicemia e zuccheri',
       price: '35.00',
+      kitimage: images.imgkit1,
       isLiked: false,
       isAdded: false,
     },
@@ -40,6 +48,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       title: 'Anemia',
       description: 'Controllo ferro e globuli rossi',
       price: '35.00',
+      kitimage: images.imgkit2,
       isLiked: false,
       isAdded: false,
     },
@@ -50,6 +59,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       price: '40.00',
       isLiked: false,
       isAdded: false,
+      kitimage: images.imgkit3,
     },
     {
       id: '4',
@@ -58,6 +68,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       price: '45.00',
       isLiked: false,
       isAdded: false,
+      kitimage: images.imgkit4,
     },
     {
       id: '5',
@@ -66,16 +77,27 @@ const ProfileContainer = ({ navigation, route }: any) => {
       price: '30.00',
       isLiked: false,
       isAdded: false,
+      kitimage: images.imgkit5,
     },
   ];
   const data = [
     {
       id: '1',
       title: getTranslation('orderhistoryprofile'),
-      image: images.imgUserProfile,
+      image: images.imgcartclock,
       onpressfun: () => {
         setIsShowOrderHistoryModel(true);
       },
+      iscurv:true
+    },
+    {
+      id: '6',
+      title: getTranslation('favourite'),
+      image: images.imgFavProfile,
+      onpressfun: () => {
+        console.log('fav');
+      },
+      iscurv:true
     },
     {
       id: '2',
@@ -84,6 +106,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onpressfun: () => {
         setIsShowSwitchModel(true);
       },
+      iscurv:true
     },
     {
       id: '3',
@@ -92,6 +115,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onpressfun: () => {
         setVisibleAccessModel(true);
       },
+      iscurv:true
     },
     {
       id: '4',
@@ -104,23 +128,51 @@ const ProfileContainer = ({ navigation, route }: any) => {
     {
       id: '5',
       title: getTranslation('addresss'),
-      image: images.imgPin,
+      image: images.imgAddressProfile,
       onpressfun: () => {
         setAddressPopupVisible(true);
       },
+      iscurv:true
     },
   ];
   const dataTwo = [
-    { id: '1', title: getTranslation('rateapp'), image: images.imgUserProfile },
     {
       id: '2',
       title: getTranslation('termsandconditions'),
-      image: images.imgBell,
+      image: images.imgShareProfile,
+      onpressfun: () => {
+        console.log('Terms');
+      },
+      iscurv:false
     },
     {
       id: '3',
       title: getTranslation('privacypolicy'),
-      image: images.imgHelpProfile,
+      image: images.imgShareProfile,
+      onpressfun: () => {
+        console.log('Terms');
+      },
+      iscurv:false
+    },
+  ];
+  const dataThree = [
+    {
+      id: '1',
+      title: getTranslation('supportprofile'),
+      image: images.imgShareProfile,
+      onpressfun: () => {
+        console.log('suppoet');
+      },
+      iscurv:false
+    },
+    {
+      id: '2',
+      title: getTranslation('rateapp'),
+      image: images.imgShareProfile,
+      onpressfun: () => {
+        console.log('rate');
+      },
+      iscurv:false
     },
   ];
   const testKits = [
@@ -299,26 +351,26 @@ const ProfileContainer = ({ navigation, route }: any) => {
         }}
       >
         <View style={{ gap: getHeight(8) }}>
-          <View style={styles.vwGrey}>
+          <ImageBackground style={styles.vwGrey} source={item.kitimage}>
             <TouchableOpacity style={styles.btnPlusBlack}>
               <Image source={images.imgPlusBlack} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnFav}>
               <Image source={images.imgFavFilled} />
             </TouchableOpacity>
-          </View>
+          </ImageBackground>
 
           {/* veProductDetails */}
           <View>
-            <Text style={styles.lblPrice} numberOfLines={1}>
-              {currency}
-              {item.price}
-            </Text>
             <Text style={styles.lblTitle} numberOfLines={1}>
               {item.title}
             </Text>
             <Text style={styles.lblDescription} numberOfLines={3}>
               {item.description}
+            </Text>
+            <Text style={styles.lblPrice} numberOfLines={1}>
+              {currency}
+              {item.price}
             </Text>
           </View>
         </View>
@@ -546,6 +598,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       memberSince={memberSince}
       data={data}
       dataTwo={dataTwo}
+      dataThree={dataThree}
       insets={insets}
       renderRecommandAnlaysisData={renderRecommandAnlaysisData}
       recommandAnalysisData={recommandAnalysisData}

@@ -14,7 +14,7 @@ export const images = {
   imgOmBoarding5: require('../assets/images/onBoarding5.png'),
 
   //WELCOME
-  imgapplogo:require('../assets/images/applogo.png'),
+  imgapplogo: require('../assets/images/applogo.png'),
 
   //BOTTOMTAB
   imgFocusGetTested: require('../assets/images/gettested-active.png'),
@@ -76,7 +76,18 @@ export const images = {
   imgapplepay: require('../assets/images/applepay.png'),
   imgkalrnapay: require('../assets/images/klarnapay.png'),
   imgpaypal: require('../assets/images/paypalpay.png'),
+  imgcartclock: require('../assets/images/cart-clock.png'),
+  imgAddressProfile: require('../assets/images/addressprofile.png'),
+  imgFavProfile: require('../assets/images/favprofile.png'),
+  imgRightCurve: require('../assets/images/rightcurv.png'),
+  imgShareProfile: require('../assets/images/shareProfile.png'),
 
   // Static Images
-  // specialOffers: require('../assets/images/Static/specialOffers.png'),
+  imgkit1: require('../assets/images/Static/kit1.png'),
+  imgkit2: require('../assets/images/Static/kit2.png'),
+  imgkit3: require('../assets/images/Static/kit3.png'),
+  imgkit4: require('../assets/images/Static/kit4.png'),
+  imgkit5: require('../assets/images/Static/kit5.png'),
+  imgkit6: require('../assets/images/Static/kit6.png'),
+  imgkit7: require('../assets/images/Static/kit7.png'),
 };

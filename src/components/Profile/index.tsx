@@ -39,8 +39,22 @@ import { ValidationConstant } from '../../constants/TextInputConstant';
 const ProfileComponent = (props: any) => {
   const Item = ({ item, onPress }: any) => (
     <TouchableOpacity style={styles.itemContainer} onPress={item.onpressfun}>
-      <Image source={item.image} style={{alignSelf:'center',marginTop:1}}/>
-      <Text style={styles.title}>{item.title}</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          flex: 1,
+          alignItems: 'center',
+        }}
+      >
+        <Image
+          source={item.image}
+          style={{ alignSelf: 'center', marginTop: 1 }}
+        />
+        <Text style={styles.title}>{item.title}</Text>
+      </View>
+      {item.iscurv == true && (
+        <Image source={images.imgRightCurve} style={{ alignSelf: 'center' }} />
+      )}
     </TouchableOpacity>
   );
   const ItemTwo = ({ item, onPress }: any) => (
@@ -78,7 +92,7 @@ const ProfileComponent = (props: any) => {
         constnatStyles.keyboardContainer,
         { paddingHorizontal: 0 },
       ]}
-      style={{ flex: 1, backgroundColor: Colors.white }}
+      style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
     >
       {/* vwProfile */}
       <View style={styles.vwProfile}>
@@ -86,9 +100,9 @@ const ProfileComponent = (props: any) => {
           <Text style={styles.txtFirstCharacter}>
             {getInitialsTwoDigit(props.fullName)}
           </Text>
-          <View style={styles.vwInsta}>
+          {/* <View style={styles.vwInsta}>
             <Image source={images.imginsta}></Image>
-          </View>
+          </View> */}
         </View>
         <View style={styles.vwNameDate}>
           <Text style={styles.txtFullName}>{props.fullName}</Text>
@@ -155,32 +169,37 @@ const ProfileComponent = (props: any) => {
         <FlatList
           scrollEnabled={false}
           data={props.data}
+          contentContainerStyle={{ gap: getHeight(8) }}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <Item item={item} onPress={() => {}} />}
         />
       </View>
 
-      {/* vwSupport */}
-      <TouchableOpacity style={styles.vwSupport} onPress={() => {}}>
-        <Image source={images.imgHelpProfile} />
-        <Text style={styles.title}>{getTranslation('supportprofile')}</Text>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <FlatList
+          scrollEnabled={false}
+          data={props.dataThree}
+          contentContainerStyle={{ gap: getHeight(8) }}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <Item item={item} onPress={() => {}} />}
+        />
+      </View>
 
-      {/* containerTwo */}
-      <View style={[styles.containerTwo]}>
+      <View style={styles.container}>
         <FlatList
           scrollEnabled={false}
           data={props.dataTwo}
+          contentContainerStyle={{ gap: getHeight(8) }}
           keyExtractor={item => item.id}
-          renderItem={({ item }) => <ItemTwo item={item} onPress={() => {}} />}
+          renderItem={({ item }) => <Item item={item} onPress={() => {}} />}
         />
       </View>
 
       {/* btns */}
       <View style={{ marginHorizontal: getWidth(16) }}>
         <CustomButton
-          style={{ backgroundColor: Colors.redFD, marginTop: getHeight(16) }}
-          textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}
+          style={{ backgroundColor: Colors.blueD1, marginTop: getHeight(16) }}
+          textStyle={{ color: Colors.blue002, fontSize: fontSize.size16 }}
           btnPress={props.handlePressLogout}
           btnTitle={getTranslation('exit')}
         />
@@ -188,7 +207,7 @@ const ProfileComponent = (props: any) => {
         <CustomButton
           btnImage={images.imgDeleteRed}
           btnicon={true}
-          style={{ backgroundColor: Colors.white, marginTop: getHeight(10) }}
+          style={{ backgroundColor: Colors.redFC, marginTop: getHeight(10) }}
           textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}
           btnPress={props.handlePressDeleteAccount}
           btnTitle={getTranslation('deleteaccountanddata')}
