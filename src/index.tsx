@@ -9,6 +9,8 @@ export AddCardContainer from "./container/auth/AddCard";
 export IntroContainer from "./container/auth/Intro";
 export AccessContainer from "./container/auth/Access";
 export NotificationSwitchContainer from "./container/auth/NotificationSwitch";
+export PaymentMethodContainer from "./container/auth/PaymentMethod";
+
 
 //BOTTOMTAB
 export HomeContainer from "./container/bottomTabs/Home";

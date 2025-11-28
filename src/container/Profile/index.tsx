@@ -122,7 +122,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       title: getTranslation('paymentmethod'),
       image: images.imgCard,
       onpressfun: () => {
-        setVisiblePaymentMethodModel(true);
+        navigation.navigate(ScreenNames.PAYMENTMETHODCONTAINER);
       },
       iscurv: true,
     },

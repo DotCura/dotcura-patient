@@ -1,4 +1,12 @@
-import { StyleSheet, Switch, Text, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Switch,
+  Text,
+  Touchable,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { constnatStyles } from '../../../constants/Styles';
@@ -10,6 +18,9 @@ import CustomButton from '../../../global/Buttons';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 import PrimaryTitleTextInput from '../../../global/PrimaryTitleTextInput';
 import { Colors } from '../../../constants/Colors';
+import { images } from '../../../constants/Images';
+import { activityOpacity } from '../../../constants/GConstant';
+import { fontSize } from '../../../constants/FontSizes';
 
 const AddCardProfileComponent = (props: any) => {
   return (
@@ -111,17 +122,29 @@ const AddCardProfileComponent = (props: any) => {
             />
 
             <View style={styles.vwSwitchcontainer}>
+              <TouchableOpacity
+                activeOpacity={activityOpacity}
+                onPress={props.toggleisDefault}
+              >
+                <Image
+                  source={
+                    props.isdefaultsave === true
+                      ? images.imgSelectRadio
+                      : images.imgUnselectRadio
+                  }
+                />
+              </TouchableOpacity>
               <Text style={styles.lblSwitchTitle} numberOfLines={1}>
                 {getTranslation('switchlabel')}
               </Text>
-              <View style={{}}>
+              {/* <View style={{}}>
                 <Switch
                   trackColor={{ false: Colors.grayE7, true: Colors.blue1C }}
                   ios_backgroundColor="#ccc"
                   onValueChange={props.toggleSwitch}
                   value={props.isEnabled}
                 />
-              </View>
+              </View> */}
             </View>
           </View>
         </View>
@@ -135,7 +158,15 @@ const AddCardProfileComponent = (props: any) => {
         >
           <CustomButton
             btnPress={props.handleOnPressAddCard}
-            btnTitle={getTranslation('continue')}
+            btnTitle={getTranslation('save')}
+          />
+          <CustomButton
+            btnicon={true}
+            btnImage={images.imgDeleteRed}
+            style={{ backgroundColor: Colors.redFC, marginTop: getHeight(8) }}
+            textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}
+            btnTitle={getTranslation('editcardtext')}
+            //   btnPress={props.handlePressAddCardProfile}
           />
         </View>
       </KeyboardAwareScrollView>

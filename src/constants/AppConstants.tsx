@@ -27,10 +27,11 @@ export const ScreenNames = {
   ADDCARDCONTAINER: 'AddCardContainer',
   WELCOMECONTAINER: 'WelcomeContainer',
   ALLSETCONATINER: 'AllSetContainer',
-  ADDCARDPROFILECONTAINER:"AddCardProfileContainer",
-  INTROCONTAINER:"IntroContainer",
-  ACCESSCONTAINER:"AccessContainer",
-  NOTIFICATIONSWITCHCONTAINER:"NotificationSwitchContainer",
+  ADDCARDPROFILECONTAINER: 'AddCardProfileContainer',
+  INTROCONTAINER: 'IntroContainer',
+  ACCESSCONTAINER: 'AccessContainer',
+  NOTIFICATIONSWITCHCONTAINER: 'NotificationSwitchContainer',
+  PAYMENTMETHODCONTAINER: 'PaymentMethodContainer',
 
   //BOTTOMTAB
   HOMECONTAINER: 'HomeContainer',

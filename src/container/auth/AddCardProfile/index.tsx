@@ -22,6 +22,7 @@ const AddCardProfileContainer = ({ navigation }: any) => {
   const [cardHolderName, setCardHolderName] = useState<string>('');
   const [expiryDate, setExpiryDate] = useState<string>('');
   const [cvv, setCvv] = useState<string>('');
+  const [isdefaultsave,setIsDefaultSave] = useState(true);
   const [isEnabled, setIsEnabled] = useState(true);
 
   const cardNumberRef = useRef<TextInput | null>(null);
@@ -106,6 +107,10 @@ const AddCardProfileContainer = ({ navigation }: any) => {
 
   const toggleSwitch = () => setIsEnabled(prev => !prev);
 
+  const toggleisDefault = () => {
+    setIsDefaultSave(!isdefaultsave)
+  }
+
   const header = () => {
     navigation.setOptions({
       header: () => (
@@ -114,8 +119,9 @@ const AddCardProfileContainer = ({ navigation }: any) => {
             console.log('hy');
             navigation.goBack();
           }}
+          centerTitle={getTranslation("paymentmethodtext")}
           dontShowStartBtn={false}
-          showTitle={false}
+          showTitle={true}
           showSubTitle={false}
           showEndBtn={false}
         />
@@ -152,6 +158,8 @@ const AddCardProfileContainer = ({ navigation }: any) => {
       isEnabled={isEnabled}
       toggleSwitch={toggleSwitch}
       navigation={navigation}
+      toggleisDefault={toggleisDefault}
+      isdefaultsave={isdefaultsave}
     />
   );
 };

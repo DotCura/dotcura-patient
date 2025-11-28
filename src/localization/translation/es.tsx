@@ -80,7 +80,7 @@ export default {
   cardholdernameinputlabel: 'Nome sulla carta',
   cardholdernameplaceholder: 'eg. Giovanni Rossi',
   cardconfirmation: 'Salva come carta predefinita',
-  switchlabel: 'Salva come carta predefinita',
+  switchlabel: 'Rendi metodo di pagamento predefinito',
 
   // All set
   gototheapp: 'Vai all’app',
@@ -302,6 +302,12 @@ export default {
   savedcardssubtitle: 'Le tue carte di credito o debito',
   paymentmethodmodel: 'Altri metodi',
 
+  //PAYMENTMETHOD
+  paymentmethodtitle: 'Metodi di Pagamento',
+  paymentmethodsubtitle: 'Le tue carte salvate verranno visualizzate qui.',
+  editcardtext:"Elimina carta",
+  paymentmethodtext:"Metodi di Pagamento",
+
   //PROFILE
   membersince: 'Membro dal',
   notifications: 'Notifiche',
@@ -341,7 +347,7 @@ export default {
   pushswitch4: 'Suggerimenti personalizzati sui controlli',
   pushswitch5: 'Tip salute giornalieri personalizzati',
   addaddresspopupbtn: 'Aggiungi indirizzo',
-  addcardtext: 'Agregar tarjeta',
+  addcardtext: 'Aggiungi Metodo di pagamento',
 
   //ORDERHSITORYPOPUP
   pickup: 'Prelevato il',
