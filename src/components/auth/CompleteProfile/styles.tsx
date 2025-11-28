@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     color: Colors.gray0F,
   },
 });

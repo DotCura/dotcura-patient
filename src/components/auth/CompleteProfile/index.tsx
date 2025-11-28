@@ -46,7 +46,7 @@ const CompleteProfileComponent = (props: any) => {
             <PrimaryTitleTextInput
               placHolderLabel={getTranslation('fullnameplaceholder')}
               refs={props.fullNameRef}
-              focusnext={() => props.emailRef.current?.focus()} // ✅ Now this works
+              focusnext={() => props.surnameRef.current?.focus()} // ✅ Now this works
               inputLabel={getTranslation('fullnametitle')}
               blur={false}
               leftIcon={false}
@@ -56,6 +56,23 @@ const CompleteProfileComponent = (props: any) => {
               autoCapitalize={'none'}
               errorMessage={props.fullNameError}
               setErrorMessage={props.setFullNameError} // ✅ Just pass this once
+              maxlength={200}
+              isMultiline={false}
+              isBorder={false}
+            />
+            <PrimaryTitleTextInput
+              placHolderLabel={getTranslation('surnameplaceholder')}
+              refs={props.surnameRef}
+              focusnext={() => props.emailRef.current?.focus()} // ✅ Now this works
+              inputLabel={getTranslation('surnametitle')}
+              blur={false}
+              leftIcon={false}
+              keyaboardType={'default'}
+              value={props.surname}
+              onChangeFun={props.onChangeSurname}
+              autoCapitalize={'none'}
+              errorMessage={props.surnameError}
+              setErrorMessage={props.setSurnameError} // ✅ Just pass this once
               maxlength={200}
               isMultiline={false}
               isBorder={false}

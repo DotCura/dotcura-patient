@@ -23,15 +23,18 @@ const CompleteProfileContainer = ({ navigation }: any) => {
   ];
 
   const [fullName, setFullName] = useState<any>('');
+  const [surname, setSurname] = useState<any>('');
   const [email, setEmail] = useState<any>('');
   const [taxCode, setTaxCode] = useState<any>('');
   const [selectedGender, setSelectedGender] = useState(1);
 
   const [fullNameError, setFullNameError] = useState<any>('');
+  const [surnameError, setSurnameError] = useState<any>('');
   const [emailError, setEmailError] = useState<any>('');
   const [taxCodeError, setTaxCodeError] = useState<any>('');
 
   const fullNameRef = useRef<any>(null);
+  const surnameRef = useRef<any>(null);
   const emailRef = useRef<any>(null);
   const taxCodeRef = useRef<any>(null);
 
@@ -40,6 +43,13 @@ const CompleteProfileContainer = ({ navigation }: any) => {
     newText = newText.replace(/^\s+/, '');
     newText = newText.replace(/\s{2,}/g, ' ');
     setFullName(newText);
+  };
+
+  const onChangeSurname = (text: any) => {
+    let newText = text.replace(/[0-9]/g, '');
+    newText = newText.replace(/^\s+/, '');
+    newText = newText.replace(/\s{2,}/g, ' ');
+    setSurname(newText);
   };
 
   const onChangeEmail = (text: any) => {
@@ -65,12 +75,16 @@ const CompleteProfileContainer = ({ navigation }: any) => {
     setFullNameError('');
     setEmailError('');
     setTaxCodeError('');
+    setSurnameError('');
 
     if (!fullName.trim()) {
       setFullNameError(getTranslation('errorMessageFullNameRequired'));
       return;
     } else if (fullName.trim().length < 2) {
       setFullNameError(getTranslation('errorMessageFullNameTooShort'));
+      return;
+    } else if (!surname.trim()) {
+      setSurnameError(getTranslation('errorMessageSurnameRequired'));
       return;
     } else if (!email.trim()) {
       setEmailError(getTranslation('errorMessageEmail'));
@@ -96,10 +110,13 @@ const CompleteProfileContainer = ({ navigation }: any) => {
       insets={insets}
       headerArray={headerArray}
       fullName={fullName}
+      surname={surname}
       email={email}
       taxCode={taxCode}
       fullNameError={fullNameError}
+      surnameError={surnameError}
       setFullNameError={setFullNameError}
+      setSurnameError={setSurnameError}
       emailError={emailError}
       setEmailError={setEmailError}
       taxCodeError={taxCodeError}
@@ -108,9 +125,11 @@ const CompleteProfileContainer = ({ navigation }: any) => {
       setEmail={setEmail}
       setTaxCode={setTaxCode}
       fullNameRef={fullNameRef}
+      surnameRef={surnameRef}
       emailRef={emailRef}
       taxCodeRef={taxCodeRef}
       onChangeFullName={onChangeFullName}
+      onChangeSurname={onChangeSurname}
       onChangeEmail={onChangeEmail}
       onChangeTaxCode={onChangeTaxCode}
       handlePressContinue={handlePressContinue}

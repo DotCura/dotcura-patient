@@ -42,14 +42,16 @@ export default {
   completeprofiletitle: 'Completa il tuo profilo',
   completeprofilesubtitle: 'Aggiungi il tuo nome e numero di telefono.',
   continue: 'Continua',
-  fullnameplaceholder: 'Giovanni Carnevale',
+  fullnameplaceholder: 'Giovanni',
   emailplaceholder: 'giovanni@email.com',
   taxcodeplaceholder: 'AAAVVBA000000000',
-  fullnametitle: 'Nome completo',
+  fullnametitle: 'Nome',
   emailtitle: 'Email',
   taxcodetitle: 'Codice fiscale',
   gender1: 'Uomo',
   gender2: 'Donna',
+  surnameplaceholder: 'Baboden',
+  surnametitle: 'Cognome',
 
   //INFORMATIONCONSATNT
   infotitle: 'Informativa e consenso',
@@ -374,9 +376,8 @@ export default {
   errorMessageEmail: 'Por favor, introduzca el correo electrónico',
   errorMessageValidEmail: 'Por favor, introduzca un correo electrónico válido',
   errorMessageDescription: 'Por favor, introduzca la descripción',
-  errorMessageFullNameRequired: 'Por favor, introduzca el nombre completo',
-  errorMessageFullNameTooShort:
-    'El nombre completo debe tener al menos 2 caracteres',
+  errorMessageFullNameRequired: 'Por favor ingrese el nombre',
+  errorMessageFullNameTooShort: 'el nombre debe tener al menos 2 caracteres',
   errorMessageBlockHouseNumberRequired:
     'Por favor, introduzca el número de bloque/número de casa',
   errorMessageBuildingNameRequired:
@@ -411,4 +412,5 @@ export default {
   pleaseselectdocument: 'Por favor, selecciona el documento.',
   pleaseuploadfrontandbackside:
     'Por favor, carga fotos de tu documento por ambos lados (frontal y posterior)',
+  errorMessageSurnameRequired: 'Por favor, ingrese el apellido',
 };

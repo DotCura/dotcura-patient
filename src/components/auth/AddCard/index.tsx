@@ -13,7 +13,7 @@ import { Colors } from '../../../constants/Colors';
 
 const AddCardComponent = (props: any) => {
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.white }}>
+    <View style={{ flex: 1, backgroundColor: Colors.whiteF2 }}>
       {/* TopBar */}
       <View style={{ marginHorizontal: getWidth(16) }}>
         <TopBar
@@ -124,7 +124,7 @@ const AddCardComponent = (props: any) => {
               </Text>
               <View style={{}}>
                 <Switch
-                  trackColor={{ false: Colors.grayE7, true: Colors.blue1C }}
+                  trackColor={{ false: Colors.grayE7, true: Colors.purple33 }}
                   thumbColor={props.isEnabled ? Colors.white : Colors.white}
                   ios_backgroundColor="#ccc"
                   onValueChange={props.toggleSwitch}

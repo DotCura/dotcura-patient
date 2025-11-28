@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     letterSpacing: 0.2,
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     color: Colors.gray0F,
   },
   optionContainer: {
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
   },
   lblHighlight: {
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gextrabold,
     textDecorationLine: 'underline',
     color: Colors.gray0F,
   },

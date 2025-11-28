@@ -20,7 +20,7 @@ import { Colors } from '../../../constants/Colors';
 
 const InformationConasantComponent = (props: any) => {
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.white }}>
+    <View style={{ flex: 1, backgroundColor: Colors.whiteF2 }}>
       <View style={{ marginHorizontal: getWidth(16) }}>
         {/* TopBar */}
         <TopBar

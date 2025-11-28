@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   },
   lblTitleInput: {
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     color: Colors.gray55,
     marginBottom: getHeight(6),
   },

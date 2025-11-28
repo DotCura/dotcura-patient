@@ -7,25 +7,22 @@ import { fontsfamily } from '../../../constants/FontFamily';
 export const styles = StyleSheet.create({
   vwMain: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whiteF2,
     paddingHorizontal: getWidth(16),
-    justifyContent:"center",
-    alignItems:"center"
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   lblMainTitle: {
-     color: Colors.gray0F,
+    color: Colors.gray0F,
     fontSize: fontSize.size28,
-    fontFamily: fontsfamily.bold,
-    marginTop:getHeight(40),
-    
-
-
+    fontFamily: fontsfamily.gmedium,
+    marginTop: getHeight(40),
   },
   lblMainSubtitle: {
     color: Colors.gray55,
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.regular,
-  
+    fontFamily: fontsfamily.gregular,
+    letterSpacing: 0.2,
   },
 });
