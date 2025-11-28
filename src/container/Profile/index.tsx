@@ -88,7 +88,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onpressfun: () => {
         setIsShowOrderHistoryModel(true);
       },
-      iscurv:true
+      iscurv: true,
     },
     {
       id: '6',
@@ -97,25 +97,25 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onpressfun: () => {
         console.log('fav');
       },
-      iscurv:true
+      iscurv: true,
     },
     {
       id: '2',
       title: getTranslation('notificationsprofile'),
       image: images.imgBell,
       onpressfun: () => {
-        setIsShowSwitchModel(true);
+        navigation.navigate(ScreenNames.NOTIFICATIONSWITCHCONTAINER);
       },
-      iscurv:true
+      iscurv: true,
     },
     {
       id: '3',
       title: getTranslation('access'),
       image: images.imgWarningProfile,
       onpressfun: () => {
-        setVisibleAccessModel(true);
+        navigation.navigate(ScreenNames.ACCESSCONTAINER);
       },
-      iscurv:true
+      iscurv: true,
     },
     {
       id: '4',
@@ -124,6 +124,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onpressfun: () => {
         setVisiblePaymentMethodModel(true);
       },
+      iscurv: true,
     },
     {
       id: '5',
@@ -132,7 +133,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onpressfun: () => {
         setAddressPopupVisible(true);
       },
-      iscurv:true
+      iscurv: true,
     },
   ];
   const dataTwo = [
@@ -143,7 +144,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onpressfun: () => {
         console.log('Terms');
       },
-      iscurv:false
+      iscurv: false,
     },
     {
       id: '3',
@@ -152,7 +153,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onpressfun: () => {
         console.log('Terms');
       },
-      iscurv:false
+      iscurv: false,
     },
   ];
   const dataThree = [
@@ -163,7 +164,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onpressfun: () => {
         console.log('suppoet');
       },
-      iscurv:false
+      iscurv: false,
     },
     {
       id: '2',
@@ -172,7 +173,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       onpressfun: () => {
         console.log('rate');
       },
-      iscurv:false
+      iscurv: false,
     },
   ];
   const testKits = [

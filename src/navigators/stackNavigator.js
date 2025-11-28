@@ -47,12 +47,10 @@ const MainNavigation = props => {
           {},
           { headerShown: false },
         )}
-        {_addScreen(
-          ScreenNames.INTROCONTAINER,
-          {},
-          { headerShown: false },
-        )}
+        {_addScreen(ScreenNames.INTROCONTAINER, {}, { headerShown: false })}
         {_addScreen(ScreenNames.LOGINCONTAINER, {}, { headerShown: true })}
+        {_addScreen(ScreenNames.ACCESSCONTAINER, {}, { headerShown: true })}
+        {_addScreen(ScreenNames.NOTIFICATIONSWITCHCONTAINER, {}, { headerShown: true })}
         {_addScreen(ScreenNames.OTPCONTAINER, {}, { headerShown: true })}
         {_addScreen(
           ScreenNames.COMPLETEPROFILECONTAINER,

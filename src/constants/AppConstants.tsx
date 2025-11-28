@@ -29,6 +29,8 @@ export const ScreenNames = {
   ALLSETCONATINER: 'AllSetContainer',
   ADDCARDPROFILECONTAINER:"AddCardProfileContainer",
   INTROCONTAINER:"IntroContainer",
+  ACCESSCONTAINER:"AccessContainer",
+  NOTIFICATIONSWITCHCONTAINER:"NotificationSwitchContainer",
 
   //BOTTOMTAB
   HOMECONTAINER: 'HomeContainer',

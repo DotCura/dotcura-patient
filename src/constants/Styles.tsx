@@ -57,13 +57,13 @@ export const constnatStyles = StyleSheet.create({
   },
   lblModalTitle: {
     fontSize: fontSize.size20,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gsemiBold,
     color: Colors.gray0F,
     marginLeft: getWidth(15),
   },
   lblModalSubTitle: {
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     color: Colors.gray55,
     marginLeft: getWidth(15),
   },

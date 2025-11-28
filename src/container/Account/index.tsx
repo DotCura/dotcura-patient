@@ -7,6 +7,7 @@ import { flashMessageWarning } from '../../constants/GConstant';
 import { ScreenNames } from '../../constants/AppConstants';
 import AppHeader from '../../global/Header';
 import AccountComponent from '../../components/Account';
+import { regex } from '../../constants/Regex';
 
 const AccountContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -18,12 +19,15 @@ const AccountContainer = ({ navigation }: any) => {
 
   const [fullName, setFullName] = useState<any>('');
   console.log(fullName, 'fullName =====');
-
+  const [surname, setSurname] = useState<any>('');
   const [taxCode, setTaxCode] = useState<any>('');
+  const [email, setEmail] = useState<any>('');
   const [dateOfBirth, setDateOfBirth] = useState<any>('');
   const [selectedGender, setSelectedGender] = useState(1);
 
   const [fullNameError, setFullNameError] = useState<any>('');
+  const [surnameError, setSurnameError] = useState<any>('');
+  const [emailError, setEmailError] = useState<any>('');
   const [dateError, setDateError] = useState<any>('');
   const [taxCodeError, setTaxCodeError] = useState<any>('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -31,13 +35,30 @@ const AccountContainer = ({ navigation }: any) => {
   const [formatedDateForApi, setFormatedDateForApi] = useState('');
 
   const fullNameRef = useRef<any>(null);
+  const surnameRef = useRef<any>(null);
   const taxCodeRef = useRef<any>(null);
+  const emailRef = useRef<any>(null);
 
   const onChangeFullName = (text: any) => {
     let newText = text.replace(/[0-9]/g, '');
     newText = newText.replace(/^\s+/, '');
     newText = newText.replace(/\s{2,}/g, ' ');
     setFullName(newText);
+  };
+
+  const onChangeSurname = (text: any) => {
+    let newText = text.replace(/[0-9]/g, '');
+    newText = newText.replace(/^\s+/, '');
+    newText = newText.replace(/\s{2,}/g, ' ');
+    setSurname(newText);
+  };
+
+  const onChangeEmail = (text: any) => {
+    const formatted = text
+      .replace(/^\s+/, '')
+      .replace(/\s+/g, '')
+      .replace(/[^a-zA-Z0-9@._-]/g, '');
+    setEmail(formatted);
   };
 
   const onChangeTaxCode = (text: any) => {
@@ -53,13 +74,24 @@ const AccountContainer = ({ navigation }: any) => {
   const handlePressContinue = () => {
     // Reset previous errors
     setFullNameError('');
+    setEmailError('');
     setTaxCodeError('');
+    setSurnameError('');
 
     if (!fullName.trim()) {
       setFullNameError(getTranslation('errorMessageFullNameRequired'));
       return;
     } else if (fullName.trim().length < 2) {
       setFullNameError(getTranslation('errorMessageFullNameTooShort'));
+      return;
+    } else if (!surname.trim()) {
+      setSurnameError(getTranslation('errorMessageSurnameRequired'));
+      return;
+    } else if (!email.trim()) {
+      setEmailError(getTranslation('errorMessageEmail'));
+      return;
+    } else if (!regex.email.test(email.trim())) {
+      setEmailError(getTranslation('errorMessageValidEmail'));
       return;
     } else if (formattedDate == '') {
       flashMessageWarning(getTranslation('pleaseselectdateofbirth'));
@@ -212,18 +244,29 @@ const AccountContainer = ({ navigation }: any) => {
       formattedDate={formattedDate}
       insets={insets}
       fullName={fullName}
+      email={email}
+      surname={surname}
       taxCode={taxCode}
       dateOfBirth={dateOfBirth}
       fullNameError={fullNameError}
       setFullNameError={setFullNameError}
+      setSurnameError={setSurnameError}
+      surnameError={surnameError}
       taxCodeError={taxCodeError}
+      emailError={emailError}
+      setEmailError={setEmailError}
       setTaxCodeError={setTaxCodeError}
       setFullName={setFullName}
       setTaxCode={setTaxCode}
+      setEmail={setEmail}
       fullNameRef={fullNameRef}
+      emailRef={emailRef}
+      surnameRef={surnameRef}
       taxCodeRef={taxCodeRef}
+      onChangeSurname={onChangeSurname}
       onChangeFullName={onChangeFullName}
       onChangeTaxCode={onChangeTaxCode}
+      onChangeEmail={onChangeEmail}
       handlePressContinue={handlePressContinue}
       genders={genders}
       selectedGender={selectedGender}

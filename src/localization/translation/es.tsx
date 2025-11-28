@@ -38,13 +38,18 @@ export default {
   otpwarning1: 'Rinvio codice possibile tra',
   otpwarning2: 'secondi',
 
+  //ACESSS
+  accesstitle: 'Accessi',
+  accesssubtitle:
+    'La tua mail e il tuo numero di telefono per poter accedere a dotCura',
+
   //COMPLETEPROFILE
   completeprofiletitle: 'Completa il tuo profilo',
   completeprofilesubtitle: 'Aggiungi il tuo nome e numero di telefono.',
   continue: 'Continua',
   fullnameplaceholder: 'Giovanni',
   emailplaceholder: 'giovanni@email.com',
-  taxcodeplaceholder: 'AAAVVBA000000000',
+  taxcodeplaceholder: '0000000000000000',
   fullnametitle: 'Nome',
   emailtitle: 'Email',
   taxcodetitle: 'Codice fiscale',

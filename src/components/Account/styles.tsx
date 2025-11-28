@@ -8,10 +8,11 @@ export const styles = StyleSheet.create({
   lblCategory: {
     color: Colors.gray0F,
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     flex: 1,
   },
   vwCategory: {
+    backgroundColor: Colors.white,
     height: getHeight(60),
     borderWidth: 2,
     borderColor: Colors.grayE7,
@@ -21,7 +22,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: getWidth(16),
   },
   lblAgg: {
-    color: Colors.blue17,
+    color: Colors.blue002,
     fontSize: fontSize.size14,
     fontFamily: fontsfamily.medium,
   },
@@ -50,7 +51,7 @@ export const styles = StyleSheet.create({
     marginTop: getHeight(24),
     color: Colors.gray0F,
     fontSize: fontSize.size20,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gsemiBold,
   },
   vwInput: {
     marginTop: getHeight(12),
@@ -63,7 +64,11 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size14,
   },
   vwinsideDate: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: getWidth(12),
     height: getHeight(56),
+    backgroundColor: Colors.white,
     borderRadius: 12,
     borderWidth: 2,
     borderColor: Colors.grayD8,
@@ -73,15 +78,14 @@ export const styles = StyleSheet.create({
     color: Colors.gray75,
     fontFamily: fontsfamily.regular,
     fontSize: fontSize.size16,
-    marginLeft: getWidth(12),
-    marginTop: getHeight(15),
+    marginLeft: getWidth(8),
   },
   txtSelectedDate: {
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.regular,
     color: Colors.gray0F,
-    marginLeft: getWidth(12),
-    marginTop: getHeight(15),
+    marginLeft: getWidth(8),
+    marginTop: 1,
   },
   vwError: {
     marginTop: getHeight(6),

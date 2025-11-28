@@ -27,7 +27,7 @@ const AccountComponent = (props: any) => {
         <PrimaryTitleTextInput
           placHolderLabel={getTranslation('fullnameplaceholder')}
           refs={props.fullNameRef}
-          focusnext={() => props.taxCodeRef.current?.focus()} // ✅ Now this works
+          focusnext={() => props.surnameRef.current?.focus()} // ✅ Now this works
           inputLabel={getTranslation('fullnametitle')}
           blur={false}
           leftIcon={false}
@@ -41,6 +41,40 @@ const AccountComponent = (props: any) => {
           isMultiline={false}
           isBorder={false}
         />
+        <PrimaryTitleTextInput
+          placHolderLabel={getTranslation('surnameplaceholder')}
+          refs={props.surnameRef}
+          focusnext={() => props.emailRef.current?.focus()} // ✅ Now this works
+          inputLabel={getTranslation('surnametitle')}
+          blur={false}
+          leftIcon={false}
+          keyaboardType={'default'}
+          value={props.surname}
+          onChangeFun={props.onChangeSurname}
+          autoCapitalize={'none'}
+          errorMessage={props.surnameError}
+          setErrorMessage={props.setSurnameError} // ✅ Just pass this once
+          maxlength={200}
+          isMultiline={false}
+          isBorder={false}
+        />
+        <PrimaryTitleTextInput
+          placHolderLabel={getTranslation('emailplaceholder')}
+          refs={props.emailRef}
+          focusnext={() => props.taxCodeRef.current?.focus()}
+          inputLabel={getTranslation('emailtitle')}
+          blur={false}
+          leftIcon={false}
+          keyaboardType={'email-address'}
+          value={props.email}
+          onChangeFun={props.onChangeEmail}
+          autoCapitalize={'none'}
+          errorMessage={props.emailError}
+          setErrorMessage={props.setEmailError}
+          isMultiline={false}
+          isBorder={true}
+        />
+
         <View>
           <TouchableOpacity
             activeOpacity={0.9}
@@ -51,6 +85,7 @@ const AccountComponent = (props: any) => {
               {getTranslation('dateofbirth')}
             </Text>
             <View style={styles.vwinsideDate}>
+              <Image source={images.imgCalenderDOB}/>
               <Text
                 style={[
                   props.formattedDate == ''
@@ -58,7 +93,7 @@ const AccountComponent = (props: any) => {
                     : styles.txtSelectedDate,
                 ]}
               >
-                {props.formattedDate == '' ? '30/09/1992' : props.formattedDate}
+                {props.formattedDate == '' ? 'gg/mm/aaaa' : props.formattedDate}
               </Text>
             </View>
           </TouchableOpacity>
@@ -136,7 +171,7 @@ const AccountComponent = (props: any) => {
                 activeOpacity={activityOpacity}
                 onPress={() => props.openModal('medicazioni')}
               >
-                <Image source={images.addblue} />
+                <Image source={images.imgPlusDark} />
                 <Text style={styles.lblAgg}>{getTranslation('addgg')}</Text>
               </TouchableOpacity>
             </View>
@@ -147,7 +182,11 @@ const AccountComponent = (props: any) => {
                   <Text style={styles.lblCategory} numberOfLines={1}>
                     {item.name}
                   </Text>
-                  <TouchableOpacity onPress={() => props.handleDeleteItem('medicazioni', item.id)}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      props.handleDeleteItem('medicazioni', item.id)
+                    }
+                  >
                     <Image source={images.imgDeleteRound} />
                   </TouchableOpacity>
                 </View>
@@ -168,7 +207,7 @@ const AccountComponent = (props: any) => {
                 activeOpacity={activityOpacity}
                 onPress={() => props.openModal('patologie')}
               >
-                <Image source={images.addblue} />
+                <Image source={images.imgPlusDark} />
                 <Text style={styles.lblAgg}>{getTranslation('addgg')}</Text>
               </TouchableOpacity>
             </View>
@@ -179,7 +218,9 @@ const AccountComponent = (props: any) => {
                   <Text style={styles.lblCategory} numberOfLines={1}>
                     {item.name}
                   </Text>
-                  <TouchableOpacity onPress={() => props.handleDeleteItem('patologie', item.id)}>
+                  <TouchableOpacity
+                    onPress={() => props.handleDeleteItem('patologie', item.id)}
+                  >
                     <Image source={images.imgDeleteRound} />
                   </TouchableOpacity>
                 </View>
@@ -200,16 +241,18 @@ const AccountComponent = (props: any) => {
                 activeOpacity={activityOpacity}
                 onPress={() => props.openModal('allergie')}
               >
-                <Image source={images.addblue} />
+                <Image source={images.imgPlusDark} />
                 <Text style={styles.lblAgg}>{getTranslation('addgg')}</Text>
               </TouchableOpacity>
             </View>
             <View style={{ gap: getHeight(8) }}>
-              {props.allergie.map((item:any) => (
+              {props.allergie.map((item: any) => (
                 // <Text key={item}>• {item}</Text>
                 <View style={styles.vwCategory}>
                   <Text style={styles.lblCategory}>{item.name}</Text>
-                  <TouchableOpacity onPress={() => props.handleDeleteItem('allergie', item.id)}>
+                  <TouchableOpacity
+                    onPress={() => props.handleDeleteItem('allergie', item.id)}
+                  >
                     <Image source={images.imgDeleteRound} />
                   </TouchableOpacity>
                 </View>

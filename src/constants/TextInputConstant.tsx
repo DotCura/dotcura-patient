@@ -1,8 +1,8 @@
-import { regex } from "./Regex";
+import { regex } from './Regex';
 
 // <============================== Validation Constant ==============================>
 export const ValidationConstant = {
-  maxMobileDigit: 11,
+  maxMobileDigit: 12,
   minMobileDigit: 8,
 
   minNameCharacters: 2,
@@ -12,7 +12,7 @@ export const ValidationConstant = {
   maxPassword: 6,
   minPassword: 8,
 
-  maxTaxCode:16
+  maxTaxCode: 16,
 };
 
 export const InputTypesEnum = {

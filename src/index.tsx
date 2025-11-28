@@ -1,7 +1,4 @@
 
-
-
-
 //AUTH
 export LoginContainer from "./container/auth/Login";
 export OnBoardingContainer from "./container/auth/OnBoarding";
@@ -10,6 +7,8 @@ export CompleteProfileContainer from "./container/auth/CompleteProfile";
 export InformationConasantContainer from "./container/auth/InformationConasant";
 export AddCardContainer from "./container/auth/AddCard";
 export IntroContainer from "./container/auth/Intro";
+export AccessContainer from "./container/auth/Access";
+export NotificationSwitchContainer from "./container/auth/NotificationSwitch";
 
 //BOTTOMTAB
 export HomeContainer from "./container/bottomTabs/Home";

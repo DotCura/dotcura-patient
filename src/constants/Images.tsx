@@ -81,6 +81,8 @@ export const images = {
   imgFavProfile: require('../assets/images/favprofile.png'),
   imgRightCurve: require('../assets/images/rightcurv.png'),
   imgShareProfile: require('../assets/images/shareProfile.png'),
+  imgCalenderDOB:require('../assets/images/calendarDOB.png'),
+  imgPlusDark:require('../assets/images/plusBlueDark.png'),
 
   // Static Images
   imgkit1: require('../assets/images/Static/kit1.png'),

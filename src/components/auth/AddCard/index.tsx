@@ -125,7 +125,6 @@ const AddCardComponent = (props: any) => {
               <View style={{}}>
                 <Switch
                   trackColor={{ false: Colors.grayE7, true: Colors.purple33 }}
-                  thumbColor={props.isEnabled ? Colors.white : Colors.white}
                   ios_backgroundColor="#ccc"
                   onValueChange={props.toggleSwitch}
                   value={props.isEnabled}

@@ -78,7 +78,6 @@ const ProfileComponent = (props: any) => {
         value={value}
         onValueChange={onToggle}
         trackColor={{ false: Colors.grey7816, true: Colors.blue1C }}
-        thumbColor={props.isEnabled ? Colors.white : Colors.white}
         ios_backgroundColor="#ccc"
       />
     </View>
