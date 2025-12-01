@@ -27,7 +27,7 @@ const CustomDropdown: React.FC<BaseProps> = ({
   search = false,
   dropdownPosition = 'auto',
   multiple = false,
-  isRenderLeftIcon=false,
+  isRenderLeftIcon = false,
 }) => {
   if (multiple) {
     return (
@@ -57,14 +57,14 @@ const CustomDropdown: React.FC<BaseProps> = ({
       dropdownPosition={dropdownPosition}
       search={search}
       selectedTextStyle={{
-        fontFamily: fontsfamily.regular,
+        fontFamily: fontsfamily.gregular,
         fontSize: fontSize.size16,
         color: Colors.gray0F,
         marginTop: getHeight(1),
       }}
       placeholderStyle={{
         fontSize: fontSize.size16,
-        fontFamily: fontsfamily.regular,
+        fontFamily: fontsfamily.gregular,
         color: Colors.gray75,
       }}
       selectedTextProps={{
@@ -73,7 +73,6 @@ const CustomDropdown: React.FC<BaseProps> = ({
       containerStyle={{
         backgroundColor: Colors.white,
         borderRadius: 10,
-          
       }}
       maxHeight={220}
       itemContainerStyle={{
@@ -83,7 +82,7 @@ const CustomDropdown: React.FC<BaseProps> = ({
       itemTextStyle={{
         fontSize: fontSize.size16,
         color: Colors.gray0F,
-        fontFamily: fontsfamily.regular,
+        fontFamily: fontsfamily.gregular,
       }}
       activeColor={Colors.grayE7}
       inputSearchStyle={{
@@ -94,34 +93,34 @@ const CustomDropdown: React.FC<BaseProps> = ({
       searchPlaceholderTextColor={Colors.black}
       autoScroll={true}
       showsVerticalScrollIndicator={false}
-      
-      renderLeftIcon={() => (
-        isRenderLeftIcon &&
-        <View
-          style={{
-            height: getHeight(32),
-            aspectRatio: 1,
-            borderRadius: 799,
-            backgroundColor: Colors.grayE7,
-            marginRight: getWidth(8),
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text
+      renderLeftIcon={() =>
+        isRenderLeftIcon && (
+          <View
             style={{
-              fontSize: fontSize.size13,
-              fontFamily: fontsfamily.regular,
-              letterSpacing: 0.1,
-              color: Colors.grayAD,
+              height: getHeight(32),
+              aspectRatio: 1,
+              borderRadius: 799,
+              backgroundColor: Colors.grayE7,
+              marginRight: getWidth(8),
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            {getInitialShortName(
-              data.find(item => item.value === value)?.label || '',
-            )}
-          </Text>
-        </View>
-      )}
+            <Text
+              style={{
+                fontSize: fontSize.size13,
+                fontFamily: fontsfamily.gregular,
+                letterSpacing: 0.1,
+                color: Colors.grayAD,
+              }}
+            >
+              {getInitialShortName(
+                data.find(item => item.value === value)?.label || '',
+              )}
+            </Text>
+          </View>
+        )
+      }
       renderRightIcon={() => (
         <Image
           source={images.imgLeftArrow}
@@ -150,6 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: getWidth(12),
     overflow: 'hidden',
+    backgroundColor: Colors.white,
     borderWidth: 2,
     borderColor: Colors.grayD8,
   },

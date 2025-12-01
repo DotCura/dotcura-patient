@@ -1,4 +1,11 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, { useState } from 'react';
 import { Colors } from '../../constants/Colors';
 import { constnatStyles } from '../../constants/Styles';
@@ -11,9 +18,18 @@ import GooglePlacesTextInput from 'react-native-google-places-textinput';
 import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 import CustomButton from '../../global/Buttons';
+import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
+import { images } from '../../constants/Images';
+import { activityOpacity } from '../../constants/GConstant';
+import CustomDropdown from '../../global/DropDown/CustomDropDown';
 
 const AddAddressComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
+  const getBorderColor = () => {
+    if (props.searchAddressError) return Colors.red8C;
+    if (isFocused) return Colors.blue002;
+    return Colors.grayD8;
+  };
 
   // 🔥 Moved styles here (no global style)
   const customStylesTextInput = {
@@ -27,8 +43,8 @@ const AddAddressComponent = (props: any) => {
       borderWidth: 2,
       borderRadius: 12,
       fontSize: fontSize.size16,
-      fontFamily: fontsfamily.regular,
-      borderColor: isFocused ? Colors.blue1C : Colors.grayD8, // Dynamic border color
+      fontFamily: fontsfamily.gregular,
+      borderColor: isFocused ? Colors.blue002 : Colors.grayD8, // Dynamic border color
       color: Colors.black,
     },
     inputFocused: {
@@ -51,13 +67,13 @@ const AddAddressComponent = (props: any) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <View style={{ marginHorizontal: getWidth(16) }}>
+      {/* <View style={{ marginHorizontal: getWidth(16) }}>
         <TopBar
           array={props.headerArray}
           currentIndex={0}
           onClickBack={() => props.navigation.goBack()}
         />
-      </View>
+      </View> */}
       <ScrollView
         scrollEnabled
         showsVerticalScrollIndicator={false}
@@ -73,29 +89,131 @@ const AddAddressComponent = (props: any) => {
           />
         </View>
 
-        <View style={{ marginTop: getHeight(43), flex: 1 }}>
-          <Text style={styles.lblTitleInput} numberOfLines={1}>
-            {getTranslation('searchaddress')}
-          </Text>
-          <View style={{ marginTop: 1 }}>
-            <GooglePlacesTextInput
-              ref={props.searchRef}
-              apiKey={''}
-              placeHolderText={getTranslation('addaddressplacholder') || ''}
-              onPlaceSelect={props.handlePlaceSelect}
-              languageCode="en"
-              style={customStylesTextInput}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              showClearButton={false}
-              showLoadingIndicator={false}
+        <View style={{ marginTop: getHeight(43), flex: 1, gap: getHeight(12) }}>
+          {/* dropdownfamilymember */}
+          <View>
+            <Text style={styles.lblwhodothetest}>
+              {getTranslation('typology')}
+            </Text>
+            <View style={{ marginTop: getHeight(6) }}>
+              <CustomDropdown
+                data={props.addressTypeData}
+                value={props.addressTypeValue}
+                onChange={item => props.handleSetAddressType(item)}
+                placeholder={getTranslation('selectfamilymember') || ''}
+                dropdownPosition="auto"
+                isRenderLeftIcon={false}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={styles.lblTitleInput} numberOfLines={1}>
+              {getTranslation('searchaddress')}
+            </Text>
+            <View style={{ marginTop: 1 }}>
+              <GooglePlacesTextInput
+                ref={props.searchRef}
+                apiKey={''}
+                placeHolderText={getTranslation('addaddressplacholder') || ''}
+                onPlaceSelect={(place: any) => {
+                  props.handlePlaceSelect(place);
+                  props.setSearchAddress(place?.fullText || ''); // Store selected address
+                }}
+                onChangeText={(text: any) => {
+                  props.setSearchAddress(text); // store every typed change
+                }}
+                cursorColor={Colors.blue002}
+                selectionColor={Colors.blue002}
+                languageCode="en"
+                style={customStylesTextInput}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                showClearButton={false}
+                showLoadingIndicator={false}
+              />
+            </View>
+          </View>
+          <View style={styles.vwInputsInner}>
+            <PrimaryTitleTextInput
+              flex={1}
+              placHolderLabel={getTranslation('florrplaceholder')}
+              refs={props.floorRef}
+              focusnext={() => props.stairsRef.current?.focus()}
+              inputLabel={getTranslation('florr')}
+              blur={false}
+              leftIcon={false}
+              keyaboardType={'default'}
+              value={props.floor}
+              onChangeFun={(text: any) =>
+                props.handleOnChangeText(text, 'floor')
+              }
+              errorMessage={props.floorError}
+              setErrorMessage={props.setFloorError}
+              isMultiline={false}
+              isBorder={false}
+              isflexstart={true}
             />
+            <PrimaryTitleTextInput
+              flex={1}
+              placHolderLabel={getTranslation('stairsplaceholder')}
+              inputLabel={getTranslation('stairs')}
+              refs={props.stairsRef}
+              focusnext={() => props.instructionRef.current?.focus()}
+              blur={false}
+              leftIcon={false}
+              keyaboardType={'default'}
+              value={props.stairs}
+              onChangeFun={(text: any) =>
+                props.handleOnChangeText(text, 'stairs')
+              }
+              errorMessage={props.stairsError}
+              setErrorMessage={props.setStairsError}
+              isflexstart={true}
+              isMultiline={false}
+              isBorder={false}
+            />
+          </View>
+
+          <View>
+            <PrimaryTitleTextInput
+              placHolderLabel={getTranslation('instructionplaceholder')}
+              refs={props.instructionRef}
+              inputLabel={getTranslation('instruction')}
+              blur={true}
+              leftIcon={false}
+              keyaboardType={'default'}
+              value={props.instructions}
+              onChangeFun={(text: any) =>
+                props.handleOnChangeText(text, 'instruction')
+              }
+              errorMessage={props.instructionsError}
+              setErrorMessage={props.setInstructionNameError}
+              isMultiline={false}
+              isBorder={false}
+            />
+          </View>
+          <View style={styles.vwSwitchcontainer}>
+            <TouchableOpacity
+              activeOpacity={activityOpacity}
+              onPress={props.toggleisDefault}
+            >
+              <Image
+                source={
+                  props.isdefaultsave === true
+                    ? images.imgSelectRadio
+                    : images.imgUnselectRadio
+                }
+              />
+            </TouchableOpacity>
+            <Text style={styles.lblSwitchTitle} numberOfLines={1}>
+              {getTranslation('addfavouriteaddresslabel')}
+            </Text>
           </View>
         </View>
         <View style={{ marginBottom: props.insets.bottom + getHeight(16) }}>
           <CustomButton
-            btnPress={props.handleNavigateConmpleAddress}
-            btnTitle={getTranslation('continue')}
+            btnPress={props.handleOnPressSaveAddress}
+            btnTitle={getTranslation('saveaddress')}
           />
         </View>
       </ScrollView>

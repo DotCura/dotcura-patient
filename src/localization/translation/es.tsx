@@ -374,6 +374,10 @@ export default {
   typeofrelationship: 'Tipo di relazione',
   typeofrelationshipplaceholder: 'Seleccione el tipo de relación',
   pleaseselecttypeofrelationship: 'Por favor seleccione el tipo de relación',
+  addfavouriteaddresslabel:"Rendi indirizzo preferito",
+  saveaddress:"Salva indirizzo",
+  typology:"Tipologia",
+  emptysearchaddress:"Por favor selecciona la dirección de búsqueda",
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',
