@@ -33,6 +33,7 @@ export const ScreenNames = {
   NOTIFICATIONSWITCHCONTAINER: 'NotificationSwitchContainer',
   PAYMENTMETHODCONTAINER: 'PaymentMethodContainer',
   ADDRESSLISTCONTAINER:"AddressListContainer",
+  FAVOURITESCONTAINER:"FavouritesContainer",
 
   //BOTTOMTAB
   HOMECONTAINER: 'HomeContainer',

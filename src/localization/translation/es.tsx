@@ -256,6 +256,15 @@ export default {
   gender:"Genere",
   saveinformation:"Salva informazioni",
   deletefamily:"Elimina familiare",
+  
+
+  //FAV
+  favtitle:"Preferiti",
+  favsubtitle:"Tutte le analisi che hai salvato, raggruppate qui",
+  unfavconfirmationtitle:"Vuoi cancellare il preferito?",
+  confirmationdelete:"Conferma cancellazione",
+  canclefav:"Non cancellare",
+  unfavmessage:"Preferito eliminato",
 
   //ADDADDRESS
   addaddresstitle: 'Aggiungi un indirizzo',

@@ -93,17 +93,21 @@ export const flashMessageBottomSucess = (message: string | null) => {
     position:'bottom',
     backgroundColor: Colors.blue0019,
     color: Colors.white,
-    duration: 3000,
+    duration: 1000,
     icon: 'none',
     style: {
       marginTop: StatusBar.currentHeight,
       zIndex: 1,
+      bottom:20,
+      alignSelf:'center',
+      borderRadius:999,
+      position:'absolute'
     },
     titleStyle: {
       fontFamily: fontsfamily.gmedium,
       fontSize: fontSize.size16,
       lineHeight: getWidth(20),
-      textAlign: 'left',
+      textAlign: 'center',
     },
   });
 };
