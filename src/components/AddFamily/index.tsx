@@ -15,6 +15,7 @@ import { activityOpacity } from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import CustomButton from '../../global/Buttons';
 import { Colors } from '../../constants/Colors';
+import { fontsfamily } from '../../constants/FontFamily';
 
 const AddFamilyComponent = (props: any) => {
   const renderListFooter = () => {
@@ -24,8 +25,8 @@ const AddFamilyComponent = (props: any) => {
         activeOpacity={activityOpacity}
         onPress={props.handleNavigateFamilyMember}
       >
-        <Image source={images.addblue} />
-        <Text style={styles.addText}>Aggiungi familiare</Text>
+        <Image source={images.imgPlusDark} />
+        <Text style={styles.addText}>{getTranslation("addfamilybtn")}</Text>
       </TouchableOpacity>
     );
   };
@@ -41,6 +42,10 @@ const AddFamilyComponent = (props: any) => {
       {/* vwEmpty */}
       {props.showEmpty && (
         <View style={styles.vwEmpty}>
+          <Image
+            source={images.imgFamilyEmpty}
+            style={{ marginVertical: getHeight(76), alignSelf: 'center' }}
+          />
           <View style={{ marginHorizontal: getWidth(7), gap: getHeight(2) }}>
             <Text style={styles.emptyTitle} numberOfLines={1}>
               {getTranslation('emptyaddfamilytitle')}
@@ -53,9 +58,12 @@ const AddFamilyComponent = (props: any) => {
             btnPress={() => props.setShowEmpty(false)}
             btnTitle={getTranslation('addfamilybtn')}
             style={{
-              backgroundColor: Colors.lightBlurE4,
+              backgroundColor: Colors.blueD1,
             }}
-            textStyle={{ color: Colors.blue17 }}
+            textStyle={{
+              color: Colors.blue002,
+              fontsfamily: fontsfamily.gmedium,
+            }}
           />
         </View>
       )}

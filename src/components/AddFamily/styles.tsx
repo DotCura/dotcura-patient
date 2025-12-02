@@ -6,7 +6,7 @@ import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
   addBtn: {
-    backgroundColor: Colors.lightBlurE4,
+    backgroundColor: Colors.blueD1,
     borderRadius: 20,
     flexDirection: 'row',
     alignItems: 'center',
@@ -16,29 +16,27 @@ export const styles = StyleSheet.create({
     height: getHeight(48),
   },
   addText: {
-    color: Colors.blue17,
+    color: Colors.blue002,
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.medium,
     letterSpacing: 0.2,
   },
   vwEmpty: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     gap: getHeight(24),
     marginHorizontal: getWidth(16),
   },
   emptyTitle: {
     color: Colors.gray0F,
     fontSize: fontSize.size24,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gmedium,
     textAlign: 'center',
   },
   emptySubtitle: {
     letterSpacing: 0.2,
     color: Colors.gray55,
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     textAlign: 'center',
   },
 });

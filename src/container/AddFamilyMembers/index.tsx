@@ -1,13 +1,19 @@
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment';
 import { getTranslation } from '../../localization/i18n/i18n.config';
-import { flashMessageWarning } from '../../constants/GConstant';
+import {
+  cameraPermission,
+  checkPermission,
+  flashMessageWarning,
+  messages,
+} from '../../constants/GConstant';
 import AppHeader from '../../global/Header';
 import AddFamilyMemberComponent from '../../components/AddFamilyMembers';
 import TopBar from '../../global/TopBar/TopBar';
 import { ScreenNames } from '../../constants/AppConstants';
+import { ImagePickerManager } from '../../constants/utils/NativeImagePicker';
 
 const AddFamilyMemberContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -16,17 +22,27 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
     { id: 1, label: getTranslation('gender1') },
     { id: 2, label: getTranslation('gender2') },
   ];
+  const IdentityData = [
+    { label: getTranslation('passport'), value: '1' },
+    { label: getTranslation('electronicsidcard'), value: '2' },
+  ];
   const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
 
   const [fullName, setFullName] = useState<any>('');
+  const [surname, setSurname] = useState<any>('');
   const [appTypeValue, setAppTypeValue] = useState<any>('');
-  console.log(fullName, 'fullName =====');
+  const [identityValue, setIdentityValue] = useState<any>('');
+  const [frontSide, setFrontSide] = useState(undefined);
+  const [frontImageAdd, setFrontImageAdd] = useState(false);
+  const [backSide, setBackSide] = useState(undefined);
+  const [backImageAdd, setBackImageAdd] = useState(false);
 
   const [taxCode, setTaxCode] = useState<any>('');
   const [dateOfBirth, setDateOfBirth] = useState<any>('');
   const [selectedGender, setSelectedGender] = useState(1);
 
   const [fullNameError, setFullNameError] = useState<any>('');
+  const [surnameError, setSurnameError] = useState<any>('');
   const [dateError, setDateError] = useState<any>('');
   const [taxCodeError, setTaxCodeError] = useState<any>('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -45,14 +61,26 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
     setAppTypeValue(item.value);
   };
 
+  const handleSetIdentity = (item: any) => {
+    setIdentityValue(item.value);
+  };
+
   const fullNameRef = useRef<any>(null);
   const taxCodeRef = useRef<any>(null);
+  const surnameRef = useRef<any>(null);
 
   const onChangeFullName = (text: any) => {
     let newText = text.replace(/[0-9]/g, '');
     newText = newText.replace(/^\s+/, '');
     newText = newText.replace(/\s{2,}/g, ' ');
     setFullName(newText);
+  };
+
+  const onChangeSurname = (text: any) => {
+    let newText = text.replace(/[0-9]/g, '');
+    newText = newText.replace(/^\s+/, '');
+    newText = newText.replace(/\s{2,}/g, ' ');
+    setSurname(newText);
   };
 
   const onChangeTaxCode = (text: any) => {
@@ -69,6 +97,7 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
     // Reset previous errors
     setFullNameError('');
     setTaxCodeError('');
+    setSurnameError('');
 
     if (appTypeValue == '') {
       flashMessageWarning(getTranslation('pleaseselecttypeofrelationship'));
@@ -77,6 +106,9 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
       return;
     } else if (fullName.trim().length < 2) {
       setFullNameError(getTranslation('errorMessageFullNameTooShort'));
+      return;
+    } else if (!surname.trim()) {
+      setSurnameError(getTranslation('errorMessageSurnameRequired'));
       return;
     } else if (formattedDate == '') {
       flashMessageWarning(getTranslation('pleaseselectdateofbirth'));
@@ -87,12 +119,13 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
     } else if (taxCode.length !== 16) {
       setTaxCodeError(getTranslation('errorMessageTaxCodeValid'));
       return;
+    } else if (identityValue == '') {
+      flashMessageWarning(getTranslation('pleaseselectdocument'));
+    } else if (frontSide == undefined || backSide == undefined) {
+      flashMessageWarning(getTranslation('pleaseuploadfrontandbackside'));
     } else {
-      console.log('✅ Profile completed successfully');
-
-      navigation.navigate(ScreenNames.CONFIRMIDENTITYCONTAINER);
-
-      // Proceed to next screen or API call
+      console.log('hy');
+      navigation.navigate(ScreenNames.ADDFAMILYCONTAINER);
     }
   };
 
@@ -116,6 +149,56 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
     console.log(formatted);
 
     hideDatePicker();
+  };
+
+  const pickImage = () => {
+    Keyboard.dismiss();
+
+    checkPermission(cameraPermission, messages.cameraPermission)
+      .then(isCameraAllow => {
+        if (!isCameraAllow) {
+          return;
+        }
+
+        return ImagePickerManager.choosePickerOptions('photo');
+      })
+      .then((result: any) => {
+        if (!result) return;
+
+        const uri = result[0]?.uri;
+        if (!uri) return;
+
+        setFrontSide(uri);
+        setFrontImageAdd(true);
+      })
+      .catch(error => {
+        console.log('🔥 Error in pickImage():', error);
+      });
+  };
+
+  const pickBackImage = () => {
+    Keyboard.dismiss();
+
+    checkPermission(cameraPermission, messages.cameraPermission)
+      .then(isCameraAllow => {
+        if (!isCameraAllow) {
+          return;
+        }
+
+        return ImagePickerManager.choosePickerOptions('photo');
+      })
+      .then((result: any) => {
+        if (!result) return;
+
+        const uri = result[0]?.uri;
+        if (!uri) return;
+
+        setBackSide(uri);
+        setBackImageAdd(true);
+      })
+      .catch(error => {
+        console.log('🔥 Error in pickBackImage():', error);
+      });
   };
 
   //model
@@ -192,13 +275,35 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
     }
 
     if (type === 'medicazioni') {
-      setMedicazioni(prev => prev.filter((item:any) => item.id !== id));
+      setMedicazioni(prev => prev.filter((item: any) => item.id !== id));
     }
 
     if (type === 'allergie') {
-      setAllergie(prev => prev.filter((item:any) => item.id !== id));
+      setAllergie(prev => prev.filter((item: any) => item.id !== id));
     }
   };
+
+  const header = () => {
+    navigation.setOptions({
+      header: () => (
+        <AppHeader
+          startBtnOnPress={() => {
+            console.log('hy');
+            navigation.goBack();
+          }}
+          dontShowStartBtn={false}
+          showTitle={true}
+          showSubTitle={false}
+          showEndBtn={false}
+          centerTitle={getTranslation('family')}
+        />
+      ),
+    });
+  };
+
+  useEffect(() => {
+    header();
+  }, []);
 
   return (
     <AddFamilyMemberComponent
@@ -244,6 +349,21 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
       appTypeValue={appTypeValue}
       handleSetRole={handleSetRole}
       navigation={navigation}
+      surname={surname}
+      surnameError={surnameError}
+      setSurnameError={setSurnameError}
+      surnameRef={surnameRef}
+      onChangeSurname={onChangeSurname}
+      //confirmidentity
+      frontSide={frontSide}
+      frontImageAdd={frontImageAdd}
+      backSide={backSide}
+      backImageAdd={backImageAdd}
+      onPressFrontSide={pickImage}
+      onPressBackSide={pickBackImage}
+      IdentityData={IdentityData}
+      identityValue={identityValue}
+      handleSetIdentity={handleSetIdentity}
     />
   );
 };

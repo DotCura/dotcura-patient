@@ -17,20 +17,14 @@ import TopBar from '../../global/TopBar/TopBar';
 import { Colors } from '../../constants/Colors';
 import CustomButton from '../../global/Buttons';
 import CustomDropdown from '../../global/DropDown/CustomDropDown';
+import { fontSize } from '../../constants/FontSizes';
 
 const AddFamilyMemberComponent = (props: any) => {
   const today = new Date();
   return (
     <View style={{ backgroundColor: Colors.white, flex: 1 }}>
-      <View style={{ marginHorizontal: getWidth(16) }}>
-        <TopBar
-          array={props.headerArray}
-          currentIndex={0}
-          onClickBack={() => props.navigation.goBack()}
-        />
-      </View>
       <KeyboardAwareScrollView
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
         contentContainerStyle={[constnatStyles.keyboardContainer]}
         keyboardShouldPersistTaps="handled"
         bounces={true}
@@ -43,7 +37,7 @@ const AddFamilyMemberComponent = (props: any) => {
           />
         </View>
         <View style={{ marginTop: getHeight(43) }}>
-          <Text style={[styles.lblTitleInput, props.styleLblTitleInput]}>
+          <Text style={[styles.lblTitleInput]}>
             {getTranslation('typeofrelationship')}
           </Text>
           <CustomDropdown
@@ -60,7 +54,7 @@ const AddFamilyMemberComponent = (props: any) => {
           <PrimaryTitleTextInput
             placHolderLabel={getTranslation('fullnameplaceholder')}
             refs={props.fullNameRef}
-            focusnext={() => props.taxCodeRef.current?.focus()} // ✅ Now this works
+            focusnext={() => props.surnameRef.current?.focus()} // ✅ Now this works
             inputLabel={getTranslation('fullnametitle')}
             blur={false}
             leftIcon={false}
@@ -74,6 +68,25 @@ const AddFamilyMemberComponent = (props: any) => {
             isMultiline={false}
             isBorder={false}
           />
+
+          <PrimaryTitleTextInput
+            placHolderLabel={getTranslation('surnameplaceholder')}
+            refs={props.surnameRef}
+            focusnext={() => props.taxCodeRef.current?.focus()} // ✅ Now this works
+            inputLabel={getTranslation('surnametitle')}
+            blur={false}
+            leftIcon={false}
+            keyaboardType={'default'}
+            value={props.surname}
+            onChangeFun={props.onChangeSurname}
+            autoCapitalize={'none'}
+            errorMessage={props.surnameError}
+            setErrorMessage={props.setSurnameError} // ✅ Just pass this once
+            maxlength={200}
+            isMultiline={false}
+            isBorder={false}
+          />
+
           <View>
             <TouchableOpacity
               activeOpacity={0.9}
@@ -92,7 +105,7 @@ const AddFamilyMemberComponent = (props: any) => {
                   ]}
                 >
                   {props.formattedDate == ''
-                    ? '30/09/1992'
+                    ? 'gg/mm/aaaa'
                     : props.formattedDate}
                 </Text>
               </View>
@@ -108,6 +121,7 @@ const AddFamilyMemberComponent = (props: any) => {
               date={moment(today).subtract(18, 'years').toDate()}
             />
           </View>
+
           <PrimaryTitleTextInput
             placHolderLabel={getTranslation('taxcodeplaceholder')}
             refs={props.taxCodeRef}
@@ -124,8 +138,9 @@ const AddFamilyMemberComponent = (props: any) => {
             isMultiline={false}
             isBorder={true}
           />
+
           <View>
-            <Text style={styles.label}>Genere</Text>
+            <Text style={styles.label}>{getTranslation('gender')}</Text>
             <View style={{ gap: getHeight(6) }}>
               {props.genders.map((item: any) => (
                 <View key={item.id} style={styles.option}>
@@ -145,13 +160,10 @@ const AddFamilyMemberComponent = (props: any) => {
               ))}
             </View>
           </View>
+
           <View
             style={{
               marginTop: getHeight(12),
-              marginBottom:
-                props.insets.bottom > 0
-                  ? props.insets.bottom
-                  : props.insets.bottom + getHeight(50),
             }}
           >
             {/* vwMedicazioni */}
@@ -171,7 +183,7 @@ const AddFamilyMemberComponent = (props: any) => {
                   activeOpacity={activityOpacity}
                   onPress={() => props.openModal('medicazioni')}
                 >
-                  <Image source={images.addblue} />
+                  <Image source={images.imgPlusDark} />
                   <Text style={styles.lblAgg}>{getTranslation('addgg')}</Text>
                 </TouchableOpacity>
               </View>
@@ -250,7 +262,7 @@ const AddFamilyMemberComponent = (props: any) => {
                 </TouchableOpacity>
               </View>
               <View style={{ gap: getHeight(8) }}>
-                {props.allergie.map((item:any) => (
+                {props.allergie.map((item: any) => (
                   // <Text key={item}>• {item}</Text>
                   <View style={styles.vwCategory}>
                     <Text style={styles.lblCategory}>{item.name}</Text>
@@ -266,6 +278,75 @@ const AddFamilyMemberComponent = (props: any) => {
               </View>
             </View>
           </View>
+
+          <View style={{ marginTop: getHeight(20) }}>
+            <Text style={[styles.lblTitleInput]}>
+              {getTranslation('document')}
+            </Text>
+            <CustomDropdown
+              data={props.IdentityData}
+              value={props.identityValue}
+              onChange={item => props.handleSetIdentity(item)}
+              placeholder={getTranslation('selectdocument') || ''}
+            />
+          </View>
+
+          <View style={styles.vwFrontSide}>
+            {props.frontImageAdd == true ? (
+              <Image
+                style={styles.imgFrontSide}
+                source={{ uri: props.frontSide }}
+              ></Image>
+            ) : (
+              <>
+                <Text style={styles.txtFronSide}>
+                  {getTranslation('uploadfronsidedoc')}
+                </Text>
+                <TouchableOpacity
+                  onPress={props.onPressFrontSide}
+                  style={styles.btnFrontSide}
+                >
+                  <Image source={images.upload}></Image>
+                  <Text style={styles.txtUpload}>
+                    {getTranslation('upload')}
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
+
+          <View
+            style={[
+              styles.vwFrontSide,
+              { marginTop: getHeight(-4), marginBottom: getHeight(20) },
+            ]}
+          >
+            {props.backImageAdd == true ? (
+              <Image
+                style={styles.imgFrontSide}
+                source={{ uri: props.backSide }}
+              ></Image>
+            ) : (
+              <>
+                <Text style={styles.txtFronSide}>
+                  {getTranslation('uploadbacksidedoc')}
+                </Text>
+                <TouchableOpacity
+                  onPress={props.onPressBackSide}
+                  style={styles.btnFrontSide}
+                >
+                  <Image
+                    source={images.upload}
+                    tintColor={Colors.blue002}
+                  ></Image>
+                  <Text style={styles.txtUpload}>
+                    {getTranslation('upload')}
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
+
           {/* Reusable Modal */}
           <AddItemModal
             visible={props.modalVisible}
@@ -276,21 +357,31 @@ const AddFamilyMemberComponent = (props: any) => {
             onClose={() => props.setModalVisible(false)}
           />
         </View>
-      </KeyboardAwareScrollView>
-      <View
+        <View
         style={{
-          marginBottom:
+          paddingBottom:
             props.insets.bottom > 0
               ? props.insets.bottom
               : props.insets.bottom + getHeight(30),
-          marginHorizontal: getWidth(16),
+          backgroundColor: Colors.whiteF2,
+          gap: getHeight(8),
         }}
       >
         <CustomButton
           btnPress={props.handlePressContinue}
-          btnTitle={getTranslation('continue')}
+          btnTitle={getTranslation('saveinformation')}
+        />
+        <CustomButton
+          btnPress={props.handlePressContinue}
+          btnTitle={getTranslation('deletefamily')}
+          style={{ backgroundColor: Colors.redFC }}
+          textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}
+          btnicon={true}
+          btnImage={images.imgDeleteRed}
         />
       </View>
+      </KeyboardAwareScrollView>
+     
     </View>
   );
 };

@@ -45,7 +45,7 @@ const AddFamilyContainer = ({ navigation }: any) => {
           style={styles.removeBtn}
           // onPress={() => handleRemove(item.id)}
         >
-          <Text style={styles.removeText}>{getTranslation('remove')}</Text>
+          <Text style={styles.removeText}>{getTranslation('edit')}</Text>
         </TouchableOpacity>
       </View>
     );

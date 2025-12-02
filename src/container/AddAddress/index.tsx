@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AppHeader from '../../global/Header';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { flashMessageWarning } from '../../constants/GConstant';
+import { ScreenNames } from '../../constants/AppConstants';
 
 const AddAddressContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -56,10 +57,11 @@ const AddAddressContainer = ({ navigation, route }: any) => {
   };
 
   const handleOnPressSaveAddress = () => {
-    if (searchAddress.trim() === '') {
-      flashMessageWarning(getTranslation('emptysearchaddress'));
-      return;
-    } else if (floor.trim() === '') {
+    // if (searchAddress.trim() === '') {
+    //   flashMessageWarning(getTranslation('emptysearchaddress'));
+    //   return;
+    // } else
+    if (floor.trim() === '') {
       setFloorError(getTranslation('emptyFloor'));
       return;
     } else if (!/^\d+$/.test(floor)) {
@@ -78,7 +80,7 @@ const AddAddressContainer = ({ navigation, route }: any) => {
       setInstructionNameError(getTranslation('emptyInstructions'));
       return;
     } else {
-      return;
+      navigation.navigate(ScreenNames.ADDRESSLISTCONTAINER);
     }
   };
 

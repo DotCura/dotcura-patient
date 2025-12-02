@@ -87,6 +87,27 @@ export const flashMessageWarning = (message: string | null) => {
   });
 };
 
+export const flashMessageBottomSucess = (message: string | null) => {
+  showMessage({
+    message: message || '',
+    position:'bottom',
+    backgroundColor: Colors.blue0019,
+    color: Colors.white,
+    duration: 3000,
+    icon: 'none',
+    style: {
+      marginTop: StatusBar.currentHeight,
+      zIndex: 1,
+    },
+    titleStyle: {
+      fontFamily: fontsfamily.gmedium,
+      fontSize: fontSize.size16,
+      lineHeight: getWidth(20),
+      textAlign: 'left',
+    },
+  });
+};
+
 // Camera-Gallery Permissions
 export const messages = {
   cameraPermission: `${getTranslation(
@@ -260,7 +281,7 @@ export const getInitials = (name: any) => {
   return first;
 };
 
-export const getInitialsTwoDigit = name => {
+export const getInitialsTwoDigit = (name:any) => {
   const parts = name.trim().split(' ');
   const first = parts[0]?.charAt(0).toUpperCase() || '';
   const last = parts[parts.length - 1]?.charAt(0).toUpperCase() || '';

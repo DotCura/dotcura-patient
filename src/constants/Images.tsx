@@ -83,6 +83,9 @@ export const images = {
   imgShareProfile: require('../assets/images/shareProfile.png'),
   imgCalenderDOB:require('../assets/images/calendarDOB.png'),
   imgPlusDark:require('../assets/images/plusBlueDark.png'),
+  imgRadioBigSelected:require('../assets/images/radiobigselected.png'),
+  imgRadioBigUnSelected:require('../assets/images/radiobigunselected.png'),
+  imgFamilyEmpty:require('../assets/images/familyempty.png'),
 
   // Static Images
   imgkit1: require('../assets/images/Static/kit1.png'),

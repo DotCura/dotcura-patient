@@ -93,6 +93,11 @@ const MainNavigation = props => {
           {},
           { headerShown: true },
         )}
+         {_addScreen(
+          ScreenNames.ADDRESSLISTCONTAINER,
+          {},
+          { headerShown: true },
+        )}
         {_addScreen(ScreenNames.ADDFAMILYCONTAINER, {}, { headerShown: true })}
         {_addScreen(
           ScreenNames.CONFIRMIDENTITYCONTAINER,
@@ -114,7 +119,7 @@ const MainNavigation = props => {
         {_addScreen(
           ScreenNames.ADDFAMILYMEMBERSCONTAINER,
           {},
-          { headerShown: false },
+          { headerShown: true },
         )}
         {_addScreen(
           ScreenNames.RESULTOPENUPCONTAINER,

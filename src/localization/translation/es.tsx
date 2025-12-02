@@ -253,6 +253,9 @@ export default {
     'Gestisci la salute dei tuoi cari direttamente da un’unica app. Potrai prenotare e controllare i dati direttamente da qua.',
   addfamilybtn: 'Aggiungi famigliare',
   remove: 'Rimuovi',
+  gender:"Genere",
+  saveinformation:"Salva informazioni",
+  deletefamily:"Elimina familiare",
 
   //ADDADDRESS
   addaddresstitle: 'Aggiungi un indirizzo',
@@ -378,6 +381,13 @@ export default {
   saveaddress:"Salva indirizzo",
   typology:"Tipologia",
   emptysearchaddress:"Por favor selecciona la dirección de búsqueda",
+
+  //ADDRESSLIST
+  addresstitle:"Indirizzi",
+  addressubtitle:"Gli indirizzi lorem ipsum dolor sit",
+  yourlocationtitle:"Usa la mia posizione",
+  yourlocationsubtitle:"Consenti la geolocalizzazione",
+  default:"PREDEFINITO",
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',

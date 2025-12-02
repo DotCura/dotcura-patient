@@ -42,6 +42,8 @@ export const Colors = {
   whiteF2:"#F2F2F2",
   purple33:"#334B8F",
   purpleE0:"#E0E8FB",
+  purple66:"#667AB2",
+  blue0019:"#001933",
   
   greenD9: '#D9FCE0',
   green0D: '#0D4018',

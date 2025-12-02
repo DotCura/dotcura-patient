@@ -13,8 +13,6 @@ export const styles = StyleSheet.create({
     paddingVertical: getWidth(12.5),
     alignItems: 'center',
     flexDirection: 'row',
-    borderWidth: 2,
-    borderColor: Colors.grayE7,
   },
   /* Initial circle */
   initialCircle: {
@@ -36,19 +34,19 @@ export const styles = StyleSheet.create({
   name: {
     fontSize: fontSize.size16,
     color: Colors.gray0F,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     letterSpacing: 0.2,
   },
   relation: {
     fontSize: fontSize.size14,
     color: Colors.gray75,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     letterSpacing: 0.1,
   },
 
   /* Remove Button */
   removeBtn: {
-    backgroundColor: Colors.redFD,
+    backgroundColor: Colors.blueD1,
     paddingVertical: getHeight(9),
     paddingHorizontal: getWidth(12),
     borderRadius: 20,
@@ -57,7 +55,7 @@ export const styles = StyleSheet.create({
   },
   removeText: {
     fontSize: fontSize.size14,
-    color: Colors.red40,
+    color: Colors.blue002,
     fontFamily: fontsfamily.medium,
     letterSpacing: 0.1,
   },

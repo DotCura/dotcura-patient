@@ -7,7 +7,7 @@ import { fontsfamily } from '../../constants/FontFamily';
 export const styles = StyleSheet.create({
   lblItemInner: {
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     color: Colors.gray2A,
   },
   vwInput: {
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
   },
   lblSave: {
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     color: Colors.blue17,
   },
   vwSave: {

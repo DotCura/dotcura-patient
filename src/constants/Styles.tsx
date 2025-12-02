@@ -23,7 +23,7 @@ export const constnatStyles = StyleSheet.create({
   },
   vwContainer: {
     flexGrow: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whiteF2,
     paddingHorizontal: getWidth(16),
   },
   vwTitleSubtitles: { gap: getWidth(4) },

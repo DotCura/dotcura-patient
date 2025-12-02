@@ -22,6 +22,7 @@ import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
 import { images } from '../../constants/Images';
 import { activityOpacity } from '../../constants/GConstant';
 import CustomDropdown from '../../global/DropDown/CustomDropDown';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 const AddAddressComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
@@ -66,20 +67,13 @@ const AddAddressComponent = (props: any) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      {/* <View style={{ marginHorizontal: getWidth(16) }}>
-        <TopBar
-          array={props.headerArray}
-          currentIndex={0}
-          onClickBack={() => props.navigation.goBack()}
-        />
-      </View> */}
-      <ScrollView
+    <View style={{ flex: 1, backgroundColor: Colors.whiteF2 }}>
+      <KeyboardAwareScrollView
         scrollEnabled
         showsVerticalScrollIndicator={false}
         bounces={true}
         contentContainerStyle={[constnatStyles.keyboardContainer]}
-        style={{ flex: 1, backgroundColor: Colors.white }}
+        style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
       >
         {/* HeaderView */}
         <View style={styles.vwHeader}>
@@ -210,13 +204,18 @@ const AddAddressComponent = (props: any) => {
             </Text>
           </View>
         </View>
-        <View style={{ marginBottom: props.insets.bottom + getHeight(16) }}>
-          <CustomButton
-            btnPress={props.handleOnPressSaveAddress}
-            btnTitle={getTranslation('saveaddress')}
-          />
-        </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
+      <View
+        style={{
+          marginBottom: props.insets.bottom + getHeight(16),
+          marginHorizontal: getWidth(16),
+        }}
+      >
+        <CustomButton
+          btnPress={props.handleOnPressSaveAddress}
+          btnTitle={getTranslation('saveaddress')}
+        />
+      </View>
     </View>
   );
 };
