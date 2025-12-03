@@ -72,7 +72,9 @@ const AddressListComponent = (props: any) => {
                     )}
                   </View>
                   <View style={{ flex: 1 }}>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View
+                      style={{ flexDirection: 'row', alignItems: 'center' }}
+                    >
                       <Text style={styles.itemTitle}>{item.title}</Text>
                       {isSelected && (
                         <Text style={styles.itemdefault}>

@@ -26,11 +26,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 const AddAddressComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
-  const getBorderColor = () => {
-    if (props.searchAddressError) return Colors.red8C;
-    if (isFocused) return Colors.blue002;
-    return Colors.grayD8;
-  };
+ 
 
   // 🔥 Moved styles here (no global style)
   const customStylesTextInput = {

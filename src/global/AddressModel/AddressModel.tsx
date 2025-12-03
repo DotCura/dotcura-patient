@@ -18,6 +18,7 @@ import { getTranslation } from '../../localization/i18n/i18n.config';
 import { activityOpacity } from '../../constants/GConstant';
 import PrimaryTitleTextInput from '../PrimaryTitleTextInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import CustomButton from '../Buttons';
 
 const AddressModel = ({
   visible,
@@ -26,8 +27,11 @@ const AddressModel = ({
   onSelect,
   onAddAddress,
   onClose,
+  onSave
 }: any) => {
   const insets = useSafeAreaInsets();
+  const selectedItem = addresses.find((a:any) => a.id === selectedId);
+
   return (
     <Modal
       transparent={true}
@@ -46,10 +50,10 @@ const AddressModel = ({
 
         <View
           style={{
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.whiteF2,
             borderTopLeftRadius: getHeight(20),
             borderTopRightRadius: getHeight(20),
-            height: '85%',
+            height: '90%',
           }}
         >
           {/* Header */}
@@ -79,7 +83,7 @@ const AddressModel = ({
             <TouchableOpacity
               style={styles.vwSave}
               activeOpacity={activityOpacity}
-              onPress={onClose}
+              onPress={()=>onSave(selectedItem)}
             >
               <Text style={styles.lblSave}>{getTranslation('save')}</Text>
             </TouchableOpacity>
@@ -96,15 +100,15 @@ const AddressModel = ({
             renderItem={({ item }) => {
               const isSelected = selectedId === item.id;
 
+
               return (
                 <TouchableOpacity
+                  activeOpacity={activityOpacity}
                   style={[
                     styles.itemBox,
                     {
-                      borderColor: isSelected ? Colors.blue1C : Colors.grayE7,
-                      backgroundColor: isSelected
-                        ? Colors.lightBlurE4
-                        : Colors.white,
+                      borderColor: isSelected ? Colors.blue002 : Colors.white,
+                      backgroundColor: Colors.white,
                     },
                   ]}
                   onPress={() => onSelect(item)}
@@ -119,22 +123,34 @@ const AddressModel = ({
                     <View>
                       {/* Tick / Untick icon */}
                       <Image
+                        resizeMode="contain"
                         source={
                           isSelected
-                            ? images.imgSelectRadio
-                            : images.imgUnselectRadio
+                            ? images.imgRadioBigSelected
+                            : images.imgRadioBigUnSelected
                         }
                       />
                     </View>
                     <View style={{ flex: 1 }}>
-                      <Text style={styles.itemTitle}>{item.title}</Text>
+                      <View
+                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                      >
+                        <Text style={styles.itemTitle}>{item.title}</Text>
+                        {isSelected && (
+                          <Text style={styles.itemdefault}>
+                            {getTranslation('default')}
+                          </Text>
+                        )}
+                      </View>
 
                       {item.subtitle ? (
                         <Text
                           style={[
                             styles.itemSubtitle,
                             {
-                              color: isSelected ? Colors.blue1C : Colors.gray75,
+                              color: isSelected
+                                ? Colors.blue002
+                                : Colors.gray75,
                             },
                           ]}
                         >
@@ -149,23 +165,34 @@ const AddressModel = ({
           />
 
           {/* Add Address Button */}
-          <TouchableOpacity
-            style={[
-              styles.addBtn,
-              {
-                marginBottom:
-                  insets.bottom > 0
-                    ? insets.bottom
-                    : insets.bottom + getHeight(16),
-              },
-            ]}
-            onPress={onAddAddress}
+          <View
+            style={{
+              marginBottom:
+                insets.bottom > 0
+                  ? insets.bottom
+                  : insets.bottom + getHeight(16),
+              marginHorizontal: getWidth(16),
+            }}
           >
-            <Image source={images.addblue} tintColor={Colors.white} />
-            <Text style={styles.addBtnTxt}>
-              {getTranslation('addaddresspopupbtn')}
-            </Text>
-          </TouchableOpacity>
+            <CustomButton
+              btnImage={images.imgPlusBlack}
+              btnicon={true}
+              imgstyle={{ tintColor: Colors.white }}
+              btnPress={onAddAddress}
+              btnTitle={getTranslation('addaddresspopupbtn')}
+            />
+            <CustomButton
+              btnImage={images.pencilblue}
+              btnicon={true}
+              style={{
+                backgroundColor: Colors.blueD1,
+                marginTop: getHeight(8),
+              }}
+              textStyle={{ color: Colors.blue002 }}
+              // btnPress={props.handlePressDeleteAccount}
+              btnTitle={getTranslation('editaddressbtn')}
+            />
+          </View>
         </View>
       </View>
     </Modal>

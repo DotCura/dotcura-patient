@@ -273,6 +273,11 @@ export default {
   searchaddress: 'Cerca indirizzo',
   addaddressplacholder: 'Via, piazza, strada...',
   errorselectaddress: 'Por favor, elija una dirección',
+  editaddressbtn:"Modifica indirizzo",
+  addaddresspopuptitle:"Questo indirizzo sarà salvato e disponibile per future visite a domicilio.",
+  cancleaddress:"Annulla",
+  selectaddressplaceholder:"Seleziona",
+  errorselectaddresstype:"Por favor seleccione el tipo de dirección.",
 
   //COMPLETEADDRESS
   completeaddresstitle: 'Completa l’indirizzo',

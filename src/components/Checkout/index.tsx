@@ -25,8 +25,46 @@ import TimeSlotPicker from '../../global/TimeSlotPicker';
 import AddressModel from '../../global/AddressModel/AddressModel';
 import { ScreenNames } from '../../constants/AppConstants';
 import TitleSubtitle from '../../global/TitleSubtitle';
+import { fontSize } from '../../constants/FontSizes';
+import GooglePlacesTextInput from 'react-native-google-places-textinput';
+import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
 
 const CheckoutComponent = (props: any) => {
+  const [isFocused, setIsFocused] = useState(false); // Add focus state
+
+  // 🔥 Moved styles here (no global style)
+  const customStylesTextInput = {
+    container: {
+      flex: 1,
+      borderRadius: 12,
+    },
+    input: {
+      overflow: 'hidden',
+      height: getHeight(56),
+      borderWidth: 2,
+      borderRadius: 12,
+      fontSize: fontSize.size16,
+      fontFamily: fontsfamily.gregular,
+      borderColor: isFocused ? Colors.blue002 : Colors.grayD8, // Dynamic border color
+      color: Colors.black,
+    },
+    inputFocused: {
+      borderColor: Colors.blue1C,
+    },
+    suggestionsContainer: {
+      backgroundColor: '#ffffff',
+      maxHeight: 250,
+      position: 'absolute',
+      top: 50,
+      left: -35,
+      right: 0,
+      width: '120%',
+      zIndex: 1000,
+    },
+    suggestionItem: {
+      padding: 15,
+    },
+  };
   return (
     <>
       <KeyboardAwareScrollView
@@ -68,7 +106,7 @@ const CheckoutComponent = (props: any) => {
         <View>
           <FlatList
             onEndReached={() => {
-              console.log('callend');
+              // console.log('callend');
             }}
             data={props.testkitsData}
             renderItem={props.renderItemTestKits}
@@ -211,14 +249,14 @@ const CheckoutComponent = (props: any) => {
             </View>
 
             {/* {props.discountValue > 0 && ( */}
-              <View style={styles.summaryItemRow}>
-                <Text style={[styles.summaryLabel]}>
-                  {getTranslation('discount')}
-                </Text>
-                <Text style={[styles.summaryValue, { color: Colors.green17 }]}>
-                  -{currency} {props.discountValue.toFixed(2)}
-                </Text>
-              </View>
+            <View style={styles.summaryItemRow}>
+              <Text style={[styles.summaryLabel]}>
+                {getTranslation('discount')}
+              </Text>
+              <Text style={[styles.summaryValue, { color: Colors.green17 }]}>
+                -{currency} {props.discountValue.toFixed(2)}
+              </Text>
+            </View>
             {/* // )} */}
 
             <View style={[styles.summaryItemRow]}>
@@ -420,7 +458,7 @@ const CheckoutComponent = (props: any) => {
               </Text>
               <FlatList
                 onEndReached={() => {
-                  console.log('callend');
+                  // console.log('callend');
                 }}
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -443,7 +481,7 @@ const CheckoutComponent = (props: any) => {
               <View>
                 <FlatList
                   onEndReached={() => {
-                    console.log('callend');
+                    // console.log('callend');
                   }}
                   numColumns={2}
                   data={props.kitDataAddMore}
@@ -558,7 +596,7 @@ const CheckoutComponent = (props: any) => {
             <View style={{ marginHorizontal: getWidth(16) }}>
               <FlatList
                 onEndReached={() => {
-                  console.log('callend');
+                  // console.log('callend');
                 }}
                 data={props.kitsArrayData}
                 renderItem={props.renderItemKitsData}
@@ -609,16 +647,263 @@ const CheckoutComponent = (props: any) => {
       <AddressModel
         visible={props.addressPopupVisible}
         addresses={props.AddressData}
-        selectedId={props?.selectedAddress?.id}
-        onSelect={(item: any) => props.setSelectedAddress(item)}
-        onAddAddress={() => {
-          props.setAddressPopupVisible(false);
-          props.navigation.navigate(ScreenNames.ADDADDRESSCONTAINER, {
-            isfromcheckout: true,
-          });
-        }}
-        onClose={() => props.setAddressPopupVisible(false)}
+        selectedId={props?.selectedid}
+        onSelect={props.handleOnPressSetId}
+        onAddAddress={props.handlePressAddAddress}
+        onClose={props.handleCloseAddress}
+        onSave={props.handleOnPressSaveLocation}     // use when hitting Save button
+
       />
+      {/* AddAddressModel */}
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={props.addAddressPopupVisible}
+        statusBarTranslucent={true}
+        onRequestClose={props.funCloseAddAddressPopup}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#00000060',
+          }}
+        >
+          <Pressable
+            style={{ flex: 1 }}
+            onPress={props.funCloseAddAddressPopup}
+          />
+
+          <View
+            style={{
+              backgroundColor: Colors.whiteF2,
+              borderTopLeftRadius: getHeight(20),
+              borderTopRightRadius: getHeight(20),
+              maxHeight: '80%',
+            }}
+          >
+            {/* Header */}
+            <View style={styles.vwHeadingLine} />
+            <View style={[styles.vwMainModelHeader]}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                onPress={props.funCloseIsKitTestDetails} // close modal
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+
+              <View>
+                <Text
+                  style={[
+                    constnatStyles.lblHeaderTitle,
+                    {
+                      letterSpacing: 0.2,
+                    },
+                  ]}
+                  numberOfLines={2}
+                >
+                  {getTranslation('addaddresspopupbtn')}
+                </Text>
+              </View>
+
+              <Image source={images.imgDelete} style={{ opacity: 0 }} />
+            </View>
+
+            <View style={styles.vwMainAddAddress}>
+              <Text style={styles.lblAddAddressPopupTitle}>
+                {getTranslation('addaddresspopuptitle')}
+              </Text>
+            </View>
+
+            <KeyboardAwareScrollView
+              scrollEnabled
+              showsVerticalScrollIndicator={false}
+              bounces={true}
+              contentContainerStyle={[
+                constnatStyles.keyboardContainer,
+                {
+                  paddingBottom: getHeight(17),
+                },
+              ]}
+              style={{ backgroundColor: Colors.whiteF2 }}
+            >
+              <View
+                style={{
+                  marginTop: getHeight(27),
+                  flex: 1,
+                  gap: getHeight(12),
+                }}
+              >
+                {/* dropdownfamilymember */}
+                <View>
+                  <Text style={styles.lblwhodothetest}>
+                    {getTranslation('typology')}
+                  </Text>
+                  <View style={{ marginTop: getHeight(6) }}>
+                    <CustomDropdown
+                      data={props.addressTypeData}
+                      value={props.addressTypeValue}
+                      onChange={item => {
+                        props.setAddressTypeError(''); // clear error on selection
+                        props.handleSetAddressType(item);
+                      }}
+                      placeholder={
+                        getTranslation('selectaddressplaceholder') || ''
+                      }
+                      dropdownPosition="auto"
+                      isRenderLeftIcon={false}
+                      dropdownstyle={{
+                        borderColor: props.addressTypeError
+                          ? Colors.red8C
+                          : Colors.grayD8,
+                        backgroundColor: props.addressTypeError
+                          ? Colors.redFD
+                          : Colors.white,
+                      }}
+                    />
+                    {props.addressTypeError ? (
+                      <View style={styles.vwError}>
+                        <Image source={images.imgWarning} />
+                        <Text style={styles.lablWarning}>
+                          {props.addressTypeError}
+                        </Text>
+                      </View>
+                    ) : null}
+                  </View>
+                </View>
+                <View>
+                  <Text style={styles.lblTitleInput} numberOfLines={1}>
+                    {getTranslation('searchaddress')}
+                  </Text>
+                  <View style={{ marginTop: 1 }}>
+                    <GooglePlacesTextInput
+                      ref={props.searchRef}
+                      apiKey={''}
+                      placeHolderText={
+                        getTranslation('addaddressplacholder') || ''
+                      }
+                      onPlaceSelect={(place: any) => {
+                        props.handlePlaceSelect(place);
+                        props.setSearchAddress(place?.fullText || ''); // Store selected address
+                      }}
+                      onChangeText={(text: any) => {
+                        props.setSearchAddress(text); // store every typed change
+                      }}
+                      cursorColor={Colors.blue002}
+                      selectionColor={Colors.blue002}
+                      languageCode="en"
+                      style={customStylesTextInput}
+                      onFocus={() => setIsFocused(true)}
+                      onBlur={() => setIsFocused(false)}
+                      showClearButton={false}
+                      showLoadingIndicator={false}
+                    />
+                  </View>
+                </View>
+                <View style={styles.vwInputsInner}>
+                  <PrimaryTitleTextInput
+                    flex={1}
+                    placHolderLabel={getTranslation('florrplaceholder')}
+                    refs={props.floorRef}
+                    focusnext={() => props.stairsRef.current?.focus()}
+                    inputLabel={getTranslation('florr')}
+                    blur={false}
+                    leftIcon={false}
+                    keyaboardType={'default'}
+                    value={props.floor}
+                    onChangeFun={(text: any) =>
+                      props.handleOnChangeText(text, 'floor')
+                    }
+                    errorMessage={props.floorError}
+                    setErrorMessage={props.setFloorError}
+                    isMultiline={false}
+                    isBorder={false}
+                    isflexstart={true}
+                  />
+                  <PrimaryTitleTextInput
+                    flex={1}
+                    placHolderLabel={getTranslation('stairsplaceholder')}
+                    inputLabel={getTranslation('stairs')}
+                    refs={props.stairsRef}
+                    focusnext={() => props.instructionRef.current?.focus()}
+                    blur={false}
+                    leftIcon={false}
+                    keyaboardType={'default'}
+                    value={props.stairs}
+                    onChangeFun={(text: any) =>
+                      props.handleOnChangeText(text, 'stairs')
+                    }
+                    errorMessage={props.stairsError}
+                    setErrorMessage={props.setStairsError}
+                    isflexstart={true}
+                    isMultiline={false}
+                    isBorder={false}
+                  />
+                </View>
+
+                <View>
+                  <PrimaryTitleTextInput
+                    placHolderLabel={getTranslation('instructionplaceholder')}
+                    refs={props.instructionRef}
+                    inputLabel={getTranslation('instruction')}
+                    blur={true}
+                    leftIcon={false}
+                    keyaboardType={'default'}
+                    value={props.instructions}
+                    onChangeFun={(text: any) =>
+                      props.handleOnChangeText(text, 'instruction')
+                    }
+                    errorMessage={props.instructionsError}
+                    setErrorMessage={props.setInstructionNameError}
+                    isMultiline={false}
+                    isBorder={false}
+                  />
+                </View>
+                <View style={styles.vwSwitchcontainer}>
+                  <TouchableOpacity
+                    activeOpacity={activityOpacity}
+                    onPress={props.toggleisDefault}
+                  >
+                    <Image
+                      source={
+                        props.isdefaultsave === true
+                          ? images.imgSelectRadio
+                          : images.imgUnselectRadio
+                      }
+                    />
+                  </TouchableOpacity>
+                  <Text style={styles.lblSwitchTitle} numberOfLines={1}>
+                    {getTranslation('addfavouriteaddresslabel')}
+                  </Text>
+                </View>
+              </View>
+            </KeyboardAwareScrollView>
+            <View
+              style={{
+                marginBottom:
+                  props.insets.bottom > 0
+                    ? props.insets.bottom
+                    : props.insets.bottom + getHeight(16),
+                marginHorizontal: getWidth(16),
+              }}
+            >
+              <CustomButton
+                btnPress={props.handleOnPressSaveAddress}
+                btnTitle={getTranslation('saveaddress')}
+              />
+              <CustomButton
+                btnicon={false}
+                style={{
+                  backgroundColor: Colors.blueD1,
+                  marginTop: getHeight(8),
+                }}
+                textStyle={{ color: Colors.blue002 }}
+                // btnPress={props.handlePressDeleteAccount}
+                btnTitle={getTranslation('cancleaddress')}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
 
       {/* CancleModel */}
       <Modal

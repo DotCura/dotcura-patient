@@ -112,6 +112,31 @@ export const flashMessageBottomSucess = (message: string | null) => {
   });
 };
 
+export const flashMessageWarningBottom = (message: string | null) => {
+  showMessage({
+    message: message || '',
+    backgroundColor: Colors.redCA,
+    color: Colors.white,
+    duration: 3000,
+    icon: 'none',
+    position:'bottom',
+    style: {
+      marginTop: StatusBar.currentHeight,
+      zIndex: 1,
+      bottom:20,
+      alignSelf:'center',
+      borderRadius:999,
+      position:'absolute'
+    },
+    titleStyle: {
+      fontFamily: fontsfamily.gmedium,
+      fontSize: fontSize.size16,
+      lineHeight: getWidth(20),
+      textAlign: 'center',
+    },
+  });
+};
+
 // Camera-Gallery Permissions
 export const messages = {
   cameraPermission: `${getTranslation(

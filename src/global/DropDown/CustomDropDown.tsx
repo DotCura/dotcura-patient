@@ -17,6 +17,7 @@ type BaseProps = {
   isRenderLeftIcon?: boolean;
   dropdownPosition?: 'auto' | 'top' | 'bottom';
   multiple?: boolean; // 👈 decide single vs multi
+  dropdownstyle?: any;
 };
 
 const CustomDropdown: React.FC<BaseProps> = ({
@@ -28,6 +29,7 @@ const CustomDropdown: React.FC<BaseProps> = ({
   dropdownPosition = 'auto',
   multiple = false,
   isRenderLeftIcon = false,
+  dropdownstyle,
 }) => {
   if (multiple) {
     return (
@@ -47,7 +49,7 @@ const CustomDropdown: React.FC<BaseProps> = ({
 
   return (
     <Dropdown
-      style={styles.dropdown}
+      style={[styles.dropdown, dropdownstyle,]}
       data={data}
       labelField="label"
       valueField="value"

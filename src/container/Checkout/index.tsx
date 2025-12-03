@@ -1,11 +1,21 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useMemo, useState } from 'react';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import CheckoutComponent from '../../components/Checkout';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import {
   activityOpacity,
   currency,
+  flashMessageWarning,
+  flashMessageWarningBottom,
   getRandomTheme,
 } from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
@@ -23,7 +33,6 @@ import { Colors } from '../../constants/Colors';
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  console.log('orderStatus in CheckoutContainer.tsx:', orderStatus);
 
   const testKits = [
     {
@@ -193,9 +202,13 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   ];
 
   const addressList = [
-    { id: 1, title: 'Use my location', subtitle: 'Allow geolocation' },
-    { id: 2, title: 'Home', subtitle: 'Via Roma, 31 – Naples' },
-    { id: 3, title: 'Apartment', subtitle: 'Piazzale Napoli, 21 – Rome' },
+    {
+      id: 1,
+      title: 'Usa la mia posizione',
+      subtitle: 'Consenti la geolocalizzazione',
+    },
+    { id: 2, title: 'Casa', subtitle: 'Via Roma, 31 – Naples' },
+    { id: 3, title: 'Appartamento', subtitle: 'Piazzale Napoli, 21 – Rome' },
   ];
 
   const [testkitsData, setTestsKitData] = useState(testKits);
@@ -224,20 +237,10 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [AddressData, setAddressData] = useState(addressList);
   const [addressPopupVisible, setAddressPopupVisible] = useState(false);
   const [cancleOrderVisible, setCancleOrderVisible] = useState(false);
+  const [addAddressPopupVisible, setAddAddressPopupVisible] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
-
-  console.log('selectedAddress', selectedAddress);
-
-  const handleBookSlot = () => {
-    if (selectedDate && selectedTime) {
-      setSelectedSlot({ day: selectedDate, time: selectedTime });
-      setShowPicker(false);
-    }
-  };
-
   const homeServiceCharge = 20;
 
-  // Compute subtotal & total dynamically
   const subtotal = useMemo(() => {
     return testkitsData.reduce((sum, item) => sum + item.price, 0);
   }, [testkitsData]);
@@ -246,7 +249,12 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     return subtotal + homeServiceCharge - discountValue;
   }, [subtotal, discountValue]);
 
-  // console.log('selectedTests', selectedTests);
+  const handleBookSlot = () => {
+    if (selectedDate && selectedTime) {
+      setSelectedSlot({ day: selectedDate, time: selectedTime });
+      setShowPicker(false);
+    }
+  };
 
   const toggleSelect = (id: string) => {
     setSelectedTests(prev =>
@@ -352,6 +360,15 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const funCloseCancleOrder = () => {
     setCancleOrderVisible(false);
+  };
+
+  const funOpenAddAddressPopup = () => {
+    setAddAddressPopupVisible(true);
+  };
+
+  const funCloseAddAddressPopup = () => {
+    setAddressPopupVisible(true);
+    setAddAddressPopupVisible(false);
   };
 
   const funOpenIsKitTestDetails = () => {
@@ -537,6 +554,168 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     });
   };
 
+  //AddAddress
+  const addressType = [
+    { label: 'Home', value: '1' },
+    { label: 'Apartment', value: '2' },
+    { label: 'Residency', value: '3' },
+  ];
+
+  const [searchAddress, setSearchAddress] = useState('');
+  const [searchAddressError, setSearchAddressError] = useState<any>('');
+
+  const [isdefaultsave, setIsDefaultSave] = useState(true);
+  const [floor, setFloor] = useState<string>('');
+  const [stairs, setStairs] = useState<string>('');
+  const [instructions, setinstructions] = useState<string>('');
+
+  const floorRef = useRef<TextInput | null>(null);
+  const stairsRef = useRef<TextInput | null>(null);
+  const instructionRef = useRef<TextInput | null>(null);
+
+  const [floorError, setFloorError] = useState<any>('');
+  const [stairsError, setStairsError] = useState<any>('');
+  const [instructionsError, setInstructionNameError] = useState<any>('');
+
+  const [addressTypeData, setAddressTypeData] = useState(addressType);
+  const [addressTypeValue, setAddressTypeValue] = useState<string | null>('');
+  const [addressTypeError, setAddressTypeError] = useState<any>('');
+  const [selectedid, setSelectedId] = useState<any>('');
+
+  const handleSetAddressType = (item: any) => {
+    setAddressTypeValue(item.value);
+  };
+
+  const handleOnChangeText = (text: string, type: string) => {
+    if (type === 'floor') {
+      let newText = text.replace(/[^\d]/g, '');
+      setFloor(newText);
+    } else if (type === 'stairs') {
+      let newText = text.replace(/[^a-zA-Z]/g, '');
+      setStairs(newText);
+    } else if (type === 'instruction') {
+      let newText = text.replace(/^\s+/, '');
+      setinstructions(newText);
+    }
+  };
+
+  const handleOnPressSaveAddress = () => {
+    setAddressTypeError('');
+    if (addressTypeValue == '') {
+      setAddressTypeError(getTranslation('errorselectaddresstype'));
+      return;
+    } else if (floor.trim() === '') {
+      setFloorError(getTranslation('emptyFloor'));
+      return;
+    } else if (!/^\d+$/.test(floor)) {
+      setFloorError(getTranslation('invalidFloor'));
+      return;
+    } else if (stairs.trim() === '') {
+      setStairsError(getTranslation('emptyStairs'));
+      return;
+    } else if (!/^[A-Za-z]+$/.test(stairs)) {
+      setFloorError(getTranslation('invalidStairs'));
+      return;
+    } else if (instructions.trim() == '') {
+      setInstructionNameError(getTranslation('emptyInstructions'));
+      return;
+    } else {
+      funCloseAddAddressPopup();
+      setAddressPopupVisible(true);
+    }
+  };
+
+  const handleOnPressSetId = (item: any) => {
+    setSelectedId(item.id);
+  };
+
+  const handleCloseAddress = () => {
+    setAddressPopupVisible(false); // do NOT reset selectedAddress
+  };
+
+  const handleOnPressSaveLocation = (item: any) => {
+    console.log('item', item);
+    setSelectedAddress(item);
+    setAddressPopupVisible(false);
+  };
+
+  const handlePressAddAddress = () => {
+    setAddressPopupVisible(false);
+    setAddAddressPopupVisible(true);
+  };
+
+  const searchRef = useRef<any>(null);
+
+  const handlePlaceSelect = async (place: any) => {
+    console.log('call', place);
+    // if (place && place.placeId) {
+    //   toggleLoader(true);
+    //   // console.log("Selected place:", JSON.stringify(place));
+    //   searchRef.current?.clear();
+    //   // setSearchText("");
+
+    //   try {
+    //     // Fetch place details to get lat/lng
+    //     const response = await fetch(
+    //       `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place.placeId}&key=${googleApiKey}`
+    //     );
+    //     const data = await response.json();
+
+    //     console.log("selectPlaceData", JSON.stringify(data));
+
+    //     //Update Search Count API Call
+    //     _updateCount();
+    //     Keyboard.dismiss();
+    //     toggleLoader(false);
+    //     if (data.result && data.result.geometry) {
+    //       const { lat, lng } = data.result.geometry.location;
+
+    //       setLocationForLatLong({ lat, lng });
+
+    //       // Update map region to the selected location
+    //       const newRegion = {
+    //         latitude: lat,
+    //         longitude: lng,
+    //         latitudeDelta: 0.001, // Adjust zoom level as needed
+    //         longitudeDelta: 0.001,
+    //       };
+
+    //       // Update map region state
+    //       setMapRegion(newRegion);
+
+    //       // Animate map to the new location
+    //       if (mapRef.current) {
+    //         mapRef.current.animateToRegion(newRegion, 700); // 1000 ms animation duration
+    //       }
+    //       setLatitude(lat);
+    //       setLongitude(lng);
+    //       // _venueList(lat, lng);
+    //       _eventList(lat, lng, 0);
+
+    //       {
+    //         subscriptionData?.is_subscription != 0  &&
+    //           fetchNearbyAirports(lat, lng);
+    //       }
+
+    //       // {
+    //       //   subscriptionData?.is_subscription != 0;
+    //       //   _getNearByDriverApi(lat, lng);
+    //       // }
+
+    //       console.log("Latitude:", lat, "Longitude:", lng);
+    //     } else {
+    //       console.warn("Could not fetch lat/lng");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching place details:", error);
+    //   }
+    // }
+  };
+
+  const toggleisDefault = () => {
+    setIsDefaultSave(!isdefaultsave);
+  };
+
   const header = () => {
     navigation.setOptions({
       header: () => (
@@ -585,7 +764,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   }, []);
 
   useEffect(() => {
-    console.log('route', route?.params?.ismodelfromCheckout);
     if (route?.params?.ismodelfromCheckout) {
       setAddressPopupVisible(true);
     }
@@ -650,6 +828,44 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       funOpenCancleOrder={funOpenCancleOrder}
       funCloseCancleOrder={funCloseCancleOrder}
       handleNavigateHome={handleNavigateHome}
+      //AddAddressModel
+      addAddressPopupVisible={addAddressPopupVisible}
+      setAddAddressPopupVisible={setAddAddressPopupVisible}
+      funOpenAddAddressPopup={funOpenAddAddressPopup}
+      funCloseAddAddressPopup={funCloseAddAddressPopup}
+      searchRef={searchRef}
+      handlePlaceSelect={handlePlaceSelect}
+      handleOnPressSaveAddress={handleOnPressSaveAddress}
+      handleOnChangeText={handleOnChangeText}
+      floor={floor}
+      stairs={stairs}
+      instructions={instructions}
+      floorRef={floorRef}
+      stairsRef={stairsRef}
+      instructionRef={instructionRef}
+      floorError={floorError}
+      setFloorError={setFloorError}
+      stairsError={stairsError}
+      setStairsError={setStairsError}
+      instructionsError={instructionsError}
+      setInstructionNameError={setInstructionNameError}
+      toggleisDefault={toggleisDefault}
+      isdefaultsave={isdefaultsave}
+      setAddressTypeValue={setAddressTypeValue}
+      addressTypeValue={addressTypeValue}
+      addressTypeData={addressTypeData}
+      handleSetAddressType={handleSetAddressType}
+      searchAddress={searchAddress}
+      setSearchAddress={setSearchAddress}
+      searchAddressError={searchAddressError}
+      setSearchAddressError={setSearchAddressError}
+      addressTypeError={addressTypeError}
+      setAddressTypeError={setAddressTypeError}
+      handleOnPressSaveLocation={handleOnPressSaveLocation}
+      handleOnPressSetId={handleOnPressSetId}
+      selectedid={selectedid}
+      handleCloseAddress={handleCloseAddress}
+      handlePressAddAddress={handlePressAddAddress}
     />
   );
 };

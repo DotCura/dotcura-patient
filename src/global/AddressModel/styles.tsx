@@ -5,6 +5,11 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  itemdefault: {
+    fontSize: fontSize.size10,
+    fontFamily: fontsfamily.gmedium,
+    color: Colors.purple66,
+  },
   itemBox: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -16,14 +21,14 @@ export const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     color: Colors.gray0F,
+    flex: 1,
   },
   itemSubtitle: {
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     color: Colors.gray75,
-    marginTop: getHeight(2),
   },
   addBtn: {
     marginHorizontal: getWidth(16),
@@ -31,7 +36,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: getWidth(6),
     flexDirection: 'row',
-    backgroundColor: Colors.blue1C,
+    backgroundColor: Colors.blue002,
     paddingVertical: getHeight(14),
     borderRadius: 14,
     marginTop: 10,
@@ -39,8 +44,9 @@ export const styles = StyleSheet.create({
   addBtnTxt: {
     color: Colors.white,
     textAlign: 'center',
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     fontSize: fontSize.size16,
+    letterSpacing: 0.2,
   },
   vwInput: {
     marginTop: getHeight(24),
@@ -49,11 +55,11 @@ export const styles = StyleSheet.create({
   },
   lblSave: {
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.medium,
-    color: Colors.blue17,
+    fontFamily: fontsfamily.gmedium,
+    color: Colors.blue002,
   },
   vwSave: {
-    backgroundColor: Colors.lightBlurE4,
+    backgroundColor: Colors.blueD1,
     height: getHeight(36),
     justifyContent: 'center',
     alignItems: 'center',

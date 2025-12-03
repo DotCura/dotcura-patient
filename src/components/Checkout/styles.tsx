@@ -1,10 +1,61 @@
 import { StyleSheet } from 'react-native';
-import { getHeight, getWidth, ScreenDimensions } from '../../constants/utils/Dimensions';
+import {
+  getHeight,
+  getWidth,
+  ScreenDimensions,
+} from '../../constants/utils/Dimensions';
 import { Colors } from '../../constants/Colors';
 import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  vwError: {
+    marginTop: getHeight(6),
+    gap: getWidth(4),
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginRight:getWidth(16)
+  },
+  lablWarning: {
+    color: Colors.red8C,
+    fontSize: fontSize.size12,
+    fontFamily: fontsfamily.medium,
+  },
+  lblTitleInput: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.medium,
+    color: Colors.gray55,
+    marginBottom: getHeight(6),
+  },
+  vwSwitchcontainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: getWidth(12),
+    marginTop: getHeight(14),
+  },
+  lblSwitchTitle: {
+    flex: 1,
+    marginRight: getWidth(10),
+    fontSize: fontSize.size16,
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gmedium,
+  },
+  vwInputsInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: getWidth(10),
+  },
+  vwMainAddAddress: {
+    marginTop: getHeight(14),
+    marginHorizontal: getWidth(15),
+  },
+  lblAddAddressPopupTitle: {
+    fontFamily: fontsfamily.gregular,
+    fontSize: fontSize.size16,
+    color: Colors.gray55,
+    letterSpacing: 0.2,
+  },
   lblGoToCart: {
     fontFamily: fontsfamily.medium,
     fontSize: fontSize.size16,
@@ -254,7 +305,7 @@ export const styles = StyleSheet.create({
   },
   btnChange: {
     backgroundColor: Colors.white64,
-    paddingVertical: getHeight(9),
+    height: getHeight(36),
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
