@@ -86,6 +86,7 @@ export const images = {
   imgRadioBigSelected:require('../assets/images/radiobigselected.png'),
   imgRadioBigUnSelected:require('../assets/images/radiobigunselected.png'),
   imgFamilyEmpty:require('../assets/images/familyempty.png'),
+  imgCalenderBlue:require('../assets/images/calendarBlue.png'),
 
   // Static Images
   imgkit1: require('../assets/images/Static/kit1.png'),

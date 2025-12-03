@@ -129,10 +129,15 @@ export default {
     'Guadagna 5 euro di sconto sul prossimo ordine per ogni amico invitato su Dotcura.',
   invitefriend: 'Invita amico',
   familymemberanlaysisvalue: 'I valori dell’analisi di',
+  hytext:"Ciao",
+  daystext:"giorni",
+  sinceyourlastanalysis:"dalla tua ultima analisi",
+  booknowtext:"Prenota ora",
 
   //GETTESTED
   kitavailable: 'kit disponibili',
   filter: 'Filtros',
+  analysistext:"Analisi",
 
   //KITDETAILS
   analytesinthekit: 'Analiti nel kit',

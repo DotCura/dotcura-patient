@@ -1,4 +1,11 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, { useState } from 'react';
 import { styles } from './styles';
 import GetTestedComponent from '../../../components/bottomTabs/GetTested';
@@ -27,6 +34,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: 'Alta richiesta',
+      kitimages: images.imgkit1,
     },
     {
       id: '2',
@@ -36,6 +44,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: 'Subito disponibile',
+      kitimages: images.imgkit2,
     },
     {
       id: '3',
@@ -45,6 +54,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: 'Pronto in 24 ore',
+      kitimages: images.imgkit3,
     },
     {
       id: '4',
@@ -54,6 +64,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: null,
+      kitimages: images.imgkit4,
     },
     {
       id: '5',
@@ -63,6 +74,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: null,
+      kitimages: images.imgkit5,
     },
     {
       id: '6',
@@ -72,6 +84,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: null,
+      kitimages: images.imgkit6,
     },
     {
       id: '7',
@@ -81,6 +94,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: null,
+      kitimages: images.imgkit7,
     },
     {
       id: '8',
@@ -90,6 +104,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: null,
+      kitimages: images.imgkit1,
     },
     {
       id: '9',
@@ -99,6 +114,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: null,
+      kitimages: images.imgkit2,
     },
     {
       id: '10',
@@ -108,6 +124,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: null,
+      kitimages: images.imgkit3,
     },
     {
       id: '11',
@@ -117,6 +134,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: null,
+      kitimages: images.imgkit4,
     },
     {
       id: '12',
@@ -126,6 +144,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: null,
+      kitimages: images.imgkit1,
     },
     {
       id: '13',
@@ -135,6 +154,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       isLiked: false,
       isAdded: false,
       status: null,
+      kitimages: images.imgkit5,
     },
   ];
 
@@ -183,8 +203,11 @@ const GetTestedContainer = ({ navigation }: any) => {
         }}
       >
         <View style={{ gap: getHeight(8) }}>
-          <View style={styles.vwGrey}>
-            <TouchableOpacity style={styles.btnPlusBlack}>
+          <ImageBackground source={item.kitimages} style={styles.vwGrey}>
+            <TouchableOpacity
+              style={styles.btnPlusBlack}
+              activeOpacity={activityOpacity}
+            >
               <Image source={images.imgPlusBlack} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnFav}>
@@ -213,19 +236,19 @@ const GetTestedContainer = ({ navigation }: any) => {
                 </Text>
               </View>
             )}
-          </View>
+          </ImageBackground>
 
           {/* veProductDetails */}
           <View>
-            <Text style={styles.lblPrice} numberOfLines={1}>
-              {currency}
-              {item.price}
-            </Text>
             <Text style={styles.lblTitle} numberOfLines={1}>
               {item.title}
             </Text>
             <Text style={styles.lblDescription} numberOfLines={3}>
               {item.description}
+            </Text>
+            <Text style={styles.lblPrice} numberOfLines={1}>
+              {currency}
+              {item.price}
             </Text>
           </View>
         </View>

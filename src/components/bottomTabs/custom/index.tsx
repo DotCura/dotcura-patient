@@ -68,7 +68,7 @@ const CustomBottomTabsComponent = (props: any) => {
               styles.lbl,
               {
                 color: Colors.gray75,
-                fontFamily: fontsfamily.medium,
+                fontFamily: fontsfamily.gmedium,
               },
             ]}
           >

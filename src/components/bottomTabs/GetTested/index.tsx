@@ -33,7 +33,11 @@ const GetTestedComponent = (props: any) => {
       ]}
     >
       {/* vwHeader */}
-      <View style={{ paddingHorizontal: getWidth(16) }}>
+      <View
+        style={{
+          paddingHorizontal: getWidth(16),
+        }}
+      >
         {props.searchVisible ? null : (
           <View
             style={[
@@ -46,7 +50,7 @@ const GetTestedComponent = (props: any) => {
           >
             <View style={styles.vwHeaderText}>
               <Text style={styles.lblHeaderTitle} numberOfLines={1}>
-                {props.kitCount} {getTranslation('kitavailable')}
+                 {getTranslation('analysistext')}
               </Text>
             </View>
 
@@ -102,7 +106,7 @@ const GetTestedComponent = (props: any) => {
               style={styles.btnClose}
               activeOpacity={activityOpacity}
             >
-              <Image source={images.imgClose} />
+              <Image source={images.imgClose} tintColor={Colors.blue002}/>
             </TouchableOpacity>
           </View>
         ) : null}

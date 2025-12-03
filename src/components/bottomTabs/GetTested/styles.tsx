@@ -86,9 +86,16 @@ export const styles = StyleSheet.create({
   btnClose: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.grayED,
+    backgroundColor: Colors.white,
     padding: 8,
     borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
   },
   vwHeaderRight: { flexDirection: 'row', gap: getWidth(8) },
   vwHeaderbtn: {
@@ -116,7 +123,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: getWidth(15),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whiteF2,
     paddingHorizontal: getWidth(12),
   },
   lblHeaderTitle: {

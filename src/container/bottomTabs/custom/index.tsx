@@ -72,19 +72,19 @@ const CustomBottomTabsContainer = ({ navigation, state, descriptors }: any) => {
               ? logosArray[index].focusImg
               : logosArray[index].unFocusImg
           }
+          tintColor={isFocused ? Colors.blue002 : Colors.gray75}
         />
         <Text
           style={[
             styles.lbl,
             {
-              color: isFocused ? Colors.blue1C : Colors.gray75,
-              fontFamily: isFocused ? fontsfamily.bold : fontsfamily.medium,
+              color: isFocused ? Colors.blue002 : Colors.gray75,
+              fontFamily: isFocused ? fontsfamily.gbold : fontsfamily.gmedium,
             },
           ]}
         >
           {logosArray[index].tabName}
         </Text>
-
       </TouchableOpacity>
     );
   };

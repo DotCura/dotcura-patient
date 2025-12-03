@@ -59,7 +59,7 @@ const HomeComponent = (props: any) => {
       ]}
     >
       {/* vwHeader */}
-      <View style={{ }}>
+      <View>
         <View
           style={[
             styles.vwMain,
@@ -71,7 +71,7 @@ const HomeComponent = (props: any) => {
         >
           <View style={styles.vwHeaderText}>
             <Text style={styles.lblHeaderTitle} numberOfLines={1}>
-              Hello Giovanni!
+              {getTranslation('hytext')} Giovanni!
             </Text>
           </View>
 
@@ -113,8 +113,31 @@ const HomeComponent = (props: any) => {
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}
       >
+        {/* vwTotalDaysInfo */}
+        <View style={styles.vwTotalDaysInfo}>
+          <Image source={images.imgCalenderBlue} />
+          <View style={styles.vwDaysAndBook}>
+            <View style={styles.vwInnerDays}>
+              <Text style={styles.lblDaysText}>
+                45 {getTranslation('daystext')}
+              </Text>
+              <Text style={styles.lblSinceyourlastanlaysis}>
+                {getTranslation('sinceyourlastanalysis')}
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={styles.btnBookNow}
+              activeOpacity={activityOpacity}
+            >
+              <Text style={styles.lblBookNow}>
+                {getTranslation('booknowtext')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        
         {/* vwwarning */}
-        <View style={styles.vwwarningDetails}>
+        {/* <View style={styles.vwwarningDetails}>
           <View style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}>
             <Image
               source={images.imgWarning}
@@ -129,7 +152,7 @@ const HomeComponent = (props: any) => {
               {getTranslation('outdatedsubtitle')}
             </Text>
           </View>
-        </View>
+        </View> */}
 
         {/* vwLatestValue */}
         <View style={styles.vwLatestValue}>
@@ -236,7 +259,7 @@ const HomeComponent = (props: any) => {
                       paddingHorizontal: getWidth(4),
                       borderRadius: 999,
                       marginLeft: getWidth(3),
-                      gap:getWidth(2)
+                      gap: getWidth(2),
                     }}
                   >
                     <View

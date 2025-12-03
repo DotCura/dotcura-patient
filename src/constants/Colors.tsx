@@ -18,6 +18,7 @@ export const Colors = {
   blue6B:"#6B9BEF",
   blue1C08:"#1C58CA14",
   blue1C04:"#1C58CA0A",
+  blueE0:"#E0E8FB",
   
   gray0F: '#0F0F0F',
   gray55: '#555556',

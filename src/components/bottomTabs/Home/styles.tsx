@@ -5,14 +5,53 @@ import { fontsfamily } from '../../../constants/FontFamily';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
+  vwInnerDays: {
+    flex: 1,
+  },
+  vwDaysAndBook: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  lblBookNow: {
+    color: Colors.white,
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.gmedium,
+  },
+  btnBookNow: {
+    alignSelf: 'center',
+    backgroundColor: Colors.blue002,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: getHeight(36),
+    paddingHorizontal: getWidth(12),
+  },
+  lblDaysText: {
+    color: Colors.blue002,
+    fontSize: fontSize.size30,
+    fontFamily: fontsfamily.gmedium,
+  },
+  lblSinceyourlastanlaysis: {
+    color: Colors.purple66,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.gregular,
+  },
+  vwTotalDaysInfo: {
+    gap: getHeight(10),
+    marginHorizontal: getWidth(16),
+    backgroundColor: Colors.blueE0,
+    paddingVertical: getHeight(19),
+    paddingHorizontal: getWidth(16),
+    borderRadius: 20,
+  },
   vwTextCount: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.redCA,
     borderRadius: 999,
     // height: getHeight(16),
-    paddingVertical:getHeight(1.5),
-    paddingHorizontal:getWidth(4.5),
+    paddingVertical: getHeight(1.5),
+    paddingHorizontal: getWidth(4.5),
     position: 'absolute',
     right: -2,
     top: -4,
@@ -23,20 +62,20 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size10,
     fontFamily: fontsfamily.medium,
   },
-  
-  lblFirstChar:{
+
+  lblFirstChar: {
     color: Colors.grey29,
     fontFamily: fontsfamily.regular,
     fontSize: fontSize.size6,
   },
-  lblFamilyMember:{
+  lblFamilyMember: {
     color: Colors.gray2A,
     fontFamily: fontsfamily.bold,
     fontSize: fontSize.size20,
   },
   vwFamilyMemberReport: {
-    marginTop:getHeight(32),
-    gap:getHeight(32),
+    marginTop: getHeight(32),
+    gap: getHeight(32),
     marginHorizontal: getWidth(16),
   },
   lblFamilyMemberAnlaysisTitle: {
@@ -137,7 +176,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: getWidth(15),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whiteF2,
     paddingHorizontal: getWidth(12),
     paddingBottom: getWidth(10),
   },
