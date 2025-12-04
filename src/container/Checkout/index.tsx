@@ -38,30 +38,26 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     {
       id: '1',
       name: 'Diabete',
+      type: 'kit',
       price: 35,
-      analyses: [
-        'Glicemia',
-        'Emoglobina glicata',
-        'Microalbuminuria',
-        'Urine',
-        'Creatininemia',
-        'Trigliceridi',
-        'Colesterolo HDL–LDL',
-      ],
+      kitimage: images.imgkit1,
+      count: 12,
     },
     {
       id: '2',
-      name: 'Anemia',
+      name: 'Diabete',
+      type: 'kit',
       price: 35,
-      analyses: [
-        'Glicemia',
-        'Emoglobina glicata',
-        'Microalbuminuria',
-        'Urine',
-        'Creatininemia',
-        'Trigliceridi',
-        'Colesterolo HDL–LDL',
-      ],
+      kitimage: images.imgkit1,
+      count: 12,
+    },
+    {
+      id: '3',
+      name: 'Cuore e circolazione',
+      price: 35,
+      type: 'analiti',
+      kitimage: images.imgHeart,
+      count: 12,
     },
   ];
 
@@ -395,20 +391,34 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const renderItemTestKits = ({ item }: any) => {
     return (
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Text style={styles.cardTitle}>{item.name}</Text>
+      <TouchableOpacity activeOpacity={activityOpacity} style={styles.card}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: getWidth(10),
+          }}
+        >
+          <Image
+            source={item.kitimage}
+            style={{
+              height: getWidth(43),
+              width: getWidth(43),
+              borderRadius: 8,
+            }}
+          />
+          <Text style={styles.cardTitle}>
+            {item.name} <Text style={styles.lblKitCount}>({item.count})</Text>
+          </Text>
+        </View>
+        <View style={{ flexDirection: 'row', gap: getWidth(8),alignItems:'center' }}>
           <Text style={styles.cardPrice}>
             {currency} {item.price.toFixed(2)}
           </Text>
+          <Image source={images.pencilblue} tintColor={Colors.gray0F} />
         </View>
-        <Text style={styles.cardDesc}>
-          <Text style={styles.testedInlcuded}>
-            {getTranslation('testincluded')}
-          </Text>{' '}
-          {item.analyses.join(', ')}
-        </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -746,13 +756,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
                 <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
               </TouchableOpacity>
             </View>
-
-            <TouchableOpacity
-              style={styles.vwSave}
-              activeOpacity={activityOpacity}
-            >
-              <Text style={styles.lblSave}>{getTranslation('edit')}</Text>
-            </TouchableOpacity>
           </View>
         </View>
       ),

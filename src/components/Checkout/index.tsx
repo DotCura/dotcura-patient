@@ -71,7 +71,7 @@ const CheckoutComponent = (props: any) => {
         contentContainerStyle={[
           constnatStyles.keyboardContainer,
           {
-            paddingBottom: getHeight(200),
+            // paddingBottom: getHeight(200),
           },
         ]}
         bounces={false}
@@ -97,7 +97,7 @@ const CheckoutComponent = (props: any) => {
               onChange={item => props.handleSetFamilyMember(item)}
               placeholder={getTranslation('selectfamilymember') || ''}
               dropdownPosition="auto"
-              isRenderLeftIcon={true}
+              isRenderLeftIcon={false}
             />
           </View>
         </View>
@@ -122,8 +122,8 @@ const CheckoutComponent = (props: any) => {
             activeOpacity={activityOpacity}
             onPress={props.funOpenIsModifyOrder}
           >
-            <Image source={images.pencilblue} />
-            <Text style={styles.lblEdit}>{getTranslation('edit')}</Text>
+            <Image source={images.addblue} tintColor={Colors.white} />
+            <Text style={styles.lblEdit}>{getTranslation('addanalysis')}</Text>
           </TouchableOpacity>
         </View>
 
@@ -151,9 +151,7 @@ const CheckoutComponent = (props: any) => {
               >
                 <Text style={styles.lblChnage}>
                   {' '}
-                  {props.selectedSlot
-                    ? getTranslation('change')
-                    : getTranslation('add')}
+                  {getTranslation('change')}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -261,12 +259,12 @@ const CheckoutComponent = (props: any) => {
 
             <View style={[styles.summaryItemRow]}>
               <Text
-                style={[styles.summaryLabel, { fontFamily: fontsfamily.bold }]}
+                style={[styles.summaryLabel, { fontFamily: fontsfamily.gbold }]}
               >
                 {getTranslation('total')}
               </Text>
               <Text
-                style={[styles.summaryValue, { fontFamily: fontsfamily.bold }]}
+                style={[styles.summaryValue, { fontFamily: fontsfamily.gbold }]}
               >
                 {currency} {props.total.toFixed(2)}
               </Text>
@@ -290,10 +288,7 @@ const CheckoutComponent = (props: any) => {
               onChangeText={props.onChangeDiscountCode}
             />
             <TouchableOpacity
-              style={[
-                styles.btnChange,
-                { backgroundColor: Colors.lightBlurE4 },
-              ]}
+              style={[styles.btnChange, { backgroundColor: Colors.blueD1 }]}
               activeOpacity={activityOpacity}
               onPress={props.onApplyDiscount}
             >
@@ -301,23 +296,32 @@ const CheckoutComponent = (props: any) => {
             </TouchableOpacity>
           </View>
         </View>
+        {/* bottom button */}
+        <View
+          style={[
+            styles.vwBottomBtn,
+            {
+              marginBottom:
+                props.insets.bottom > 0
+                  ? props.insets.bottom
+                  : props.insets.bottom + getHeight(16),
+            },
+          ]}
+        >
+          <CustomButton
+            btnTitle={getTranslation('savechnages')}
+            btnPress={props.handleOnPressSaveChanges}
+          />
+          <CustomButton
+            btnTitle={getTranslation('canclereservation')}
+            style={{ backgroundColor: Colors.redFD }}
+            btnicon={true}
+            btnImage={images.imgDelete}
+            textStyle={{ color: Colors.red8C }}
+            btnPress={props.funOpenCancleOrder}
+          />
+        </View>
       </KeyboardAwareScrollView>
-
-      {/* bottom button */}
-      <View style={[styles.vwBottomBtn, { bottom: props.insets.bottom }]}>
-        <CustomButton
-          btnTitle={getTranslation('savechnages')}
-          btnPress={props.handleOnPressSaveChanges}
-        />
-        <CustomButton
-          btnTitle={getTranslation('canclebooking')}
-          style={{ backgroundColor: Colors.white }}
-          btnicon={true}
-          btnImage={images.imgDelete}
-          textStyle={{ color: Colors.red8C }}
-          btnPress={props.funOpenCancleOrder}
-        />
-      </View>
 
       {/* datetimeslotmodel */}
       <Modal
@@ -651,8 +655,7 @@ const CheckoutComponent = (props: any) => {
         onSelect={props.handleOnPressSetId}
         onAddAddress={props.handlePressAddAddress}
         onClose={props.handleCloseAddress}
-        onSave={props.handleOnPressSaveLocation}     // use when hitting Save button
-
+        onSave={props.handleOnPressSaveLocation} // use when hitting Save button
       />
       {/* AddAddressModel */}
       <Modal

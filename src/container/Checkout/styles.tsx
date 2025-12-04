@@ -5,7 +5,12 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
-  vwGrey:{
+  lblKitCount: {
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size16,
+  },
+  vwGrey: {
     backgroundColor: Colors.grayF3,
     height: getHeight(143),
     borderRadius: 20,
@@ -44,7 +49,7 @@ export const styles = StyleSheet.create({
     fontFamily: fontsfamily.regular,
     fontSize: fontSize.size12,
   },
-  lblStatus:{
+  lblStatus: {
     color: Colors.gray55,
     fontFamily: fontsfamily.regular,
     fontSize: fontSize.size12,
@@ -83,7 +88,7 @@ export const styles = StyleSheet.create({
   },
   lblHelp: {
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     color: Colors.gray0F,
   },
   lblSave: {
@@ -111,11 +116,12 @@ export const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 2,
     },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
   },
   vwHeaderLeft: {
     flexDirection: 'row',
@@ -127,23 +133,24 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: getWidth(15),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whiteF2,
     paddingBottom: getWidth(10),
   },
   card: {
-    backgroundColor: Colors.grayF3,
+    alignItems:'center',
+    backgroundColor: Colors.white,
     borderRadius: 20,
-    padding: 16,
-    gap: getHeight(12),
-  },
-  cardHeader: {
+    padding: 20,
     flexDirection: 'row',
   },
+  cardHeader: {},
   cardTitle: {
     color: Colors.gray0F,
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gbold,
     flex: 1,
+    letterSpacing: 0.2,
+    marginRight: getWidth(15),
   },
   testedInlcuded: {
     color: Colors.gray2A,
@@ -153,7 +160,8 @@ export const styles = StyleSheet.create({
   cardPrice: {
     color: Colors.gray0F,
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
+    letterSpacing:0.2
   },
   cardDesc: {
     color: Colors.gray2A,

@@ -177,6 +177,8 @@ export default {
   atleastoneselected:"Almeno un test deve rimanere selezionato.",
 
   //CHECKOUT
+  canclereservation:"Cancella prenotazione",
+  addanalysis:"Aggiungi analisi",
   help: 'Aiuto',
   edit: 'Modifica',
   yourorder: 'Il tuo ordine',
