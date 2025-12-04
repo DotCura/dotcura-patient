@@ -93,7 +93,7 @@ const MainNavigation = props => {
           {},
           { headerShown: true },
         )}
-         {_addScreen(
+        {_addScreen(
           ScreenNames.ADDRESSLISTCONTAINER,
           {},
           { headerShown: true },
@@ -105,11 +105,7 @@ const MainNavigation = props => {
           { headerShown: false },
         )}
         {_addScreen(ScreenNames.PROFILECONTAINER, {}, { headerShown: true })}
-        {_addScreen(
-          ScreenNames.ADDADDRESSCONTAINER,
-          {},
-          { headerShown: true },
-        )}
+        {_addScreen(ScreenNames.ADDADDRESSCONTAINER, {}, { headerShown: true })}
         {_addScreen(
           ScreenNames.COMPLETEADDRESSCONTAINER,
           {},
@@ -131,8 +127,9 @@ const MainNavigation = props => {
           {},
           { headerShown: true },
         )}
-         {_addScreen(
-          ScreenNames.FAVOURITESCONTAINER,
+        {_addScreen(ScreenNames.FAVOURITESCONTAINER, {}, { headerShown: true })}
+        {_addScreen(
+          ScreenNames.ANALITIDETAILSCONTAINER,
           {},
           { headerShown: true },
         )}

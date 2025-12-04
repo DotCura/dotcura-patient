@@ -167,6 +167,10 @@ export default {
   gotocart: 'Vai al carrello',
   addtoorder:"Aggiungi all’ordine",
 
+  //ANALITIDETAILS
+  analititextdetails:"Analiti",
+  atleastoneselected:"Almeno un test deve rimanere selezionato.",
+
   //CHECKOUT
   help: 'Aiuto',
   edit: 'Modifica',

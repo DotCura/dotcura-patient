@@ -327,6 +327,7 @@ const GetTestedContainer = ({ navigation }: any) => {
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
+        onPress={()=>navigation.navigate(ScreenNames.ANALITIDETAILSCONTAINER)}
         style={styles.btnAnalitiMain}
       >
         <View style={styles.vwtitleimage}>

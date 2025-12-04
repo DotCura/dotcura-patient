@@ -1,5 +1,4 @@
 
-
 //AUTH
 export LoginContainer from "./container/auth/Login";
 export OnBoardingContainer from "./container/auth/OnBoarding";
@@ -38,6 +37,7 @@ export AccountContainer from "./container/Account";
 export AddFamilyMemberContainer from "./container/AddFamilyMembers";
 export ResultOpenUpContainers from "./container/ResultOpenUp";
 export AddCardProfileContainer from "./container/auth/AddCardProfile";
+export AnalitiDetailsContainer from "./container/AnalitiDetails";
 
 
 

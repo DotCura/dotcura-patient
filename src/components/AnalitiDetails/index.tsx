@@ -1,0 +1,137 @@
+import {
+  FlatList,
+  Image,
+  ImageBackground,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React from 'react';
+import { constnatStyles } from '../../constants/Styles';
+import { getTranslation } from '../../localization/i18n/i18n.config';
+import { styles } from './styles';
+import { images } from '../../constants/Images';
+import { Colors } from '../../constants/Colors';
+import { getHeight } from '../../constants/utils/Dimensions';
+import { activityOpacity, currency } from '../../constants/GConstant';
+
+const AnalitiDetailsComponent = (props: any) => {
+  return (
+    <>
+      <ScrollView
+        contentContainerStyle={[constnatStyles.keyboardContainer]}
+        keyboardShouldPersistTaps="handled"
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.imgkitdetails}>
+          <View style={styles.vwHeaderTitle}>
+            <Image
+              source={images.imgHeart}
+              style={{ height: getHeight(64), aspectRatio: 1 }}
+            />
+            <Text style={styles.kittitle}>Cuore e circolazione</Text>
+            <Text style={styles.kitsubtitle}>
+              9 {getTranslation('analititextdetails')}
+            </Text>
+          </View>
+        </View>
+
+        {/* vwTestList */}
+        <FlatList
+          onEndReached={() => {
+            console.log('callend');
+          }}
+          data={props.kitsArrayData}
+          renderItem={props.renderItemKitsData}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.id.toString()}
+          contentContainerStyle={{
+            marginTop: getHeight(31),
+            gap: getHeight(20),
+          }}
+        />
+
+        {/* vwInfoView */}
+        <View
+          style={{
+            marginTop: getHeight(30),
+            gap: getHeight(8),
+            marginBottom: props.insets.bottom + getHeight(100),
+          }}
+        >
+          <View style={styles.vwInfo1}>
+            <View style={styles.vwInBank}>
+              <Text style={styles.txtBankDetails} numberOfLines={1}>
+                {getTranslation('usefullif')}
+              </Text>
+              <Text style={styles.txtinfo1Subtitle} numberOfLines={5}>
+                {getTranslation('usefullifsubtitle1')}{' '}
+                <Text style={styles.txtinfo1SubtitleBold}>
+                  {getTranslation('usefullifsubtitle2')},
+                  {getTranslation('usefullifsubtitle3')}
+                </Text>{' '}
+                {getTranslation('usefullifsubtitle4')}{' '}
+                <Text style={styles.txtinfo1SubtitleBold}>
+                  {getTranslation('usefullifsubtitle5')}
+                </Text>
+                {getTranslation('usefullifsubtitle6')}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.vwInfo2}>
+            <View style={styles.vwInBank}>
+              <Text style={styles.txtBankDetails} numberOfLines={1}>
+                {getTranslation('howtoprepare')}
+              </Text>
+              <Text style={styles.txtlablinfo2} numberOfLines={5}>
+                {getTranslation('howtopreparesubtitle1')}
+                <Text style={styles.txtinfo1SubtitleBold}>
+                  {getTranslation('howtopreparesubtitle2')}
+                </Text>
+                {getTranslation('howtopreparesubtitle3')}{' '}
+                <Text style={styles.txtinfo1SubtitleBold}>
+                  {getTranslation('howtopreparesubtitle4')}
+                </Text>
+                {getTranslation('howtopreparesubtitle5')}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* vwGotoCart */}
+      <TouchableOpacity
+        style={[
+          styles.vwGoToCart,
+          {
+            bottom:
+              props.insets.bottom > 0
+                ? props.insets.bottom
+                : props.insets.bottom + getHeight(20),
+          },
+        ]}
+        activeOpacity={activityOpacity}
+        onPress={props.handleNavigateCheckout}
+      >
+        <View style={styles.vwCartImage}>
+          <Image source={images.imgCartHome} tintColor={Colors.white} />
+          <Text style={styles.lblGoToCart}>
+            {getTranslation('addtoorder')} ({props.selectedTests.length})
+          </Text>
+        </View>
+        <View style={styles.vwPrice}>
+          {/* {props.selectedTests.length === props.kitsArrayData.length && (
+            <Text style={styles.disprice}>{currency}0.54</Text>
+          )} */}
+          <Text style={styles.totalprice}>
+            {currency} {props.totalPrice.toFixed(2)}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </>
+  );
+};
+
+export default AnalitiDetailsComponent;
