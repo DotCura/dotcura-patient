@@ -20,5 +20,6 @@ export const fontSize = {
   size26: getWidth(26),
   size28: getWidth(28),
   size30: getWidth(30),
+  size36:getWidth(36),
   size40:getWidth(40),
 };

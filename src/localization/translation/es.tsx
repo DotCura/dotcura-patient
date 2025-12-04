@@ -138,8 +138,12 @@ export default {
   kitavailable: 'kit disponibili',
   filter: 'Filtros',
   analysistext:"Analisi",
+  checkuptext:"Check-up",
+  analitiheadertext:"Analiti",
+  andtext:"da",
 
   //KITDETAILS
+  kitanalysis:"Kit analisi",
   analytesinthekit: 'Analiti nel kit',
   betterinmorning: 'Meglio al mattino!',
   betterinmorningsubtitle: 'I prelievi vanno fatti a stomaco vuoto.',
@@ -161,6 +165,7 @@ export default {
   howtopreparesubtitle4: 'evita alcol e sforzi intensi',
   howtopreparesubtitle5: ' il giorno prima e cerca di riposare bene.',
   gotocart: 'Vai al carrello',
+  addtoorder:"Aggiungi all’ordine",
 
   //CHECKOUT
   help: 'Aiuto',

@@ -1,6 +1,7 @@
 import {
   FlatList,
   Image,
+  ImageBackground,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -24,13 +25,17 @@ const KitDetailsComponent = (props: any) => {
         bounces={false}
         showsVerticalScrollIndicator={false}
       >
-        {/* vwHeader */}
-        <View style={styles.vwHeaderTitle}>
-          <Text style={styles.kittitle}>Anaemia</Text>
-          <Text style={styles.kitsubtitle}>
-            9 {getTranslation('analytesinthekit')}
-          </Text>
-        </View>
+        <ImageBackground
+          source={images.imgKidDetailsImg}
+          style={styles.imgkitdetails}
+        >
+          <View style={styles.vwHeaderTitle}>
+            <Text style={styles.kittitle}>Anemia</Text>
+            <Text style={styles.kitsubtitle}>
+              9 {getTranslation('analytesinthekit')}
+            </Text>
+          </View>
+        </ImageBackground>
 
         {/* vwwarning */}
         <View style={styles.vwwarningDetails}>
@@ -56,7 +61,7 @@ const KitDetailsComponent = (props: any) => {
             <Text style={styles.lblAnlaytics} numberOfLines={1}>
               {getTranslation('analytics')}
             </Text>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.btnSelectAll}
               activeOpacity={activityOpacity}
               onPress={props.selectAll}
@@ -67,7 +72,7 @@ const KitDetailsComponent = (props: any) => {
                   ? getTranslation('selectall')
                   : getTranslation('desellectall')}
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View>
@@ -137,21 +142,28 @@ const KitDetailsComponent = (props: any) => {
 
       {/* vwGotoCart */}
       <TouchableOpacity
-        style={[styles.vwGoToCart, { bottom: props.insets.bottom>0?props.insets.bottom:props.insets.bottom+getHeight(20) }]}
+        style={[
+          styles.vwGoToCart,
+          {
+            bottom:
+              props.insets.bottom > 0
+                ? props.insets.bottom
+                : props.insets.bottom + getHeight(20),
+          },
+        ]}
         activeOpacity={activityOpacity}
         onPress={props.handleNavigateCheckout}
       >
         <View style={styles.vwCartImage}>
           <Image source={images.imgCartHome} tintColor={Colors.white} />
-          <Text style={styles.lblGoToCart}>{getTranslation('gotocart')}</Text>
+          <Text style={styles.lblGoToCart}>{getTranslation('addtoorder')}</Text>
         </View>
         <View style={styles.vwPrice}>
           {/* {props.selectedTests.length === props.kitsArrayData.length && (
             <Text style={styles.disprice}>{currency}0.54</Text>
           )} */}
           <Text style={styles.totalprice}>
-            {currency}
-            {props.totalPrice.toFixed(2)}
+            {currency} {props.totalPrice.toFixed(2)}
           </Text>
         </View>
       </TouchableOpacity>

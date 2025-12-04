@@ -50,7 +50,7 @@ const GetTestedComponent = (props: any) => {
           >
             <View style={styles.vwHeaderText}>
               <Text style={styles.lblHeaderTitle} numberOfLines={1}>
-                 {getTranslation('analysistext')}
+                {getTranslation('analysistext')}
               </Text>
             </View>
 
@@ -106,16 +106,94 @@ const GetTestedComponent = (props: any) => {
               style={styles.btnClose}
               activeOpacity={activityOpacity}
             >
-              <Image source={images.imgClose} tintColor={Colors.blue002}/>
+              <Image source={images.imgClose} tintColor={Colors.blue002} />
             </TouchableOpacity>
           </View>
         ) : null}
       </View>
 
-      <View style={{ marginTop: getHeight(24) }}>
+      {/* vwCheckupAnaliti */}
+      <View style={styles.vwCheckupAnaliti}>
+        <TouchableOpacity
+          activeOpacity={activityOpacity}
+          onPress={() => props.setSelectedTab('checkup')}
+          style={[
+            styles.btncheckup,
+            {
+              backgroundColor:
+                props.selectedTab === 'checkup'
+                  ? Colors.blue002
+                  : Colors.grayE7,
+            },
+          ]}
+        >
+          <Image
+            source={images.imgCartHome}
+            style={{
+              resizeMode: 'contain',
+              tintColor:
+                props.selectedTab === 'checkup' ? Colors.white : Colors.blue002,
+            }}
+          />
+          <Text
+            style={[
+              styles.lblCheckup,
+              {
+                fontFamily: fontsfamily.gmedium,
+
+                color:
+                  props.selectedTab === 'checkup'
+                    ? Colors.white
+                    : Colors.blue002,
+              },
+            ]}
+          >
+            {getTranslation('checkuptext')} ({props.checkupcount})
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={activityOpacity}
+          onPress={() => props.setSelectedTab('analiti')}
+          style={[
+            styles.btnAnlaiti,
+            {
+              backgroundColor:
+                props.selectedTab === 'analiti'
+                  ? Colors.blue002
+                  : Colors.grayE7,
+            },
+          ]}
+        >
+          <Image
+            source={images.imgCartHome}
+            style={{
+              resizeMode: 'contain',
+              tintColor:
+                props.selectedTab === 'analiti' ? Colors.white : Colors.blue002,
+            }}
+          />
+          <Text
+            style={[
+              styles.lblAnaliti,
+              {
+                fontFamily: fontsfamily.gmedium,
+                color:
+                  props.selectedTab === 'analiti'
+                    ? Colors.white
+                    : Colors.blue002,
+              },
+            ]}
+          >
+            {getTranslation('analitiheadertext')} ({props.checkupcount})
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {props.selectedTab === 'checkup' ? (
         <FlatList
+          key={'checkup-2'}
           onEndReached={() => {
-            console.log('callend');
+            console.log('callendcheckup');
           }}
           numColumns={2}
           data={props.kitData}
@@ -124,11 +202,29 @@ const GetTestedComponent = (props: any) => {
           keyExtractor={item => item.id.toString()}
           contentContainerStyle={{
             gap: getWidth(12),
+            marginTop: getHeight(20),
             alignSelf: 'center',
             paddingBottom: getHeight(250),
           }}
         />
-      </View>
+      ) : (
+        <FlatList
+          onEndReached={() => {
+            console.log('callendanaliti');
+          }}
+          key={'analiti-1'}
+          keyExtractor={item => item.id.toString()}
+          numColumns={1}
+          data={props.analitiData}
+          renderItem={props.renderAnalitiData}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            gap: getWidth(12),
+            paddingBottom: getHeight(250),
+            marginTop: getHeight(20),
+          }}
+        />
+      )}
 
       {/* filterModel */}
       <Modal

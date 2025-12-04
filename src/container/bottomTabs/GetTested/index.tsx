@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { act, useState } from 'react';
 import { styles } from './styles';
 import GetTestedComponent from '../../../components/bottomTabs/GetTested';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -22,6 +22,7 @@ import {
 } from '../../../constants/utils/Dimensions';
 import { images } from '../../../constants/Images';
 import { ScreenNames } from '../../../constants/AppConstants';
+import { getTranslation } from '../../../localization/i18n/i18n.config';
 
 const GetTestedContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -157,6 +158,68 @@ const GetTestedContainer = ({ navigation }: any) => {
       kitimages: images.imgkit5,
     },
   ];
+  const analitiList = [
+    {
+      id: '1',
+      title: 'Cuore e circolazione',
+      price: '6.00',
+      analitiimages: images.imgHeart,
+    },
+    {
+      id: '2',
+      title: 'Reni',
+      price: '6.00',
+      analitiimages: images.imgKidney,
+    },
+    {
+      id: '3',
+      title: 'Fegato',
+      price: '6.00',
+      analitiimages: images.imgSoda,
+    },
+    {
+      id: '4',
+      title: 'Tiroide',
+      price: '6.00',
+      analitiimages: images.imgButterfly,
+    },
+    {
+      id: '5',
+      title: 'Diabete e metabolismo',
+      price: '6.00',
+      analitiimages: images.imgLolipop,
+    },
+    {
+      id: '6',
+      title: 'Anemia e sangue',
+      price: '6.00',
+      analitiimages: images.imgBlood,
+    },
+    {
+      id: '7',
+      title: 'Ossa e vitamina D',
+      price: '6.00',
+      analitiimages: images.imgHadi,
+    },
+    {
+      id: '8',
+      title: 'Difese immunitarie',
+      price: '6.00',
+      analitiimages: images.imgShield,
+    },
+    {
+      id: '9',
+      title: 'Ormone uomo',
+      price: '6.00',
+      analitiimages: images.imgMasrrom,
+    },
+    {
+      id: '10',
+      title: 'Ormone donna',
+      price: '6.00',
+      analitiimages: images.imgFlower,
+    },
+  ];
 
   const categoriesList = [
     { id: 1, name: 'Routine checks' },
@@ -179,6 +242,7 @@ const GetTestedContainer = ({ navigation }: any) => {
 
   const [kitCount, setkitCount] = useState(31);
   const [kitData, setKitData] = useState(kitList);
+  const [analitiData, setAnalitiData] = useState(analitiList);
   const [searchVisible, setSearchVisible] = useState(false);
   const [isFilterModelVisible, setIsFilterModelVisible] = useState(false);
 
@@ -189,6 +253,10 @@ const GetTestedContainer = ({ navigation }: any) => {
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const [selectedGender, setSelectedGender] = useState<number | null>(null);
   const [selectedAge, setSelectedAge] = useState<number | null>(null);
+
+  const [selectedTab, setSelectedTab] = useState('checkup'); // 'checkup' or 'analiti'
+  const [checkupcount, setCheckupCount] = useState(31);
+  const [analiticount, setAnalitiCount] = useState(31);
 
   const renderKitData = ({ item, index }: any) => {
     const { backgroundColor, textColor } = getRandomTheme();
@@ -255,6 +323,26 @@ const GetTestedContainer = ({ navigation }: any) => {
       </TouchableOpacity>
     );
   };
+  const renderAnalitiData = ({ item, index }: any) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={activityOpacity}
+        style={styles.btnAnalitiMain}
+      >
+        <View style={styles.vwtitleimage}>
+          <Image source={item.analitiimages} />
+          <Text style={styles.lblAnalitiLabel}>{item.title}</Text>
+        </View>
+        <View style={styles.vwCurrencyPrice}>
+          <Text style={styles.lablCurrency}>
+            {getTranslation('andtext')} {currency}{' '}
+          </Text>
+          <Text style={styles.lablPrice}>{item.price}</Text>
+          <Image source={images.imgRightCurve} />
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   const handleNavigateCheckout = () => {
     navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
@@ -302,7 +390,9 @@ const GetTestedContainer = ({ navigation }: any) => {
       insets={insets}
       kitCount={kitCount}
       kitData={kitData}
+      analitiData={analitiData}
       renderKitData={renderKitData}
+      renderAnalitiData={renderAnalitiData}
       searchVisible={searchVisible}
       setSearchVisible={setSearchVisible}
       handleNavigateCheckout={handleNavigateCheckout}
@@ -320,6 +410,10 @@ const GetTestedContainer = ({ navigation }: any) => {
       selectedCategories={selectedCategories}
       selectedGender={selectedGender}
       selectedAge={selectedAge}
+      selectedTab={selectedTab}
+      setSelectedTab={setSelectedTab}
+      checkupcount={checkupcount}
+      analiticount={analiticount}
     />
   );
 };

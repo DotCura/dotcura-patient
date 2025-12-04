@@ -23,18 +23,18 @@ export const styles = StyleSheet.create({
   },
   lblCurrency: {
     color: Colors.gray75,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     fontSize: fontSize.size14,
   },
   lblTestName: {
     // flex: 1,
     color: Colors.gray0F,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     fontSize: fontSize.size16,
   },
   lblDesc: {
     color: Colors.gray75,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     fontSize: fontSize.size14,
     letterSpacing: 0.1,
   },

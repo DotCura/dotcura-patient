@@ -11,6 +11,7 @@ import { Colors } from '../../constants/Colors';
 import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 import { ScreenNames } from '../../constants/AppConstants';
+import { getTranslation } from '../../localization/i18n/i18n.config';
 
 const KitDetailsContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -95,7 +96,7 @@ const KitDetailsContainer = ({ navigation }: any) => {
   const renderItemKitsData = ({ item, index }: { item: any; index: any }) => {
     const selected = selectedTests.includes(item.id);
     return (
-      <TouchableOpacity activeOpacity={activityOpacity} onPress={() => toggleSelect(item.id)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View
           style={{
             flexDirection: 'row',
@@ -104,41 +105,39 @@ const KitDetailsContainer = ({ navigation }: any) => {
             gap: getWidth(12),
           }}
         >
-          <TouchableOpacity onPress={() => toggleSelect(item.id)}>
-            <Image
-              source={
-                selected ? images.imgSelectRadio : images.imgUnselectRadio
-              }
-            />
-          </TouchableOpacity>
+          <View style={{ alignSelf: 'flex-start' }}>
+            <Image source={images.imglightbluetick} />
+          </View>
           <View style={{ flex: 1, marginRight: getWidth(20) }}>
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.lblTestName} numberOfLines={2}>
                 {item.name}{' '}
               </Text>
-              <View style={{ alignItems: 'center' }}>
-                <Text
-                  style={[
-                    styles.lblStatus,
-                    {
-                      backgroundColor:
-                        index == 2
-                          ? Colors.greenD9
-                          : index == 5
-                          ? Colors.redFC
-                          : Colors.white,
-                      color:
-                        index == 2
-                          ? Colors.green0D
-                          : index == 5
-                          ? Colors.red40
-                          : Colors.white,
-                    },
-                  ]}
-                >
-                  {item.status}
-                </Text>
-              </View>
+              {item.status && (
+                <View style={{ alignItems: 'center' }}>
+                  <Text
+                    style={[
+                      styles.lblStatus,
+                      {
+                        backgroundColor:
+                          index == 2
+                            ? Colors.greenD9
+                            : index == 5
+                            ? Colors.redFC
+                            : Colors.white,
+                        color:
+                          index == 2
+                            ? Colors.green0D
+                            : index == 5
+                            ? Colors.red40
+                            : Colors.white,
+                      },
+                    ]}
+                  >
+                    {item.status}
+                  </Text>
+                </View>
+              )}
             </View>
 
             <Text style={styles.lblDesc} numberOfLines={3}>
@@ -146,13 +145,13 @@ const KitDetailsContainer = ({ navigation }: any) => {
             </Text>
           </View>
         </View>
-        <View>
+        <View style={{ alignSelf: 'flex-start', marginTop: 2 }}>
           <Text style={styles.lblCurrency}>
             + {currency}
             {item.price.toFixed(2)}
           </Text>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
 
@@ -169,7 +168,7 @@ const KitDetailsContainer = ({ navigation }: any) => {
             navigation.goBack();
           }}
           dontShowStartBtn={false}
-          centerTitle={'Anaemia'}
+          centerTitle={getTranslation('kitanalysis')}
           showTitle={true}
           showSubTitle={false}
           showEndBtn={false}

@@ -5,6 +5,24 @@ import { fontSize } from '../../../constants/FontSizes';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
+  vwCurrencyPrice: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  vwtitleimage: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: getWidth(8),
+  },
+  btnAnalitiMain: {
+    paddingVertical: getHeight(12),
+    paddingHorizontal: getWidth(20),
+    marginHorizontal: getWidth(16),
+    borderRadius: 20,
+    flexDirection: 'row',
+    backgroundColor: Colors.white,
+  },
   vwGrey: {
     backgroundColor: Colors.grayF3,
     height: getHeight(143),
@@ -34,6 +52,21 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: getWidth(16),
     top: getHeight(8),
+  },
+  lablPrice: {
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size15,
+  },
+  lablCurrency: {
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size15,
+  },
+  lblAnalitiLabel: {
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gbold,
+    fontSize: fontSize.size16,
   },
   lblReportTitle: {
     color: Colors.gray0F,

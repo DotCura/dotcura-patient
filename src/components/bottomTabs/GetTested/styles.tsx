@@ -5,6 +5,50 @@ import { fontsfamily } from '../../../constants/FontFamily';
 import { fontSize } from '../../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  //TAB SELECT
+  btnAnlaiti: {
+    flexDirection: 'row',
+    gap: getWidth(6),
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+    height: getHeight(34),
+    borderRadius: getWidth(10),
+    marginVertical: getHeight(4),
+  },
+  btncheckup: {
+    flexDirection: 'row',
+    gap: getWidth(6),
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+    height: getHeight(34),
+    borderRadius: getWidth(10),
+    marginVertical: getHeight(4),
+  },
+  vwCheckupAnaliti: {
+    marginTop: getHeight(13),
+    backgroundColor: Colors.grayE7,
+    marginHorizontal: getWidth(16),
+    borderRadius: getWidth(14),
+    flexDirection: 'row',
+    height: getHeight(42),
+    alignItems: 'center',
+    paddingHorizontal: getWidth(4),
+  },
+  lblCheckup: {
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size14,
+    letterSpacing:0.1,
+    color: Colors.grayE7,
+  },
+  lblAnaliti: {
+    fontFamily: fontsfamily.gregular,
+    fontSize: fontSize.size14,
+    letterSpacing:0.1,
+    color: Colors.grayE7,
+  },
+  //TAB SELECT END
   vwMainModelHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -153,7 +197,7 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size14,
     fontFamily: fontsfamily.medium,
   },
-  chipTextSel: { color:Colors.blue0D},
+  chipTextSel: { color: Colors.blue0D },
 
   applyBtn: {
     marginTop: 40,
