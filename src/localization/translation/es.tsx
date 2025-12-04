@@ -133,6 +133,11 @@ export default {
   daystext:"giorni",
   sinceyourlastanalysis:"dalla tua ultima analisi",
   booknowtext:"Prenota ora",
+  myhealtthtext:"La mia salute",
+  ditext:"di",
+  analitietext:"Analizzati",
+  viewalltestresult:"Vedi il quadro completo",
+
 
   //GETTESTED
   kitavailable: 'kit disponibili',

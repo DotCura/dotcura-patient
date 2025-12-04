@@ -13,6 +13,8 @@ import { Colors } from '../../../constants/Colors';
 import VerticalBarChart from '../../../global/VerticalBarChartHome';
 import { activityOpacity, currency } from '../../../constants/GConstant';
 import { ScreenNames } from '../../../constants/AppConstants';
+import LinearGradient from 'react-native-linear-gradient';
+import ProgressBar from '../../../global/ProgressBar';
 
 const HomeContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -21,11 +23,11 @@ const HomeContainer = ({ navigation }: any) => {
     {
       id: '1',
       chartData: [
-        { value: 0.60, date: 'Set 23'},
-        { value: 0.16, date: 'Set 24'},
-        { value: 0, date: 'Dic 24'},
-        { value: 0.26, date: 'Gen 25'},
-        { value: 0.37, date: 'Set 25'},
+        { value: 0.6, date: 'Set 23' },
+        { value: 0.16, date: 'Set 24' },
+        { value: 0, date: 'Dic 24' },
+        { value: 0.26, date: 'Gen 25' },
+        { value: 0.37, date: 'Set 25' },
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -35,11 +37,11 @@ const HomeContainer = ({ navigation }: any) => {
     {
       id: '2',
       chartData: [
-        { value: 1800, date: 'Set 23'},
-        { value: 0.14, date: 'Set 24'},
-        { value: 0.1, date: 'Dic 24'},
-        { value: 0.26, date: 'Gen 25'},
-        { value: 0.37, date: 'Set 25'},
+        { value: 1800, date: 'Set 23' },
+        { value: 0.14, date: 'Set 24' },
+        { value: 0.1, date: 'Dic 24' },
+        { value: 0.26, date: 'Gen 25' },
+        { value: 0.37, date: 'Set 25' },
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -49,11 +51,11 @@ const HomeContainer = ({ navigation }: any) => {
     {
       id: '3',
       chartData: [
-        { value: 1800, date: 'Set 23'},
-        { value: 0.14, date: 'Set 24'},
-        { value: 0.1, date: 'Dic 24'},
-        { value: 0.26, date: 'Gen 25'},
-        { value: 0.37, date: 'Set 25'},
+        { value: 1800, date: 'Set 23' },
+        { value: 0.14, date: 'Set 24' },
+        { value: 0.1, date: 'Dic 24' },
+        { value: 0.26, date: 'Gen 25' },
+        { value: 0.37, date: 'Set 25' },
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -158,8 +160,40 @@ const HomeContainer = ({ navigation }: any) => {
     },
   ];
 
+  const testReportList = [
+    {
+      id: 1,
+      reportimage: images.imgHeart,
+      totalanalysis: 22,
+      currentanalysis: 17,
+      testname: 'Cuore',
+    },
+    {
+      id: 2,
+      reportimage: images.imgKidney,
+      totalanalysis: 22,
+      currentanalysis: 0,
+      testname: 'Reni',
+    },
+    {
+      id: 3,
+      reportimage: images.imgSoda,
+      totalanalysis: 22,
+      currentanalysis: 12,
+      testname: 'Fegato',
+    },
+    {
+      id: 4,
+      reportimage: images.imgLolipop,
+      totalanalysis: 22,
+      currentanalysis: 18,
+      testname: 'Diabete',
+    },
+  ];
+
   const [outdated, setOutdated] = useState(true);
   const [latestAnalysisData, setLatestAnalysisData] = useState(latestAnalysis);
+  const [testReportData, setTestReportData] = useState(testReportList);
   const [recommandAnalysisData, setrecommandAnalysisData] =
     useState(recommandAnalysis);
   const [familyMemberAnalysisData, setFamilyMemberAnalysisData] =
@@ -236,6 +270,37 @@ const HomeContainer = ({ navigation }: any) => {
       </TouchableOpacity>
     );
   };
+  const renderTestReportData = ({ item, index }: any) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={activityOpacity}
+        style={styles.btnTestReport}
+      >
+        <View style={styles.lblTestImage}>
+          <Text style={styles.lblTestName} numberOfLines={1}>
+            {item.testname}
+          </Text>
+          <Image source={item.reportimage} />
+        </View>
+        <View>
+          <Text style={styles.lblTotalAnalysis}>
+            <Text style={styles.lblCurrentanalysis}>
+              {item.currentanalysis}{' '}
+            </Text>
+            {getTranslation('ditext')} {item.totalanalysis}{' '}
+            {getTranslation('analitietext')}
+          </Text>
+          <ProgressBar
+            current={item.currentanalysis}
+            total={item.totalanalysis}
+            height={6}
+            backgroundColor={Colors.blueEF}
+            gradientColors={[Colors.blue00250, Colors.blue002]}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   const handleNavigateProfileScreen = () => {
     navigation.navigate(ScreenNames.PROFILECONTAINER);
@@ -256,6 +321,8 @@ const HomeContainer = ({ navigation }: any) => {
       renderLatestAnlaysisData={renderLatestAnlaysisData}
       recommandAnalysisData={recommandAnalysisData}
       renderRecommandAnlaysisData={renderRecommandAnlaysisData}
+      renderTestReportData={renderTestReportData}
+      testReportData={testReportData}
       familyMemberAnalysisData={familyMemberAnalysisData}
       handleNavigateProfileScreen={handleNavigateProfileScreen}
       handleNavigateCheckoutScreen={handleNavigateCheckoutScreen}

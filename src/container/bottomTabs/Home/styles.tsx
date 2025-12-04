@@ -5,6 +5,36 @@ import { fontSize } from '../../../constants/FontSizes';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
+  lblTestImage: {
+    flexDirection: 'row',
+    alignItems:'center'
+  },
+  lblTotalAnalysis: {
+    color: Colors.blue002,
+    fontFamily: fontsfamily.gregular,
+    fontSize: fontSize.size16,
+    letterSpacing: 0.2,
+  },
+  lblCurrentanalysis: {
+    letterSpacing: 0.2,
+    color: Colors.blue002,
+    fontFamily: fontsfamily.gbold,
+    fontSize: fontSize.size16,
+  },
+  lblTestName: {
+    flex:1,
+    letterSpacing: 0.2,
+    color: Colors.blue002,
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size16,
+  },
+  btnTestReport: {
+    backgroundColor: Colors.white,
+    borderRadius: 20,
+    paddingVertical: getHeight(12),
+    paddingHorizontal: getWidth(16),
+    gap: getHeight(7),
+  },
   vwGrey: {
     backgroundColor: Colors.grayF3,
     height: getHeight(143),

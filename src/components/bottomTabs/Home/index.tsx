@@ -49,6 +49,17 @@ import { ZustandStores } from '../../../store';
 
 const HomeComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
+  const renderListFooter = () => {
+    return (
+      <TouchableOpacity
+        style={styles.addBtn}
+        activeOpacity={activityOpacity}
+        // onPress={props.handleNavigateFamilyMember}
+      >
+        <Text style={styles.addText}>{getTranslation("viewalltestresult")}</Text>
+      </TouchableOpacity>
+    );
+  };
   return (
     <View
       style={[
@@ -135,7 +146,28 @@ const HomeComponent = (props: any) => {
             </TouchableOpacity>
           </View>
         </View>
-        
+
+        {/* vwTestReports */}
+        <View style={styles.vwTestReports}>
+          <Text style={styles.lblMyHealth}>
+            {getTranslation('myhealtthtext')}
+          </Text>
+          <FlatList
+            onEndReached={() => {
+              console.log('callend');
+            }}
+            data={props.testReportData}
+            renderItem={props.renderTestReportData}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={item => item.id.toString()}
+            contentContainerStyle={{
+              gap: getHeight(12),
+              marginTop: getHeight(12),
+            }}
+            ListFooterComponent={renderListFooter}
+          />
+        </View>
+
         {/* vwwarning */}
         {/* <View style={styles.vwwarningDetails}>
           <View style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}>

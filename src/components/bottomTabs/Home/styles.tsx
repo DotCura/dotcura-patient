@@ -5,6 +5,32 @@ import { fontsfamily } from '../../../constants/FontFamily';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
+  addText: {
+    color: Colors.blue002,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.gmedium,
+    letterSpacing: 0.2,
+  },
+  addBtn: {
+    justifyContent: 'center',
+    backgroundColor: Colors.blueD1,
+    borderRadius: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: getHeight(6),
+    paddingHorizontal: getWidth(16),
+    height: getHeight(48),
+  },
+  vwTestReports: {
+    marginHorizontal: getWidth(16),
+    marginTop: getHeight(31),
+  },
+  lblMyHealth: {
+    color: Colors.gray0F,
+    fontSize: fontSize.size20,
+    letterSpacing: 0.3,
+    fontFamily: fontsfamily.gsemiBold,
+  },
   vwInnerDays: {
     flex: 1,
   },
