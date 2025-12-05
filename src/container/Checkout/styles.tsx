@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     color: Colors.blue002,
     fontFamily: fontsfamily.gmedium,
     fontSize: fontSize.size14,
+    letterSpacing: 0.1,
   },
   btnadd: {
     gap: getWidth(6),
@@ -154,7 +155,7 @@ export const styles = StyleSheet.create({
     paddingBottom: getWidth(10),
   },
   card: {
-    alignItems:'center',
+    alignItems: 'center',
     backgroundColor: Colors.white,
     borderRadius: 20,
     padding: 20,
@@ -178,7 +179,7 @@ export const styles = StyleSheet.create({
     color: Colors.gray0F,
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.gmedium,
-    letterSpacing:0.2
+    letterSpacing: 0.2,
   },
   cardDesc: {
     color: Colors.gray2A,
@@ -198,6 +199,11 @@ export const styles = StyleSheet.create({
   lblCurrency: {
     color: Colors.gray75,
     fontFamily: fontsfamily.gregular,
+    fontSize: fontSize.size14,
+  },
+  lblCurrencyanaliti: {
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gbold,
     fontSize: fontSize.size14,
   },
   lblTestName: {

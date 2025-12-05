@@ -1,7 +1,6 @@
 import {
   FlatList,
   Image,
-  ImageBackground,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -43,8 +42,8 @@ const AnalitiDetailsComponent = (props: any) => {
           onEndReached={() => {
             console.log('callend');
           }}
-          data={props.kitsArrayData}
-          renderItem={props.renderItemKitsData}
+          data={props.analitiArrayData}
+          renderItem={props.renderItemAnalitiData}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item.id.toString()}
           contentContainerStyle={{
@@ -122,11 +121,8 @@ const AnalitiDetailsComponent = (props: any) => {
           </Text>
         </View>
         <View style={styles.vwPrice}>
-          {/* {props.selectedTests.length === props.kitsArrayData.length && (
-            <Text style={styles.disprice}>{currency}0.54</Text>
-          )} */}
           <Text style={styles.totalprice}>
-            {currency} {props.totalPrice.toFixed(2)}
+            {currency} {props.totalPriceanaliti.toFixed(2)}
           </Text>
         </View>
       </TouchableOpacity>

@@ -209,53 +209,40 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const analaitidata = [
     {
       id: '1',
-      name: 'Emocromo',
-      desc: 'Conteggio completo delle cellule del sangue',
-      price: 7.0,
+      name: 'Colesterolo Totale',
+      desc: 'Quanto colesterolo hai nel sangue',
+      price: 8.0,
       status: null,
     },
     {
       id: '2',
-      name: 'Sideremia',
-      desc: 'Livello di ferro nel sangue',
-      price: 6.0,
+      name: 'Colesterolo HDL',
+      desc: "Il colesterolo 'buono' per il cuore",
+      price: 10.0,
       status: null,
     },
     {
       id: '3',
-      name: 'Ferritina',
-      desc: 'Riserve di ferro nell’organismo',
+      name: 'Colesterolo LDL',
+      desc: "Il colesterolo 'cattivo' da controllare",
       price: 6.0,
       status: 'Da fare',
     },
     {
       id: '4',
-      name: 'Emoglobulina A2',
-      desc: 'Proteina che trasporta il ferro',
+      name: 'Trigliceridi',
+      desc: 'Grassi da tenere sotto controllo',
       price: 11.0,
       status: null,
     },
     {
       id: '5',
-      name: 'Vitamina B12',
-      desc: 'Vitamina essenziale per la produzione di globuli rossi',
+      name: 'Profilo Lipidico Completo',
+      desc: 'Analisi completa dei grassi nel sangue',
       price: 10.0,
       status: null,
     },
-    {
-      id: '6',
-      name: 'Sangue occulto',
-      desc: 'Ricerca di sangue nascosto nelle feci',
-      price: 12.0,
-      status: 'Deal',
-    },
-    {
-      id: '7',
-      name: 'Anticorpi transglutaminasi',
-      desc: 'Test per escludere celiachia',
-      price: 10,
-      status: null,
-    },
+    
   ];
 
   const [testkitsData, setTestsKitData] = useState(testKits);
@@ -636,7 +623,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
             <Text style={styles.lblDesc} numberOfLines={3}>
               {item.desc}
             </Text>
-            <Text style={styles.lblCurrency}>
+            <Text style={styles.lblCurrencyanaliti}>
               {currency} {item.price.toFixed(2)}
             </Text>
           </View>

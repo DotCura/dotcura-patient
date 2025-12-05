@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
   },
   imgkitdetails: {
     justifyContent: 'flex-end',
-    marginTop: getHeight(11),
+    marginTop: getHeight(21),
     marginHorizontal: getWidth(16),
     backgroundColor: Colors.white,
     borderTopLeftRadius: 26,
