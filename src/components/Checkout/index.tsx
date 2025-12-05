@@ -595,7 +595,9 @@ const CheckoutComponent = (props: any) => {
                 marginTop: -35,
               }}
             >
-              <Text style={styles.lblKitTitleInner}>{getTranslation("analitiheadertext")}</Text>
+              <Text style={styles.lblKitTitleInner}>
+                {getTranslation('analitiheadertext')}
+              </Text>
               <FlatList
                 onEndReached={() => {
                   // console.log('callend');
@@ -609,7 +611,7 @@ const CheckoutComponent = (props: any) => {
                   gap: getHeight(20),
                   paddingHorizontal: getWidth(16),
                   paddingTop: getHeight(25),
-                  paddingBottom:getHeight(320)
+                  paddingBottom: getHeight(320),
                 }}
               />
             </View>
@@ -636,7 +638,100 @@ const CheckoutComponent = (props: any) => {
               <View style={styles.vwPrice}>
                 <Text style={styles.totalprice}>
                   {currency}
-                  {props.totalPrice.toFixed(2)}
+                  {props.totalPriceKits.toFixed(2)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* editAnalitidetails */}
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={props.editAnlitiPopupVisible}
+        statusBarTranslucent={true}
+        onRequestClose={props.funCloseEditAnaliti}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#00000060',
+          }}
+        >
+          <Pressable style={{ flex: 1 }} onPress={props.funCloseEditAnaliti} />
+
+          <View
+            style={{
+              backgroundColor: Colors.whiteF2,
+              borderTopLeftRadius: getHeight(20),
+              borderTopRightRadius: getHeight(20),
+              maxHeight: '92%',
+            }}
+          >
+            {/* Header */}
+            <View style={styles.vwHeadingLine} />
+            <View style={[styles.vwMainModelHeaderEditAnliti]}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                onPress={props.funCloseEditAnaliti} // close modal
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.imgkitdetails}>
+              <View style={styles.vwHeaderTitle}>
+                <Image
+                  source={images.imgHeart}
+                  style={{ height: getHeight(64), aspectRatio: 1 }}
+                />
+                <Text style={styles.kittitle}>Cuore e circolazione</Text>
+                <Text style={styles.kitsubtitle}>
+                  9 {getTranslation('analititextdetails')}
+                </Text>
+              </View>
+            </View>
+
+            {/* vwTestList */}
+            <FlatList
+              onEndReached={() => {
+                console.log('callend');
+              }}
+              data={props.analitiArrayData}
+              renderItem={props.renderitemanalitidata}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={item => item.id.toString()}
+              contentContainerStyle={{
+                marginTop: getHeight(31),
+                gap: getHeight(20),
+                paddingHorizontal: getWidth(16),
+                paddingBottom: getHeight(100),
+              }}
+            />
+            <TouchableOpacity
+              style={[
+                styles.vwGoToCart,
+                {
+                  bottom:
+                    props.insets.bottom > 0
+                      ? props.insets.bottom
+                      : props.insets.bottom + getHeight(16),
+                },
+              ]}
+              activeOpacity={activityOpacity}
+              onPress={props.funCloseIsKitTestDetails}
+            >
+              <View style={styles.vwCartImage}>
+                <Image source={images.imgCartHome} tintColor={Colors.white} />
+                <Text style={styles.lblGoToCart}>
+                  {getTranslation('addtoorder')}
+                </Text>
+              </View>
+              <View style={styles.vwPrice}>
+                <Text style={styles.totalprice}>
+                  {currency}
+                  {props.totalPriceAnaliti.toFixed(2)}
                 </Text>
               </View>
             </TouchableOpacity>

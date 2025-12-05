@@ -9,6 +9,40 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  vwHeaderTitle: {},
+  lblGoToCart: {
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size16,
+    color: Colors.white,
+  },
+  kittitle: {
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size36,
+    color: Colors.blue002,
+    letterSpacing: 0.1,
+    marginTop: getHeight(7),
+  },
+  kitsubtitle: {
+    fontFamily: fontsfamily.gregular,
+    fontSize: fontSize.size16,
+    color: Colors.blue002,
+    letterSpacing: 0.2,
+  },
+  imgkitdetails: {
+    justifyContent: 'flex-end',
+    marginTop: getHeight(11),
+    marginHorizontal: getWidth(16),
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    padding: 21,
+  },
+  vwKitDeatils: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   lblKitTitleInner: {
     color: Colors.gray0F,
     fontSize: fontSize.size20,
@@ -228,6 +262,10 @@ export const styles = StyleSheet.create({
   },
   vwMainModelHeader: {
     paddingTop: getHeight(10),
+  },
+  vwMainModelHeaderEditAnliti:{
+    paddingTop: getHeight(10),
+    marginHorizontal:getWidth(16)
   },
   vwMain: {
     flexDirection: 'row',

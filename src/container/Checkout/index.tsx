@@ -206,14 +206,65 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     { id: 2, title: 'Casa', subtitle: 'Via Roma, 31 – Naples' },
     { id: 3, title: 'Appartamento', subtitle: 'Piazzale Napoli, 21 – Rome' },
   ];
+  const analaitidata = [
+    {
+      id: '1',
+      name: 'Emocromo',
+      desc: 'Conteggio completo delle cellule del sangue',
+      price: 7.0,
+      status: null,
+    },
+    {
+      id: '2',
+      name: 'Sideremia',
+      desc: 'Livello di ferro nel sangue',
+      price: 6.0,
+      status: null,
+    },
+    {
+      id: '3',
+      name: 'Ferritina',
+      desc: 'Riserve di ferro nell’organismo',
+      price: 6.0,
+      status: 'Da fare',
+    },
+    {
+      id: '4',
+      name: 'Emoglobulina A2',
+      desc: 'Proteina che trasporta il ferro',
+      price: 11.0,
+      status: null,
+    },
+    {
+      id: '5',
+      name: 'Vitamina B12',
+      desc: 'Vitamina essenziale per la produzione di globuli rossi',
+      price: 10.0,
+      status: null,
+    },
+    {
+      id: '6',
+      name: 'Sangue occulto',
+      desc: 'Ricerca di sangue nascosto nelle feci',
+      price: 12.0,
+      status: 'Deal',
+    },
+    {
+      id: '7',
+      name: 'Anticorpi transglutaminasi',
+      desc: 'Test per escludere celiachia',
+      price: 10,
+      status: null,
+    },
+  ];
 
   const [testkitsData, setTestsKitData] = useState(testKits);
   const [kitDataInCart, setKitDataInCart] = useState(kitListInCart);
   const [kitDataAddMore, setKitDataAddMore] = useState(kitListAddMore);
   const [kitsArrayData, setKitsArraysData] = useState(kitsData);
-  const [selectedTests, setSelectedTests] = useState<string[]>(
-    kitsArrayData.map(t => t.id),
-  );
+  const [analitiArrayData, setAnalitiArraysData] = useState(analaitidata);
+  const [selectedTests, setSelectedTests] = useState(analitiArrayData.map(t => t.id));
+  const [selectedTestsKits, setSelectedTestsKits] = useState(kitsArrayData.map(t => t.id));
   const [manageAddress, setManageAddress] = useState('');
   const [discountCode, setDiscountCode] = useState('');
   const [discountValue, setDiscountValue] = useState(20);
@@ -234,6 +285,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [addressPopupVisible, setAddressPopupVisible] = useState(false);
   const [cancleOrderVisible, setCancleOrderVisible] = useState(false);
   const [addAddressPopupVisible, setAddAddressPopupVisible] = useState(false);
+  const [editAnlitiPopupVisible, setEditAnalitiPopupVisible] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const homeServiceCharge = 20;
 
@@ -253,9 +305,18 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   };
 
   const toggleSelect = (id: string) => {
-    setSelectedTests(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id],
-    );
+    setSelectedTests(prev => {
+      // ❌ If only 1 item is selected → DO NOT allow removal
+      if (prev.length === 1 && prev.includes(id)) {
+        flashMessageWarning(getTranslation("atleastoneselected"))
+        return prev; // stop here
+      }
+  
+      // Normal add/remove
+      return prev.includes(id)
+        ? prev.filter(i => i !== id)
+        : [...prev, id];
+    });
   };
 
   const selectAll = () => {
@@ -266,71 +327,75 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     }
   };
 
-  const totalPrice = kitsArrayData
+  const totalPriceAnaliti = analitiArrayData
     .filter(t => selectedTests.includes(t.id))
     .reduce((sum, t) => sum + t.price, 0);
 
-    const renderItemKitsData = ({ item, index }: { item: any; index: any }) => {
-      const selected = selectedTests.includes(item.id);
-      return (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              flex: 1,
-              alignItems: 'center',
-              gap: getWidth(12),
-            }}
-          >
-            <View style={{ alignSelf: 'flex-start' }}>
-              <Image source={images.imglightbluetick} />
-            </View>
-            <View style={{ flex: 1, marginRight: getWidth(20) }}>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.lblTestName} numberOfLines={2}>
-                  {item.name}{' '}
-                </Text>
-                {item.status && (
-                  <View style={{ alignItems: 'center' }}>
-                    <Text
-                      style={[
-                        styles.lblStatus,
-                        {
-                          backgroundColor:
-                            index == 2
-                              ? Colors.greenD9
-                              : index == 5
-                              ? Colors.redFC
-                              : Colors.white,
-                          color:
-                            index == 2
-                              ? Colors.green0D
-                              : index == 5
-                              ? Colors.red40
-                              : Colors.white,
-                        },
-                      ]}
-                    >
-                      {item.status}
-                    </Text>
-                  </View>
-                )}
-              </View>
-  
-              <Text style={styles.lblDesc} numberOfLines={3}>
-                {item.desc}
-              </Text>
-            </View>
+    const totalPriceKits = kitsArrayData
+    .filter(t => selectedTestsKits.includes(t.id))
+    .reduce((sum, t) => sum + t.price, 0);
+
+  const renderItemKitsData = ({ item, index }: { item: any; index: any }) => {
+    const selected = selectedTests.includes(item.id);
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            alignItems: 'center',
+            gap: getWidth(12),
+          }}
+        >
+          <View style={{ alignSelf: 'flex-start' }}>
+            <Image source={images.imglightbluetick} />
           </View>
-          <View style={{ alignSelf: 'flex-start', marginTop: 2 }}>
-            <Text style={styles.lblCurrency}>
-              + {currency}
-              {item.price.toFixed(2)}
+          <View style={{ flex: 1, marginRight: getWidth(20) }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.lblTestName} numberOfLines={2}>
+                {item.name}{' '}
+              </Text>
+              {item.status && (
+                <View style={{ alignItems: 'center' }}>
+                  <Text
+                    style={[
+                      styles.lblStatus,
+                      {
+                        backgroundColor:
+                          index == 2
+                            ? Colors.greenD9
+                            : index == 5
+                            ? Colors.redFC
+                            : Colors.white,
+                        color:
+                          index == 2
+                            ? Colors.green0D
+                            : index == 5
+                            ? Colors.red40
+                            : Colors.white,
+                      },
+                    ]}
+                  >
+                    {item.status}
+                  </Text>
+                </View>
+              )}
+            </View>
+
+            <Text style={styles.lblDesc} numberOfLines={3}>
+              {item.desc}
             </Text>
           </View>
         </View>
-      );
-    };
+        <View style={{ alignSelf: 'flex-start', marginTop: 2 }}>
+          <Text style={styles.lblCurrency}>
+            + {currency}
+            {item.price.toFixed(2)}
+          </Text>
+        </View>
+      </View>
+    );
+  };
 
   const handleApplyDiscount = () => {
     // Just a sample logic
@@ -376,7 +441,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     if (type === 'kit') {
       setShowIsKitTestDetails(true);
     } else {
-      setShowIsModifyOrder(true);
+      setEditAnalitiPopupVisible(true);
     }
   };
 
@@ -387,6 +452,14 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   };
   const funCloseEditKit = () => {
     setShowIsKitTestDetails(false);
+  };
+  const funOpenEditAnaliti = () => {
+    console.log('hy');
+
+    setEditAnalitiPopupVisible(true);
+  };
+  const funCloseEditAnaliti = () => {
+    setEditAnalitiPopupVisible(false);
   };
 
   const funCloseIsKitTestDetails = () => {
@@ -511,6 +584,87 @@ const CheckoutContainer = ({ navigation, route }: any) => {
           </View>
         </View>
       </TouchableOpacity>
+    );
+  };
+
+  const renderitemanalitidata = ({ item, index }: { item: any; index: any }) => {
+    const selected = selectedTests.includes(item.id);
+    const isLastSelected = selectedTests.length === 1 && selected;
+
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            alignItems: 'center',
+            gap: getWidth(12),
+          }}
+        >
+          <View style={{ flex: 1, marginRight: getWidth(20), gap: 1 }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.lblTestName} numberOfLines={2}>
+                {item.name}{' '}
+              </Text>
+              {item.status && (
+                <View style={{ alignItems: 'center' }}>
+                  <Text
+                    style={[
+                      styles.lblStatus,
+                      {
+                        backgroundColor:
+                          index == 2
+                            ? Colors.greenD9
+                            : index == 5
+                            ? Colors.redFC
+                            : Colors.white,
+                        color:
+                          index == 2
+                            ? Colors.green0D
+                            : index == 5
+                            ? Colors.red40
+                            : Colors.white,
+                      },
+                    ]}
+                  >
+                    {item.status}
+                  </Text>
+                </View>
+              )}
+            </View>
+
+            <Text style={styles.lblDesc} numberOfLines={3}>
+              {item.desc}
+            </Text>
+            <Text style={styles.lblCurrency}>
+              {currency} {item.price.toFixed(2)}
+            </Text>
+          </View>
+        </View>
+        <View style={{ alignSelf: 'flex-start', marginTop: 2 }}>
+        {!selected ? (
+          <TouchableOpacity
+            activeOpacity={activityOpacity}
+            style={styles.btnadd}
+            disabled={isLastSelected}
+
+            onPress={() => toggleSelect(item.id)}
+          >
+            <Image source={images.imgPlusDark} />
+            <Text style={styles.lblAdd}>{getTranslation('add')}</Text>
+          </TouchableOpacity>
+           ) : (
+          <TouchableOpacity
+            activeOpacity={activityOpacity}
+            style={[styles.btnadd, { backgroundColor: Colors.white }]}
+            onPress={() => toggleSelect(item.id)}
+          >
+            <Image source={images.imgminusdark} />
+            <Text style={styles.lblAdd}>{getTranslation('remove')}</Text>
+          </TouchableOpacity>
+           )}
+        </View>
+      </View>
     );
   };
 
@@ -846,10 +1000,18 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       kitsArrayData={kitsArrayData}
       renderItemKitsData={renderItemKitsData}
       selectAll={selectAll}
-      totalPrice={totalPrice}
+      totalPriceKits={totalPriceKits}
       selectedTests={selectedTests}
       funOpenEditKit={funOpenEditKit}
       funCloseEditKit={funCloseEditKit}
+      //editanaliti
+      editAnlitiPopupVisible={editAnlitiPopupVisible}
+      setEditAnalitiPopupVisible={setEditAnalitiPopupVisible}
+      funOpenEditAnaliti={funOpenEditAnaliti}
+      funCloseEditAnaliti={funCloseEditAnaliti}
+      analitiArrayData={analitiArrayData}
+      renderitemanalitidata={renderitemanalitidata}
+      totalPriceAnaliti={totalPriceAnaliti}
       //AddressModel
       AddressData={AddressData}
       addressPopupVisible={addressPopupVisible}

@@ -5,6 +5,20 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  lblAdd: {
+    color: Colors.blue002,
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size14,
+  },
+  btnadd: {
+    gap: getWidth(6),
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.blueD1,
+    borderRadius: 20,
+    paddingVertical: getHeight(9),
+    paddingHorizontal: getWidth(12),
+  },
   lblKitCount: {
     color: Colors.gray0F,
     fontFamily: fontsfamily.gmedium,
