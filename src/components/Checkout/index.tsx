@@ -544,7 +544,7 @@ const CheckoutComponent = (props: any) => {
         animationType="slide"
         visible={props.showIsKitTestDetails}
         statusBarTranslucent={true}
-        onRequestClose={props.funCloseIsKitTestDetails}
+        onRequestClose={props.funCloseEditKit}
       >
         <View
           style={{
@@ -552,64 +552,64 @@ const CheckoutComponent = (props: any) => {
             backgroundColor: '#00000060',
           }}
         >
-          <Pressable
-            style={{ flex: 1 }}
-            onPress={props.funCloseIsKitTestDetails}
-          />
+          <Pressable style={{ flex: 1 }} onPress={props.funCloseEditKit} />
 
           <View
             style={{
-              backgroundColor: Colors.white,
-              borderTopLeftRadius: getHeight(20),
-              borderTopRightRadius: getHeight(20),
-              maxHeight: '80%',
+              backgroundColor: Colors.whiteF2,
+              borderTopLeftRadius: getHeight(34),
+              borderTopRightRadius: getHeight(34),
+              maxHeight: '85%',
+              overflow: 'hidden',
             }}
           >
             {/* Header */}
-            <View style={styles.vwHeadingLine} />
-            <View style={[styles.vwMainModelHeader]}>
-              <TouchableOpacity
-                style={styles.btnBack}
-                onPress={props.funCloseIsKitTestDetails} // close modal
+            <ImageBackground
+              source={images.imgkit1}
+              style={[styles.vwMainModelHeader]}
+            >
+              <View
+                style={{ paddingHorizontal: getWidth(16), gap: getHeight(3) }}
               >
-                <Image source={images.imgLeftArrow} />
-              </TouchableOpacity>
-
-              <View>
-                <Text
-                  style={[
-                    constnatStyles.lblHeaderTitle,
-                    {
-                      letterSpacing: 0.2,
-                    },
-                  ]}
-                  numberOfLines={2}
+                <TouchableOpacity
+                  style={styles.btnBack}
+                  onPress={props.funCloseEditKit} // close modal
                 >
-                  Anemia
-                </Text>
-                <Text
-                  style={[constnatStyles.lblSubHeaderTitle]}
-                  numberOfLines={2}
-                >
-                  1 {getTranslation('selected')}
-                </Text>
+                  <Image source={images.imgLeftArrow} />
+                </TouchableOpacity>
+                <View style={{ marginBottom: getHeight(40) }}>
+                  <Text style={styles.lblKittitleModel}>Anemia</Text>
+                  <Text style={styles.lblKitselectTitle}>
+                    1 {getTranslation('selected')}
+                  </Text>
+                </View>
               </View>
+            </ImageBackground>
 
-              <Image source={images.imgDelete} style={{ opacity: 0 }} />
-            </View>
-            <View style={{ marginHorizontal: getWidth(16) }}>
+            <View
+              style={{
+                backgroundColor: Colors.whiteF2,
+                borderTopLeftRadius: 36,
+                borderTopRightRadius: 36,
+                overflow: 'hidden',
+                marginTop: -35,
+              }}
+            >
+              <Text style={styles.lblKitTitleInner}>{getTranslation("analitiheadertext")}</Text>
               <FlatList
                 onEndReached={() => {
                   // console.log('callend');
                 }}
+                bounces={false}
                 data={props.kitsArrayData}
                 renderItem={props.renderItemKitsData}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={item => item.id.toString()}
                 contentContainerStyle={{
-                  marginTop: getHeight(16),
                   gap: getHeight(20),
-                  paddingBottom: getHeight(155),
+                  paddingHorizontal: getWidth(16),
+                  paddingTop: getHeight(25),
+                  paddingBottom:getHeight(320)
                 }}
               />
             </View>
@@ -630,13 +630,10 @@ const CheckoutComponent = (props: any) => {
               <View style={styles.vwCartImage}>
                 <Image source={images.imgCartHome} tintColor={Colors.white} />
                 <Text style={styles.lblGoToCart}>
-                  {getTranslation('gotocart')}
+                  {getTranslation('addtoorder')}
                 </Text>
               </View>
               <View style={styles.vwPrice}>
-                {props.selectedTests.length === props.kitsArrayData.length && (
-                  <Text style={styles.disprice}>{currency}0.54</Text>
-                )}
                 <Text style={styles.totalprice}>
                   {currency}
                   {props.totalPrice.toFixed(2)}
@@ -926,7 +923,7 @@ const CheckoutComponent = (props: any) => {
 
           <View
             style={{
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.whiteF2,
               borderTopLeftRadius: getHeight(20),
               borderTopRightRadius: getHeight(20),
               maxHeight: '80%',
@@ -954,7 +951,7 @@ const CheckoutComponent = (props: any) => {
               />
               <View
                 style={{
-                  marginTop: getHeight(140),
+                  marginTop: getHeight(123),
                   marginBottom:
                     props.insets.bottom > 0
                       ? props.insets.bottom
@@ -964,12 +961,15 @@ const CheckoutComponent = (props: any) => {
                 <CustomButton
                   btnTitle={getTranslation('cancletext')}
                   btnPress={props.handleNavigateHome}
-                  style={{ backgroundColor: Colors.redFD }}
-                  textStyle={{ color: Colors.red40 }}
+                  style={{ backgroundColor: Colors.redFC }}
+                  textStyle={{ color: Colors.red8C }}
                 />
                 <CustomButton
                   btnTitle={getTranslation('cancletextnoback')}
-                  style={{ backgroundColor: Colors.white }}
+                  style={{
+                    backgroundColor: Colors.blueD1,
+                    marginTop: getHeight(8),
+                  }}
                   textStyle={{ color: Colors.gray0F }}
                   btnPress={props.funCloseCancleOrder}
                 />

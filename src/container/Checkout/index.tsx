@@ -270,67 +270,67 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     .filter(t => selectedTests.includes(t.id))
     .reduce((sum, t) => sum + t.price, 0);
 
-  const renderItemKitsData = ({ item, index }: { item: any; index: any }) => {
-    const selected = selectedTests.includes(item.id);
-    return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            flex: 1,
-            alignItems: 'center',
-            gap: getWidth(12),
-          }}
-        >
-          <TouchableOpacity onPress={() => toggleSelect(item.id)}>
-            <Image
-              source={
-                selected ? images.imgSelectRadio : images.imgUnselectRadio
-              }
-            />
-          </TouchableOpacity>
-          <View style={{ flex: 1, marginRight: getWidth(20) }}>
-            <Text style={styles.lblTestName} numberOfLines={2}>
-              {item.name}{' '}
-              <View style={{ alignItems: 'center', marginTop: 3 }}>
-                <Text
-                  style={[
-                    styles.lblStatusKitDetails,
-                    {
-                      backgroundColor:
-                        index == 2
-                          ? Colors.greenD9
-                          : index == 5
-                          ? Colors.redFC
-                          : Colors.white,
-                      color:
-                        index == 2
-                          ? Colors.green0D
-                          : index == 5
-                          ? Colors.red40
-                          : Colors.white,
-                    },
-                  ]}
-                >
-                  {item.status}
+    const renderItemKitsData = ({ item, index }: { item: any; index: any }) => {
+      const selected = selectedTests.includes(item.id);
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              alignItems: 'center',
+              gap: getWidth(12),
+            }}
+          >
+            <View style={{ alignSelf: 'flex-start' }}>
+              <Image source={images.imglightbluetick} />
+            </View>
+            <View style={{ flex: 1, marginRight: getWidth(20) }}>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.lblTestName} numberOfLines={2}>
+                  {item.name}{' '}
                 </Text>
+                {item.status && (
+                  <View style={{ alignItems: 'center' }}>
+                    <Text
+                      style={[
+                        styles.lblStatus,
+                        {
+                          backgroundColor:
+                            index == 2
+                              ? Colors.greenD9
+                              : index == 5
+                              ? Colors.redFC
+                              : Colors.white,
+                          color:
+                            index == 2
+                              ? Colors.green0D
+                              : index == 5
+                              ? Colors.red40
+                              : Colors.white,
+                        },
+                      ]}
+                    >
+                      {item.status}
+                    </Text>
+                  </View>
+                )}
               </View>
-            </Text>
-
-            <Text style={styles.lblDesc} numberOfLines={3}>
-              {item.desc}
+  
+              <Text style={styles.lblDesc} numberOfLines={3}>
+                {item.desc}
+              </Text>
+            </View>
+          </View>
+          <View style={{ alignSelf: 'flex-start', marginTop: 2 }}>
+            <Text style={styles.lblCurrency}>
+              + {currency}
+              {item.price.toFixed(2)}
             </Text>
           </View>
         </View>
-        <View>
-          <Text style={styles.lblCurrency}>
-            + {currency}
-            {item.price.toFixed(2)}
-          </Text>
-        </View>
-      </View>
-    );
-  };
+      );
+    };
 
   const handleApplyDiscount = () => {
     // Just a sample logic
@@ -372,6 +372,23 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     setShowIsKitTestDetails(true);
   };
 
+  const pressHandleCartItem = (type: any) => {
+    if (type === 'kit') {
+      setShowIsKitTestDetails(true);
+    } else {
+      setShowIsModifyOrder(true);
+    }
+  };
+
+  const funOpenEditKit = () => {
+    console.log('hy');
+
+    setShowIsKitTestDetails(true);
+  };
+  const funCloseEditKit = () => {
+    setShowIsKitTestDetails(false);
+  };
+
   const funCloseIsKitTestDetails = () => {
     setShowIsKitTestDetails(false);
     setShowIsModifyOrder(true);
@@ -391,7 +408,13 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const renderItemTestKits = ({ item }: any) => {
     return (
-      <TouchableOpacity activeOpacity={activityOpacity} style={styles.card}>
+      <TouchableOpacity
+        activeOpacity={activityOpacity}
+        style={styles.card}
+        onPress={() => {
+          pressHandleCartItem(item.type);
+        }}
+      >
         <View
           style={{
             flex: 1,
@@ -412,7 +435,13 @@ const CheckoutContainer = ({ navigation, route }: any) => {
             {item.name} <Text style={styles.lblKitCount}>({item.count})</Text>
           </Text>
         </View>
-        <View style={{ flexDirection: 'row', gap: getWidth(8),alignItems:'center' }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: getWidth(8),
+            alignItems: 'center',
+          }}
+        >
           <Text style={styles.cardPrice}>
             {currency} {item.price.toFixed(2)}
           </Text>
@@ -819,6 +848,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       selectAll={selectAll}
       totalPrice={totalPrice}
       selectedTests={selectedTests}
+      funOpenEditKit={funOpenEditKit}
+      funCloseEditKit={funCloseEditKit}
       //AddressModel
       AddressData={AddressData}
       addressPopupVisible={addressPopupVisible}

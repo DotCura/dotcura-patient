@@ -129,26 +129,25 @@ export default {
     'Guadagna 5 euro di sconto sul prossimo ordine per ogni amico invitato su Dotcura.',
   invitefriend: 'Invita amico',
   familymemberanlaysisvalue: 'I valori dell’analisi di',
-  hytext:"Ciao",
-  daystext:"giorni",
-  sinceyourlastanalysis:"dalla tua ultima analisi",
-  booknowtext:"Prenota ora",
-  myhealtthtext:"La mia salute",
-  ditext:"di",
-  analitietext:"Analizzati",
-  viewalltestresult:"Vedi il quadro completo",
-
+  hytext: 'Ciao',
+  daystext: 'giorni',
+  sinceyourlastanalysis: 'dalla tua ultima analisi',
+  booknowtext: 'Prenota ora',
+  myhealtthtext: 'La mia salute',
+  ditext: 'di',
+  analitietext: 'Analizzati',
+  viewalltestresult: 'Vedi il quadro completo',
 
   //GETTESTED
   kitavailable: 'kit disponibili',
   filter: 'Filtros',
-  analysistext:"Analisi",
-  checkuptext:"Check-up",
-  analitiheadertext:"Analiti",
-  andtext:"da",
+  analysistext: 'Analisi',
+  checkuptext: 'Check-up',
+  analitiheadertext: 'Analiti',
+  andtext: 'da',
 
   //KITDETAILS
-  kitanalysis:"Kit analisi",
+  kitanalysis: 'Kit analisi',
   analytesinthekit: 'Analiti nel kit',
   betterinmorning: 'Meglio al mattino!',
   betterinmorningsubtitle: 'I prelievi vanno fatti a stomaco vuoto.',
@@ -170,15 +169,15 @@ export default {
   howtopreparesubtitle4: 'evita alcol e sforzi intensi',
   howtopreparesubtitle5: ' il giorno prima e cerca di riposare bene.',
   gotocart: 'Vai al carrello',
-  addtoorder:"Aggiungi all’ordine",
+  addtoorder: 'Aggiungi all’ordine',
 
   //ANALITIDETAILS
-  analititextdetails:"Analiti",
-  atleastoneselected:"Almeno un test deve rimanere selezionato.",
+  analititextdetails: 'Analiti',
+  atleastoneselected: 'Almeno un test deve rimanere selezionato.',
 
   //CHECKOUT
-  canclereservation:"Cancella prenotazione",
-  addanalysis:"Aggiungi analisi",
+  canclereservation: 'Cancella prenotazione',
+  addanalysis: 'Aggiungi analisi',
   help: 'Aiuto',
   edit: 'Modifica',
   yourorder: 'Il tuo ordine',
@@ -207,11 +206,11 @@ export default {
   modifyorder: 'Modifica ordine',
   inthecart: 'Nel carrello',
   addmoretext: 'Aggiungi altri',
-  cancleordertitle: '¿Quieres cancelar el pedido?',
+  cancleordertitle: 'Vuoi cancellare l’ordine?',
   cancleordersubtitle:
-    'El reembolso se procesará a tu método de pago en un plazo de 3 a 5 días laborables.',
-  cancletext: 'Cancelar',
-  cancletextnoback: 'No, volver',
+    'Il rimborso verrà effettuato sul tuo metodo di pagamento in 3-5 giorni lavorativi.',
+  cancletext: 'Conferma cancellazione',
+  cancletextnoback: 'Non cancellare',
 
   //RESULTOPENUP
   resultopentitle: 'Los resultados han llegado.',
@@ -274,18 +273,17 @@ export default {
     'Gestisci la salute dei tuoi cari direttamente da un’unica app. Potrai prenotare e controllare i dati direttamente da qua.',
   addfamilybtn: 'Aggiungi famigliare',
   remove: 'Rimuovi',
-  gender:"Genere",
-  saveinformation:"Salva informazioni",
-  deletefamily:"Elimina familiare",
-  
+  gender: 'Genere',
+  saveinformation: 'Salva informazioni',
+  deletefamily: 'Elimina familiare',
 
   //FAV
-  favtitle:"Preferiti",
-  favsubtitle:"Tutte le analisi che hai salvato, raggruppate qui",
-  unfavconfirmationtitle:"Vuoi cancellare il preferito?",
-  confirmationdelete:"Conferma cancellazione",
-  canclefav:"Non cancellare",
-  unfavmessage:"Preferito eliminato",
+  favtitle: 'Preferiti',
+  favsubtitle: 'Tutte le analisi che hai salvato, raggruppate qui',
+  unfavconfirmationtitle: 'Vuoi cancellare il preferito?',
+  confirmationdelete: 'Conferma cancellazione',
+  canclefav: 'Non cancellare',
+  unfavmessage: 'Preferito eliminato',
 
   //ADDADDRESS
   addaddresstitle: 'Aggiungi un indirizzo',
@@ -294,11 +292,12 @@ export default {
   searchaddress: 'Cerca indirizzo',
   addaddressplacholder: 'Via, piazza, strada...',
   errorselectaddress: 'Por favor, elija una dirección',
-  editaddressbtn:"Modifica indirizzo",
-  addaddresspopuptitle:"Questo indirizzo sarà salvato e disponibile per future visite a domicilio.",
-  cancleaddress:"Annulla",
-  selectaddressplaceholder:"Seleziona",
-  errorselectaddresstype:"Por favor seleccione el tipo de dirección.",
+  editaddressbtn: 'Modifica indirizzo',
+  addaddresspopuptitle:
+    'Questo indirizzo sarà salvato e disponibile per future visite a domicilio.',
+  cancleaddress: 'Annulla',
+  selectaddressplaceholder: 'Seleziona',
+  errorselectaddresstype: 'Por favor seleccione el tipo de dirección.',
 
   //COMPLETEADDRESS
   completeaddresstitle: 'Completa l’indirizzo',
@@ -343,8 +342,8 @@ export default {
   //PAYMENTMETHOD
   paymentmethodtitle: 'Metodi di Pagamento',
   paymentmethodsubtitle: 'Le tue carte salvate verranno visualizzate qui.',
-  editcardtext:"Elimina carta",
-  paymentmethodtext:"Metodi di Pagamento",
+  editcardtext: 'Elimina carta',
+  paymentmethodtext: 'Metodi di Pagamento',
 
   //PROFILE
   membersince: 'Membro dal',
@@ -412,17 +411,17 @@ export default {
   typeofrelationship: 'Tipo di relazione',
   typeofrelationshipplaceholder: 'Seleccione el tipo de relación',
   pleaseselecttypeofrelationship: 'Por favor seleccione el tipo de relación',
-  addfavouriteaddresslabel:"Rendi indirizzo preferito",
-  saveaddress:"Salva indirizzo",
-  typology:"Tipologia",
-  emptysearchaddress:"Por favor selecciona la dirección de búsqueda",
+  addfavouriteaddresslabel: 'Rendi indirizzo preferito',
+  saveaddress: 'Salva indirizzo',
+  typology: 'Tipologia',
+  emptysearchaddress: 'Por favor selecciona la dirección de búsqueda',
 
   //ADDRESSLIST
-  addresstitle:"Indirizzi",
-  addressubtitle:"Gli indirizzi lorem ipsum dolor sit",
-  yourlocationtitle:"Usa la mia posizione",
-  yourlocationsubtitle:"Consenti la geolocalizzazione",
-  default:"PREDEFINITO",
+  addresstitle: 'Indirizzi',
+  addressubtitle: 'Gli indirizzi lorem ipsum dolor sit',
+  yourlocationtitle: 'Usa la mia posizione',
+  yourlocationsubtitle: 'Consenti la geolocalizzazione',
+  default: 'PREDEFINITO',
 
   //ERROR
   errorMessageOtp: 'Por favor, introduzca el código OTP',

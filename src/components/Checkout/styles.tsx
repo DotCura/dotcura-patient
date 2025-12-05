@@ -9,6 +9,24 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  lblKitTitleInner: {
+    color: Colors.gray0F,
+    fontSize: fontSize.size20,
+    fontFamily: fontsfamily.gsemiBold,
+    marginHorizontal: getWidth(16),
+    marginTop: getHeight(23),
+    letterSpacing: 0.3,
+  },
+  lblKittitleModel: {
+    color: Colors.white,
+    fontSize: fontSize.size36,
+    fontFamily: fontsfamily.gmedium,
+  },
+  lblKitselectTitle: {
+    color: Colors.white,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.gregular,
+  },
   vwError: {
     marginTop: getHeight(6),
     gap: getWidth(4),
@@ -57,9 +75,10 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   lblGoToCart: {
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
     fontSize: fontSize.size16,
     color: Colors.white,
+    letterSpacing: 0.2,
   },
   vwCartImage: {
     flexDirection: 'row',
@@ -80,7 +99,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     height: getHeight(48),
     paddingHorizontal: getWidth(16),
-    backgroundColor: Colors.blue1C,
+    backgroundColor: Colors.blue002,
     flexDirection: 'row',
   },
   disprice: {
@@ -90,7 +109,8 @@ export const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
   },
   totalprice: {
-    fontFamily: fontsfamily.regular,
+    letterSpacing: 0.2,
+    fontFamily: fontsfamily.gregular,
     fontSize: fontSize.size16,
     color: Colors.white,
   },
@@ -207,13 +227,7 @@ export const styles = StyleSheet.create({
     gap: getWidth(8),
   },
   vwMainModelHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: getWidth(15),
-    marginTop: getHeight(5),
-    marginHorizontal: getWidth(12),
-    paddingBottom: getWidth(10),
+    paddingTop: getHeight(10),
   },
   vwMain: {
     flexDirection: 'row',
