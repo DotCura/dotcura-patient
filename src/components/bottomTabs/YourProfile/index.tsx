@@ -24,13 +24,18 @@ const YourProfileComponent = (props: any) => {
     return (
       <>
         {/* LatestAnalysis */}
-        <View style={{ marginTop: getHeight(24) }}>
-          <Text style={styles.latestanlaysis}>
-            {getTranslation('latestanalysis')}
-          </Text>
+        <View style={{ marginTop: getHeight(24), marginBottom: getHeight(20) }}>
+          <View style={styles.vwSeeall}>
+            <Text style={styles.latestanlaysis}>
+              {getTranslation('latestanalysis')}
+            </Text>
+            <TouchableOpacity activeOpacity={activityOpacity}>
+              <Text style={styles.seeall}>{getTranslation('seeall')}</Text>
+            </TouchableOpacity>
+          </View>
           <View style={{ marginTop: getHeight(12) }}>
             <FlatList
-              data={props.modifiedData}
+              data={props.modifiedData.slice(0, 4)}
               renderItem={props.renderItemLatestAnalysis}
               showsHorizontalScrollIndicator={false}
               horizontal
@@ -45,7 +50,7 @@ const YourProfileComponent = (props: any) => {
         </View>
 
         {/* waitingforresultof */}
-        <View
+        {/* <View
           style={{ marginHorizontal: getWidth(16), marginTop: getHeight(32) }}
         >
           {props.appointmentsData.some((a: any) => a.status === 'waiting') && (
@@ -75,7 +80,7 @@ const YourProfileComponent = (props: any) => {
                 {props.renderItemAppointment({ item, index })}
               </React.Fragment>
             ))}
-        </View>
+        </View> */}
       </>
     );
   };
@@ -131,12 +136,12 @@ const YourProfileComponent = (props: any) => {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={props.handlePressCheckout}
+                onPress={props.handlePressProfile}
                 activeOpacity={activityOpacity}
                 style={styles.vwHeaderbtn}
                 hitSlop={20}
               >
-                <Image source={images.imgCartHome} />
+                <Image source={images.imgUserHome} />
               </TouchableOpacity>
             </View>
           </View>
@@ -166,7 +171,7 @@ const YourProfileComponent = (props: any) => {
               style={styles.btnClose}
               activeOpacity={activityOpacity}
             >
-              <Image source={images.imgClose} />
+              <Image source={images.imgClose} tintColor={Colors.blue002} />
             </TouchableOpacity>
           </View>
         ) : null}
@@ -250,7 +255,7 @@ const YourProfileComponent = (props: any) => {
       </View> */}
 
       {/* vwReportsList */}
-      <FlatList
+      {/* <FlatList
         data={props.userReportData}
         renderItem={props.renderUserReportData}
         keyExtractor={item => item.id.toString()}
@@ -269,6 +274,23 @@ const YourProfileComponent = (props: any) => {
           gap: getWidth(8),
         }}
         style={{ flex: 1 }}
+      /> */}
+      {/* vwTestReports */}
+
+      <FlatList
+        onEndReached={() => {
+          console.log('callend');
+        }}
+        style={{ flex: 1 }}
+        ListHeaderComponent={renderListHeader}
+        data={props.testReportData}
+        renderItem={props.renderTestReportData}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={{
+          gap: getHeight(12),
+          paddingBottom: getHeight(130),
+        }}
       />
     </View>
   );

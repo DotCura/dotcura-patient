@@ -5,6 +5,18 @@ import { fontSize } from '../../../constants/FontSizes';
 import { fontsfamily } from '../../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  vwTestReports: {},
+  vwSeeall: {
+    flexDirection: 'row',
+    marginHorizontal: getWidth(16),
+    alignItems: 'center',
+  },
+  seeall: {
+    color: Colors.blue002,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.gmedium,
+    letterSpacing: 0.2,
+  },
   vwEmpty: {
     flex: 1,
     justifyContent: 'center',
@@ -19,7 +31,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   emptySubtitle: {
-    letterSpacing:0.2,
+    letterSpacing: 0.2,
     color: Colors.gray55,
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.regular,
@@ -41,13 +53,13 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
     color: Colors.gray2A,
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
   },
   selectedText: {
     textAlign: 'left',
     color: Colors.gray2A,
     fontSize: fontSize.size14,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gmedium,
   },
   lblWaitingForResult: {
     color: Colors.gray0F,
@@ -81,9 +93,17 @@ export const styles = StyleSheet.create({
     gap: getWidth(8),
   },
   btnClose: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    elevation: 4,
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.grayED,
+    backgroundColor: Colors.white,
     padding: 8,
     borderRadius: 20,
   },
@@ -92,21 +112,21 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: getWidth(15),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whiteF2,
     paddingHorizontal: getWidth(16),
     paddingBottom: getWidth(10),
   },
   latestanlaysis: {
-    marginHorizontal: getWidth(16),
+    flex: 1,
     color: Colors.gray0F,
     fontSize: fontSize.size20,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gsemiBold,
     letterSpacing: 0.3,
   },
   lblHeaderTitle: {
     color: Colors.gray0F,
     fontSize: fontSize.size24,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gmedium,
   },
   lblSearchProfile: {
     color: Colors.gray0F,

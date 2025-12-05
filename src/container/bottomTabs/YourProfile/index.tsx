@@ -14,44 +14,70 @@ import {
 } from '../../../constants/utils/Dimensions';
 import VerticalBarChartProfile from '../../../global/VerticalBarChartProfile';
 import { ScreenNames } from '../../../constants/AppConstants';
+import ProgressBar from '../../../global/ProgressBar';
 
 const YourProfileContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
   const analysisArray = [
     {
       id: '1',
-      reportname: 'Diabetes',
-      date: '8/8/2025',
+      reportdate: 24,
+      reportmonth: 'dic',
+      reportyear: '2026',
+      kitname: 'Diabete',
+      testname: 'Cuore',
+      kitcount: 6,
+      testcount: 2,
     },
     {
       id: '2',
-      reportname: 'Anemia',
-      date: '8/8/2025',
+      reportdate: 24,
+      reportmonth: 'dic',
+      reportyear: '2026',
+      kitname: 'Diabete',
+      testname: 'Cuore',
+      kitcount: 6,
+      testcount: 2,
     },
     {
       id: '3',
-      reportname: 'Diabetes',
-      date: '8/8/2025',
+      reportdate: 24,
+      reportmonth: 'dic',
+      reportyear: '2026',
+      kitname: 'Diabete',
+      testname: 'Cuore',
+      kitcount: 6,
+      testcount: 2,
     },
     {
       id: '4',
-      reportname: 'Anemia',
-      date: '8/8/2025',
+      reportdate: 24,
+      reportmonth: 'dic',
+      reportyear: '2026',
+      kitname: 'Diabete',
+      testname: 'Cuore',
+      kitcount: 6,
+      testcount: 2,
     },
     {
       id: '5',
-      reportname: 'Anemia',
-      date: '8/8/2025',
+      reportdate: 24,
+      reportmonth: 'dic',
+      reportyear: '2026',
+      kitname: 'Diabete',
+      testname: 'Cuore',
+      kitcount: 6,
+      testcount: 2,
     },
     {
       id: '6',
-      reportname: 'Diabetes',
-      date: '8/8/2025',
-    },
-    {
-      id: '7',
-      reportname: 'Anemia',
-      date: '8/8/2025',
+      reportdate: 24,
+      reportmonth: 'dic',
+      reportyear: '2026',
+      kitname: 'Diabete',
+      testname: 'Cuore',
+      kitcount: 6,
+      testcount: 2,
     },
   ];
 
@@ -59,11 +85,11 @@ const YourProfileContainer = ({ navigation }: any) => {
     {
       id: '1',
       chartData: [
-        { value: 1800, date: 'Set 23'},
-        { value: 0.14, date: 'Set 24'},
-        { value: 0.1, date: 'Dic 24'},
-        { value: 0.26, date: 'Gen 25'},
-        { value: 0.37, date: 'Set 25'},
+        { value: 1800, date: 'Set 23' },
+        { value: 0.14, date: 'Set 24' },
+        { value: 0.1, date: 'Dic 24' },
+        { value: 0.26, date: 'Gen 25' },
+        { value: 0.37, date: 'Set 25' },
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -74,11 +100,11 @@ const YourProfileContainer = ({ navigation }: any) => {
     {
       id: '2',
       chartData: [
-        { value: 1800, date: 'Set 23'},
-        { value: 0.14, date: 'Set 24'},
-        { value: 0.1, date: 'Dic 24'},
-        { value: 0.26, date: 'Gen 25'},
-        { value: 0.37, date: 'Set 25'},
+        { value: 1800, date: 'Set 23' },
+        { value: 0.14, date: 'Set 24' },
+        { value: 0.1, date: 'Dic 24' },
+        { value: 0.26, date: 'Gen 25' },
+        { value: 0.37, date: 'Set 25' },
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -89,11 +115,11 @@ const YourProfileContainer = ({ navigation }: any) => {
     {
       id: '3',
       chartData: [
-        { value: 1800, date: 'Set 23'},
-        { value: 0.14, date: 'Set 24'},
-        { value: 0.1, date: 'Dic 24'},
-        { value: 0.26, date: 'Gen 25'},
-        { value: 0.37, date: 'Set 25'},
+        { value: 1800, date: 'Set 23' },
+        { value: 0.14, date: 'Set 24' },
+        { value: 0.1, date: 'Dic 24' },
+        { value: 0.26, date: 'Gen 25' },
+        { value: 0.37, date: 'Set 25' },
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -104,11 +130,11 @@ const YourProfileContainer = ({ navigation }: any) => {
     {
       id: '4',
       chartData: [
-        { value: 1800, date: 'Set 23'},
-        { value: 0.14, date: 'Set 24'},
-        { value: 0.1, date: 'Dic 24'},
-        { value: 0.26, date: 'Gen 25'},
-        { value: 0.37, date: 'Set 25'},
+        { value: 1800, date: 'Set 23' },
+        { value: 0.14, date: 'Set 24' },
+        { value: 0.1, date: 'Dic 24' },
+        { value: 0.26, date: 'Gen 25' },
+        { value: 0.37, date: 'Set 25' },
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -196,10 +222,42 @@ const YourProfileContainer = ({ navigation }: any) => {
     },
   ];
 
+  const testReportList = [
+    {
+      id: 1,
+      reportimage: images.imgHeart,
+      totalanalysis: 22,
+      currentanalysis: 17,
+      testname: 'Cuore',
+    },
+    {
+      id: 2,
+      reportimage: images.imgKidney,
+      totalanalysis: 22,
+      currentanalysis: 0,
+      testname: 'Reni',
+    },
+    {
+      id: 3,
+      reportimage: images.imgSoda,
+      totalanalysis: 22,
+      currentanalysis: 12,
+      testname: 'Fegato',
+    },
+    {
+      id: 4,
+      reportimage: images.imgLolipop,
+      totalanalysis: 22,
+      currentanalysis: 18,
+      testname: 'Diabete',
+    },
+  ];
+
   const [latestanalysisData, setLatestanalysisData] = useState(analysisArray);
   const [userReportData, setUserReportData] = useState(userReport);
   const [appointmentsData, setAppointmentsData] = useState(appointments);
   const [familyMembersData, setFamilyMembersData] = useState(familyMember);
+  const [testReportData, setTestReportData] = useState(testReportList);
   const [searchVisible, setSearchVisible] = useState(false);
   const [showAllTags, setShowAllTags] = useState(false);
   const [showAllTagsBooked, setShowAllTagsBooked] = useState(false);
@@ -213,7 +271,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       ? [...limitedData, { id: 'see_all', type: 'see_all' }]
       : limitedData;
 
-  const ProgressBar = ({ currentStep, totalSteps = 4 }: any) => {
+  const ProgressBarStep = ({ currentStep, totalSteps = 4 }: any) => {
     const steps = Array.from({ length: totalSteps }, (_, i) => i + 1);
 
     return (
@@ -232,23 +290,23 @@ const YourProfileContainer = ({ navigation }: any) => {
   };
 
   const renderItemLatestAnalysis = ({ item, index }: any) => {
-    if (item.type === 'see_all') {
-      return (
-        <TouchableOpacity
-          activeOpacity={activityOpacity}
-          onPress={handleNavigateOrderHistory}
-          style={[
-            styles.vwReportDate,
-            {
-              flexDirection: 'row',
-            },
-          ]}
-        >
-          <Text style={[styles.lblReportName]}>{getTranslation('seeall')}</Text>
-          <Image source={images.imgRightBlack} />
-        </TouchableOpacity>
-      );
-    }
+    // if (item.type === 'see_all') {
+    //   return (
+    //     <TouchableOpacity
+    //       activeOpacity={activityOpacity}
+    //       onPress={handleNavigateOrderHistory}
+    //       style={[
+    //         styles.vwReportDate,
+    //         {
+    //           flexDirection: 'row',
+    //         },
+    //       ]}
+    //     >
+    //       <Text style={[styles.lblReportName]}>{getTranslation('seeall')}</Text>
+    //       <Image source={images.imgRightBlack} />
+    //     </TouchableOpacity>
+    //   );
+    // }
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
@@ -256,8 +314,49 @@ const YourProfileContainer = ({ navigation }: any) => {
         style={styles.vwReportDate}
         onPress={hanldeNavigateKitAnalysis}
       >
-        <Text style={styles.lblReportName}>{item.reportname}</Text>
-        <Text style={styles.lblDate}>{item.date}</Text>
+        <View style={styles.vwLightBlue}></View>
+        <View>
+          <Text style={styles.lblDateyear}>
+            {getTranslation('analsisOf')}
+            {item.reportdate} {item.reportmonth} {item.reportyear}
+          </Text>
+          <Text style={styles.lblKitAndTestName}>
+            {getTranslation('kitlabeltext')} {item.kitname} ({item.kitcount}),{' '}
+            {item.testname} ({item.testcount})
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderTestReportData = ({ item, index }: any) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={activityOpacity}
+        style={styles.btnTestReport}
+      >
+        <View style={styles.lblTestImage}>
+          <Text style={styles.lblTestName} numberOfLines={1}>
+            {item.testname}
+          </Text>
+          <Image source={item.reportimage} />
+        </View>
+        <View>
+          <Text style={styles.lblTotalAnalysis}>
+            <Text style={styles.lblCurrentanalysis}>
+              {item.currentanalysis}{' '}
+            </Text>
+            {getTranslation('ditext')} {item.totalanalysis}{' '}
+            {getTranslation('analitietext')}
+          </Text>
+          <ProgressBar
+            current={item.currentanalysis}
+            total={item.totalanalysis}
+            height={6}
+            backgroundColor={Colors.blueEF}
+            gradientColors={[Colors.blue00250, Colors.blue002]}
+          />
+        </View>
       </TouchableOpacity>
     );
   };
@@ -525,15 +624,15 @@ const YourProfileContainer = ({ navigation }: any) => {
                 </TouchableOpacity>
               )}
             </View>
-            <ProgressBar currentStep={1} />
+            <ProgressBarStep currentStep={1} />
           </TouchableOpacity>
         )}
       </>
     );
   };
 
-  const handlePressCheckout = () => {
-    navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+  const handlePressProfile = () => {
+    navigation.navigate(ScreenNames.PROFILECONTAINER);
   };
 
   const hanldeNavigateKitAnalysis = () => {
@@ -552,6 +651,8 @@ const YourProfileContainer = ({ navigation }: any) => {
       modifiedData={modifiedData}
       userReportData={userReportData}
       renderUserReportData={renderUserReportData}
+      renderTestReportData={renderTestReportData}
+      testReportData={testReportData}
       setSearchVisible={setSearchVisible}
       searchVisible={searchVisible}
       renderItemAppointment={renderItemAppointment}
@@ -561,7 +662,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       setSelectedName={setSelectedName}
       showPopup={showPopup}
       setShowPopup={setShowPopup}
-      handlePressCheckout={handlePressCheckout}
+      handlePressProfile={handlePressProfile}
       hanldeNavigateKitAnalysis={hanldeNavigateKitAnalysis}
     />
   );

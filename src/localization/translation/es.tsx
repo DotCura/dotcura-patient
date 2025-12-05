@@ -347,6 +347,7 @@ export default {
   paymentmethodtext: 'Metodi di Pagamento',
 
   //PROFILE
+  kitlabeltext:"Kit",
   membersince: 'Membro dal',
   notifications: 'Notifiche',
   emailnotification: 'Notifiche email',
