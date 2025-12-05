@@ -262,10 +262,14 @@ export const styles = StyleSheet.create({
   },
   vwMainModelHeader: {
     paddingTop: getHeight(10),
+    marginHorizontal: getWidth(16),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  vwMainModelHeaderEditAnliti:{
+  vwMainModelHeaderEditAnliti: {
     paddingTop: getHeight(10),
-    marginHorizontal:getWidth(16)
+    marginHorizontal: getWidth(16),
   },
   vwMain: {
     flexDirection: 'row',

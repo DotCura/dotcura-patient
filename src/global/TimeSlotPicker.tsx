@@ -82,7 +82,7 @@ export default function TimeSlotPicker({
         }
       }, 150);
     }
-  }, [showPicker]); 
+  }, [showPicker]);
 
   return (
     <View style={styles.pickerContainer}>
@@ -104,7 +104,7 @@ export default function TimeSlotPicker({
               <Text
                 style={[
                   styles.itemText,
-                  { color: isSelected ? Colors.blue17 : Colors.gray0F },
+                  { color: isSelected ? Colors.blue002 : Colors.gray0F },
                 ]}
               >
                 {date.label}
@@ -133,7 +133,7 @@ export default function TimeSlotPicker({
               <Text
                 style={[
                   styles.itemText,
-                  { color: isSelected ? Colors.blue17 : Colors.gray0F },
+                  { color: isSelected ? Colors.blue002 : Colors.gray0F },
                 ]}
               >
                 {slot.display}
@@ -165,7 +165,9 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.medium,
+    fontFamily: fontsfamily.gregular,
+    color: Colors.gray0F,
+    letterSpacing: 0.2,
   },
   highlightBar: {
     position: 'absolute',

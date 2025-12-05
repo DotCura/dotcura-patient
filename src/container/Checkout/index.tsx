@@ -206,6 +206,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     { id: 2, title: 'Casa', subtitle: 'Via Roma, 31 – Naples' },
     { id: 3, title: 'Appartamento', subtitle: 'Piazzale Napoli, 21 – Rome' },
   ];
+
   const analaitidata = [
     {
       id: '1',
@@ -242,7 +243,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       price: 10.0,
       status: null,
     },
-    
   ];
 
   const [testkitsData, setTestsKitData] = useState(testKits);
@@ -250,22 +250,32 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [kitDataAddMore, setKitDataAddMore] = useState(kitListAddMore);
   const [kitsArrayData, setKitsArraysData] = useState(kitsData);
   const [analitiArrayData, setAnalitiArraysData] = useState(analaitidata);
-  const [selectedTests, setSelectedTests] = useState(analitiArrayData.map(t => t.id));
-  const [selectedTestsKits, setSelectedTestsKits] = useState(kitsArrayData.map(t => t.id));
+
+  const [selectedTestsAnaliti, setSelectedTestsAnaliti] = useState(
+    analitiArrayData.map(t => t.id),
+  );
+  const [selectedTestsKits, setSelectedTestsKits] = useState(
+    kitsArrayData.map(t => t.id),
+  );
+
   const [manageAddress, setManageAddress] = useState('');
   const [discountCode, setDiscountCode] = useState('');
   const [discountValue, setDiscountValue] = useState(20);
+
   const [familyMemberData, setFamilyMemberData] = useState(familymembers);
   const [familymemberValue, setFamilyMemberValue] = useState<string | null>(
     '1',
   );
+
   const [showPicker, setShowPicker] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<{
     day: string;
     time: string;
   } | null>(null);
+
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
+
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
   const [showIsKitTestDetails, setShowIsKitTestDetails] = useState(false);
   const [AddressData, setAddressData] = useState(addressList);
@@ -273,6 +283,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [cancleOrderVisible, setCancleOrderVisible] = useState(false);
   const [addAddressPopupVisible, setAddAddressPopupVisible] = useState(false);
   const [editAnlitiPopupVisible, setEditAnalitiPopupVisible] = useState(false);
+
   const [selectedAddress, setSelectedAddress] = useState(null);
   const homeServiceCharge = 20;
 
@@ -292,38 +303,27 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   };
 
   const toggleSelect = (id: string) => {
-    setSelectedTests(prev => {
+    setSelectedTestsAnaliti(prev => {
       // ❌ If only 1 item is selected → DO NOT allow removal
       if (prev.length === 1 && prev.includes(id)) {
-        flashMessageWarning(getTranslation("atleastoneselected"))
+        Alert.alert(getTranslation('atleastoneselected') || '');
         return prev; // stop here
       }
-  
+
       // Normal add/remove
-      return prev.includes(id)
-        ? prev.filter(i => i !== id)
-        : [...prev, id];
+      return prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id];
     });
   };
 
-  const selectAll = () => {
-    if (selectedTests.length === kitsArrayData.length) {
-      setSelectedTests([]);
-    } else {
-      setSelectedTests(kitsArrayData.map(t => t.id));
-    }
-  };
-
   const totalPriceAnaliti = analitiArrayData
-    .filter(t => selectedTests.includes(t.id))
+    .filter(t => selectedTestsAnaliti.includes(t.id))
     .reduce((sum, t) => sum + t.price, 0);
 
-    const totalPriceKits = kitsArrayData
+  const totalPriceKits = kitsArrayData
     .filter(t => selectedTestsKits.includes(t.id))
     .reduce((sum, t) => sum + t.price, 0);
 
   const renderItemKitsData = ({ item, index }: { item: any; index: any }) => {
-    const selected = selectedTests.includes(item.id);
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View
@@ -433,18 +433,17 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   };
 
   const funOpenEditKit = () => {
-    console.log('hy');
-
     setShowIsKitTestDetails(true);
   };
+
   const funCloseEditKit = () => {
     setShowIsKitTestDetails(false);
   };
-  const funOpenEditAnaliti = () => {
-    console.log('hy');
 
+  const funOpenEditAnaliti = () => {
     setEditAnalitiPopupVisible(true);
   };
+
   const funCloseEditAnaliti = () => {
     setEditAnalitiPopupVisible(false);
   };
@@ -574,9 +573,15 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     );
   };
 
-  const renderitemanalitidata = ({ item, index }: { item: any; index: any }) => {
-    const selected = selectedTests.includes(item.id);
-    const isLastSelected = selectedTests.length === 1 && selected;
+  const renderitemanalitidata = ({
+    item,
+    index,
+  }: {
+    item: any;
+    index: any;
+  }) => {
+    const selected = selectedTestsAnaliti.includes(item.id);
+    const isLastSelected = selectedTestsAnaliti.length === 1 && selected;
 
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -629,27 +634,26 @@ const CheckoutContainer = ({ navigation, route }: any) => {
           </View>
         </View>
         <View style={{ alignSelf: 'flex-start', marginTop: 2 }}>
-        {!selected ? (
-          <TouchableOpacity
-            activeOpacity={activityOpacity}
-            style={styles.btnadd}
-            disabled={isLastSelected}
-
-            onPress={() => toggleSelect(item.id)}
-          >
-            <Image source={images.imgPlusDark} />
-            <Text style={styles.lblAdd}>{getTranslation('add')}</Text>
-          </TouchableOpacity>
-           ) : (
-          <TouchableOpacity
-            activeOpacity={activityOpacity}
-            style={[styles.btnadd, { backgroundColor: Colors.white }]}
-            onPress={() => toggleSelect(item.id)}
-          >
-            <Image source={images.imgminusdark} />
-            <Text style={styles.lblAdd}>{getTranslation('remove')}</Text>
-          </TouchableOpacity>
-           )}
+          {!selected ? (
+            <TouchableOpacity
+              activeOpacity={activityOpacity}
+              style={styles.btnadd}
+              disabled={isLastSelected}
+              onPress={() => toggleSelect(item.id)}
+            >
+              <Image source={images.imgPlusDark} />
+              <Text style={styles.lblAdd}>{getTranslation('add')}</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              activeOpacity={activityOpacity}
+              style={[styles.btnadd, { backgroundColor: Colors.white }]}
+              onPress={() => toggleSelect(item.id)}
+            >
+              <Image source={images.imgminusdark} />
+              <Text style={styles.lblAdd}>{getTranslation('remove')}</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );
@@ -936,12 +940,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     header();
   }, []);
 
-  useEffect(() => {
-    if (route?.params?.ismodelfromCheckout) {
-      setAddressPopupVisible(true);
-    }
-  }, [route?.params]);
-
   return (
     <CheckoutComponent
       navigation={navigation}
@@ -986,9 +984,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       //kittestdetails
       kitsArrayData={kitsArrayData}
       renderItemKitsData={renderItemKitsData}
-      selectAll={selectAll}
       totalPriceKits={totalPriceKits}
-      selectedTests={selectedTests}
       funOpenEditKit={funOpenEditKit}
       funCloseEditKit={funCloseEditKit}
       //editanaliti

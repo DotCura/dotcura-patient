@@ -344,7 +344,7 @@ const CheckoutComponent = (props: any) => {
 
           <View
             style={{
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.whiteF2,
               borderTopLeftRadius: getHeight(20),
               borderTopRightRadius: getHeight(20),
               maxHeight: '60%',
@@ -393,7 +393,7 @@ const CheckoutComponent = (props: any) => {
               }}
             >
               <CustomButton
-                btnTitle={getTranslation('booktext')}
+                btnTitle={getTranslation('confirmdata')}
                 btnPress={props.onBookSlot}
               />
             </View>
@@ -525,9 +525,6 @@ const CheckoutComponent = (props: any) => {
                 </Text>
               </View>
               <View style={styles.vwPrice}>
-                {/* {props.selectedTests.length === props.kitsArrayData.length && (
-            <Text style={styles.disprice}>{currency}0.54</Text>
-          )} */}
                 <Text style={styles.totalprice}>
                   {currency}
                   {props.total.toFixed(2)}
@@ -747,8 +744,9 @@ const CheckoutComponent = (props: any) => {
         onSelect={props.handleOnPressSetId}
         onAddAddress={props.handlePressAddAddress}
         onClose={props.handleCloseAddress}
-        onSave={props.handleOnPressSaveLocation} // use when hitting Save button
+        onSave={props.handleOnPressSaveLocation}
       />
+
       {/* AddAddressModel */}
       <Modal
         transparent={true}
