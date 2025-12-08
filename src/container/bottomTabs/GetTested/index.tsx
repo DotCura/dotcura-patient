@@ -278,9 +278,9 @@ const GetTestedContainer = ({ navigation }: any) => {
             >
               <Image source={images.imgPlusBlack} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btnFav}>
+            {/* <TouchableOpacity style={styles.btnFav}>
               <Image source={images.imgFavFilled} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             {item.status != null && (
               <View
                 style={{
@@ -327,7 +327,7 @@ const GetTestedContainer = ({ navigation }: any) => {
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
-        onPress={()=>navigation.navigate(ScreenNames.ANALITIDETAILSCONTAINER)}
+        onPress={() => navigation.navigate(ScreenNames.ANALITIDETAILSCONTAINER)}
         style={styles.btnAnalitiMain}
       >
         <View style={styles.vwtitleimage}>

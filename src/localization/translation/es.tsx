@@ -403,6 +403,8 @@ export default {
   //ORDERHSITORYPOPUP
   pickup: 'Prelevato il',
   downloadreceipt: 'Scarica ricevuta',
+  orderhistoryemptytitle:"Qui non c’è nessun ordine",
+  orderhistoryemptysubtitle:"Non hai ancora effettuato ordini.",
 
   // CONFIRMIDENTITY
   confrimaccount: 'Conferma account',

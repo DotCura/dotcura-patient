@@ -90,6 +90,8 @@ export const images = {
   imglightbluetick: require('../assets/images/ticklightblue.png'),
   imgminusdark: require('../assets/images/minusDark.png'),
   imgInjection: require('../assets/images/injection.png'),
+  imgMicroscope: require('../assets/images/microscope.png'),
+  
   
 
   // Static Images

@@ -103,14 +103,13 @@ const ProfileComponent = (props: any) => {
       </View>
 
       {/* vwFavourite */}
-      <View style={[styles.vwLatestValue]}>
+      {/* <View style={[styles.vwLatestValue]}>
         <View style={{ marginHorizontal: getWidth(16) }}>
           <Text style={styles.lblLatestValue}>
             {getTranslation('favourite')}
           </Text>
         </View>
 
-        {/* vwFavourites */}
         <View>
           <FlatList
             onEndReached={() => {
@@ -128,7 +127,7 @@ const ProfileComponent = (props: any) => {
             }}
           />
         </View>
-      </View>
+      </View> */}
 
       {/* container */}
       <View style={styles.container}>

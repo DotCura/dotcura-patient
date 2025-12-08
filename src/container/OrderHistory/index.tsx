@@ -313,7 +313,7 @@ const OrderHistoryContainer = ({ navigation }: any) => {
         <View style={styles.vwMainOrderDetails}>
           <View style={{ flex: 1 }}>
             <Text style={styles.lblOrderTitle}>
-              {getTranslation('analsisOf')} {formatDateToSpanish(item.date)}
+              {getTranslation('analsisOf')}{formatDateToSpanish(item.date)}
             </Text>
             <Text style={styles.lblOrderID}>
               {getTranslation('orderidlabel')} {item.orderid}
