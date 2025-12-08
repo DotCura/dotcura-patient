@@ -5,6 +5,22 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  lblEditText:{
+    color: Colors.blue002,
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size14,
+    letterSpacing: 0.1,
+  },
+  editbtn: {
+    backgroundColor: Colors.blueD1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: getWidth(6),
+    flexDirection: 'row',
+    paddingVertical: getHeight(8),
+    paddingHorizontal: getWidth(12),
+    borderRadius: 20,
+  },
   lblAdd: {
     color: Colors.blue002,
     fontFamily: fontsfamily.gmedium,
@@ -21,9 +37,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: getWidth(12),
   },
   lblKitCount: {
-    color: Colors.gray0F,
-    fontFamily: fontsfamily.gmedium,
-    fontSize: fontSize.size16,
+    color: Colors.gray75,
+    fontFamily: fontsfamily.gregular,
+    fontSize: fontSize.size14,
   },
   vwGrey: {
     backgroundColor: Colors.grayF3,
@@ -168,7 +184,6 @@ export const styles = StyleSheet.create({
     fontFamily: fontsfamily.gbold,
     flex: 1,
     letterSpacing: 0.2,
-    marginRight: getWidth(15),
   },
   testedInlcuded: {
     color: Colors.gray2A,

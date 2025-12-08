@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { constnatStyles } from '../../constants/Styles';
 
-const OrderHistoryComponent = (props: any) => {
+const HistoricalAnalysisComponent = (props: any) => {
   return (
     <View
       style={[
@@ -15,8 +15,8 @@ const OrderHistoryComponent = (props: any) => {
         onEndReached={() => {
           console.log('callend');
         }}
-        data={props.orderHistoryData}
-        renderItem={props.renderItemAppointment}
+        data={props.historicalanalysisData}
+        renderItem={props.renderItemHistoricalAnalisis}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}
         style={{ flex: 1 }}
@@ -30,4 +30,4 @@ const OrderHistoryComponent = (props: any) => {
   );
 };
 
-export default OrderHistoryComponent;
+export default HistoricalAnalysisComponent;

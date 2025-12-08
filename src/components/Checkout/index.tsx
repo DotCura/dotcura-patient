@@ -563,7 +563,7 @@ const CheckoutComponent = (props: any) => {
             {/* Header */}
             <ImageBackground
               source={images.imgkit1}
-              style={[styles.vwMainModelHeader]}
+              style={[styles.vwMainModelHeaderTestDetails]}
             >
               <View
                 style={{ paddingHorizontal: getWidth(16), gap: getHeight(3) }}

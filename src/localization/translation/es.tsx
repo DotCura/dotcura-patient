@@ -145,6 +145,7 @@ export default {
   checkuptext: 'Check-up',
   analitiheadertext: 'Analiti',
   andtext: 'da',
+  oftext: 'di',
 
   //KITDETAILS
   kitanalysis: 'Kit analisi',
@@ -175,8 +176,10 @@ export default {
   analititextdetails: 'Analiti',
   atleastoneselected: 'Almeno un test deve rimanere selezionato.',
 
+  
+
   //CHECKOUT
-  confirmdata:"Conferma data",
+  confirmdata: 'Conferma data',
   canclereservation: 'Cancella prenotazione',
   addanalysis: 'Aggiungi analisi',
   help: 'Aiuto',
@@ -225,6 +228,14 @@ export default {
   ordersentsubtitle:
     'La tua richiesta é stata registrata.Stiamo cercando un infermiere per te...',
   editorder: 'Modifica ordine',
+
+  //ANALITIDETAILSTEST
+  desanalititestdetails:
+    'Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida at eget metus.',
+
+  //HISTORICALANALSIS
+  historicalanalistext:"Storico analisi",
+  orderidlabel:"Ordine",
 
   //YOURPROFILE
   searchprofile: 'Cerca',
@@ -347,7 +358,8 @@ export default {
   paymentmethodtext: 'Metodi di Pagamento',
 
   //PROFILE
-  kitlabeltext:"Kit",
+  kitlabeltext: 'Kit',
+  kitlabeltextcheckout: 'Kit ',
   membersince: 'Membro dal',
   notifications: 'Notifiche',
   emailnotification: 'Notifiche email',

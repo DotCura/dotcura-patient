@@ -328,4 +328,18 @@ export const getRandomTheme = () => {
   return themes[randomIndex];
 };
 
+export const formatDateToSpanish = (dateString: string) => {
+  const months = [
+    "Ene", "Feb", "Mar", "Abr", "May", "Jun",
+    "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
+  ];
+
+  const [year, month, day] = dateString.split("-");
+
+  const monthName = months[parseInt(month) - 1];
+
+  return `${day} ${monthName} ${year}`;
+};
+
+
 

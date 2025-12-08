@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     fontFamily: fontsfamily.gmedium,
     fontSize: fontSize.size16,
     color: Colors.white,
+    letterSpacing: 0.2,
   },
   kittitle: {
     fontFamily: fontsfamily.gmedium,
@@ -108,12 +109,6 @@ export const styles = StyleSheet.create({
     color: Colors.gray55,
     letterSpacing: 0.2,
   },
-  lblGoToCart: {
-    fontFamily: fontsfamily.gmedium,
-    fontSize: fontSize.size16,
-    color: Colors.white,
-    letterSpacing: 0.2,
-  },
   vwCartImage: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -156,11 +151,7 @@ export const styles = StyleSheet.create({
     marginBottom: getHeight(12),
   },
   vwBottomBtn: {
-    // position: 'absolute',
-    // left: 0,
-    // right: 0,
-    marginTop: getHeight(60),
-    // marginHorizontal: getWidth(16),
+    marginTop: getHeight(16),
     gap: getHeight(8),
   },
   lblwhodothetest: {
@@ -263,6 +254,12 @@ export const styles = StyleSheet.create({
   vwMainModelHeader: {
     paddingTop: getHeight(10),
     marginHorizontal: getWidth(16),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  vwMainModelHeaderTestDetails: {
+    paddingTop: getHeight(10),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

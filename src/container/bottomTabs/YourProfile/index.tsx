@@ -640,7 +640,7 @@ const YourProfileContainer = ({ navigation }: any) => {
   };
 
   const handleNavigateOrderHistory = () => {
-    navigation.navigate(ScreenNames.ORDERHISTORYCONTAINER);
+    navigation.navigate(ScreenNames.HISTORICALANALYSISCONTAINER);
   };
 
   return (

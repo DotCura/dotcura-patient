@@ -79,7 +79,7 @@ const MainNavigation = props => {
         {_addScreen(ScreenNames.KITDETAILSCONTAINER, {}, { headerShown: true })}
         {_addScreen(ScreenNames.CHECKOUTCONTAINER, {}, { headerShown: true })}
         {_addScreen(
-          ScreenNames.ORDERHISTORYCONTAINER,
+          ScreenNames.HISTORICALANALYSISCONTAINER,
           {},
           { headerShown: true },
         )}
@@ -130,6 +130,11 @@ const MainNavigation = props => {
         {_addScreen(ScreenNames.FAVOURITESCONTAINER, {}, { headerShown: true })}
         {_addScreen(
           ScreenNames.ANALITIDETAILSCONTAINER,
+          {},
+          { headerShown: true },
+        )}
+         {_addScreen(
+          ScreenNames.ANALITITESTDETAILSCONTAINER,
           {},
           { headerShown: true },
         )}

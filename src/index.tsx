@@ -1,4 +1,6 @@
 
+
+
 //AUTH
 export LoginContainer from "./container/auth/Login";
 export OnBoardingContainer from "./container/auth/OnBoarding";
@@ -25,7 +27,6 @@ export WelcomeContainer from "./container/auth/Welcome";
 
 export KitDetailsContainer from "./container/KitDetails";
 export CheckoutContainer from "./container/Checkout";
-export OrderHistoryContainer from "./container/OrderHistory";
 export KitAnalysisContainer from "./container/KitAnlaysis";
 export TestDetailsContainer from "./container/TestDetails";
 export AddFamilyContainer from "./container/AddFamily";
@@ -38,6 +39,9 @@ export AddFamilyMemberContainer from "./container/AddFamilyMembers";
 export ResultOpenUpContainers from "./container/ResultOpenUp";
 export AddCardProfileContainer from "./container/auth/AddCardProfile";
 export AnalitiDetailsContainer from "./container/AnalitiDetails";
+export AnalitiTestDetailContainer from "./container/AnalitiTestDetail";
+export HistoricalAnalysisContainer from "./container/HistoricalAnalysis";
+
 
 
 

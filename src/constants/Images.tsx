@@ -89,6 +89,8 @@ export const images = {
   imgCalenderBlue: require('../assets/images/calendarBlue.png'),
   imglightbluetick: require('../assets/images/ticklightblue.png'),
   imgminusdark: require('../assets/images/minusDark.png'),
+  imgInjection: require('../assets/images/injection.png'),
+  
 
   // Static Images
   imgkit1: require('../assets/images/Static/kit1.png'),

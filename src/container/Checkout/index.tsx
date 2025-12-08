@@ -467,13 +467,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const renderItemTestKits = ({ item }: any) => {
     return (
-      <TouchableOpacity
-        activeOpacity={activityOpacity}
-        style={styles.card}
-        onPress={() => {
-          pressHandleCartItem(item.type);
-        }}
-      >
+      <View style={styles.card}>
         <View
           style={{
             flex: 1,
@@ -490,9 +484,42 @@ const CheckoutContainer = ({ navigation, route }: any) => {
               borderRadius: 8,
             }}
           />
-          <Text style={styles.cardTitle}>
-            {item.name} <Text style={styles.lblKitCount}>({item.count})</Text>
-          </Text>
+          <View
+            style={{ flex: 1, gap: getHeight(9), marginRight: getWidth(20) }}
+          >
+            <Text style={styles.cardTitle}>
+              {item.type === 'kit' && getTranslation('kitlabeltextcheckout')}
+              {item.name}{' '}
+              {item.type !== 'kit' && (
+                <Text style={styles.lblKitCount}>({item.count})</Text>
+              )}
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: getWidth(18),
+                alignItems: 'center',
+              }}
+            >
+              {item.type !== 'kit' && (
+                <TouchableOpacity
+                  style={styles.editbtn}
+                  onPress={() => {
+                    pressHandleCartItem(item.type);
+                  }}
+                  activeOpacity={activityOpacity}
+                >
+                  <Image source={images.pencilblue} />
+                  <Text style={styles.lblEditText}>
+                    {getTranslation('edit')}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              <TouchableOpacity activeOpacity={activityOpacity}>
+                <Image source={images.imgDelete} tintColor={Colors.gray0F} />
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
         <View
           style={{
@@ -504,9 +531,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
           <Text style={styles.cardPrice}>
             {currency} {item.price.toFixed(2)}
           </Text>
-          <Image source={images.pencilblue} tintColor={Colors.gray0F} />
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
 
