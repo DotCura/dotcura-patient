@@ -323,7 +323,7 @@ const HomeComponent = (props: any) => {
                           minValue={reportItem.minValue}
                           maxValue={reportItem.maxvalue}
                           width={ScreenDimensions.screenWidth - getWidth(40)}
-                          height={getHeight(50)}
+                          height={getHeight(30)}
                           reportName={reportItem.reportname}
                           reportValue={reportItem.reportValue}
                           reportItem={reportItem}
