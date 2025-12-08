@@ -41,6 +41,8 @@ export AddCardProfileContainer from "./container/auth/AddCardProfile";
 export AnalitiDetailsContainer from "./container/AnalitiDetails";
 export AnalitiTestDetailContainer from "./container/AnalitiTestDetail";
 export HistoricalAnalysisContainer from "./container/HistoricalAnalysis";
+export OrderHistoryContainer from "./container/OrderHistory";
+
 
 
 

@@ -133,8 +133,13 @@ const MainNavigation = props => {
           {},
           { headerShown: true },
         )}
-         {_addScreen(
+        {_addScreen(
           ScreenNames.ANALITITESTDETAILSCONTAINER,
+          {},
+          { headerShown: true },
+        )}
+        {_addScreen(
+          ScreenNames.ORDERHISTORYCONTAINER,
           {},
           { headerShown: true },
         )}
