@@ -22,7 +22,7 @@ const ResultOpenUpComponents = (props: any) => {
       <View style={{ flex: 1 }}>
         <Image
           source={images.imgFolderOpen}
-          style={{ alignSelf: 'center', marginTop: '55%' }}
+          style={{ alignSelf: 'center', marginTop: getHeight(142) }}
         />
         <View style={{ marginTop: getHeight(16), gap: getHeight(4) }}>
           <Text style={styles.lblResultOpenTitle} numberOfLines={2}>

@@ -33,8 +33,10 @@ export const Colors = {
   grey40:"#40360D",
   grey29:"#929298",
   greyf324:"#F3F3F53D",
+  grey9224:"#9292983D",
   greyC5:"#C5C5CB",
   grey7816:"#78788029",
+  gray92:"#929298",
 
   //new Color
   blue002:"#002F6C",
@@ -48,6 +50,8 @@ export const Colors = {
   blue0019:"#001933",
   blue00250:"#002F6C80",
   blueEF:"#EFF6FE",
+  blue2243:"#224382",
+  blue3C78:"#3C78E8",
   
   greenD9: '#D9FCE0',
   green0D: '#0D4018',

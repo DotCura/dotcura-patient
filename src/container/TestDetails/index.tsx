@@ -8,11 +8,11 @@ import { Colors } from '../../constants/Colors';
 
 const TestDetailsContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
-  
+
   const userReport = {
     id: '1',
     chartData: [
-      { value: 1800, date: 'Set 23'},
+      { value: 1800, date: 'Set 23' },
       { value: 0.14, date: 'Set 24' },
       { value: 0.1, date: 'Dic 24' },
       { value: 0.26, date: 'Gen 25' },
@@ -35,33 +35,10 @@ const TestDetailsContainer = ({ navigation }: any) => {
     setNote(text);
   };
 
-  const header = () => {
-    navigation.setOptions({
-      header: () => (
-        <AppHeader
-          startBtnOnPress={() => {
-            console.log('hy');
-            navigation.goBack();
-          }}
-          dontShowStartBtn={false}
-          showTitle={true}
-          showSubTitle={true}
-          showEndBtn={false}
-          centerTitle={'Glicemia'}
-          centerSubTitle={'8/8/2025' + '-' + '17:09'}
-        />
-      ),
-    });
-  };
-
-  useEffect(() => {
-    header();
-  }, []);
   return (
     <TestDetailsComponents
       insets={insets}
       note={note}
-
       onChangeNotes={onChangeNotes}
       noteError={noteError}
       setNoteError={setNoteError}

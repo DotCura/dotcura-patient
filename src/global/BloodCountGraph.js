@@ -261,10 +261,12 @@ import {
 import { fontsfamily } from '../constants/FontFamily';
 import { fontSize } from '../constants/FontSizes';
 import { Colors } from '../constants/Colors';
-import { getWidth } from '../constants/utils/Dimensions';
+import { getHeight, getWidth } from '../constants/utils/Dimensions';
 import { activityOpacity } from '../constants/GConstant';
 import { images } from '../constants/Images';
 import LinearGradient from 'react-native-linear-gradient';
+import CustomButton from './Buttons';
+import { getTranslation } from '../localization/i18n/i18n.config';
 
 // Chart constants
 const INDICATOR_RADIUS = 9;
@@ -398,7 +400,7 @@ const BarChartComponent = ({
     x: CHART_PADDING + (i / (DOT_COUNT - 1)) * CHART_WIDTH,
     y: centerY,
   }));
-
+  const isTestedReport = props.reportItem.isTest == true;
   return (
     <TouchableOpacity
       style={{
@@ -409,19 +411,21 @@ const BarChartComponent = ({
       }}
       activeOpacity={activityOpacity}
     >
-      <LinearGradient
-        // 1. First color: The blue glow
-        // 2. Second color: Pure white
-        colors={['#D1E0FF', '#D1E0FF', '#FFFFFF']}
-        // 3. Start high and to the right (100% right, 0% top)
-        start={{ x: 1, y: 0 }}
-        // 4. End just a little bit away from that corner
-        // Changing this to 0.7 instead of 0.0 makes it look "sprayed"
-        end={{ x: 0.9, y: 0.5 }}
-        style={styles.card}
-      >
-        {/* Your content here */}
-      </LinearGradient>
+      {isTestedReport && (
+        <LinearGradient
+          // 1. First color: The blue glow
+          // 2. Second color: Pure white
+          colors={['#D1E0FF', '#D1E0FF', '#FFFFFF']}
+          // 3. Start high and to the right (100% right, 0% top)
+          start={{ x: 1, y: 0 }}
+          // 4. End just a little bit away from that corner
+          // Changing this to 0.7 instead of 0.0 makes it look "sprayed"
+          end={{ x: 0.9, y: 0.5 }}
+          style={styles.card}
+        >
+          {/* Your content here */}
+        </LinearGradient>
+      )}
       <View
         style={{
           flexDirection: 'row',
@@ -439,68 +443,86 @@ const BarChartComponent = ({
         >
           {props.reportName}
         </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: getWidth(8),
-          }}
-        >
-          <Text
+        {isTestedReport && (
+          <View
             style={{
-              fontSize: fontSize.size16,
-              fontFamily: fontsfamily.gregular,
-              color: Colors.gray75,
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: getWidth(8),
             }}
           >
             <Text
               style={{
-                fontSize: fontSize.size20,
+                fontSize: fontSize.size16,
                 fontFamily: fontsfamily.gregular,
-                color: Colors.gray0F,
+                color: Colors.gray75,
               }}
             >
-              {' '}
-              {props.reportValue}
-            </Text>{' '}
-            {props.reportItem.reportunit}
-          </Text>
-          <Image source={images.imgRightCurve} style={{ marginTop: 3 }} />
-        </View>
+              <Text
+                style={{
+                  fontSize: fontSize.size20,
+                  fontFamily: fontsfamily.gregular,
+                  color: Colors.gray0F,
+                }}
+              >
+                {' '}
+                {props.reportValue}
+              </Text>{' '}
+              {props.reportItem.reportunit}
+            </Text>
+            <Image source={images.imgRightCurve} style={{ marginTop: 3 }} />
+          </View>
+        )}
       </View>
-      <View style={{ alignSelf: 'center', marginTop: 12 }}>
-        <Svg width={width} height={height}>
-          {/* LINEAR GRADIENT FOR DOTS */}
-          <Defs>
-            <SvgGradient id="dotGradient" cx="50%" cy="50%" r="50%">
-              <Stop offset="0%" stopColor="#737373" />
-              <Stop offset="100%" stopColor="#737373" stopOpacity="0.2" />
-            </SvgGradient>
-          </Defs>
+      {isTestedReport && (
+        <View style={{ alignSelf: 'center', marginTop: 12 }}>
+          <Svg width={width} height={height}>
+            {/* LINEAR GRADIENT FOR DOTS */}
+            <Defs>
+              <SvgGradient id="dotGradient" cx="50%" cy="50%" r="50%">
+                <Stop offset="0%" stopColor="#737373" />
+                <Stop offset="100%" stopColor="#737373" stopOpacity="0.2" />
+              </SvgGradient>
+            </Defs>
 
-          {/* Dotted line */}
-          {dots.map((dot, index) => (
-            <Circle
-              key={`dot-${index}`}
-              cx={dot.x}
-              cy={dot.y}
-              r={DOT_RADIUS}
-              fill="url(#dotGradient)"
+            {/* Dotted line */}
+            {dots.map((dot, index) => (
+              <Circle
+                key={`dot-${index}`}
+                cx={dot.x}
+                cy={dot.y}
+                r={DOT_RADIUS}
+                fill="url(#dotGradient)"
+              />
+            ))}
+
+            {/* Hexagon represents min-max range */}
+            <Polygon
+              points={hexagonPoints}
+              fill={Colors.whiteF2}
+              opacity={0.8}
             />
-          ))}
 
-          {/* Hexagon represents min-max range */}
-          <Polygon points={hexagonPoints} fill={Colors.whiteF2} opacity={0.8} />
-
-          {/* Current value indicator */}
-          <Circle
-            cx={valueX}
-            cy={centerY}
-            r={INDICATOR_RADIUS}
-            fill={INDICATOR_COLOR}
+            {/* Current value indicator */}
+            <Circle
+              cx={valueX}
+              cy={centerY}
+              r={INDICATOR_RADIUS}
+              fill={INDICATOR_COLOR}
+            />
+          </Svg>
+        </View>
+      )}
+      {!isTestedReport && (
+        <View style={{ marginHorizontal: getWidth(20) }}>
+          <CustomButton
+            style={{ backgroundColor: Colors.blueD1, marginTop: getHeight(13) }}
+            textStyle={{ color: Colors.blue002, fontSize: fontSize.size16 }}
+            // btnPress={props.handlePressLogout}
+            btnTitle={getTranslation('booknowtext')}
           />
-        </Svg>
-      </View>
+        </View>
+      )}
     </TouchableOpacity>
   );
 };

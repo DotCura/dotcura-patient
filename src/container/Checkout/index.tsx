@@ -484,9 +484,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
               borderRadius: 8,
             }}
           />
-          <View
-            style={{ flex: 1, gap: getHeight(9), marginRight: getWidth(20) }}
-          >
+          <View style={{ flex: 1, marginRight: getWidth(25) }}>
             <Text style={styles.cardTitle}>
               {item.type === 'kit' && getTranslation('kitlabeltextcheckout')}
               {item.name}{' '}
@@ -494,43 +492,37 @@ const CheckoutContainer = ({ navigation, route }: any) => {
                 <Text style={styles.lblKitCount}>({item.count})</Text>
               )}
             </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                gap: getWidth(18),
-                alignItems: 'center',
-              }}
-            >
-              {item.type !== 'kit' && (
-                <TouchableOpacity
-                  style={styles.editbtn}
-                  onPress={() => {
-                    pressHandleCartItem(item.type);
-                  }}
-                  activeOpacity={activityOpacity}
-                >
-                  <Image source={images.pencilblue} />
-                  <Text style={styles.lblEditText}>
-                    {getTranslation('edit')}
-                  </Text>
-                </TouchableOpacity>
-              )}
-              <TouchableOpacity activeOpacity={activityOpacity}>
-                <Image source={images.imgDelete} tintColor={Colors.gray0F} />
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.cardPrice}>
+              {currency} {item.price.toFixed(2)}
+            </Text>
           </View>
         </View>
         <View
           style={{
             flexDirection: 'row',
-            gap: getWidth(8),
+            gap: getWidth(18),
             alignItems: 'center',
+            alignSelf: 'flex-start',
+            marginTop: getHeight(2),
           }}
         >
-          <Text style={styles.cardPrice}>
-            {currency} {item.price.toFixed(2)}
-          </Text>
+          {item.type !== 'kit' && (
+            <TouchableOpacity
+              // style={styles.editbtn}
+              onPress={() => {
+                pressHandleCartItem(item.type);
+              }}
+              activeOpacity={activityOpacity}
+            >
+              <Image source={images.pencilblue} tintColor={Colors.gray0F} />
+              {/* <Text style={styles.lblEditText}>
+                    {getTranslation('edit')}
+                  </Text> */}
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity activeOpacity={activityOpacity}>
+            <Image source={images.imgDelete} tintColor={Colors.gray0F} />
+          </TouchableOpacity>
         </View>
       </View>
     );

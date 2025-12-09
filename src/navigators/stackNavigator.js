@@ -91,7 +91,7 @@ const MainNavigation = props => {
         {_addScreen(
           ScreenNames.TESTDETAILSCONTAINER,
           {},
-          { headerShown: true },
+          { headerShown: false },
         )}
         {_addScreen(
           ScreenNames.ADDRESSLISTCONTAINER,

@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 import YourProfileComponent from '../../../components/bottomTabs/YourProfile';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
-import { activityOpacity } from '../../../constants/GConstant';
+import {
+  activityOpacity,
+  formatDateToSpanish,
+} from '../../../constants/GConstant';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { images } from '../../../constants/Images';
 import { Colors } from '../../../constants/Colors';
@@ -147,10 +150,104 @@ const YourProfileContainer = ({ navigation }: any) => {
   const appointments = [
     {
       id: '1',
-      orderid: '#121314',
-      title: 'Diabetes',
       status: 'waiting',
-      date: '8/8/2025',
+      orderid: '#121314',
+      date: '2025-12-24',
+      price: '35.00',
+      kits: [
+        {
+          kitype: 'kit',
+          kitname: 'Diabete',
+          kittest: [
+            {
+              id: '1',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '1',
+              reportname: 'Emoglobina glicata',
+              reportValue: '0.37',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'mg/g',
+            },
+            {
+              id: '2',
+              reportname: 'Microalbuminuria',
+              reportValue: '18',
+              currentvalue: 2000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'mg/g',
+            },
+            {
+              id: '3',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 100,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '4',
+              reportname: 'Creatininemia',
+              reportValue: '18 mg/g',
+              currentvalue: 4000,
+              minValue: 1000,
+              maxvalue: 10000,
+            },
+            {
+              id: '5',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 100,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '6',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+          ],
+        },
+        {
+          kitype: 'analiti',
+          kitname: 'Cuore',
+          kittest: [
+            {
+              id: '1',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '2',
+              reportname: 'Microalbuminuria',
+              reportValue: '18',
+              currentvalue: 2000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'mg/g',
+            },
+          ],
+        },
+      ],
       tags: [
         'Urine',
         'Blood sugar',
@@ -159,18 +256,112 @@ const YourProfileContainer = ({ navigation }: any) => {
         'Urine',
         'Blood sugar',
       ],
-      doctor: {
+      nurse: {
+        nurseid: '1',
         name: 'Federica S.',
         rating: 3,
-        image: images.imgNurseUser,
       },
     },
     {
       id: '2',
-      orderid: '#121314',
-      title: 'Diabetes',
       status: 'waiting',
-      date: '8/8/2025',
+      orderid: '#121314',
+      date: '2025-12-24',
+      price: '35.00',
+      kits: [
+        {
+          kitype: 'kit',
+          kitname: 'Diabete',
+          kittest: [
+            {
+              id: '1',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '1',
+              reportname: 'Emoglobina glicata',
+              reportValue: '0.37',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'mg/g',
+            },
+            {
+              id: '2',
+              reportname: 'Microalbuminuria',
+              reportValue: '18',
+              currentvalue: 2000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'mg/g',
+            },
+            {
+              id: '3',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 100,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '4',
+              reportname: 'Creatininemia',
+              reportValue: '18 mg/g',
+              currentvalue: 4000,
+              minValue: 1000,
+              maxvalue: 10000,
+            },
+            {
+              id: '5',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 100,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '6',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+          ],
+        },
+        {
+          kitype: 'analiti',
+          kitname: 'Cuore',
+          kittest: [
+            {
+              id: '1',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '2',
+              reportname: 'Microalbuminuria',
+              reportValue: '18',
+              currentvalue: 2000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'mg/g',
+            },
+          ],
+        },
+      ],
       tags: [
         'Urine',
         'Blood sugar',
@@ -179,17 +370,116 @@ const YourProfileContainer = ({ navigation }: any) => {
         'Urine',
         'Blood sugar',
       ],
-      doctor: {
+      nurse: {
+        nurseid: '1',
         name: 'Federica S.',
         rating: 3,
-        image: images.imgNurseUser,
       },
     },
     {
       id: '3',
-      orderid: '#889900',
-      title: 'Diabetes',
       status: 'booked',
+      orderid: '#121314',
+      date: '2025-12-24',
+      appointmentMessage:
+        'The appointment is confirmed for Wednesday 10/8 by 10:00',
+      price: '35.00',
+      time: '10:00',
+      dayname: 'Wednesday',
+      kits: [
+        {
+          kitype: 'kit',
+          kitname: 'Diabete',
+          kittest: [
+            {
+              id: '1',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '1',
+              reportname: 'Emoglobina glicata',
+              reportValue: '0.37',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'mg/g',
+            },
+            {
+              id: '2',
+              reportname: 'Microalbuminuria',
+              reportValue: '18',
+              currentvalue: 2000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'mg/g',
+            },
+            {
+              id: '3',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 100,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '4',
+              reportname: 'Creatininemia',
+              reportValue: '18 mg/g',
+              currentvalue: 4000,
+              minValue: 1000,
+              maxvalue: 10000,
+            },
+            {
+              id: '5',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 100,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '6',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+          ],
+        },
+        {
+          kitype: 'analiti',
+          kitname: 'Cuore',
+          kittest: [
+            {
+              id: '1',
+              reportname: 'Urine',
+              reportValue: '2.2',
+              currentvalue: 11000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'pH',
+            },
+            {
+              id: '2',
+              reportname: 'Microalbuminuria',
+              reportValue: '18',
+              currentvalue: 2000,
+              minValue: 1000,
+              maxvalue: 10000,
+              reportunit: 'mg/g',
+            },
+          ],
+        },
+      ],
       tags: [
         'Urine',
         'Blood sugar',
@@ -197,13 +487,12 @@ const YourProfileContainer = ({ navigation }: any) => {
         'Blood sugar',
         'Urine',
         'Blood sugar',
-        'Urine',
-        'Blood sugar',
       ],
-      appointmentMessage:
-        'The appointment is confirmed for Wednesday 10/8 by 10:00',
-      totalStatus: 4,
-      completedStatus: 2,
+      nurse: {
+        nurseid: '1',
+        name: 'Federica S.',
+        rating: 3,
+      },
     },
   ];
 
@@ -263,6 +552,8 @@ const YourProfileContainer = ({ navigation }: any) => {
   const [showAllTagsBooked, setShowAllTagsBooked] = useState(false);
   const [selectedName, setSelectedName] = useState('Giovanni (tu)');
   const [showPopup, setShowPopup] = useState(false);
+  const [expandedWaiting, setExpandedWaiting] = useState<any>({});
+  const [expandedBooked, setExpandedBooked] = useState<any>({});
 
   const totalStars = 5;
   const limitedData = latestanalysisData.slice(0, 4);
@@ -287,6 +578,18 @@ const YourProfileContainer = ({ navigation }: any) => {
         ))}
       </View>
     );
+  };
+
+  const formatKits = (kits: any[]) => {
+    return kits
+      .map(item => {
+        const kitName = item?.kitname || '';
+        const count = item?.kittest?.length || 0;
+        const label =
+          item.kitype === 'kit' ? getTranslation('kitlabeltextcheckout') : '';
+        return `${label}${kitName} (${count})`;
+      })
+      .join(' , ');
   };
 
   const renderItemLatestAnalysis = ({ item, index }: any) => {
@@ -409,117 +712,86 @@ const YourProfileContainer = ({ navigation }: any) => {
   };
 
   const renderItemAppointment = ({ item, index }: any) => {
-    const visibleTags = showAllTags ? item.tags : item.tags.slice(0, 2);
+    const isExpanded = expandedWaiting[item.id]; // for waiting items
+    const isExpandedBooked = expandedBooked[item.id]; // for booked items
+  
+    const visibleTags = isExpanded ? item.tags : item.tags.slice(0, 2);
     const extraCount = item.tags.length - 2;
-
-    const visibleTagsAppoint = showAllTagsBooked
-      ? item.tags
-      : item.tags.slice(0, 2);
+  
+    const visibleTagsAppoint = isExpandedBooked ? item.tags : item.tags.slice(0, 2);
     const extraCountAppoint = item.tags.length - 2;
     return (
       <>
-        {/* {item.status === 'waiting' ? (
-          <Text style={styles.lblWaitingForResult}>
-            {getTranslation('waitingforresultof')}
-          </Text>
-        ) : (
-          <Text style={styles.lblWaitingForResult}>
-            {getTranslation('appointmentbook')}
-          </Text>
-        )} */}
         {item.status === 'waiting' && (
           <TouchableOpacity
             activeOpacity={activityOpacity}
-            style={{
-              backgroundColor: Colors.blue1C04,
-              padding: 4,
-              borderRadius: 20,
-              marginTop: getHeight(3),
-            }}
+            style={styles.btnwaitingview1}
           >
-            <View
-              style={{
-                backgroundColor: Colors.blue1C08,
-                padding: 4,
-                borderRadius: 20,
-              }}
-            >
-              <View
-                style={{
-                  gap: getHeight(8),
-                  backgroundColor: Colors.white,
-                  borderRadius: 20,
-                  borderWidth: 2,
-                  borderColor: Colors.blue6B,
-                  paddingHorizontal: getWidth(16),
-                  paddingTop: getHeight(16),
-                  paddingBottom: getHeight(12),
-                }}
-              >
-                {/* orderDetailsView */}
-                <View style={styles.vwMainOrderDetails}>
-                  <View style={{ flex: 1, gap: getHeight(2) }}>
-                    <Text style={styles.lblOrderTitle}>{item.title}</Text>
-                    <Text style={styles.lblOrderDate}>{item.date}</Text>
-                    <Text style={styles.lblOrderID}>{item.orderid}</Text>
+            <View style={styles.btnwaitingview2}>
+              <View style={styles.btnwaitingview3}>
+                <Image source={images.imgkit7} style={styles.imgkit} />
+                <View style={{ flex: 1 }}>
+                  {/* orderDetailsView */}
+                  <View style={styles.vwMainOrderDetails}>
+                    <View style={{ flex: 1, gap: getHeight(2) }}>
+                      <Text style={styles.lblOrderTitle}>
+                        {' '}
+                        {getTranslation('analsisOf')}{' '}
+                        {formatDateToSpanish(item.date)}
+                      </Text>
+                      <View
+                        style={{
+                          marginTop: getHeight(6),
+                          marginBottom: getHeight(10),
+                        }}
+                      >
+                        <Text style={styles.lblOrderID}>
+                          {getTranslation('orderidlabel')} {item.orderid}
+                        </Text>
+                        <Text style={styles.lblKitsandAnaliti}>
+                          {formatKits(item.kits)}
+                        </Text>
+                      </View>
+                    </View>
+                    <TouchableOpacity>
+                      <Image source={images.imgRightBlack} />
+                    </TouchableOpacity>
                   </View>
-                  <TouchableOpacity>
-                    <Image source={images.imgRightBlack} />
-                  </TouchableOpacity>
-                </View>
-                {/* tags */}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    gap: getHeight(5),
-                  }}
-                >
+                  {/* tags */}
+                  <View style={styles.vwTags}>
                   {visibleTags.map((tag: any, index: any) => (
-                    <View
-                      key={index}
-                      style={{
-                        backgroundColor: Colors.grayF3,
-                        paddingHorizontal: getWidth(8),
-                        height: getHeight(24),
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 999,
-                        marginRight: getWidth(2),
-                      }}
-                    >
+                    <View key={index} style={styles.vwBackTagWaiting}>
                       <Text style={styles.lblTag}>{tag}</Text>
                     </View>
                   ))}
 
-                  {/* Show +count only when collapsed */}
-                  {!showAllTags && extraCount > 0 && (
+                  {!isExpanded && extraCount > 0 && (
                     <TouchableOpacity
-                      onPress={() => setShowAllTags(true)}
-                      style={{
-                        backgroundColor: Colors.grayF3,
-                        paddingHorizontal: getWidth(8),
-                        paddingVertical: getHeight(4),
-                        borderRadius: 999,
-                        marginRight: getWidth(2),
-                      }}
+                      style={styles.btnextracount}
+                      onPress={() =>
+                        setExpandedWaiting((prev: any) => ({
+                          ...prev,
+                          [item.id]: true,
+                        }))
+                      }
                     >
                       <Text style={styles.lblTag}>+{extraCount}</Text>
                     </TouchableOpacity>
                   )}
                 </View>
-                {/* nurseView */}
-                <View style={styles.nurseview}>
-                  <Image source={item.doctor.image} />
-                  <Text>{item.doctor.name}</Text>
+                  {/* nurseView */}
+                  <View style={styles.nurseview}>
+                    <Image source={images.imgInjection} />
+                    <Text>{item.nurse.name}</Text>
 
-                  <View style={styles.starRow}>
-                    {[...Array(totalStars)].map((_, index) => {
-                      const isFilled = index < item.doctor.rating; // fill up to ratingStar
-                      const iconName = isFilled && images.imgStarFill;
+                    <View style={styles.starRow}>
+                      {[...Array(totalStars)].map((_, index) => {
+                        const isFilled = index < item.nurse.rating; // fill up to ratingStar
+                        const iconName = isFilled && images.imgStarFill;
 
-                      return <Image key={index} source={iconName} />;
-                    })}
+                        return <Image key={index} source={iconName} />;
+                      })}
+                    </View>
                   </View>
                 </View>
               </View>
@@ -529,102 +801,64 @@ const YourProfileContainer = ({ navigation }: any) => {
         {item.status === 'booked' && (
           <TouchableOpacity
             activeOpacity={activityOpacity}
-            style={{
-              marginTop: getHeight(8),
-              gap: getHeight(14),
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5,
-              backgroundColor: Colors.black04,
-              borderRadius: 20,
-              padding: 16,
-            }}
+            style={styles.btnBooked}
           >
-            {/* orderDetailsView */}
-            <View style={styles.vwMainOrderDetails}>
-              <View
-                style={{
-                  flex: 1,
-                  gap: getHeight(2),
-                  marginRight: getWidth(15),
-                }}
-              >
-                <Text style={styles.lblOrderTitleBooked}>{item.title}</Text>
-                <Text style={styles.lblOrderDesBooked}>
-                  {item.appointmentMessage}
-                </Text>
-              </View>
-              <TouchableOpacity>
-                <Image source={images.imgRightBlack} tintColor={Colors.white} />
-              </TouchableOpacity>
-            </View>
-            {/* tags */}
             <View
               style={{
                 flexDirection: 'row',
-                flexWrap: 'wrap',
-                gap: getHeight(5),
+                gap: getWidth(10),
+                marginBottom: getHeight(12),
               }}
             >
-              {visibleTagsAppoint.map((tag: any, index: any) => (
-                <View
-                  key={index}
-                  style={{
-                    backgroundColor: Colors.white08,
-                    paddingHorizontal: getWidth(8),
-                    height: getHeight(24),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 999,
-                    marginRight: getWidth(2),
-                  }}
-                >
-                  <Text
-                    style={[
-                      styles.lblTag,
-                      {
-                        color: Colors.white,
-                      },
-                    ]}
-                  >
-                    {tag}
+              <Image source={images.imgkit7} style={styles.imgkit} />
+              <View style={{ flex: 1 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={styles.lblOrderTitleBooked}>
+                    {getTranslation('analsisOf')}{' '}
+                    {formatDateToSpanish(item.date)}
                   </Text>
+                  <TouchableOpacity>
+                    <Image
+                      source={images.imgRightBlack}
+                      tintColor={Colors.white}
+                    />
+                  </TouchableOpacity>
                 </View>
-              ))}
+                <Text style={styles.lblOrderDesBooked}>
+                  {item.appointmentMessage}
+                </Text>
+                <View style={[styles.vwTags, { marginTop: getHeight(10) }]}>
+                {visibleTagsAppoint.map((tag: any, index: any) => (
+                  <View key={index} style={styles.vwTagBooked}>
+                    <Text style={[styles.lblTag, { color: Colors.white }]}>{tag}</Text>
+                  </View>
+                ))}
 
-              {/* Show +count only when collapsed */}
-              {!showAllTagsBooked && extraCountAppoint > 0 && (
-                <TouchableOpacity
-                  onPress={() => setShowAllTagsBooked(true)}
-                  style={{
-                    backgroundColor: Colors.white08,
-                    paddingHorizontal: getWidth(8),
-                    height: getHeight(24),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 999,
-                    marginRight: getWidth(2),
-                  }}
-                >
-                  <Text
-                    style={[
-                      styles.lblTag,
-                      {
-                        color: Colors.white,
-                      },
-                    ]}
+                {!isExpandedBooked && extraCountAppoint > 0 && (
+                  <TouchableOpacity
+                    style={styles.btnBookedExtraCount}
+                    onPress={() =>
+                      setExpandedBooked((prev: any) => ({
+                        ...prev,
+                        [item.id]: true,
+                      }))
+                    }
                   >
-                    +{extraCount}
-                  </Text>
-                </TouchableOpacity>
-              )}
+                    <Text style={[styles.lblTag, { color: Colors.white }]}>
+                      +{extraCountAppoint}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+              </View>
             </View>
-            <ProgressBarStep currentStep={1} />
+            <ProgressBar
+              current={50}
+              total={100}
+              height={6}
+              backgroundColor={Colors.grey9224}
+              gradientColors={[Colors.blue00250, Colors.blue3C78]}
+            />
           </TouchableOpacity>
         )}
       </>

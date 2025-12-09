@@ -5,6 +5,11 @@ import { fontsfamily } from '../../../constants/FontFamily';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
+  lblWaitingForResult: {
+    color: Colors.gray0F,
+    fontSize: fontSize.size20,
+    fontFamily: fontsfamily.bold,
+  },
   vwmainFamilyMember: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -124,7 +129,7 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   vwFamilyMemberReport: {
-    marginTop: getHeight(32),
+    marginTop: getHeight(29),
     gap: getHeight(32),
     marginHorizontal: getWidth(16),
   },

@@ -473,7 +473,8 @@ const ProfileContainer = ({ navigation, route }: any) => {
           dontShowStartBtn={false}
           showTitle={false}
           showSubTitle={false}
-          showEndBtn={false}
+          showEndBtn={true}
+          isNotificationIcon={true}
         />
       ),
     });

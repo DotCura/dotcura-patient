@@ -28,6 +28,7 @@ interface PropsType {
   isSaveIcon?: boolean;
   isWhiteLeftBtn?: boolean;
   isHelpIcon?: boolean;
+  isNotificationIcon?:boolean;
   showSubTitle?: boolean;
   endBtnTitle?: string;
   endBtnOnPress?: () => void;
@@ -108,6 +109,14 @@ const AppHeader = (props: PropsType) => {
             >
               <Image source={images.imgHelp} />
               <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
+            </TouchableOpacity>
+          )}
+          {props.isNotificationIcon && (
+            <TouchableOpacity
+              style={styles.btnBack}
+              activeOpacity={activityOpacity}
+            >
+              <Image source={images.imgBell} />
             </TouchableOpacity>
           )}
         </>

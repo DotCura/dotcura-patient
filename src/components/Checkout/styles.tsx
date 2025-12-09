@@ -161,7 +161,6 @@ export const styles = StyleSheet.create({
     color: Colors.gray55,
   },
   vwImgBack: {
-    height: getHeight(167),
     marginTop: getHeight(12),
     borderRadius: 24,
     padding: 16,

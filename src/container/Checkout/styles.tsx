@@ -5,7 +5,7 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
-  lblEditText:{
+  lblEditText: {
     color: Colors.blue002,
     fontFamily: fontsfamily.gmedium,
     fontSize: fontSize.size14,
@@ -195,6 +195,7 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.gmedium,
     letterSpacing: 0.2,
+    marginTop: getHeight(4),
   },
   cardDesc: {
     color: Colors.gray2A,

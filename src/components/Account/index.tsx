@@ -61,7 +61,7 @@ const AccountComponent = (props: any) => {
         <PrimaryTitleTextInput
           placHolderLabel={getTranslation('emailplaceholder')}
           refs={props.emailRef}
-          focusnext={() => props.taxCodeRef.current?.focus()}
+          focusnext={() => props.placeOfBirthRef.current?.focus()}
           inputLabel={getTranslation('emailtitle')}
           blur={false}
           leftIcon={false}
@@ -71,6 +71,22 @@ const AccountComponent = (props: any) => {
           autoCapitalize={'none'}
           errorMessage={props.emailError}
           setErrorMessage={props.setEmailError}
+          isMultiline={false}
+          isBorder={true}
+        />
+        <PrimaryTitleTextInput
+          placHolderLabel={getTranslation('placeofbirthplaceholder')}
+          refs={props.placeOfBirthRef}
+          focusnext={() => props.taxCodeRef.current?.focus()}
+          inputLabel={getTranslation('placeofbirthtitle')}
+          blur={false}
+          leftIcon={false}
+          keyaboardType={'default'}
+          value={props.placeOfBirth}
+          onChangeFun={props.onChagePlaceOfBirth}
+          autoCapitalize={'none'}
+          errorMessage={props.placeOfBirthError}
+          setErrorMessage={props.setPlaceOfBirthErrorError}
           isMultiline={false}
           isBorder={true}
         />
@@ -85,7 +101,7 @@ const AccountComponent = (props: any) => {
               {getTranslation('dateofbirth')}
             </Text>
             <View style={styles.vwinsideDate}>
-              <Image source={images.imgCalenderDOB}/>
+              <Image source={images.imgCalenderDOB} />
               <Text
                 style={[
                   props.formattedDate == ''

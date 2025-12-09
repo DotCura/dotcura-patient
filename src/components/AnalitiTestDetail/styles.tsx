@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     fontFamily: fontsfamily.gregular,
     color: Colors.gray55,
     letterSpacing: 0.2,
+    marginBottom: getHeight(22),
   },
   imgTest: { height: getHeight(64), width: getWidth(50) },
   lblAnalyses: {

@@ -50,8 +50,8 @@ const YourProfileComponent = (props: any) => {
         </View>
 
         {/* waitingforresultof */}
-        {/* <View
-          style={{ marginHorizontal: getWidth(16), marginTop: getHeight(32) }}
+        <View
+          style={{ marginHorizontal: getWidth(16) }}
         >
           {props.appointmentsData.some((a: any) => a.status === 'waiting') && (
             <Text style={styles.lblWaitingForResult}>
@@ -80,7 +80,7 @@ const YourProfileComponent = (props: any) => {
                 {props.renderItemAppointment({ item, index })}
               </React.Fragment>
             ))}
-        </View> */}
+        </View>
       </>
     );
   };

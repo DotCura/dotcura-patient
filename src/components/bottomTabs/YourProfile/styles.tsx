@@ -62,6 +62,7 @@ export const styles = StyleSheet.create({
     fontFamily: fontsfamily.gmedium,
   },
   lblWaitingForResult: {
+    marginTop: getHeight(12),
     color: Colors.gray0F,
     fontSize: fontSize.size20,
     fontFamily: fontsfamily.bold,

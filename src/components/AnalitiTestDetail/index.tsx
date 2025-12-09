@@ -3,17 +3,22 @@ import React from 'react';
 import { constnatStyles } from '../../constants/Styles';
 import { Colors } from '../../constants/Colors';
 import { images } from '../../constants/Images';
-import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import {
+  getHeight,
+  getWidth,
+  ScreenDimensions,
+} from '../../constants/utils/Dimensions';
 import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { styles } from './styles';
+import BarChartComponent from '../../global/BloodCountGraph';
 
 const AnalitiTestDetailComponent = (props: any) => {
   const total = 8;
   const analyzed = 7;
 
-  const progress = analyzed / total; 
+  const progress = analyzed / total;
   const renderHeaderComponent = () => {
     return (
       <View>
@@ -49,9 +54,38 @@ const AnalitiTestDetailComponent = (props: any) => {
       </View>
     );
   };
+
+  const AnalitiTestDetailsDataProps = props.AnalitiTestDetailsData;
   return (
     <View style={constnatStyles.vwContainer}>
-      <FlatList ListHeaderComponent={renderHeaderComponent} />
+      <FlatList
+        data={AnalitiTestDetailsDataProps?.kits}
+        keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled={true}
+        contentContainerStyle={{
+          paddingBottom: getHeight(60),
+        }}
+        style={{ flex: 1 }}
+        ListHeaderComponent={renderHeaderComponent}
+        renderItem={({ item: kit, index: kitIndex }) => (
+          <View style={{ gap: getHeight(12) }}>
+            {kit.kittest.map((reportItem: any, reportIndex: any) => (
+              <BarChartComponent
+                key={`${kitIndex}-${reportIndex}`}
+                currentValue={reportItem.currentvalue}
+                minValue={reportItem.minValue}
+                maxValue={reportItem.maxvalue}
+                width={ScreenDimensions.screenWidth - getWidth(40)}
+                height={getHeight(50)}
+                reportName={reportItem.reportname}
+                reportValue={reportItem.reportValue}
+                reportItem={reportItem}
+              />
+            ))}
+          </View>
+        )}
+      />
     </View>
   );
 };

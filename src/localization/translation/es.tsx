@@ -253,8 +253,8 @@ export default {
   searchprofile: 'Cerca',
   latestanalysis: 'Ultime analisi',
   seeall: 'Vedi tutte',
-  waitingforresultof: 'Waiting for results of:',
-  appointmentbook: 'Appointment booked',
+  waitingforresultof: 'Analisi in attesa',
+  appointmentbook: 'Analisi in attesa',
   orderhistory: 'Storico ordini',
   analsisOf: 'Analisi del ',
   withdrawon: 'Prelievo in data: ',
@@ -277,7 +277,8 @@ export default {
 
   //TEST DETAILS
   thevalueis: 'Il valore della',
-  lowethen: 'è più basso del riferimento.',
+  lowethen: 'è più basso',
+  lowethensub:" del riferimento.",
   percentage: 'Precedente',
   valueoptimal: 'Valore ottimale',
   high: 'Alta',
@@ -351,6 +352,8 @@ export default {
 
   //ACCOUNT
   dateofbirth: 'Data di nascita',
+  placeofbirthplaceholder:"Inserisci il comune",
+  placeofbirthtitle:"Luogo di nascita",
   account: 'Account',
   save: 'Salva',
   pleaseselectdateofbirth: 'Por favor seleccione su fecha de nacimiento.',
@@ -452,6 +455,7 @@ export default {
   default: 'PREDEFINITO',
 
   //ERROR
+  errorMessagePlaceOfBirthRequired:"Inserisci il luogo di nascita",
   errorMessageOtp: 'Por favor, introduzca el código OTP',
   errorMessageInvalidOtp: 'Código OTP no válido',
   errorMessageCountryCode: 'Por favor, seleccione el código de país',

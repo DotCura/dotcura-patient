@@ -170,24 +170,6 @@ const HomeComponent = (props: any) => {
           />
         </View>
 
-        {/* vwwarning */}
-        {/* <View style={styles.vwwarningDetails}>
-          <View style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}>
-            <Image
-              source={images.imgWarning}
-              tintColor={Colors.black12}
-            ></Image>
-          </View>
-          <View style={styles.vwInBank}>
-            <Text style={styles.txtBankDetails} numberOfLines={1}>
-              {getTranslation('outdatedtitle')}
-            </Text>
-            <Text style={styles.txtWeCanNot} numberOfLines={5}>
-              {getTranslation('outdatedsubtitle')}
-            </Text>
-          </View>
-        </View> */}
-
         {/* vwLatestValue */}
         <View style={styles.vwLatestValue}>
           <View style={{ marginHorizontal: getWidth(16) }}>
@@ -216,56 +198,38 @@ const HomeComponent = (props: any) => {
           </View>
         </View>
 
-        {/* vwrecommnandanalysis */}
-        {/* <View style={[styles.vwLatestValue]}>
-          <View style={{ marginHorizontal: getWidth(16) }}>
-            <Text style={styles.lblLatestValue}>
-              {getTranslation('recommandanalysis')}
+        {/* waitingforresultof */}
+        <View
+          style={{ marginHorizontal: getWidth(16), marginTop: getHeight(29) }}
+        >
+          {props.appointmentsData.some((a: any) => a.status === 'waiting') && (
+            <Text style={styles.lblWaitingForResult}>
+              {getTranslation('waitingforresultof')}
             </Text>
-          </View>
+          )}
 
-          <View>
-            <FlatList
-              onEndReached={() => {
-                console.log('callend');
-              }}
-              data={props.recommandAnalysisData}
-              renderItem={props.renderRecommandAnlaysisData}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              keyExtractor={item => item.id.toString()}
-              contentContainerStyle={{
-                gap: getWidth(12),
-                paddingLeft: getWidth(16),
-                paddingRight: getWidth(16),
-              }}
-            />
-          </View>
-        </View> */}
+          {props.appointmentsData
+            .filter((a: any) => a.status === 'waiting')
+            .map((item: any, index: any) => (
+              <React.Fragment key={`waiting-${index}`}>
+                {props.renderItemAppointment({ item, index })}
+              </React.Fragment>
+            ))}
 
-        {/* vwinvotedFriend */}
-        {/* <View style={styles.vwInviteDetails}>
-          <View style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}>
-            <Image
-              source={images.imgWarning}
-              tintColor={Colors.black12}
-            ></Image>
-          </View>
-          <View style={styles.vwInBank}>
-            <Text style={styles.txtinvitefriendTitle} numberOfLines={1}>
-              {getTranslation('invitefriendtitle')}
+          {props.appointmentsData.some((a: any) => a.status === 'booked') && (
+            <Text style={styles.lblWaitingForResult}>
+              {getTranslation('appointmentbook')}
             </Text>
-            <Text style={styles.txtInvoteFriendSubtitle} numberOfLines={5}>
-              {getTranslation('invitefriendsubtitle')}
-            </Text>
-            <TouchableOpacity
-              style={styles.btnInviteFriend}
-              activeOpacity={activityOpacity}
-            >
-              <Text>{getTranslation('invitefriend')}</Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
+          )}
+
+          {props.appointmentsData
+            .filter((a: any) => a.status === 'booked')
+            .map((item: any, index: any) => (
+              <React.Fragment key={`booked-${index}`}>
+                {props.renderItemAppointment({ item, index })}
+              </React.Fragment>
+            ))}
+        </View>
 
         {/* vwFamilyMemberReport */}
         <View style={styles.vwFamilyMemberReport}>

@@ -18,7 +18,7 @@ const AccountContainer = ({ navigation }: any) => {
   ];
 
   const [fullName, setFullName] = useState<any>('');
-  console.log(fullName, 'fullName =====');
+  const [placeOfBirth, setPlaceOfBirth] = useState<any>('');
   const [surname, setSurname] = useState<any>('');
   const [taxCode, setTaxCode] = useState<any>('');
   const [email, setEmail] = useState<any>('');
@@ -26,6 +26,7 @@ const AccountContainer = ({ navigation }: any) => {
   const [selectedGender, setSelectedGender] = useState(1);
 
   const [fullNameError, setFullNameError] = useState<any>('');
+  const [placeOfBirthError, setPlaceOfBirthErrorError] = useState<any>('');
   const [surnameError, setSurnameError] = useState<any>('');
   const [emailError, setEmailError] = useState<any>('');
   const [dateError, setDateError] = useState<any>('');
@@ -35,6 +36,7 @@ const AccountContainer = ({ navigation }: any) => {
   const [formatedDateForApi, setFormatedDateForApi] = useState('');
 
   const fullNameRef = useRef<any>(null);
+  const placeOfBirthRef = useRef<any>(null);
   const surnameRef = useRef<any>(null);
   const taxCodeRef = useRef<any>(null);
   const emailRef = useRef<any>(null);
@@ -44,6 +46,12 @@ const AccountContainer = ({ navigation }: any) => {
     newText = newText.replace(/^\s+/, '');
     newText = newText.replace(/\s{2,}/g, ' ');
     setFullName(newText);
+  };
+  const onChagePlaceOfBirth = (text: any) => {
+    let newText = text.replace(/[0-9]/g, '');
+    newText = newText.replace(/^\s+/, '');
+    newText = newText.replace(/\s{2,}/g, ' ');
+    setPlaceOfBirth(newText);
   };
 
   const onChangeSurname = (text: any) => {
@@ -92,6 +100,10 @@ const AccountContainer = ({ navigation }: any) => {
       return;
     } else if (!regex.email.test(email.trim())) {
       setEmailError(getTranslation('errorMessageValidEmail'));
+      return;
+    }
+    else if (!placeOfBirth.trim()) {
+      setPlaceOfBirthErrorError(getTranslation('errorMessagePlaceOfBirthRequired'));
       return;
     } else if (formattedDate == '') {
       flashMessageWarning(getTranslation('pleaseselectdateofbirth'));
@@ -244,12 +256,15 @@ const AccountContainer = ({ navigation }: any) => {
       formattedDate={formattedDate}
       insets={insets}
       fullName={fullName}
+      placeOfBirth={placeOfBirth}
       email={email}
       surname={surname}
       taxCode={taxCode}
       dateOfBirth={dateOfBirth}
       fullNameError={fullNameError}
+      placeOfBirthError={placeOfBirthError}
       setFullNameError={setFullNameError}
+      setPlaceOfBirthErrorError={setPlaceOfBirthErrorError}
       setSurnameError={setSurnameError}
       surnameError={surnameError}
       taxCodeError={taxCodeError}
@@ -260,10 +275,12 @@ const AccountContainer = ({ navigation }: any) => {
       setTaxCode={setTaxCode}
       setEmail={setEmail}
       fullNameRef={fullNameRef}
+      placeOfBirthRef={placeOfBirthRef}
       emailRef={emailRef}
       surnameRef={surnameRef}
       taxCodeRef={taxCodeRef}
       onChangeSurname={onChangeSurname}
+      onChagePlaceOfBirth={onChagePlaceOfBirth}
       onChangeFullName={onChangeFullName}
       onChangeTaxCode={onChangeTaxCode}
       onChangeEmail={onChangeEmail}
