@@ -267,7 +267,7 @@ import { images } from '../constants/Images';
 import LinearGradient from 'react-native-linear-gradient';
 
 // Chart constants
-const INDICATOR_RADIUS = 8;
+const INDICATOR_RADIUS = 9;
 const DOT_RADIUS = 2;
 const DOT_COUNT = 40;
 const HEXAGON_HEIGHT = 17;
@@ -412,15 +412,12 @@ const BarChartComponent = ({
       <LinearGradient
         // 1. First color: The blue glow
         // 2. Second color: Pure white
-        colors={['#D1E0FF','#D1E0FF','#FFFFFF']}
-        
+        colors={['#D1E0FF', '#D1E0FF', '#FFFFFF']}
         // 3. Start high and to the right (100% right, 0% top)
-        start={{ x: 1, y: 0 }} 
-        
-        // 4. End just a little bit away from that corner 
+        start={{ x: 1, y: 0 }}
+        // 4. End just a little bit away from that corner
         // Changing this to 0.7 instead of 0.0 makes it look "sprayed"
-        end={{ x: 0.9, y: 0.5 }} 
-        
+        end={{ x: 0.9, y: 0.5 }}
         style={styles.card}
       >
         {/* Your content here */}
@@ -501,8 +498,6 @@ const BarChartComponent = ({
             cy={centerY}
             r={INDICATOR_RADIUS}
             fill={INDICATOR_COLOR}
-            stroke={Colors.white}
-            strokeWidth={2}
           />
         </Svg>
       </View>
@@ -520,17 +515,14 @@ const styles = StyleSheet.create({
     width: '20%', // adjust until it matches your design
     height: '50%', // adjust for vertical gradient coverage
     borderRadius: 1,
-    
-
   },
   card: {
     height: 100,
-    position:'absolute',
+    position: 'absolute',
     top: 0,
-    width:180,
+    width: 180,
     right: 0,
     borderRadius: 20, // Large radius for that bubbly look
     backgroundColor: 'white', // Fallback
-   
   },
 });

@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { constnatStyles } from '../../constants/Styles';
 import { images } from '../../constants/Images';
@@ -7,10 +7,18 @@ import { styles } from './styles';
 import { getHeight } from '../../constants/utils/Dimensions';
 import CustomButton from '../../global/Buttons';
 import { Colors } from '../../constants/Colors';
+import { activityOpacity } from '../../constants/GConstant';
 
 const ResultOpenUpComponents = (props: any) => {
   return (
-    <View style={constnatStyles.vwContainer}>
+    <View
+      style={[
+        constnatStyles.vwContainer,
+        {
+          backgroundColor: Colors.white,
+        },
+      ]}
+    >
       <View style={{ flex: 1 }}>
         <Image
           source={images.imgFolderOpen}
@@ -23,6 +31,9 @@ const ResultOpenUpComponents = (props: any) => {
           <Text style={styles.lblResultOpenSubTitle} numberOfLines={5}>
             {getTranslation('resultopenupsubtitle')}
           </Text>
+          <TouchableOpacity activeOpacity={activityOpacity}>
+            <Text style={styles.lbldiscoverprivacy}>{getTranslation("discoverourprivacypolicy")}</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View
@@ -35,11 +46,11 @@ const ResultOpenUpComponents = (props: any) => {
         }}
       >
         <CustomButton
-          btnTitle={getTranslation('iunderstand')}
+          btnTitle={getTranslation('saveopenupbtn')}
           // btnPress={props.handleNavigateHome}
         />
         <CustomButton
-          btnTitle={getTranslation('continuewithoutsaving')}
+          btnTitle={getTranslation('continueopenup')}
           style={{ backgroundColor: Colors.white }}
           textStyle={{ color: Colors.gray0F }}
           // btnPress={props.funCloseCancleOrder}

@@ -2,6 +2,7 @@ import {getWidth} from './utils/Dimensions';
 
 export const fontSize = {
   size6:getWidth(6),
+  size7:getWidth(7),
   size9: getWidth(9),
   size10: getWidth(10),
   size11: getWidth(11),

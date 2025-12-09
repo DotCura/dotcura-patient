@@ -5,6 +5,29 @@ import { fontsfamily } from '../../../constants/FontFamily';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
+  vwmainFamilyMember: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: getHeight(12),
+  },
+  vwfirstchart: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    height: getHeight(18),
+    width: getWidth(18),
+    borderRadius: 321,
+  },
+  btnfamilymembername: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.grayD8,
+    paddingVertical: getHeight(3),
+    paddingHorizontal: getWidth(4),
+    borderRadius: 999,
+    marginLeft: getWidth(3),
+    gap: getWidth(2),
+  },
   addText: {
     color: Colors.blue002,
     fontSize: fontSize.size16,
@@ -92,12 +115,13 @@ export const styles = StyleSheet.create({
   lblFirstChar: {
     color: Colors.grey29,
     fontFamily: fontsfamily.regular,
-    fontSize: fontSize.size6,
+    fontSize: fontSize.size7,
   },
   lblFamilyMember: {
     color: Colors.gray2A,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gsemiBold,
     fontSize: fontSize.size20,
+    letterSpacing: 0.3,
   },
   vwFamilyMemberReport: {
     marginTop: getHeight(32),
@@ -106,7 +130,8 @@ export const styles = StyleSheet.create({
   },
   lblFamilyMemberAnlaysisTitle: {
     color: Colors.gray0F,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gsemiBold,
+    letterSpacing: 0.3,
     fontSize: fontSize.size20,
   },
   btnInviteFriend: {

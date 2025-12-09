@@ -3,6 +3,7 @@ export const Colors = {
   white36:"#FFFFFF5C",
   white64:"#FFFFFFA3",
   white08:"#FFFFFF14",
+  white80:"#FFFFFFCC",
 
   black:'#000000',
   black12: '#120F04',

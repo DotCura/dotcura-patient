@@ -176,6 +176,13 @@ export default {
   analititextdetails: 'Analiti',
   atleastoneselected: 'Almeno un test deve rimanere selezionato.',
 
+  //KITANALYSIS
+  seethefullpicture:"Vedi il quadro completo",
+  viewdocumenttitle:"Visualizza il documento",
+  viewdocumentsubtitle:"Puoi condividere il pdf, stamparlo, ecc",
+  viewpdflebel:"Apri il pdf",
+  needtooriginaldocument:"Ritira il referto in originale",
+  comearrive:"Come arrivarci",
   
 
   //CHECKOUT
@@ -217,11 +224,15 @@ export default {
   cancletextnoback: 'Non cancellare',
 
   //RESULTOPENUP
-  resultopentitle: 'Los resultados han llegado.',
+  resultopentitle: 'Le analisi sono arrivate.',
   resultopenupsubtitle:
-    'Al continuar, aceptas guardar tus datos personales dentro de DotCura; de lo contrario, serán eliminados en un plazo de 45 días.',
+    'Continuando, accetti di salvare i tuoi dati personali all’interndo di DotCura; altrimenti verranno cancellate entro 45 giorni.',
   iunderstand: 'Entiendo',
   continuewithoutsaving: 'Continuar sin guardar',
+  saveopenupbtn:"Salva e visualizza analisi",
+  continueopenup:"Continua senza salvare",
+  discoverourprivacypolicy:"Scopri le nostre policy sulla privacy",
+
 
   //ORDERSTATYS
   ordersent: 'Ordine inviato',
@@ -236,6 +247,7 @@ export default {
   //HISTORICALANALSIS
   historicalanalistext:"Storico analisi",
   orderidlabel:"Ordine",
+  rebookinglabel:"Prenota di nuovo",
 
   //YOURPROFILE
   searchprofile: 'Cerca',
@@ -249,9 +261,9 @@ export default {
   information: 'Informazioni',
   samplecollectedon: 'Campione raccolto il:',
   samletakeuser: 'Infermiere:',
-  diagnose: 'Diagnose:',
+  diagnose: 'Diagnosticate il:',
   seeorder: 'Vedi ordine',
-  needpaper: 'Bisogno del cartaceo?',
+  needpaper: 'Ritira il referto in originale',
   collectondes: 'Puoi ritirare le analisi in formato cartaceo presso il ',
   openmap: 'Apri mappa',
   savepdf: 'Stampa PDF',

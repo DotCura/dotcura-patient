@@ -56,7 +56,9 @@ const HomeComponent = (props: any) => {
         activeOpacity={activityOpacity}
         // onPress={props.handleNavigateFamilyMember}
       >
-        <Text style={styles.addText}>{getTranslation("viewalltestresult")}</Text>
+        <Text style={styles.addText}>
+          {getTranslation('viewalltestresult')}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -215,14 +217,13 @@ const HomeComponent = (props: any) => {
         </View>
 
         {/* vwrecommnandanalysis */}
-        <View style={[styles.vwLatestValue]}>
+        {/* <View style={[styles.vwLatestValue]}>
           <View style={{ marginHorizontal: getWidth(16) }}>
             <Text style={styles.lblLatestValue}>
               {getTranslation('recommandanalysis')}
             </Text>
           </View>
 
-          {/* vwFavourites */}
           <View>
             <FlatList
               onEndReached={() => {
@@ -240,10 +241,10 @@ const HomeComponent = (props: any) => {
               }}
             />
           </View>
-        </View>
+        </View> */}
 
         {/* vwinvotedFriend */}
-        <View style={styles.vwInviteDetails}>
+        {/* <View style={styles.vwInviteDetails}>
           <View style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}>
             <Image
               source={images.imgWarning}
@@ -264,46 +265,22 @@ const HomeComponent = (props: any) => {
               <Text>{getTranslation('invitefriend')}</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
 
         {/* vwFamilyMemberReport */}
         <View style={styles.vwFamilyMemberReport}>
           {props.familyMemberAnalysisData.map((item: any, index: any) => {
             return (
               <View key={item.id}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginBottom: getHeight(12),
-                  }}
-                >
+                <View style={styles.vwmainFamilyMember}>
                   <Text style={styles.lblFamilyMemberAnlaysisTitle}>
                     {getTranslation('familymemberanlaysisvalue')}
                   </Text>
                   <TouchableOpacity
                     activeOpacity={activityOpacity}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      backgroundColor: Colors.grayED,
-                      paddingVertical: getHeight(3),
-                      paddingHorizontal: getWidth(4),
-                      borderRadius: 999,
-                      marginLeft: getWidth(3),
-                      gap: getWidth(2),
-                    }}
+                    style={styles.btnfamilymembername}
                   >
-                    <View
-                      style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: Colors.grayD8,
-                        height: getHeight(18),
-                        width: getWidth(18),
-                        borderRadius: 321,
-                      }}
-                    >
+                    <View style={styles.vwfirstchart}>
                       <Text style={styles.lblFirstChar}>
                         {getInitials(item.familyMemberName)}
                       </Text>

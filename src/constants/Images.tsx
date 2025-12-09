@@ -70,7 +70,7 @@ export const images = {
   imginsta: require('../assets/images/insta.png'),
   imgDeleteRound: require('../assets/images/deleteRound.png'),
   imgSearchModel: require('../assets/images/searchModel.png'),
-  imgFolderOpen: require('../assets/images/folderOpen.png'),
+  imgFolderOpen: require('../assets/images/folderopenup.png'),
   imgvisa: require('../assets/images/visa.png'),
   imgmastercard: require('../assets/images/mastercard.png'),
   imgapplepay: require('../assets/images/applepay.png'),
@@ -91,6 +91,11 @@ export const images = {
   imgminusdark: require('../assets/images/minusDark.png'),
   imgInjection: require('../assets/images/injection.png'),
   imgMicroscope: require('../assets/images/microscope.png'),
+  imgKitAnalysisback: require('../assets/images/kitanalysisback.png'),
+  imgCycle: require('../assets/images/cycle.png'),
+  imgApartmentAnalysis: require('../assets/images/apartmentAnalysis.png'),
+  
+  
   
   
 
