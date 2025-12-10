@@ -37,6 +37,7 @@ interface PropsType {
   headerTextStyle?: object;
   headerSubTextStyle?: object;
   onClickSave?: () => void;
+  NotificationPressFun?: () => void;
 }
 
 const AppHeader = (props: PropsType) => {
@@ -115,6 +116,7 @@ const AppHeader = (props: PropsType) => {
             <TouchableOpacity
               style={styles.btnBack}
               activeOpacity={activityOpacity}
+              onPress={props.NotificationPressFun}
             >
               <Image source={images.imgBell} />
             </TouchableOpacity>

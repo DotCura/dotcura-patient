@@ -54,7 +54,7 @@ const HomeComponent = (props: any) => {
       <TouchableOpacity
         style={styles.addBtn}
         activeOpacity={activityOpacity}
-        // onPress={props.handleNavigateFamilyMember}
+        onPress={props.handleNavigateYourProfileScreen}
       >
         <Text style={styles.addText}>
           {getTranslation('viewalltestresult')}
@@ -141,6 +141,7 @@ const HomeComponent = (props: any) => {
             <TouchableOpacity
               style={styles.btnBookNow}
               activeOpacity={activityOpacity}
+              onPress={props.handleNavigateGetTested}
             >
               <Text style={styles.lblBookNow}>
                 {getTranslation('booknowtext')}
@@ -268,6 +269,7 @@ const HomeComponent = (props: any) => {
                           reportName={reportItem.reportname}
                           reportValue={reportItem.reportValue}
                           reportItem={reportItem}
+                          onpressreport={props.handleNavigateTestDetailsScreen}
                         />
                       );
                     },

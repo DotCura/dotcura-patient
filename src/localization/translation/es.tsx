@@ -138,6 +138,11 @@ export default {
   analitietext: 'Analizzati',
   viewalltestresult: 'Vedi il quadro completo',
 
+  //NOTIFICATIONLIST
+  notificationlistlabel:"Notifiche",
+  notificationalert:"Non perderti le comunicazioni più importanti.",
+  alertbtnlebel:"Attiva le notifiche",
+
   //GETTESTED
   kitavailable: 'kit disponibili',
   filter: 'Filtros',

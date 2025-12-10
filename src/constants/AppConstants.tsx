@@ -49,6 +49,7 @@ export const ScreenNames = {
   ANALITIDETAILSCONTAINER:"AnalitiDetailsContainer",
   ANALITITESTDETAILSCONTAINER:"AnalitiTestDetailContainer",
   ORDERHISTORYCONTAINER:"OrderHistoryContainer",
+  NOTIFICATIONLISTCONTAINER:"NotificationListContainer",
 
   //FAMILY
   CONFIRMIDENTITYCONTAINER: 'ConfrimIdentityContainer',

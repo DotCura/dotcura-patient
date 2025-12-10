@@ -29,7 +29,7 @@ const YourProfileComponent = (props: any) => {
             <Text style={styles.latestanlaysis}>
               {getTranslation('latestanalysis')}
             </Text>
-            <TouchableOpacity activeOpacity={activityOpacity}>
+            <TouchableOpacity activeOpacity={activityOpacity} onPress={props.handleNavigateHistoricalAnlysis}>
               <Text style={styles.seeall}>{getTranslation('seeall')}</Text>
             </TouchableOpacity>
           </View>

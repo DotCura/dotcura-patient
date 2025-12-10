@@ -4,6 +4,7 @@ import AnalitiTestDetailComponent from '../../components/AnalitiTestDetail';
 import AppHeader from '../../global/Header';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../../constants/Images';
+import { ScreenNames } from '../../constants/AppConstants';
 
 const AnalitiTestDetailContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -113,7 +114,7 @@ const AnalitiTestDetailContainer = ({ navigation }: any) => {
       header: () => (
         <AppHeader
           startBtnOnPress={() => {
-            console.log('hy');
+            navigation.goBack();
           }}
           dontShowStartBtn={false}
           showTitle={false}
@@ -124,6 +125,15 @@ const AnalitiTestDetailContainer = ({ navigation }: any) => {
     });
   };
 
+  const navigateTestDetailsScreen = () => {
+    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+  };
+  const navigateTestGetTestedScreem = () => {
+    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+      screen: ScreenNames.GETTESTEDCONTAINER,
+    });
+  };
+
   useEffect(() => {
     header();
   }, []);
@@ -131,6 +141,8 @@ const AnalitiTestDetailContainer = ({ navigation }: any) => {
     <AnalitiTestDetailComponent
       insets={insets}
       AnalitiTestDetailsData={AnalitiTestDetailsData}
+      navigateTestDetailsScreen={navigateTestDetailsScreen}
+      navigateTestGetTestedScreem={navigateTestGetTestedScreem}
     />
   );
 };

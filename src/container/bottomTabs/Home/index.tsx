@@ -133,6 +133,7 @@ const HomeContainer = ({ navigation }: any) => {
       familyMemberReport: [
         {
           id: '1',
+          isTest: true,
           reportname: 'Urine',
           reportunit: 'pH',
           reportValue: '2.2',
@@ -148,6 +149,7 @@ const HomeContainer = ({ navigation }: any) => {
       familyMemberReport: [
         {
           id: '1',
+          isTest: true,
           reportname: 'Glicemia',
           reportunit: 'mg/dL',
           reportValue: '0.37',
@@ -157,6 +159,7 @@ const HomeContainer = ({ navigation }: any) => {
         },
         {
           id: '2',
+          isTest: true,
           reportname: 'Urine',
           reportunit: 'pH',
           reportValue: '2.2',
@@ -579,6 +582,7 @@ const HomeContainer = ({ navigation }: any) => {
       <TouchableOpacity
         activeOpacity={activityOpacity}
         style={styles.btnTestReport}
+        onPress={handleNavigateAnlitiTestDetails}
       >
         <View style={styles.lblTestImage}>
           <Text style={styles.lblTestName} numberOfLines={1}>
@@ -612,9 +616,21 @@ const HomeContainer = ({ navigation }: any) => {
   const handleNavigateCheckoutScreen = () => {
     navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
   };
-
   const handleNavigateTestDetailsScreen = () => {
     navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+  };
+  const handleNavigateYourProfileScreen = () => {
+    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+      screen: ScreenNames.YOURPROFILECONAINER,
+    });
+  };
+  const handleNavigateAnlitiTestDetails = () => {
+    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
+  };
+  const handleNavigateGetTested= () => {
+    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION,{
+      screen:ScreenNames.GETTESTEDCONTAINER
+    });
   };
 
   return (
@@ -633,6 +649,8 @@ const HomeContainer = ({ navigation }: any) => {
       handleNavigateTestDetailsScreen={handleNavigateTestDetailsScreen}
       renderItemAppointment={renderItemAppointment}
       appointmentsData={appointmentsData}
+      handleNavigateYourProfileScreen={handleNavigateYourProfileScreen}
+      handleNavigateGetTested={handleNavigateGetTested}
     />
   );
 };

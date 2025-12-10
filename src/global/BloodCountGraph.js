@@ -403,6 +403,7 @@ const BarChartComponent = ({
   const isTestedReport = props.reportItem.isTest == true;
   return (
     <TouchableOpacity
+    onPress={props.onpressreport}
       style={{
         backgroundColor: Colors.white,
         paddingTop: 20,
@@ -518,7 +519,7 @@ const BarChartComponent = ({
           <CustomButton
             style={{ backgroundColor: Colors.blueD1, marginTop: getHeight(13) }}
             textStyle={{ color: Colors.blue002, fontSize: fontSize.size16 }}
-            // btnPress={props.handlePressLogout}
+            btnPress={props.onpressBookNow}
             btnTitle={getTranslation('booknowtext')}
           />
         </View>

@@ -90,7 +90,7 @@ const KitAnalysisComponent = (props: any) => {
               marginTop: getHeight(12),
             }}
             textStyle={{ color: Colors.blue002, fontSize: fontSize.size16 }}
-            btnPress={() => {}}
+            btnPress={props.handlePressCheckout}
             btnTitle={getTranslation('rebookinglabel')}
           />
         </View>
@@ -531,8 +531,16 @@ const KitAnalysisComponent = (props: any) => {
         ]}
       >
         <TouchableOpacity
-          style={styles.btnBack}
+          style={styles.btnBackLeft}
           onPress={props.handleNavigationGoBack}
+          activeOpacity={activityOpacity}
+        >
+          <Image source={images.imgLeftArrow} />
+        </TouchableOpacity>
+        <TouchableOpacity
+        activeOpacity={activityOpacity}
+          style={styles.btnBack}
+          // onPress={props.handleNavigationGoBack}
         >
           {/* <Image source={images.imgLeftArrow} /> */}
           <Text style={styles.lblseefullpicture}>
@@ -573,6 +581,7 @@ const KitAnalysisComponent = (props: any) => {
                   reportName={reportItem.reportname}
                   reportValue={reportItem.reportValue}
                   reportItem={reportItem}
+                  onpressreport={props.handleNavigationTestDetails}
                 />
               ))}
             </View>

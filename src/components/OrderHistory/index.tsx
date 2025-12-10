@@ -12,7 +12,7 @@ const OrderHistoryComponent = (props: any) => {
       <Text style={styles.lblOrderHistory}>
         {getTranslation('orderhistoryprofile')}
       </Text>
-      {/* <FlatList
+      <FlatList
         onEndReached={() => {
           console.log('callend');
         }}
@@ -26,9 +26,9 @@ const OrderHistoryComponent = (props: any) => {
           marginTop: getHeight(24),
           paddingBottom: props.insets.bottom + getHeight(40),
         }}
-      /> */}
+      />
       {/* emptyview */}
-      <View style={styles.emptyview}>
+      {/* <View style={styles.emptyview}>
         <Image source={images.imgMicroscope} />
         <Text style={styles.orderhistoryemptytitle} numberOfLines={1}>
           {getTranslation('orderhistoryemptytitle')}
@@ -36,7 +36,7 @@ const OrderHistoryComponent = (props: any) => {
         <Text style={styles.orderhistoryemptysubtitle} numberOfLines={3}>
           {getTranslation('orderhistoryemptysubtitle')}
         </Text>
-      </View>
+      </View> */}
     </View>
   );
 };

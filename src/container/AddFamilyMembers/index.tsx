@@ -307,6 +307,7 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
 
   return (
     <AddFamilyMemberComponent
+    navigation={navigation}
       formattedDate={formattedDate}
       insets={insets}
       fullName={fullName}

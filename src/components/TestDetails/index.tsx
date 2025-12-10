@@ -52,7 +52,10 @@ const TestDetailsComponents = (props: any) => {
         >
           <TouchableOpacity
             style={styles.btnBack}
-            onPress={props.startBtnOnPress}
+            onPress={() => {
+              console.log("hy");
+              
+              props.navigation.goBack()}}
             activeOpacity={activityOpacity}
           >
             <Image source={images.imgLeftArrow} />

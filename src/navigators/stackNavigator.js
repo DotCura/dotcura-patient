@@ -143,6 +143,11 @@ const MainNavigation = props => {
           {},
           { headerShown: true },
         )}
+         {_addScreen(
+          ScreenNames.NOTIFICATIONLISTCONTAINER,
+          {},
+          { headerShown: true },
+        )}
       </Stack.Navigator>
     );
   };

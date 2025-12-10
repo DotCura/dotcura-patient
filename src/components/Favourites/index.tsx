@@ -34,14 +34,12 @@ const FavouritesComponent = (props: any) => {
           console.log('callend');
         }}
         style={{ flex: 1 }}
-        numColumns={2}
         data={props.kitFavData}
         renderItem={props.renderFavKitData}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={{
           gap: getWidth(12),
-          alignSelf: 'center',
           paddingBottom: getHeight(50),
         }}
       />

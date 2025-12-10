@@ -10,14 +10,14 @@ const InformationConasantContainer = ({ navigation }: any) => {
   const [headerArray, setHeaderArray] = useState([
     { id: 1 },
     { id: 2 },
-    { id: 3 },
   ]);
 
   const [selectedInfo, setSelectedInfo] = useState(1);
 
   const handlePressContinue = () => {
     console.log('hy');
-    navigation.navigate(ScreenNames.ADDCARDCONTAINER);
+    navigation.navigate(ScreenNames.ALLSETCONATINER);
+    // navigation.navigate(ScreenNames.ADDCARDCONTAINER);
   };
 
   return (

@@ -97,6 +97,7 @@ const KitAnalysisContainer = ({ navigation }: any) => {
         kittest: [
           {
             id: '1',
+            isTest:true,
             reportname: 'Urine',
             reportValue: '2.2',
             currentvalue: 11000,
@@ -106,6 +107,7 @@ const KitAnalysisContainer = ({ navigation }: any) => {
           },
           {
             id: '1',
+            isTest:true,
             reportname: 'Emoglobina glicata',
             reportValue: '0.37',
             currentvalue: 11000,
@@ -115,6 +117,7 @@ const KitAnalysisContainer = ({ navigation }: any) => {
           },
           {
             id: '2',
+            isTest:true,
             reportname: 'Microalbuminuria',
             reportValue: '18',
             currentvalue: 2000,
@@ -124,6 +127,7 @@ const KitAnalysisContainer = ({ navigation }: any) => {
           },
           {
             id: '3',
+            isTest:true,
             reportname: 'Urine',
             reportValue: '2.2',
             currentvalue: 100,
@@ -133,6 +137,7 @@ const KitAnalysisContainer = ({ navigation }: any) => {
           },
           {
             id: '4',
+            isTest:true,
             reportname: 'Creatininemia',
             reportValue: '18 mg/g',
             currentvalue: 4000,
@@ -141,6 +146,7 @@ const KitAnalysisContainer = ({ navigation }: any) => {
           },
           {
             id: '5',
+            isTest:true,
             reportname: 'Urine',
             reportValue: '2.2',
             currentvalue: 100,
@@ -150,6 +156,7 @@ const KitAnalysisContainer = ({ navigation }: any) => {
           },
           {
             id: '6',
+            isTest:true,
             reportname: 'Urine',
             reportValue: '2.2',
             currentvalue: 11000,
@@ -165,6 +172,7 @@ const KitAnalysisContainer = ({ navigation }: any) => {
         kittest: [
           {
             id: '1',
+            isTest:true,
             reportname: 'Urine',
             reportValue: '2.2',
             currentvalue: 11000,
@@ -174,6 +182,7 @@ const KitAnalysisContainer = ({ navigation }: any) => {
           },
           {
             id: '2',
+            isTest:true,
             reportname: 'Microalbuminuria',
             reportValue: '18',
             currentvalue: 2000,
@@ -205,11 +214,21 @@ const KitAnalysisContainer = ({ navigation }: any) => {
     navigation.goBack();
   };
 
+  const handlePressCheckout = () => {
+    navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+  }
+
+  const handleNavigationTestDetails= () => {
+    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+  };
+
   return (
     <KitAnalysisComponent
       insets={insets}
       KitAnalysisData={KitAnalysisData}
       handleNavigationGoBack={handleNavigationGoBack}
+      handleNavigationTestDetails={handleNavigationTestDetails}
+      handlePressCheckout={handlePressCheckout}
     />
   );
 };

@@ -84,7 +84,8 @@ const ProfileContainer = ({ navigation, route }: any) => {
       title: getTranslation('orderhistoryprofile'),
       image: images.imgcartclock,
       onpressfun: () => {
-        setIsShowOrderHistoryModel(true);
+        // setIsShowOrderHistoryModel(true);
+        navigation.navigate(ScreenNames.ORDERHISTORYCONTAINER);
       },
       iscurv: true,
     },
@@ -94,6 +95,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       image: images.imgFavProfile,
       onpressfun: () => {
         console.log('fav');
+        navigation.navigate(ScreenNames.FAVOURITESCONTAINER);
       },
       iscurv: true,
     },
@@ -115,21 +117,21 @@ const ProfileContainer = ({ navigation, route }: any) => {
       },
       iscurv: true,
     },
-    {
-      id: '4',
-      title: getTranslation('paymentmethod'),
-      image: images.imgCard,
-      onpressfun: () => {
-        navigation.navigate(ScreenNames.PAYMENTMETHODCONTAINER);
-      },
-      iscurv: true,
-    },
+    // {
+    //   id: '4',
+    //   title: getTranslation('paymentmethod'),
+    //   image: images.imgCard,
+    //   onpressfun: () => {
+    //     navigation.navigate(ScreenNames.PAYMENTMETHODCONTAINER);
+    //   },
+    //   iscurv: true,
+    // },
     {
       id: '5',
       title: getTranslation('addresss'),
       image: images.imgAddressProfile,
       onpressfun: () => {
-        setAddressPopupVisible(true);
+        navigation.navigate(ScreenNames.ADDRESSLISTCONTAINER);
       },
       iscurv: true,
     },
@@ -475,6 +477,9 @@ const ProfileContainer = ({ navigation, route }: any) => {
           showSubTitle={false}
           showEndBtn={true}
           isNotificationIcon={true}
+          NotificationPressFun={()=>{
+            navigation.navigate(ScreenNames.NOTIFICATIONLISTCONTAINER);
+          }}
         />
       ),
     });

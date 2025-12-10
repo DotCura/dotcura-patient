@@ -81,6 +81,8 @@ const AnalitiTestDetailComponent = (props: any) => {
                 reportName={reportItem.reportname}
                 reportValue={reportItem.reportValue}
                 reportItem={reportItem}
+                onpressreport={props.navigateTestDetailsScreen}
+                onpressBookNow={props.navigateTestGetTestedScreem}
               />
             ))}
           </View>

@@ -372,7 +372,7 @@ const AddFamilyMemberComponent = (props: any) => {
           btnTitle={getTranslation('saveinformation')}
         />
         <CustomButton
-          btnPress={props.handlePressContinue}
+          btnPress={()=>props.navigation.goBack()}
           btnTitle={getTranslation('deletefamily')}
           style={{ backgroundColor: Colors.redFC }}
           textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}

@@ -15,7 +15,6 @@ const CompleteProfileContainer = ({ navigation }: any) => {
   const [headerArray, setHeaderArray] = useState([
     { id: 1 },
     { id: 2 },
-    { id: 3 },
   ]);
   const genders = [
     { id: 1, label: getTranslation('gender1') },

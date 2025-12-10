@@ -42,6 +42,8 @@ export AnalitiDetailsContainer from "./container/AnalitiDetails";
 export AnalitiTestDetailContainer from "./container/AnalitiTestDetail";
 export HistoricalAnalysisContainer from "./container/HistoricalAnalysis";
 export OrderHistoryContainer from "./container/OrderHistory";
+export NotificationListContainer from "./container/Notification";
+
 
 
 

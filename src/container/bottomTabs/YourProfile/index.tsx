@@ -637,6 +637,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       <TouchableOpacity
         activeOpacity={activityOpacity}
         style={styles.btnTestReport}
+        onPress={handleNavigateAnalitiTestDetails}
       >
         <View style={styles.lblTestImage}>
           <Text style={styles.lblTestName} numberOfLines={1}>
@@ -873,8 +874,11 @@ const YourProfileContainer = ({ navigation }: any) => {
     navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
   };
 
-  const handleNavigateOrderHistory = () => {
+  const handleNavigateHistoricalAnlysis = () => {
     navigation.navigate(ScreenNames.HISTORICALANALYSISCONTAINER);
+  };
+  const handleNavigateAnalitiTestDetails = () => {
+    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
   };
 
   return (
@@ -897,6 +901,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       showPopup={showPopup}
       setShowPopup={setShowPopup}
       handlePressProfile={handlePressProfile}
+      handleNavigateHistoricalAnlysis={handleNavigateHistoricalAnlysis}
       hanldeNavigateKitAnalysis={hanldeNavigateKitAnalysis}
     />
   );
