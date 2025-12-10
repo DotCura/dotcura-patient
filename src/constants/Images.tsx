@@ -94,6 +94,15 @@ export const images = {
   imgKitAnalysisback: require('../assets/images/kitanalysisback.png'),
   imgCycle: require('../assets/images/cycle.png'),
   imgApartmentAnalysis: require('../assets/images/apartmentAnalysis.png'),
+  imgYellowShadow: require('../assets/images/yellowShadow.png'),
+  imgTestBlueShadow: require('../assets/images/TestBlueShadow.png'),
+  imgTestRedShadow: require('../assets/images/TestRedShadow.png'),
+  imgTestYellowShadow: require('../assets/images/TestYellowShadow.png'),
+  imgTopShadow: require('../assets/images/topshadow.png'),
+  
+  
+  
+  
   
   
   

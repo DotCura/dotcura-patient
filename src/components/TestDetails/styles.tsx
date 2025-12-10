@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
   lblTrade: {
     marginTop: getHeight(24),
     color: Colors.gray0F,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gbold,
     fontSize: fontSize.size20,
   },
   lblChangeQuery: {

@@ -28,11 +28,11 @@ const HomeContainer = ({ navigation }: any) => {
     {
       id: '1',
       chartData: [
-        { value: 0.6, date: 'Set 23' },
-        { value: 0.16, date: 'Set 24' },
+        { value: 0, date: 'Set 23' },
+        { value: 0.4, date: 'Set 24' },
         { value: 0, date: 'Dic 24' },
         { value: 0.26, date: 'Gen 25' },
-        { value: 0.37, date: 'Set 25' },
+        { value: 1, date: 'Set 25' },
       ],
       maxvalue: 0.54,
       minvalue: 0.14,
@@ -512,19 +512,24 @@ const HomeContainer = ({ navigation }: any) => {
         onPress={handleNavigateTestDetailsScreen}
         activeOpacity={activityOpacity}
         style={{
-          width: ScreenDimensions.screenWidth * 0.75,
-          borderWidth: 2,
-          borderColor: Colors.grayED,
+          width: ScreenDimensions.screenWidth * 0.85,
+          backgroundColor: Colors.white,
           borderRadius: 20,
           padding: 16,
           gap: getHeight(6),
+          overflow: 'hidden',
         }}
       >
+        <Image
+          source={images.imgYellowShadow}
+          style={{ position: 'absolute' }}
+        />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ flex: 1 }}>
             <Text style={styles.lblReportTitle}>{item.reporttitle}</Text>
             <Text style={styles.lblLastValue}>
-              {getTranslation('lastvalue')} {item.reportlastValue}
+              {/* {getTranslation('lastvalue')}  */}
+              {item.reportlastValue}
             </Text>
           </View>
           <View style={{ alignSelf: 'flex-start' }}>
@@ -577,6 +582,7 @@ const HomeContainer = ({ navigation }: any) => {
       </TouchableOpacity>
     );
   };
+
   const renderTestReportData = ({ item, index }: any) => {
     return (
       <TouchableOpacity
@@ -613,23 +619,28 @@ const HomeContainer = ({ navigation }: any) => {
   const handleNavigateProfileScreen = () => {
     navigation.navigate(ScreenNames.PROFILECONTAINER);
   };
+
   const handleNavigateCheckoutScreen = () => {
     navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
   };
+
   const handleNavigateTestDetailsScreen = () => {
     navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
   };
+
   const handleNavigateYourProfileScreen = () => {
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
       screen: ScreenNames.YOURPROFILECONAINER,
     });
   };
+
   const handleNavigateAnlitiTestDetails = () => {
     navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
   };
-  const handleNavigateGetTested= () => {
-    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION,{
-      screen:ScreenNames.GETTESTEDCONTAINER
+
+  const handleNavigateGetTested = () => {
+    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+      screen: ScreenNames.GETTESTEDCONTAINER,
     });
   };
 

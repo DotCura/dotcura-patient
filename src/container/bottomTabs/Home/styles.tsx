@@ -202,13 +202,15 @@ export const styles = StyleSheet.create({
   },
   lblReportTitle: {
     color: Colors.gray0F,
-    fontFamily: fontsfamily.bold,
+    fontFamily: fontsfamily.gregular,
     fontSize: fontSize.size16,
+    letterSpacing:0.2
   },
   lblLastValue: {
-    color: Colors.gray55,
-    fontFamily: fontsfamily.regular,
-    fontSize: fontSize.size12,
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gregular,
+    fontSize: fontSize.size24,
+    letterSpacing:0.2
   },
   lblPrice: {
     color: Colors.gray0F,

@@ -12,6 +12,7 @@ import { ScreenDimensions } from '../../../constants/utils/Dimensions';
 import { ScreenNames } from '../../../constants/AppConstants';
 import { MmkvManager } from '../../../constants/utils/MmkvManager';
 import { images } from '../../../constants/Images';
+import { CommonActions } from '@react-navigation/native';
 
 const OnBoardingContainer = ({ navigation }: any) => {
   const onBoardingArr = [
@@ -55,7 +56,12 @@ const OnBoardingContainer = ({ navigation }: any) => {
     if (currentIndex < onBoardingArr.length - 1) {
       flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
     } else {
-      navigation.navigate(ScreenNames.WELCOMECONTAINER);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{name: ScreenNames.WELCOMECONTAINER}],
+        }),
+      );
       MmkvManager.setData(MmkvManager.Keys.isOnBoardingVisisted, 'true');
     }
   };

@@ -23,6 +23,7 @@ import { activityOpacity } from '../../constants/GConstant';
 import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
 import VerticalBarChartProfile from '../../global/VerticalBarChartProfile';
 import { ZustandStores } from '../../store';
+import BarChartComponent from '../../global/BloodCountGraph';
 
 const TestDetailsComponents = (props: any) => {
   const [rangeType, setRangeType] = React.useState('normal');
@@ -39,6 +40,18 @@ const TestDetailsComponents = (props: any) => {
         return [Colors.white, Colors.goldenF9];
     }
   };
+
+  const kittestdetails={
+    id: '1',
+    isTest:true,
+    reportname: 'Urine',
+    reportValue: '2.2',
+    currentvalue: 11000,
+    minValue: 1000,
+    maxvalue: 10000,
+    reportunit: 'pH',
+  }
+
   return (
     <>
         <View
@@ -124,12 +137,13 @@ const TestDetailsComponents = (props: any) => {
               0.37<Text style={styles.lblUnit}>mg/dL</Text>
             </Text>
             <BarChartComponentDetails
-              currentValue={500}
-              minValue={1000}
-              maxValue={10000}
+              currentValue={kittestdetails.currentvalue}
+              minValue={kittestdetails.minValue}
+              maxValue={kittestdetails.maxvalue}
               width={ScreenDimensions.screenWidth - getWidth(40)}
               height={getHeight(40)}
-              onRangeTypeChange={setRangeType}
+              reportItem={kittestdetails}
+
             />
             <View style={styles.vwOptimalAndPercentage}>
               <View style={styles.vwPercentage}>
@@ -158,8 +172,7 @@ const TestDetailsComponents = (props: any) => {
           <Text style={styles.lblTrade}>{getTranslation('trend')}</Text>
           <View
             style={{
-              borderWidth: 2,
-              borderColor: Colors.grayED,
+              backgroundColor:Colors.white,
               borderRadius: 20,
               padding: 16,
               gap: getHeight(6),

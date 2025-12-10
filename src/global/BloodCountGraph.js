@@ -343,6 +343,20 @@ const BarChartComponent = ({
       break;
   }
 
+  let shadowImage = images.imgTestBlueShadow;
+
+  switch (rangeType) {
+    case 'normal':
+      shadowImage = images.imgTestBlueShadow;
+      break;
+    case 'moderate':
+      shadowImage = images.imgTestYellowShadow;
+      break;
+    case 'extreme':
+      shadowImage = images.imgTestRedShadow;
+      break;
+  }
+
   // ✅ Background color logic based on range type
   let backgroundColor = Colors.white;
   switch (rangeType) {
@@ -403,29 +417,33 @@ const BarChartComponent = ({
   const isTestedReport = props.reportItem.isTest == true;
   return (
     <TouchableOpacity
-    onPress={props.onpressreport}
+      onPress={props.onpressreport}
       style={{
         backgroundColor: Colors.white,
         paddingTop: 20,
         paddingBottom: 15,
+        overflow: 'hidden',
         borderRadius: 20,
       }}
       activeOpacity={activityOpacity}
     >
-      {isTestedReport && (
+      {/* {isTestedReport && (
         <LinearGradient
-          // 1. First color: The blue glow
-          // 2. Second color: Pure white
+         
           colors={['#D1E0FF', '#D1E0FF', '#FFFFFF']}
-          // 3. Start high and to the right (100% right, 0% top)
+      
           start={{ x: 1, y: 0 }}
-          // 4. End just a little bit away from that corner
-          // Changing this to 0.7 instead of 0.0 makes it look "sprayed"
+        
           end={{ x: 0.9, y: 0.5 }}
           style={styles.card}
         >
-          {/* Your content here */}
         </LinearGradient>
+      )} */}
+      {isTestedReport && (
+        <Image
+          source={shadowImage}
+          style={{ position: 'absolute', right: 0 }}
+        />
       )}
       <View
         style={{
