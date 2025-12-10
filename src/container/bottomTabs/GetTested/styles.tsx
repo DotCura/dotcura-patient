@@ -67,6 +67,7 @@ export const styles = StyleSheet.create({
     color: Colors.gray0F,
     fontFamily: fontsfamily.gbold,
     fontSize: fontSize.size16,
+    flex:1,
   },
   lblReportTitle: {
     color: Colors.gray0F,

@@ -395,7 +395,10 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   };
 
   const funOpenIsModifyOrder = () => {
-    setShowIsModifyOrder(true);
+    // setShowIsModifyOrder(true);
+    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+      screen: ScreenNames.GETTESTEDCONTAINER,
+    });
   };
 
   const funCloseIsModifyOrder = () => {
@@ -750,6 +753,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   };
 
   const handleNavigateHome = () => {
+    setOrderStatus('')
     setCancleOrderVisible(false);
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
       screen: ScreenNames.GETTESTEDCONTAINER,

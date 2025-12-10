@@ -21,9 +21,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 100,
     alignItems: 'center',
-    gap: getWidth(4),
     height: getHeight(54),
     justifyContent: 'center',
   },
-  lbl: { fontSize: fontSize.size10 },
+  lbl: { fontSize: fontSize.size10},
 });

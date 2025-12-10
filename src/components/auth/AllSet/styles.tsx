@@ -18,11 +18,13 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size28,
     fontFamily: fontsfamily.gmedium,
     marginTop: getHeight(40),
+    textAlign: 'center',
   },
   lblMainSubtitle: {
     color: Colors.gray55,
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.gregular,
     letterSpacing: 0.2,
+    textAlign: 'center',
   },
 });

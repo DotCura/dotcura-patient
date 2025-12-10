@@ -540,6 +540,48 @@ const YourProfileContainer = ({ navigation }: any) => {
       currentanalysis: 18,
       testname: 'Diabete',
     },
+    {
+      id: 5,
+      reportimage: images.imgButterfly,
+      totalanalysis: 10,
+      currentanalysis: 9,
+      testname: 'Tiroide',
+    },
+    {
+      id: 6,
+      reportimage: images.imgBlood,
+      totalanalysis: 2,
+      currentanalysis: 1,
+      testname: 'Anemia e sangue',
+    },
+    {
+      id: 7,
+      reportimage: images.imgHadi,
+      totalanalysis: 25,
+      currentanalysis: 2,
+      testname: 'Ossa e vitamina D',
+    },
+    {
+      id: 8,
+      reportimage: images.imgShield,
+      totalanalysis: 14,
+      currentanalysis: 7,
+      testname: 'Difese immunitarie',
+    },
+    {
+      id: 9,
+      reportimage: images.imgFlower,
+      totalanalysis: 8,
+      currentanalysis: 5,
+      testname: 'Ormone donna',
+    },
+    {
+      id: 10,
+      reportimage: images.imgMasrrom,
+      totalanalysis: 10,
+      currentanalysis: 2,
+      testname: 'Ormone uomo',
+    },
   ];
 
   const [latestanalysisData, setLatestanalysisData] = useState(analysisArray);

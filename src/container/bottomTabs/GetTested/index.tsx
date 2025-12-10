@@ -332,7 +332,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       >
         <View style={styles.vwtitleimage}>
           <Image source={item.analitiimages} />
-          <Text style={styles.lblAnalitiLabel}>{item.title}</Text>
+          <Text style={styles.lblAnalitiLabel} numberOfLines={2}>{item.title}</Text>
         </View>
         <View style={styles.vwCurrencyPrice}>
           <Text style={styles.lablCurrency}>
