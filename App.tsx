@@ -11,11 +11,20 @@ import AppLayout from './src/global/AppLayout';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ZustandStores } from './src/store';
 import { MmkvManager } from './src/constants/utils/MmkvManager';
+import SplashScreen from 'react-native-splash-screen'
 
 LogBox.ignoreAllLogs();
 
 const App = () => {
-  const [initialRouteName, setInitialRouteName] = useState<string | null>(ScreenNames.BOTTOMTABNAVIGATION);
+  const [initialRouteName, setInitialRouteName] = useState<string | null>(
+    ScreenNames.INTROCONTAINER,
+  );
+
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 500);
+  }, []);
 
   // useEffect(() => {
   //   MmkvManager.getData(
