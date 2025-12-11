@@ -275,6 +275,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
+  
 
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
   const [showIsKitTestDetails, setShowIsKitTestDetails] = useState(false);

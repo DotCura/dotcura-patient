@@ -35,7 +35,8 @@ const AddressListContainer = ({ navigation }: any) => {
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
-            navigation.navigate(ScreenNames.PROFILECONTAINER);
+            // navigation.navigate(ScreenNames.PROFILECONTAINER);
+            navigation.goBack();
           }}
           centerTitle={getTranslation('addresss')}
           dontShowStartBtn={false}

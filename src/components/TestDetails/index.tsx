@@ -41,62 +41,63 @@ const TestDetailsComponents = (props: any) => {
     }
   };
 
-  const kittestdetails={
+  const kittestdetails = {
     id: '1',
-    isTest:true,
+    isTest: true,
     reportname: 'Urine',
     reportValue: '2.2',
     currentvalue: 11000,
     minValue: 1000,
     maxvalue: 10000,
     reportunit: 'pH',
-  }
+  };
 
   return (
     <>
-        <View
-          style={[
-            styles.vwMain,
-            {
-              paddingTop:
-                orderStatus == '' ? props.insets.top + 10 : getHeight(25),
-            },
-          ]}
+      <View
+        style={[
+          styles.vwMain,
+          {
+            paddingTop:
+              orderStatus == '' ? props.insets.top + 10 : getHeight(25),
+          },
+        ]}
+      >
+        <TouchableOpacity
+          style={styles.btnBack}
+          onPress={() => {
+            console.log('hy');
+
+            props.navigation.goBack();
+          }}
+          activeOpacity={activityOpacity}
         >
-          <TouchableOpacity
-            style={styles.btnBack}
-            onPress={() => {
-              console.log("hy");
-              
-              props.navigation.goBack()}}
-            activeOpacity={activityOpacity}
+          <Image source={images.imgLeftArrow} />
+        </TouchableOpacity>
+        <View>
+          <Text
+            style={[constnatStyles.lblHeaderTitle, props?.headerTextStyle]}
+            numberOfLines={2}
           >
-            <Image source={images.imgLeftArrow} />
-          </TouchableOpacity>
-          <View>
-            <Text
-              style={[constnatStyles.lblHeaderTitle, props?.headerTextStyle]}
-              numberOfLines={2}
-            >
-              Glicemia
-            </Text>
-            <Text
-              style={[
-                constnatStyles.lblSubHeaderTitle,
-                props?.headerSubTextStyle,
-              ]}
-              numberOfLines={2}
-            >
-              {'8/8/2025' + '-' + '17:09'}
-            </Text>
-          </View>
-          <TouchableOpacity
-            style={styles.btnBack}
-            activeOpacity={activityOpacity}
+            Glicemia
+          </Text>
+          <Text
+            style={[
+              constnatStyles.lblSubHeaderTitle,
+              props?.headerSubTextStyle,
+            ]}
+            numberOfLines={2}
           >
-            <Image source={images.imgFavFilled} />
-          </TouchableOpacity>
+            {'8/8/2025' + '-' + '17:09'}
+          </Text>
         </View>
+        <TouchableOpacity
+          style={styles.btnBack}
+          activeOpacity={activityOpacity}
+        >
+          <Image source={images.imgFavFilled} />
+        </TouchableOpacity>
+      </View>
       <ScrollView
         contentContainerStyle={[
           constnatStyles.keyboardContainer,
@@ -116,8 +117,12 @@ const TestDetailsComponents = (props: any) => {
 
           <Text style={styles.lblValue}> glicemia </Text>
 
-          <View style={styles.vwTestTitle}>
-            <Text style={styles.lblValueDes}>{getTranslation('lowethen')}</Text>
+          <View style={styles.vwTestTitleInner}>
+            <View style={styles.vwTestTitle}>
+              <Text style={styles.lblValueDes}>
+                {getTranslation('lowethen')}
+              </Text>
+            </View>
           </View>
           <Text style={styles.lblValueDes}>
             {getTranslation('lowethensub')}
@@ -143,7 +148,6 @@ const TestDetailsComponents = (props: any) => {
               width={ScreenDimensions.screenWidth - getWidth(40)}
               height={getHeight(40)}
               reportItem={kittestdetails}
-
             />
             <View style={styles.vwOptimalAndPercentage}>
               <View style={styles.vwPercentage}>
@@ -172,7 +176,7 @@ const TestDetailsComponents = (props: any) => {
           <Text style={styles.lblTrade}>{getTranslation('trend')}</Text>
           <View
             style={{
-              backgroundColor:Colors.white,
+              backgroundColor: Colors.white,
               borderRadius: 20,
               padding: 16,
               gap: getHeight(6),

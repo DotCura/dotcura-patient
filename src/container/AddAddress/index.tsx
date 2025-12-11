@@ -80,7 +80,7 @@ const AddAddressContainer = ({ navigation, route }: any) => {
       setInstructionNameError(getTranslation('emptyInstructions'));
       return;
     } else {
-      navigation.navigate(ScreenNames.ADDRESSLISTCONTAINER);
+      navigation.popTo(ScreenNames.ADDRESSLISTCONTAINER);
     }
   };
 

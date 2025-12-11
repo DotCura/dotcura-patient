@@ -779,7 +779,7 @@ const CheckoutComponent = (props: any) => {
             <View style={[styles.vwMainModelHeader]}>
               <TouchableOpacity
                 style={styles.btnBack}
-                onPress={props.funCloseIsKitTestDetails} // close modal
+                onPress={props.funCloseAddAddressPopup} // close modal
               >
                 <Image source={images.imgLeftArrow} />
               </TouchableOpacity>

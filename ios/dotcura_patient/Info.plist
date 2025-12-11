@@ -22,6 +22,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -35,6 +37,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>La aplicación Doctura necesita acceso a la cámara para tomar fotos.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>$(PRODUCT_NAME) need to access in order to load songs.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We use your location to automatically detect your address and provide accurate location-based services.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>La aplicación Doctura necesita acceso a tu ubicación mientras la usas.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
@@ -81,6 +87,8 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>
 </plist>

@@ -61,7 +61,8 @@ const AddFamilyContainer = ({ navigation }: any) => {
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
-            navigation.navigate(ScreenNames.PROFILECONTAINER);
+            // navigation.navigate(ScreenNames.PROFILECONTAINER);
+            navigation.goBack();
           }}
           dontShowStartBtn={false}
           showTitle={true}

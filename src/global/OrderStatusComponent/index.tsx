@@ -7,6 +7,7 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { getTranslation } from '../../localization/i18n/i18n.config';
+import { activityOpacity } from '../../constants/GConstant';
 
 const OrderStatusComponent = (props: any) => {
   const insets = useSafeAreaInsets();
@@ -31,7 +32,11 @@ const OrderStatusComponent = (props: any) => {
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <TouchableOpacity
+      onPress={() => setShowBigView(!showBigView)}
+      activeOpacity={activityOpacity}
+      style={[styles.container, { paddingTop: insets.top }]}
+    >
       {/* BIG VIEW */}
       {showBigView && (
         <View style={styles.bigViewContainer}>
@@ -97,7 +102,7 @@ const OrderStatusComponent = (props: any) => {
           </View>
         </View>
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 

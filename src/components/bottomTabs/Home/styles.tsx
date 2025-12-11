@@ -97,6 +97,7 @@ export const styles = StyleSheet.create({
     paddingVertical: getHeight(19),
     paddingHorizontal: getWidth(16),
     borderRadius: 20,
+    marginTop:getHeight(11)
   },
   vwTextCount: {
     justifyContent: 'center',

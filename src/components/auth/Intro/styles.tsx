@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
   txtSubtitle: {
     marginTop: 4,
     fontSize: fontSize.size16,
-    fontFamily: fontsfamily.regular,
+    fontFamily: fontsfamily.gregular,
     color: Colors.gray55,
     textAlign: 'center',
     marginHorizontal: getWidth(16),

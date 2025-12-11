@@ -5,6 +5,13 @@ import { Colors } from '../../constants/Colors';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
+  vwTestTitleInner:{
+    backgroundColor: Colors.goldenFB,
+    borderRadius: 999,
+    paddingHorizontal: getWidth(4),
+    marginHorizontal: getWidth(2),
+    paddingVertical: getHeight(2),
+  },
   btnBack: {
     backgroundColor: Colors.white,
     height: getHeight(36),
@@ -146,7 +153,7 @@ export const styles = StyleSheet.create({
     elevation: 4,
   },
   vwTestTitle: {
-    backgroundColor: Colors.goldenFB,
+    backgroundColor: Colors.goldeenF5,
     borderRadius: 999,
     paddingHorizontal: getWidth(4),
     marginHorizontal: getWidth(2),

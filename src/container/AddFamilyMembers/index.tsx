@@ -125,7 +125,7 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
       flashMessageWarning(getTranslation('pleaseuploadfrontandbackside'));
     } else {
       console.log('hy');
-      navigation.navigate(ScreenNames.ADDFAMILYCONTAINER);
+      navigation.popTo(ScreenNames.ADDFAMILYCONTAINER);
     }
   };
 

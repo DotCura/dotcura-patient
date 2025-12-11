@@ -303,7 +303,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [{ name: ScreenNames.LOGINCONTAINER }],
+        routes: [{ name: ScreenNames.WELCOMECONTAINER }],
       }),
     );
   };
@@ -468,9 +468,10 @@ const ProfileContainer = ({ navigation, route }: any) => {
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
-            navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-              screen: ScreenNames.HOMECONTAINER,
-            });
+            // navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+            //   screen: ScreenNames.HOMECONTAINER,
+            // });
+            navigation.goBack();
           }}
           dontShowStartBtn={false}
           showTitle={false}
