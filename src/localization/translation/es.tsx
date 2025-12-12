@@ -47,6 +47,7 @@ export default {
   completeprofiletitle: 'Completa il tuo profilo',
   completeprofilesubtitle: 'Aggiungi il tuo nome e numero di telefono.',
   continue: 'Continua',
+  submit:"Enviar",
   fullnameplaceholder: 'Giovanni',
   emailplaceholder: 'giovanni@email.com',
   taxcodeplaceholder: '0000000000000000',
@@ -231,6 +232,12 @@ export default {
   checkoutemptysubtitle:"Inizia il tuo percorso di salute prenotando il primo esame. Comodo, veloce e a domicilio.",
   checkoutemptybtn:"Scopri le analisi",
   
+  //RATEREVIEW
+  ratereviewtital:"Tutto fatto!",
+  ratereviewsubtitle:"Ora bisogna aspettare i risultati, ti arriverà una notifica quando saranno pubblicati.",
+  ratereviewpopuptitle:"Come è andato il prelievo?",
+  ratereviewpopupsubtitle:"Lascia una recensione",
+
   //RESULTOPENUP
   resultopentitle: 'Le analisi sono arrivate.',
   resultopenupsubtitle:

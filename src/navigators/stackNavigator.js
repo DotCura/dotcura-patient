@@ -143,10 +143,15 @@ const MainNavigation = props => {
           {},
           { headerShown: true },
         )}
-         {_addScreen(
+        {_addScreen(
           ScreenNames.NOTIFICATIONLISTCONTAINER,
           {},
           { headerShown: true },
+        )}
+        {_addScreen(
+          ScreenNames.RATEANDREVIEWCONTAINER,
+          {},
+          { headerShown: false },
         )}
       </Stack.Navigator>
     );

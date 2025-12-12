@@ -100,6 +100,12 @@ export const images = {
   imgTestYellowShadow: require('../assets/images/TestYellowShadow.png'),
   imgTopShadow: require('../assets/images/topshadow.png'),
   imgfavblack:require('../assets/images/fav-filled-black.png'),
+  imgRateReview:require('../assets/images/ratereview.png'),
+  imgRateFillStar:require('../assets/images/ratefillStar.png'),
+  imgRateUnfillStar:require('../assets/images/rateUnfillStar.png'),
+  
+  
+  
   
   
   

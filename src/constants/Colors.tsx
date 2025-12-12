@@ -11,6 +11,7 @@ export const Colors = {
 
   lightBlurE4: '#E4EEFD',
   blue1C: '#1C58CA',
+  blue2C:"#2C64E7",
   blue17: '#17408C',
   blue3C: '#3C78E8',
   blue94: '#94B8F5',
