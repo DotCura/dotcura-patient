@@ -95,7 +95,7 @@ const TestDetailsComponents = (props: any) => {
           style={styles.btnBack}
           activeOpacity={activityOpacity}
         >
-          <Image source={images.imgFavFilled} />
+          <Image source={images.imgfavblack} />
         </TouchableOpacity>
       </View>
       <ScrollView

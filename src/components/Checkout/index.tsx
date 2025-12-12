@@ -67,261 +67,290 @@ const CheckoutComponent = (props: any) => {
   };
   return (
     <>
-      <KeyboardAwareScrollView
-        contentContainerStyle={[
-          constnatStyles.keyboardContainer,
-          {
-            // paddingBottom: getHeight(200),
-          },
-        ]}
-        bounces={false}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* vwHeaderTitle */}
-        <View style={{ marginTop: getHeight(24) }}>
-          <Text style={styles.lblYourOrder}>{getTranslation('yourorder')}</Text>
-          <Text style={styles.lblYourOrderSubtitle}>
-            {getTranslation('yourordersubtitle')}
+      {props.testkitsData.length === 0 ? (
+        <View style={styles.emptyview}>
+          <Image source={images.imgMicroscope} />
+          <Text style={styles.orderhistoryemptytitle} numberOfLines={1}>
+            {getTranslation('checkoutemptytitle')}
           </Text>
-        </View>
-
-        {/* dropdownfamilymember */}
-        <View style={{ marginTop: getHeight(24) }}>
-          <Text style={styles.lblwhodothetest}>
-            {getTranslation('whoshoulddotest')}
+          <Text style={styles.orderhistoryemptysubtitle} numberOfLines={3}>
+            {getTranslation('checkoutemptysubtitle')}
           </Text>
-          <View style={{ marginTop: getHeight(6) }}>
-            <CustomDropdown
-              data={props.familyMemberData}
-              value={props.familymemberValue}
-              onChange={item => props.handleSetFamilyMember(item)}
-              placeholder={getTranslation('selectfamilymember') || ''}
-              dropdownPosition="auto"
-              isRenderLeftIcon={false}
-            />
-          </View>
-        </View>
-
-        {/* vwkitList */}
-        <View>
-          <FlatList
-            onEndReached={() => {
-              // console.log('callend');
-            }}
-            data={props.testkitsData}
-            renderItem={props.renderItemTestKits}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={item => item.id.toString()}
-            contentContainerStyle={{
-              gap: getWidth(8),
-              marginTop: getHeight(24),
-            }}
+          <CustomButton
+            btnTitle={getTranslation('checkoutemptybtn')}
+            style={{ backgroundColor: Colors.blueD1 }}
+            btnicon={false}
+            textStyle={{ color: Colors.blue002 }}
+            btnPress={props.funOpenIsModifyOrder}
           />
-          <TouchableOpacity
-            style={styles.btnEdit}
-            activeOpacity={activityOpacity}
-            onPress={props.funOpenIsModifyOrder}
-          >
-            <Image source={images.addblue} tintColor={Colors.white} />
-            <Text style={styles.lblEdit}>{getTranslation('addanalysis')}</Text>
-          </TouchableOpacity>
         </View>
-
-        {/* vwDateTime */}
-        <View style={{ marginTop: getHeight(24) }}>
-          <Text style={styles.lblHomeService}>
-            {getTranslation('homesevice')}
-          </Text>
-          <View style={styles.vwDateTimeMain}>
-            <View style={styles.vwDateTimeInner}>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.lblDateAndTime}>
-                  {getTranslation('dateandtime')}
-                </Text>
-                <Text style={styles.lblDateAndTimeValue}>
-                  {props.selectedSlot
-                    ? `${props.selectedSlot.day} ${props.selectedSlot.time}`
-                    : 'Domani entro le 10:00'}
-                </Text>
-              </View>
-              <TouchableOpacity
-                style={styles.btnAdd}
-                activeOpacity={activityOpacity}
-                onPress={() => props.setShowPicker(true)} // 👈 open picker modal
-              >
-                <Text style={styles.lblChnage}>
-                  {' '}
-                  {getTranslation('change')}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        {/* vwAddress */}
-        <ImageBackground
-          source={images.imgAddessManager}
-          style={styles.vwImgBack}
+      ) : (
+        <KeyboardAwareScrollView
+          contentContainerStyle={[
+            constnatStyles.keyboardContainer,
+            {
+              // paddingBottom: getHeight(200),
+            },
+          ]}
+          bounces={false}
+          showsVerticalScrollIndicator={false}
         >
-          <View
-            style={{
-              flexDirection: 'row',
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <Text style={styles.lblDateAndTime}>
-                {getTranslation('address')}
-              </Text>
-              <Text style={styles.lblDateAndTimeValue}>
-                {props.selectedAddress
-                  ? `${props.selectedAddress.title} - ${props.selectedAddress.subtitle}`
-                  : 'Via Roma, 31 - Napoli'}
-              </Text>
-            </View>
-            <TouchableOpacity
-              style={styles.btnChange}
-              activeOpacity={activityOpacity}
-              onPress={props.handleNavigateAddAddress}
-            >
-              <Text style={styles.lblChnage}>{getTranslation('change')}</Text>
-            </TouchableOpacity>
+          {/* vwHeaderTitle */}
+          <View style={{ marginTop: getHeight(24) }}>
+            <Text style={styles.lblYourOrder}>
+              {getTranslation('yourorder')}
+            </Text>
+            <Text style={styles.lblYourOrderSubtitle}>
+              {getTranslation('yourordersubtitle')}
+            </Text>
           </View>
 
-          {/* vwAddtionalInstructions */}
-          <View style={{ marginTop: getHeight(16) }}>
-            <Text style={styles.lblAddtionalInstructions}>
-              {getTranslation('additionalinstructions')}
+          {/* dropdownfamilymember */}
+          <View style={{ marginTop: getHeight(24) }}>
+            <Text style={styles.lblwhodothetest}>
+              {getTranslation('whoshoulddotest')}
             </Text>
-            <View>
-              <TextInput
-                style={styles.vwInput}
-                placeholder={getTranslation('manageaddressplaceholder') || ''}
-                placeholderTextColor={Colors.gray75}
-                cursorColor={Colors.gray75}
-                selectionColor={Colors.gray75}
-                value={props.manageAddress}
-                onChangeText={props.onChnageManageAddress}
+            <View style={{ marginTop: getHeight(6) }}>
+              <CustomDropdown
+                data={props.familyMemberData}
+                value={props.familymemberValue}
+                onChange={item => props.handleSetFamilyMember(item)}
+                placeholder={getTranslation('selectfamilymember') || ''}
+                dropdownPosition="auto"
+                isRenderLeftIcon={false}
               />
             </View>
           </View>
-        </ImageBackground>
 
-        {/* ✅ Summary Section */}
-        <View style={styles.summaryContainer}>
-          <View style={{ gap: getHeight(4) }}>
-            <Text style={styles.summaryTitle}>
-              {getTranslation('summarytitle')}
-            </Text>
-            <Text style={styles.summarySubtitle}>
-              {getTranslation('summarysubtitle')}
-            </Text>
-          </View>
-          <View style={styles.summaryInnerContainer}>
-            {/* Subtotal list */}
-            <View style={styles.summaryItemRow}>
-              <Text style={styles.summaryLabel}>
-                {getTranslation('subtotal')}
-              </Text>
-              <Text style={styles.summaryValue}>
-                {currency} {props.subtotal.toFixed(2)}
-              </Text>
-            </View>
-            <View style={{ marginLeft: getWidth(12), gap: getHeight(8) }}>
-              {props.testkitsData.map((kit: any) => (
-                <View key={kit.id} style={styles.summaryItemRow}>
-                  <Text style={styles.summaryLabel}>{kit.name}</Text>
-                  <Text style={styles.summaryValue}>
-                    {currency} {kit.price.toFixed(2)}
-                  </Text>
-                </View>
-              ))}
-            </View>
-
-            <View style={styles.summaryItemRow}>
-              <Text style={styles.summaryLabel}>
-                {getTranslation('service')}
-              </Text>
-              <Text style={styles.summaryValue}>
-                {currency} {props.homeServiceCharge.toFixed(2)}
-              </Text>
-            </View>
-
-            {/* {props.discountValue > 0 && ( */}
-            <View style={styles.summaryItemRow}>
-              <Text style={[styles.summaryLabel]}>
-                {getTranslation('discount')}
-              </Text>
-              <Text style={[styles.summaryValue, { color: Colors.green17 }]}>
-                -{currency} {props.discountValue.toFixed(2)}
-              </Text>
-            </View>
-            {/* // )} */}
-
-            <View style={[styles.summaryItemRow]}>
-              <Text
-                style={[styles.summaryLabel, { fontFamily: fontsfamily.gbold }]}
-              >
-                {getTranslation('total')}
-              </Text>
-              <Text
-                style={[styles.summaryValue, { fontFamily: fontsfamily.gbold }]}
-              >
-                {currency} {props.total.toFixed(2)}
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        {/* discountCode */}
-        <View style={{ marginTop: getHeight(16) }}>
-          <Text style={styles.lblHaveYouCoupans}>
-            {getTranslation('haveyoucoupans')}
-          </Text>
-          <View style={styles.vwInputDisocunt}>
-            <TextInput
-              style={styles.vwInputDiscountInner}
-              placeholder={getTranslation('placholdercoupans') || ''}
-              placeholderTextColor={Colors.gray75}
-              cursorColor={Colors.gray75}
-              selectionColor={Colors.gray75}
-              value={props.discountCode}
-              onChangeText={props.onChangeDiscountCode}
+          {/* vwkitList */}
+          <View>
+            <FlatList
+              onEndReached={() => {
+                // console.log('callend');
+              }}
+              data={props.testkitsData}
+              renderItem={props.renderItemTestKits}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={item => item.id.toString()}
+              contentContainerStyle={{
+                gap: getWidth(8),
+                marginTop: getHeight(24),
+              }}
             />
             <TouchableOpacity
-              style={[styles.btnChange, { backgroundColor: Colors.blueD1 }]}
+              style={styles.btnEdit}
               activeOpacity={activityOpacity}
-              onPress={props.onApplyDiscount}
+              onPress={props.funOpenIsModifyOrder}
             >
-              <Text style={styles.lblChnage}>{getTranslation('add')}</Text>
+              <Image source={images.addblue} tintColor={Colors.white} />
+              <Text style={styles.lblEdit}>
+                {getTranslation('addanalysis')}
+              </Text>
             </TouchableOpacity>
           </View>
-        </View>
-        {/* bottom button */}
-        <View
-          style={[
-            styles.vwBottomBtn,
-            {
-              marginBottom:
-                props.insets.bottom > 0
-                  ? props.insets.bottom
-                  : props.insets.bottom + getHeight(16),
-            },
-          ]}
-        >
-          <CustomButton
-            btnTitle={getTranslation('savechnages')}
-            btnPress={props.handleOnPressSaveChanges}
-          />
-          <CustomButton
-            btnTitle={getTranslation('canclereservation')}
-            style={{ backgroundColor: Colors.redFD }}
-            btnicon={true}
-            btnImage={images.imgDelete}
-            textStyle={{ color: Colors.red8C }}
-            btnPress={props.funOpenCancleOrder}
-          />
-        </View>
-      </KeyboardAwareScrollView>
+
+          {/* vwDateTime */}
+          <View style={{ marginTop: getHeight(24) }}>
+            <Text style={styles.lblHomeService}>
+              {getTranslation('homesevice')}
+            </Text>
+            <View style={styles.vwDateTimeMain}>
+              <View style={styles.vwDateTimeInner}>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.lblDateAndTime}>
+                    {getTranslation('dateandtime')}
+                  </Text>
+                  <Text style={styles.lblDateAndTimeValue}>
+                    {props.selectedSlot
+                      ? `${props.selectedSlot.day} ${props.selectedSlot.time}`
+                      : 'Domani entro le 10:00'}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.btnAdd}
+                  activeOpacity={activityOpacity}
+                  onPress={() => props.setShowPicker(true)} // 👈 open picker modal
+                >
+                  <Text style={styles.lblChnage}>
+                    {' '}
+                    {getTranslation('change')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
+          {/* vwAddress */}
+          <ImageBackground
+            source={images.imgAddessManager}
+            style={styles.vwImgBack}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text style={styles.lblDateAndTime}>
+                  {getTranslation('address')}
+                </Text>
+                <Text style={styles.lblDateAndTimeValue}>
+                  {props.selectedAddress
+                    ? `${props.selectedAddress.title} - ${props.selectedAddress.subtitle}`
+                    : 'Via Roma, 31 - Napoli'}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.btnChange}
+                activeOpacity={activityOpacity}
+                onPress={props.handleNavigateAddAddress}
+              >
+                <Text style={styles.lblChnage}>{getTranslation('change')}</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* vwAddtionalInstructions */}
+            <View style={{ marginTop: getHeight(16) }}>
+              <Text style={styles.lblAddtionalInstructions}>
+                {getTranslation('additionalinstructions')}
+              </Text>
+              <View>
+                <TextInput
+                  style={styles.vwInput}
+                  placeholder={getTranslation('manageaddressplaceholder') || ''}
+                  placeholderTextColor={Colors.gray75}
+                  cursorColor={Colors.gray75}
+                  selectionColor={Colors.gray75}
+                  value={props.manageAddress}
+                  onChangeText={props.onChnageManageAddress}
+                />
+              </View>
+            </View>
+          </ImageBackground>
+
+          {/* ✅ Summary Section */}
+          <View style={styles.summaryContainer}>
+            <View style={{ gap: getHeight(4) }}>
+              <Text style={styles.summaryTitle}>
+                {getTranslation('summarytitle')}
+              </Text>
+              <Text style={styles.summarySubtitle}>
+                {getTranslation('summarysubtitle')}
+              </Text>
+            </View>
+            <View style={styles.summaryInnerContainer}>
+              {/* Subtotal list */}
+              <View style={styles.summaryItemRow}>
+                <Text style={styles.summaryLabel}>
+                  {getTranslation('subtotal')}
+                </Text>
+                <Text style={styles.summaryValue}>
+                  {currency} {props.subtotal.toFixed(2)}
+                </Text>
+              </View>
+              <View style={{ marginLeft: getWidth(12), gap: getHeight(8) }}>
+                {props.testkitsData.map((kit: any) => (
+                  <View key={kit.id} style={styles.summaryItemRow}>
+                    <Text style={styles.summaryLabel}>{kit.name}</Text>
+                    <Text style={styles.summaryValue}>
+                      {currency} {kit.price.toFixed(2)}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+
+              <View style={styles.summaryItemRow}>
+                <Text style={styles.summaryLabel}>
+                  {getTranslation('service')}
+                </Text>
+                <Text style={styles.summaryValue}>
+                  {currency} {props.homeServiceCharge.toFixed(2)}
+                </Text>
+              </View>
+
+              {/* {props.discountValue > 0 && ( */}
+              <View style={styles.summaryItemRow}>
+                <Text style={[styles.summaryLabel]}>
+                  {getTranslation('discount')}
+                </Text>
+                <Text style={[styles.summaryValue, { color: Colors.green17 }]}>
+                  -{currency} {props.discountValue.toFixed(2)}
+                </Text>
+              </View>
+              {/* // )} */}
+
+              <View style={[styles.summaryItemRow]}>
+                <Text
+                  style={[
+                    styles.summaryLabel,
+                    { fontFamily: fontsfamily.gbold },
+                  ]}
+                >
+                  {getTranslation('total')}
+                </Text>
+                <Text
+                  style={[
+                    styles.summaryValue,
+                    { fontFamily: fontsfamily.gbold },
+                  ]}
+                >
+                  {currency} {props.total.toFixed(2)}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* discountCode */}
+          <View style={{ marginTop: getHeight(16) }}>
+            <Text style={styles.lblHaveYouCoupans}>
+              {getTranslation('haveyoucoupans')}
+            </Text>
+            <View style={styles.vwInputDisocunt}>
+              <TextInput
+                style={styles.vwInputDiscountInner}
+                placeholder={getTranslation('placholdercoupans') || ''}
+                placeholderTextColor={Colors.gray75}
+                cursorColor={Colors.gray75}
+                selectionColor={Colors.gray75}
+                value={props.discountCode}
+                onChangeText={props.onChangeDiscountCode}
+              />
+              <TouchableOpacity
+                style={[styles.btnChange, { backgroundColor: Colors.blueD1 }]}
+                activeOpacity={activityOpacity}
+                onPress={props.onApplyDiscount}
+              >
+                <Text style={styles.lblChnage}>{getTranslation('add')}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          {/* bottom button */}
+          <View
+            style={[
+              styles.vwBottomBtn,
+              {
+                marginBottom:
+                  props.insets.bottom > 0
+                    ? props.insets.bottom
+                    : props.insets.bottom + getHeight(16),
+              },
+            ]}
+          >
+            <CustomButton
+              btnTitle={getTranslation('savechnages')}
+              btnPress={props.handleOnPressSaveChanges}
+            />
+            <CustomButton
+              btnTitle={getTranslation('canclereservation')}
+              style={{ backgroundColor: Colors.redFD }}
+              btnicon={true}
+              btnImage={images.imgDelete}
+              textStyle={{ color: Colors.red8C }}
+              btnPress={props.funOpenCancleOrder}
+            />
+          </View>
+        </KeyboardAwareScrollView>
+      )}
 
       {/* datetimeslotmodel */}
       <Modal

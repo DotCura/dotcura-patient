@@ -42,6 +42,7 @@ const AnalitiDetailsComponent = (props: any) => {
           onEndReached={() => {
             console.log('callend');
           }}
+          bounces={false}
           data={props.analitiArrayData}
           renderItem={props.renderItemAnalitiData}
           showsVerticalScrollIndicator={false}

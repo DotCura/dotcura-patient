@@ -80,6 +80,7 @@ const KitDetailsComponent = (props: any) => {
               onEndReached={() => {
                 console.log('callend');
               }}
+              bounces={false}
               data={props.kitsArrayData}
               renderItem={props.renderItemKitsData}
               showsVerticalScrollIndicator={false}

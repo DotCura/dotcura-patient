@@ -42,8 +42,9 @@ const CustomBottomTabsComponent = (props: any) => {
         <TouchableOpacity
           activeOpacity={0.9}
           style={{
-            paddingVertical: getHeight(8),
+            // paddingVertical: getHeight(8),
             paddingHorizontal: getWidth(18),
+            height: getHeight(62),
             backgroundColor: Colors.white,
             alignItems: 'center',
             alignSelf: 'center',

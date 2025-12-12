@@ -395,6 +395,11 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     }
   };
 
+  const handleDeleteTestKit = (id:any) => {
+    const updated = testkitsData.filter(item => item.id !== id);
+    setTestsKitData(updated);
+  };
+
   const funOpenIsModifyOrder = () => {
     // setShowIsModifyOrder(true);
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
@@ -524,7 +529,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
                   </Text> */}
             </TouchableOpacity>
           )}
-          <TouchableOpacity activeOpacity={activityOpacity}>
+          <TouchableOpacity activeOpacity={activityOpacity} onPress={() => handleDeleteTestKit(item.id)}>
             <Image source={images.imgDelete} tintColor={Colors.gray0F} />
           </TouchableOpacity>
         </View>
@@ -966,6 +971,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   return (
     <CheckoutComponent
       navigation={navigation}
+      handleDeleteTestKit={handleDeleteTestKit}
       handleNavigateAddAddress={handleNavigateAddAddress}
       insets={insets}
       testkitsData={testkitsData}

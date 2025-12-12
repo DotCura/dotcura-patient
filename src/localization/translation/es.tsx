@@ -227,7 +227,10 @@ export default {
     'Il rimborso verrà effettuato sul tuo metodo di pagamento in 3-5 giorni lavorativi.',
   cancletext: 'Conferma cancellazione',
   cancletextnoback: 'Non cancellare',
-
+  checkoutemptytitle:"Nessun ordine effettuato",
+  checkoutemptysubtitle:"Inizia il tuo percorso di salute prenotando il primo esame. Comodo, veloce e a domicilio.",
+  checkoutemptybtn:"Scopri le analisi",
+  
   //RESULTOPENUP
   resultopentitle: 'Le analisi sono arrivate.',
   resultopenupsubtitle:

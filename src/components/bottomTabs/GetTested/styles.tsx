@@ -131,7 +131,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.white,
-    padding: 8,
+    // padding: 8,
+    height:getHeight(36),
+    width:getWidth(36),
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: {
