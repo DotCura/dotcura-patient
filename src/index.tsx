@@ -1,6 +1,7 @@
 
 
 
+
 //AUTH
 export LoginContainer from "./container/auth/Login";
 export OnBoardingContainer from "./container/auth/OnBoarding";
@@ -44,6 +45,8 @@ export HistoricalAnalysisContainer from "./container/HistoricalAnalysis";
 export OrderHistoryContainer from "./container/OrderHistory";
 export NotificationListContainer from "./container/Notification";
 export RateAndReviewContainer from "./container/RateAndReview";
+export EditOrderContainer from "./container/EditOrder";
+
 
 
 

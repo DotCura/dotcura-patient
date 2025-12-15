@@ -24,6 +24,7 @@ import { fontsfamily } from '../../../constants/FontFamily';
 import { fontSize } from '../../../constants/FontSizes';
 import BarChartComponent from '../../../global/BloodCountGraph';
 import { ZustandStores } from '../../../store';
+import LinearGradient from 'react-native-linear-gradient';
 
 {
   /* veEmpty */
@@ -71,6 +72,7 @@ const HomeComponent = (props: any) => {
         },
       ]}
     >
+    
       {/* vwHeader */}
       <View>
         <View

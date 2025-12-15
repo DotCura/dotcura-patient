@@ -78,6 +78,7 @@ const MainNavigation = props => {
 
         {_addScreen(ScreenNames.KITDETAILSCONTAINER, {}, { headerShown: true })}
         {_addScreen(ScreenNames.CHECKOUTCONTAINER, {}, { headerShown: true })}
+        {_addScreen(ScreenNames.EDITORDERCONTAINER, {}, { headerShown: true })}
         {_addScreen(
           ScreenNames.HISTORICALANALYSISCONTAINER,
           {},
@@ -153,6 +154,8 @@ const MainNavigation = props => {
           {},
           { headerShown: false },
         )}
+        
+
       </Stack.Navigator>
     );
   };

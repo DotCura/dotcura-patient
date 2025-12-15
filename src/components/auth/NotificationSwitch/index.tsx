@@ -139,3 +139,118 @@ const NotificationSwitchComponent = (props: any) => {
 };
 
 export default NotificationSwitchComponent;
+
+
+//api vala code
+// import { ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+// import React from 'react';
+// import { styles } from './styles';
+// import { getHeight } from '../../../constants/utils/Dimensions';
+// import ModalTitleSubtitle from '../../../global/TitleSubtitleModel';
+// import { getTranslation } from '../../../localization/i18n/i18n.config';
+// import { Colors } from '../../../constants/Colors';
+
+// interface NotificationItem {
+//   id: number;
+//   type: string;
+//   name: string;
+//   is_enabled: number;
+// }
+
+// interface NotificationSettings {
+//   email: NotificationItem[];
+//   sms: NotificationItem[];
+//   push: NotificationItem[];
+// }
+
+// interface NotificationSwitchComponentProps {
+//   notificationSettings: NotificationSettings;
+//   toggleNotification: (type: 'email' | 'sms' | 'push', id: number) => void;
+// }
+
+// const NotificationSwitchComponent = ({
+//   notificationSettings,
+//   toggleNotification,
+// }: NotificationSwitchComponentProps) => {
+//   const SettingItem = ({ label, value, onToggle }: any) => (
+//     <View style={styles.itemRow}>
+//       <Text style={styles.itemLabel} numberOfLines={2}>
+//         {label}
+//       </Text>
+//       <Switch
+//         style={{ alignSelf: 'center' }}
+//         value={value}
+//         onValueChange={onToggle}
+//         trackColor={{ false: Colors.grey7816, true: Colors.purple33 }}
+//         ios_backgroundColor="#ccc"
+//       />
+//     </View>
+//   );
+
+//   return (
+//     <ScrollView
+//       showsVerticalScrollIndicator={false}
+//       contentContainerStyle={{ paddingBottom: getHeight(50) }}
+//     >
+//       {/* ---------------- EMAIL ---------------- */}
+//       <View style={{ marginTop: getHeight(24) }}>
+//         <ModalTitleSubtitle
+//           title={getTranslation('notificationemail')}
+//           subtitle={getTranslation('notificationemailsubtitle')}
+//           subtitleTwo={'giovanni.carnevale@email.it'}
+//           isAdd={true}
+//         />
+//       </View>
+//       <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
+//         {notificationSettings.email.map((item) => (
+//           <SettingItem
+//             key={item.id}
+//             label={item.name}
+//             value={item.is_enabled === 1}
+//             onToggle={() => toggleNotification('email', item.id)}
+//           />
+//         ))}
+//       </View>
+
+//       {/* ---------------- SMS ---------------- */}
+//       <View style={{ marginTop: getHeight(24) }}>
+//         <ModalTitleSubtitle
+//           title={getTranslation('notificationsms')}
+//           subtitle={getTranslation('notificationsmssubtitle')}
+//           subtitleTwo={'+39' + '333 000 00 00'}
+//           isAdd={true}
+//         />
+//       </View>
+//       <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
+//         {notificationSettings.sms.map((item) => (
+//           <SettingItem
+//             key={item.id}
+//             label={item.name}
+//             value={item.is_enabled === 1}
+//             onToggle={() => toggleNotification('sms', item.id)}
+//           />
+//         ))}
+//       </View>
+
+//       {/* ---------------- PUSH ---------------- */}
+//       <View style={{ marginTop: getHeight(24) }}>
+//         <ModalTitleSubtitle
+//           title={getTranslation('notificationpush')}
+//           subtitle={''}
+//         />
+//       </View>
+//       <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
+//         {notificationSettings.push.map((item) => (
+//           <SettingItem
+//             key={item.id}
+//             label={item.name}
+//             value={item.is_enabled === 1}
+//             onToggle={() => toggleNotification('push', item.id)}
+//           />
+//         ))}
+//       </View>
+//     </ScrollView>
+//   );
+// };
+
+// export default NotificationSwitchComponent;

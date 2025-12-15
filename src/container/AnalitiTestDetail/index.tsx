@@ -130,7 +130,7 @@ const AnalitiTestDetailContainer = ({ navigation }: any) => {
   };
   const navigateTestGetTestedScreem = () => {
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-      screen: ScreenNames.GETTESTEDCONTAINER,
+      screen: ScreenNames.GETTESTED,
     });
   };
 

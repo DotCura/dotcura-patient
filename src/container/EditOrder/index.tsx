@@ -29,8 +29,9 @@ import { ZustandStores } from '../../store';
 import { ScreenNames } from '../../constants/AppConstants';
 import RNRestart from 'react-native-restart';
 import { Colors } from '../../constants/Colors';
+import EditOrderComponent from '../../components/EditOrder';
 
-const CheckoutContainer = ({ navigation, route }: any) => {
+const EditOrderContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
 
@@ -969,7 +970,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   }, []);
 
   return (
-    <CheckoutComponent
+    <EditOrderComponent
       navigation={navigation}
       handleDeleteTestKit={handleDeleteTestKit}
       handleNavigateAddAddress={handleNavigateAddAddress}
@@ -1078,4 +1079,4 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   );
 };
 
-export default CheckoutContainer;
+export default EditOrderContainer;

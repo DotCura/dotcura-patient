@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import KitAnalysisComponent from '../components/KitAnlaysis';
+import { getTranslation } from '../localization/i18n/i18n.config';
 
 // <============================== App State Keys ==============================>
 
@@ -41,6 +42,10 @@ export const ScreenNames = {
   YOURPROFILECONAINER: 'YourProfileContainer',
   BOTTOMTABNAVIGATION: 'BottomTabsNavigation',
 
+  HOME:getTranslation('home'),
+  GETTESTED:getTranslation('gettested'),
+  YOURPROFILE:getTranslation('yourprofile'),
+
   KITDETAILSCONTAINER: 'KitDetailsContainer',
   CHECKOUTCONTAINER: 'CheckoutContainer',
   HISTORICALANALYSISCONTAINER: 'HistoricalAnalysisContainer',
@@ -51,6 +56,7 @@ export const ScreenNames = {
   ORDERHISTORYCONTAINER:"OrderHistoryContainer",
   NOTIFICATIONLISTCONTAINER:"NotificationListContainer",
   RATEANDREVIEWCONTAINER:"RateAndReviewContainer",
+  EDITORDERCONTAINER:"EditOrderContainer",
 
   //FAMILY
   CONFIRMIDENTITYCONTAINER: 'ConfrimIdentityContainer',

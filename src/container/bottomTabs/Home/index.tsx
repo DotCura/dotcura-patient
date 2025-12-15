@@ -153,7 +153,7 @@ const HomeContainer = ({ navigation }: any) => {
           reportname: 'Glicemia',
           reportunit: 'mg/dL',
           reportValue: '0.37',
-          currentvalue: 20000,
+          currentvalue: 300,
           minValue: 1000,
           maxvalue: 10000,
         },
@@ -163,9 +163,9 @@ const HomeContainer = ({ navigation }: any) => {
           reportname: 'Urine',
           reportunit: 'pH',
           reportValue: '2.2',
-          currentvalue: 0,
-          minValue: 1000,
-          maxvalue: 10000,
+          currentvalue: 0.45,
+          minValue: 0.5,
+          maxvalue: 0.7,
         },
       ],
     },
@@ -629,8 +629,9 @@ const HomeContainer = ({ navigation }: any) => {
   };
 
   const handleNavigateYourProfileScreen = () => {
+    
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-      screen: ScreenNames.YOURPROFILECONAINER,
+      screen: ScreenNames.YOURPROFILE,
     });
   };
 
@@ -640,7 +641,7 @@ const HomeContainer = ({ navigation }: any) => {
 
   const handleNavigateGetTested = () => {
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-      screen: ScreenNames.GETTESTEDCONTAINER,
+      screen: ScreenNames.GETTESTED,
     });
   };
 
