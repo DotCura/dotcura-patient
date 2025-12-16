@@ -12,6 +12,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ZustandStores } from './src/store';
 import { MmkvManager } from './src/constants/utils/MmkvManager';
 import SplashScreen from 'react-native-splash-screen'
+import { Colors } from './src/constants/Colors';
 
 LogBox.ignoreAllLogs();
 
@@ -56,7 +57,7 @@ const App = () => {
     <SafeAreaProvider>
       <KeyboardProvider statusBarTranslucent>
         <I18nextProvider i18n={i18n}>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1,backgroundColor:Colors.whiteF2 }}>
             <AppLayout isOrderPlaced={orderStatus}>
               <MainNavigation initialRouteName={initialRouteName} />
             </AppLayout>

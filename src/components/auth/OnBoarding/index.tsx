@@ -102,7 +102,7 @@ const OnBoardingComponent = (props: any) => {
                     style={[
                       styles.onboardingImage,
                       {
-                        resizeMode: index == 0 ? 'cover' : 'contain',
+                        resizeMode: index == 0 ? 'stretch' : 'contain',
                       },
                     ]}
                   />
