@@ -3,6 +3,8 @@ import React from 'react';
 import { styles } from './styles';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { constnatStyles } from '../../constants/Styles';
+import { getTranslation } from '../../localization/i18n/i18n.config';
+import AppHeader from '../../global/Header';
 
 const HistoricalAnalysisComponent = (props: any) => {
   return (
@@ -11,6 +13,17 @@ const HistoricalAnalysisComponent = (props: any) => {
         constnatStyles.vwContainer,
       ]}
     >
+       <AppHeader
+          startBtnOnPress={() => {
+            console.log('hy');
+            props.navigation.goBack();
+          }}
+          dontShowStartBtn={false}
+          showTitle={true}
+          showSubTitle={false}
+          showEndBtn={false}
+          centerTitle={getTranslation('historicalanalistext')}
+        />
       <FlatList
         onEndReached={() => {
           console.log('callend');

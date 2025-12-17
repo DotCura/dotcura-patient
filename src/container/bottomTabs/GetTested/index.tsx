@@ -271,7 +271,7 @@ const GetTestedContainer = ({ navigation }: any) => {
         }}
       >
         <View style={{ gap: getHeight(8) }}>
-          <ImageBackground source={item.kitimages} style={styles.vwGrey}>
+          <ImageBackground source={item.kitimages} style={styles.vwGrey} >
             <TouchableOpacity
               style={styles.btnPlusBlack}
               activeOpacity={activityOpacity}
@@ -327,7 +327,12 @@ const GetTestedContainer = ({ navigation }: any) => {
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
-        onPress={() => navigation.navigate(ScreenNames.ANALITIDETAILSCONTAINER)}
+        onPress={() => {
+          navigation.navigate('TransitionFlow', {
+            screen: ScreenNames.ANALITIDETAILSCONTAINER,
+          });
+          // navigation.navigate(ScreenNames.ANALITIDETAILSCONTAINER);
+        }}
         style={styles.btnAnalitiMain}
       >
         <View style={styles.vwtitleimage}>
@@ -350,7 +355,10 @@ const GetTestedContainer = ({ navigation }: any) => {
   };
 
   const handleNavigateKitDetails = () => {
-    navigation.navigate(ScreenNames.KITDETAILSCONTAINER);
+    // navigation.navigate(ScreenNames.KITDETAILSCONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.KITDETAILSCONTAINER,
+    });
   };
 
   const handleFunOpenFilterModel = () => {

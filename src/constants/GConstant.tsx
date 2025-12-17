@@ -15,6 +15,7 @@ import { Colors } from './Colors';
 import { fontsfamily } from './FontFamily';
 import { fontSize } from './FontSizes';
 import { getHeight, getWidth } from './utils/Dimensions';
+import { ScreenNames } from './AppConstants';
 
 export const appName = getTranslation('appname') || 'DotCura';
 
@@ -22,6 +23,48 @@ export const appName = getTranslation('appname') || 'DotCura';
 export const isRTLSupport = I18nManager.isRTL;
 
 export const currency = '€';
+
+// export const goToTabScreen = (
+//   navigation:any,
+//   tabScreen:any,
+//   screenParams = {}
+// ) => {
+//   navigation.navigate('TransitionFlow', {
+//     screen: ScreenNames.BOTTOMTABNAVIGATION,
+//     params: {
+//       screen: tabScreen,
+//       params: screenParams,   // ✅ PASS PARAMS HERE
+//     },
+//   });
+// };
+export const goToTabScreen = (
+  navigation:any,
+  tabScreen:any,
+  screenParams = {}
+) => {
+  const state = navigation.getState();
+
+  const isAlreadyInTransitionFlow =
+    state?.routes?.some(r => r.name === 'TransitionFlow');
+
+  if (isAlreadyInTransitionFlow) {
+    // ✅ Already inside TransitionFlow → navigate normally
+    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+      screen: tabScreen,
+      params: screenParams,
+    });
+  } else {
+    // ✅ Coming from NativeStack → enter TransitionFlow
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.BOTTOMTABNAVIGATION,
+      params: {
+        screen: tabScreen,
+        params: screenParams,
+      },
+    });
+  }
+};
+
 
 // Image Transform
 export const imageTransform = isRTLSupport

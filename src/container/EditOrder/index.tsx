@@ -17,6 +17,7 @@ import {
   flashMessageWarning,
   flashMessageWarningBottom,
   getRandomTheme,
+  goToTabScreen,
 } from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { images } from '../../constants/Images';
@@ -276,7 +277,6 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
-  
 
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
   const [showIsKitTestDetails, setShowIsKitTestDetails] = useState(false);
@@ -396,7 +396,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     }
   };
 
-  const handleDeleteTestKit = (id:any) => {
+  const handleDeleteTestKit = (id: any) => {
     const updated = testkitsData.filter(item => item.id !== id);
     setTestsKitData(updated);
   };
@@ -404,8 +404,9 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const funOpenIsModifyOrder = () => {
     // setShowIsModifyOrder(true);
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-      screen: ScreenNames.GETTESTED,
+      screen: ScreenNames.GETTESTEDCONTAINER,
     });
+    // goToTabScreen(navigation, ScreenNames.GETTESTEDCONTAINER);
   };
 
   const funCloseIsModifyOrder = () => {
@@ -530,7 +531,10 @@ const EditOrderContainer = ({ navigation, route }: any) => {
                   </Text> */}
             </TouchableOpacity>
           )}
-          <TouchableOpacity activeOpacity={activityOpacity} onPress={() => handleDeleteTestKit(item.id)}>
+          <TouchableOpacity
+            activeOpacity={activityOpacity}
+            onPress={() => handleDeleteTestKit(item.id)}
+          >
             <Image source={images.imgDelete} tintColor={Colors.gray0F} />
           </TouchableOpacity>
         </View>
@@ -752,6 +756,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
   const handleOnPressSaveChanges = () => {
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION);
+    // goToTabScreen(navigation, ScreenNames.BOTTOMTABNAVIGATION);
     setOrderStatus('order_sent');
   };
 
@@ -760,11 +765,12 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   };
 
   const handleNavigateHome = () => {
-    setOrderStatus('')
+    setOrderStatus('');
     setCancleOrderVisible(false);
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-      screen: ScreenNames.GETTESTED,
+      screen: ScreenNames.GETTESTEDCONTAINER,
     });
+    // goToTabScreen(navigation, ScreenNames.GETTESTEDCONTAINER);
   };
 
   //AddAddress
@@ -971,6 +977,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
   return (
     <EditOrderComponent
+      orderStatus={orderStatus}
       navigation={navigation}
       handleDeleteTestKit={handleDeleteTestKit}
       handleNavigateAddAddress={handleNavigateAddAddress}

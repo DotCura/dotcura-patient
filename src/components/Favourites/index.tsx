@@ -17,105 +17,121 @@ import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { Colors } from '../../constants/Colors';
 import { images } from '../../constants/Images';
 import CustomButton from '../../global/Buttons';
+import AppHeader from '../../global/Header';
 
 const FavouritesComponent = (props: any) => {
   return (
-    <View style={constnatStyles.vwContainer}>
-      {/* favtitlesubtitle */}
-      <View style={{ marginTop: getHeight(23), marginBottom: getHeight(26) }}>
-        <TitleSubtitle
-          title={getTranslation('favtitle')}
-          subtitle={getTranslation('favsubtitle')}
-        />
-      </View>
-
-      <FlatList
-        onEndReached={() => {
-          console.log('callend');
+    <>
+      <AppHeader
+        startBtnOnPress={() => {
+          console.log('hy');
+          props.navigation.goBack();
         }}
-        style={{ flex: 1 }}
-        data={props.kitFavData}
-        renderItem={props.renderFavKitData}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={item => item.id.toString()}
-        contentContainerStyle={{
-          gap: getWidth(12),
-          paddingBottom: getHeight(50),
-        }}
+        dontShowStartBtn={false}
+        showTitle={false}
+        showSubTitle={false}
+        showEndBtn={false}
       />
+      <View style={constnatStyles.vwContainer}>
+        {/* favtitlesubtitle */}
+        <View style={{ marginTop: getHeight(23), marginBottom: getHeight(26) }}>
+          <TitleSubtitle
+            title={getTranslation('favtitle')}
+            subtitle={getTranslation('favsubtitle')}
+          />
+        </View>
 
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={props.showDeleteModel}
-        statusBarTranslucent={true}
-        onRequestClose={props.funCloseDeleteModel}
-      >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: '#00000060',
+        <FlatList
+          onEndReached={() => {
+            console.log('callend');
           }}
-        >
-          <Pressable style={{ flex: 1 }} onPress={props.funCloseDeleteModel} />
+          style={{ flex: 1 }}
+          data={props.kitFavData}
+          renderItem={props.renderFavKitData}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.id.toString()}
+          contentContainerStyle={{
+            gap: getWidth(12),
+            paddingBottom: getHeight(50),
+          }}
+        />
 
+        <Modal
+          transparent={true}
+          animationType="slide"
+          visible={props.showDeleteModel}
+          statusBarTranslucent={true}
+          onRequestClose={props.funCloseDeleteModel}
+        >
           <View
             style={{
-              backgroundColor: Colors.white,
-              borderTopLeftRadius: getHeight(20),
-              borderTopRightRadius: getHeight(20),
-              maxHeight: '90%',
+              flex: 1,
+              backgroundColor: '#00000060',
             }}
           >
-            {/* Header */}
-            <View style={styles.vwHeadingLine} />
+            <Pressable
+              style={{ flex: 1 }}
+              onPress={props.funCloseDeleteModel}
+            />
 
-            {/* backbtn */}
-            <View style={[styles.vwMainModelHeader]}>
-              <TouchableOpacity
-                style={styles.btnBack}
-                onPress={props.funCloseDeleteModel} // close modal
-              >
-                <Image source={images.imgLeftArrow} />
-              </TouchableOpacity>
-            </View>
-
-            {/* title */}
-            <Text style={styles.lblunfavtitle} numberOfLines={1}>
-              {getTranslation('unfavconfirmationtitle')}
-            </Text>
             <View
               style={{
-                paddingHorizontal: getWidth(16),
-                paddingBottom:
-                  props.insets.bottom > 0
-                    ? props.insets.bottom
-                    : props.insets.bottom + getHeight(16),
+                backgroundColor: Colors.white,
+                borderTopLeftRadius: getHeight(20),
+                borderTopRightRadius: getHeight(20),
+                maxHeight: '90%',
               }}
             >
-              <CustomButton
+              {/* Header */}
+              <View style={styles.vwHeadingLine} />
+
+              {/* backbtn */}
+              <View style={[styles.vwMainModelHeader]}>
+                <TouchableOpacity
+                  style={styles.btnBack}
+                  onPress={props.funCloseDeleteModel} // close modal
+                >
+                  <Image source={images.imgLeftArrow} />
+                </TouchableOpacity>
+              </View>
+
+              {/* title */}
+              <Text style={styles.lblunfavtitle} numberOfLines={1}>
+                {getTranslation('unfavconfirmationtitle')}
+              </Text>
+              <View
                 style={{
-                  backgroundColor: Colors.redFC,
-                  marginTop: getHeight(41),
+                  paddingHorizontal: getWidth(16),
+                  paddingBottom:
+                    props.insets.bottom > 0
+                      ? props.insets.bottom
+                      : props.insets.bottom + getHeight(16),
                 }}
-                textStyle={{ color: Colors.red40 }}
-                btnPress={props.handlePressUnfav}
-                btnTitle={getTranslation('confirmationdelete')}
-              />
-              <CustomButton
-                style={{
-                  backgroundColor: Colors.blueD1,
-                  marginTop: getHeight(8),
-                }}
-                textStyle={{ color: Colors.blue002 }}
-                btnPress={props.funCloseDeleteModel}
-                btnTitle={getTranslation('canclefav')}
-              />
+              >
+                <CustomButton
+                  style={{
+                    backgroundColor: Colors.redFC,
+                    marginTop: getHeight(41),
+                  }}
+                  textStyle={{ color: Colors.red40 }}
+                  btnPress={props.handlePressUnfav}
+                  btnTitle={getTranslation('confirmationdelete')}
+                />
+                <CustomButton
+                  style={{
+                    backgroundColor: Colors.blueD1,
+                    marginTop: getHeight(8),
+                  }}
+                  textStyle={{ color: Colors.blue002 }}
+                  btnPress={props.funCloseDeleteModel}
+                  btnTitle={getTranslation('canclefav')}
+                />
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+    </>
   );
 };
 

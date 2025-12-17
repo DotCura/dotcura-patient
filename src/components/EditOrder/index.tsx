@@ -67,6 +67,35 @@ const EditOrderComponent = (props: any) => {
   };
   return (
     <>
+     <View style={{}}>
+          <View
+            style={[
+              styles.vwMain,
+              {
+                paddingTop: props.orderStatus == '' ? props.insets.top + 10 : getHeight(25),
+              },
+            ]}
+          >
+            <View style={styles.vwHeaderLeft}>
+              <TouchableOpacity
+                activeOpacity={activityOpacity}
+                style={styles.btnBack}
+                onPress={() => {
+                  props.navigation.goBack();
+                }}
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.vwHelp}
+                activeOpacity={activityOpacity}
+              >
+                <Image source={images.imgHelp} />
+                <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
       {props.testkitsData.length === 0 ? (
         <View style={styles.emptyview}>
           <Image source={images.imgMicroscope} />
@@ -746,7 +775,7 @@ const EditOrderComponent = (props: any) => {
                 },
               ]}
               activeOpacity={activityOpacity}
-              onPress={props.funCloseIsKitTestDetails}
+              onPress={props.funCloseEditAnaliti}
             >
               <View style={styles.vwCartImage}>
                 <Image source={images.imgCartHome} tintColor={Colors.white} />

@@ -188,7 +188,9 @@ const AnalitiDetailsContainer = ({ navigation }: any) => {
   }, []);
   
   return (
+    
     <AnalitiDetailsComponent
+    navigation={navigation}
       insets={insets}
       analitiArrayData={analitiArrayData}
       renderItemAnalitiData={renderItemAnalitiData}

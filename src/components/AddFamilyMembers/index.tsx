@@ -18,11 +18,23 @@ import { Colors } from '../../constants/Colors';
 import CustomButton from '../../global/Buttons';
 import CustomDropdown from '../../global/DropDown/CustomDropDown';
 import { fontSize } from '../../constants/FontSizes';
+import AppHeader from '../../global/Header';
 
 const AddFamilyMemberComponent = (props: any) => {
   const today = new Date();
   return (
     <View style={{ backgroundColor: Colors.white, flex: 1 }}>
+       <AppHeader
+          startBtnOnPress={() => {
+            console.log('hy');
+            props.navigation.goBack();
+          }}
+          dontShowStartBtn={false}
+          showTitle={true}
+          showSubTitle={false}
+          showEndBtn={false}
+          centerTitle={getTranslation('family')}
+        />
       <KeyboardAwareScrollView
         style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
         contentContainerStyle={[constnatStyles.keyboardContainer]}

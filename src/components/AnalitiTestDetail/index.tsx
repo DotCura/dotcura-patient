@@ -13,6 +13,7 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { styles } from './styles';
 import BarChartComponent from '../../global/BloodCountGraph';
+import AppHeader from '../../global/Header';
 
 const AnalitiTestDetailComponent = (props: any) => {
   const total = 8;
@@ -57,38 +58,49 @@ const AnalitiTestDetailComponent = (props: any) => {
 
   const AnalitiTestDetailsDataProps = props.AnalitiTestDetailsData;
   return (
-    <View style={constnatStyles.vwContainer}>
-      <FlatList
-        data={AnalitiTestDetailsDataProps?.kits}
-        keyExtractor={(item, index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-        nestedScrollEnabled={true}
-        contentContainerStyle={{
-          paddingBottom: getHeight(60),
+    <>
+      <AppHeader
+        startBtnOnPress={() => {
+          props.navigation.goBack();
         }}
-        style={{ flex: 1 }}
-        ListHeaderComponent={renderHeaderComponent}
-        renderItem={({ item: kit, index: kitIndex }) => (
-          <View style={{ gap: getHeight(12) }}>
-            {kit.kittest.map((reportItem: any, reportIndex: any) => (
-              <BarChartComponent
-                key={`${kitIndex}-${reportIndex}`}
-                currentValue={reportItem.currentvalue}
-                minValue={reportItem.minValue}
-                maxValue={reportItem.maxvalue}
-                width={ScreenDimensions.screenWidth - getWidth(40)}
-                height={getHeight(50)}
-                reportName={reportItem.reportname}
-                reportValue={reportItem.reportValue}
-                reportItem={reportItem}
-                onpressreport={props.navigateTestDetailsScreen}
-                onpressBookNow={props.navigateTestGetTestedScreem}
-              />
-            ))}
-          </View>
-        )}
+        dontShowStartBtn={false}
+        showTitle={false}
+        showSubTitle={false}
+        showEndBtn={false}
       />
-    </View>
+      <View style={constnatStyles.vwContainer}>
+        <FlatList
+          data={AnalitiTestDetailsDataProps?.kits}
+          keyExtractor={(item, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+          nestedScrollEnabled={true}
+          contentContainerStyle={{
+            paddingBottom: getHeight(60),
+          }}
+          style={{ flex: 1 }}
+          ListHeaderComponent={renderHeaderComponent}
+          renderItem={({ item: kit, index: kitIndex }) => (
+            <View style={{ gap: getHeight(12) }}>
+              {kit.kittest.map((reportItem: any, reportIndex: any) => (
+                <BarChartComponent
+                  key={`${kitIndex}-${reportIndex}`}
+                  currentValue={reportItem.currentvalue}
+                  minValue={reportItem.minValue}
+                  maxValue={reportItem.maxvalue}
+                  width={ScreenDimensions.screenWidth - getWidth(40)}
+                  height={getHeight(50)}
+                  reportName={reportItem.reportname}
+                  reportValue={reportItem.reportValue}
+                  reportItem={reportItem}
+                  onpressreport={props.navigateTestDetailsScreen}
+                  onpressBookNow={props.navigateTestGetTestedScreem}
+                />
+              ))}
+            </View>
+          )}
+        />
+      </View>
+    </>
   );
 };
 

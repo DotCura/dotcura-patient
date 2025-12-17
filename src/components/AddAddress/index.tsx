@@ -23,6 +23,7 @@ import { images } from '../../constants/Images';
 import { activityOpacity } from '../../constants/GConstant';
 import CustomDropdown from '../../global/DropDown/CustomDropDown';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import AppHeader from '../../global/Header';
 
 const AddAddressComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
@@ -64,6 +65,17 @@ const AddAddressComponent = (props: any) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.whiteF2 }}>
+      <AppHeader
+          startBtnOnPress={() => {
+            console.log('hy');
+            props.navigation.goBack();
+          }}
+          centerTitle={getTranslation('addresss')}
+          dontShowStartBtn={false}
+          showTitle={true}
+          showSubTitle={false}
+          showEndBtn={false}
+        />
       <KeyboardAwareScrollView
         scrollEnabled
         showsVerticalScrollIndicator={false}

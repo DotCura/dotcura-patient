@@ -45,7 +45,10 @@ const LoginContainer = ({ navigation }: any) => {
       return;
     } else {
       console.log('login done');
-      navigation.navigate(ScreenNames.OTPCONTAINER);
+      // navigation.navigate(ScreenNames.OTPCONTAINER);
+      navigation.navigate('TransitionFlow', {
+        screen: ScreenNames.OTPCONTAINER,
+      });
     }
   };
 
@@ -72,6 +75,7 @@ const LoginContainer = ({ navigation }: any) => {
 
   return (
     <LoginComponent
+      navigation={navigation}
       insets={insets}
       phoneNumber={phoneNumber}
       setPhoneNumber={setPhoneNumber}

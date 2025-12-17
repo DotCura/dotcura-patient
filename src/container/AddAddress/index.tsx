@@ -179,11 +179,11 @@ const AddAddressContainer = ({ navigation, route }: any) => {
   }, []);
   return (
     <AddAddressComponent
+      navigation={navigation}
       insets={insets}
       headerArray={headerArray}
       searchRef={searchRef}
       handlePlaceSelect={handlePlaceSelect}
-      navigation={navigation}
       handleOnPressSaveAddress={handleOnPressSaveAddress}
       handleOnChangeText={handleOnChangeText}
       floor={floor}

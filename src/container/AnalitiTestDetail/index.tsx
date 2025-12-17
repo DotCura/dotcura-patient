@@ -5,6 +5,7 @@ import AppHeader from '../../global/Header';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../../constants/Images';
 import { ScreenNames } from '../../constants/AppConstants';
+import { goToTabScreen } from '../../constants/GConstant';
 
 const AnalitiTestDetailContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -126,12 +127,17 @@ const AnalitiTestDetailContainer = ({ navigation }: any) => {
   };
 
   const navigateTestDetailsScreen = () => {
-    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+    // navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.TESTDETAILSCONTAINER,
+    });
   };
   const navigateTestGetTestedScreem = () => {
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-      screen: ScreenNames.GETTESTED,
+      screen: ScreenNames.GETTESTEDCONTAINER,
     });
+    // goToTabScreen(navigation, ScreenNames.GETTESTEDCONTAINER);
+
   };
 
   useEffect(() => {
@@ -140,6 +146,7 @@ const AnalitiTestDetailContainer = ({ navigation }: any) => {
   return (
     <AnalitiTestDetailComponent
       insets={insets}
+      navigation={navigation}
       AnalitiTestDetailsData={AnalitiTestDetailsData}
       navigateTestDetailsScreen={navigateTestDetailsScreen}
       navigateTestGetTestedScreem={navigateTestGetTestedScreem}

@@ -17,10 +17,23 @@ import CustomButton from '../../global/Buttons';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { images } from '../../constants/Images';
 import { activityOpacity } from '../../constants/GConstant';
+import AppHeader from '../../global/Header';
 
 const AddressListComponent = (props: any) => {
   return (
     <View style={{ flex: 1, backgroundColor: Colors.whiteF2 }}>
+       <AppHeader
+          startBtnOnPress={() => {
+            console.log('hy');
+            // navigation.navigate(ScreenNames.PROFILECONTAINER);
+            props.navigation.goBack();
+          }}
+          centerTitle={getTranslation('addresss')}
+          dontShowStartBtn={false}
+          showTitle={false}
+          showSubTitle={false}
+          showEndBtn={false}
+        />
       {/* HeaderView */}
       <View style={styles.vwHeader}>
         <TitleSubtitle

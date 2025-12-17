@@ -53,6 +53,7 @@ const AddressListContainer = ({ navigation }: any) => {
   }, []);
   return (
     <AddressListComponent
+      navigation={navigation}
       insets={insets}
       AddressData={AddressData}
       selectedAddress={selectedAddress}

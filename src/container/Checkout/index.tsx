@@ -17,6 +17,7 @@ import {
   flashMessageWarning,
   flashMessageWarningBottom,
   getRandomTheme,
+  goToTabScreen,
 } from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { images } from '../../constants/Images';
@@ -403,8 +404,9 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const funOpenIsModifyOrder = () => {
     // setShowIsModifyOrder(true);
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-      screen: ScreenNames.GETTESTED,
+      screen: ScreenNames.GETTESTEDCONTAINER,
     });
+    // goToTabScreen(navigation, ScreenNames.GETTESTEDCONTAINER);
   };
 
   const funCloseIsModifyOrder = () => {
@@ -749,20 +751,63 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     );
   };
 
-  const handleOnPressSaveChanges = () => {
-    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION);
-    setOrderStatus('order_sent');
-  };
+  // const handleOnPressSaveChanges = () => {
+  //   navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+  //     screen: ScreenNames.HOMECONTAINER,
+  //   });
+  //   // goToTabScreen(navigation, ScreenNames.HOMECONTAINER);
+  //   setOrderStatus('order_sent');
+  // };
 
   const handleNavigateAddAddress = () => {
     setAddressPopupVisible(true);
   };
 
+  // const handleNavigateHome = () => {
+  //   // goToTabScreen(navigation, ScreenNames.HOMECONTAINER);
+  //   setOrderStatus('');
+  //   setCancleOrderVisible(false);
+  //   navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+  //     screen: ScreenNames.HOMECONTAINER,
+  //   });
+  // };
+
+  const handleOnPressSaveChanges = () => {
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: ScreenNames.BOTTOMTABNAVIGATION,
+          state: {
+            routes: [
+              {
+                name: ScreenNames.HOMECONTAINER,
+              },
+            ],
+          },
+        },
+      ],
+    });
+    setOrderStatus('order_sent');
+  };
+  
   const handleNavigateHome = () => {
-    setOrderStatus('')
+    setOrderStatus('');
     setCancleOrderVisible(false);
-    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-      screen: ScreenNames.GETTESTED,
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: ScreenNames.BOTTOMTABNAVIGATION,
+          state: {
+            routes: [
+              {
+                name: ScreenNames.HOMECONTAINER,
+              },
+            ],
+          },
+        },
+      ],
     });
   };
 
@@ -973,6 +1018,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       navigation={navigation}
       handleDeleteTestKit={handleDeleteTestKit}
       handleNavigateAddAddress={handleNavigateAddAddress}
+      orderStatus={orderStatus}
       insets={insets}
       testkitsData={testkitsData}
       renderItemTestKits={renderItemTestKits}

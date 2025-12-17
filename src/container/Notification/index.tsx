@@ -167,6 +167,7 @@ const NotificationListContainer = ({ navigation }: any) => {
   }, []);
   return (
     <NotificationListComponent
+      navigation={navigation}
       notificationData={notificationData}
       renderNotificationData={renderNotificationData}
     />

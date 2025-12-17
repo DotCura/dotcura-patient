@@ -555,6 +555,10 @@ const KitAnalysisComponent = (props: any) => {
         nestedScrollEnabled={true}
         contentContainerStyle={{
           paddingBottom: getHeight(110),
+          backgroundColor:Colors.whiteF2
+        }}
+        style={{
+          backgroundColor:Colors.whiteF2
         }}
         ListHeaderComponent={
           <RenderHeader

@@ -15,6 +15,7 @@ import { getTranslation } from '../../localization/i18n/i18n.config';
 
 const KitDetailsContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+  
 
   const kitsData = [
     {
@@ -182,6 +183,7 @@ const KitDetailsContainer = ({ navigation }: any) => {
   }, []);
   return (
     <KitDetailsComponent
+    navigation={navigation}
       insets={insets}
       kitsArrayData={kitsArrayData}
       renderItemKitsData={renderItemKitsData}

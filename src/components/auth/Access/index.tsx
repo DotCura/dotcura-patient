@@ -10,77 +10,90 @@ import { getHeight } from '../../../constants/utils/Dimensions';
 import PrimaryTitleTextInput from '../../../global/PrimaryTitleTextInput';
 import PrimaryTitleMoblieNumber from '../../../global/PrimaryTitleMoblieNumber';
 import { ValidationConstant } from '../../../constants/TextInputConstant';
+import AppHeader from '../../../global/Header';
 
 const AccessComponent = (props: any) => {
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={[constnatStyles.keyboardContainer]}
-      keyboardShouldPersistTaps="handled"
-      bounces={false}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={{ flex: 1 }}>
-        {/* HeaderView */}
-        <View style={styles.vwHeader}>
-          <TitleSubtitle
-            title={getTranslation('accesstitle')}
-            subtitle={getTranslation('accesssubtitle')}
-          />
-          <View style={{ marginTop: getHeight(28),gap:getHeight(16) }}>
-            <PrimaryTitleTextInput
-              placHolderLabel={getTranslation('emailplaceholder')}
-              refs={props.emailRef}
-              focusnext={() => props.moblieNoRef.current?.focus()}
-              inputLabel={getTranslation('emailtitle')}
-              blur={false}
-              leftIcon={false}
-              keyaboardType={'email-address'}
-              value={props.email}
-              onChangeFun={props.onChangeEmail}
-              autoCapitalize={'none'}
-              errorMessage={props.emailError}
-              setErrorMessage={props.setEmailError}
-              isMultiline={false}
-              isBorder={true}
+    <>
+      <AppHeader
+        startBtnOnPress={() => {
+          console.log('hy');
+          props.navigation.goBack();
+        }}
+        dontShowStartBtn={false}
+        showTitle={false}
+        showSubTitle={false}
+        showEndBtn={false}
+      />
+      <KeyboardAwareScrollView
+        contentContainerStyle={[constnatStyles.keyboardContainer]}
+        keyboardShouldPersistTaps="handled"
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{ flex: 1 }}>
+          {/* HeaderView */}
+          <View style={styles.vwHeader}>
+            <TitleSubtitle
+              title={getTranslation('accesstitle')}
+              subtitle={getTranslation('accesssubtitle')}
             />
-            <PrimaryTitleMoblieNumber
-              blur={true}
-              label={getTranslation('moblieno')}
-              value={props.phoneNumber}
-              onChangeFun={(text: any) =>
-                props.changeInput('Phone Number', text)
-              }
-              maxLength={ValidationConstant.maxMobileDigit}
-              callingCode={props.callingCode}
-              setCallingCode={props.setCallingCode}
-              refs={props.moblieNoRef}
-              inputLabel={getTranslation('moblieno')}
-              errorMessage={props.phoneNumberError}
-              setErrorMessage={props.setPhoneNumberError}
-              leftIcon={false}
-              isBorder={false}
-              placHolderLabel={'333 000 000'}
-            />
+            <View style={{ marginTop: getHeight(28), gap: getHeight(16) }}>
+              <PrimaryTitleTextInput
+                placHolderLabel={getTranslation('emailplaceholder')}
+                refs={props.emailRef}
+                focusnext={() => props.moblieNoRef.current?.focus()}
+                inputLabel={getTranslation('emailtitle')}
+                blur={false}
+                leftIcon={false}
+                keyaboardType={'email-address'}
+                value={props.email}
+                onChangeFun={props.onChangeEmail}
+                autoCapitalize={'none'}
+                errorMessage={props.emailError}
+                setErrorMessage={props.setEmailError}
+                isMultiline={false}
+                isBorder={true}
+              />
+              <PrimaryTitleMoblieNumber
+                blur={true}
+                label={getTranslation('moblieno')}
+                value={props.phoneNumber}
+                onChangeFun={(text: any) =>
+                  props.changeInput('Phone Number', text)
+                }
+                maxLength={ValidationConstant.maxMobileDigit}
+                callingCode={props.callingCode}
+                setCallingCode={props.setCallingCode}
+                refs={props.moblieNoRef}
+                inputLabel={getTranslation('moblieno')}
+                errorMessage={props.phoneNumberError}
+                setErrorMessage={props.setPhoneNumberError}
+                leftIcon={false}
+                isBorder={false}
+                placHolderLabel={'333 000 000'}
+              />
+            </View>
           </View>
         </View>
-      </View>
-      {/* vwBottomBtn */}
-      <View
-        style={[
-          {
-            marginBottom:
-              props.insets.bottom > 0
-                ? props.insets.bottom
-                : props.insets.bottom + getHeight(16),
-          },
-        ]}
-      >
-        <CustomButton
-          btnPress={props.handleSaveAccess}
-          btnTitle={getTranslation('save')}
-        />
-      </View>
-    </KeyboardAwareScrollView>
+        {/* vwBottomBtn */}
+        <View
+          style={[
+            {
+              marginBottom:
+                props.insets.bottom > 0
+                  ? props.insets.bottom
+                  : props.insets.bottom + getHeight(16),
+            },
+          ]}
+        >
+          <CustomButton
+            btnPress={props.handleSaveAccess}
+            btnTitle={getTranslation('save')}
+          />
+        </View>
+      </KeyboardAwareScrollView>
+    </>
   );
 };
 

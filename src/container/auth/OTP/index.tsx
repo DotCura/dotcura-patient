@@ -26,8 +26,8 @@ interface OtpArray {
 
 const OTPContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
-  const [countrycode,setCountryCode] = useState("+39");
-  const [phoneNumber,setPhoneNumber] = useState("1234561234");
+  const [countrycode, setCountryCode] = useState('+39');
+  const [phoneNumber, setPhoneNumber] = useState('1234561234');
   const [otpArray, setOtpArray] = useState<OtpArray[]>([
     {
       value: '',
@@ -125,7 +125,10 @@ const OTPContainer = ({ navigation }: any) => {
     } else if (fullOtp != validateOtp.toString()) {
       flashMessageWarning(getTranslation('errorMessageInvalidOtp'));
     } else {
-      navigation.navigate(ScreenNames.COMPLETEPROFILECONTAINER);
+      // navigation.navigate(ScreenNames.COMPLETEPROFILECONTAINER);
+      navigation.navigate('TransitionFlow', {
+        screen: ScreenNames.COMPLETEPROFILECONTAINER,
+      });
     }
   };
 
@@ -170,6 +173,7 @@ const OTPContainer = ({ navigation }: any) => {
 
   return (
     <OTPComponent
+      navigation={navigation}
       otpArray={otpArray}
       countrycode={countrycode}
       phoneNumber={phoneNumber}

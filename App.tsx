@@ -11,14 +11,15 @@ import AppLayout from './src/global/AppLayout';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ZustandStores } from './src/store';
 import { MmkvManager } from './src/constants/utils/MmkvManager';
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
 import { Colors } from './src/constants/Colors';
+import OrderStatusComponent from './src/global/OrderStatusComponent';
 
 LogBox.ignoreAllLogs();
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.BOTTOMTABNAVIGATION,
+    ScreenNames.INTROCONTAINER,
   );
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const App = () => {
     <SafeAreaProvider>
       <KeyboardProvider statusBarTranslucent>
         <I18nextProvider i18n={i18n}>
-          <View style={{ flex: 1,backgroundColor:Colors.whiteF2 }}>
+          <View style={{ flex: 1, backgroundColor: Colors.whiteF2 }}>
             <AppLayout isOrderPlaced={orderStatus}>
               <MainNavigation initialRouteName={initialRouteName} />
             </AppLayout>
@@ -70,3 +71,5 @@ const App = () => {
 };
 
 export default App;
+
+

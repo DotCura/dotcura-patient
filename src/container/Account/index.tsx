@@ -306,6 +306,7 @@ const AccountContainer = ({ navigation }: any) => {
       setModalVisible={setModalVisible}
       modalType={modalType}
       handleDeleteItem={handleDeleteItem}
+      navigation={navigation}
     />
   );
 };

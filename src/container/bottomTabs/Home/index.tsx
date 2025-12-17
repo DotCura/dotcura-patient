@@ -617,7 +617,10 @@ const HomeContainer = ({ navigation }: any) => {
   };
 
   const handleNavigateProfileScreen = () => {
-    navigation.navigate(ScreenNames.PROFILECONTAINER);
+    // navigation.navigate(ScreenNames.PROFILECONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.PROFILECONTAINER,
+    });
   };
 
   const handleNavigateCheckoutScreen = () => {
@@ -625,24 +628,27 @@ const HomeContainer = ({ navigation }: any) => {
   };
 
   const handleNavigateTestDetailsScreen = () => {
-    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+    // navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.TESTDETAILSCONTAINER,
+    });
   };
 
   const handleNavigateYourProfileScreen = () => {
-    
-    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-      screen: ScreenNames.YOURPROFILE,
-    });
+    console.log('Navigating to:', ScreenNames.BOTTOMTABNAVIGATION);
+    console.log('Screen:', ScreenNames.YOURPROFILECONAINER);
+    navigation.jumpTo(ScreenNames.YOURPROFILECONAINER);
   };
 
   const handleNavigateAnlitiTestDetails = () => {
-    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
+    // navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.ANALITITESTDETAILSCONTAINER,
+    });
   };
 
   const handleNavigateGetTested = () => {
-    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-      screen: ScreenNames.GETTESTED,
-    });
+    navigation.jumpTo(ScreenNames.GETTESTEDCONTAINER);
   };
 
   return (

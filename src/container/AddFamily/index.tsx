@@ -79,6 +79,7 @@ const AddFamilyContainer = ({ navigation }: any) => {
   }, []);
   return (
     <AddFamilyComponent
+      navigation={navigation}
       insets={insets}
       familyMembersData={familyMembersData}
       renderItemFamilyMember={renderItemFamilyMember}

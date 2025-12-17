@@ -137,7 +137,10 @@ const FavouritesContainer = ({ navigation }: any) => {
   };
 
   const handleNavigateTestDetails = () => {
-    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+    // navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.TESTDETAILSCONTAINER,
+    });
   };
 
   const header = () => {
@@ -164,6 +167,7 @@ const FavouritesContainer = ({ navigation }: any) => {
   return (
     <FavouritesComponent
       insets={insets}
+      navigation={navigation}
       kitFavData={kitFavData}
       renderFavKitData={renderFavKitData}
       showDeleteModel={showDeleteModel}

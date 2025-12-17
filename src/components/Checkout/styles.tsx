@@ -26,10 +26,12 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   emptyview: {
-    marginHorizontal: getWidth(16),
-    marginTop: getHeight(70),
+    flex:1,
+    backgroundColor:Colors.whiteF2,
+    paddingHorizontal: getWidth(16),
+    paddingTop:getHeight(70),
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   vwHeaderTitle: {},
   lblGoToCart: {
@@ -294,7 +296,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: getWidth(15),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whiteF2,
     paddingBottom: getWidth(10),
   },
   vwInputDisocunt: {

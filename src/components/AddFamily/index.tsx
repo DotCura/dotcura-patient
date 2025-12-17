@@ -16,6 +16,7 @@ import { getTranslation } from '../../localization/i18n/i18n.config';
 import CustomButton from '../../global/Buttons';
 import { Colors } from '../../constants/Colors';
 import { fontsfamily } from '../../constants/FontFamily';
+import AppHeader from '../../global/Header';
 
 const AddFamilyComponent = (props: any) => {
   const renderListFooter = () => {
@@ -39,6 +40,18 @@ const AddFamilyComponent = (props: any) => {
         },
       ]}
     >
+       <AppHeader
+          startBtnOnPress={() => {
+            console.log('hy');
+            // navigation.navigate(ScreenNames.PROFILECONTAINER);
+            props.navigation.goBack();
+          }}
+          dontShowStartBtn={false}
+          showTitle={true}
+          showSubTitle={false}
+          showEndBtn={false}
+          centerTitle={getTranslation('family')}
+        />
       {/* vwEmpty */}
       {props.showEmpty && (
         <View style={styles.vwEmpty}>

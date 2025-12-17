@@ -12,14 +12,23 @@ import { getTranslation } from '../localization/i18n/i18n.config';
 import { Platform } from 'react-native';
 
 const BottomTabsNavigation = () => {
+  // const isNativeTabs =
+  // Platform.OS === 'ios' && Number(Platform.Version) >= 26;
   const isNativeTabs =
-  Platform.OS === 'ios' && Number(Platform.Version) >= 26;
+  false;
   const BottomTabs = isNativeTabs
   ? createNativeBottomTabNavigator()
   : createBottomTabNavigator();
 
+  // console.log(isNativeTabs ? 'Yes' : 'No');
+
+
+ 
+  
+
   //handleTabsScreens
   const handleBottomTabsScreens = ({ screenName, component,options }) => {
+    { console.log("Tab bar renderer", isNativeTabs);}
     return (
       <BottomTabs.Screen
       
@@ -40,15 +49,20 @@ const BottomTabsNavigation = () => {
     screenOptions={{
       tabBarActiveTintColor: Colors.blue002,
       tabBarInactiveTintColor: Colors.gray75,
+      //  ...(isNativeTabs && {
+      //   freezeOnBlur: false,
+      //   lazy: false,
+      // }),
      
     }}
-      tabBar={props => <CustomBottomTabsContainer {...props} />
+      tabBar={props =>  <CustomBottomTabsContainer {...props} />
     }
     >
       {handleBottomTabsScreens({
-        screenName: ScreenNames.HOME,
+        screenName: ScreenNames.HOMECONTAINER,
         component: Screen[ScreenNames.HOMECONTAINER],
         options: {
+          tabBarLabel: ScreenNames.HOME, // Display name: "Get Tested"
           tabBarIcon: ({ focused }) => ({
             type: 'image',
             source: focused
@@ -60,9 +74,10 @@ const BottomTabsNavigation = () => {
       })}
 
       {handleBottomTabsScreens({
-       screenName: ScreenNames.GETTESTED,
+       screenName: ScreenNames.GETTESTEDCONTAINER,
         component: Screen[ScreenNames.GETTESTEDCONTAINER],
         options: {
+          tabBarLabel: ScreenNames.GETTESTED, // Display name: "Get Tested"
           tabBarIcon: ({ focused }) => ({
             type: 'image',
             source: focused
@@ -73,11 +88,13 @@ const BottomTabsNavigation = () => {
       })}
 
       {handleBottomTabsScreens({
-        screenName: ScreenNames.YOURPROFILE,
+        screenName: ScreenNames.YOURPROFILECONAINER,
         component: Screen[ScreenNames.YOURPROFILECONAINER],
         options: {
+          tabBarLabel: ScreenNames.YOURPROFILE, // Display name: "Get Tested"
           tabBarIcon: ({ focused }) => ({
             type: 'image',
+            
             source: focused
               ? images.imgFocusProfile
               : images.imgUnFocusProfile,

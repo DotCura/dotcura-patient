@@ -83,6 +83,7 @@ const AccessContainer = ({ navigation }: any) => {
   }, []);
   return (
     <AccessComponent
+      navigation={navigation}
       insets={insets}
       phoneNumber={phoneNumber}
       setPhoneNumber={setPhoneNumber}

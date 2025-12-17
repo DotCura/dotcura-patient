@@ -15,10 +15,22 @@ import { images } from '../../constants/Images';
 import { Colors } from '../../constants/Colors';
 import { getHeight } from '../../constants/utils/Dimensions';
 import { activityOpacity, currency } from '../../constants/GConstant';
+import AppHeader from '../../global/Header';
 
 const KitDetailsComponent = (props: any) => {
   return (
     <>
+      <AppHeader
+        startBtnOnPress={() => {
+          console.log('hy');
+          props.navigation.goBack();
+        }}
+        dontShowStartBtn={false}
+        centerTitle={getTranslation('kitanalysis')}
+        showTitle={true}
+        showSubTitle={false}
+        showEndBtn={false}
+      />
       <ScrollView
         contentContainerStyle={[constnatStyles.keyboardContainer]}
         keyboardShouldPersistTaps="handled"

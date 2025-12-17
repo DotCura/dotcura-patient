@@ -719,7 +719,12 @@ const YourProfileContainer = ({ navigation }: any) => {
           gap: getHeight(6),
           marginHorizontal: getWidth(16),
         }}
-        onPress={() => navigation.navigate(ScreenNames.TESTDETAILSCONTAINER)}
+        onPress={() => {
+          navigation.navigate('TransitionFlow', {
+            screen: ScreenNames.TESTDETAILSCONTAINER,
+          });
+          // navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+        }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ flex: 1 }}>
@@ -909,18 +914,30 @@ const YourProfileContainer = ({ navigation }: any) => {
   };
 
   const handlePressProfile = () => {
-    navigation.navigate(ScreenNames.PROFILECONTAINER);
+    // navigation.navigate(ScreenNames.PROFILECONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.PROFILECONTAINER,
+    });
   };
 
   const hanldeNavigateKitAnalysis = () => {
-    navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+    // navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.KITANALYSISCONTAINER,
+    });
   };
 
   const handleNavigateHistoricalAnlysis = () => {
-    navigation.navigate(ScreenNames.HISTORICALANALYSISCONTAINER);
+    // navigation.navigate(ScreenNames.HISTORICALANALYSISCONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.HISTORICALANALYSISCONTAINER,
+    });
   };
   const handleNavigateAnalitiTestDetails = () => {
-    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
+    // navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.ANALITITESTDETAILSCONTAINER,
+    });
   };
 
   return (

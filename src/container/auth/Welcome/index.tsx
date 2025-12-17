@@ -9,7 +9,10 @@ const WelcomeContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
   const handleNavigateLogin = () => {
-    navigation.navigate(ScreenNames.LOGINCONTAINER);
+    // navigation.navigate(ScreenNames.LOGINCONTAINER);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.LOGINCONTAINER,
+    });
   };
 
   return (

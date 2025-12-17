@@ -116,6 +116,7 @@ const NotificationSwitchContainer = ({ navigation }: any) => {
   }, []);
   return (
     <NotificationSwitchComponent
+    navigation={navigation}
       toggleSwitchModel={toggleSwitchModel}
       settingsSwitch={settingsSwitch}
       // api valo

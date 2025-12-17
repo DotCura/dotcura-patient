@@ -306,7 +306,10 @@ const OrderHistoryContainer = ({ navigation }: any) => {
         activeOpacity={activityOpacity}
         style={styles.btnOrderHistory}
         onPress={() => {
-          navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+          // navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+          navigation.navigate('TransitionFlow', {
+            screen: ScreenNames.KITANALYSISCONTAINER,
+          });
         }}
       >
         {/* orderDetailsView */}
@@ -381,6 +384,7 @@ const OrderHistoryContainer = ({ navigation }: any) => {
   return (
     <OrderHistoryComponent
       insets={insets}
+      navigation={navigation}
       orderHistoryData={orderHistoryData}
       renderItemOrderHistory={renderItemOrderHistory}
     />
