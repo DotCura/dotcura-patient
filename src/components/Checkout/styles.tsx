@@ -9,6 +9,48 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  btnAnlaiti: {
+    flexDirection: 'row',
+    gap: getWidth(6),
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+    height: getHeight(34),
+    borderRadius: getWidth(10),
+    marginVertical: getHeight(4),
+  },
+  btncheckup: {
+    flexDirection: 'row',
+    gap: getWidth(6),
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+    height: getHeight(34),
+    borderRadius: getWidth(10),
+    marginVertical: getHeight(4),
+  },
+  vwCheckupAnaliti: {
+    marginTop: getHeight(30),
+    backgroundColor: Colors.grayE7,
+    marginHorizontal: getWidth(16),
+    borderRadius: getWidth(14),
+    flexDirection: 'row',
+    height: getHeight(42),
+    alignItems: 'center',
+    paddingHorizontal: getWidth(4),
+  },
+  lblCheckup: {
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size14,
+    letterSpacing:0.1,
+    color: Colors.grayE7,
+  },
+  lblAnaliti: {
+    fontFamily: fontsfamily.gregular,
+    fontSize: fontSize.size14,
+    letterSpacing:0.1,
+    color: Colors.grayE7,
+  },
   orderhistoryemptysubtitle: {
     fontFamily: fontsfamily.gregular,
     fontSize: fontSize.size14,

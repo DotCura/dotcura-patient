@@ -13,7 +13,11 @@ import {
 import React, { act } from 'react';
 import { styles } from './styles';
 import { constnatStyles } from '../../../constants/Styles';
-import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
+import {
+  getHeight,
+  getWidth,
+  ScreenDimensions,
+} from '../../../constants/utils/Dimensions';
 import { images } from '../../../constants/Images';
 import { activityOpacity } from '../../../constants/GConstant';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
@@ -22,9 +26,43 @@ import { fontSize } from '../../../constants/FontSizes';
 import { fontsfamily } from '../../../constants/FontFamily';
 import { ZustandStores } from '../../../store';
 import CustomButton from '../../../global/Buttons';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
 
 const GetTestedComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
+
+  const searchAnim = useSharedValue(0); // 0 = header, 1 = search
+
+  React.useEffect(() => {
+    searchAnim.value = withTiming(props.searchVisible ? 1 : 0, {
+      duration: 300, // 0.3s
+      easing: Easing.bezier(0.22, 0.68, 0.01, 0.99),
+    });
+  }, [props.searchVisible]);
+
+  const headerAnimStyle = useAnimatedStyle(() => ({
+    opacity: 1 - searchAnim.value,
+    transform: [
+      {
+        translateX: -searchAnim.value * ScreenDimensions.screenWidth,
+      },
+    ],
+  }));
+
+  const searchAnimStyle = useAnimatedStyle(() => ({
+    opacity: searchAnim.value,
+    transform: [
+      {
+        translateX: (1 - searchAnim.value) * ScreenDimensions.screenWidth,
+      },
+    ],
+  }));
+
   return (
     <View
       style={[
@@ -33,81 +71,76 @@ const GetTestedComponent = (props: any) => {
       ]}
     >
       {/* vwHeader */}
-      <View
-        style={{
-          paddingHorizontal: getWidth(16),
-        }}
-      >
-        {props.searchVisible ? null : (
-          <View
-            style={[
-              styles.vwMain,
-              {
-                paddingTop:
-                  orderStatus == '' ? props.insets.top + 10 : getHeight(25),
-              },
-            ]}
-          >
-            <View style={styles.vwHeaderText}>
-              <Text style={styles.lblHeaderTitle} numberOfLines={1}>
-                {getTranslation('analysistext')}
-              </Text>
-            </View>
-
-            <View style={styles.vwHeaderRight}>
-              <TouchableOpacity
-                onPress={() => {
-                  props.setSearchVisible(true);
-                }}
-                activeOpacity={activityOpacity}
-                style={styles.vwHeaderbtn}
-              >
-                <Image source={images.imgSearchBlack} />
-              </TouchableOpacity>
-              <View>
-                <TouchableOpacity
-                  onPress={props.handleNavigateCheckout}
-                  activeOpacity={activityOpacity}
-                  style={styles.vwHeaderbtn}
-                >
-                  <Image source={images.imgCartHome} />
-                </TouchableOpacity>
-                <View style={styles.vwTextCount}>
-                  <Text style={styles.labelTextCount}>2</Text>
-                </View>
-              </View>
-            </View>
+      <View>
+        {/* NORMAL HEADER */}
+        <Animated.View
+          style={[
+            styles.vwMain,
+            {
+              paddingTop:
+                orderStatus == '' ? props.insets.top + 10 : getHeight(25),
+              position: 'absolute',
+              // width: '100%',
+            },
+            headerAnimStyle,
+          ]}
+          pointerEvents={props.searchVisible ? 'none' : 'auto'}
+        >
+          <View style={styles.vwHeaderText}>
+            <Text style={styles.lblHeaderTitle} numberOfLines={1}>
+              {getTranslation('analysistext')}
+            </Text>
           </View>
-        )}
-        {props.searchVisible ? (
-          <View
-            style={[
-              styles.vwMain,
-              {
-                paddingTop:
-                  orderStatus == '' ? props.insets.top + 10 : getHeight(25),
-              },
-            ]}
-          >
-            <View style={styles.vwTextinputIcon}>
-              <Image source={images.imgSearchBlack} />
-              <TextInput
-                style={styles.textinputsearch}
-                cursorColor={Colors.gray0F}
-                selectionColor={Colors.gray0F}
-              />
-            </View>
+
+          <View style={styles.vwHeaderRight}>
             <TouchableOpacity
-              onPress={() => {
-                props.setSearchVisible(false);
-              }}
-              style={styles.btnClose}
+              onPress={() => props.setSearchVisible(true)}
               activeOpacity={activityOpacity}
+              style={styles.vwHeaderbtn}
             >
-              <Image source={images.imgClose} tintColor={Colors.blue002} />
+              <Image source={images.imgSearchBlack} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={props.handleNavigateCheckout}
+              activeOpacity={activityOpacity}
+              style={styles.vwHeaderbtn}
+            >
+              <Image source={images.imgCartHome} />
             </TouchableOpacity>
           </View>
-        ) : null}
+        </Animated.View>
+
+        {/* SEARCH HEADER */}
+        <Animated.View
+          style={[
+            styles.vwMain,
+            {
+              paddingTop:
+                orderStatus == '' ? props.insets.top + 10 : getHeight(25),
+            },
+            searchAnimStyle,
+          ]}
+          pointerEvents={props.searchVisible ? 'auto' : 'none'}
+        >
+          <View style={styles.vwTextinputIcon}>
+            <Image source={images.imgSearchBlack} />
+            <TextInput
+              style={styles.textinputsearch}
+              cursorColor={Colors.gray0F}
+              selectionColor={Colors.gray0F}
+              autoFocus={props.searchVisible}
+            />
+          </View>
+
+          <TouchableOpacity
+            onPress={() => props.setSearchVisible(false)}
+            style={styles.btnClose}
+            activeOpacity={activityOpacity}
+          >
+            <Image source={images.imgClose} tintColor={Colors.blue002} />
+          </TouchableOpacity>
+        </Animated.View>
       </View>
 
       {/* vwCheckupAnaliti */}

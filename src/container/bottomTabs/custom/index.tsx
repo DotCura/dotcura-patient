@@ -15,6 +15,8 @@ interface TabsArray {
 }
 
 const CustomBottomTabsContainer = ({ navigation, state, descriptors }: any) => {
+  // console.log("render Botoom");
+  
   const focusedOptions = descriptors[state.routes[state.index].key].options;
 
   if (focusedOptions.tabBarVisible === false) {
@@ -43,7 +45,7 @@ const CustomBottomTabsContainer = ({ navigation, state, descriptors }: any) => {
   const onPressBottomTab = (route: TabsArray, index: number) => {
     const isFocused = state.index === index;
     const onPress = () => {
-      setTimeout(() => {
+      // setTimeout(() => {
         const event = navigation.emit({
           type: 'tabPress',
           target: route.key,
@@ -52,7 +54,7 @@ const CustomBottomTabsContainer = ({ navigation, state, descriptors }: any) => {
         if (!isFocused && !event.defaultPrevented) {
           navigation.navigate(route.name);
         }
-      }, 500);
+      // }, 500);
     };
 
     return (
@@ -61,7 +63,6 @@ const CustomBottomTabsContainer = ({ navigation, state, descriptors }: any) => {
         key={index}
         style={[
           styles.btn,
-          { backgroundColor: isFocused ? Colors.grayED : Colors.white },
         ]}
         activeOpacity={0.9}
         hitSlop={hitSlop}

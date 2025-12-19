@@ -5,6 +5,40 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  lablPrice: {
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size15,
+  },
+  lablCurrency: {
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gmedium,
+    fontSize: fontSize.size15,
+  },
+  vwCurrencyPrice: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  lblAnalitiLabel: {
+    color: Colors.gray0F,
+    fontFamily: fontsfamily.gbold,
+    fontSize: fontSize.size16,
+    flex:1,
+  },
+  vwtitleimage: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: getWidth(8),
+  },
+  btnAnalitiMain: {
+    paddingVertical: getHeight(12),
+    paddingHorizontal: getWidth(20),
+    marginHorizontal: getWidth(16),
+    borderRadius: 20,
+    flexDirection: 'row',
+    backgroundColor: Colors.white,
+  },
   lblEditText: {
     color: Colors.blue002,
     fontFamily: fontsfamily.gmedium,
@@ -45,6 +79,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.grayF3,
     height: getHeight(143),
     borderRadius: 20,
+    overflow: 'hidden',
   },
   btnPlusBlack: {
     backgroundColor: Colors.white,

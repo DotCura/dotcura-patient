@@ -67,8 +67,8 @@ export const styles = StyleSheet.create({
   },
   lblCurrency: {
     textAlign: 'right',
-    marginRight: getWidth(11),
-    marginTop: getHeight(11),
+    marginRight: getWidth(17),
+    marginTop: getHeight(24),
     color: Colors.blue002,
     fontFamily: fontsfamily.gbold,
     fontSize: fontSize.size16,

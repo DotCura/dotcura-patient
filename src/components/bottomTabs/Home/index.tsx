@@ -63,6 +63,8 @@ const HomeComponent = (props: any) => {
       </TouchableOpacity>
     );
   };
+  const CARD_WIDTH = getWidth(280); // your card width
+  const CARD_GAP = getWidth(8);
   return (
     <View
       style={[
@@ -72,7 +74,6 @@ const HomeComponent = (props: any) => {
         },
       ]}
     >
-    
       {/* vwHeader */}
       <View>
         <View
@@ -197,6 +198,14 @@ const HomeComponent = (props: any) => {
                 paddingLeft: getWidth(16),
                 paddingRight: getWidth(16),
               }}
+              // ===== ADD THESE SNAP PROPERTIES =====
+              snapToInterval={
+                ScreenDimensions.screenWidth * 0.85 + getWidth(16)
+              } // Card width + gap
+              snapToAlignment="center" // Snap to the start of each item
+              decelerationRate="fast" // Makes snapping feel smoother
+              pagingEnabled={false} // Keep false to use snapToInterval
+              // ===== END OF SNAP PROPERTIES =====
             />
           </View>
         </View>

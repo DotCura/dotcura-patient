@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Modal,
   View,
   Text,
   TextInput,
@@ -19,6 +18,7 @@ import { activityOpacity } from '../../constants/GConstant';
 import PrimaryTitleTextInput from '../PrimaryTitleTextInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CustomButton from '../Buttons';
+import Modal from 'react-native-modal';
 
 const AddressModel = ({
   visible,
@@ -27,27 +27,24 @@ const AddressModel = ({
   onSelect,
   onAddAddress,
   onClose,
-  onSave
+  onSave,
 }: any) => {
   const insets = useSafeAreaInsets();
-  const selectedItem = addresses.find((a:any) => a.id === selectedId);
+  const selectedItem = addresses.find((a: any) => a.id === selectedId);
 
   return (
     <Modal
-      transparent={true}
-      animationType="slide"
-      visible={visible}
-      statusBarTranslucent={true}
-      onRequestClose={onClose}
+      statusBarTranslucent
+      useNativeDriverForBackdrop={true}
+      isVisible={visible}
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
+      backdropOpacity={0.6}
+      onBackdropPress={onClose}
+      onBackButtonPress={onClose}
+      style={{ margin: 0 }} // full-screen bottom sheet
     >
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#00000060',
-        }}
-      >
-        <Pressable style={{ flex: 1 }} onPress={onClose} />
-
+      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <View
           style={{
             backgroundColor: Colors.whiteF2,
@@ -58,22 +55,15 @@ const AddressModel = ({
         >
           {/* Header */}
           <View style={styles.vwHeadingLine} />
-          <View style={[styles.vwMainModelHeader]}>
-            <TouchableOpacity
-              style={styles.btnBack}
-              onPress={onClose} // close modal
-            >
+
+          <View style={styles.vwMainModelHeader}>
+            <TouchableOpacity style={styles.btnBack} onPress={onClose}>
               <Image source={images.imgLeftArrow} />
             </TouchableOpacity>
 
             <View>
               <Text
-                style={[
-                  constnatStyles.lblHeaderTitle,
-                  {
-                    letterSpacing: 0.2,
-                  },
-                ]}
+                style={[constnatStyles.lblHeaderTitle, { letterSpacing: 0.2 }]}
                 numberOfLines={2}
               >
                 {getTranslation('address')}
@@ -83,11 +73,12 @@ const AddressModel = ({
             <TouchableOpacity
               style={styles.vwSave}
               activeOpacity={activityOpacity}
-              onPress={()=>onSave(selectedItem)}
+              onPress={() => onSave(selectedItem)}
             >
               <Text style={styles.lblSave}>{getTranslation('save')}</Text>
             </TouchableOpacity>
           </View>
+
           {/* Address List */}
           <FlatList
             data={addresses}
@@ -99,7 +90,6 @@ const AddressModel = ({
             }}
             renderItem={({ item }) => {
               const isSelected = selectedId === item.id;
-
 
               return (
                 <TouchableOpacity
@@ -120,22 +110,24 @@ const AddressModel = ({
                       gap: getWidth(12),
                     }}
                   >
-                    <View>
-                      {/* Tick / Untick icon */}
-                      <Image
-                        resizeMode="contain"
-                        source={
-                          isSelected
-                            ? images.imgRadioBigSelected
-                            : images.imgRadioBigUnSelected
-                        }
-                      />
-                    </View>
+                    <Image
+                      resizeMode="contain"
+                      source={
+                        isSelected
+                          ? images.imgRadioBigSelected
+                          : images.imgRadioBigUnSelected
+                      }
+                    />
+
                     <View style={{ flex: 1 }}>
                       <View
-                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}
                       >
                         <Text style={styles.itemTitle}>{item.title}</Text>
+
                         {isSelected && (
                           <Text style={styles.itemdefault}>
                             {getTranslation('default')}
@@ -143,7 +135,7 @@ const AddressModel = ({
                         )}
                       </View>
 
-                      {item.subtitle ? (
+                      {item.subtitle && (
                         <Text
                           style={[
                             styles.itemSubtitle,
@@ -156,7 +148,7 @@ const AddressModel = ({
                         >
                           {item.subtitle}
                         </Text>
-                      ) : null}
+                      )}
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -164,7 +156,7 @@ const AddressModel = ({
             }}
           />
 
-          {/* Add Address Button */}
+          {/* Bottom Buttons */}
           <View
             style={{
               marginBottom:
@@ -176,20 +168,20 @@ const AddressModel = ({
           >
             <CustomButton
               btnImage={images.imgPlusBlack}
-              btnicon={true}
+              btnicon
               imgstyle={{ tintColor: Colors.white }}
               btnPress={onAddAddress}
               btnTitle={getTranslation('addaddresspopupbtn')}
             />
+
             <CustomButton
               btnImage={images.pencilblue}
-              btnicon={true}
+              btnicon
               style={{
                 backgroundColor: Colors.blueD1,
                 marginTop: getHeight(8),
               }}
               textStyle={{ color: Colors.blue002 }}
-              // btnPress={props.handlePressDeleteAccount}
               btnTitle={getTranslation('editaddressbtn')}
             />
           </View>

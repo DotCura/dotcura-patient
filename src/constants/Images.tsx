@@ -103,6 +103,7 @@ export const images = {
   imgRateReview:require('../assets/images/ratereview.png'),
   imgRateFillStar:require('../assets/images/ratefillStar.png'),
   imgRateUnfillStar:require('../assets/images/rateUnfillStar.png'),
+  imgBottomtras:require('../assets/images/bottoooomtrasparent.png'),
   
   
   

@@ -148,7 +148,7 @@ export default {
   kitavailable: 'kit disponibili',
   filter: 'Filtros',
   analysistext: 'Analisi',
-  checkuptext: 'Check-up',
+  checkuptext: 'Kit',
   analitiheadertext: 'Analiti',
   andtext: 'da',
   oftext: 'di',

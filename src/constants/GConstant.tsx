@@ -16,6 +16,7 @@ import { fontsfamily } from './FontFamily';
 import { fontSize } from './FontSizes';
 import { getHeight, getWidth } from './utils/Dimensions';
 import { ScreenNames } from './AppConstants';
+import { useEffect, useState } from 'react';
 
 export const appName = getTranslation('appname') || 'DotCura';
 
@@ -45,7 +46,7 @@ export const goToTabScreen = (
   const state = navigation.getState();
 
   const isAlreadyInTransitionFlow =
-    state?.routes?.some(r => r.name === 'TransitionFlow');
+    state?.routes?.some((r:any) => r.name === 'TransitionFlow');
 
   if (isAlreadyInTransitionFlow) {
     // ✅ Already inside TransitionFlow → navigate normally
@@ -63,6 +64,27 @@ export const goToTabScreen = (
       },
     });
   }
+};
+
+export const useDelayedBg = (visible: boolean, delay = 500) => {
+  const [bgColor, setBgColor] = useState('transparent');
+ 
+  useEffect(() => {
+    let timer: any;
+ 
+    if (visible) {
+      setBgColor('transparent');
+      timer = setTimeout(() => {
+        setBgColor('#00000060');
+      }, delay);
+    } else {
+      setBgColor('transparent');
+    }
+ 
+    return () => clearTimeout(timer);
+  }, [visible, delay]);
+ 
+  return bgColor;
 };
 
 

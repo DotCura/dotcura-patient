@@ -170,7 +170,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: getWidth(15),
     backgroundColor: Colors.whiteF2,
-    paddingHorizontal: getWidth(12),
+    paddingHorizontal: getWidth(16),
   },
   lblHeaderTitle: {
     color: Colors.gray0F,

@@ -9,6 +9,7 @@ interface AppLayoutProps {
 }
 
 const AppLayout = ({ children, isOrderPlaced }: AppLayoutProps) => {
+  
   return (
     <View style={styles.container} >
       {/* Header / Order Status */}
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    // overflow: 'hidden',
+    overflow: 'hidden',
   },
   roundedTop: {
     borderTopLeftRadius: 40,

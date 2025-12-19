@@ -26,6 +26,7 @@ import { getTranslation } from '../../../localization/i18n/i18n.config';
 
 const GetTestedContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+
   const kitList = [
     {
       id: '1',
@@ -158,6 +159,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       kitimages: images.imgkit5,
     },
   ];
+  
   const analitiList = [
     {
       id: '1',
@@ -271,7 +273,7 @@ const GetTestedContainer = ({ navigation }: any) => {
         }}
       >
         <View style={{ gap: getHeight(8) }}>
-          <ImageBackground source={item.kitimages} style={styles.vwGrey} >
+          <ImageBackground source={item.kitimages} style={styles.vwGrey}>
             <TouchableOpacity
               style={styles.btnPlusBlack}
               activeOpacity={activityOpacity}
@@ -337,7 +339,9 @@ const GetTestedContainer = ({ navigation }: any) => {
       >
         <View style={styles.vwtitleimage}>
           <Image source={item.analitiimages} />
-          <Text style={styles.lblAnalitiLabel} numberOfLines={2}>{item.title}</Text>
+          <Text style={styles.lblAnalitiLabel} numberOfLines={2}>
+            {item.title}
+          </Text>
         </View>
         <View style={styles.vwCurrencyPrice}>
           <Text style={styles.lablCurrency}>

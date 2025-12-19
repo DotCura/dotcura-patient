@@ -14,31 +14,27 @@ import { Platform } from 'react-native';
 const BottomTabsNavigation = () => {
   // const isNativeTabs =
   // Platform.OS === 'ios' && Number(Platform.Version) >= 26;
-  const isNativeTabs =
-  false;
+  const isNativeTabs = false;
   const BottomTabs = isNativeTabs
-  ? createNativeBottomTabNavigator()
-  : createBottomTabNavigator();
+    ? createNativeBottomTabNavigator()
+    : createBottomTabNavigator();
 
   // console.log(isNativeTabs ? 'Yes' : 'No');
 
-
- 
-  
-
   //handleTabsScreens
-  const handleBottomTabsScreens = ({ screenName, component,options }) => {
-    { console.log("Tab bar renderer", isNativeTabs);}
+  const handleBottomTabsScreens = ({ screenName, component, options }) => {
+    {
+      console.log('Tab bar renderer', isNativeTabs);
+    }
     return (
       <BottomTabs.Screen
-      
         name={screenName}
         component={component}
         options={{
           headerTitleAlign: 'center',
           headerShadowVisible: false,
           headerShown: false,
-          ...(options || {})
+          ...(options || {}),
         }}
       />
     );
@@ -46,17 +42,15 @@ const BottomTabsNavigation = () => {
 
   return (
     <BottomTabs.Navigator
-    screenOptions={{
-      tabBarActiveTintColor: Colors.blue002,
-      tabBarInactiveTintColor: Colors.gray75,
-      //  ...(isNativeTabs && {
-      //   freezeOnBlur: false,
-      //   lazy: false,
-      // }),
-     
-    }}
-      tabBar={props =>  <CustomBottomTabsContainer {...props} />
-    }
+      screenOptions={{
+        tabBarActiveTintColor: Colors.blue002,
+        tabBarInactiveTintColor: Colors.gray75,
+        //  ...(isNativeTabs && {
+        //   freezeOnBlur: false,
+        //   lazy: false,
+        // }),
+      }}
+      tabBar={props => <CustomBottomTabsContainer {...props} />}
     >
       {handleBottomTabsScreens({
         screenName: ScreenNames.HOMECONTAINER,
@@ -65,16 +59,13 @@ const BottomTabsNavigation = () => {
           tabBarLabel: ScreenNames.HOME, // Display name: "Get Tested"
           tabBarIcon: ({ focused }) => ({
             type: 'image',
-            source: focused
-              ? images.imgFocusHome
-              : images.imgUnFocusHome,
+            source: focused ? images.imgFocusHome : images.imgUnFocusHome,
           }),
-          
         },
       })}
 
       {handleBottomTabsScreens({
-       screenName: ScreenNames.GETTESTEDCONTAINER,
+        screenName: ScreenNames.GETTESTEDCONTAINER,
         component: Screen[ScreenNames.GETTESTEDCONTAINER],
         options: {
           tabBarLabel: ScreenNames.GETTESTED, // Display name: "Get Tested"
@@ -94,10 +85,8 @@ const BottomTabsNavigation = () => {
           tabBarLabel: ScreenNames.YOURPROFILE, // Display name: "Get Tested"
           tabBarIcon: ({ focused }) => ({
             type: 'image',
-            
-            source: focused
-              ? images.imgFocusProfile
-              : images.imgUnFocusProfile,
+
+            source: focused ? images.imgFocusProfile : images.imgUnFocusProfile,
           }),
         },
       })}

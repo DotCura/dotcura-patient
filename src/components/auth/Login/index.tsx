@@ -57,7 +57,7 @@ const LoginComponent = (props: any) => {
               setErrorMessage={props.setPhoneNumberError}
               leftIcon={false}
               isBorder={false}
-              placHolderLabel={'333 000 000'}
+              placHolderLabel={'333 000 0000'}
             />
           </View>
         </View>

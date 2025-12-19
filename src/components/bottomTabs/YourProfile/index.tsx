@@ -1,6 +1,7 @@
 import {
   FlatList,
   Image,
+  Pressable,
   Text,
   TextInput,
   TouchableOpacity,
@@ -8,19 +9,59 @@ import {
 } from 'react-native';
 import React from 'react';
 import { constnatStyles } from '../../../constants/Styles';
-import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
+import {
+  getHeight,
+  getWidth,
+  ScreenDimensions,
+} from '../../../constants/utils/Dimensions';
 import { ZustandStores } from '../../../store';
 import { styles } from './styles';
 import { activityOpacity } from '../../../constants/GConstant';
 import { images } from '../../../constants/Images';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { Colors } from '../../../constants/Colors';
-import CustomButton from '../../../global/Buttons';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+  runOnJS,
+  withSpring,
+} from 'react-native-reanimated';
 
 const YourProfileComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
 
+  const searchAnim = useSharedValue(0);
+
+  React.useEffect(() => {
+    searchAnim.value = withTiming(props.searchVisible ? 1 : 0, {
+      duration: 300,
+      easing: Easing.bezier(0.22, 0.68, 0.01, 0.99),
+    });
+  }, [props.searchVisible]);
+
+  const headerAnimStyle = useAnimatedStyle(() => ({
+    opacity: 1 - searchAnim.value,
+    transform: [
+      {
+        translateX: -searchAnim.value * ScreenDimensions.screenWidth,
+      },
+    ],
+  }));
+
+  const searchAnimStyle = useAnimatedStyle(() => ({
+    opacity: searchAnim.value,
+    transform: [
+      {
+        translateX: (1 - searchAnim.value) * ScreenDimensions.screenWidth,
+      },
+    ],
+  }));
+
   const renderListHeader = () => {
+    console.log('header render');
+
     return (
       <>
         {/* LatestAnalysis */}
@@ -29,7 +70,10 @@ const YourProfileComponent = (props: any) => {
             <Text style={styles.latestanlaysis}>
               {getTranslation('latestanalysis')}
             </Text>
-            <TouchableOpacity activeOpacity={activityOpacity} onPress={props.handleNavigateHistoricalAnlysis}>
+            <TouchableOpacity
+              activeOpacity={activityOpacity}
+              onPress={props.handleNavigateHistoricalAnlysis}
+            >
               <Text style={styles.seeall}>{getTranslation('seeall')}</Text>
             </TouchableOpacity>
           </View>
@@ -50,9 +94,7 @@ const YourProfileComponent = (props: any) => {
         </View>
 
         {/* waitingforresultof */}
-        <View
-          style={{ marginHorizontal: getWidth(16) }}
-        >
+        <View style={{ marginHorizontal: getWidth(16) }}>
           {props.appointmentsData.some((a: any) => a.status === 'waiting') && (
             <Text style={styles.lblWaitingForResult}>
               {getTranslation('waitingforresultof')}
@@ -85,6 +127,49 @@ const YourProfileComponent = (props: any) => {
     );
   };
 
+  //dropdown
+  const dropdownAnim = useSharedValue(0);
+  const [dropdownVisible, setDropdownVisible] = React.useState(false);
+  const dropdownOpacity = useSharedValue(0);
+
+  React.useEffect(() => {
+    if (props.showPopup) {
+      setDropdownVisible(true);
+
+      // 🌊 Spring for movement
+      dropdownAnim.value = withSpring(1, {
+        damping: 5,
+        stiffness: 120,
+        mass: 0.6,
+      });
+
+      // 🎯 Timing for opacity
+      dropdownOpacity.value = withTiming(1, { duration: 120 });
+    } else {
+      dropdownOpacity.value = withTiming(0, { duration: 100 });
+
+      dropdownAnim.value = withTiming(0, { duration: 160 }, finished => {
+        if (finished) {
+          runOnJS(setDropdownVisible)(false);
+        }
+      });
+    }
+  }, [props.showPopup]);
+
+  const dropdownAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: dropdownAnim.value,
+      transform: [
+        {
+          translateY: (1 - dropdownAnim.value) * -6, // slide from top
+        },
+        {
+          scale: 0.97 + dropdownAnim.value * 0.03, // subtle zoom
+        },
+      ],
+    };
+  });
+
   return (
     <View
       style={[
@@ -96,86 +181,105 @@ const YourProfileComponent = (props: any) => {
     >
       {/* vwHeader */}
       <View style={{}}>
-        {props.searchVisible ? null : (
-          <View
-            style={[
-              styles.vwMain,
-              {
-                paddingTop:
-                  orderStatus == '' ? props.insets.top + 10 : getHeight(25),
-              },
-            ]}
+        {/* NORMAL HEADER */}
+        <Animated.View
+          style={[
+            styles.vwMain,
+            {
+              paddingTop:
+                orderStatus == '' ? props.insets.top + 10 : getHeight(25),
+              position: 'absolute',
+              width: '100%',
+            },
+            headerAnimStyle,
+          ]}
+          pointerEvents={props.searchVisible ? 'none' : 'auto'}
+        >
+          <TouchableOpacity
+            style={styles.vwHeaderText}
+            activeOpacity={activityOpacity}
+            onPress={() => props.setShowPopup(true)}
           >
+            <Text style={styles.lblHeaderTitle} numberOfLines={1}>
+              {props.selectedName}
+            </Text>
+            <Image
+              source={images.imgLeftArrow}
+              style={{ transform: [{ rotate: '270deg' }] }}
+            />
+          </TouchableOpacity>
+
+          <View style={styles.vwHeaderRight}>
             <TouchableOpacity
-              style={styles.vwHeaderText}
+              onPress={() => props.setSearchVisible(true)}
               activeOpacity={activityOpacity}
-              onPress={() => props.setShowPopup(true)}
+              style={styles.vwHeaderbtnSearch}
             >
-              <Text style={styles.lblHeaderTitle} numberOfLines={1}>
-                {props.selectedName}
+              <Image source={images.imgSearchBlack} />
+              <Text style={styles.lblSearchProfile}>
+                {getTranslation('searchprofile')}
               </Text>
-              <Image
-                source={images.imgLeftArrow}
-                style={{
-                  transform: [{ rotate: '270deg' }],
-                }}
-              />
             </TouchableOpacity>
 
-            <View style={styles.vwHeaderRight}>
-              <TouchableOpacity
-                onPress={() => {
-                  props.setSearchVisible(true);
-                }}
-                activeOpacity={activityOpacity}
-                style={[styles.vwHeaderbtnSearch]}
-              >
-                <Image source={images.imgSearchBlack} />
-                <Text style={styles.lblSearchProfile}>
-                  {getTranslation('searchprofile')}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={props.handlePressProfile}
-                activeOpacity={activityOpacity}
-                style={styles.vwHeaderbtn}
-                hitSlop={20}
-              >
-                <Image source={images.imgUserHome} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-        {props.searchVisible ? (
-          <View
-            style={[
-              styles.vwMain,
-              {
-                paddingTop:
-                  orderStatus == '' ? props.insets.top + 10 : getHeight(25),
-              },
-            ]}
-          >
-            <View style={styles.vwTextinputIcon}>
-              <Image source={images.imgSearchBlack} />
-              <TextInput
-                style={styles.textinputsearch}
-                cursorColor={Colors.gray0F}
-                selectionColor={Colors.gray0F}
-              />
-            </View>
             <TouchableOpacity
-              onPress={() => {
-                props.setSearchVisible(false);
-              }}
-              style={styles.btnClose}
+              onPress={props.handlePressProfile}
               activeOpacity={activityOpacity}
+              style={styles.vwHeaderbtn}
             >
-              <Image source={images.imgClose} tintColor={Colors.blue002} />
+              <Image source={images.imgUserHome} />
             </TouchableOpacity>
           </View>
-        ) : null}
-        {props.showPopup == true && (
+        </Animated.View>
+
+        {/* SEARCH HEADER */}
+        <Animated.View
+          style={[
+            styles.vwMain,
+            {
+              paddingTop:
+                orderStatus == '' ? props.insets.top + 10 : getHeight(25),
+            },
+            searchAnimStyle,
+          ]}
+          pointerEvents={props.searchVisible ? 'auto' : 'none'}
+        >
+          <View style={styles.vwTextinputIcon}>
+            <Image source={images.imgSearchBlack} />
+            <TextInput
+              style={styles.textinputsearch}
+              cursorColor={Colors.gray0F}
+              selectionColor={Colors.gray0F}
+              autoFocus={props.searchVisible}
+            />
+          </View>
+
+          <TouchableOpacity
+            onPress={() => props.setSearchVisible(false)}
+            style={styles.btnClose}
+            activeOpacity={activityOpacity}
+          >
+            <Image source={images.imgClose} tintColor={Colors.blue002} />
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
+
+      {/* POPUP */}
+      {/* {props.showPopup == true && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 999,
+          }}
+        >
+         
+          <Pressable
+            style={{ flex: 1 }}
+            onPress={() => props.setShowPopup(false)}
+          />
           <View
             style={{
               position: 'absolute',
@@ -231,8 +335,76 @@ const YourProfileComponent = (props: any) => {
               );
             })}
           </View>
-        )}
-      </View>
+        </View>
+      )} */}
+      {/* POPUP WITH ANIMATION */}
+      {dropdownVisible && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 999,
+          }}
+        >
+          {/* 👇 OUTSIDE AREA */}
+          <Pressable
+            style={{ flex: 1 }}
+            onPress={() => props.setShowPopup(false)}
+          />
+
+          {/* 👇 ANIMATED DROPDOWN */}
+          <Animated.View
+            style={[
+              {
+                position: 'absolute',
+                left: 16,
+                top: 38,
+                borderRadius: 16,
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.23,
+                shadowRadius: 2.62,
+                padding: 6,
+                gap: getHeight(7),
+                elevation: 4,
+                backgroundColor: Colors.white,
+                marginTop:
+                  orderStatus == '' ? props.insets.top + 10 : getHeight(25),
+              },
+              dropdownAnimatedStyle,
+            ]}
+          >
+            {props.familyMembersData.map((item: any, index: number) => {
+              const isSelected = item.familymembername === props.selectedName;
+
+              return (
+                <TouchableOpacity
+                  key={`family-${index}`}
+                  style={[styles.itemRow, isSelected && styles.selectedRow]}
+                  activeOpacity={activityOpacity}
+                  onPress={() => {
+                    props.setSelectedName(item.familymembername);
+                    props.setShowPopup(false);
+                  }}
+                >
+                  <Image
+                    source={images.imgRightTickBlack}
+                    style={{ opacity: isSelected ? 1 : 0 }}
+                  />
+                  <Text
+                    style={[styles.itemText, isSelected && styles.selectedText]}
+                  >
+                    {item.familymembername}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </Animated.View>
+        </View>
+      )}
 
       {/* vwEmpty */}
       {/* <View style={styles.vwEmpty}>
@@ -254,32 +426,13 @@ const YourProfileComponent = (props: any) => {
         />
       </View> */}
 
-      {/* vwReportsList */}
-      {/* <FlatList
-        data={props.userReportData}
-        renderItem={props.renderUserReportData}
-        keyExtractor={item => item.id.toString()}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={renderListHeader}
-        onEndReached={() => {
-          console.log('callendreport');
-        }}
-        onEndReachedThreshold={0.5}
-        onScroll={() => {
-          props.setShowPopup(false);
-        }}
-        scrollEventThrottle={16}
-        contentContainerStyle={{
-          paddingBottom: getHeight(150),
-          gap: getWidth(8),
-        }}
-        style={{ flex: 1 }}
-      /> */}
       {/* vwTestReports */}
-
       <FlatList
         onEndReached={() => {
           console.log('callend');
+        }}
+        onScroll={() => {
+          props.setShowPopup(false);
         }}
         style={{ flex: 1 }}
         ListHeaderComponent={renderListHeader}

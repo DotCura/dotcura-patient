@@ -499,7 +499,7 @@ const YourProfileContainer = ({ navigation }: any) => {
   const familyMember = [
     {
       id: '1',
-      familymembername: 'Giovanni (tu)',
+      familymembername: 'Il tuo quadro',
     },
     {
       id: '2',
@@ -592,7 +592,7 @@ const YourProfileContainer = ({ navigation }: any) => {
   const [searchVisible, setSearchVisible] = useState(false);
   const [showAllTags, setShowAllTags] = useState(false);
   const [showAllTagsBooked, setShowAllTagsBooked] = useState(false);
-  const [selectedName, setSelectedName] = useState('Giovanni (tu)');
+  const [selectedName, setSelectedName] = useState('Il tuo quadro');
   const [showPopup, setShowPopup] = useState(false);
   const [expandedWaiting, setExpandedWaiting] = useState<any>({});
   const [expandedBooked, setExpandedBooked] = useState<any>({});

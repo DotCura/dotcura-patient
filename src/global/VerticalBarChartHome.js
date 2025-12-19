@@ -3089,6 +3089,8 @@
 
 // export default VerticalBarChart;
 
+
+//latest workign code
 import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Svg, { Polyline, Circle, Defs, LinearGradient, Stop, Path } from "react-native-svg";
