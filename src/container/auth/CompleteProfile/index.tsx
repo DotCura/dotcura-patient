@@ -8,6 +8,7 @@ import {
 import { regex } from '../../../constants/Regex';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { ScreenNames } from '../../../constants/AppConstants';
+import { Keyboard } from 'react-native';
 
 const CompleteProfileContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -99,6 +100,7 @@ const CompleteProfileContainer = ({ navigation }: any) => {
       return;
     } else {
       console.log('✅ Profile completed successfully');
+      Keyboard.dismiss();
       navigation.navigate(ScreenNames.INFOATIONCONASATNTCONTAINER);
       // Proceed to next screen or API call
     }

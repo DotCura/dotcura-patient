@@ -28,6 +28,9 @@ import { fontSize } from '../../constants/FontSizes';
 import GooglePlacesTextInput from 'react-native-google-places-textinput';
 import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
 import Modal from 'react-native-modal';
+import LinearGradient from 'react-native-linear-gradient';
+import MaskedView from '@react-native-masked-view/masked-view';
+import { BlurView } from '@react-native-community/blur';
 
 const CheckoutComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
@@ -618,6 +621,34 @@ const CheckoutComponent = (props: any) => {
               />
             )}
 
+            {/* 🔹 BLUR BEHIND GO TO CART */}
+            <MaskedView
+              pointerEvents="none"
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                height: 110,
+              }}
+              maskElement={
+                <LinearGradient
+                  colors={[
+                    'transparent', // ❌ no blur at top
+                    'black', // ✅ full blur at bottom
+                  ]}
+                  locations={[0.25, 1]}
+                  style={{ flex: 1 }}
+                />
+              }
+            >
+              <BlurView
+                style={{ flex: 1 }}
+                blurType="light"
+                blurAmount={14}
+                reducedTransparencyFallbackColor="transparent"
+              />
+            </MaskedView>
+
             {/* Go To Cart */}
             <TouchableOpacity
               style={[
@@ -819,6 +850,34 @@ const CheckoutComponent = (props: any) => {
                 paddingBottom: getHeight(100),
               }}
             />
+
+             {/* 🔹 BLUR BEHIND GO TO CART */}
+             <MaskedView
+              pointerEvents="none"
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                height: 110,
+              }}
+              maskElement={
+                <LinearGradient
+                  colors={[
+                    'transparent', // ❌ no blur at top
+                    'black', // ✅ full blur at bottom
+                  ]}
+                  locations={[0.25, 1]}
+                  style={{ flex: 1 }}
+                />
+              }
+            >
+              <BlurView
+                style={{ flex: 1 }}
+                blurType="light"
+                blurAmount={14}
+                reducedTransparencyFallbackColor="transparent"
+              />
+            </MaskedView>
 
             {/* Add To Order */}
             <TouchableOpacity

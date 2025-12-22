@@ -289,14 +289,14 @@ const MainNavigation = props => {
           TransitionStack,
           ScreenNames.INFOATIONCONASATNTCONTAINER,
           { headerShown: false },
-          Transition.Presets.ElasticCard(),
+          Transition.Presets.ZoomIn(),
         )}
 
         {_addScreen(
           TransitionStack,
           ScreenNames.KITDETAILSCONTAINER,
           { headerShown: true },
-          Transition.Presets.DraggableCard(),
+          Transition.Presets.ZoomIn(),
         )}
 
         {_addScreen(
@@ -316,7 +316,7 @@ const MainNavigation = props => {
           TransitionStack,
           ScreenNames.ANALITITESTDETAILSCONTAINER,
           { headerShown: false },
-          Transition.Presets.DraggableCard(),
+          Transition.Presets.ZoomIn(),
         )}
 
         {_addScreen(
@@ -330,13 +330,13 @@ const MainNavigation = props => {
           TransitionStack,
           ScreenNames.ANALITIDETAILSCONTAINER,
           { headerShown: true },
-          Transition.Presets.DraggableCard(),
+          Transition.Presets.ZoomIn(),
         )}
          {_addScreen(
           TransitionStack,
           ScreenNames.TESTDETAILSCONTAINER,
           { headerShown: true },
-          Transition.Presets.DraggableCard(),
+          Transition.Presets.ZoomIn(),
         )}
       </TransitionStack.Navigator>
     );

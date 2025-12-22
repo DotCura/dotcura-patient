@@ -19,7 +19,7 @@ LogBox.ignoreAllLogs();
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.BOTTOMTABNAVIGATION,
+    ScreenNames.INTROCONTAINER,
   );
 
   useEffect(() => {
@@ -28,26 +28,26 @@ const App = () => {
     }, 500);
   }, []);
 
-  // useEffect(() => {
-  //   MmkvManager.getData(
-  //     MmkvManager.Keys.isOnBoardingVisisted,
-  //     isOnBoardingVisited => {
-  //       if (isOnBoardingVisited) {
-  //         // Onboarding visited → check login
-  //         MmkvManager.getData(MmkvManager.Keys.isLoggedIn, isLoginVisited => {
-  //           if (isLoginVisited) {
-  //             setInitialRouteName(ScreenNames.BOTTOMTABNAVIGATION); // Logged in
-  //           } else {
-  //             setInitialRouteName(ScreenNames.WELCOMECONTAINER); // Not logged in
-  //           }
-  //         });
-  //       } else {
-  //         setInitialRouteName(ScreenNames.INTROCONTAINER); // Onboarding not visited
-  //       }
-  //     },
+  useEffect(() => {
+    MmkvManager.getData(
+      MmkvManager.Keys.isOnBoardingVisisted,
+      isOnBoardingVisited => {
+        if (isOnBoardingVisited) {
+          // Onboarding visited → check login
+          MmkvManager.getData(MmkvManager.Keys.isLoggedIn, isLoginVisited => {
+            if (isLoginVisited) {
+              setInitialRouteName(ScreenNames.BOTTOMTABNAVIGATION); // Logged in
+            } else {
+              setInitialRouteName(ScreenNames.WELCOMECONTAINER); // Not logged in
+            }
+          });
+        } else {
+          setInitialRouteName(ScreenNames.INTROCONTAINER); // Onboarding not visited
+        }
+      },
 
-  //   );
-  // }, []);
+    );
+  }, []);
 
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
 

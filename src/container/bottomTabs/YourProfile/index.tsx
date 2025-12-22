@@ -772,7 +772,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       <>
         {item.status === 'waiting' && (
           <TouchableOpacity
-            activeOpacity={activityOpacity}
+            activeOpacity={1}
             style={styles.btnwaitingview1}
           >
             <View style={styles.btnwaitingview2}>
@@ -848,7 +848,7 @@ const YourProfileContainer = ({ navigation }: any) => {
         )}
         {item.status === 'booked' && (
           <TouchableOpacity
-            activeOpacity={activityOpacity}
+            activeOpacity={1}
             style={styles.btnBooked}
           >
             <View

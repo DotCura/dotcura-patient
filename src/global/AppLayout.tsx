@@ -14,7 +14,7 @@ const AppLayout = ({ children, isOrderPlaced }: AppLayoutProps) => {
     <View style={styles.container} >
       {/* Header / Order Status */}
       {isOrderPlaced && (
-        <View>
+        <View >
           <OrderStatusComponent orderStatus={isOrderPlaced}/>
         </View>
       )}

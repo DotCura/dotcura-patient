@@ -516,7 +516,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         style={{
           width: ScreenDimensions.screenWidth / 2 - getWidth(32),
           borderRadius: 20,
-          marginRight: 12,
+          // marginRight: 12,
+          marginLeft: index % 2 === 0 ? 0 : getWidth(16),
         }}
       >
         <View style={{ gap: getHeight(8) }}>

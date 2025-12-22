@@ -5,7 +5,7 @@ import CustomButton from '../../../global/Buttons';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { constnatStyles } from '../../../constants/Styles';
-import { getHeight } from '../../../constants/utils/Dimensions';
+import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 import { Colors } from '../../../constants/Colors';
 import { activityOpacity } from '../../../constants/GConstant';
 import AppHeader from '../../../global/Header';
@@ -86,11 +86,13 @@ const OTPComponent = (props: any) => {
           </Text>
         </View>
 
-        {/* vwBottomBtn */}
-        <View
+        
+      </KeyboardAwareScrollView>
+      {/* vwBottomBtn */}
+      <View
           style={[
             styles.vwBottom,
-            { marginBottom: props.insets.bottom + getHeight(16) },
+            { marginBottom: props.insets.bottom + getHeight(16),marginHorizontal:getWidth(16) },
           ]}
         >
           <CustomButton
@@ -117,7 +119,6 @@ const OTPComponent = (props: any) => {
             )}
           </TouchableOpacity>
         </View>
-      </KeyboardAwareScrollView>
     </>
   );
 };
