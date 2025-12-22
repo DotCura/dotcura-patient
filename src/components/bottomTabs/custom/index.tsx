@@ -285,7 +285,7 @@ const TAB_WIDTH = getWidth(250) / 3; // 👈 3 tabs
 
 const CustomBottomTabsComponent = (props: any) => {
   const insets = useSafeAreaInsets();
-  
+
   // === 1. Tab Indicator Animation ===
   const translateX = useSharedValue(0);
 
@@ -303,24 +303,24 @@ const CustomBottomTabsComponent = (props: any) => {
 
   // === 2. Support Button Animation Setup ===
   const mapTranslateX = useSharedValue(-40); // Slide from left
-  const mapOpacity = useSharedValue(0);      // Fade
-  const mapMaxWidth = useSharedValue(0);     // Collapse width
-  const mapMarginLeft = useSharedValue(0);   // Collapse margin
+  const mapOpacity = useSharedValue(0); // Fade
+  const mapMaxWidth = useSharedValue(0); // Collapse width
+  const mapMarginLeft = useSharedValue(0); // Collapse margin
 
   useEffect(() => {
     if (props.state.index === 1) {
       // === SHOW (Expand) ===
       mapTranslateX.value = withTiming(0, { duration: 400 });
-      mapOpacity.value = withTiming(1, { duration: 300 });
+      mapOpacity.value = withTiming(1, { duration: 600 });
       // Set max width large enough to fit content (e.g. 150-200)
-      mapMaxWidth.value = withTiming(getWidth(200), { duration: 400 });
-      mapMarginLeft.value = withTiming(getWidth(8), { duration: 400 });
+      mapMaxWidth.value = withTiming(getWidth(200), { duration: 600 });
+      mapMarginLeft.value = withTiming(getWidth(8), { duration: 600 });
     } else {
       // === HIDE (Collapse) ===
       mapTranslateX.value = withTiming(-40, { duration: 400 });
-      mapOpacity.value = withTiming(0, { duration: 200 });
-      mapMaxWidth.value = withTiming(0, { duration: 400 });
-      mapMarginLeft.value = withTiming(0, { duration: 400 });
+      mapOpacity.value = withTiming(0, { duration: 600 });
+      mapMaxWidth.value = withTiming(0, { duration: 600 });
+      mapMarginLeft.value = withTiming(0, { duration: 600 });
     }
   }, [props.state.index]);
 
@@ -337,7 +337,7 @@ const CustomBottomTabsComponent = (props: any) => {
 
   return (
     <>
-      {/* 🔹 PERFECT MASKED BLUR (NO TOP LINE) */}
+       {/* 🔹 PERFECT MASKED BLUR (NO TOP LINE) */}
       {isFocused && (
         <MaskedView
           pointerEvents="none"
@@ -363,7 +363,7 @@ const CustomBottomTabsComponent = (props: any) => {
             reducedTransparencyFallbackColor="transparent"
           />
         </MaskedView>
-      )}
+      )} 
 
       <View
         style={{
@@ -408,35 +408,35 @@ const CustomBottomTabsComponent = (props: any) => {
 
         {/* === SUPPORT BUTTON === */}
         {/* Removed conditional check so animation can run on exit */}
-        <Animated.View 
-            style={[mapAnimatedStyle, { overflow: 'hidden' }]}
-            pointerEvents={props.state.index === 1 ? 'auto' : 'none'}
+        <Animated.View
+          style={[mapAnimatedStyle, { overflow: 'hidden' }]}
+          pointerEvents={props.state.index === 1 ? 'auto' : 'none'}
         >
-                      <TouchableOpacity
-              activeOpacity={0.9}
-              style={{
-                // paddingVertical: getHeight(8),
-                // paddingHorizontal: getWidth(18),
-                width:getWidth(80),
-                height: getHeight(62),
-                backgroundColor: Colors.white,
-                alignItems: 'center',
-                alignSelf: 'center',
-                marginBottom:
-                  insets.bottom > 0
-                    ? insets.bottom + getHeight(5)
-                    : insets.bottom + getHeight(10),
-                marginLeft: getWidth(8),
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.15,
-                shadowRadius: 6,
-                elevation: 8,
-                gap: getWidth(4),
-                borderRadius: 999,
-                justifyContent: 'center',
-              }}
-            >
+          <TouchableOpacity
+            activeOpacity={0.9}
+            style={{
+              // paddingVertical: getHeight(8),
+              // paddingHorizontal: getWidth(18),
+              width: getWidth(80),
+              height: getHeight(62),
+              backgroundColor: Colors.white,
+              alignItems: 'center',
+              alignSelf: 'center',
+              marginBottom:
+                insets.bottom > 0
+                  ? insets.bottom + getHeight(5)
+                  : insets.bottom + getHeight(10),
+              marginLeft: getWidth(8),
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.15,
+              shadowRadius: 6,
+              elevation: 8,
+              gap: getWidth(4),
+              borderRadius: 999,
+              justifyContent: 'center',
+            }}
+          >
             <Image source={images.imgSupport} />
             <Text
               numberOfLines={1} // Prevents text wrap during collapse

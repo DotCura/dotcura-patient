@@ -62,12 +62,13 @@ const GetTestedComponent = (props: any) => {
       },
     ],
   }));
+  
 
   return (
     <View
       style={[
         constnatStyles.vwContainer,
-        { paddingHorizontal: 0, paddingBottom: getHeight(100) },
+        { paddingHorizontal: 0 },
       ]}
     >
       {/* vwHeader */}
@@ -223,9 +224,9 @@ const GetTestedComponent = (props: any) => {
       {props.selectedTab === 'checkup' ? (
         <FlatList
           key={'checkup-2'}
-          onEndReached={() => {
-            console.log('callendcheckup');
-          }}
+          // onEndReached={() => {
+          //   console.log('callendcheckup');
+          // }}
           numColumns={2}
           data={props.kitData}
           renderItem={props.renderKitData}
@@ -240,9 +241,9 @@ const GetTestedComponent = (props: any) => {
         />
       ) : (
         <FlatList
-          onEndReached={() => {
-            console.log('callendanaliti');
-          }}
+          // onEndReached={() => {
+          //   console.log('callendanaliti');
+          // }}
           key={'analiti-1'}
           keyExtractor={item => item.id.toString()}
           numColumns={1}

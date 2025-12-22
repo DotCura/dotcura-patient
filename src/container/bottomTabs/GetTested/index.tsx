@@ -25,6 +25,8 @@ import { ScreenNames } from '../../../constants/AppConstants';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 
 const GetTestedContainer = ({ navigation }: any) => {
+  console.log("rebder getetsted");
+  
   const insets = useSafeAreaInsets();
 
   const kitList = [

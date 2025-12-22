@@ -428,9 +428,9 @@ const YourProfileComponent = (props: any) => {
 
       {/* vwTestReports */}
       <FlatList
-        onEndReached={() => {
-          console.log('callend');
-        }}
+        // onEndReached={() => {
+        //   console.log('callend');
+        // }}
         onScroll={() => {
           props.setShowPopup(false);
         }}

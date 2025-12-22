@@ -22,7 +22,7 @@ export const constnatStyles = StyleSheet.create({
     paddingHorizontal: getWidth(16),
   },
   vwContainer: {
-    flexGrow: 1,
+    flex: 1,
     backgroundColor: Colors.whiteF2,
     paddingHorizontal: getWidth(16),
   },

@@ -323,7 +323,7 @@ const MainNavigation = props => {
           TransitionStack,
           ScreenNames.PROFILECONTAINER,
           { headerShown: true },
-          Transition.Presets.SlideFromBottom(),
+          Transition.Presets.ZoomIn(),
         )}
 
         {_addScreen(

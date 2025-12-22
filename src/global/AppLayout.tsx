@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import OrderStatusComponent from './OrderStatusComponent';
 import { Colors } from '../constants/Colors';
@@ -9,20 +9,24 @@ interface AppLayoutProps {
 }
 
 const AppLayout = ({ children, isOrderPlaced }: AppLayoutProps) => {
-  
+  const rendercChild = useCallback(() => {
+    console.log("render child");
+    
+    return <View style={[styles.content, styles.roundedTop]}>{children}</View>;
+  }, []);
+
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       {/* Header / Order Status */}
       {isOrderPlaced && (
-        <View >
-          <OrderStatusComponent orderStatus={isOrderPlaced}/>
+        <View>
+          <OrderStatusComponent orderStatus={isOrderPlaced} />
         </View>
       )}
 
       {/* Main Content */}
-      <View style={[styles.content, isOrderPlaced && styles.roundedTop]}>
-        {children}
-      </View>
+      {/* {rendercChild()} */}
+      <View style={[styles.content, styles.roundedTop]}>{children}</View>
     </View>
   );
 };
@@ -32,10 +36,11 @@ export default AppLayout;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black04, // Same color as OrderStatusComponent background
+    backgroundColor: Colors.black, // Same color as OrderStatusComponent background
   },
   content: {
     flex: 1,
+    backgroundColor:Colors.black,
     overflow: 'hidden',
   },
   roundedTop: {
