@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@bottom-tabs/react-navigation": "^1.0.2",
-    "@candlefinance/blur-view": "^0.5.3",
     "@d11/react-native-fast-image": "^8.12.0",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-community/blur": "^4.4.1",
@@ -55,7 +54,7 @@
     "react-native-screens": "^4.18.0",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^15.14.0",
-    "react-native-worklets": "^0.5.2",
+    "react-native-worklets": "^0.7.1",
     "zustand": "^5.0.8"
   },
   "devDependencies": {

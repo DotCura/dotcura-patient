@@ -98,6 +98,9 @@ android {
             keyPassword 'android'
         }
     }
+    configurations.all {
+    exclude group: "com.caverock", module: "androidsvg"
+}
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
