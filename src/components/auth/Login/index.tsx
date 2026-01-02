@@ -12,7 +12,6 @@ import { ValidationConstant } from '../../../constants/TextInputConstant';
 import AppHeader from '../../../global/Header';
 
 const LoginComponent = (props: any) => {
-  console.log("props.insets.bottom + getHeight(16)",props.insets.bottom + getHeight(16));
   
   return (
     <>

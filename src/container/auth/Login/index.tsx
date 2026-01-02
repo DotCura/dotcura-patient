@@ -6,6 +6,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { formatPhoneNumber } from '../../../constants/TextInputConstant';
 import { regex } from '../../../constants/Regex';
 import { ScreenNames } from '../../../constants/AppConstants';
+import { Platform } from 'react-native';
+import {
+  ApiEndPoints,
+  MethodType,
+  StatusCode,
+  toggleLoader,
+} from '../../../api/APIConstant';
+import { flashMessageSucess } from '../../../constants/GConstant';
+import { APIManager } from '../../../api/APIManager';
 
 const LoginContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -45,8 +54,8 @@ const LoginContainer = ({ navigation }: any) => {
       return;
     } else {
       console.log('login done');
-      navigation.navigate(ScreenNames.OTPCONTAINER);
-      
+      // navigation.navigate(ScreenNames.OTPCONTAINER);
+      await _loginApi();
     }
   };
 
@@ -70,6 +79,50 @@ const LoginContainer = ({ navigation }: any) => {
   useEffect(() => {
     header();
   }, []);
+
+  //=========================== API ========================================
+
+  const _loginApi = async () => {
+    try {
+      console.log('callLogin Api');
+      toggleLoader(true);
+      const plainText = phoneNumber.replace(/ /g, '');
+
+      const params = {
+        country_code: callingCode,
+        phone_number: plainText,
+        device_token: '0',
+        device_type: Platform.OS == 'ios' ? 'I' : 'A',
+      };
+
+      const callback = async (responseData: any) => {
+        console.log(responseData, 'reponseData of api');
+
+        toggleLoader(false);
+        if (responseData.code === StatusCode.NO_DATA_FOUND) {
+          // Handle error states
+        } else if (responseData.code === StatusCode.OTP_NOT_VERIFIED) {
+          console.log(responseData, 'resposneDate');
+
+          // flashMessageSucess(responseData.message);
+          // navigation.navigate(ScreenNames.OTPCONTAINER,{responseData:responseData.data} );
+        } else {
+          // Optional: other cases
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.AUTH.LOGIN,
+        callback,
+        params,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('Login error:', error);
+    }
+  };
 
   return (
     <LoginComponent

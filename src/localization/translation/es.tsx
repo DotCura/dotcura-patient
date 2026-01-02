@@ -519,4 +519,11 @@ export default {
   pleaseuploadfrontandbackside:
     'Por favor, carga fotos de tu documento por ambos lados (frontal y posterior)',
   errorMessageSurnameRequired: 'Por favor, ingrese el apellido',
+
+
+  // No internet connection
+  nointernetconnection:"Sin conexión a Internet",
+  youhavebeenloggedout:"Has sido cerrado de sesión porque tu cuenta inició sesión en otro dispositivo o fue desactivada por el administrador."
+  
+ 
 };

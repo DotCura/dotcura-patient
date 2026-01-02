@@ -11,6 +11,8 @@ import AppLayout from './src/global/AppLayout';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ZustandStores } from './src/store';
 import SplashScreen from 'react-native-splash-screen';
+import Loader from './src/api/Loader';
+import { setLoaderRef } from './src/api/APIConstant';
 
 LogBox.ignoreAllLogs();
 
@@ -38,6 +40,7 @@ const App = () => {
           <AppLayout isOrderPlaced={orderStatus}>
             <MainNavigation initialRouteName={initialRouteName} />
           </AppLayout>
+          <Loader ref={(ref) => setLoaderRef(ref)} />
           <FlashMessage ref={flashMessageRef} position="top" floating={true} />
         </I18nextProvider>
       </KeyboardProvider>
