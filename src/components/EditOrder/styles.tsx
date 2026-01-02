@@ -71,9 +71,9 @@ export const styles = StyleSheet.create({
     flex:1,
     backgroundColor:Colors.whiteF2,
     paddingHorizontal: getWidth(16),
-    paddingTop:getHeight(70),
-    alignItems: 'center',
-    // justifyContent: 'center',
+    // paddingTop:getHeight(70),
+    // alignItems: 'center',
+    justifyContent: 'center',
   },
   vwHeaderTitle: {},
   lblGoToCart: {

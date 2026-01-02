@@ -98,7 +98,7 @@ const InformationConasantComponent = (props: any) => {
         <View
           style={[
             styles.vwBottom,
-            { marginBottom: props.insets.bottom + getHeight(16) },
+            { marginBottom: props.insets.bottom + getHeight(10) },
           ]}
         >
           <CustomButton

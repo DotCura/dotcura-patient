@@ -367,9 +367,7 @@ const CheckoutComponent = (props: any) => {
               styles.vwBottomBtn,
               {
                 marginBottom:
-                  props.insets.bottom > 0
-                    ? props.insets.bottom
-                    : props.insets.bottom + getHeight(16),
+                   props.insets.bottom + getHeight(10),
               },
             ]}
           >
@@ -657,9 +655,7 @@ const CheckoutComponent = (props: any) => {
                   styles.vwGoToCart,
                   {
                     bottom:
-                      props.insets.bottom > 0
-                        ? props.insets.bottom
-                        : props.insets.bottom + getHeight(16),
+                       getHeight(30),
                   },
                 ]}
               >
@@ -765,9 +761,7 @@ const CheckoutComponent = (props: any) => {
                 styles.vwGoToCart,
                 {
                   bottom:
-                    props.insets.bottom > 0
-                      ? props.insets.bottom
-                      : props.insets.bottom + getHeight(16),
+                     props.insets.bottom + getHeight(10),
                 },
               ]}
               activeOpacity={activityOpacity}
@@ -886,9 +880,7 @@ const CheckoutComponent = (props: any) => {
                   styles.vwGoToCart,
                   {
                     bottom:
-                      props.insets.bottom > 0
-                        ? props.insets.bottom
-                        : props.insets.bottom + getHeight(16),
+                       getHeight(30),
                   },
                 ]}
               >
@@ -1135,9 +1127,7 @@ const CheckoutComponent = (props: any) => {
             <View
               style={{
                 marginBottom:
-                  props.insets.bottom > 0
-                    ? props.insets.bottom
-                    : props.insets.bottom + getHeight(16),
+                 props.insets.bottom + getHeight(16),
                 marginHorizontal: getWidth(16),
               }}
             >
@@ -1209,9 +1199,7 @@ const CheckoutComponent = (props: any) => {
                 style={{
                   marginTop: getHeight(123),
                   marginBottom:
-                    props.insets.bottom > 0
-                      ? props.insets.bottom
-                      : props.insets.bottom + getHeight(16),
+                    props.insets.bottom + getHeight(10),
                 }}
               >
                 <CustomButton

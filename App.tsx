@@ -1,4 +1,4 @@
-import { LogBox} from 'react-native';
+import { LogBox } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import MainNavigation from './src/navigators/stackNavigator';
 import { ScreenNames } from './src/constants/AppConstants';
@@ -16,18 +16,15 @@ LogBox.ignoreAllLogs();
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.CUSTOMSPLASHCONTAINER,
+    ScreenNames.RESULTOPENUPCONTAINER,
   );
-  console.log("Initial Route Name:", initialRouteName);
-  
+  console.log('Initial Route Name:', initialRouteName);
 
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 500);
   }, []);
-
-
 
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
 
@@ -38,9 +35,9 @@ const App = () => {
     <SafeAreaProvider>
       <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
         <I18nextProvider i18n={i18n}>
-            <AppLayout isOrderPlaced={orderStatus}>
-              <MainNavigation initialRouteName={initialRouteName} />
-            </AppLayout>
+          <AppLayout isOrderPlaced={orderStatus}>
+            <MainNavigation initialRouteName={initialRouteName} />
+          </AppLayout>
           <FlashMessage ref={flashMessageRef} position="top" floating={true} />
         </I18nextProvider>
       </KeyboardProvider>
@@ -49,5 +46,3 @@ const App = () => {
 };
 
 export default App;
-
-

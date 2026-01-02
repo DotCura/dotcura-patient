@@ -126,7 +126,7 @@ const OnBoardingComponent = (props: any) => {
         style={[
           styles.buttonContainer,
           {
-            marginBottom: props.insets.bottom + getHeight(16),
+            marginBottom: props.insets.bottom + getHeight(10),
           },
         ]}
       >

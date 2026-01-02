@@ -81,9 +81,7 @@ const AccessComponent = (props: any) => {
           style={[
             {
               marginBottom:
-                props.insets.bottom > 0
-                  ? props.insets.bottom
-                  : props.insets.bottom + getHeight(16),
+              props.insets.bottom + 10,
             },
           ]}
         >

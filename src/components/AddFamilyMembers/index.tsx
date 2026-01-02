@@ -372,9 +372,7 @@ const AddFamilyMemberComponent = (props: any) => {
         <View
         style={{
           paddingBottom:
-            props.insets.bottom > 0
-              ? props.insets.bottom
-              : props.insets.bottom + getHeight(30),
+             props.insets.bottom + getHeight(10),
           backgroundColor: Colors.whiteF2,
           gap: getHeight(8),
         }}

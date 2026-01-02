@@ -1,4 +1,3 @@
-
 import {
   Alert,
   Image,
@@ -33,6 +32,7 @@ import { ZustandStores } from '../../store';
 import { ScreenNames } from '../../constants/AppConstants';
 import RNRestart from 'react-native-restart';
 import { Colors } from '../../constants/Colors';
+import EditOrderComponent from '../../components/EditOrder';
 
 const EditOrderContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -508,6 +508,14 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     });
   };
 
+  const toggleAddKit = (id: string) => {
+    setKitData(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, isAdded: !item.isAdded } : item,
+      ),
+    );
+  };
+
   const renderKitData = ({ item, index }: any) => {
     const { backgroundColor, textColor } = getRandomTheme();
     return (
@@ -523,15 +531,24 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       >
         <View style={{ gap: getHeight(8) }}>
           <ImageBackground source={item.kitimages} style={styles.vwGrey}>
-            <TouchableOpacity
-              style={styles.btnPlusBlack}
-              activeOpacity={activityOpacity}
-            >
-              <Image source={images.imgPlusBlack} />
-            </TouchableOpacity>
-            {/* <TouchableOpacity style={styles.btnFav}>
-                <Image source={images.imgFavFilled} />
-              </TouchableOpacity> */}
+            {item.isAdded ? (
+              <TouchableOpacity
+                style={styles.btnPlusBlue}
+                activeOpacity={activityOpacity}
+                onPress={() => toggleAddKit(item.id)}
+              >
+                <Image source={images.imgBlueTickRight} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => toggleAddKit(item.id)}
+                style={styles.btnPlusBlack}
+                activeOpacity={activityOpacity}
+              >
+                <Image source={images.imgPlusBlack} />
+              </TouchableOpacity>
+            )}
+
             {item.status != null && (
               <View
                 style={{
@@ -686,6 +703,12 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     //   screen: ScreenNames.GETTESTEDCONTAINER,
     // });
     // goToTabScreen(navigation, ScreenNames.GETTESTEDCONTAINER);
+  };
+
+  const funGetTestedContainer = () => {
+    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+      screen: ScreenNames.GETTESTEDCONTAINER,
+    });
   };
 
   const funCloseIsModifyOrder = () => {
@@ -1305,7 +1328,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   }, []);
 
   return (
-    <CheckoutComponent
+    <EditOrderComponent
       navigation={navigation}
       handleDeleteTestKit={handleDeleteTestKit}
       handleNavigateAddAddress={handleNavigateAddAddress}
@@ -1421,6 +1444,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       checkupcount={checkupcount}
       analiticount={analiticount}
       pickerBg={pickerBg}
+      funGetTestedContainer={funGetTestedContainer}
     />
   );
 };

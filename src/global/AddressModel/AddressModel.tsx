@@ -159,10 +159,7 @@ const AddressModel = ({
           {/* Bottom Buttons */}
           <View
             style={{
-              marginBottom:
-                insets.bottom > 0
-                  ? insets.bottom
-                  : insets.bottom + getHeight(16),
+              marginBottom: insets.bottom + getHeight(10),
               marginHorizontal: getWidth(16),
             }}
           >

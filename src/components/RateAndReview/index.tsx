@@ -72,7 +72,7 @@ const RateAndReviewComponent = (props: any) => {
       <View
         style={{
           marginBottom:
-            insets.bottom > 0 ? insets.bottom : insets.bottom + getHeight(16),
+            insets.bottom + getHeight(10),
         }}
       >
         <CustomButton

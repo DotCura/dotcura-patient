@@ -103,9 +103,7 @@ const FavouritesComponent = (props: any) => {
                 style={{
                   paddingHorizontal: getWidth(16),
                   paddingBottom:
-                    props.insets.bottom > 0
-                      ? props.insets.bottom
-                      : props.insets.bottom + getHeight(16),
+                    props.insets.bottom + getHeight(16),
                 }}
               >
                 <CustomButton

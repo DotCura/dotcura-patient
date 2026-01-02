@@ -184,9 +184,7 @@ const AccountComponent = (props: any) => {
             style={{
               marginTop: getHeight(12),
               marginBottom:
-                props.insets.bottom > 0
-                  ? props.insets.bottom
-                  : props.insets.bottom + getHeight(50),
+                props.insets.bottom + getHeight(10),
             }}
           >
             {/* vwMedicazioni */}

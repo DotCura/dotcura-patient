@@ -6,6 +6,7 @@ import ModalTitleSubtitle from '../../../global/TitleSubtitleModel';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { Colors } from '../../../constants/Colors';
 import AppHeader from '../../../global/Header';
+import { isPlatformiOS } from '../../../constants/AppConstants';
 
 const NotificationSwitchComponent = (props: any) => {
   const SettingItem = ({ label, value, onToggle }: any) => (
@@ -19,6 +20,7 @@ const NotificationSwitchComponent = (props: any) => {
         onValueChange={onToggle}
         trackColor={{ false: Colors.grey7816, true: Colors.purple33 }}
         ios_backgroundColor="#ccc"
+        thumbColor={Colors.white}
       />
     </View>
   );

@@ -91,7 +91,7 @@ const OTPComponent = (props: any) => {
         style={[
           styles.vwBottom,
           {
-            marginBottom: props.insets.bottom + getHeight(16),
+            marginBottom: props.insets.bottom + getHeight(10),
             marginHorizontal: getWidth(16),
           },
         ]}

@@ -5,6 +5,18 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  btnPlusBlue: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: getHeight(36),
+    aspectRatio: 1,
+    borderRadius: 20,
+   
+    position: 'absolute',
+    left: getWidth(8),
+    top: getHeight(8),
+    elevation: 6,
+  },
   lablPrice: {
     color: Colors.gray0F,
     fontFamily: fontsfamily.gmedium,

@@ -202,11 +202,8 @@ const PaymentMethodComponent = (props: any) => {
       <View
         style={{
           marginHorizontal: getWidth(16),
-          marginTop:getHeight(20),
-          marginBottom:
-            props.insets.bottom > 0
-              ? props.insets.bottom
-              : props.insets.bottom + getHeight(16),
+          marginTop: getHeight(20),
+          marginBottom: props.insets.bottom + getHeight(16),
         }}
       >
         <CustomButton

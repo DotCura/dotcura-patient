@@ -48,7 +48,7 @@ const IntroComponent = (props: any) => {
         style={[
           styles.buttonContainer,
           {
-            paddingBottom: props.insets.bottom + getHeight(16),
+            paddingBottom: props.insets.bottom + getHeight(10),
           },
         ]}
       >

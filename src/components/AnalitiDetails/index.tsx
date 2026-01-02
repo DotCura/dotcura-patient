@@ -121,9 +121,7 @@ const AnalitiDetailsComponent = (props: any) => {
             styles.vwGoToCart,
             {
               bottom:
-                props.insets.bottom > 0
-                  ? props.insets.bottom
-                  : props.insets.bottom + getHeight(20),
+                getHeight(30),
             },
           ]}
         >
