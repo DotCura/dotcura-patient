@@ -64,6 +64,7 @@ const HomeComponent = (props: any) => {
   };
   const CARD_WIDTH = getWidth(280); // your card width
   const CARD_GAP = getWidth(8);
+  console.log("render")
   return (
     <View
       style={[

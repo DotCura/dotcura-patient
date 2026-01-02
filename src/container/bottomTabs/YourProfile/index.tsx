@@ -720,7 +720,6 @@ const YourProfileContainer = ({ navigation }: any) => {
           marginHorizontal: getWidth(16),
         }}
         onPress={() => {
-          
           navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
         }}
       >
@@ -760,19 +759,18 @@ const YourProfileContainer = ({ navigation }: any) => {
   const renderItemAppointment = ({ item, index }: any) => {
     const isExpanded = expandedWaiting[item.id]; // for waiting items
     const isExpandedBooked = expandedBooked[item.id]; // for booked items
-  
+
     const visibleTags = isExpanded ? item.tags : item.tags.slice(0, 2);
     const extraCount = item.tags.length - 2;
-  
-    const visibleTagsAppoint = isExpandedBooked ? item.tags : item.tags.slice(0, 2);
+
+    const visibleTagsAppoint = isExpandedBooked
+      ? item.tags
+      : item.tags.slice(0, 2);
     const extraCountAppoint = item.tags.length - 2;
     return (
       <>
         {item.status === 'waiting' && (
-          <TouchableOpacity
-            activeOpacity={1}
-            style={styles.btnwaitingview1}
-          >
+          <TouchableOpacity activeOpacity={1} style={styles.btnwaitingview1}>
             <View style={styles.btnwaitingview2}>
               <View style={styles.btnwaitingview3}>
                 <Image source={images.imgkit7} style={styles.imgkit} />
@@ -805,26 +803,26 @@ const YourProfileContainer = ({ navigation }: any) => {
                   </View>
                   {/* tags */}
                   <View style={styles.vwTags}>
-                  {visibleTags.map((tag: any, index: any) => (
-                    <View key={index} style={styles.vwBackTagWaiting}>
-                      <Text style={styles.lblTag}>{tag}</Text>
-                    </View>
-                  ))}
+                    {visibleTags.map((tag: any, index: any) => (
+                      <View key={index} style={styles.vwBackTagWaiting}>
+                        <Text style={styles.lblTag}>{tag}</Text>
+                      </View>
+                    ))}
 
-                  {!isExpanded && extraCount > 0 && (
-                    <TouchableOpacity
-                      style={styles.btnextracount}
-                      onPress={() =>
-                        setExpandedWaiting((prev: any) => ({
-                          ...prev,
-                          [item.id]: true,
-                        }))
-                      }
-                    >
-                      <Text style={styles.lblTag}>+{extraCount}</Text>
-                    </TouchableOpacity>
-                  )}
-                </View>
+                    {!isExpanded && extraCount > 0 && (
+                      <TouchableOpacity
+                        style={styles.btnextracount}
+                        onPress={() =>
+                          setExpandedWaiting((prev: any) => ({
+                            ...prev,
+                            [item.id]: true,
+                          }))
+                        }
+                      >
+                        <Text style={styles.lblTag}>+{extraCount}</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
                   {/* nurseView */}
                   <View style={styles.nurseview}>
                     <Image source={images.imgInjection} />
@@ -845,10 +843,7 @@ const YourProfileContainer = ({ navigation }: any) => {
           </TouchableOpacity>
         )}
         {item.status === 'booked' && (
-          <TouchableOpacity
-            activeOpacity={1}
-            style={styles.btnBooked}
-          >
+          <TouchableOpacity activeOpacity={1} style={styles.btnBooked}>
             <View
               style={{
                 flexDirection: 'row',
@@ -874,28 +869,30 @@ const YourProfileContainer = ({ navigation }: any) => {
                   {item.appointmentMessage}
                 </Text>
                 <View style={[styles.vwTags, { marginTop: getHeight(10) }]}>
-                {visibleTagsAppoint.map((tag: any, index: any) => (
-                  <View key={index} style={styles.vwTagBooked}>
-                    <Text style={[styles.lblTag, { color: Colors.white }]}>{tag}</Text>
-                  </View>
-                ))}
+                  {visibleTagsAppoint.map((tag: any, index: any) => (
+                    <View key={index} style={styles.vwTagBooked}>
+                      <Text style={[styles.lblTag, { color: Colors.white }]}>
+                        {tag}
+                      </Text>
+                    </View>
+                  ))}
 
-                {!isExpandedBooked && extraCountAppoint > 0 && (
-                  <TouchableOpacity
-                    style={styles.btnBookedExtraCount}
-                    onPress={() =>
-                      setExpandedBooked((prev: any) => ({
-                        ...prev,
-                        [item.id]: true,
-                      }))
-                    }
-                  >
-                    <Text style={[styles.lblTag, { color: Colors.white }]}>
-                      +{extraCountAppoint}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              </View>
+                  {!isExpandedBooked && extraCountAppoint > 0 && (
+                    <TouchableOpacity
+                      style={styles.btnBookedExtraCount}
+                      onPress={() =>
+                        setExpandedBooked((prev: any) => ({
+                          ...prev,
+                          [item.id]: true,
+                        }))
+                      }
+                    >
+                      <Text style={[styles.lblTag, { color: Colors.white }]}>
+                        +{extraCountAppoint}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
               </View>
             </View>
             <ProgressBar
@@ -920,7 +917,6 @@ const YourProfileContainer = ({ navigation }: any) => {
 
   const hanldeNavigateKitAnalysis = () => {
     navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
-   
   };
 
   const handleNavigateHistoricalAnlysis = () => {
@@ -930,10 +926,7 @@ const YourProfileContainer = ({ navigation }: any) => {
     });
   };
   const handleNavigateAnalitiTestDetails = () => {
-    // navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
-    navigation.navigate('TransitionFlow', {
-      screen: ScreenNames.ANALITITESTDETAILSCONTAINER,
-    });
+    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
   };
 
   return (

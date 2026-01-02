@@ -1,4 +1,4 @@
-import { LogBox, StyleSheet, Text, View } from 'react-native';
+import { LogBox} from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import MainNavigation from './src/navigators/stackNavigator';
 import { ScreenNames } from './src/constants/AppConstants';
@@ -10,10 +10,7 @@ import { setFlashMessageRef } from './src/constants/GConstant';
 import AppLayout from './src/global/AppLayout';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ZustandStores } from './src/store';
-import { MmkvManager } from './src/constants/utils/MmkvManager';
 import SplashScreen from 'react-native-splash-screen';
-import { Colors } from './src/constants/Colors';
-import OrderStatusComponent from './src/global/OrderStatusComponent';
 
 LogBox.ignoreAllLogs();
 
@@ -30,26 +27,7 @@ const App = () => {
     }, 500);
   }, []);
 
-  // useEffect(() => {
-  //   MmkvManager.getData(
-  //     MmkvManager.Keys.isOnBoardingVisisted,
-  //     isOnBoardingVisited => {
-  //       if (isOnBoardingVisited) {
-  //         // Onboarding visited → check login
-  //         MmkvManager.getData(MmkvManager.Keys.isLoggedIn, isLoginVisited => {
-  //           if (isLoginVisited) {
-  //             setInitialRouteName(ScreenNames.BOTTOMTABNAVIGATION); // Logged in
-  //           } else {
-  //             setInitialRouteName(ScreenNames.WELCOMECONTAINER); // Not logged in
-  //           }
-  //         });
-  //       } else {
-  //         setInitialRouteName(ScreenNames.INTROCONTAINER); // Onboarding not visited
-  //       }
-  //     },
 
-  //   );
-  // }, []);
 
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
 
@@ -58,7 +36,7 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <KeyboardProvider statusBarTranslucent>
+      <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
         <I18nextProvider i18n={i18n}>
             <AppLayout isOrderPlaced={orderStatus}>
               <MainNavigation initialRouteName={initialRouteName} />

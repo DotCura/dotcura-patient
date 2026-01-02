@@ -47,10 +47,10 @@ const OnBoardingComponent = (props: any) => {
                 style={[
                   styles.indicator,
                   index === props.currentIndex
-                    ? styles.activeIndicator 
+                    ? styles.activeIndicator
                     : index < props.currentIndex
                     ? styles.completedIndicator
-                    : styles.inactiveIndicator, 
+                    : styles.inactiveIndicator,
                 ]}
               />
             </TouchableOpacity>
@@ -126,10 +126,7 @@ const OnBoardingComponent = (props: any) => {
         style={[
           styles.buttonContainer,
           {
-            paddingBottom:
-              props.insets.bottom > 0
-                ? props.insets.bottom
-                : props.insets.bottom + getHeight(16),
+            marginBottom: props.insets.bottom + getHeight(16),
           },
         ]}
       >

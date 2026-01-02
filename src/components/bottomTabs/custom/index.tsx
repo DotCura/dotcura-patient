@@ -338,7 +338,7 @@ const CustomBottomTabsComponent = (props: any) => {
   return (
     <>
       {/* 🔹 PERFECT MASKED BLUR (NO TOP LINE) */}
-      {isFocused && (
+      {/* {isFocused && (
         <MaskedView
           pointerEvents="none"
           style={{
@@ -363,15 +363,14 @@ const CustomBottomTabsComponent = (props: any) => {
             reducedTransparencyFallbackColor="transparent"
           />
         </MaskedView>
-      )}
+      )} */}
 
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           position: 'absolute',
-          bottom:
-            insets.bottom > 0 ? insets.bottom : insets.bottom + getHeight(25),
+          bottom: getHeight(35),
           alignSelf: 'center',
         }}
       >

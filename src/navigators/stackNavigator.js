@@ -392,13 +392,16 @@ const MainNavigation = props => {
         {_addScreen(NativeStack, ScreenNames.ORDERHISTORYCONTAINER, {
           headerShown: false,
         })}
-         {_addScreen(NativeStack, ScreenNames.KITANALYSISCONTAINER, {
+        {_addScreen(NativeStack, ScreenNames.KITANALYSISCONTAINER, {
           headerShown: false,
         })}
         {_addScreen(NativeStack, ScreenNames.NOTIFICATIONLISTCONTAINER, {
           headerShown: false,
         })}
         {_addScreen(NativeStack, ScreenNames.RATEANDREVIEWCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ANALITITESTDETAILSCONTAINER, {
           headerShown: false,
         })}
 
