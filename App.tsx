@@ -16,7 +16,7 @@ LogBox.ignoreAllLogs();
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.RESULTOPENUPCONTAINER,
+    ScreenNames.CUSTOMSPLASHCONTAINER,
   );
   console.log('Initial Route Name:', initialRouteName);
 

@@ -338,7 +338,7 @@ const CustomBottomTabsComponent = (props: any) => {
   return (
     <>
       {/* 🔹 PERFECT MASKED BLUR (NO TOP LINE) */}
-      {/* {isFocused && (
+      {isFocused && (
         <MaskedView
           pointerEvents="none"
           style={{
@@ -363,7 +363,7 @@ const CustomBottomTabsComponent = (props: any) => {
             reducedTransparencyFallbackColor="transparent"
           />
         </MaskedView>
-      )} */}
+      )}
 
       <View
         style={{
