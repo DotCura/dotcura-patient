@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.whiteF2,
     paddingHorizontal: getWidth(16),
     justifyContent: 'center',
-    alignItems: 'center',
   },
 
   lblMainTitle: {

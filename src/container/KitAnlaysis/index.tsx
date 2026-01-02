@@ -219,10 +219,8 @@ const KitAnalysisContainer = ({ navigation }: any) => {
   }
 
   const handleNavigationTestDetails= () => {
-    // navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
-    navigation.navigate('TransitionFlow', {
-      screen: ScreenNames.TESTDETAILSCONTAINER,
-    });
+    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+    
   };
 
   return (

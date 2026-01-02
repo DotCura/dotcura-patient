@@ -19,8 +19,10 @@ LogBox.ignoreAllLogs();
 
 const App = () => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.INTROCONTAINER,
+    ScreenNames.CUSTOMSPLASHCONTAINER,
   );
+  console.log("Initial Route Name:", initialRouteName);
+  
 
   useEffect(() => {
     setTimeout(() => {
@@ -28,26 +30,26 @@ const App = () => {
     }, 500);
   }, []);
 
-  useEffect(() => {
-    MmkvManager.getData(
-      MmkvManager.Keys.isOnBoardingVisisted,
-      isOnBoardingVisited => {
-        if (isOnBoardingVisited) {
-          // Onboarding visited → check login
-          MmkvManager.getData(MmkvManager.Keys.isLoggedIn, isLoginVisited => {
-            if (isLoginVisited) {
-              setInitialRouteName(ScreenNames.BOTTOMTABNAVIGATION); // Logged in
-            } else {
-              setInitialRouteName(ScreenNames.WELCOMECONTAINER); // Not logged in
-            }
-          });
-        } else {
-          setInitialRouteName(ScreenNames.INTROCONTAINER); // Onboarding not visited
-        }
-      },
+  // useEffect(() => {
+  //   MmkvManager.getData(
+  //     MmkvManager.Keys.isOnBoardingVisisted,
+  //     isOnBoardingVisited => {
+  //       if (isOnBoardingVisited) {
+  //         // Onboarding visited → check login
+  //         MmkvManager.getData(MmkvManager.Keys.isLoggedIn, isLoginVisited => {
+  //           if (isLoginVisited) {
+  //             setInitialRouteName(ScreenNames.BOTTOMTABNAVIGATION); // Logged in
+  //           } else {
+  //             setInitialRouteName(ScreenNames.WELCOMECONTAINER); // Not logged in
+  //           }
+  //         });
+  //       } else {
+  //         setInitialRouteName(ScreenNames.INTROCONTAINER); // Onboarding not visited
+  //       }
+  //     },
 
-    );
-  }, []);
+  //   );
+  // }, []);
 
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
 
@@ -58,11 +60,9 @@ const App = () => {
     <SafeAreaProvider>
       <KeyboardProvider statusBarTranslucent>
         <I18nextProvider i18n={i18n}>
-          <View style={{ flex: 1, backgroundColor: Colors.whiteF2 }}>
             <AppLayout isOrderPlaced={orderStatus}>
               <MainNavigation initialRouteName={initialRouteName} />
             </AppLayout>
-          </View>
           <FlashMessage ref={flashMessageRef} position="top" floating={true} />
         </I18nextProvider>
       </KeyboardProvider>

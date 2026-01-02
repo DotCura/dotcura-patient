@@ -48,6 +48,18 @@ export const styles = StyleSheet.create({
     top: getHeight(8),
     elevation: 6,
   },
+  btnPlusBlue: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: getHeight(36),
+    aspectRatio: 1,
+    borderRadius: 20,
+   
+    position: 'absolute',
+    left: getWidth(8),
+    top: getHeight(8),
+    elevation: 6,
+  },
   btnFav: {
     position: 'absolute',
     right: getWidth(16),

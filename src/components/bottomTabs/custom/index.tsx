@@ -313,7 +313,7 @@ const CustomBottomTabsComponent = (props: any) => {
       mapTranslateX.value = withTiming(0, { duration: 400 });
       mapOpacity.value = withTiming(1, { duration: 600 });
       // Set max width large enough to fit content (e.g. 150-200)
-      mapMaxWidth.value = withTiming(getWidth(200), { duration: 600 });
+      mapMaxWidth.value = withTiming(getWidth(450), { duration: 600 });
       mapMarginLeft.value = withTiming(getWidth(8), { duration: 600 });
     } else {
       // === HIDE (Collapse) ===
@@ -337,7 +337,7 @@ const CustomBottomTabsComponent = (props: any) => {
 
   return (
     <>
-       {/* 🔹 PERFECT MASKED BLUR (NO TOP LINE) */}
+      {/* 🔹 PERFECT MASKED BLUR (NO TOP LINE) */}
       {isFocused && (
         <MaskedView
           pointerEvents="none"
@@ -363,14 +363,15 @@ const CustomBottomTabsComponent = (props: any) => {
             reducedTransparencyFallbackColor="transparent"
           />
         </MaskedView>
-      )} 
+      )}
 
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           position: 'absolute',
-          bottom: 0,
+          bottom:
+            insets.bottom > 0 ? insets.bottom : insets.bottom + getHeight(25),
           alignSelf: 'center',
         }}
       >
@@ -378,12 +379,12 @@ const CustomBottomTabsComponent = (props: any) => {
         <View
           style={[
             styles.vwTabs,
-            {
-              marginBottom:
-                insets.bottom > 0
-                  ? insets.bottom + getHeight(5)
-                  : insets.bottom + getHeight(10),
-            },
+            // {
+            //   marginBottom:
+            //     insets.bottom > 0
+            //       ? insets.bottom
+            //       : insets.bottom + 25,
+            // },
           ]}
         >
           {/* 🔵 Animated Sliding Background */}
@@ -415,17 +416,11 @@ const CustomBottomTabsComponent = (props: any) => {
           <TouchableOpacity
             activeOpacity={0.9}
             style={{
-              // paddingVertical: getHeight(8),
-              // paddingHorizontal: getWidth(18),
               width: getWidth(80),
               height: getHeight(62),
               backgroundColor: Colors.white,
               alignItems: 'center',
               alignSelf: 'center',
-              marginBottom:
-                insets.bottom > 0
-                  ? insets.bottom + getHeight(5)
-                  : insets.bottom + getHeight(10),
               marginLeft: getWidth(8),
               shadowColor: '#000',
               shadowOffset: { width: 0, height: 4 },

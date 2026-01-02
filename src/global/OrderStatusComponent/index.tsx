@@ -507,22 +507,22 @@ const OrderStatusComponent = (props: any) => {
     if (!showBigView) {
       // Expanding
       setShowBigView(true);
-      rotateValue.value = withSpring(1, { damping: 15, stiffness: 150 });
+      rotateValue.value = withSpring(1, { damping: 10, stiffness: 150 });
       animatedHeight.value = withSpring(expandedHeight.value, {
         damping: 80,
         stiffness: 120,
       });
-      smallViewOpacity.value = withTiming(0, { duration: 500 });
-      bigViewOpacity.value = withTiming(1, { duration: 500 });
+      smallViewOpacity.value = withTiming(0, { duration: 100 });
+      bigViewOpacity.value = withTiming(1, { duration: 100 });
     } else {
       // Collapsing
-      rotateValue.value = withSpring(0, { damping: 15, stiffness: 150 });
+      rotateValue.value = withSpring(0, { damping: 10, stiffness: 150 });
       animatedHeight.value = withSpring(collapsedHeight.value, {
         damping: 80,
         stiffness: 120,
       });
-      bigViewOpacity.value = withTiming(0, { duration: 500 });
-      smallViewOpacity.value = withTiming(1, { duration: 500 }, () => {
+      bigViewOpacity.value = withTiming(0, { duration: 100 });
+      smallViewOpacity.value = withTiming(1, { duration: 100 }, () => {
         runOnJS(setShowBigView)(false);
       });
     }

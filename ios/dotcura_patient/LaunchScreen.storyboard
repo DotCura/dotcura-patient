@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,17 +12,28 @@
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <imageView key="view" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash" id="Fwl-Mc-B14">
+                    <view key="view" contentMode="scaleToFill" id="mGI-3r-4Lj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JKi-qK-RFQ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.86274509803921573" green="0.90980392156862744" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Bnu-XV-Vt2"/>
+                        <color key="backgroundColor" red="0.86274509803921573" green="0.90980392156862744" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JKi-qK-RFQ" firstAttribute="top" secondItem="mGI-3r-4Lj" secondAttribute="top" id="VNy-1d-WRx"/>
+                            <constraint firstItem="JKi-qK-RFQ" firstAttribute="leading" secondItem="mGI-3r-4Lj" secondAttribute="leading" id="fo3-Ap-c4c"/>
+                            <constraint firstAttribute="bottom" secondItem="JKi-qK-RFQ" secondAttribute="bottom" id="kJz-sV-9l6"/>
+                            <constraint firstAttribute="trailing" secondItem="JKi-qK-RFQ" secondAttribute="trailing" id="zge-Qu-YBt"/>
+                        </constraints>
+                    </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52.173913043478265" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Splash" width="393" height="852"/>
-    </resources>
 </document>

@@ -15,21 +15,22 @@ import { Colors } from '../../constants/Colors';
 import { getHeight } from '../../constants/utils/Dimensions';
 import { activityOpacity, currency } from '../../constants/GConstant';
 import AppHeader from '../../global/Header';
+import PressScale from '../../global/PressScale';
 
 const AnalitiDetailsComponent = (props: any) => {
   return (
     <>
-    <AppHeader
-          startBtnOnPress={() => {
-            console.log('hy');
-            props.navigation.goBack();
-          }}
-          dontShowStartBtn={false}
-          centerTitle={getTranslation('analititextdetails')}
-          showTitle={true}
-          showSubTitle={false}
-          showEndBtn={false}
-        />
+      <AppHeader
+        startBtnOnPress={() => {
+          console.log('hy');
+          props.navigation.goBack();
+        }}
+        dontShowStartBtn={false}
+        centerTitle={getTranslation('analititextdetails')}
+        showTitle={true}
+        showSubTitle={false}
+        showEndBtn={false}
+      />
       <ScrollView
         contentContainerStyle={[constnatStyles.keyboardContainer]}
         keyboardShouldPersistTaps="handled"
@@ -114,31 +115,31 @@ const AnalitiDetailsComponent = (props: any) => {
       </ScrollView>
 
       {/* vwGotoCart */}
-      <TouchableOpacity
-        style={[
-          styles.vwGoToCart,
-          {
-            bottom:
-              props.insets.bottom > 0
-                ? props.insets.bottom
-                : props.insets.bottom + getHeight(20),
-          },
-        ]}
-        activeOpacity={activityOpacity}
-        onPress={props.handleNavigateCheckout}
-      >
-        <View style={styles.vwCartImage}>
-          <Image source={images.imgCartHome} tintColor={Colors.white} />
-          <Text style={styles.lblGoToCart}>
-            {getTranslation('addtoorder')} ({props.selectedTests.length})
-          </Text>
+      <PressScale onPress={props.handleNavigateCheckout}>
+        <View
+          style={[
+            styles.vwGoToCart,
+            {
+              bottom:
+                props.insets.bottom > 0
+                  ? props.insets.bottom
+                  : props.insets.bottom + getHeight(20),
+            },
+          ]}
+        >
+          <View style={styles.vwCartImage}>
+            <Image source={images.imgCartHome} tintColor={Colors.white} />
+            <Text style={styles.lblGoToCart}>
+              {getTranslation('addtoorder')} ({props.selectedTests.length})
+            </Text>
+          </View>
+          <View style={styles.vwPrice}>
+            <Text style={styles.totalprice}>
+              {currency} {props.totalPriceanaliti.toFixed(2)}
+            </Text>
+          </View>
         </View>
-        <View style={styles.vwPrice}>
-          <Text style={styles.totalprice}>
-            {currency} {props.totalPriceanaliti.toFixed(2)}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      </PressScale>
     </>
   );
 };

@@ -17,18 +17,17 @@ import CustomButton from '../../global/Buttons';
 import { Colors } from '../../constants/Colors';
 import { fontsfamily } from '../../constants/FontFamily';
 import AppHeader from '../../global/Header';
+import PressScale from '../../global/PressScale';
 
 const AddFamilyComponent = (props: any) => {
   const renderListFooter = () => {
     return (
-      <TouchableOpacity
-        style={styles.addBtn}
-        activeOpacity={activityOpacity}
-        onPress={props.handleNavigateFamilyMember}
-      >
-        <Image source={images.imgPlusDark} />
-        <Text style={styles.addText}>{getTranslation("addfamilybtn")}</Text>
-      </TouchableOpacity>
+      <PressScale onPress={props.handleNavigateFamilyMember}>
+        <View style={styles.addBtn}>
+          <Image source={images.imgPlusDark} />
+          <Text style={styles.addText}>{getTranslation('addfamilybtn')}</Text>
+        </View>
+      </PressScale>
     );
   };
   return (
@@ -40,18 +39,18 @@ const AddFamilyComponent = (props: any) => {
         },
       ]}
     >
-       <AppHeader
-          startBtnOnPress={() => {
-            console.log('hy');
-            // navigation.navigate(ScreenNames.PROFILECONTAINER);
-            props.navigation.goBack();
-          }}
-          dontShowStartBtn={false}
-          showTitle={true}
-          showSubTitle={false}
-          showEndBtn={false}
-          centerTitle={getTranslation('family')}
-        />
+      <AppHeader
+        startBtnOnPress={() => {
+          console.log('hy');
+          // navigation.navigate(ScreenNames.PROFILECONTAINER);
+          props.navigation.goBack();
+        }}
+        dontShowStartBtn={false}
+        showTitle={true}
+        showSubTitle={false}
+        showEndBtn={false}
+        centerTitle={getTranslation('family')}
+      />
       {/* vwEmpty */}
       {props.showEmpty && (
         <View style={styles.vwEmpty}>

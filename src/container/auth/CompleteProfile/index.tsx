@@ -13,10 +13,7 @@ import { Keyboard } from 'react-native';
 const CompleteProfileContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
-  const [headerArray, setHeaderArray] = useState([
-    { id: 1 },
-    { id: 2 },
-  ]);
+  const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
   const genders = [
     { id: 1, label: getTranslation('gender1') },
     { id: 2, label: getTranslation('gender2') },

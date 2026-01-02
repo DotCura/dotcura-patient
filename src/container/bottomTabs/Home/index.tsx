@@ -628,10 +628,8 @@ const HomeContainer = ({ navigation }: any) => {
   };
 
   const handleNavigateTestDetailsScreen = () => {
-    // navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
-    navigation.navigate('TransitionFlow', {
-      screen: ScreenNames.TESTDETAILSCONTAINER,
-    });
+    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+    
   };
 
   const handleNavigateYourProfileScreen = () => {

@@ -327,10 +327,8 @@ const HistoricalAnalysisContainer = ({ navigation }: any) => {
         activeOpacity={activityOpacity}
         style={styles.btnOrderHistory}
         onPress={() => {
-          // navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
-          navigation.navigate('TransitionFlow', {
-            screen: ScreenNames.KITANALYSISCONTAINER,
-          });
+          navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+         
         }}
       >
         {/* orderDetailsView */}

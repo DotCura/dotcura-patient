@@ -1,8 +1,8 @@
+
 import {
   FlatList,
   Image,
   ImageBackground,
-  Modal,
   Pressable,
   Text,
   TextInput,
@@ -28,6 +28,10 @@ import TitleSubtitle from '../../global/TitleSubtitle';
 import { fontSize } from '../../constants/FontSizes';
 import GooglePlacesTextInput from 'react-native-google-places-textinput';
 import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
+import Modal from 'react-native-modal';
+import LinearGradient from 'react-native-linear-gradient';
+import MaskedView from '@react-native-masked-view/masked-view';
+import { BlurView } from '@react-native-community/blur';
 
 const EditOrderComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
@@ -67,35 +71,37 @@ const EditOrderComponent = (props: any) => {
   };
   return (
     <>
-     <View style={{}}>
-          <View
-            style={[
-              styles.vwMain,
-              {
-                paddingTop: props.orderStatus == '' ? props.insets.top + 10 : getHeight(25),
-              },
-            ]}
-          >
-            <View style={styles.vwHeaderLeft}>
-              <TouchableOpacity
-                activeOpacity={activityOpacity}
-                style={styles.btnBack}
-                onPress={() => {
-                  props.navigation.goBack();
-                }}
-              >
-                <Image source={images.imgLeftArrow} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.vwHelp}
-                activeOpacity={activityOpacity}
-              >
-                <Image source={images.imgHelp} />
-                <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
-              </TouchableOpacity>
-            </View>
+      <View style={{}}>
+        <View
+          style={[
+            styles.vwMain,
+            {
+              paddingTop:
+                props.orderStatus == '' ? props.insets.top + 10 : getHeight(25),
+              paddingHorizontal: getWidth(16),
+            },
+          ]}
+        >
+          <View style={styles.vwHeaderLeft}>
+            <TouchableOpacity
+              activeOpacity={activityOpacity}
+              style={styles.btnBack}
+              onPress={() => {
+                props.navigation.goBack();
+              }}
+            >
+              <Image source={images.imgLeftArrow} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.vwHelp}
+              activeOpacity={activityOpacity}
+            >
+              <Image source={images.imgHelp} />
+              <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
+            </TouchableOpacity>
           </View>
         </View>
+      </View>
       {props.testkitsData.length === 0 ? (
         <View style={styles.emptyview}>
           <Image source={images.imgMicroscope} />
@@ -382,24 +388,19 @@ const EditOrderComponent = (props: any) => {
       )}
 
       {/* datetimeslotmodel */}
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={props.showPicker}
-        statusBarTranslucent={true}
-        onRequestClose={() => props.setShowPicker(false)}
-      >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: '#00000060',
-          }}
-        >
-          <Pressable
-            style={{ flex: 1 }}
-            onPress={() => props.setShowPicker(false)}
-          />
 
+      <Modal
+        statusBarTranslucent
+        isVisible={props.showPicker}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0.6}
+        useNativeDriverForBackdrop={true}
+        onBackdropPress={() => props.setShowPicker(false)}
+        onBackButtonPress={() => props.setShowPicker(false)}
+        style={{ margin: 0 }} // important: full screen
+      >
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View
             style={{
               backgroundColor: Colors.whiteF2,
@@ -410,11 +411,11 @@ const EditOrderComponent = (props: any) => {
           >
             {/* Header */}
             <View style={styles.vwHeadingLine} />
-            <View style={[styles.vwMainModelHeader]}>
+
+            <View style={styles.vwMainModelHeader}>
               <TouchableOpacity
                 style={styles.btnBack}
-                // onPress={props.startBtnOnPress}
-                onPress={() => props.setShowPicker(false)} // close modal
+                onPress={() => props.setShowPicker(false)}
               >
                 <Image source={images.imgLeftArrow} />
               </TouchableOpacity>
@@ -423,9 +424,7 @@ const EditOrderComponent = (props: any) => {
                 <Text
                   style={[
                     constnatStyles.lblHeaderTitle,
-                    {
-                      letterSpacing: 0.2,
-                    },
+                    { letterSpacing: 0.2 },
                   ]}
                   numberOfLines={2}
                 >
@@ -433,6 +432,7 @@ const EditOrderComponent = (props: any) => {
                 </Text>
               </View>
 
+              {/* Spacer for alignment */}
               <Image source={images.imgDelete} style={{ opacity: 0 }} />
             </View>
 
@@ -443,6 +443,7 @@ const EditOrderComponent = (props: any) => {
               onTimeChange={props.setSelectedTime}
               showPicker={props.showPicker}
             />
+
             <View
               style={{
                 marginTop: getHeight(32),
@@ -460,27 +461,22 @@ const EditOrderComponent = (props: any) => {
       </Modal>
 
       {/* editmodifyordermodel */}
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={props.showIsModifyOrder}
-        statusBarTranslucent={true}
-        onRequestClose={props.funCloseIsModifyOrder}
-      >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: '#00000060',
-          }}
-        >
-          <Pressable
-            style={{ flex: 1 }}
-            onPress={props.funCloseIsModifyOrder}
-          />
 
+      <Modal
+        statusBarTranslucent
+        useNativeDriverForBackdrop={true}
+        isVisible={props.showIsModifyOrder}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0.6}
+        onBackdropPress={props.funCloseIsModifyOrder}
+        onBackButtonPress={props.funCloseIsModifyOrder}
+        style={{ margin: 0 }} // important for full-screen bottom modal
+      >
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View
             style={{
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.whiteF2,
               borderTopLeftRadius: getHeight(20),
               borderTopRightRadius: getHeight(20),
               maxHeight: '92%',
@@ -488,10 +484,11 @@ const EditOrderComponent = (props: any) => {
           >
             {/* Header */}
             <View style={styles.vwHeadingLine} />
-            <View style={[styles.vwMainModelHeader]}>
+
+            <View style={styles.vwMainModelHeader}>
               <TouchableOpacity
                 style={styles.btnBack}
-                onPress={props.funCloseIsModifyOrder} // close modal
+                onPress={props.funCloseIsModifyOrder}
               >
                 <Image source={images.imgLeftArrow} />
               </TouchableOpacity>
@@ -500,9 +497,7 @@ const EditOrderComponent = (props: any) => {
                 <Text
                   style={[
                     constnatStyles.lblHeaderTitle,
-                    {
-                      letterSpacing: 0.2,
-                    },
+                    { letterSpacing: 0.2 },
                   ]}
                   numberOfLines={2}
                 >
@@ -510,59 +505,152 @@ const EditOrderComponent = (props: any) => {
                 </Text>
               </View>
 
+              {/* Spacer */}
               <Image source={images.imgDelete} style={{ opacity: 0 }} />
             </View>
 
-            {/* vwinthecart */}
-            <View style={{ marginTop: getHeight(30) }}>
-              <Text style={styles.lblInTheCart}>
-                {getTranslation('inthecart')}
-              </Text>
+            {/* Tabs */}
+            <View style={styles.vwCheckupAnaliti}>
+              <TouchableOpacity
+                activeOpacity={activityOpacity}
+                onPress={() => props.setSelectedTab('checkup')}
+                style={[
+                  styles.btncheckup,
+                  {
+                    backgroundColor:
+                      props.selectedTab === 'checkup'
+                        ? Colors.blue002
+                        : Colors.grayE7,
+                  },
+                ]}
+              >
+                <Image
+                  source={images.imgCartHome}
+                  style={{
+                    resizeMode: 'contain',
+                    tintColor:
+                      props.selectedTab === 'checkup'
+                        ? Colors.white
+                        : Colors.blue002,
+                  }}
+                />
+                <Text
+                  style={[
+                    styles.lblCheckup,
+                    {
+                      fontFamily: fontsfamily.gmedium,
+                      color:
+                        props.selectedTab === 'checkup'
+                          ? Colors.white
+                          : Colors.blue002,
+                    },
+                  ]}
+                >
+                  {getTranslation('checkuptext')} ({props.checkupcount})
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                activeOpacity={activityOpacity}
+                onPress={() => props.setSelectedTab('analiti')}
+                style={[
+                  styles.btnAnlaiti,
+                  {
+                    backgroundColor:
+                      props.selectedTab === 'analiti'
+                        ? Colors.blue002
+                        : Colors.grayE7,
+                  },
+                ]}
+              >
+                <Image
+                  source={images.imgCartHome}
+                  style={{
+                    resizeMode: 'contain',
+                    tintColor:
+                      props.selectedTab === 'analiti'
+                        ? Colors.white
+                        : Colors.blue002,
+                  }}
+                />
+                <Text
+                  style={[
+                    styles.lblAnaliti,
+                    {
+                      fontFamily: fontsfamily.gmedium,
+                      color:
+                        props.selectedTab === 'analiti'
+                          ? Colors.white
+                          : Colors.blue002,
+                    },
+                  ]}
+                >
+                  {getTranslation('analitiheadertext')} ({props.checkupcount})
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Content */}
+            {props.selectedTab === 'checkup' ? (
               <FlatList
-                onEndReached={() => {
-                  // console.log('callend');
-                }}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={props.kitDataInCart}
-                renderItem={props.renderKitDataInCart}
+                key="checkup-2"
+                numColumns={2}
+                data={props.kitData}
+                renderItem={props.renderKitData}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={item => item.id.toString()}
                 contentContainerStyle={{
-                  marginLeft: getWidth(16),
-                  marginRight: getWidth(16),
+                  gap: getWidth(12),
+                  marginTop: getHeight(20),
                   alignSelf: 'center',
+                  paddingBottom: getHeight(150),
                 }}
               />
-            </View>
-            {/* vwAddMore */}
-            <View style={{ marginTop: getHeight(42) }}>
-              <Text style={styles.lblInTheCart}>
-                {getTranslation('addmoretext')}
-              </Text>
-              <View>
-                <FlatList
-                  onEndReached={() => {
-                    // console.log('callend');
-                  }}
-                  numColumns={2}
-                  data={props.kitDataAddMore}
-                  renderItem={props.renderKitDataAddMore}
-                  showsVerticalScrollIndicator={false}
-                  keyExtractor={item => item.id.toString()}
-                  columnWrapperStyle={{
-                    gap: getWidth(12),
-                  }}
-                  contentContainerStyle={{
-                    gap: getWidth(12),
-                    alignSelf: 'center',
-                    paddingBottom: 550,
-                  }}
-                />
-              </View>
-            </View>
+            ) : (
+              <FlatList
+                key="analiti-1"
+                numColumns={1}
+                data={props.analitiData}
+                renderItem={props.renderAnalitiData}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={item => item.id.toString()}
+                contentContainerStyle={{
+                  gap: getWidth(12),
+                  marginTop: getHeight(20),
+                  paddingBottom: getHeight(150),
+                }}
+              />
+            )}
 
-            {/* vwGotoCart */}
+            {/* 🔹 BLUR BEHIND GO TO CART */}
+            <MaskedView
+              pointerEvents="none"
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                height: 110,
+              }}
+              maskElement={
+                <LinearGradient
+                  colors={[
+                    'transparent', // ❌ no blur at top
+                    'black', // ✅ full blur at bottom
+                  ]}
+                  locations={[0.25, 1]}
+                  style={{ flex: 1 }}
+                />
+              }
+            >
+              <BlurView
+                style={{ flex: 1 }}
+                blurType="light"
+                blurAmount={14}
+                reducedTransparencyFallbackColor="transparent"
+              />
+            </MaskedView>
+
+            {/* Go To Cart */}
             <TouchableOpacity
               style={[
                 styles.vwGoToCart,
@@ -582,6 +670,7 @@ const EditOrderComponent = (props: any) => {
                   {getTranslation('gotocart')}
                 </Text>
               </View>
+
               <View style={styles.vwPrice}>
                 <Text style={styles.totalprice}>
                   {currency}
@@ -594,7 +683,7 @@ const EditOrderComponent = (props: any) => {
       </Modal>
 
       {/* editkitTestDetails */}
-      <Modal
+      {/* <Modal
         transparent={true}
         animationType="slide"
         visible={props.showIsKitTestDetails}
@@ -618,7 +707,7 @@ const EditOrderComponent = (props: any) => {
               overflow: 'hidden',
             }}
           >
-            {/* Header */}
+          
             <ImageBackground
               source={images.imgkit1}
               style={[styles.vwMainModelHeaderTestDetails]}
@@ -670,7 +759,7 @@ const EditOrderComponent = (props: any) => {
                 }}
               />
             </View>
-            {/* vwGotoCart */}
+           
             <TouchableOpacity
               style={[
                 styles.vwGoToCart,
@@ -699,24 +788,22 @@ const EditOrderComponent = (props: any) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
 
       {/* editAnalitidetails */}
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={props.editAnlitiPopupVisible}
-        statusBarTranslucent={true}
-        onRequestClose={props.funCloseEditAnaliti}
-      >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: '#00000060',
-          }}
-        >
-          <Pressable style={{ flex: 1 }} onPress={props.funCloseEditAnaliti} />
 
+      <Modal
+        statusBarTranslucent
+        useNativeDriverForBackdrop={true}
+        isVisible={props.editAnlitiPopupVisible}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0.6}
+        onBackdropPress={props.funCloseEditAnaliti}
+        onBackButtonPress={props.funCloseEditAnaliti}
+        style={{ margin: 0 }} // full screen
+      >
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View
             style={{
               backgroundColor: Colors.whiteF2,
@@ -727,14 +814,17 @@ const EditOrderComponent = (props: any) => {
           >
             {/* Header */}
             <View style={styles.vwHeadingLine} />
-            <View style={[styles.vwMainModelHeaderEditAnliti]}>
+
+            <View style={styles.vwMainModelHeaderEditAnliti}>
               <TouchableOpacity
                 style={styles.btnBack}
-                onPress={props.funCloseEditAnaliti} // close modal
+                onPress={props.funCloseEditAnaliti}
               >
                 <Image source={images.imgLeftArrow} />
               </TouchableOpacity>
             </View>
+
+            {/* Kit Details */}
             <View style={styles.imgkitdetails}>
               <View style={styles.vwHeaderTitle}>
                 <Image
@@ -748,11 +838,8 @@ const EditOrderComponent = (props: any) => {
               </View>
             </View>
 
-            {/* vwTestList */}
+            {/* Test List */}
             <FlatList
-              onEndReached={() => {
-                console.log('callend');
-              }}
               data={props.analitiArrayData}
               renderItem={props.renderitemanalitidata}
               showsVerticalScrollIndicator={false}
@@ -764,6 +851,36 @@ const EditOrderComponent = (props: any) => {
                 paddingBottom: getHeight(100),
               }}
             />
+
+             {/* 🔹 BLUR BEHIND GO TO CART */}
+             <MaskedView
+              pointerEvents="none"
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                height: 110,
+              }}
+              maskElement={
+                <LinearGradient
+                  colors={[
+                    'transparent', // ❌ no blur at top
+                    'black', // ✅ full blur at bottom
+                  ]}
+                  locations={[0.25, 1]}
+                  style={{ flex: 1 }}
+                />
+              }
+            >
+              <BlurView
+                style={{ flex: 1 }}
+                blurType="light"
+                blurAmount={14}
+                reducedTransparencyFallbackColor="transparent"
+              />
+            </MaskedView>
+
+            {/* Add To Order */}
             <TouchableOpacity
               style={[
                 styles.vwGoToCart,
@@ -783,6 +900,7 @@ const EditOrderComponent = (props: any) => {
                   {getTranslation('addtoorder')}
                 </Text>
               </View>
+
               <View style={styles.vwPrice}>
                 <Text style={styles.totalprice}>
                   {currency}
@@ -806,24 +924,20 @@ const EditOrderComponent = (props: any) => {
       />
 
       {/* AddAddressModel */}
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={props.addAddressPopupVisible}
-        statusBarTranslucent={true}
-        onRequestClose={props.funCloseAddAddressPopup}
-      >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: '#00000060',
-          }}
-        >
-          <Pressable
-            style={{ flex: 1 }}
-            onPress={props.funCloseAddAddressPopup}
-          />
 
+      <Modal
+        statusBarTranslucent
+        useNativeDriverForBackdrop={true}
+        isVisible={props.addAddressPopupVisible}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0.6}
+        onBackdropPress={props.funCloseAddAddressPopup}
+        onBackButtonPress={props.funCloseAddAddressPopup}
+        style={{ margin: 0 }}
+        avoidKeyboard
+      >
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View
             style={{
               backgroundColor: Colors.whiteF2,
@@ -834,10 +948,11 @@ const EditOrderComponent = (props: any) => {
           >
             {/* Header */}
             <View style={styles.vwHeadingLine} />
-            <View style={[styles.vwMainModelHeader]}>
+
+            <View style={styles.vwMainModelHeader}>
               <TouchableOpacity
                 style={styles.btnBack}
-                onPress={props.funCloseAddAddressPopup} // close modal
+                onPress={props.funCloseAddAddressPopup}
               >
                 <Image source={images.imgLeftArrow} />
               </TouchableOpacity>
@@ -846,9 +961,7 @@ const EditOrderComponent = (props: any) => {
                 <Text
                   style={[
                     constnatStyles.lblHeaderTitle,
-                    {
-                      letterSpacing: 0.2,
-                    },
+                    { letterSpacing: 0.2 },
                   ]}
                   numberOfLines={2}
                 >
@@ -859,21 +972,20 @@ const EditOrderComponent = (props: any) => {
               <Image source={images.imgDelete} style={{ opacity: 0 }} />
             </View>
 
+            {/* Title */}
             <View style={styles.vwMainAddAddress}>
               <Text style={styles.lblAddAddressPopupTitle}>
                 {getTranslation('addaddresspopuptitle')}
               </Text>
             </View>
 
+            {/* Form */}
             <KeyboardAwareScrollView
-              scrollEnabled
               showsVerticalScrollIndicator={false}
-              bounces={true}
+              bounces
               contentContainerStyle={[
                 constnatStyles.keyboardContainer,
-                {
-                  paddingBottom: getHeight(17),
-                },
+                { paddingBottom: getHeight(17) },
               ]}
               style={{ backgroundColor: Colors.whiteF2 }}
             >
@@ -884,17 +996,18 @@ const EditOrderComponent = (props: any) => {
                   gap: getHeight(12),
                 }}
               >
-                {/* dropdownfamilymember */}
+                {/* Address Type */}
                 <View>
                   <Text style={styles.lblwhodothetest}>
                     {getTranslation('typology')}
                   </Text>
+
                   <View style={{ marginTop: getHeight(6) }}>
                     <CustomDropdown
                       data={props.addressTypeData}
                       value={props.addressTypeValue}
                       onChange={item => {
-                        props.setAddressTypeError(''); // clear error on selection
+                        props.setAddressTypeError('');
                         props.handleSetAddressType(item);
                       }}
                       placeholder={
@@ -911,6 +1024,7 @@ const EditOrderComponent = (props: any) => {
                           : Colors.white,
                       }}
                     />
+
                     {props.addressTypeError ? (
                       <View style={styles.vwError}>
                         <Image source={images.imgWarning} />
@@ -921,35 +1035,34 @@ const EditOrderComponent = (props: any) => {
                     ) : null}
                   </View>
                 </View>
+
+                {/* Search Address */}
                 <View>
-                  <Text style={styles.lblTitleInput} numberOfLines={1}>
+                  <Text style={styles.lblTitleInput}>
                     {getTranslation('searchaddress')}
                   </Text>
-                  <View style={{ marginTop: 1 }}>
-                    <GooglePlacesTextInput
-                      ref={props.searchRef}
-                      apiKey={''}
-                      placeHolderText={
-                        getTranslation('addaddressplacholder') || ''
-                      }
-                      onPlaceSelect={(place: any) => {
-                        props.handlePlaceSelect(place);
-                        props.setSearchAddress(place?.fullText || ''); // Store selected address
-                      }}
-                      onChangeText={(text: any) => {
-                        props.setSearchAddress(text); // store every typed change
-                      }}
-                      cursorColor={Colors.blue002}
-                      selectionColor={Colors.blue002}
-                      languageCode="en"
-                      style={customStylesTextInput}
-                      onFocus={() => setIsFocused(true)}
-                      onBlur={() => setIsFocused(false)}
-                      showClearButton={false}
-                      showLoadingIndicator={false}
-                    />
-                  </View>
+
+                  <GooglePlacesTextInput
+                    ref={props.searchRef}
+                    apiKey=""
+                    placeHolderText={
+                      getTranslation('addaddressplacholder') || ''
+                    }
+                    onPlaceSelect={(place: any) => {
+                      props.handlePlaceSelect(place);
+                      props.setSearchAddress(place?.fullText || '');
+                    }}
+                    onChangeText={props.setSearchAddress}
+                    cursorColor={Colors.blue002}
+                    selectionColor={Colors.blue002}
+                    languageCode="en"
+                    style={customStylesTextInput}
+                    showClearButton={false}
+                    showLoadingIndicator={false}
+                  />
                 </View>
+
+                {/* Floor & Stairs */}
                 <View style={styles.vwInputsInner}>
                   <PrimaryTitleTextInput
                     flex={1}
@@ -957,58 +1070,48 @@ const EditOrderComponent = (props: any) => {
                     refs={props.floorRef}
                     focusnext={() => props.stairsRef.current?.focus()}
                     inputLabel={getTranslation('florr')}
-                    blur={false}
-                    leftIcon={false}
-                    keyaboardType={'default'}
                     value={props.floor}
-                    onChangeFun={(text: any) =>
+                    onChangeFun={text =>
                       props.handleOnChangeText(text, 'floor')
                     }
                     errorMessage={props.floorError}
                     setErrorMessage={props.setFloorError}
-                    isMultiline={false}
                     isBorder={false}
                     isflexstart={true}
                   />
+
                   <PrimaryTitleTextInput
                     flex={1}
                     placHolderLabel={getTranslation('stairsplaceholder')}
-                    inputLabel={getTranslation('stairs')}
                     refs={props.stairsRef}
                     focusnext={() => props.instructionRef.current?.focus()}
-                    blur={false}
-                    leftIcon={false}
-                    keyaboardType={'default'}
+                    inputLabel={getTranslation('stairs')}
                     value={props.stairs}
-                    onChangeFun={(text: any) =>
+                    onChangeFun={text =>
                       props.handleOnChangeText(text, 'stairs')
                     }
                     errorMessage={props.stairsError}
                     setErrorMessage={props.setStairsError}
-                    isflexstart={true}
-                    isMultiline={false}
                     isBorder={false}
+                    isflexstart={true}
                   />
                 </View>
 
-                <View>
-                  <PrimaryTitleTextInput
-                    placHolderLabel={getTranslation('instructionplaceholder')}
-                    refs={props.instructionRef}
-                    inputLabel={getTranslation('instruction')}
-                    blur={true}
-                    leftIcon={false}
-                    keyaboardType={'default'}
-                    value={props.instructions}
-                    onChangeFun={(text: any) =>
-                      props.handleOnChangeText(text, 'instruction')
-                    }
-                    errorMessage={props.instructionsError}
-                    setErrorMessage={props.setInstructionNameError}
-                    isMultiline={false}
-                    isBorder={false}
-                  />
-                </View>
+                {/* Instructions */}
+                <PrimaryTitleTextInput
+                  placHolderLabel={getTranslation('instructionplaceholder')}
+                  refs={props.instructionRef}
+                  inputLabel={getTranslation('instruction')}
+                  value={props.instructions}
+                  onChangeFun={text =>
+                    props.handleOnChangeText(text, 'instruction')
+                  }
+                  errorMessage={props.instructionsError}
+                  setErrorMessage={props.setInstructionNameError}
+                  isBorder={false}
+                />
+
+                {/* Default Address */}
                 <View style={styles.vwSwitchcontainer}>
                   <TouchableOpacity
                     activeOpacity={activityOpacity}
@@ -1016,18 +1119,21 @@ const EditOrderComponent = (props: any) => {
                   >
                     <Image
                       source={
-                        props.isdefaultsave === true
+                        props.isdefaultsave
                           ? images.imgSelectRadio
                           : images.imgUnselectRadio
                       }
                     />
                   </TouchableOpacity>
-                  <Text style={styles.lblSwitchTitle} numberOfLines={1}>
+
+                  <Text style={styles.lblSwitchTitle}>
                     {getTranslation('addfavouriteaddresslabel')}
                   </Text>
                 </View>
               </View>
             </KeyboardAwareScrollView>
+
+            {/* Actions */}
             <View
               style={{
                 marginBottom:
@@ -1041,6 +1147,7 @@ const EditOrderComponent = (props: any) => {
                 btnPress={props.handleOnPressSaveAddress}
                 btnTitle={getTranslation('saveaddress')}
               />
+
               <CustomButton
                 btnicon={false}
                 style={{
@@ -1048,7 +1155,7 @@ const EditOrderComponent = (props: any) => {
                   marginTop: getHeight(8),
                 }}
                 textStyle={{ color: Colors.blue002 }}
-                // btnPress={props.handlePressDeleteAccount}
+                btnPress={props.funCloseAddAddressPopup}
                 btnTitle={getTranslation('cancleaddress')}
               />
             </View>
@@ -1057,21 +1164,19 @@ const EditOrderComponent = (props: any) => {
       </Modal>
 
       {/* CancleModel */}
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={props.cancleOrderVisible}
-        statusBarTranslucent={true}
-        onRequestClose={props.funCloseCancleOrder}
-      >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: '#00000060',
-          }}
-        >
-          <Pressable style={{ flex: 1 }} onPress={props.funCloseCancleOrder} />
 
+      <Modal
+        statusBarTranslucent
+        useNativeDriverForBackdrop={true}
+        isVisible={props.cancleOrderVisible}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0.6}
+        onBackdropPress={props.funCloseCancleOrder}
+        onBackButtonPress={props.funCloseCancleOrder}
+        style={{ margin: 0 }} // full screen
+      >
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View
             style={{
               backgroundColor: Colors.whiteF2,
@@ -1082,14 +1187,16 @@ const EditOrderComponent = (props: any) => {
           >
             {/* Header */}
             <View style={styles.vwHeadingLine} />
-            <View style={[styles.vwMainModelHeader]}>
+
+            <View style={styles.vwMainModelHeader}>
               <TouchableOpacity
                 style={styles.btnBack}
-                onPress={props.funCloseCancleOrder} // close modal
+                onPress={props.funCloseCancleOrder}
               >
                 <Image source={images.imgLeftArrow} />
               </TouchableOpacity>
             </View>
+
             <View
               style={{
                 marginHorizontal: getWidth(16),
@@ -1100,6 +1207,7 @@ const EditOrderComponent = (props: any) => {
                 title={getTranslation('cancleordertitle')}
                 subtitle={getTranslation('cancleordersubtitle')}
               />
+
               <View
                 style={{
                   marginTop: getHeight(123),
@@ -1115,6 +1223,7 @@ const EditOrderComponent = (props: any) => {
                   style={{ backgroundColor: Colors.redFC }}
                   textStyle={{ color: Colors.red8C }}
                 />
+
                 <CustomButton
                   btnTitle={getTranslation('cancletextnoback')}
                   style={{

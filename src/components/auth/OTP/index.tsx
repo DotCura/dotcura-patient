@@ -85,40 +85,41 @@ const OTPComponent = (props: any) => {
             {getTranslation('otpwarning2')}
           </Text>
         </View>
-
-        
       </KeyboardAwareScrollView>
       {/* vwBottomBtn */}
       <View
-          style={[
-            styles.vwBottom,
-            { marginBottom: props.insets.bottom + getHeight(16),marginHorizontal:getWidth(16) },
-          ]}
+        style={[
+          styles.vwBottom,
+          {
+            marginBottom: props.insets.bottom + getHeight(16),
+            marginHorizontal: getWidth(16),
+          },
+        ]}
+      >
+        <CustomButton
+          btnPress={props.handleOnPressNext}
+          btnTitle={getTranslation('next')}
+        />
+        <TouchableOpacity
+          activeOpacity={activityOpacity}
+          disabled={props.resendOtp}
+          onPress={props.handleOnPressResendOtp}
+          style={{ marginTop: getHeight(21) }}
         >
-          <CustomButton
-            btnPress={props.handleOnPressNext}
-            btnTitle={getTranslation('next')}
-          />
-          <TouchableOpacity
-            activeOpacity={activityOpacity}
-            disabled={props.resendOtp}
-            onPress={props.handleOnPressResendOtp}
-            style={{ marginTop: getHeight(21) }}
-          >
-            {!props.resendOtp ? (
-              <Text style={styles.lblResendOtp}>
-                {getTranslation('resendcode')}
+          {!props.resendOtp ? (
+            <Text style={styles.lblResendOtp}>
+              {getTranslation('resendcode')}
+            </Text>
+          ) : (
+            <Text style={styles.lblDidntgetOtp}>
+              {/* {getTranslation('ifYouDidntReceiveCodeTitle')}{' '} */}
+              <Text style={[styles.lblResendOtp, { color: Colors.blue002 }]}>
+                00:{props?.otp?.toString().padStart(2, '0')}
               </Text>
-            ) : (
-              <Text style={styles.lblDidntgetOtp}>
-                {/* {getTranslation('ifYouDidntReceiveCodeTitle')}{' '} */}
-                <Text style={[styles.lblResendOtp, { color: Colors.blue002 }]}>
-                  00:{props?.otp?.toString().padStart(2, '0')}
-                </Text>
-              </Text>
-            )}
-          </TouchableOpacity>
-        </View>
+            </Text>
+          )}
+        </TouchableOpacity>
+      </View>
     </>
   );
 };

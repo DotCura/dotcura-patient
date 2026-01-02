@@ -127,10 +127,8 @@ const AnalitiTestDetailContainer = ({ navigation }: any) => {
   };
 
   const navigateTestDetailsScreen = () => {
-    // navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
-    navigation.navigate('TransitionFlow', {
-      screen: ScreenNames.TESTDETAILSCONTAINER,
-    });
+    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+   
   };
   const navigateTestGetTestedScreem = () => {
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {

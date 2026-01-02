@@ -125,10 +125,10 @@ const OTPContainer = ({ navigation }: any) => {
     } else if (fullOtp != validateOtp.toString()) {
       flashMessageWarning(getTranslation('errorMessageInvalidOtp'));
     } else {
-      // navigation.navigate(ScreenNames.COMPLETEPROFILECONTAINER);
-      navigation.navigate('TransitionFlow', {
-        screen: ScreenNames.COMPLETEPROFILECONTAINER,
-      });
+      navigation.navigate(ScreenNames.COMPLETEPROFILECONTAINER);
+      // navigation.navigate('TransitionFlow', {
+      //   screen: ScreenNames.COMPLETEPROFILECONTAINER,
+      // });
     }
   };
 

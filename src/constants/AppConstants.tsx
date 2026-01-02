@@ -35,6 +35,7 @@ export const ScreenNames = {
   PAYMENTMETHODCONTAINER: 'PaymentMethodContainer',
   ADDRESSLISTCONTAINER:"AddressListContainer",
   FAVOURITESCONTAINER:"FavouritesContainer",
+  CUSTOMSPLASHCONTAINER:"CustomSplashContainer",
 
   //BOTTOMTAB
   HOMECONTAINER: 'HomeContainer',

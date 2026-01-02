@@ -100,6 +100,7 @@ export const showAlert = (message: string) => {
 
 // Buttons
 export const activityOpacity = 0.8;
+export const activityOpacitybtn = 1;
 export const hitSlop = 10;
 export const currencySymbol = 'KWD';
 

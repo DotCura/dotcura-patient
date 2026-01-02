@@ -104,6 +104,10 @@ export const images = {
   imgRateFillStar:require('../assets/images/ratefillStar.png'),
   imgRateUnfillStar:require('../assets/images/rateUnfillStar.png'),
   imgBottomtras:require('../assets/images/bottoooomtrasparent.png'),
+  imgBlueTickRight:require('../assets/images/BlueTickRight.png'),
+
+  splashvideo: require('../assets/videos/SplashScreen.mp4'),
+
   
   
   

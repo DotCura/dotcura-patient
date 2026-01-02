@@ -9,25 +9,19 @@ interface AppLayoutProps {
 }
 
 const AppLayout = ({ children, isOrderPlaced }: AppLayoutProps) => {
-  const rendercChild = useCallback(() => {
-    console.log("render child");
-    
-    return <View style={[styles.content, styles.roundedTop]}>{children}</View>;
-  }, []);
-
+  console.log("remder app");
+  
   return (
-    <View style={styles.container}>
+    <>
       {/* Header / Order Status */}
       {isOrderPlaced && (
-        <View>
           <OrderStatusComponent orderStatus={isOrderPlaced} />
-        </View>
       )}
 
       {/* Main Content */}
-      {/* {rendercChild()} */}
-      <View style={[styles.content, styles.roundedTop]}>{children}</View>
-    </View>
+    
+    {children}
+    </>
   );
 };
 
@@ -36,12 +30,12 @@ export default AppLayout;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black, // Same color as OrderStatusComponent background
+    backgroundColor: Colors.red40, // Same color as OrderStatusComponent background
   },
   content: {
     flex: 1,
-    backgroundColor:Colors.black,
-    overflow: 'hidden',
+    backgroundColor:Colors.red8C,
+    // overflow: 'hidden',
   },
   roundedTop: {
     borderTopLeftRadius: 40,

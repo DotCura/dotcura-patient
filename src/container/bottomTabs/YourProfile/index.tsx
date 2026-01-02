@@ -720,10 +720,8 @@ const YourProfileContainer = ({ navigation }: any) => {
           marginHorizontal: getWidth(16),
         }}
         onPress={() => {
-          navigation.navigate('TransitionFlow', {
-            screen: ScreenNames.TESTDETAILSCONTAINER,
-          });
-          // navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+          
+          navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -921,10 +919,8 @@ const YourProfileContainer = ({ navigation }: any) => {
   };
 
   const hanldeNavigateKitAnalysis = () => {
-    // navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
-    navigation.navigate('TransitionFlow', {
-      screen: ScreenNames.KITANALYSISCONTAINER,
-    });
+    navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+   
   };
 
   const handleNavigateHistoricalAnlysis = () => {

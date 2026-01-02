@@ -25,6 +25,7 @@ import { fontSize } from '../../../constants/FontSizes';
 import BarChartComponent from '../../../global/BloodCountGraph';
 import { ZustandStores } from '../../../store';
 import LinearGradient from 'react-native-linear-gradient';
+import PressScale from '../../../global/PressScale';
 
 {
   /* veEmpty */
@@ -52,15 +53,13 @@ const HomeComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
   const renderListFooter = () => {
     return (
-      <TouchableOpacity
-        style={styles.addBtn}
-        activeOpacity={activityOpacity}
-        onPress={props.handleNavigateYourProfileScreen}
-      >
-        <Text style={styles.addText}>
-          {getTranslation('viewalltestresult')}
-        </Text>
-      </TouchableOpacity>
+      <PressScale onPress={props.handleNavigateYourProfileScreen}>
+        <View style={styles.addBtn}>
+          <Text style={styles.addText}>
+            {getTranslation('viewalltestresult')}
+          </Text>
+        </View>
+      </PressScale>
     );
   };
   const CARD_WIDTH = getWidth(280); // your card width
@@ -141,15 +140,13 @@ const HomeComponent = (props: any) => {
                 {getTranslation('sinceyourlastanalysis')}
               </Text>
             </View>
-            <TouchableOpacity
-              style={styles.btnBookNow}
-              activeOpacity={activityOpacity}
-              onPress={props.handleNavigateGetTested}
-            >
-              <Text style={styles.lblBookNow}>
-                {getTranslation('booknowtext')}
-              </Text>
-            </TouchableOpacity>
+            <PressScale onPress={props.handleNavigateGetTested}>
+              <View style={styles.btnBookNow}>
+                <Text style={styles.lblBookNow}>
+                  {getTranslation('booknowtext')}
+                </Text>
+              </View>
+            </PressScale>
           </View>
         </View>
 

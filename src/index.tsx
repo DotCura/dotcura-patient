@@ -1,8 +1,8 @@
 
 
 
-
 //AUTH
+export CustomSplashContainer from "./container/CustomSplash";
 export LoginContainer from "./container/auth/Login";
 export OnBoardingContainer from "./container/auth/OnBoarding";
 export OTPContainer from "./container/auth/OTP";
@@ -15,7 +15,6 @@ export NotificationSwitchContainer from "./container/auth/NotificationSwitch";
 export PaymentMethodContainer from "./container/auth/PaymentMethod";
 export AddressListContainer from "./container/AddressList";
 export FavouritesContainer from "./container/Favourites";
-
 
 //BOTTOMTAB
 export HomeContainer from "./container/bottomTabs/Home";

@@ -31,6 +31,7 @@ import Modal from 'react-native-modal';
 import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { BlurView } from '@react-native-community/blur';
+import PressScale from '../../global/PressScale';
 
 const CheckoutComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
@@ -103,7 +104,10 @@ const CheckoutComponent = (props: any) => {
       </View>
       {props.testkitsData.length === 0 ? (
         <View style={styles.emptyview}>
-          <Image source={images.imgMicroscope} />
+          <Image
+            source={images.imgMicroscope}
+            style={{ alignSelf: 'center' }}
+          />
           <Text style={styles.orderhistoryemptytitle} numberOfLines={1}>
             {getTranslation('checkoutemptytitle')}
           </Text>
@@ -115,7 +119,7 @@ const CheckoutComponent = (props: any) => {
             style={{ backgroundColor: Colors.blueD1 }}
             btnicon={false}
             textStyle={{ color: Colors.blue002 }}
-            btnPress={props.funOpenIsModifyOrder}
+            btnPress={props.funGetTestedContainer}
           />
         </View>
       ) : (
@@ -171,16 +175,14 @@ const CheckoutComponent = (props: any) => {
                 marginTop: getHeight(24),
               }}
             />
-            <TouchableOpacity
-              style={styles.btnEdit}
-              activeOpacity={activityOpacity}
-              onPress={props.funOpenIsModifyOrder}
-            >
-              <Image source={images.addblue} tintColor={Colors.white} />
-              <Text style={styles.lblEdit}>
-                {getTranslation('addanalysis')}
-              </Text>
-            </TouchableOpacity>
+            <PressScale onPress={props.funOpenIsModifyOrder}>
+              <View style={styles.btnEdit}>
+                <Image source={images.addblue} tintColor={Colors.white} />
+                <Text style={styles.lblEdit}>
+                  {getTranslation('addanalysis')}
+                </Text>
+              </View>
+            </PressScale>
           </View>
 
           {/* vwDateTime */}
@@ -358,6 +360,7 @@ const CheckoutComponent = (props: any) => {
               </TouchableOpacity>
             </View>
           </View>
+
           {/* bottom button */}
           <View
             style={[
@@ -387,7 +390,6 @@ const CheckoutComponent = (props: any) => {
       )}
 
       {/* datetimeslotmodel */}
-
       <Modal
         statusBarTranslucent
         isVisible={props.showPicker}
@@ -460,7 +462,6 @@ const CheckoutComponent = (props: any) => {
       </Modal>
 
       {/* editmodifyordermodel */}
-
       <Modal
         statusBarTranslucent
         useNativeDriverForBackdrop={true}
@@ -650,33 +651,33 @@ const CheckoutComponent = (props: any) => {
             </MaskedView>
 
             {/* Go To Cart */}
-            <TouchableOpacity
-              style={[
-                styles.vwGoToCart,
-                {
-                  bottom:
-                    props.insets.bottom > 0
-                      ? props.insets.bottom
-                      : props.insets.bottom + getHeight(16),
-                },
-              ]}
-              activeOpacity={activityOpacity}
-              onPress={props.funCloseIsModifyOrder}
-            >
-              <View style={styles.vwCartImage}>
-                <Image source={images.imgCartHome} tintColor={Colors.white} />
-                <Text style={styles.lblGoToCart}>
-                  {getTranslation('gotocart')}
-                </Text>
-              </View>
+            <PressScale onPress={props.funCloseIsModifyOrder}>
+              <View
+                style={[
+                  styles.vwGoToCart,
+                  {
+                    bottom:
+                      props.insets.bottom > 0
+                        ? props.insets.bottom
+                        : props.insets.bottom + getHeight(16),
+                  },
+                ]}
+              >
+                <View style={styles.vwCartImage}>
+                  <Image source={images.imgCartHome} tintColor={Colors.white} />
+                  <Text style={styles.lblGoToCart}>
+                    {getTranslation('gotocart')}
+                  </Text>
+                </View>
 
-              <View style={styles.vwPrice}>
-                <Text style={styles.totalprice}>
-                  {currency}
-                  {props.total.toFixed(2)}
-                </Text>
+                <View style={styles.vwPrice}>
+                  <Text style={styles.totalprice}>
+                    {currency}
+                    {props.total.toFixed(2)}
+                  </Text>
+                </View>
               </View>
-            </TouchableOpacity>
+            </PressScale>
           </View>
         </View>
       </Modal>
@@ -790,7 +791,6 @@ const CheckoutComponent = (props: any) => {
       </Modal> */}
 
       {/* editAnalitidetails */}
-
       <Modal
         statusBarTranslucent
         useNativeDriverForBackdrop={true}
@@ -851,8 +851,8 @@ const CheckoutComponent = (props: any) => {
               }}
             />
 
-             {/* 🔹 BLUR BEHIND GO TO CART */}
-             <MaskedView
+            {/* 🔹 BLUR BEHIND GO TO CART */}
+            <MaskedView
               pointerEvents="none"
               style={{
                 position: 'absolute',
@@ -880,33 +880,33 @@ const CheckoutComponent = (props: any) => {
             </MaskedView>
 
             {/* Add To Order */}
-            <TouchableOpacity
-              style={[
-                styles.vwGoToCart,
-                {
-                  bottom:
-                    props.insets.bottom > 0
-                      ? props.insets.bottom
-                      : props.insets.bottom + getHeight(16),
-                },
-              ]}
-              activeOpacity={activityOpacity}
-              onPress={props.funCloseEditAnaliti}
-            >
-              <View style={styles.vwCartImage}>
-                <Image source={images.imgCartHome} tintColor={Colors.white} />
-                <Text style={styles.lblGoToCart}>
-                  {getTranslation('addtoorder')}
-                </Text>
-              </View>
+            <PressScale onPress={props.funCloseEditAnaliti}>
+              <View
+                style={[
+                  styles.vwGoToCart,
+                  {
+                    bottom:
+                      props.insets.bottom > 0
+                        ? props.insets.bottom
+                        : props.insets.bottom + getHeight(16),
+                  },
+                ]}
+              >
+                <View style={styles.vwCartImage}>
+                  <Image source={images.imgCartHome} tintColor={Colors.white} />
+                  <Text style={styles.lblGoToCart}>
+                    {getTranslation('addtoorder')}
+                  </Text>
+                </View>
 
-              <View style={styles.vwPrice}>
-                <Text style={styles.totalprice}>
-                  {currency}
-                  {props.totalPriceAnaliti.toFixed(2)}
-                </Text>
+                <View style={styles.vwPrice}>
+                  <Text style={styles.totalprice}>
+                    {currency}
+                    {props.totalPriceAnaliti.toFixed(2)}
+                  </Text>
+                </View>
               </View>
-            </TouchableOpacity>
+            </PressScale>
           </View>
         </View>
       </Modal>
@@ -923,7 +923,6 @@ const CheckoutComponent = (props: any) => {
       />
 
       {/* AddAddressModel */}
-
       <Modal
         statusBarTranslucent
         useNativeDriverForBackdrop={true}
@@ -1163,7 +1162,6 @@ const CheckoutComponent = (props: any) => {
       </Modal>
 
       {/* CancleModel */}
-
       <Modal
         statusBarTranslucent
         useNativeDriverForBackdrop={true}

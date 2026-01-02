@@ -8,28 +8,24 @@
 // import { createBlankStackNavigator } from 'react-native-screen-transitions/blank-stack';
 // import Transition from 'react-native-screen-transitions';
 
-
 // // const Stack = createStackNavigator();
 // const Stack = createBlankStackNavigator();
 // const ModalStack = createNativeStackNavigator();
 
-
 // const MainNavigation = props => {
 //   const _addScreen = (name, component, option,transition) => {
-   
 
 //     const mergedOptions = {
 //       // ✅ DEFAULT transition
 //       ...Transition.Presets.ElasticCard(),
-  
+
 //       // ✅ Override if transition is provided
 //       ...(transition ? transition : {}),
-  
+
 //       ...option,
 //       // ✅ Screen specific options (header, gesture etc.)
 //     };
-   
-  
+
 //     return (
 //       <Stack.Screen name={name} component={Screen[name]} options={mergedOptions} />
 //     );
@@ -215,8 +211,6 @@
 
 // export default MainNavigation;
 
-
-
 //check with effect diffrent diffrent
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -231,14 +225,13 @@ import Transition from 'react-native-screen-transitions';
 
 /* ---------------- STACKS ---------------- */
 
-const NativeStack = createNativeStackNavigator();      // ✅ DEFAULT
-const TransitionStack = createBlankStackNavigator();   // ✅ ANIMATED
+const NativeStack = createNativeStackNavigator(); // ✅ DEFAULT
+const TransitionStack = createBlankStackNavigator(); // ✅ ANIMATED
 const ModalStack = createNativeStackNavigator();
 
 /* ---------------- MAIN NAVIGATION ---------------- */
 
 const MainNavigation = props => {
-
   /* --------- YOUR SAME ADD SCREEN LOGIC --------- */
   const _addScreen = (StackRef, name, option, transition) => {
     const mergedOptions = {
@@ -266,62 +259,25 @@ const MainNavigation = props => {
       >
         {_addScreen(
           TransitionStack,
-          ScreenNames.LOGINCONTAINER,
-          { headerShown: true },
-          Transition.Presets.SlideFromBottom(),
-        )}
-
-        {_addScreen(
-          TransitionStack,
-          ScreenNames.OTPCONTAINER,
-          { headerShown: true },
-          Transition.Presets.ZoomIn(),
-        )}
-
-        {_addScreen(
-          TransitionStack,
-          ScreenNames.COMPLETEPROFILECONTAINER,
-          { headerShown: false },
-          Transition.Presets.SlideFromTop(),
-        )}
-
-        {_addScreen(
-          TransitionStack,
-          ScreenNames.INFOATIONCONASATNTCONTAINER,
-          { headerShown: false },
-          Transition.Presets.ZoomIn(),
-        )}
-
-        {_addScreen(
-          TransitionStack,
           ScreenNames.KITDETAILSCONTAINER,
           { headerShown: true },
           Transition.Presets.ZoomIn(),
         )}
-
         {_addScreen(
-          TransitionStack,
-          ScreenNames.HISTORICALANALYSISCONTAINER,
-          { headerShown: true },
-          Transition.Presets.SlideFromTop(),
-        )}
-
-        {_addScreen(
-          TransitionStack,
-          ScreenNames.KITANALYSISCONTAINER,
-          { headerShown: false },
-          Transition.Presets.SlideFromBottom(),
-        )}
-         {_addScreen(
           TransitionStack,
           ScreenNames.ANALITITESTDETAILSCONTAINER,
           { headerShown: false },
           Transition.Presets.ZoomIn(),
         )}
-
         {_addScreen(
           TransitionStack,
           ScreenNames.PROFILECONTAINER,
+          { headerShown: true },
+          Transition.Presets.ZoomIn(),
+        )}
+        {_addScreen(
+          TransitionStack,
+          ScreenNames.HISTORICALANALYSISCONTAINER,
           { headerShown: true },
           Transition.Presets.ZoomIn(),
         )}
@@ -329,12 +285,6 @@ const MainNavigation = props => {
         {_addScreen(
           TransitionStack,
           ScreenNames.ANALITIDETAILSCONTAINER,
-          { headerShown: true },
-          Transition.Presets.ZoomIn(),
-        )}
-         {_addScreen(
-          TransitionStack,
-          ScreenNames.TESTDETAILSCONTAINER,
           { headerShown: true },
           Transition.Presets.ZoomIn(),
         )}
@@ -356,34 +306,101 @@ const MainNavigation = props => {
           orientation: 'portrait',
         }}
       >
-        {_addScreen(NativeStack, ScreenNames.BOTTOMTABNAVIGATION, { headerShown: false, gestureEnabled: false })}
-        {_addScreen(NativeStack, ScreenNames.ONBOARDINGCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.INTROCONTAINER, { headerShown: false })}
+        {_addScreen(NativeStack, ScreenNames.CUSTOMSPLASHCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.BOTTOMTABNAVIGATION, {
+          headerShown: false,
+          gestureEnabled: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ONBOARDINGCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.LOGINCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.OTPCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.COMPLETEPROFILECONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.INFOATIONCONASATNTCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.INTROCONTAINER, {
+          headerShown: false,
+        })}
 
-        {_addScreen(NativeStack, ScreenNames.ACCESSCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.PAYMENTMETHODCONTAINER, { headerShown: true })}
-        {_addScreen(NativeStack, ScreenNames.NOTIFICATIONSWITCHCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.ADDCARDCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.ALLSETCONATINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.WELCOMECONTAINER, { headerShown: false })}
-        {/* {_addScreen(NativeStack, ScreenNames.HOMECONTAINER, { headerShown: true })} */}
-        {_addScreen(NativeStack, ScreenNames.CHECKOUTCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.EDITORDERCONTAINER, { headerShown: false })}
-        {/* {_addScreen(NativeStack, ScreenNames.TESTDETAILSCONTAINER, { headerShown: false })} */}
-        {_addScreen(NativeStack, ScreenNames.ADDRESSLISTCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.ADDFAMILYCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.CONFIRMIDENTITYCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.ADDADDRESSCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.COMPLETEADDRESSCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.ACCOUNTCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.ADDFAMILYMEMBERSCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.RESULTOPENUPCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.ADDCARDPROFILECONTAINER, { headerShown: true })}
-        {_addScreen(NativeStack, ScreenNames.FAVOURITESCONTAINER, { headerShown: false })}
-        {/* {_addScreen(NativeStack, ScreenNames.ANALITITESTDETAILSCONTAINER, { headerShown: true })} */}
-        {_addScreen(NativeStack, ScreenNames.ORDERHISTORYCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.NOTIFICATIONLISTCONTAINER, { headerShown: false })}
-        {_addScreen(NativeStack, ScreenNames.RATEANDREVIEWCONTAINER, { headerShown: false })}
+        {_addScreen(NativeStack, ScreenNames.ACCESSCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.PAYMENTMETHODCONTAINER, {
+          headerShown: true,
+        })}
+        {_addScreen(NativeStack, ScreenNames.NOTIFICATIONSWITCHCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ADDCARDCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ALLSETCONATINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.WELCOMECONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.CHECKOUTCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.EDITORDERCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.TESTDETAILSCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ADDRESSLISTCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ADDFAMILYCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.CONFIRMIDENTITYCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ADDADDRESSCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.COMPLETEADDRESSCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ACCOUNTCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ADDFAMILYMEMBERSCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.RESULTOPENUPCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ADDCARDPROFILECONTAINER, {
+          headerShown: true,
+        })}
+        {_addScreen(NativeStack, ScreenNames.FAVOURITESCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.ORDERHISTORYCONTAINER, {
+          headerShown: false,
+        })}
+         {_addScreen(NativeStack, ScreenNames.KITANALYSISCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.NOTIFICATIONLISTCONTAINER, {
+          headerShown: false,
+        })}
+        {_addScreen(NativeStack, ScreenNames.RATEANDREVIEWCONTAINER, {
+          headerShown: false,
+        })}
 
         {/* 🔥 TRANSITION ENTRY */}
         <NativeStack.Screen
@@ -397,20 +414,20 @@ const MainNavigation = props => {
 
   /* ---------------- ROOT ---------------- */
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <StatusBar barStyle="dark-content" translucent backgroundColor="transparent" />
-
-      <NavigationContainer>
-        <ModalStack.Navigator screenOptions={{ headerShown: false }}>
-          <ModalStack.Screen
-            name="MainStackScreen"
-            component={NativeStackScreen}
-          />
-        </ModalStack.Navigator>
-      </NavigationContainer>
-    </View>
+    <NavigationContainer>
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"
+      />
+      <ModalStack.Navigator screenOptions={{ headerShown: false }}>
+        <ModalStack.Screen
+          name="MainStackScreen"
+          component={NativeStackScreen}
+        />
+      </ModalStack.Navigator>
+    </NavigationContainer>
   );
 };
 
 export default MainNavigation;
-

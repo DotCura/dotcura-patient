@@ -16,6 +16,7 @@ import { Colors } from '../../constants/Colors';
 import { getHeight } from '../../constants/utils/Dimensions';
 import { activityOpacity, currency } from '../../constants/GConstant';
 import AppHeader from '../../global/Header';
+import PressScale from '../../global/PressScale';
 
 const KitDetailsComponent = (props: any) => {
   return (
@@ -154,7 +155,8 @@ const KitDetailsComponent = (props: any) => {
       </ScrollView>
 
       {/* vwGotoCart */}
-      <TouchableOpacity
+      <PressScale onPress={props.handleNavigateCheckout}>
+      <View
         style={[
           styles.vwGoToCart,
           {
@@ -164,8 +166,7 @@ const KitDetailsComponent = (props: any) => {
                 : props.insets.bottom + getHeight(20),
           },
         ]}
-        activeOpacity={activityOpacity}
-        onPress={props.handleNavigateCheckout}
+        
       >
         <View style={styles.vwCartImage}>
           <Image source={images.imgCartHome} tintColor={Colors.white} />
@@ -179,7 +180,8 @@ const KitDetailsComponent = (props: any) => {
             {currency} {props.totalPrice.toFixed(2)}
           </Text>
         </View>
-      </TouchableOpacity>
+      </View>
+      </PressScale>
     </>
   );
 };

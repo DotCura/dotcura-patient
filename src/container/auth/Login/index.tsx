@@ -45,10 +45,8 @@ const LoginContainer = ({ navigation }: any) => {
       return;
     } else {
       console.log('login done');
-      // navigation.navigate(ScreenNames.OTPCONTAINER);
-      navigation.navigate('TransitionFlow', {
-        screen: ScreenNames.OTPCONTAINER,
-      });
+      navigation.navigate(ScreenNames.OTPCONTAINER);
+      
     }
   };
 
