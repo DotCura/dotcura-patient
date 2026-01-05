@@ -11,7 +11,7 @@ import { activityOpacity } from '../../../constants/GConstant';
 import AppHeader from '../../../global/Header';
 
 const OTPComponent = (props: any) => {
-  const masked = props.phoneNumber
+  const masked = props?.loginDataParams?.phone_number
     .replace(/\d(?=\d{4})/g, '*')
     .replace(/(\*+)(\d{4})/, '$1 $2');
   return (
@@ -41,7 +41,7 @@ const OTPComponent = (props: any) => {
               <Text style={constnatStyles.lblMainSubtitle}>
                 {getTranslation('otpsubtitle1')}{' '}
                 <Text style={styles.lblPhoneNumber}>
-                  {props.countrycode} {masked}.
+                  +{props?.loginDataParams?.country_code} {masked}.
                 </Text>{' '}
                 {getTranslation('otpsubtitle2')}
               </Text>

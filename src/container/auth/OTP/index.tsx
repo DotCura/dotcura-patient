@@ -18,13 +18,22 @@ import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { OTPManager } from '../../../constants/utils/OTP';
 import OTPComponent from '../../../components/auth/OTP';
 import { ScreenNames } from '../../../constants/AppConstants';
+import {
+  ApiEndPoints,
+  MethodType,
+  StatusCode,
+  toggleLoader,
+} from '../../../api/APIConstant';
+import { APIManager } from '../../../api/APIManager';
+import { MmkvManager } from '../../../constants/utils/MmkvManager';
+import { CommonActions } from '@react-navigation/native';
 
 interface OtpArray {
   value: string;
   ref: RefObject<TextInput | null>;
 }
 
-const OTPContainer = ({ navigation }: any) => {
+const OTPContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const [countrycode, setCountryCode] = useState('+39');
   const [phoneNumber, setPhoneNumber] = useState('1234561234');
@@ -56,12 +65,24 @@ const OTPContainer = ({ navigation }: any) => {
   ]);
   const [fullOtp, setFullOtp] = useState<string | number>('');
   const [otp, setOtp] = useState<number>(30);
-  const [validateOtp, setValidateOtp] = useState<string>('123456' || '');
+
   const [resendOtp, setResendOtp] = useState(true);
   const timerRef = useRef<any>(null);
   const startTimeRef = useRef<number>(0);
   const appStateRef = useRef(AppState.currentState);
   const OTPTIMING = 30;
+
+  //======API========
+  const [loginDataParams, setLoginDataParams] = useState<any>(null);
+  const [validateOtp, setValidateOtp] = useState<string>(
+    route?.params?.LoginData?.otp,
+  );
+
+  useEffect(() => {
+    console.log('validateOtp', validateOtp);
+    console.log('loginDataParams', route?.params?.LoginData);
+    setLoginDataParams(route?.params?.LoginData);
+  }, [route?.params?.LoginData]);
 
   const handleOnChangeText = (text: string, index: number) => {
     if (regex.number.test(text)) {
@@ -97,18 +118,10 @@ const OTPContainer = ({ navigation }: any) => {
   };
 
   const handleOnPressResendOtp = async () => {
-    flashMessageSucess(getTranslation('otpResendSuccessfully'));
-
-    const clearedOtpArray = otpArray.map(item => ({
-      ...item,
-      value: '',
-    }));
-    setOtpArray(clearedOtpArray);
-    setFullOtp('');
-    handleResendOtpTimer();
+    await _reSendOTPApi();
   };
 
-  const handleResendOtpTimer = () => {
+  const handleResendOtpTimer = async () => {
     OTPManager.resendOtpStartTimerReverse(
       30,
       setOtp,
@@ -119,16 +132,17 @@ const OTPContainer = ({ navigation }: any) => {
     );
   };
 
-  const handleOnPressNext = () => {
+  const handleOnPressNext = async () => {
+    console.log('fullOtp !== validateOtp', fullOtp !== validateOtp);
+    console.log('fullOtp !== validateOtp', fullOtp);
+    console.log('fullOtp !== validateOtp', validateOtp);
+
     if (fullOtp.toString().length !== 6) {
       flashMessageWarning(getTranslation('errorMessageOtp'));
-    } else if (fullOtp != validateOtp.toString()) {
+    } else if (fullOtp != validateOtp) {
       flashMessageWarning(getTranslation('errorMessageInvalidOtp'));
     } else {
-      navigation.navigate(ScreenNames.COMPLETEPROFILECONTAINER);
-      // navigation.navigate('TransitionFlow', {
-      //   screen: ScreenNames.COMPLETEPROFILECONTAINER,
-      // });
+      await _verifyOTPApi();
     }
   };
 
@@ -171,6 +185,146 @@ const OTPContainer = ({ navigation }: any) => {
     header();
   }, []);
 
+  //=========================== API ========================================
+
+  const _reSendOTPApi = async () => {
+    try {
+      toggleLoader(true);
+      const params = {
+        country_code: loginDataParams?.country_code,
+        phone_number: loginDataParams?.phone_number,
+      };
+
+      const callback = async (responseData: any) => {
+        console.log(responseData, 'reponseData of api OTP');
+        toggleLoader(false);
+        if (responseData.code === StatusCode.SUCCESS) {
+          console.log(responseData, 'RESPONSE OTP');
+          flashMessageSucess(responseData.message);
+          const clearedOtpArray = otpArray.map(item => ({
+            ...item,
+            value: '',
+          }));
+          setOtpArray(clearedOtpArray);
+          setFullOtp('');
+          handleResendOtpTimer();
+          setValidateOtp(responseData?.data?.otp);
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.AUTH.RESENDOTP,
+        callback,
+        params,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('Login error:', error);
+    }
+  };
+
+  const _verifyOTPApi = async () => {
+    try {
+      toggleLoader(true);
+      const params = {
+        country_code: loginDataParams?.country_code,
+        phone_number: loginDataParams?.phone_number,
+        otp_code: validateOtp,
+      };
+
+      const callback = async (responseData: any) => {
+        toggleLoader(false);
+        console.log(responseData, 'resposneDate verify otp');
+        console.log(typeof responseData.code, 'code');
+        console.log(typeof StatusCode.STEP_ONE, 'step');
+        if (responseData.code === StatusCode.SUCCESS) {
+          console.log(
+            'responseData.data.device.token',
+            responseData.data.device.token,
+          );
+          await MmkvManager.setData(
+            MmkvManager.Keys.userToken,
+            responseData.data.device.token,
+          );
+          await MmkvManager.setData(
+            MmkvManager.Keys.userDetails,
+            responseData.data,
+          );
+          MmkvManager.getData(MmkvManager.Keys.userDetails, value => {
+            console.log('checking userdetails', value);
+          });
+          flashMessageSucess(responseData.message);
+          MmkvManager.setData(MmkvManager.Keys.isLoggedIn, 'true');
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{ name: ScreenNames.BOTTOMTABNAVIGATION }],
+            }),
+          );
+        } else if (responseData.code === StatusCode.STEP_ONE) {
+          console.log(
+            'responseData.data.device.token',
+            responseData.data.device.token,
+          );
+
+          await MmkvManager.setData(
+            MmkvManager.Keys.userToken,
+            responseData.data.device.token,
+          );
+          await MmkvManager.setData(
+            MmkvManager.Keys.userDetails,
+            responseData.data,
+          );
+          MmkvManager.getData(MmkvManager.Keys.userDetails, value => {
+            console.log('checking userdetails', value);
+          });
+          flashMessageSucess(responseData.message);
+          navigation.navigate(ScreenNames.COMPLETEPROFILECONTAINER, {
+            LoginData: responseData.data,
+          });
+        } else if (responseData.code === StatusCode.STEP_TWO) {
+          console.log(
+            'responseData.data.device.token',
+            responseData.data.device.token,
+          );
+
+          await MmkvManager.setData(
+            MmkvManager.Keys.userToken,
+            responseData.data.device.token,
+          );
+          await MmkvManager.setData(
+            MmkvManager.Keys.userDetails,
+            responseData.data,
+          );
+          MmkvManager.getData(MmkvManager.Keys.userDetails, value => {
+            console.log('checking userdetails', value);
+          });
+          flashMessageSucess(responseData.message);
+          navigation.navigate(ScreenNames.INFOATIONCONASATNTCONTAINER, {
+            LoginData: responseData.data,
+          });
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.AUTH.VERIFYOTP,
+        callback,
+        params,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('Login error:', error);
+    }
+  };
+
   return (
     <OTPComponent
       navigation={navigation}
@@ -186,6 +340,7 @@ const OTPContainer = ({ navigation }: any) => {
       handleOnPressResendOtp={handleOnPressResendOtp}
       OTPTIMING={OTPTIMING}
       handleOnPressNext={handleOnPressNext}
+      loginDataParams={loginDataParams}
     />
   );
 };

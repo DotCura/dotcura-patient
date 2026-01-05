@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import CompleteProfileComponent from '../../../components/auth/CompleteProfile';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
@@ -8,7 +8,17 @@ import {
 import { regex } from '../../../constants/Regex';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { ScreenNames } from '../../../constants/AppConstants';
-import { Keyboard } from 'react-native';
+import { BackHandler, Keyboard } from 'react-native';
+import {
+  ApiEndPoints,
+  MethodType,
+  StatusCode,
+  toggleLoader,
+} from '../../../api/APIConstant';
+import { flashMessageWarning } from '../../../constants/GConstant';
+import { APIManager } from '../../../api/APIManager';
+import { CommonActions, useFocusEffect } from '@react-navigation/native';
+import { MmkvManager } from '../../../constants/utils/MmkvManager';
 
 const CompleteProfileContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -34,6 +44,23 @@ const CompleteProfileContainer = ({ navigation }: any) => {
   const surnameRef = useRef<any>(null);
   const emailRef = useRef<any>(null);
   const taxCodeRef = useRef<any>(null);
+
+
+  //=== BackHandler ====
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        return true; // Prevent default back action
+      };
+
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => subscription.remove();
+    }, []),
+  );
 
   const onChangeFullName = (text: any) => {
     let newText = text.replace(/[0-9]/g, '');
@@ -98,13 +125,54 @@ const CompleteProfileContainer = ({ navigation }: any) => {
     } else {
       console.log('✅ Profile completed successfully');
       Keyboard.dismiss();
-      navigation.navigate(ScreenNames.INFOATIONCONASATNTCONTAINER);
       // Proceed to next screen or API call
+      await _completeProfileApi();
+    }
+  };
+
+  //=========================== API ========================================
+
+  const _completeProfileApi = async () => {
+    try {
+      toggleLoader(true);
+      const params = {
+        steps: '1',
+        name: fullName + ' ' + surname,
+        email: email,
+        gender: selectedGender == 1 ? 'male' : 'female',
+      };
+
+      const callback = async (responseData: any) => {
+        console.log(responseData, 'reponseData of api COMPLETE PROFILE');
+        toggleLoader(false);
+        if (responseData.code === StatusCode.SUCCESS) {
+          console.log(responseData, 'COMPLETE PROFILE');
+          await MmkvManager.setData(
+            MmkvManager.Keys.userDetails,
+            responseData.data,
+          );
+          navigation.navigate(ScreenNames.INFOATIONCONASATNTCONTAINER);
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.AUTH.COMPLETEPROFILE,
+        callback,
+        params,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('Login error:', error);
     }
   };
 
   return (
     <CompleteProfileComponent
+      navigation={navigation}
       insets={insets}
       headerArray={headerArray}
       fullName={fullName}

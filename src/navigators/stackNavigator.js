@@ -222,6 +222,7 @@ import { Colors } from '../constants/Colors';
 import * as Screen from '../index';
 import { createBlankStackNavigator } from 'react-native-screen-transitions/blank-stack';
 import Transition from 'react-native-screen-transitions';
+import { createStackNavigator } from '@react-navigation/stack';
 
 /* ---------------- STACKS ---------------- */
 
@@ -324,6 +325,7 @@ const MainNavigation = props => {
         })}
         {_addScreen(NativeStack, ScreenNames.COMPLETEPROFILECONTAINER, {
           headerShown: false,
+          gestureEnabled: false,
         })}
         {_addScreen(NativeStack, ScreenNames.INFOATIONCONASATNTCONTAINER, {
           headerShown: false,

@@ -12,6 +12,7 @@ import PrimaryTitleTextInput from '../../../global/PrimaryTitleTextInput';
 import { ValidationConstant } from '../../../constants/TextInputConstant';
 import { images } from '../../../constants/Images';
 import { Colors } from '../../../constants/Colors';
+import { ScreenNames } from '../../../constants/AppConstants';
 
 const CompleteProfileComponent = (props: any) => {
   return (
@@ -22,7 +23,11 @@ const CompleteProfileComponent = (props: any) => {
       }}
     >
       <View style={{ marginHorizontal: getWidth(16) }}>
-        <TopBar array={props.headerArray} currentIndex={0} />
+        <TopBar
+          array={props.headerArray}
+          currentIndex={0}
+          onClickBack={() => props.navigation.popTo(ScreenNames.LOGINCONTAINER)}
+        />
       </View>
       <KeyboardAwareScrollView
         contentContainerStyle={[constnatStyles.keyboardContainer]}

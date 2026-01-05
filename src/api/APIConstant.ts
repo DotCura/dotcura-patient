@@ -6,11 +6,14 @@ export const ApiBaseURL = {
 // export const socketUrl = '';
 
 // API end points
-const AUTH_PREFIX = 'patient/';
+const PATIENT_PREFIX = 'patient/';
 
 export const ApiEndPoints = {
   AUTH: {
-    LOGIN: `${AUTH_PREFIX}login`,
+    LOGIN: `${PATIENT_PREFIX}login`,
+    RESENDOTP: `${PATIENT_PREFIX}resentOtp`,
+    VERIFYOTP: `${PATIENT_PREFIX}verifyOtp`,
+    COMPLETEPROFILE: `${PATIENT_PREFIX}update_patient`,
   },
 };
 
@@ -31,7 +34,6 @@ export const StatusCode = {
   // COMPLETE_PROFILE_ONE: 411,
   // COMPLETE_PROFILE_TWO: 412,
   // COMPLETE_PROFILE_THREE: 413,
-  // INVALID_OR_FAIL: 0,
   // NO_DATA_FOUND: 0,
   // DELETE_ACCOUNT: 3,
   // REDIRECT_TO_PROFILE: 11,
@@ -39,7 +41,7 @@ export const StatusCode = {
   // REDIRECT_TO_PROFILE_TYPE: 13,
   
   USER_SESSION_EXPIRE: -1,
-  OPERATION_FAILED: 0,
+  INVALID_OR_FAIL: 0,
   SUCCESS: 1,
   NO_DATA_FOUND: 2,
   INACTIVE_ACCOUNT: 3,

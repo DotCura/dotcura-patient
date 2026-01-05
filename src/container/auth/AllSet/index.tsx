@@ -14,27 +14,9 @@ const AllSetContainer = ({ navigation }: any) => {
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [{name: ScreenNames.BOTTOMTABNAVIGATION}],
+        routes: [{ name: ScreenNames.BOTTOMTABNAVIGATION }],
       }),
     );
-    // navigation.dispatch(
-    //   CommonActions.reset({
-    //     index: 0,
-    //     routes: [
-    //       {
-    //         name: 'TransitionFlow',
-    //         state: {
-    //           index: 0,
-    //           routes: [
-    //             {
-    //               name: ScreenNames.BOTTOMTABNAVIGATION,
-    //             },
-    //           ],
-    //         },
-    //       },
-    //     ],
-    //   })
-    // );
   };
 
   return (

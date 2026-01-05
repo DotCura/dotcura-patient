@@ -13,8 +13,9 @@ import {
   StatusCode,
   toggleLoader,
 } from '../../../api/APIConstant';
-import { flashMessageSucess } from '../../../constants/GConstant';
+import { flashMessageSucess, flashMessageWarning } from '../../../constants/GConstant';
 import { APIManager } from '../../../api/APIManager';
+import { DeviceInfoManager } from '../../../constants/utils/DeviceInfo';
 
 const LoginContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -93,21 +94,20 @@ const LoginContainer = ({ navigation }: any) => {
         phone_number: plainText,
         device_token: '0',
         device_type: Platform.OS == 'ios' ? 'I' : 'A',
+        os_version: DeviceInfoManager.getSystemVersion(),
       };
 
       const callback = async (responseData: any) => {
-        console.log(responseData, 'reponseData of api');
-
         toggleLoader(false);
-        if (responseData.code === StatusCode.NO_DATA_FOUND) {
-          // Handle error states
-        } else if (responseData.code === StatusCode.OTP_NOT_VERIFIED) {
-          console.log(responseData, 'resposneDate');
-
-          // flashMessageSucess(responseData.message);
-          // navigation.navigate(ScreenNames.OTPCONTAINER,{responseData:responseData.data} );
-        } else {
-          // Optional: other cases
+        if (responseData.code === StatusCode.OTP_NOT_VERIFIED) {
+          console.log(responseData, 'RESPONSELOGIN');
+          flashMessageSucess(responseData.message);
+          navigation.navigate(ScreenNames.OTPCONTAINER, {
+            LoginData: responseData.data,
+          });
+        }
+        else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
         }
       };
 
