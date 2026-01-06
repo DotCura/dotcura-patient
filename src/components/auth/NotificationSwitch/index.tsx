@@ -55,7 +55,7 @@ const NotificationSwitchComponent = (props: any) => {
           />
         </View>
         <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
-          {props.notificationSettings.email.map((item: any) => (
+          {props?.notificationSettings?.email?.map((item: any) => (
             <SettingItem
               key={item.id}
               label={item.name}
@@ -75,7 +75,7 @@ const NotificationSwitchComponent = (props: any) => {
           />
         </View>
         <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
-          {props.notificationSettings.sms.map((item: any) => (
+          {props?.notificationSettings?.sms?.map((item: any) => (
             <SettingItem
               key={item.id}
               label={item.name}
@@ -93,7 +93,7 @@ const NotificationSwitchComponent = (props: any) => {
           />
         </View>
         <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
-          {props.notificationSettings.push.map((item: any) => (
+          {props?.notificationSettings?.push?.map((item: any) => (
             <SettingItem
               key={item.id}
               label={item.name}

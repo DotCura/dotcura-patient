@@ -26,7 +26,7 @@ const AccountComponent = (props: any) => {
         dontShowStartBtn={false}
         showTitle={true}
         showSubTitle={true}
-        centerSubTitle={'Giovanni (tu)'}
+        centerSubTitle={`${props.fullName} (tu)`}
         showEndBtn={true}
         isSaveIcon={true}
         onClickSave={props.handlePressContinue}
@@ -183,8 +183,7 @@ const AccountComponent = (props: any) => {
           <View
             style={{
               marginTop: getHeight(12),
-              marginBottom:
-                props.insets.bottom + getHeight(10),
+              marginBottom: props.insets.bottom + getHeight(10),
             }}
           >
             {/* vwMedicazioni */}

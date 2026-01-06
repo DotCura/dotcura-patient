@@ -3,7 +3,11 @@ import React, { useEffect, useState } from 'react';
 import KitDetailsComponent from '../../components/KitDetails';
 import AppHeader from '../../global/Header';
 import { images } from '../../constants/Images';
-import { activityOpacity, currency } from '../../constants/GConstant';
+import {
+  activityOpacity,
+  currency,
+  flashMessageWarning,
+} from '../../constants/GConstant';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
@@ -12,10 +16,16 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 import { ScreenNames } from '../../constants/AppConstants';
 import { getTranslation } from '../../localization/i18n/i18n.config';
+import {
+  ApiEndPoints,
+  MethodType,
+  StatusCode,
+  toggleLoader,
+} from '../../api/APIConstant';
+import { APIManager } from '../../api/APIManager';
 
-const KitDetailsContainer = ({ navigation }: any) => {
+const KitDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
-  
 
   const kitsData = [
     {
@@ -181,9 +191,44 @@ const KitDetailsContainer = ({ navigation }: any) => {
   useEffect(() => {
     header();
   }, []);
+
+  //==================API=========================
+
+  const _kitDetailsApi = async () => {
+    try {
+      const params = {
+        kit_id: route?.params?.kitId,
+      };
+
+      const callback = async (responseData: any) => {
+        console.log(responseData, 'reponseData of api Kit Details');
+        toggleLoader(false);
+        if (responseData.code === StatusCode.SUCCESS) {
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.BOTTOMTAB.KITDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('kit details error:', error);
+    }
+  };
+
+  useEffect(() => {
+    _kitDetailsApi();
+  }, []);
+
   return (
     <KitDetailsComponent
-    navigation={navigation}
+      navigation={navigation}
       insets={insets}
       kitsArrayData={kitsArrayData}
       renderItemKitsData={renderItemKitsData}

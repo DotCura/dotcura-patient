@@ -14,13 +14,16 @@ export const ApiEndPoints = {
     RESENDOTP: `${PATIENT_PREFIX}resentOtp`,
     VERIFYOTP: `${PATIENT_PREFIX}verifyOtp`,
     COMPLETEPROFILE: `${PATIENT_PREFIX}update_patient`,
-  },
+  },  
   BOTTOMTAB:{
     KITLIST:`${PATIENT_PREFIX}getKitList`,
+    KITDETAILS:`${PATIENT_PREFIX}getKitDetails`,
   },
   SETTINGS:{
     GETNOTIFICATIONTYPE: `${PATIENT_PREFIX}getNotificationTypes`,
     ADDUPDATENOTICATIONTYPE: `${PATIENT_PREFIX}addOrUpdateNotificationPermission`,
+    LOGOUT:`${PATIENT_PREFIX}logout`,
+    DELETEACCOUNT:`${PATIENT_PREFIX}delete_user`,
   }
 };
 

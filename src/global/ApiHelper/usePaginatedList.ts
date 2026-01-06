@@ -88,7 +88,6 @@ export function usePaginatedList<T>({
       switch (res.code) {
         case 1: {
           const incoming = res.data ?? [];
-          console.log('incoming', incoming, loadType === LoadType.LOAD_MORE);
 
           const nextHasMore = incoming.length === pageSize;
 
@@ -96,7 +95,6 @@ export function usePaginatedList<T>({
           setPage(pageToLoad);
 
           setData(prev => {
-            console.log('PREV DATA 👉', prev);
             onEndReachedGuard.current = false;
             return loadType === LoadType.LOAD_MORE
               ? [...prev, ...incoming]

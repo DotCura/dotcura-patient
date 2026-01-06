@@ -258,7 +258,6 @@ const GetTestedContainer = ({ navigation }: any) => {
 
   const [kitCount, setkitCount] = useState(31);
   const [kitData, setKitData] = useState<any>([]);
-  console.log('kitData==================', kitData);
 
   const [analitiData, setAnalitiData] = useState<any>([]);
   const [searchVisible, setSearchVisible] = useState(false);
@@ -310,7 +309,9 @@ const GetTestedContainer = ({ navigation }: any) => {
   const renderKitData = ({ item, index }: any) => {
     return (
       <TouchableOpacity
-        onPress={handleNavigateKitDetails}
+        onPress={() => {
+          handleNavigateKitDetails(item.id);
+        }}
         activeOpacity={activityOpacity}
         style={{
           width: ScreenDimensions.screenWidth / 2 - getWidth(32),
@@ -422,10 +423,12 @@ const GetTestedContainer = ({ navigation }: any) => {
     navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
   };
 
-  const handleNavigateKitDetails = () => {
-    // navigation.navigate(ScreenNames.KITDETAILSCONTAINER);
+  const handleNavigateKitDetails = (kitId: any) => {
     navigation.navigate('TransitionFlow', {
       screen: ScreenNames.KITDETAILSCONTAINER,
+      params: {
+        kitId: kitId,
+      },
     });
   };
 
@@ -563,7 +566,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       checkup={checkup}
       analiti={analiti}
       kitData={kitData}
-      analitiData={analiti.data}
+      analitiData={analitiData}
       renderKitData={renderKitData}
       renderAnalitiData={renderAnalitiData}
       searchVisible={searchVisible}

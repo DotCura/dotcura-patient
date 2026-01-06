@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment';
 import { getTranslation } from '../../localization/i18n/i18n.config';
@@ -8,6 +8,8 @@ import { ScreenNames } from '../../constants/AppConstants';
 import AppHeader from '../../global/Header';
 import AccountComponent from '../../components/Account';
 import { regex } from '../../constants/Regex';
+import { MmkvManager } from '../../constants/utils/MmkvManager';
+import { useFocusEffect } from '@react-navigation/native';
 
 const AccountContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -101,9 +103,10 @@ const AccountContainer = ({ navigation }: any) => {
     } else if (!regex.email.test(email.trim())) {
       setEmailError(getTranslation('errorMessageValidEmail'));
       return;
-    }
-    else if (!placeOfBirth.trim()) {
-      setPlaceOfBirthErrorError(getTranslation('errorMessagePlaceOfBirthRequired'));
+    } else if (!placeOfBirth.trim()) {
+      setPlaceOfBirthErrorError(
+        getTranslation('errorMessagePlaceOfBirthRequired'),
+      );
       return;
     } else if (formattedDate == '') {
       flashMessageWarning(getTranslation('pleaseselectdateofbirth'));
@@ -154,7 +157,7 @@ const AccountContainer = ({ navigation }: any) => {
           dontShowStartBtn={false}
           showTitle={true}
           showSubTitle={true}
-          centerSubTitle={'Giovanni (tu)'}
+          centerSubTitle={`${fullName} (tu)`}
           showEndBtn={true}
           isSaveIcon={true}
           onClickSave={handlePressContinue}
@@ -164,10 +167,8 @@ const AccountContainer = ({ navigation }: any) => {
   };
 
   useEffect(() => {
-    console.log('hy');
-
     header();
-  });
+  }, []);
 
   //model
   const [patologie, setPatologie] = useState([
@@ -250,6 +251,23 @@ const AccountContainer = ({ navigation }: any) => {
       setAllergie(prev => prev.filter((item: any) => item.id !== id));
     }
   };
+
+  //====================API===============================
+
+  useFocusEffect(
+    useCallback(() => {
+      MmkvManager.getData(MmkvManager.Keys.userDetails, (value: any) => {
+        console.log('Profile Data of user', value);
+        setFullName(value.name);
+        setSurname(value.name);
+        setEmail(value.email);
+        setSelectedGender(value.gender == 'male' ? 1 : 2);
+        setTaxCode(value.tax_code);
+      });
+
+      return () => {};
+    }, []),
+  );
 
   return (
     <AccountComponent

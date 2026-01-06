@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../../constants/Images';
 import AppHeader from '../../global/Header';
@@ -12,7 +12,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { activityOpacity, appName, currency } from '../../constants/GConstant';
+import {
+  activityOpacity,
+  appName,
+  currency,
+  flashMessageSucess,
+} from '../../constants/GConstant';
 import {
   getHeight,
   getWidth,
@@ -24,60 +29,15 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 import { ScreenNames } from '../../constants/AppConstants';
 import { MmkvManager } from '../../constants/utils/MmkvManager';
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions, useFocusEffect } from '@react-navigation/native';
 import { ZustandStores } from '../../store';
+import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
+import { APIManager } from '../../api/APIManager';
 
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
 
-  const recommandAnalysis = [
-    {
-      id: '1',
-      title: 'Diabete',
-      description: 'Controllo glicemia e zuccheri',
-      price: '35.00',
-      kitimage: images.imgkit1,
-      isLiked: false,
-      isAdded: false,
-    },
-    {
-      id: '2',
-      title: 'Anemia',
-      description: 'Controllo ferro e globuli rossi',
-      price: '35.00',
-      kitimage: images.imgkit2,
-      isLiked: false,
-      isAdded: false,
-    },
-    {
-      id: '3',
-      title: 'Colesterolo',
-      description: 'Controllo colesterolo totale e HDL',
-      price: '40.00',
-      isLiked: false,
-      isAdded: false,
-      kitimage: images.imgkit3,
-    },
-    {
-      id: '4',
-      title: 'Tiroide',
-      description: 'Controllo TSH, FT3, FT4',
-      price: '45.00',
-      isLiked: false,
-      isAdded: false,
-      kitimage: images.imgkit4,
-    },
-    {
-      id: '5',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-      kitimage: images.imgkit5,
-    },
-  ];
   const data = [
     {
       id: '1',
@@ -176,126 +136,9 @@ const ProfileContainer = ({ navigation, route }: any) => {
       iscurv: false,
     },
   ];
-  const testKits = [
-    {
-      id: '1',
-      name: 'Diabete',
-      price: 35,
-      analyses: [
-        'Glicemia',
-        'Emoglobina glicata',
-        'Microalbuminuria',
-        'Urine',
-        'Creatininemia',
-        'Trigliceridi',
-        'Colesterolo HDL–LDL',
-      ],
-    },
-    {
-      id: '2',
-      name: 'Anemia',
-      price: 35,
-      analyses: [
-        'Glicemia',
-        'Emoglobina glicata',
-        'Microalbuminuria',
-        'Urine',
-        'Creatininemia',
-        'Trigliceridi',
-        'Colesterolo HDL–LDL',
-      ],
-    },
-  ];
-  const orderHistory = [
-    {
-      id: '1',
-      orderid: '#121314',
-      title: 'Diabetes',
-      status: 'Pagato',
-      date: '8/8/2025',
-      price: 35,
-    },
-    {
-      id: '2',
-      orderid: '#121314',
-      title: 'Diabetes',
-      status: 'Cancellato',
-      date: '8/8/2025',
-      price: 35,
-    },
-    {
-      id: '3',
-      orderid: '#121314',
-      title: 'Diabetes',
-      status: 'Pagato',
-      date: '8/8/2025',
-      price: 35,
-    },
-    {
-      id: '4',
-      orderid: '#121314',
-      title: 'Diabetes',
-      status: 'Pagato',
-      date: '8/8/2025',
-      price: 35,
-    },
-    {
-      id: '5',
-      orderid: '#121314',
-      title: 'Diabetes',
-      status: 'Pagato',
-      date: '8/8/2025',
-      price: 35,
-    },
-    {
-      id: '6',
-      orderid: '#121314',
-      title: 'Diabetes',
-      status: 'Cancellato',
-      date: '8/8/2025',
-      price: 35,
-    },
-  ];
-  const addressList = [
-    { id: 1, title: 'Use my location', subtitle: 'Allow geolocation' },
-    { id: 2, title: 'Home', subtitle: 'Via Roma, 31 – Naples' },
-    { id: 3, title: 'Apartment', subtitle: 'Piazzale Napoli, 21 – Rome' },
-  ];
 
-  const [settingsSwitch, setSettingsSwitch] = useState<any>({
-    email_24h: true,
-    email_results: false,
-    email_offers: false,
-    email_tips: false,
-    email_updates: false,
-
-    sms_1h: true,
-    sms_confirm: false,
-    sms_periodic: false,
-    sms_limited: false,
-    sms_urgent: false,
-
-    push_1h: false,
-    push_tracking: false,
-    push_results: false,
-    push_suggestions: true,
-    push_tips: true,
-  });
-
-  const [recommandAnalysisData, setrecommandAnalysisData] =
-    useState(recommandAnalysis);
   const [fullName, setFullName] = useState('Giovanni Carnevale');
   const [memberSince, setMemberSince] = useState('2025');
-  const [testkitsData, setTestsKitData] = useState(testKits);
-  const [orderHistoryData, setOrderHistoryData] = useState(orderHistory);
-  const [AddressData, setAddressData] = useState(addressList);
-  const [addressPopupVisible, setAddressPopupVisible] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(null);
-
-  //ModelVariables
-  const [isShowOrderHistoryModel, setIsShowOrderHistoryModel] = useState(false);
-  const [isShowOrderHistoryDetailsModel, setIsShowOrderHistoryDetailsModel] =
-    useState(false);
 
   const handleNavigation = () => {
     setOrderStatus('');
@@ -306,130 +149,6 @@ const ProfileContainer = ({ navigation, route }: any) => {
         routes: [{ name: ScreenNames.WELCOMECONTAINER }],
       }),
     );
-  };
-
-  const renderRecommandAnlaysisData = ({ item, index }: any) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={activityOpacity}
-        style={{
-          width: ScreenDimensions.screenWidth * 0.4,
-          borderRadius: 20,
-        }}
-      >
-        <View style={{ gap: getHeight(8) }}>
-          <ImageBackground style={styles.vwGrey} source={item.kitimage}>
-            <TouchableOpacity style={styles.btnPlusBlack}>
-              <Image source={images.imgPlusBlack} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btnFav}>
-              <Image source={images.imgFavFilled} />
-            </TouchableOpacity>
-          </ImageBackground>
-
-          {/* veProductDetails */}
-          <View>
-            <Text style={styles.lblTitle} numberOfLines={1}>
-              {item.title}
-            </Text>
-            <Text style={styles.lblDescription} numberOfLines={3}>
-              {item.description}
-            </Text>
-            <Text style={styles.lblPrice} numberOfLines={1}>
-              {currency}
-              {item.price}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  const renderItemTestKits = ({ item }: any) => {
-    return (
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Text style={styles.cardTitle}>{item.name}</Text>
-          <Text style={styles.cardPrice}>
-            {currency} {item.price.toFixed(2)}
-          </Text>
-        </View>
-        <Text style={styles.cardDesc}>
-          <Text style={styles.testedInlcuded}>
-            {getTranslation('testincluded')}
-          </Text>{' '}
-          {item.analyses.join(', ')}
-        </Text>
-      </View>
-    );
-  };
-
-  const renderItemOrderHistory = ({ item, index }: any) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={activityOpacity}
-        style={styles.btnOrderHistory}
-        onPress={funOpenOrderHistoryDetailsModel}
-      >
-        {/* orderDetailsView */}
-        <View style={styles.vwMainOrderDetails}>
-          <View style={{ flex: 1, gap: getHeight(2) }}>
-            <Text style={styles.lblOrderTitle}>{item.title}</Text>
-            <Text style={styles.lblOrderDate}>{item.date}</Text>
-            <Text style={styles.lblOrderID}>{item.orderid}</Text>
-          </View>
-          <View style={{ flexDirection: 'row', gap: getWidth(6) }}>
-            <Text style={styles.lblPrice}>
-              {currency} {item?.price?.toFixed(2)}
-            </Text>
-            <TouchableOpacity style={{ marginTop: 1 }}>
-              <Image source={images.imgRightBlack} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            alignSelf: 'flex-start',
-            backgroundColor:
-              item.status == 'Pagato' ? Colors.greenD9 : Colors.redFC,
-            borderRadius: 999,
-            height: getHeight(24),
-            paddingHorizontal: getWidth(8),
-          }}
-        >
-          <Text
-            style={{
-              color: item.status == 'Pagato' ? Colors.green0D : Colors.red40,
-              fontFamily: fontsfamily.medium,
-              fontSize: fontSize.size12,
-              letterSpacing: 0.1,
-            }}
-          >
-            {item.status}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  const funOpenOrderHistoryModel = () => {
-    setIsShowOrderHistoryModel(true);
-  };
-
-  const funCloseOrderHistoryModel = () => {
-    setIsShowOrderHistoryModel(false);
-  };
-
-  const funOpenOrderHistoryDetailsModel = () => {
-    setIsShowOrderHistoryModel(false);
-    setIsShowOrderHistoryDetailsModel(true);
-  };
-
-  const funCloseOrderHistoryDetailsModel = () => {
-    setIsShowOrderHistoryModel(true);
-    setIsShowOrderHistoryDetailsModel(false);
   };
 
   const handleNavigateAddFamily = () => {
@@ -447,7 +166,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      { text: 'OK', onPress: handleNavigation },
+      { text: 'OK', onPress: _logoutApi },
     ]);
   };
 
@@ -458,7 +177,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      { text: 'OK', onPress: handleNavigation },
+      { text: 'OK', onPress: _deleteAccountApi },
     ]);
   };
 
@@ -468,9 +187,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
         <AppHeader
           startBtnOnPress={() => {
             console.log('hy');
-            // navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-            //   screen: ScreenNames.HOMECONTAINER,
-            // });
+
             navigation.goBack();
           }}
           dontShowStartBtn={false}
@@ -478,7 +195,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
           showSubTitle={false}
           showEndBtn={true}
           isNotificationIcon={true}
-          NotificationPressFun={()=>{
+          NotificationPressFun={() => {
             navigation.navigate(ScreenNames.NOTIFICATIONLISTCONTAINER);
           }}
         />
@@ -490,12 +207,72 @@ const ProfileContainer = ({ navigation, route }: any) => {
     header();
   }, []);
 
-  useEffect(() => {
-    console.log('route', route?.params?.ismodelfromProfile);
-    if (route?.params?.ismodelfromProfile) {
-      setAddressPopupVisible(true);
+  // ========================== API ==========================
+
+  // Api Logout
+  const _logoutApi = async () => {
+    try {
+      const params = {};
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          handleNavigation();
+          flashMessageSucess(responseData.message);
+        } else {
+          flashMessageSucess(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.SETTINGS.LOGOUT,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('LogOut error:', error);
     }
-  }, [route?.params]);
+  };
+
+  // Api Delete User
+  const _deleteAccountApi = async () => {
+    try {
+      const params = {};
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          handleNavigation();
+        } else {
+          flashMessageSucess(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.SETTINGS.DELETEACCOUNT,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('Delete User error:', error);
+    }
+  };
+
+  //=== ProfileFocus ====
+  useFocusEffect(
+    useCallback(() => {
+      MmkvManager.getData(MmkvManager.Keys.userDetails, (value: any) => {
+        console.log('Profile Data of user', value);
+        setFullName(value.name);
+        const createdAt = value?.created_at;
+        setMemberSince(String(new Date(createdAt).getFullYear()));
+      });
+
+      return () => {};
+    }, []),
+  );
 
   return (
     <ProfileComponent
@@ -509,27 +286,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       dataTwo={dataTwo}
       dataThree={dataThree}
       insets={insets}
-      renderRecommandAnlaysisData={renderRecommandAnlaysisData}
-      recommandAnalysisData={recommandAnalysisData}
       handleNavigateAddFamily={handleNavigateAddFamily}
-      //orderhistoryDetails
-      isShowOrderHistoryDetailsModel={isShowOrderHistoryDetailsModel}
-      funOpenOrderHistoryDetailsModel={funOpenOrderHistoryDetailsModel}
-      funCloseOrderHistoryDetailsModel={funCloseOrderHistoryDetailsModel}
-      renderItemTestKits={renderItemTestKits}
-      testkitsData={testkitsData}
-      //OrderHistoryModel
-      isShowOrderHistoryModel={isShowOrderHistoryModel}
-      funOpenOrderHistoryModel={funOpenOrderHistoryModel}
-      funCloseOrderHistoryModel={funCloseOrderHistoryModel}
-      renderItemOrderHistory={renderItemOrderHistory}
-      orderHistoryData={orderHistoryData}
-      //AddressModel
-      AddressData={AddressData}
-      addressPopupVisible={addressPopupVisible}
-      setAddressPopupVisible={setAddressPopupVisible}
-      selectedAddress={selectedAddress}
-      setSelectedAddress={setSelectedAddress}
     />
   );
 };
