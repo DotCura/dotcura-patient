@@ -1,4 +1,3 @@
-
 import CryptoJS from 'crypto-js';
 import {
   ApiBaseURL,
@@ -28,7 +27,7 @@ const ENC_IV = CryptoJS.enc.Utf8.parse(ApiKeys.IV);
 ======================= */
 const getUserToken = () =>
   new Promise<string | null>(resolve => {
-    MmkvManager.getData(MmkvManager.Keys.userToken, (value:any) => {
+    MmkvManager.getData(MmkvManager.Keys.userToken, (value: any) => {
       resolve(value);
     });
   });
@@ -91,6 +90,7 @@ export const APIManager = {
     method,
     apiEndPoint,
     callback,
+    showLoader = true,
     params,
   }: any) => {
     /* ---- Internet check ---- */
@@ -102,10 +102,13 @@ export const APIManager = {
       });
       return;
     }
-
+    console.log('showLoader=================', showLoader);
 
     try {
       /* ---- Headers ---- */
+      if (showLoader) {
+        toggleLoader(true);
+      }
       const headers: any = APIManager.getHeader();
 
       /* ---- Token (awaited) ---- */
@@ -118,9 +121,7 @@ export const APIManager = {
       }
 
       /* ---- Encrypt Params ---- */
-      const dataToSend = params
-        ? APIManager.encryptText(params)
-        : null;
+      const dataToSend = params ? APIManager.encryptText(params) : null;
 
       /* ---- Logs ---- */
       console.log(
@@ -128,17 +129,17 @@ export const APIManager = {
       );
       console.log('\n========== Headers ==========\n', headers);
       console.log('\n========== Method ==========\n', method);
-      console.log('\n========== URL ==========\n', APIManager.getURL(apiEndPoint));
+      console.log(
+        '\n========== URL ==========\n',
+        APIManager.getURL(apiEndPoint),
+      );
       console.log('\n========== Params ==========\n', params);
       console.log('\n========== Encrypted ==========\n', dataToSend);
 
       /* ---- Axios Call ---- */
       let response;
       if (method === MethodType.GET) {
-        response = await axios.get(
-          APIManager.getURL(apiEndPoint),
-          { headers },
-        );
+        response = await axios.get(APIManager.getURL(apiEndPoint), { headers });
       } else {
         response = await axios.post(
           APIManager.getURL(apiEndPoint),
@@ -159,6 +160,10 @@ export const APIManager = {
           '\n🚀🚀🚀 <========= API Request Log End =========> 🚀🚀🚀\n\n',
         );
 
+        if (showLoader) {
+          toggleLoader(false);
+        }
+
         if (responseData.code === StatusCode.USER_SESSION_EXPIRE) {
           handleUnauthorized();
         } else {
@@ -172,10 +177,16 @@ export const APIManager = {
 
       if (error?.response?.status === 401) {
         handleUnauthorized();
+        if (showLoader) {
+          toggleLoader(false);
+        }
       } else {
         callback(null, { message: error.message });
+        if (showLoader) {
+          toggleLoader(false);
+        }
       }
-    } 
+    }
 
     /* =======================
        Unauthorized Handler

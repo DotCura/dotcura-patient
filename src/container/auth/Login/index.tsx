@@ -86,7 +86,6 @@ const LoginContainer = ({ navigation }: any) => {
   const _loginApi = async () => {
     try {
       console.log('callLogin Api');
-      toggleLoader(true);
       const plainText = phoneNumber.replace(/ /g, '');
 
       const params = {

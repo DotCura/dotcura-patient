@@ -15,6 +15,13 @@ export const ApiEndPoints = {
     VERIFYOTP: `${PATIENT_PREFIX}verifyOtp`,
     COMPLETEPROFILE: `${PATIENT_PREFIX}update_patient`,
   },
+  BOTTOMTAB:{
+    KITLIST:`${PATIENT_PREFIX}getKitList`,
+  },
+  SETTINGS:{
+    GETNOTIFICATIONTYPE: `${PATIENT_PREFIX}getNotificationTypes`,
+    ADDUPDATENOTICATIONTYPE: `${PATIENT_PREFIX}addOrUpdateNotificationPermission`,
+  }
 };
 
 // API methods

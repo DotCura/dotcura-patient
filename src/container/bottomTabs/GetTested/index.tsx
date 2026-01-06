@@ -1,18 +1,18 @@
 import {
   Image,
   ImageBackground,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { act, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { styles } from './styles';
 import GetTestedComponent from '../../../components/bottomTabs/GetTested';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   activityOpacity,
   currency,
+  flashMessageWarning,
   getRandomTheme,
 } from '../../../constants/GConstant';
 import {
@@ -23,10 +23,22 @@ import {
 import { images } from '../../../constants/Images';
 import { ScreenNames } from '../../../constants/AppConstants';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
+import { APIManager } from '../../../api/APIManager';
+import {
+  ApiEndPoints,
+  MethodType,
+  StatusCode,
+  toggleLoader,
+} from '../../../api/APIConstant';
+import { useDebounce } from '../../../constants/utils/useDebounce';
+import {
+  LoadType,
+  usePaginatedList,
+} from '../../../global/ApiHelper/usePaginatedList';
+import { apiPromise } from '../../../global/ApiHelper/apiPromise';
+import FastImage from '@d11/react-native-fast-image';
 
 const GetTestedContainer = ({ navigation }: any) => {
-  console.log('rebder getetsted');
-
   const insets = useSafeAreaInsets();
 
   const kitList = [
@@ -245,8 +257,10 @@ const GetTestedContainer = ({ navigation }: any) => {
   ];
 
   const [kitCount, setkitCount] = useState(31);
-  const [kitData, setKitData] = useState(kitList);
-  const [analitiData, setAnalitiData] = useState(analitiList);
+  const [kitData, setKitData] = useState<any>([]);
+  console.log('kitData==================', kitData);
+
+  const [analitiData, setAnalitiData] = useState<any>([]);
   const [searchVisible, setSearchVisible] = useState(false);
   const [isFilterModelVisible, setIsFilterModelVisible] = useState(false);
 
@@ -262,16 +276,38 @@ const GetTestedContainer = ({ navigation }: any) => {
   const [checkupcount, setCheckupCount] = useState(31);
   const [analiticount, setAnalitiCount] = useState(31);
 
+  const [searchHistory, setSeachHistory] = useState('');
+
+  const debouncedSearch = useDebounce(searchHistory, 400);
+
   const toggleAddKit = (id: string) => {
-    setKitData(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, isAdded: !item.isAdded } : item,
+    console.log('toggleAddKit', id);
+
+    setKitData((prev: any) =>
+      prev.map((item: any) =>
+        item.id === id ? { ...item, is_in_cart: !item.is_in_cart } : item,
       ),
     );
   };
 
+  const darkenColor = (hex: string, amount = 0.25) => {
+    // remove #
+    const color = hex.replace('#', '');
+
+    const num = parseInt(color, 16);
+
+    let r = (num >> 16) & 0xff;
+    let g = (num >> 8) & 0xff;
+    let b = num & 0xff;
+
+    r = Math.max(0, Math.floor(r * (1 - amount)));
+    g = Math.max(0, Math.floor(g * (1 - amount)));
+    b = Math.max(0, Math.floor(b * (1 - amount)));
+
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+
   const renderKitData = ({ item, index }: any) => {
-    const { backgroundColor, textColor } = getRandomTheme();
     return (
       <TouchableOpacity
         onPress={handleNavigateKitDetails}
@@ -283,8 +319,11 @@ const GetTestedContainer = ({ navigation }: any) => {
         }}
       >
         <View style={{ gap: getHeight(8) }}>
-          <ImageBackground source={item.kitimages} style={styles.vwGrey}>
-            {item.isAdded ? (
+          <ImageBackground
+            source={{ uri: item.kit_image }}
+            style={styles.vwGrey}
+          >
+            {item.is_in_cart ? (
               <TouchableOpacity
                 style={styles.btnPlusBlue}
                 activeOpacity={activityOpacity}
@@ -301,10 +340,10 @@ const GetTestedContainer = ({ navigation }: any) => {
                 <Image source={images.imgPlusBlack} />
               </TouchableOpacity>
             )}
-            {item.status != null && (
+            {item.kit_label != null && (
               <View
                 style={{
-                  backgroundColor: backgroundColor,
+                  backgroundColor: item.kit_label_color,
                   position: 'absolute',
                   bottom: 8,
                   left: 8,
@@ -317,10 +356,13 @@ const GetTestedContainer = ({ navigation }: any) => {
                 }}
               >
                 <Text
-                  style={[styles.lblStatus, { color: textColor }]}
+                  style={[
+                    styles.lblStatus,
+                    { color: darkenColor(item.kit_label_color, 0.8) },
+                  ]}
                   numberOfLines={2}
                 >
-                  {item.status}
+                  {item.kit_label}
                 </Text>
               </View>
             )}
@@ -329,7 +371,7 @@ const GetTestedContainer = ({ navigation }: any) => {
           {/* veProductDetails */}
           <View>
             <Text style={styles.lblTitle} numberOfLines={1}>
-              {item.title}
+              {item.kit_name}
             </Text>
             <Text style={styles.lblDescription} numberOfLines={3}>
               {item.description}
@@ -343,6 +385,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       </TouchableOpacity>
     );
   };
+
   const renderAnalitiData = ({ item, index }: any) => {
     return (
       <TouchableOpacity
@@ -356,9 +399,12 @@ const GetTestedContainer = ({ navigation }: any) => {
         style={styles.btnAnalitiMain}
       >
         <View style={styles.vwtitleimage}>
-          <Image source={item.analitiimages} />
+          <FastImage
+            source={{ uri: item.kit_image }}
+            style={styles.imganaliti}
+          />
           <Text style={styles.lblAnalitiLabel} numberOfLines={2}>
-            {item.title}
+            {item.kit_name}
           </Text>
         </View>
         <View style={styles.vwCurrencyPrice}>
@@ -416,12 +462,108 @@ const GetTestedContainer = ({ navigation }: any) => {
     (selectedGender ? 1 : 0) +
     (selectedAge ? 1 : 0);
 
+  //==================API=============================
+
+  const fetchCheckupList = useCallback(
+    async ({
+      page,
+      searchQuery,
+      loadType,
+    }: {
+      page: number;
+      searchQuery?: string;
+      loadType: any;
+    }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.BOTTOMTAB.KITLIST,
+        method: 'POST',
+        showLoader:
+          loadType === LoadType.INITIAL || loadType === LoadType.TAB_CHANGE,
+        params: {
+          page,
+          kit_type: 'CHECKUP',
+          ...(searchQuery ? { search: searchQuery } : {}),
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data?.items ?? [], // ✅ always array
+      };
+    },
+    [navigation],
+  );
+
+  const fetchAnalitiList = useCallback(
+    async ({
+      page,
+      searchQuery,
+      loadType,
+    }: {
+      page: number;
+      searchQuery?: string;
+      loadType: any;
+    }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.BOTTOMTAB.KITLIST,
+        method: 'POST',
+        showLoader:
+          loadType === LoadType.INITIAL || loadType === LoadType.TAB_CHANGE,
+        params: {
+          page,
+          kit_type: 'ANALYSIS',
+          ...(searchQuery ? { search: searchQuery } : {}),
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data?.items ?? [], // ✅ always array
+      };
+    },
+    [navigation],
+  );
+
+  const checkup: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: selectedTab === 'checkup',
+    searchQuery: debouncedSearch,
+    fetcher: fetchCheckupList,
+  });
+
+  const analiti: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: selectedTab === 'analiti',
+    searchQuery: debouncedSearch,
+    fetcher: fetchAnalitiList,
+  });
+
+  //local Kit data state whenever it changes
+  useEffect(() => {
+    if (checkup.data) {
+      setKitData(checkup.data);
+    }
+  }, [checkup.data]);
+
+  //local analiti data state whenever it changes
+  useEffect(() => {
+    if (analiti.data) {
+      setAnalitiData(analiti.data);
+    }
+  }, [analiti.data]);
+
   return (
     <GetTestedComponent
       insets={insets}
       kitCount={kitCount}
+      checkup={checkup}
+      analiti={analiti}
       kitData={kitData}
-      analitiData={analitiData}
+      analitiData={analiti.data}
       renderKitData={renderKitData}
       renderAnalitiData={renderAnalitiData}
       searchVisible={searchVisible}
@@ -445,6 +587,8 @@ const GetTestedContainer = ({ navigation }: any) => {
       setSelectedTab={setSelectedTab}
       checkupcount={checkupcount}
       analiticount={analiticount}
+      searchHistory={searchHistory}
+      setSeachHistory={setSeachHistory}
     />
   );
 };

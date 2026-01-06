@@ -134,7 +134,6 @@ const CompleteProfileContainer = ({ navigation }: any) => {
 
   const _completeProfileApi = async () => {
     try {
-      toggleLoader(true);
       const params = {
         steps: '1',
         name: fullName + ' ' + surname,

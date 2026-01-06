@@ -189,7 +189,6 @@ const OTPContainer = ({ navigation, route }: any) => {
 
   const _reSendOTPApi = async () => {
     try {
-      toggleLoader(true);
       const params = {
         country_code: loginDataParams?.country_code,
         phone_number: loginDataParams?.phone_number,
@@ -229,7 +228,6 @@ const OTPContainer = ({ navigation, route }: any) => {
 
   const _verifyOTPApi = async () => {
     try {
-      toggleLoader(true);
       const params = {
         country_code: loginDataParams?.country_code,
         phone_number: loginDataParams?.phone_number,

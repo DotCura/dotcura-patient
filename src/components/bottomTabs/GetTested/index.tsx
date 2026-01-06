@@ -1,16 +1,15 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Modal,
   Pressable,
-  ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { act } from 'react';
+import React from 'react';
 import { styles } from './styles';
 import { constnatStyles } from '../../../constants/Styles';
 import {
@@ -22,7 +21,6 @@ import { images } from '../../../constants/Images';
 import { activityOpacity } from '../../../constants/GConstant';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { Colors } from '../../../constants/Colors';
-import { fontSize } from '../../../constants/FontSizes';
 import { fontsfamily } from '../../../constants/FontFamily';
 import { ZustandStores } from '../../../store';
 import CustomButton from '../../../global/Buttons';
@@ -62,15 +60,9 @@ const GetTestedComponent = (props: any) => {
       },
     ],
   }));
-  
 
   return (
-    <View
-      style={[
-        constnatStyles.vwContainer,
-        { paddingHorizontal: 0 },
-      ]}
-    >
+    <View style={[constnatStyles.vwContainer, { paddingHorizontal: 0 }]}>
       {/* vwHeader */}
       <View>
         {/* NORMAL HEADER */}
@@ -95,7 +87,9 @@ const GetTestedComponent = (props: any) => {
 
           <View style={styles.vwHeaderRight}>
             <TouchableOpacity
-              onPress={() => props.setSearchVisible(true)}
+              onPress={() => {
+                props.setSearchVisible(true);
+              }}
               activeOpacity={activityOpacity}
               style={styles.vwHeaderbtn}
             >
@@ -131,11 +125,18 @@ const GetTestedComponent = (props: any) => {
               cursorColor={Colors.gray0F}
               selectionColor={Colors.gray0F}
               autoFocus={props.searchVisible}
+              value={props.searchHistory}
+              onChangeText={(text: any) => {
+                props.setSeachHistory(text);
+              }}
             />
           </View>
 
           <TouchableOpacity
-            onPress={() => props.setSearchVisible(false)}
+            onPress={() => {
+              props.setSearchVisible(false);
+              props.setSeachHistory('');
+            }}
             style={styles.btnClose}
             activeOpacity={activityOpacity}
           >
@@ -224,9 +225,15 @@ const GetTestedComponent = (props: any) => {
       {props.selectedTab === 'checkup' ? (
         <FlatList
           key={'checkup-2'}
-          // onEndReached={() => {
-          //   console.log('callendcheckup');
-          // }}
+          onEndReached={props.checkup.loadMore}
+          onEndReachedThreshold={0.5}
+          refreshing={props.checkup.refreshing}
+          onRefresh={props.checkup.refresh}
+          ListFooterComponent={
+            props.checkup.loadingMore ? (
+              <ActivityIndicator size="large" color={Colors.blue002} />
+            ) : null
+          }
           numColumns={2}
           data={props.kitData}
           renderItem={props.renderKitData}
@@ -236,14 +243,20 @@ const GetTestedComponent = (props: any) => {
             gap: getWidth(12),
             marginTop: getHeight(20),
             alignSelf: 'center',
-            paddingBottom: getHeight(250),
+            paddingBottom: getHeight(150),
           }}
         />
       ) : (
         <FlatList
-          // onEndReached={() => {
-          //   console.log('callendanaliti');
-          // }}
+          onEndReached={props.analiti.loadMore}
+          onEndReachedThreshold={0.5}
+          refreshing={props.analiti.refreshing}
+          onRefresh={props.analiti.refresh}
+          ListFooterComponent={
+            props.analiti.loadingMore ? (
+              <ActivityIndicator size="large" color={Colors.blue002} />
+            ) : null
+          }
           key={'analiti-1'}
           keyExtractor={item => item.id.toString()}
           numColumns={1}
@@ -252,7 +265,7 @@ const GetTestedComponent = (props: any) => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             gap: getWidth(12),
-            paddingBottom: getHeight(250),
+            paddingBottom: getHeight(150),
             marginTop: getHeight(20),
           }}
         />
@@ -413,8 +426,7 @@ const GetTestedComponent = (props: any) => {
               style={{
                 marginHorizontal: getWidth(16),
                 marginTop: getHeight(164),
-                marginBottom:
-                props.insets.bottom + getHeight(16),
+                marginBottom: props.insets.bottom + getHeight(16),
               }}
             >
               <CustomButton

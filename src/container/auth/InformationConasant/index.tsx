@@ -28,7 +28,6 @@ const InformationConasantContainer = ({ navigation }: any) => {
 
   const _infoConstantApi = async () => {
     try {
-      toggleLoader(true);
       const params = {
         steps: '2',
         terms: selectedInfo == 1 ? 0 : 2,

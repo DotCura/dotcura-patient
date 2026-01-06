@@ -5,6 +5,11 @@ import { fontSize } from '../../../constants/FontSizes';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
+  imganaliti:{
+    height:getHeight(25),
+    width:getWidth(25),
+    borderRadius:100,
+  },
   vwCurrencyPrice: {
     flexDirection: 'row',
     alignItems: 'center',
