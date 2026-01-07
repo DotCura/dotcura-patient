@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size14,
   },
   lblTestName: {
-    // flex: 1,
+    
     color: Colors.gray0F,
     fontFamily: fontsfamily.gmedium,
     fontSize: fontSize.size16,

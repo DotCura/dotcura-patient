@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     marginTop: getHeight(11),
     height: getHeight(237),
+    overflow:'hidden',
     borderTopLeftRadius: 26,
     borderTopRightRadius: 26,
     borderBottomLeftRadius: 20,

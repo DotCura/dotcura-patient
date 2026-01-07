@@ -39,13 +39,13 @@ const KitDetailsComponent = (props: any) => {
         showsVerticalScrollIndicator={false}
       >
         <ImageBackground
-          source={images.imgKidDetailsImg}
+          source={{uri:props?.kitsArrayData?.kit_image}}
           style={styles.imgkitdetails}
         >
           <View style={styles.vwHeaderTitle}>
-            <Text style={styles.kittitle}>Anemia</Text>
+            <Text style={styles.kittitle}>{props?.kitsArrayData?.name}</Text>
             <Text style={styles.kitsubtitle}>
-              9 {getTranslation('analytesinthekit')}
+              {props?.kitsTestData?.length} {getTranslation('analytesinthekit')}
             </Text>
           </View>
         </ImageBackground>
@@ -74,18 +74,6 @@ const KitDetailsComponent = (props: any) => {
             <Text style={styles.lblAnlaytics} numberOfLines={1}>
               {getTranslation('analytics')}
             </Text>
-            {/* <TouchableOpacity
-              style={styles.btnSelectAll}
-              activeOpacity={activityOpacity}
-              onPress={props.selectAll}
-            >
-              <Image source={images.addblue} />
-              <Text style={styles.lblSelectAll}>
-                {props.selectedTests.length === props.kitsArrayData.length
-                  ? getTranslation('selectall')
-                  : getTranslation('desellectall')}
-              </Text>
-            </TouchableOpacity> */}
           </View>
 
           <View>
@@ -94,10 +82,10 @@ const KitDetailsComponent = (props: any) => {
                 console.log('callend');
               }}
               bounces={false}
-              data={props.kitsArrayData}
+              data={props.kitsTestData}
               renderItem={props.renderItemKitsData}
               showsVerticalScrollIndicator={false}
-              keyExtractor={item => item.id.toString()}
+              keyExtractor={item => item.test_id}
               contentContainerStyle={{
                 marginTop: getHeight(16),
                 gap: getHeight(20),
@@ -156,29 +144,26 @@ const KitDetailsComponent = (props: any) => {
 
       {/* vwGotoCart */}
       <PressScale onPress={props.handleNavigateCheckout}>
-      <View
-        style={[
-          styles.vwGoToCart,
-          {
-            bottom:
-               getHeight(30),
-          },
-        ]}
-        
-      >
-        <View style={styles.vwCartImage}>
-          <Image source={images.imgCartHome} tintColor={Colors.white} />
-          <Text style={styles.lblGoToCart}>{getTranslation('addtoorder')}</Text>
-        </View>
-        <View style={styles.vwPrice}>
-          {/* {props.selectedTests.length === props.kitsArrayData.length && (
-            <Text style={styles.disprice}>{currency}0.54</Text>
-          )} */}
-          <Text style={styles.totalprice}>
+        <View
+          style={[
+            styles.vwGoToCart,
+            {
+              bottom: getHeight(30),
+            },
+          ]}
+        >
+          <View style={styles.vwCartImage}>
+            <Image source={images.imgCartHome} tintColor={Colors.white} />
+            <Text style={styles.lblGoToCart}>
+              {getTranslation('addtoorder')}
+            </Text>
+          </View>
+          <View style={styles.vwPrice}>
+            <Text style={styles.totalprice}>
             {currency} {props.totalPrice.toFixed(2)}
           </Text>
+          </View>
         </View>
-      </View>
       </PressScale>
     </>
   );

@@ -40,12 +40,12 @@ const AnalitiDetailsComponent = (props: any) => {
         <View style={styles.imgkitdetails}>
           <View style={styles.vwHeaderTitle}>
             <Image
-              source={images.imgHeart}
-              style={{ height: getHeight(64), aspectRatio: 1 }}
+              source={{uri:props?.analitiArrayData?.kit_image}}
+              style={{ height: getHeight(64), aspectRatio: 1, borderRadius: 10 }}
             />
-            <Text style={styles.kittitle}>Cuore e circolazione</Text>
+            <Text style={styles.kittitle}>{props?.analitiArrayData?.name}</Text>
             <Text style={styles.kitsubtitle}>
-              9 {getTranslation('analititextdetails')}
+              {props?.analitiArrayData?.tests?.length} {getTranslation('analititextdetails')}
             </Text>
           </View>
         </View>
@@ -56,10 +56,10 @@ const AnalitiDetailsComponent = (props: any) => {
             console.log('callend');
           }}
           bounces={false}
-          data={props.analitiArrayData}
+          data={props?.analitiArrayData?.tests}
           renderItem={props.renderItemAnalitiData}
           showsVerticalScrollIndicator={false}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.test_id.toString()}
           contentContainerStyle={{
             marginTop: getHeight(31),
             gap: getHeight(20),
@@ -133,7 +133,7 @@ const AnalitiDetailsComponent = (props: any) => {
           </View>
           <View style={styles.vwPrice}>
             <Text style={styles.totalprice}>
-              {currency} {props.totalPriceanaliti.toFixed(2)}
+              {currency} {props?.totalPriceanaliti?.toFixed(2)}
             </Text>
           </View>
         </View>

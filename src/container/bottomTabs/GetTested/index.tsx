@@ -392,10 +392,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       <TouchableOpacity
         activeOpacity={activityOpacity}
         onPress={() => {
-          navigation.navigate('TransitionFlow', {
-            screen: ScreenNames.ANALITIDETAILSCONTAINER,
-          });
-          // navigation.navigate(ScreenNames.ANALITIDETAILSCONTAINER);
+          handleNavigateAnalitiDetails(item.id);
         }}
         style={styles.btnAnalitiMain}
       >
@@ -428,6 +425,15 @@ const GetTestedContainer = ({ navigation }: any) => {
       screen: ScreenNames.KITDETAILSCONTAINER,
       params: {
         kitId: kitId,
+      },
+    });
+  };
+
+  const handleNavigateAnalitiDetails = (analitiId: any) => {
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.ANALITIDETAILSCONTAINER,
+      params: {
+        analitiId: analitiId,
       },
     });
   };

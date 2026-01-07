@@ -1,19 +1,13 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import KitDetailsComponent from '../../components/KitDetails';
 import AppHeader from '../../global/Header';
 import { images } from '../../constants/Images';
-import {
-  activityOpacity,
-  currency,
-  flashMessageWarning,
-} from '../../constants/GConstant';
+import { currency, flashMessageWarning } from '../../constants/GConstant';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
-import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { getWidth } from '../../constants/utils/Dimensions';
 import { Colors } from '../../constants/Colors';
-import { fontsfamily } from '../../constants/FontFamily';
-import { fontSize } from '../../constants/FontSizes';
 import { ScreenNames } from '../../constants/AppConstants';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import {
@@ -27,85 +21,9 @@ import { APIManager } from '../../api/APIManager';
 const KitDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
-  const kitsData = [
-    {
-      id: '1',
-      name: 'Emocromo',
-      desc: 'Conteggio completo delle cellule del sangue',
-      price: 7.0,
-      status: null,
-    },
-    {
-      id: '2',
-      name: 'Sideremia',
-      desc: 'Livello di ferro nel sangue',
-      price: 6.0,
-      status: null,
-    },
-    {
-      id: '3',
-      name: 'Ferritina',
-      desc: 'Riserve di ferro nell’organismo',
-      price: 6.0,
-      status: 'Da fare',
-    },
-    {
-      id: '4',
-      name: 'Emoglobulina A2',
-      desc: 'Proteina che trasporta il ferro',
-      price: 11.0,
-      status: null,
-    },
-    {
-      id: '5',
-      name: 'Vitamina B12',
-      desc: 'Vitamina essenziale per la produzione di globuli rossi',
-      price: 10.0,
-      status: null,
-    },
-    {
-      id: '6',
-      name: 'Sangue occulto',
-      desc: 'Ricerca di sangue nascosto nelle feci',
-      price: 12.0,
-      status: 'Deal',
-    },
-    {
-      id: '7',
-      name: 'Anticorpi transglutaminasi',
-      desc: 'Test per escludere celiachia',
-      price: 10,
-      status: null,
-    },
-  ];
-
-  const [kitsArrayData, setKitsArraysData] = useState(kitsData);
-  const [selectedTests, setSelectedTests] = useState<string[]>(
-    kitsArrayData.map(t => t.id),
-  );
-
-  // console.log('selectedTests', selectedTests);
-
-  const toggleSelect = (id: string) => {
-    setSelectedTests(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id],
-    );
-  };
-
-  const selectAll = () => {
-    if (selectedTests.length === kitsArrayData.length) {
-      setSelectedTests([]);
-    } else {
-      setSelectedTests(kitsArrayData.map(t => t.id));
-    }
-  };
-
-  const totalPrice = kitsArrayData
-    .filter(t => selectedTests.includes(t.id))
-    .reduce((sum, t) => sum + t.price, 0);
+  const [kitsArrayData, setKitsArraysData] = useState<any>({});
 
   const renderItemKitsData = ({ item, index }: { item: any; index: any }) => {
-    const selected = selectedTests.includes(item.id);
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View
@@ -119,41 +37,37 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
           <View style={{ alignSelf: 'flex-start' }}>
             <Image source={images.imglightbluetick} />
           </View>
-          <View style={{ flex: 1, marginRight: getWidth(20) }}>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={styles.lblTestName} numberOfLines={2}>
-                {item.name}{' '}
+          <View style={{ flex: 1, marginRight: getWidth(10) }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}
+            >
+              <Text style={styles.lblTestName} numberOfLines={3}>
+                {item.name}
               </Text>
-              {item.status && (
-                <View style={{ alignItems: 'center' }}>
-                  <Text
-                    style={[
-                      styles.lblStatus,
-                      {
-                        backgroundColor:
-                          index == 2
-                            ? Colors.greenD9
-                            : index == 5
-                            ? Colors.redFC
-                            : Colors.white,
-                        color:
-                          index == 2
-                            ? Colors.green0D
-                            : index == 5
-                            ? Colors.red40
-                            : Colors.white,
-                      },
-                    ]}
-                  >
-                    {item.status}
-                  </Text>
-                </View>
+
+              {item.test_label && (
+                <Text
+                  style={[
+                    styles.lblStatus,
+                    {
+                      backgroundColor: item.test_label_color,
+                      color: darkenColor(item.test_label_color, 0.8),
+                    },
+                  ]}
+                >
+                  {item.test_label}
+                </Text>
               )}
             </View>
-
-            <Text style={styles.lblDesc} numberOfLines={3}>
-              {item.desc}
-            </Text>
+            {item.description && (
+              <Text style={styles.lblDesc} numberOfLines={3}>
+                {item.description}
+              </Text>
+            )}
           </View>
         </View>
         <View style={{ alignSelf: 'flex-start', marginTop: 2 }}>
@@ -163,6 +77,32 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
           </Text>
         </View>
       </View>
+    );
+  };
+
+  const darkenColor = (hex: string, amount = 0.25) => {
+    // remove #
+    const color = hex.replace('#', '');
+
+    const num = parseInt(color, 16);
+
+    let r = (num >> 16) & 0xff;
+    let g = (num >> 8) & 0xff;
+    let b = num & 0xff;
+
+    r = Math.max(0, Math.floor(r * (1 - amount)));
+    g = Math.max(0, Math.floor(g * (1 - amount)));
+    b = Math.max(0, Math.floor(b * (1 - amount)));
+
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+
+  const getTotalTestPrice = () => {
+    if (!kitsArrayData?.tests?.length) return 0;
+
+    return kitsArrayData.tests.reduce(
+      (total: number, item: any) => total + Number(item.price || 0),
+      0,
     );
   };
 
@@ -201,9 +141,10 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
       };
 
       const callback = async (responseData: any) => {
-        console.log(responseData, 'reponseData of api Kit Details');
         toggleLoader(false);
+        console.log(responseData, 'reponseData of api Kit Details');
         if (responseData.code === StatusCode.SUCCESS) {
+          setKitsArraysData(responseData.data);
         } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
           flashMessageWarning(responseData.message);
         }
@@ -230,12 +171,11 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
     <KitDetailsComponent
       navigation={navigation}
       insets={insets}
-      kitsArrayData={kitsArrayData}
+      kitsTestData={kitsArrayData?.tests}
       renderItemKitsData={renderItemKitsData}
-      selectAll={selectAll}
-      totalPrice={totalPrice}
-      selectedTests={selectedTests}
       handleNavigateCheckout={handleNavigateCheckout}
+      kitsArrayData={kitsArrayData}
+      totalPrice={getTotalTestPrice()}
     />
   );
 };

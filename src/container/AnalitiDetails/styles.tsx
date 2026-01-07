@@ -34,6 +34,7 @@ export const styles = StyleSheet.create({
     marginLeft: getWidth(4),
     fontFamily: fontsfamily.medium,
     fontSize: fontSize.size12,
+    marginTop:1,
   },
   lblCurrency: {
     color: Colors.gray0F,
@@ -41,7 +42,6 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size14,
   },
   lblTestName: {
-    // flex: 1,
     color: Colors.gray0F,
     fontFamily: fontsfamily.gmedium,
     fontSize: fontSize.size16,
