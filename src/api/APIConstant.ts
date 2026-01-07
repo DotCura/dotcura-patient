@@ -14,17 +14,23 @@ export const ApiEndPoints = {
     RESENDOTP: `${PATIENT_PREFIX}resentOtp`,
     VERIFYOTP: `${PATIENT_PREFIX}verifyOtp`,
     COMPLETEPROFILE: `${PATIENT_PREFIX}update_patient`,
-  },  
-  BOTTOMTAB:{
-    KITLIST:`${PATIENT_PREFIX}getKitList`,
-    KITDETAILS:`${PATIENT_PREFIX}getKitDetails`,
   },
-  SETTINGS:{
+  BOTTOMTAB: {
+    KITLIST: `${PATIENT_PREFIX}getKitList`,
+    KITDETAILS: `${PATIENT_PREFIX}getKitDetails`,
+  },
+  SETTINGS: {
     GETNOTIFICATIONTYPE: `${PATIENT_PREFIX}getNotificationTypes`,
     ADDUPDATENOTICATIONTYPE: `${PATIENT_PREFIX}addOrUpdateNotificationPermission`,
-    LOGOUT:`${PATIENT_PREFIX}logout`,
-    DELETEACCOUNT:`${PATIENT_PREFIX}delete_user`,
-  }
+    LOGOUT: `${PATIENT_PREFIX}logout`,
+    DELETEACCOUNT: `${PATIENT_PREFIX}delete_user`,
+    PATIENTDETAILS: `${PATIENT_PREFIX}patient_details`,
+  },
+  MEDICAL: {
+    GETMEDICALHISTORY: `${PATIENT_PREFIX}getmedicalHistory`,
+    ADDMEDICALHISTORY: `${PATIENT_PREFIX}add_patient_medical`,
+    DELETEMEDICALHISTORY: `${PATIENT_PREFIX}delete_patient_medical`,
+  },
 };
 
 // API methods
@@ -49,7 +55,7 @@ export const StatusCode = {
   // REDIRECT_TO_PROFILE: 11,
   // REDIRECT_TO_PROFILE_INFO: 12,
   // REDIRECT_TO_PROFILE_TYPE: 13,
-  
+
   USER_SESSION_EXPIRE: -1,
   INVALID_OR_FAIL: 0,
   SUCCESS: 1,

@@ -1,15 +1,23 @@
-import { View } from 'react-native';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment';
 import { getTranslation } from '../../localization/i18n/i18n.config';
-import { flashMessageWarning } from '../../constants/GConstant';
-import { ScreenNames } from '../../constants/AppConstants';
+import {
+  flashMessageSucess,
+  flashMessageWarning,
+} from '../../constants/GConstant';
 import AppHeader from '../../global/Header';
 import AccountComponent from '../../components/Account';
 import { regex } from '../../constants/Regex';
 import { MmkvManager } from '../../constants/utils/MmkvManager';
 import { useFocusEffect } from '@react-navigation/native';
+import {
+  ApiEndPoints,
+  MethodType,
+  StatusCode,
+  toggleLoader,
+} from '../../api/APIConstant';
+import { APIManager } from '../../api/APIManager';
 
 const AccountContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -81,7 +89,7 @@ const AccountContainer = ({ navigation }: any) => {
     setTaxCode(formatted);
   };
 
-  const handlePressContinue = () => {
+  const handlePressContinue = async () => {
     // Reset previous errors
     setFullNameError('');
     setEmailError('');
@@ -119,8 +127,7 @@ const AccountContainer = ({ navigation }: any) => {
       return;
     } else {
       console.log('✅ Profile completed successfully');
-
-      navigation.goBack();
+      await _updateProfileApi();
     }
   };
 
@@ -171,100 +178,212 @@ const AccountContainer = ({ navigation }: any) => {
   }, []);
 
   //model
-  const [patologie, setPatologie] = useState([
-    {
-      id: 1,
-      name: 'Disordine alimentare',
-    },
-  ]);
-  const [medicazioni, setMedicazioni] = useState([]);
-  const [allergie, setAllergie] = useState([]);
+  const [patologie, setPatologie] = useState<any>([]);
+  const [medicazioni, setMedicazioni] = useState<any>([]);
+  const [allergie, setAllergie] = useState<any>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState<any>('');
   const [modalData, setModalData] = useState<any>([]);
   const [modalSelected, setModalSelected] = useState<any>([]);
   const [modalType, setModalType] = useState<any>('');
+  const [medicalList, setMedicalList] = useState<any[]>([]);
 
-  const patologieData = [
-    { id: 1, name: 'Disordine alimentare' },
-    { id: 2, name: 'Disordine renale' },
-    { id: 3, name: 'Disordine del fegato' },
-    { id: 4, name: 'Disordine di alterazione mentale' },
-  ];
-
-  const allergieData = [
-    { id: 10, name: 'Polline' },
-    { id: 11, name: 'Polvere' },
-    { id: 12, name: 'Lattosio' },
-    { id: 13, name: 'Glutine' },
-  ];
-  const medicazioneData = [
-    { id: 14, name: 'Aspirina' },
-    { id: 15, name: 'Ibuprofene' },
-    { id: 16, name: 'Paracetamolo' },
-  ];
-
-  const openModal = (type: any) => {
+  const openModal = async (type: 'patologie' | 'medicazioni' | 'allergie') => {
     setModalType(type);
 
     if (type === 'patologie') {
       setModalTitle('Aggiungi patologia');
-      setModalData(patologieData);
+      await _getMedicalHistory('P');
       setModalSelected(patologie);
     }
 
     if (type === 'medicazioni') {
       setModalTitle('Aggiungi medicazione');
-      setModalData(medicazioneData);
+      await _getMedicalHistory('M');
       setModalSelected(medicazioni);
     }
 
     if (type === 'allergie') {
       setModalTitle('Aggiungi allergia');
-      setModalData(allergieData);
+      await _getMedicalHistory('A');
       setModalSelected(allergie);
     }
 
     setModalVisible(true);
   };
 
-  const handleSave = (selected: any) => {
-    if (modalType === 'patologie') setPatologie(selected);
+  const handleSave = async (selected: any[]) => {
+    const medical_ids = selected.map(item => item.id);
 
-    if (modalType === 'medicazioni') setMedicazioni(selected);
+    try {
+      const params = { medical_ids };
 
-    if (modalType === 'allergie') setAllergie(selected);
+      const callback = async (res: any) => {
+        if (res.code === StatusCode.SUCCESS) {
+          flashMessageSucess(res.message);
 
-    setModalVisible(false);
+          if (modalType === 'patologie') setPatologie(selected);
+          if (modalType === 'medicazioni') setMedicazioni(selected);
+          if (modalType === 'allergie') setAllergie(selected);
+
+          setModalVisible(false);
+        } else {
+          flashMessageWarning(res.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.MEDICAL.ADDMEDICALHISTORY,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('add medical error:', error);
+    }
   };
 
   const handleDeleteItem = (type: any, id: any) => {
     if (type === 'patologie') {
-      setPatologie(prev => prev.filter(item => item.id !== id));
+      setPatologie((prev: any) => prev.filter((item: any) => item.id !== id));
     }
 
     if (type === 'medicazioni') {
-      setMedicazioni(prev => prev.filter((item: any) => item.id !== id));
+      setMedicazioni((prev: any) => prev.filter((item: any) => item.id !== id));
     }
 
     if (type === 'allergie') {
-      setAllergie(prev => prev.filter((item: any) => item.id !== id));
+      setAllergie((prev: any) => prev.filter((item: any) => item.id !== id));
     }
   };
 
   //====================API===============================
 
+  const _getMedicalHistory = async (
+    type: 'P' | 'M' | 'A',
+    search: string = '',
+  ) => {
+    try {
+      const params: any = {
+        type,
+      };
+
+      // ✅ Add search ONLY if not empty
+      if (search.trim().length > 0) {
+        params.search = search.trim();
+      }
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setMedicalList(responseData.data);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.MEDICAL.GETMEDICALHISTORY,
+        callback,
+        showLoader: search.trim().length === 0,
+        params,
+      });
+    } catch (error) {
+      console.log('medicalhistory error:', error);
+    }
+  };
+
+  const _getPatientDetails = async () => {
+    const params = {};
+
+    try {
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          const value = responseData.data;
+          console.log('Patient Details API Response:', value);
+          const DEFAULT_DOB = '';
+          setFullName(value.first_name);
+          setSurname(value.last_name);
+          setEmail(value.email);
+          setSelectedGender(value.gender === 'male' ? 1 : 2);
+          setTaxCode(value.tax_code);
+          setFormattedDate(
+            value?.dob && moment(value.dob).isValid()
+              ? moment(value.dob).format('DD/MM/YYYY')
+              : DEFAULT_DOB,
+          );
+          setPlaceOfBirth(value.place_of_dob);
+          setFormatedDateForApi(formatedDateForApi == null ? '' : value.dob);
+
+          // 🔥 MEDICAL INFO MAPPING
+          const medicalInfo = value.medical_info || {};
+
+          setMedicazioni(medicalInfo.M ?? []);
+          setPatologie(medicalInfo.P ?? []);
+          setAllergie(medicalInfo.A ?? []);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.SETTINGS.PATIENTDETAILS,
+        callback,
+        showLoader: true,
+        params,
+      });
+    } catch (error) {
+      console.log('patient details error:', error);
+    }
+  };
+
+  const _updateProfileApi = async () => {
+    try {
+      const params = {
+        name: fullName + ' ' + surname,
+        email: email,
+        first_name: fullName,
+        last_name: surname,
+        tax_code: taxCode,
+        gender: selectedGender == 1 ? 'male' : 'female',
+        place_of_dob: placeOfBirth,
+        dob: formatedDateForApi,
+      };
+
+      const callback = async (responseData: any) => {
+        console.log(responseData, 'reponseData of api UPDATE PROFILE');
+        toggleLoader(false);
+        if (responseData.code === StatusCode.SUCCESS) {
+          await MmkvManager.setData(
+            MmkvManager.Keys.userDetails,
+            responseData.data,
+          );
+          navigation.goBack();
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.AUTH.COMPLETEPROFILE,
+        callback,
+        params,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('Login error:', error);
+    }
+  };
+
   useFocusEffect(
     useCallback(() => {
-      MmkvManager.getData(MmkvManager.Keys.userDetails, (value: any) => {
-        console.log('Profile Data of user', value);
-        setFullName(value.name);
-        setSurname(value.name);
-        setEmail(value.email);
-        setSelectedGender(value.gender == 'male' ? 1 : 2);
-        setTaxCode(value.tax_code);
-      });
-
+      _getPatientDetails();
       return () => {};
     }, []),
   );
@@ -325,6 +444,8 @@ const AccountContainer = ({ navigation }: any) => {
       modalType={modalType}
       handleDeleteItem={handleDeleteItem}
       navigation={navigation}
+      medicalList={medicalList}
+      _getMedicalHistory={_getMedicalHistory}
     />
   );
 };

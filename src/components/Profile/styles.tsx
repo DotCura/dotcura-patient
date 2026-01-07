@@ -219,6 +219,7 @@ export const styles = StyleSheet.create({
   },
   vwNameDate: {
     marginLeft: getWidth(12),
+    flex:1,
   },
   txtFullName: {
     color: Colors.gray0F,

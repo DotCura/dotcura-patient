@@ -47,7 +47,7 @@ export default {
   completeprofiletitle: 'Completa il tuo profilo',
   completeprofilesubtitle: 'Aggiungi il tuo nome e numero di telefono.',
   continue: 'Continua',
-  submit:"Enviar",
+  submit: 'Enviar',
   fullnameplaceholder: 'Giovanni',
   emailplaceholder: 'giovanni@email.com',
   taxcodeplaceholder: '0000000000000000',
@@ -140,9 +140,9 @@ export default {
   viewalltestresult: 'Vedi il quadro completo',
 
   //NOTIFICATIONLIST
-  notificationlistlabel:"Notifiche",
-  notificationalert:"Non perderti le comunicazioni più importanti.",
-  alertbtnlebel:"Attiva le notifiche",
+  notificationlistlabel: 'Notifiche',
+  notificationalert: 'Non perderti le comunicazioni più importanti.',
+  alertbtnlebel: 'Attiva le notifiche',
 
   //GETTESTED
   kitavailable: 'kit disponibili',
@@ -183,13 +183,12 @@ export default {
   atleastoneselected: 'Almeno un test deve rimanere selezionato.',
 
   //KITANALYSIS
-  seethefullpicture:"Vedi il quadro completo",
-  viewdocumenttitle:"Visualizza il documento",
-  viewdocumentsubtitle:"Puoi condividere il pdf, stamparlo, ecc",
-  viewpdflebel:"Apri il pdf",
-  needtooriginaldocument:"Ritira il referto in originale",
-  comearrive:"Come arrivarci",
-  
+  seethefullpicture: 'Vedi il quadro completo',
+  viewdocumenttitle: 'Visualizza il documento',
+  viewdocumentsubtitle: 'Puoi condividere il pdf, stamparlo, ecc',
+  viewpdflebel: 'Apri il pdf',
+  needtooriginaldocument: 'Ritira il referto in originale',
+  comearrive: 'Come arrivarci',
 
   //CHECKOUT
   confirmdata: 'Conferma data',
@@ -228,15 +227,17 @@ export default {
     'Il rimborso verrà effettuato sul tuo metodo di pagamento in 3-5 giorni lavorativi.',
   cancletext: 'Conferma cancellazione',
   cancletextnoback: 'Non cancellare',
-  checkoutemptytitle:"Nessun ordine effettuato",
-  checkoutemptysubtitle:"Inizia il tuo percorso di salute prenotando il primo esame. Comodo, veloce e a domicilio.",
-  checkoutemptybtn:"Scopri le analisi",
-  
+  checkoutemptytitle: 'Nessun ordine effettuato',
+  checkoutemptysubtitle:
+    'Inizia il tuo percorso di salute prenotando il primo esame. Comodo, veloce e a domicilio.',
+  checkoutemptybtn: 'Scopri le analisi',
+
   //RATEREVIEW
-  ratereviewtital:"Tutto fatto!",
-  ratereviewsubtitle:"Ora bisogna aspettare i risultati, ti arriverà una notifica quando saranno pubblicati.",
-  ratereviewpopuptitle:"Come è andato il prelievo?",
-  ratereviewpopupsubtitle:"Lascia una recensione",
+  ratereviewtital: 'Tutto fatto!',
+  ratereviewsubtitle:
+    'Ora bisogna aspettare i risultati, ti arriverà una notifica quando saranno pubblicati.',
+  ratereviewpopuptitle: 'Come è andato il prelievo?',
+  ratereviewpopupsubtitle: 'Lascia una recensione',
 
   //RESULTOPENUP
   resultopentitle: 'Le analisi sono arrivate.',
@@ -244,10 +245,9 @@ export default {
     'Continuando, accetti di salvare i tuoi dati personali all’interndo di DotCura; altrimenti verranno cancellate entro 45 giorni.',
   iunderstand: 'Entiendo',
   continuewithoutsaving: 'Continuar sin guardar',
-  saveopenupbtn:"Salva e visualizza analisi",
-  continueopenup:"Continua senza salvare",
-  discoverourprivacypolicy:"Scopri le nostre policy sulla privacy",
-
+  saveopenupbtn: 'Salva e visualizza analisi',
+  continueopenup: 'Continua senza salvare',
+  discoverourprivacypolicy: 'Scopri le nostre policy sulla privacy',
 
   //ORDERSTATYS
   ordersent: 'Ordine inviato',
@@ -260,9 +260,9 @@ export default {
     'Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida at eget metus.',
 
   //HISTORICALANALSIS
-  historicalanalistext:"Storico analisi",
-  orderidlabel:"Ordine",
-  rebookinglabel:"Prenota di nuovo",
+  historicalanalistext: 'Storico analisi',
+  orderidlabel: 'Ordine',
+  rebookinglabel: 'Prenota di nuovo',
 
   //YOURPROFILE
   searchprofile: 'Cerca',
@@ -293,7 +293,7 @@ export default {
   //TEST DETAILS
   thevalueis: 'Il valore della',
   lowethen: 'è più basso',
-  lowethensub:" del riferimento.",
+  lowethensub: ' del riferimento.',
   percentage: 'Precedente',
   valueoptimal: 'Valore ottimale',
   high: 'Alta',
@@ -367,8 +367,8 @@ export default {
 
   //ACCOUNT
   dateofbirth: 'Data di nascita',
-  placeofbirthplaceholder:"Inserisci il comune",
-  placeofbirthtitle:"Luogo di nascita",
+  placeofbirthplaceholder: 'Inserisci il comune',
+  placeofbirthtitle: 'Luogo di nascita',
   account: 'Account',
   save: 'Salva',
   pleaseselectdateofbirth: 'Por favor seleccione su fecha de nacimiento.',
@@ -433,8 +433,8 @@ export default {
   //ORDERHSITORYPOPUP
   pickup: 'Prelevato il',
   downloadreceipt: 'Scarica ricevuta',
-  orderhistoryemptytitle:"Qui non c’è nessun ordine",
-  orderhistoryemptysubtitle:"Non hai ancora effettuato ordini.",
+  orderhistoryemptytitle: 'Qui non c’è nessun ordine',
+  orderhistoryemptysubtitle: 'Non hai ancora effettuato ordini.',
 
   // CONFIRMIDENTITY
   confrimaccount: 'Conferma account',
@@ -470,7 +470,7 @@ export default {
   default: 'PREDEFINITO',
 
   //ERROR
-  errorMessagePlaceOfBirthRequired:"Inserisci il luogo di nascita",
+  errorMessagePlaceOfBirthRequired: 'Inserisci il luogo di nascita',
   errorMessageOtp: 'Por favor, introduzca el código OTP',
   errorMessageInvalidOtp: 'Código OTP no válido',
   errorMessageCountryCode: 'Por favor, seleccione el código de país',
@@ -520,10 +520,11 @@ export default {
     'Por favor, carga fotos de tu documento por ambos lados (frontal y posterior)',
   errorMessageSurnameRequired: 'Por favor, ingrese el apellido',
 
-
   // No internet connection
-  nointernetconnection:"Sin conexión a Internet",
-  youhavebeenloggedout:"Has sido cerrado de sesión porque tu cuenta inició sesión en otro dispositivo o fue desactivada por el administrador."
-  
- 
+  nointernetconnection: 'Sin conexión a Internet',
+  youhavebeenloggedout:
+    'Has sido cerrado de sesión porque tu cuenta inició sesión en otro dispositivo o fue desactivada por el administrador.',
+
+  versionname: 'Versione',
+  nodatafound:"No se encontraron datos",
 };

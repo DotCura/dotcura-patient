@@ -27,6 +27,7 @@ import { fontsfamily } from '../../constants/FontFamily';
 import AddressModel from '../../global/AddressModel/AddressModel';
 import { ScreenNames } from '../../constants/AppConstants';
 import AppHeader from '../../global/Header';
+import DeviceInfo from 'react-native-device-info';
 
 const ProfileComponent = (props: any) => {
   const Item = ({ item, onPress }: any) => (
@@ -182,7 +183,7 @@ const ProfileComponent = (props: any) => {
             { marginBottom: props.insets.bottom + getHeight(15) },
           ]}
         >
-          {'Versione: v3.4.5 (1111)'}
+         {getTranslation("versionname")}: v{DeviceInfo.getVersion()}{" ("+DeviceInfo.getBuildNumber()+")"}
         </Text>
       </ScrollView>
     </>

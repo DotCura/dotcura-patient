@@ -180,6 +180,7 @@ const AccountComponent = (props: any) => {
               ))}
             </View>
           </View>
+
           <View
             style={{
               marginTop: getHeight(12),
@@ -298,14 +299,20 @@ const AccountComponent = (props: any) => {
               </View>
             </View>
           </View>
+          
           {/* Reusable Modal */}
           <AddItemModal
             visible={props.modalVisible}
             title={props.modalTitle}
-            data={props.modalData}
+            data={props.medicalList}
             selectedItems={props.modalSelected}
             onSave={props.handleSave}
             onClose={() => props.setModalVisible(false)}
+            onSearch={(text: string) => {
+              if (props.modalType === 'patologie') props._getMedicalHistory('P', text);
+              if (props.modalType === 'medicazioni') props._getMedicalHistory('M', text);
+              if (props.modalType === 'allergie') props._getMedicalHistory('A', text);
+            }}
           />
         </View>
       </KeyboardAwareScrollView>

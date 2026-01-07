@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Modal,
   View,
   Text,
   TextInput,
@@ -17,6 +16,8 @@ import { constnatStyles } from '../../constants/Styles';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { activityOpacity } from '../../constants/GConstant';
 import PrimaryTitleTextInput from '../PrimaryTitleTextInput';
+import Modal from 'react-native-modal';
+import { fontsfamily } from '../../constants/FontFamily';
 
 const AddItemModal = ({
   visible,
@@ -25,14 +26,16 @@ const AddItemModal = ({
   onClose,
   onSave,
   selectedItems,
+  onSearch, // 🔥 new
 }: any) => {
   const [search, setSearch] = useState('');
-  console.log('seracg', search);
 
   const searchref = useRef<any>(null);
   const [localSelected, setLocalSelected] = useState(selectedItems);
   const [searchError, setSearchError] = useState('');
   const [showList, setShowList] = useState(false);
+  const searchTimeout = useRef<any>(null);
+
   useEffect(() => {
     if (visible) {
       setSearch('');
@@ -41,40 +44,69 @@ const AddItemModal = ({
     }
   }, [visible]);
 
+  const handleSearch = (text: string) => {
+    setSearch(text);
+
+    if (searchTimeout.current) {
+      clearTimeout(searchTimeout.current);
+    }
+
+    searchTimeout.current = setTimeout(() => {
+      onSearch(text); // 🔥 API call
+    }, 500);
+  };
+
   const filteredData = data.filter((item: any) =>
     item.name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const toggleSelect = (item:any) => {
-    const exists = localSelected.some((i:any) => i.id === item.id);
+  const toggleSelect = (item: any) => {
+    const exists = localSelected.some((i: any) => i.id === item.id);
 
     if (exists) {
-      setLocalSelected(localSelected.filter((i:any) => i.id !== item.id));
+      setLocalSelected(localSelected.filter((i: any) => i.id !== item.id));
     } else {
       setLocalSelected([...localSelected, item]);
     }
   };
 
-  const isSelected = (id:any) => {
-    return localSelected.some((i:any) => i.id === id);
+  const isSelected = (id: any) => {
+    return localSelected.some((i: any) => i.id === id);
   };
+
+  const NoDataFound = () => (
+    <View
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: getHeight(20),
+      }}
+    >
+      <Text
+        style={{
+          color: Colors.black,
+          fontSize: 14,
+          fontFamily: fontsfamily.bold,
+        }}
+      >
+        No se encontraron datos
+      </Text>
+    </View>
+  );
 
   return (
     <Modal
-      transparent={true}
-      animationType="slide"
-      visible={visible}
-      statusBarTranslucent={true}
-      onRequestClose={onClose}
+      statusBarTranslucent
+      useNativeDriverForBackdrop={true}
+      isVisible={visible}
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
+      backdropOpacity={0.6}
+      onBackdropPress={onClose}
+      onBackButtonPress={onClose}
+      style={{ margin: 0 }} // important for full-screen bottom modal
     >
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#00000060',
-        }}
-      >
-        <Pressable style={{ flex: 1 }} onPress={onClose} />
-
+      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <View
           style={{
             backgroundColor: Colors.white,
@@ -125,7 +157,7 @@ const AddItemModal = ({
               blur={false}
               keyaboardType={'default'}
               value={search}
-              onChangeFun={setSearch}
+              onChangeFun={handleSearch} // 🔥 here
               autoCapitalize={'none'}
               errorMessage={searchError}
               setErrorMessage={setSearchError} // ✅ Just pass this once
@@ -158,8 +190,11 @@ const AddItemModal = ({
             >
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={filteredData}
-                keyExtractor={item => item}
+                data={data}
+                ListEmptyComponent={
+                  search.trim().length > 0 ? <NoDataFound /> : null
+                }
+                keyExtractor={item => item.id.toString()} // ✅ CORRECT
                 contentContainerStyle={{
                   gap: getHeight(5),
                 }}
@@ -179,7 +214,9 @@ const AddItemModal = ({
                         borderRadius: 8,
                       }}
                     >
-                      {isSelected(item.id) && <Image source={images.imgRightTickBlack}/>}
+                      {isSelected(item.id) && (
+                        <Image source={images.imgRightTickBlack} />
+                      )}
                       <Text style={styles.lblItemInner}>{item.name}</Text>
                     </TouchableOpacity>
                   </View>
