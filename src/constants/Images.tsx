@@ -99,26 +99,18 @@ export const images = {
   imgTestRedShadow: require('../assets/images/TestRedShadow.png'),
   imgTestYellowShadow: require('../assets/images/TestYellowShadow.png'),
   imgTopShadow: require('../assets/images/topshadow.png'),
-  imgfavblack:require('../assets/images/fav-filled-black.png'),
-  imgRateReview:require('../assets/images/ratereview.png'),
-  imgRateFillStar:require('../assets/images/ratefillStar.png'),
-  imgRateUnfillStar:require('../assets/images/rateUnfillStar.png'),
-  imgBottomtras:require('../assets/images/bottoooomtrasparent.png'),
-  imgBlueTickRight:require('../assets/images/BlueTickRight.png'),
+  imgfavblack: require('../assets/images/fav-filled-black.png'),
+  imgRateReview: require('../assets/images/ratereview.png'),
+  imgRateFillStar: require('../assets/images/ratefillStar.png'),
+  imgRateUnfillStar: require('../assets/images/rateUnfillStar.png'),
+  imgBottomtras: require('../assets/images/bottoooomtrasparent.png'),
+  imgBlueTickRight: require('../assets/images/BlueTickRight.png'),
+  imgDeleteAddress: require('../assets/images/deleteIcon.png'),
+  imgEditAddress: require('../assets/images/editaddress.png'),
+  imgNoDataFoundAddress: require('../assets/images/nodatefoundaddress.png'),
+  
 
   splashvideo: require('../assets/videos/SplashScreen.mp4'),
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
   // Static Images
   imgkit1: require('../assets/images/Static/kit1.png'),

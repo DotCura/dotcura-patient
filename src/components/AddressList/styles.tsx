@@ -5,6 +5,28 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { Colors } from '../../constants/Colors';
 
 export const styles = StyleSheet.create({
+  lblNoAddressFound: {
+    fontSize: fontSize.size20,
+    textAlign: 'center',
+    marginHorizontal: getWidth(40),
+    fontFamily: fontsfamily.gsemiBold,
+    color: Colors.blue002,
+  },
+  imgEditIcon: {
+    width: getWidth(20),
+    height: getHeight(20),
+    resizeMode: 'contain',
+  },
+  imgDeleteIcon: {
+    width: getWidth(20),
+    height: getHeight(20),
+    resizeMode: 'contain',
+  },
+  vwDeleteAddressIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: getWidth(10),
+  },
   itemdefault: {
     fontSize: fontSize.size10,
     fontFamily: fontsfamily.gmedium,
@@ -20,6 +42,7 @@ export const styles = StyleSheet.create({
     marginBottom: getHeight(8),
   },
   itemTitle: {
+    marginRight: getWidth(10),
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.gmedium,
     color: Colors.gray0F,

@@ -4,17 +4,23 @@ import AddAddressComponent from '../../components/AddAddress';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AppHeader from '../../global/Header';
 import { getTranslation } from '../../localization/i18n/i18n.config';
-import { flashMessageWarning } from '../../constants/GConstant';
+import {
+  flashMessageSucess,
+  flashMessageWarning,
+} from '../../constants/GConstant';
 import { ScreenNames } from '../../constants/AppConstants';
+import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
+import { APIManager } from '../../api/APIManager';
 
 const AddAddressContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
   const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
   const addressType = [
-    { label: 'Home', value: '1' },
-    { label: 'Apartment', value: '2' },
-    { label: 'Residency', value: '3' },
+    { label: getTranslation('addresstypehome'), value: '1' },
+    { label: getTranslation('addresstypework'), value: '2' },
+    { label: getTranslation('addresstypemedical'), value: '3' },
+    { label: getTranslation('addresstypeother'), value: '4' },
   ];
 
   const [searchAddress, setSearchAddress] = useState('');
@@ -35,9 +41,37 @@ const AddAddressContainer = ({ navigation, route }: any) => {
 
   const [addressTypeData, setAddressTypeData] = useState(addressType);
   const [addressTypeValue, setAddressTypeValue] = useState<string | null>('1');
+  const [addressTypeItem, setAddressTypeItem] = useState<string | null>(
+    addressTypeData[0].label,
+  );
+
+  //EDIT ADDRESS
+  const editAddressData = route?.params?.editAddressData;
+  const editAddress = route?.params?.editAddress;
+  console.log('editAddressData', editAddressData);
+  console.log('editAddress', editAddress);
+
+  useEffect(() => {
+    if (editAddress && editAddressData) {
+      // setSearchAddress(editAddressData.address);
+      setFloor(editAddressData.floor);
+      setStairs(editAddressData.stairs);
+      setinstructions(editAddressData.instructions);
+      setIsDefaultSave(editAddressData.is_default === 1 ? true : false);
+
+      const selectedType = addressType.find(
+        item => item.label === editAddressData.title,
+      );
+      if (selectedType) {
+        setAddressTypeValue(selectedType.value);
+        setAddressTypeItem(selectedType.label);
+      }
+    }
+  }, [editAddress, editAddressData]);
 
   const handleSetAddressType = (item: any) => {
     setAddressTypeValue(item.value);
+    setAddressTypeItem(item.label);
   };
 
   const handleOnChangeText = (text: string, type: string) => {
@@ -56,7 +90,7 @@ const AddAddressContainer = ({ navigation, route }: any) => {
     }
   };
 
-  const handleOnPressSaveAddress = () => {
+  const handleOnPressSaveAddress = async () => {
     // if (searchAddress.trim() === '') {
     //   flashMessageWarning(getTranslation('emptysearchaddress'));
     //   return;
@@ -80,9 +114,23 @@ const AddAddressContainer = ({ navigation, route }: any) => {
       setInstructionNameError(getTranslation('emptyInstructions'));
       return;
     } else {
-      navigation.popTo(ScreenNames.ADDRESSLISTCONTAINER);
+      if (editAddress === true) {
+        await _updateAddressApi();
+        return;
+      } else {
+        await _addAddressApi();
+        return;
+      }
     }
   };
+
+  const handleOnPressCancleAddress = () => {
+    navigation.goBack();
+  };
+
+  const handleOnPressDeleteAddress = async () => {
+    await _deleteAddressApi();
+  }
 
   const searchRef = useRef<any>(null);
 
@@ -177,6 +225,102 @@ const AddAddressContainer = ({ navigation, route }: any) => {
   useEffect(() => {
     header();
   }, []);
+
+  //======================API============================
+
+  const _addAddressApi = async () => {
+    try {
+      const params = {
+        address: 'D-501 Sarjan residency opp',
+        title: addressTypeItem,
+        floor: floor,
+        stairs: stairs,
+        instructions: instructions,
+        latitude: '34.0522',
+        longitude: '34.0522',
+        is_default: isdefaultsave == true ? 1 : 0,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          navigation.popTo(ScreenNames.ADDRESSLISTCONTAINER);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.ADDRESS.ADDADDRESS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('Add Address error:', error);
+    }
+  };
+
+  const _updateAddressApi = async () => {
+    try {
+      const params = {
+        address_id: editAddressData.address_id,
+        address: 'D-501 Sarjan residency opp',
+        title: addressTypeItem,
+        floor: floor,
+        stairs: stairs,
+        instructions: instructions,
+        latitude: '34.0522',
+        longitude: '34.0522',
+        is_default: isdefaultsave == true ? 1 : 0,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          navigation.popTo(ScreenNames.ADDRESSLISTCONTAINER);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.ADDRESS.UPDATEADDRESS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('Add Address error:', error);
+    }
+  };
+
+  const _deleteAddressApi = async () => {
+    try {
+      const params = {
+        address_id: editAddressData.address_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          navigation.popTo(ScreenNames.ADDRESSLISTCONTAINER);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.ADDRESS.REMOVEADDRESS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('Remove Address error:', error);
+    }
+  };
+
   return (
     <AddAddressComponent
       navigation={navigation}
@@ -208,6 +352,9 @@ const AddAddressContainer = ({ navigation, route }: any) => {
       setSearchAddress={setSearchAddress}
       searchAddressError={searchAddressError}
       setSearchAddressError={setSearchAddressError}
+      editAddress={editAddress}
+      handleOnPressCancleAddress={handleOnPressCancleAddress}
+      handleOnPressDeleteAddress={handleOnPressDeleteAddress}
     />
   );
 };

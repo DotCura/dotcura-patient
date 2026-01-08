@@ -1,15 +1,7 @@
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import { Colors } from '../../constants/Colors';
 import { constnatStyles } from '../../constants/Styles';
-import TopBar from '../../global/TopBar/TopBar';
 import TitleSubtitle from '../../global/TitleSubtitle';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { styles } from './styles';
@@ -27,7 +19,6 @@ import AppHeader from '../../global/Header';
 
 const AddAddressComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
- 
 
   // 🔥 Moved styles here (no global style)
   const customStylesTextInput = {
@@ -66,16 +57,16 @@ const AddAddressComponent = (props: any) => {
   return (
     <View style={{ flex: 1, backgroundColor: Colors.whiteF2 }}>
       <AppHeader
-          startBtnOnPress={() => {
-            console.log('hy');
-            props.navigation.goBack();
-          }}
-          centerTitle={getTranslation('addresss')}
-          dontShowStartBtn={false}
-          showTitle={true}
-          showSubTitle={false}
-          showEndBtn={false}
-        />
+        startBtnOnPress={() => {
+          console.log('hy');
+          props.navigation.goBack();
+        }}
+        centerTitle={getTranslation('addresss')}
+        dontShowStartBtn={false}
+        showTitle={true}
+        showSubTitle={false}
+        showEndBtn={false}
+      />
       <KeyboardAwareScrollView
         scrollEnabled
         showsVerticalScrollIndicator={false}
@@ -86,8 +77,16 @@ const AddAddressComponent = (props: any) => {
         {/* HeaderView */}
         <View style={styles.vwHeader}>
           <TitleSubtitle
-            title={getTranslation('addaddresstitle')}
-            subtitle={getTranslation('addaddresssubtitle')}
+            title={
+              props.editAddress
+                ? getTranslation('editaddressbtn')
+                : getTranslation('addaddresstitle')
+            }
+            subtitle={
+              props.editAddress
+                ? getTranslation('editaddresssubtitle')
+                : getTranslation('addaddresssubtitle')
+            }
           />
         </View>
 
@@ -221,8 +220,29 @@ const AddAddressComponent = (props: any) => {
       >
         <CustomButton
           btnPress={props.handleOnPressSaveAddress}
-          btnTitle={getTranslation('saveaddress')}
+          btnTitle={
+            props.editAddress
+              ? getTranslation('savechnages')
+              : getTranslation('saveaddress')
+          }
         />
+        {props.editAddress ? (
+          <CustomButton
+            btnicon={true}
+            btnImage={images.imgDeleteRed}
+            style={{ backgroundColor: Colors.redFC, marginTop: getHeight(8) }}
+            textStyle={{ color: Colors.red40 }}
+            btnPress={props.handleOnPressDeleteAddress}
+            btnTitle={getTranslation('deleteaddresssbtn')}
+          />
+        ) : (
+          <CustomButton
+            style={{ backgroundColor: Colors.blueD1, marginTop: getHeight(8) }}
+            textStyle={{ color: Colors.blue002 }}
+            btnPress={props.handleOnPressCancleAddress}
+            btnTitle={getTranslation('cancleaddress')}
+          />
+        )}
       </View>
     </View>
   );

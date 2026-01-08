@@ -31,6 +31,13 @@ export const ApiEndPoints = {
     ADDMEDICALHISTORY: `${PATIENT_PREFIX}add_patient_medical`,
     DELETEMEDICALHISTORY: `${PATIENT_PREFIX}delete_patient_medical`,
   },
+  ADDRESS:{
+    GETADDRESS: `${PATIENT_PREFIX}getAddress`,
+    UPDATEADDRESS: `${PATIENT_PREFIX}updateAddress`,
+    REMOVEADDRESS: `${PATIENT_PREFIX}removeAddress`,
+    ADDADDRESS: `${PATIENT_PREFIX}addAddress`,
+    
+  }
 };
 
 // API methods

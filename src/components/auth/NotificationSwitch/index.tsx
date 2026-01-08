@@ -50,7 +50,7 @@ const NotificationSwitchComponent = (props: any) => {
           <ModalTitleSubtitle
             title={getTranslation('notificationemail')}
             subtitle={getTranslation('notificationemailsubtitle')}
-            subtitleTwo={'giovanni.carnevale@email.it'}
+            subtitleTwo={props.emailNotification}
             isAdd={true}
           />
         </View>
@@ -70,7 +70,7 @@ const NotificationSwitchComponent = (props: any) => {
           <ModalTitleSubtitle
             title={getTranslation('notificationsms')}
             subtitle={getTranslation('notificationsmssubtitle')}
-            subtitleTwo={'+39' + '333 000 00 00'}
+            subtitleTwo={props.countryCodeWithMobileNumber}
             isAdd={true}
           />
         </View>

@@ -329,6 +329,9 @@ export default {
   addaddresstitle: 'Aggiungi un indirizzo',
   addaddresssubtitle:
     'Questo indirizzo sarà salvato e disponibile per future visite a domicilio.',
+  editaddresssubtitle:
+    'Esta información se editará y estará disponible para futuras visitas domiciliarias',
+  deleteaddresssbtn:"Elimina questo indirizzo",
   searchaddress: 'Cerca indirizzo',
   addaddressplacholder: 'Via, piazza, strada...',
   errorselectaddress: 'Por favor, elija una dirección',
@@ -519,6 +522,7 @@ export default {
   pleaseuploadfrontandbackside:
     'Por favor, carga fotos de tu documento por ambos lados (frontal y posterior)',
   errorMessageSurnameRequired: 'Por favor, ingrese el apellido',
+  please_select_address: 'Por favor, seleccione una dirección para editar',
 
   // No internet connection
   nointernetconnection: 'Sin conexión a Internet',
@@ -526,5 +530,12 @@ export default {
     'Has sido cerrado de sesión porque tu cuenta inició sesión en otro dispositivo o fue desactivada por el administrador.',
 
   versionname: 'Versione',
-  nodatafound:"No se encontraron datos",
+  nodatafound: 'No se encontraron datos',
+
+  //ADDRESSTYPE
+  addresstypehome: 'Casa',
+  addresstypework: 'Trabajar',
+  addresstypeother: 'Otro',
+  addresstypemedical: 'Clínica / Hospital',
+  noaddressfoundlabel: 'No se encontró ninguna dirección',
 };

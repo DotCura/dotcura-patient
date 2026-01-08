@@ -212,11 +212,25 @@ const AccountContainer = ({ navigation }: any) => {
     setModalVisible(true);
   };
 
+  const getMedicalType = (modalType: string): 'P' | 'M' | 'A' => {
+    switch (modalType) {
+      case 'patologie':
+        return 'P';
+      case 'medicazioni':
+        return 'M';
+      case 'allergie':
+        return 'A';
+      default:
+        return 'M';
+    }
+  };
+
   const handleSave = async (selected: any[]) => {
     const medical_ids = selected.map(item => item.id);
+    const type = getMedicalType(modalType); // 🔥 IMPORTANT
 
     try {
-      const params = { medical_ids };
+      const params = { type, medical_ids };
 
       const callback = async (res: any) => {
         if (res.code === StatusCode.SUCCESS) {
@@ -381,6 +395,36 @@ const AccountContainer = ({ navigation }: any) => {
     }
   };
 
+  const _deleteMedicalHistory = async (
+    medicalId: number,
+    modalType: 'patologie' | 'medicazioni' | 'allergie',
+  ) => {
+    try {
+      const params: any = {
+        id: medicalId,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          handleDeleteItem(modalType, medicalId);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.MEDICAL.DELETEMEDICALHISTORY,
+        callback,
+        params,
+        showLoader: false,
+      });
+    } catch (error) {
+      console.log('delete medical error:', error);
+    }
+  };
+
   useFocusEffect(
     useCallback(() => {
       _getPatientDetails();
@@ -446,6 +490,7 @@ const AccountContainer = ({ navigation }: any) => {
       navigation={navigation}
       medicalList={medicalList}
       _getMedicalHistory={_getMedicalHistory}
+      onDeleteMedical={_deleteMedicalHistory}
     />
   );
 };

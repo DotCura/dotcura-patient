@@ -40,31 +40,38 @@ const AnalitiDetailsComponent = (props: any) => {
         <View style={styles.imgkitdetails}>
           <View style={styles.vwHeaderTitle}>
             <Image
-              source={{uri:props?.analitiArrayData?.kit_image}}
-              style={{ height: getHeight(64), aspectRatio: 1, borderRadius: 10 }}
+              source={{ uri: props?.analitiArrayData?.kit_image }}
+              style={{
+                height: getHeight(64),
+                aspectRatio: 1,
+                borderRadius: 10,
+              }}
             />
             <Text style={styles.kittitle}>{props?.analitiArrayData?.name}</Text>
             <Text style={styles.kitsubtitle}>
-              {props?.analitiArrayData?.tests?.length} {getTranslation('analititextdetails')}
+              {props?.analitiArrayData?.tests?.length}{' '}
+              {getTranslation('analititextdetails')}
             </Text>
           </View>
         </View>
 
         {/* vwTestList */}
-        <FlatList
-          onEndReached={() => {
-            console.log('callend');
-          }}
-          bounces={false}
-          data={props?.analitiArrayData?.tests}
-          renderItem={props.renderItemAnalitiData}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={item => item.test_id.toString()}
-          contentContainerStyle={{
-            marginTop: getHeight(31),
-            gap: getHeight(20),
-          }}
-        />
+        <View>
+          <FlatList
+            onEndReached={() => {
+              console.log('callend');
+            }}
+            bounces={false}
+            data={props?.analitiArrayData?.tests}
+            renderItem={props.renderItemAnalitiData}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={item => item.test_id.toString()}
+            contentContainerStyle={{
+              marginTop: getHeight(31),
+              gap: getHeight(20),
+            }}
+          />
+        </View>
 
         {/* vwInfoView */}
         <View
@@ -120,8 +127,7 @@ const AnalitiDetailsComponent = (props: any) => {
           style={[
             styles.vwGoToCart,
             {
-              bottom:
-                getHeight(30),
+              bottom: getHeight(30),
             },
           ]}
         >

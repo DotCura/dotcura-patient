@@ -217,7 +217,7 @@ const AccountComponent = (props: any) => {
                     </Text>
                     <TouchableOpacity
                       onPress={() =>
-                        props.handleDeleteItem('medicazioni', item.id)
+                        props.onDeleteMedical(item.id, 'medicazioni')
                       }
                     >
                       <Image source={images.imgDeleteRound} />
@@ -246,14 +246,13 @@ const AccountComponent = (props: any) => {
               </View>
               <View style={{ gap: getHeight(8) }}>
                 {props.patologie.map((item: any) => (
-                  // <Text key={item}>• {item}</Text>
                   <View style={styles.vwCategory}>
                     <Text style={styles.lblCategory} numberOfLines={1}>
                       {item.name}
                     </Text>
                     <TouchableOpacity
                       onPress={() =>
-                        props.handleDeleteItem('patologie', item.id)
+                        props.onDeleteMedical(item.id, 'patologie')
                       }
                     >
                       <Image source={images.imgDeleteRound} />
@@ -284,13 +283,10 @@ const AccountComponent = (props: any) => {
               </View>
               <View style={{ gap: getHeight(8) }}>
                 {props.allergie.map((item: any) => (
-                  // <Text key={item}>• {item}</Text>
                   <View style={styles.vwCategory}>
                     <Text style={styles.lblCategory}>{item.name}</Text>
                     <TouchableOpacity
-                      onPress={() =>
-                        props.handleDeleteItem('allergie', item.id)
-                      }
+                      onPress={() => props.onDeleteMedical(item.id, 'allergie')}
                     >
                       <Image source={images.imgDeleteRound} />
                     </TouchableOpacity>
@@ -299,7 +295,7 @@ const AccountComponent = (props: any) => {
               </View>
             </View>
           </View>
-          
+
           {/* Reusable Modal */}
           <AddItemModal
             visible={props.modalVisible}
@@ -309,9 +305,12 @@ const AccountComponent = (props: any) => {
             onSave={props.handleSave}
             onClose={() => props.setModalVisible(false)}
             onSearch={(text: string) => {
-              if (props.modalType === 'patologie') props._getMedicalHistory('P', text);
-              if (props.modalType === 'medicazioni') props._getMedicalHistory('M', text);
-              if (props.modalType === 'allergie') props._getMedicalHistory('A', text);
+              if (props.modalType === 'patologie')
+                props._getMedicalHistory('P', text);
+              if (props.modalType === 'medicazioni')
+                props._getMedicalHistory('M', text);
+              if (props.modalType === 'allergie')
+                props._getMedicalHistory('A', text);
             }}
           />
         </View>

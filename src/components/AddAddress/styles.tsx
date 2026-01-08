@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: getWidth(12),
     marginTop: getHeight(14),
+    marginBottom: getHeight(24),
   },
   lblSwitchTitle: {
     flex: 1,

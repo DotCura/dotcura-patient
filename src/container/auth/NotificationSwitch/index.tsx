@@ -12,6 +12,7 @@ import {
 } from '../../../api/APIConstant';
 import { flashMessageWarning } from '../../../constants/GConstant';
 import { APIManager } from '../../../api/APIManager';
+import { MmkvManager } from '../../../constants/utils/MmkvManager';
 
 const NotificationSwitchContainer = ({ navigation }: any) => {
   const [notificationSettings, setNotificationSettings] = useState<any>({
@@ -19,20 +20,24 @@ const NotificationSwitchContainer = ({ navigation }: any) => {
     sms: [],
     push: [],
   });
+  const [emailNotification, setEmailNotification] = useState("");
+  const [countryCodeWithMobileNumber, setCountryCodeWithMobileNumber] = useState("");
   console.log('notificationSettings', notificationSettings);
 
   const toggleNotification = (type: 'email' | 'sms' | 'push', id: number) => {
     // Find the current item to get its current state
-    const currentItem = notificationSettings[type].find((item:any) => item.id === id);
+    const currentItem = notificationSettings[type].find(
+      (item: any) => item.id === id,
+    );
 
     if (currentItem) {
       // Calculate the new state
       const newIsEnabled = currentItem.is_enabled === 1 ? 0 : 1;
 
       // Update local state
-      setNotificationSettings((prevSettings:any) => ({
+      setNotificationSettings((prevSettings: any) => ({
         ...prevSettings,
-        [type]: prevSettings[type].map((item:any) =>
+        [type]: prevSettings[type].map((item: any) =>
           item.id === id
             ? {
                 ...item,
@@ -132,6 +137,12 @@ const NotificationSwitchContainer = ({ navigation }: any) => {
 
   useEffect(() => {
     _notificationSwitchApi();
+    MmkvManager.getData(MmkvManager.Keys.userDetails, (value: any) => {
+      console.log('Profile Data of user', value);
+      setEmailNotification(value.email);
+      setCountryCodeWithMobileNumber("+"+value.country_code+" "+value.phone_number )
+
+    });
   }, []);
 
   return (
@@ -139,6 +150,8 @@ const NotificationSwitchContainer = ({ navigation }: any) => {
       navigation={navigation}
       notificationSettings={notificationSettings}
       toggleNotification={toggleNotification}
+      emailNotification={emailNotification}
+      countryCodeWithMobileNumber={countryCodeWithMobileNumber}
     />
   );
 };
