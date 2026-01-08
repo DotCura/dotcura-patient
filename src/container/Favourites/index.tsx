@@ -1,32 +1,22 @@
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { styles } from './styles';
+import React, { useCallback, useEffect, useState } from 'react';
 import FavouritesComponent from '../../components/Favourites';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AppHeader from '../../global/Header';
-import {
-  activityOpacity,
-  currency,
-  flashMessageBottomSucess,
-  getRandomTheme,
-} from '../../constants/GConstant';
+import { flashMessageBottomSucess } from '../../constants/GConstant';
 import {
   getHeight,
   getWidth,
   ScreenDimensions,
 } from '../../constants/utils/Dimensions';
-import { images } from '../../constants/Images';
-import { getTags } from 'react-native-device-info';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import BarChartComponent from '../../global/BloodCountGraph';
 import { ScreenNames } from '../../constants/AppConstants';
+import { ApiEndPoints } from '../../api/APIConstant';
+import { apiPromise } from '../../global/ApiHelper/apiPromise';
+import {
+  LoadType,
+  usePaginatedList,
+} from '../../global/ApiHelper/usePaginatedList';
 
 const FavouritesContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -103,22 +93,25 @@ const FavouritesContainer = ({ navigation }: any) => {
     },
   ];
 
-  const [kitFavData, setKitFavData] = useState(kitfavList);
+  const [kitFavData, setKitFavData] = useState<any>([]);
   const [showDeleteModel, setShowDeleteModel] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const renderFavKitData = ({ item, index }: any) => {
     return (
       <BarChartComponent
         key={index}
-        currentValue={item.currentvalue}
-        minValue={item.minValue}
-        maxValue={item.maxvalue}
+        currentValue={item?.latest?.value}
+        minValue={item?.latest?.minvalue}
+        maxValue={item?.latest?.maxvalue}
         width={ScreenDimensions.screenWidth - getWidth(40)}
         height={getHeight(50)}
-        reportName={item.reportname}
-        reportValue={item.reportValue}
+        reportName={item?.test?.name}
+        reportValue={item?.latest?.value}
         reportItem={item}
         onpressreport={handleNavigateTestDetails}
+        isTestCheck={true}
+        isUnitShow={true}
       />
     );
   };
@@ -138,7 +131,6 @@ const FavouritesContainer = ({ navigation }: any) => {
 
   const handleNavigateTestDetails = () => {
     navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
-  
   };
 
   const header = () => {
@@ -162,6 +154,42 @@ const FavouritesContainer = ({ navigation }: any) => {
     header();
   }, []);
 
+  // ========================== API ==========================
+
+  const fetchFavouritesList = useCallback(
+    async ({ page, loadType }: { page: number; loadType: any }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.SETTINGS.GETLIKEREPORTLIST,
+        method: 'POST',
+        showLoader: loadType === LoadType.INITIAL,
+        params: {
+          page,
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data ?? [],
+      };
+    },
+    [navigation],
+  );
+
+  const favourites: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: true,
+    fetcher: fetchFavouritesList,
+  });
+
+  //local Fav data state whenever it changes
+  useEffect(() => {
+    if (favourites.data) {
+      setKitFavData(favourites.data);
+    }
+  }, [favourites.data]);
+
   return (
     <FavouritesComponent
       insets={insets}
@@ -172,6 +200,8 @@ const FavouritesContainer = ({ navigation }: any) => {
       funOpenDeleteModel={funOpenDeleteModel}
       funCloseDeleteModel={funCloseDeleteModel}
       handlePressUnfav={handlePressUnfav}
+      isLoading={isLoading}
+      favourites={favourites}
     />
   );
 };

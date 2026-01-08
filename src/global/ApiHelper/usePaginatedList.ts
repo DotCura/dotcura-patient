@@ -100,6 +100,7 @@ export function usePaginatedList<T>({
               ? [...prev, ...incoming]
               : incoming;
           });
+          
 
           if (pageToLoad === 1) {
             blockLoadMoreRef.current = false; // 🔓 unlock

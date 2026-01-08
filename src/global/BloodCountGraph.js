@@ -429,11 +429,11 @@
 //     >
 //       {/* {isTestedReport && (
 //         <LinearGradient
-         
+
 //           colors={['#D1E0FF', '#D1E0FF', '#FFFFFF']}
-      
+
 //           start={{ x: 1, y: 0 }}
-        
+
 //           end={{ x: 0.9, y: 0.5 }}
 //           style={styles.card}
 //         >
@@ -567,8 +567,6 @@
 //     backgroundColor: 'white', // Fallback
 //   },
 // });
-
-
 
 // working for small range
 // import React from 'react';
@@ -931,7 +929,7 @@
 
 //   // We divide the bar into 3 zones:
 //   // Left: 0% to 30% | Hexagon (Range): 30% to 70% | Right: 70% to 100%
-//   const zoneBoundaryLeft = 0.3; 
+//   const zoneBoundaryLeft = 0.3;
 //   const zoneBoundaryRight = 0.7;
 //   const zoneWidthHexagon = zoneBoundaryRight - zoneBoundaryLeft;
 
@@ -949,7 +947,7 @@
 //     // --- VALUE IS HIGH ---
 //     // Map the value into the 70% - 100% zone.
 //     // We use a buffer (same as range width) to define how far right it can go.
-//     const highBuffer = rangeWidth || 10; 
+//     const highBuffer = rangeWidth || 10;
 //     const ratio = Math.min(1, (safeValue - safeMax) / highBuffer);
 //     valueX = CHART_PADDING + ((zoneBoundaryRight + (ratio * (1 - zoneBoundaryRight))) * AVAILABLE_WIDTH);
 //   } else {
@@ -994,7 +992,7 @@
 //   // ✅ 7. Hexagon Geometry (Symmetric and Fixed)
 //   const hexagonWidth = maxX - minX;
 //   const hexagonCenterX = (minX + maxX) / 2;
-  
+
 //   // Symmetrical points based on the fixed center
 //   const leftPoint = hexagonCenterX - (hexagonWidth / 2);
 //   const rightPoint = hexagonCenterX + (hexagonWidth / 2);
@@ -1135,7 +1133,8 @@ const BarChartComponent = ({
 }) => {
   // ✅ 1. Safe value handling
   const safeMin = Number.isFinite(minValue) ? minValue : 0;
-  const safeMax = Number.isFinite(maxValue) && maxValue > safeMin ? maxValue : safeMin + 1;
+  const safeMax =
+    Number.isFinite(maxValue) && maxValue > safeMin ? maxValue : safeMin + 1;
   const safeValue = Number.isFinite(currentValue) ? currentValue : 0;
 
   // ✅ 2. Layout Constants
@@ -1146,7 +1145,7 @@ const BarChartComponent = ({
   // ✅ ADJUST THESE VALUES TO CHANGE WIDTH
   // Left Zone: 0% to 20% | Hexagon: 20% to 80% | Right Zone: 80% to 100%
   // Decreasing zoneBoundaryLeft and increasing zoneBoundaryRight makes the hexagon WIDER.
-  const zoneBoundaryLeft = 0.2; 
+  const zoneBoundaryLeft = 0.2;
   const zoneBoundaryRight = 0.8;
   const zoneWidthHexagon = zoneBoundaryRight - zoneBoundaryLeft;
 
@@ -1157,21 +1156,25 @@ const BarChartComponent = ({
   if (safeValue < safeMin) {
     // --- VALUE IS LOW ---
     const ratio = safeMin === 0 ? 0 : Math.max(0, safeValue / safeMin);
-    valueX = CHART_PADDING + (ratio * zoneBoundaryLeft * AVAILABLE_WIDTH);
+    valueX = CHART_PADDING + ratio * zoneBoundaryLeft * AVAILABLE_WIDTH;
   } else if (safeValue > safeMax) {
     // --- VALUE IS HIGH ---
-    const highBuffer = rangeWidth || 10; 
+    const highBuffer = rangeWidth || 10;
     const ratio = Math.min(1, (safeValue - safeMax) / highBuffer);
-    valueX = CHART_PADDING + ((zoneBoundaryRight + (ratio * (1 - zoneBoundaryRight))) * AVAILABLE_WIDTH);
+    valueX =
+      CHART_PADDING +
+      (zoneBoundaryRight + ratio * (1 - zoneBoundaryRight)) * AVAILABLE_WIDTH;
   } else {
     // --- VALUE IS NORMAL (Inside Hexagon) ---
     const ratio = (safeValue - safeMin) / rangeWidth;
-    valueX = CHART_PADDING + ((zoneBoundaryLeft + (ratio * zoneWidthHexagon)) * AVAILABLE_WIDTH);
+    valueX =
+      CHART_PADDING +
+      (zoneBoundaryLeft + ratio * zoneWidthHexagon) * AVAILABLE_WIDTH;
   }
 
   // ✅ 4. Hexagon Positions (Fixed based on new boundaries)
-  const minX = CHART_PADDING + (zoneBoundaryLeft * AVAILABLE_WIDTH);
-  const maxX = CHART_PADDING + (zoneBoundaryRight * AVAILABLE_WIDTH);
+  const minX = CHART_PADDING + zoneBoundaryLeft * AVAILABLE_WIDTH;
+  const maxX = CHART_PADDING + zoneBoundaryRight * AVAILABLE_WIDTH;
 
   // ✅ 5. Color Logic
   let rangeType = 'normal';
@@ -1204,12 +1207,12 @@ const BarChartComponent = ({
   // ✅ 6. Hexagon Geometry (Fixed and Wider)
   const hexagonWidth = maxX - minX;
   const hexagonCenterX = (minX + maxX) / 2;
-  
-  const leftPoint = hexagonCenterX - (hexagonWidth / 2);
-  const rightPoint = hexagonCenterX + (hexagonWidth / 2);
+
+  const leftPoint = hexagonCenterX - hexagonWidth / 2;
+  const rightPoint = hexagonCenterX + hexagonWidth / 2;
   const flatEdgeWidth = hexagonWidth * 0.85; // Increased flat edge for a cleaner look at larger widths
-  const topLeftFlat = hexagonCenterX - (flatEdgeWidth / 2);
-  const topRightFlat = hexagonCenterX + (flatEdgeWidth / 2);
+  const topLeftFlat = hexagonCenterX - flatEdgeWidth / 2;
+  const topRightFlat = hexagonCenterX + flatEdgeWidth / 2;
 
   const hexagonPoints = `
     ${topLeftFlat},${centerY - HEXAGON_HEIGHT}
@@ -1225,7 +1228,8 @@ const BarChartComponent = ({
     y: centerY,
   }));
 
-  const isTestedReport = props.reportItem.isTest === true;
+  const isTestedReport =
+    props.isTestCheck == true ? true : props.reportItem.isTest === true;
 
   return (
     <TouchableOpacity
@@ -1253,16 +1257,42 @@ const BarChartComponent = ({
           marginHorizontal: getWidth(16),
         }}
       >
-        <Text style={{ fontSize: fontSize.size16, fontFamily: fontsfamily.gmedium, color: Colors.gray0F }}>
+        <Text
+          style={{
+            fontSize: fontSize.size16,
+            fontFamily: fontsfamily.gmedium,
+            color: Colors.gray0F,
+          }}
+        >
           {props.reportName}
         </Text>
         {isTestedReport && (
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: getWidth(8) }}>
-            <Text style={{ fontSize: fontSize.size16, fontFamily: fontsfamily.gregular, color: Colors.gray75 }}>
-              <Text style={{ fontSize: fontSize.size20, fontFamily: fontsfamily.gregular, color: Colors.gray0F }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: getWidth(8),
+            }}
+          >
+            <Text
+              style={{
+                fontSize: fontSize.size16,
+                fontFamily: fontsfamily.gregular,
+                color: Colors.gray75,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: fontSize.size20,
+                  fontFamily: fontsfamily.gregular,
+                  color: Colors.gray0F,
+                }}
+              >
                 {props.reportValue}
-              </Text>
-              {' '}{props.reportItem.reportunit}
+              </Text>{' '}
+              {props.isUnitShow === true
+                ? props.reportItem?.latest.unit
+                : props.reportItem.reportunit}
             </Text>
             <Image source={images.imgRightCurve} style={{ marginTop: 3 }} />
           </View>
@@ -1281,14 +1311,29 @@ const BarChartComponent = ({
 
             {/* Dotted line */}
             {dots.map((dot, index) => (
-              <Circle key={`dot-${index}`} cx={dot.x} cy={dot.y} r={DOT_RADIUS} fill="url(#dotGradient)" />
+              <Circle
+                key={`dot-${index}`}
+                cx={dot.x}
+                cy={dot.y}
+                r={DOT_RADIUS}
+                fill="url(#dotGradient)"
+              />
             ))}
 
             {/* Fixed Wider Hexagon */}
-            <Polygon points={hexagonPoints} fill={Colors.whiteF2} opacity={0.8} />
+            <Polygon
+              points={hexagonPoints}
+              fill={Colors.whiteF2}
+              opacity={0.8}
+            />
 
             {/* Indicator Circle */}
-            <Circle cx={valueX} cy={centerY} r={INDICATOR_RADIUS} fill={INDICATOR_COLOR} />
+            <Circle
+              cx={valueX}
+              cy={centerY}
+              r={INDICATOR_RADIUS}
+              fill={INDICATOR_COLOR}
+            />
           </Svg>
         </View>
       )}

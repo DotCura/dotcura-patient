@@ -531,6 +531,7 @@ export default {
 
   versionname: 'Versione',
   nodatafound: 'No se encontraron datos',
+  nodatafoundlikereport:"Aún no has añadido nada a favoritos.",
 
   //ADDRESSTYPE
   addresstypehome: 'Casa',

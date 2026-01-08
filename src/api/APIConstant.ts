@@ -25,6 +25,7 @@ export const ApiEndPoints = {
     LOGOUT: `${PATIENT_PREFIX}logout`,
     DELETEACCOUNT: `${PATIENT_PREFIX}delete_user`,
     PATIENTDETAILS: `${PATIENT_PREFIX}patient_details`,
+    GETLIKEREPORTLIST: `${PATIENT_PREFIX}getLikeReportList`,
   },
   MEDICAL: {
     GETMEDICALHISTORY: `${PATIENT_PREFIX}getmedicalHistory`,

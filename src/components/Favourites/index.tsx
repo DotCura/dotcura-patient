@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Modal,
@@ -42,14 +43,38 @@ const FavouritesComponent = (props: any) => {
         </View>
 
         <FlatList
-          onEndReached={() => {
-            console.log('callend');
-          }}
+          onEndReached={props.favourites.loadMore}
+          onEndReachedThreshold={0.5}
+          refreshing={props.favourites.refreshing}
+          onRefresh={props.favourites.refresh}
+          ListFooterComponent={
+            props.favourites.loadingMore ? (
+              <ActivityIndicator size="large" color={Colors.blue002} />
+            ) : null
+          }
+          ListEmptyComponent={
+            !props.favourites.loading ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: getHeight(20),
+                  marginTop: getHeight(100),
+                }}
+              >
+                <Image source={images.imgNoDataFoundAddress} />
+                <Text style={styles.lblNoAddressFound}>
+                  {getTranslation('nodatafoundlikereport')}
+                </Text>
+              </View>
+            ) : null
+          }
           style={{ flex: 1 }}
           data={props.kitFavData}
           renderItem={props.renderFavKitData}
           showsVerticalScrollIndicator={false}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.test.id}
           contentContainerStyle={{
             gap: getWidth(12),
             paddingBottom: getHeight(50),
@@ -102,8 +127,7 @@ const FavouritesComponent = (props: any) => {
               <View
                 style={{
                   paddingHorizontal: getWidth(16),
-                  paddingBottom:
-                    props.insets.bottom + getHeight(16),
+                  paddingBottom: props.insets.bottom + getHeight(16),
                 }}
               >
                 <CustomButton
