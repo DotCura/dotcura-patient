@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AppHeader from '../../global/Header';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -12,6 +12,12 @@ import {
 import { styles } from './styles';
 import { ScreenNames } from '../../constants/AppConstants';
 import OrderHistoryComponent from '../../components/OrderHistory';
+import { apiPromise } from '../../global/ApiHelper/apiPromise';
+import { ApiEndPoints } from '../../api/APIConstant';
+import {
+  LoadType,
+  usePaginatedList,
+} from '../../global/ApiHelper/usePaginatedList';
 
 const OrderHistoryContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -280,44 +286,43 @@ const OrderHistoryContainer = ({ navigation }: any) => {
     },
   ];
 
-  const [orderHistoryData, setOrderHistoryData] = useState(orderHistory);
+  const [orderHistoryData, setOrderHistoryData] = useState<any>([]);
   const [expandedItems, setExpandedItems] = useState<number[]>([]);
 
-  const totalStars = 5;
-
   const formatKits = (kits: any[]) => {
+    if (!kits?.length) return '';
+
     return kits
-      .map(item => {
-        const kitName = item?.kitname || '';
-        const count = item?.kittest?.length || 0;
-        const label =
-          item.kitype === 'kit' ? getTranslation('kitlabeltextcheckout') : '';
-        return `${label}${kitName} (${count})`;
+      .map(kit => {
+        const kitName = kit?.kit?.name ?? '';
+        const count = kit?.test_count ?? 0;
+        return `${kitName} (${count})`;
       })
       .join(' + ');
   };
 
   const renderItemOrderHistory = ({ item, index }: any) => {
     const isExpanded = expandedItems.includes(index);
-    const visibleTags = isExpanded ? item.tags : item.tags.slice(0, 2);
-    const extraCount = item.tags.length - 2;
+    const tests = item.all_tests ?? [];
+    const visibleTags = isExpanded ? tests : tests.slice(0, 2);
+    const extraCount = tests.length - 2;
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
         style={styles.btnOrderHistory}
         onPress={() => {
           navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
-          
         }}
       >
         {/* orderDetailsView */}
         <View style={styles.vwMainOrderDetails}>
           <View style={{ flex: 1 }}>
             <Text style={styles.lblOrderTitle}>
-              {getTranslation('analsisOf')}{formatDateToSpanish(item.date)}
+              {getTranslation('analsisOf')}
+              {formatDateToSpanish(item.test_date)}
             </Text>
             <Text style={styles.lblOrderID}>
-              {getTranslation('orderidlabel')} {item.orderid}
+              {getTranslation('orderidlabel')} #{item.booking_number}
             </Text>
             <Text style={styles.kitandtestdetails}>
               {formatKits(item.kits)}
@@ -327,12 +332,10 @@ const OrderHistoryContainer = ({ navigation }: any) => {
             <Image source={images.imgRightBlack} />
           </TouchableOpacity>
         </View>
-
-        {/* tags */}
         <View style={styles.vwTagMain}>
-          {visibleTags.map((tag: any, index: any) => (
-            <View key={index} style={styles.vwTagInner}>
-              <Text style={styles.lblTag}>{tag}</Text>
+          {visibleTags.map((test: string, idx: number) => (
+            <View key={idx} style={styles.vwTagInner}>
+              <Text style={styles.lblTag}>{test}</Text>
             </View>
           ))}
 
@@ -351,7 +354,7 @@ const OrderHistoryContainer = ({ navigation }: any) => {
         {/* nurseView */}
         <View style={styles.nurseview}>
           <Text style={styles.lblPrice}>
-            {currency} {item.price}
+            {currency} {item.total}
           </Text>
         </View>
       </TouchableOpacity>
@@ -379,12 +382,49 @@ const OrderHistoryContainer = ({ navigation }: any) => {
     header();
   }, []);
 
+  // ========================== API ==========================
+
+  const fetchOrderList = useCallback(
+    async ({ page, loadType }: { page: number; loadType: any }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.ORDER.GETORDERHISTORY,
+        method: 'POST',
+        showLoader: loadType === LoadType.INITIAL,
+        params: {
+          page,
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data ?? [],
+      };
+    },
+    [navigation],
+  );
+
+  const orders: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: true,
+    fetcher: fetchOrderList,
+  });
+
+  //local Fav data state whenever it changes
+  useEffect(() => {
+    if (orders.data) {
+      setOrderHistoryData(orders.data);
+    }
+  }, [orders.data]);
+
   return (
     <OrderHistoryComponent
       insets={insets}
       navigation={navigation}
       orderHistoryData={orderHistoryData}
       renderItemOrderHistory={renderItemOrderHistory}
+      orders={orders}
     />
   );
 };

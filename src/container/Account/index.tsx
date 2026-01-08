@@ -260,15 +260,15 @@ const AccountContainer = ({ navigation }: any) => {
 
   const handleDeleteItem = (type: any, id: any) => {
     if (type === 'patologie') {
-      setPatologie((prev: any) => prev.filter((item: any) => item.id !== id));
+      setPatologie((prev: any) => prev.filter((item: any) => item.deleteid !== id));
     }
 
     if (type === 'medicazioni') {
-      setMedicazioni((prev: any) => prev.filter((item: any) => item.id !== id));
+      setMedicazioni((prev: any) => prev.filter((item: any) => item.deleteid !== id));
     }
 
     if (type === 'allergie') {
-      setAllergie((prev: any) => prev.filter((item: any) => item.id !== id));
+      setAllergie((prev: any) => prev.filter((item: any) => item.deleteid !== id));
     }
   };
 
@@ -334,9 +334,17 @@ const AccountContainer = ({ navigation }: any) => {
           // 🔥 MEDICAL INFO MAPPING
           const medicalInfo = value.medical_info || {};
 
-          setMedicazioni(medicalInfo.M ?? []);
-          setPatologie(medicalInfo.P ?? []);
-          setAllergie(medicalInfo.A ?? []);
+          const normalizeMedical = (arr: any[]) =>
+            arr.map(item => ({
+              id: item.medicalid,
+              deleteid: item.id, 
+              name: item.name,
+              type: item.type,
+            }));
+
+          setMedicazioni(normalizeMedical(medicalInfo.M ?? []));
+          setPatologie(normalizeMedical(medicalInfo.P ?? []));
+          setAllergie(normalizeMedical(medicalInfo.A ?? []));
         } else {
           flashMessageWarning(responseData.message);
         }

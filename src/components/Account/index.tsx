@@ -217,7 +217,7 @@ const AccountComponent = (props: any) => {
                     </Text>
                     <TouchableOpacity
                       onPress={() =>
-                        props.onDeleteMedical(item.id, 'medicazioni')
+                        props.onDeleteMedical(item.deleteid, 'medicazioni')
                       }
                     >
                       <Image source={images.imgDeleteRound} />
@@ -252,7 +252,7 @@ const AccountComponent = (props: any) => {
                     </Text>
                     <TouchableOpacity
                       onPress={() =>
-                        props.onDeleteMedical(item.id, 'patologie')
+                        props.onDeleteMedical(item.deleteid, 'patologie')
                       }
                     >
                       <Image source={images.imgDeleteRound} />
@@ -286,7 +286,7 @@ const AccountComponent = (props: any) => {
                   <View style={styles.vwCategory}>
                     <Text style={styles.lblCategory}>{item.name}</Text>
                     <TouchableOpacity
-                      onPress={() => props.onDeleteMedical(item.id, 'allergie')}
+                      onPress={() => props.onDeleteMedical(item.deleteid, 'allergie')}
                     >
                       <Image source={images.imgDeleteRound} />
                     </TouchableOpacity>
