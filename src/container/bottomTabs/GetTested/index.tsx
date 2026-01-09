@@ -282,7 +282,7 @@ const GetTestedContainer = ({ navigation }: any) => {
   const toggleAddKit = (id: string) => {
     console.log('toggleAddKit', id);
 
-    setKitData((prev: any) =>
+    checkup.updateData((prev: any) =>
       prev.map((item: any) =>
         item.id === id ? { ...item, is_in_cart: !item.is_in_cart } : item,
       ),
@@ -533,7 +533,7 @@ const GetTestedContainer = ({ navigation }: any) => {
           ...(searchQuery ? { search: searchQuery } : {}),
         },
       });
-      
+
       // ✅ set counts here
       if (res?.data?.kitTypeTotals) {
         setCheckupCount(res.data.kitTypeTotals.CHECKUP ?? 0);
@@ -562,21 +562,6 @@ const GetTestedContainer = ({ navigation }: any) => {
     searchQuery: debouncedSearch,
     fetcher: fetchAnalitiList,
   });
-
-  //local Kit data state whenever it changes
-  useEffect(() => {
-    if (checkup.data) {
-      setKitData(checkup.data);
-    }
-  }, [checkup.data]);
-
-
-  //local analiti data state whenever it changes
-  useEffect(() => {
-    if (analiti.data) {
-      setAnalitiData(analiti.data);
-    }
-  }, [analiti.data]);
 
   return (
     <GetTestedComponent

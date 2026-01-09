@@ -53,7 +53,7 @@ const FavouritesComponent = (props: any) => {
             ) : null
           }
           ListEmptyComponent={
-            !props.favourites.loading ? (
+            !props.favourites.loading && !props.favourites.refreshing ? (
               <View
                 style={{
                   flex: 1,
@@ -71,7 +71,7 @@ const FavouritesComponent = (props: any) => {
             ) : null
           }
           style={{ flex: 1 }}
-          data={props.kitFavData}
+          data={props.favourites.data}
           renderItem={props.renderFavKitData}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item.test.id}

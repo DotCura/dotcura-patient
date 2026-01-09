@@ -21,79 +21,6 @@ import {
 const FavouritesContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
-  const kitfavList = [
-    {
-      id: '1',
-      isTest: true,
-      reportname: 'Colesterolo Totale',
-      reportValue: '2.2',
-      currentvalue: 11000,
-      minValue: 1000,
-      maxvalue: 10000,
-      reportunit: 'pH',
-    },
-    {
-      id: '6',
-      isTest: true,
-      reportname: 'Colesterolo LDL',
-      reportValue: '0.37',
-      currentvalue: 11000,
-      minValue: 1000,
-      maxvalue: 10000,
-      reportunit: 'mg/g',
-    },
-    {
-      id: '2',
-      isTest: true,
-      reportname: 'Trigliceridi',
-      reportValue: '18',
-      currentvalue: 2000,
-      minValue: 1000,
-      maxvalue: 10000,
-      reportunit: 'mg/g',
-    },
-    {
-      id: '3',
-      isTest: true,
-      reportname: 'Coloresterolo HDL',
-      reportValue: '2.2',
-      currentvalue: 100,
-      minValue: 1000,
-      maxvalue: 10000,
-      reportunit: 'pH',
-    },
-    {
-      id: '4',
-      isTest: true,
-      reportname: 'Profilo Lipidico Completo',
-      reportValue: '18 mg/g',
-      currentvalue: 4000,
-      minValue: 1000,
-      maxvalue: 10000,
-    },
-    {
-      id: '5',
-      isTest: true,
-      reportname: 'Profilo Lipidico Completo',
-      reportValue: '2.2',
-      currentvalue: 100,
-      minValue: 1000,
-      maxvalue: 10000,
-      reportunit: 'pH',
-    },
-    {
-      id: '6',
-      isTest: true,
-      reportname: 'Profilo Lipidico Completo',
-      reportValue: '2.2',
-      currentvalue: 11000,
-      minValue: 1000,
-      maxvalue: 10000,
-      reportunit: 'pH',
-    },
-  ];
-
-  const [kitFavData, setKitFavData] = useState<any>([]);
   const [showDeleteModel, setShowDeleteModel] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -183,18 +110,10 @@ const FavouritesContainer = ({ navigation }: any) => {
     fetcher: fetchFavouritesList,
   });
 
-  //local Fav data state whenever it changes
-  useEffect(() => {
-    if (favourites.data) {
-      setKitFavData(favourites.data);
-    }
-  }, [favourites.data]);
-
   return (
     <FavouritesComponent
       insets={insets}
       navigation={navigation}
-      kitFavData={kitFavData}
       renderFavKitData={renderFavKitData}
       showDeleteModel={showDeleteModel}
       funOpenDeleteModel={funOpenDeleteModel}

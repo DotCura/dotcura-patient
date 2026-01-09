@@ -235,7 +235,7 @@ const GetTestedComponent = (props: any) => {
             ) : null
           }
           ListEmptyComponent={
-            !props.checkup.loading ? (
+            !props.checkup.loading && !props.checkup.refreshing ? (
               <View
                 style={{
                   flex: 1,
@@ -253,7 +253,7 @@ const GetTestedComponent = (props: any) => {
             ) : null
           }
           numColumns={2}
-          data={props.kitData}
+          data={props.checkup.data}
           renderItem={props.renderKitData}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item.id.toString()}
@@ -276,7 +276,7 @@ const GetTestedComponent = (props: any) => {
             ) : null
           }
           ListEmptyComponent={
-            !props.analiti.loading ? (
+            !props.analiti.loading && !props.analiti.refreshing ? (
               <View
                 style={{
                   flex: 1,
@@ -296,7 +296,7 @@ const GetTestedComponent = (props: any) => {
           key={'analiti-1'}
           keyExtractor={item => item.id.toString()}
           numColumns={1}
-          data={props.analitiData}
+          data={props.analiti.data}
           renderItem={props.renderAnalitiData}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{

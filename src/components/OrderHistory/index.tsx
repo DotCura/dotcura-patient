@@ -43,7 +43,7 @@ const OrderHistoryComponent = (props: any) => {
             ) : null
           }
           ListEmptyComponent={
-            !props.orders.loading ? (
+            !props.orders.loading && !props.orders.refreshing ? (
               <View style={styles.emptyview}>
                 <Image source={images.imgMicroscope} />
                 <Text style={styles.orderhistoryemptytitle} numberOfLines={1}>
@@ -58,7 +58,7 @@ const OrderHistoryComponent = (props: any) => {
               </View>
             ) : null
           }
-          data={props.orderHistoryData}
+          data={props.orders.data}
           renderItem={props.renderItemOrderHistory}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item.booking_id.toString()}

@@ -80,7 +80,7 @@ export function usePaginatedList<T>({
 
       const requestId = nextRequestId();
 
-      const res = await fetcher({ page: pageToLoad, searchQuery , loadType,});
+      const res = await fetcher({ page: pageToLoad, searchQuery, loadType });
 
       // Ignore stale responses
       if (requestId !== requestIdRef.current) return;
@@ -100,7 +100,6 @@ export function usePaginatedList<T>({
               ? [...prev, ...incoming]
               : incoming;
           });
-          
 
           if (pageToLoad === 1) {
             blockLoadMoreRef.current = false; // 🔓 unlock
@@ -137,6 +136,11 @@ export function usePaginatedList<T>({
     },
     [enabled, fetcher, pageSize, searchQuery],
   );
+
+  // In usePaginatedList.ts - add this function
+  const updateData = useCallback((updater: (prev: T[]) => T[]) => {
+    setData(updater);
+  }, []);
 
   /* Public API */
   const loadInitial = useCallback(() => {
@@ -195,6 +199,7 @@ export function usePaginatedList<T>({
     refresh,
     loadMore,
     reset,
+    updateData,
   };
 }
 

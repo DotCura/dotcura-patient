@@ -411,18 +411,10 @@ const OrderHistoryContainer = ({ navigation }: any) => {
     fetcher: fetchOrderList,
   });
 
-  //local Fav data state whenever it changes
-  useEffect(() => {
-    if (orders.data) {
-      setOrderHistoryData(orders.data);
-    }
-  }, [orders.data]);
-
   return (
     <OrderHistoryComponent
       insets={insets}
       navigation={navigation}
-      orderHistoryData={orderHistoryData}
       renderItemOrderHistory={renderItemOrderHistory}
       orders={orders}
     />
