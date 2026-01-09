@@ -24,17 +24,17 @@ const AddFamilyMemberComponent = (props: any) => {
   const today = new Date();
   return (
     <View style={{ backgroundColor: Colors.white, flex: 1 }}>
-       <AppHeader
-          startBtnOnPress={() => {
-            console.log('hy');
-            props.navigation.goBack();
-          }}
-          dontShowStartBtn={false}
-          showTitle={true}
-          showSubTitle={false}
-          showEndBtn={false}
-          centerTitle={getTranslation('family')}
-        />
+      <AppHeader
+        startBtnOnPress={() => {
+          console.log('hy');
+          props.navigation.goBack();
+        }}
+        dontShowStartBtn={false}
+        showTitle={true}
+        showSubTitle={false}
+        showEndBtn={false}
+        centerTitle={getTranslation('family')}
+      />
       <KeyboardAwareScrollView
         style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
         contentContainerStyle={[constnatStyles.keyboardContainer]}
@@ -124,13 +124,17 @@ const AddFamilyMemberComponent = (props: any) => {
             </TouchableOpacity>
 
             <DateTimePickerModal
+              locale="es"
               isVisible={props.isDatePickerVisible}
               mode="date"
               onConfirm={props.handleConfirm}
               onCancel={props.hideDatePicker}
-              minimumDate={moment(today).subtract(100, 'years').toDate()}
-              maximumDate={moment(today).subtract(18, 'years').toDate()}
-              date={moment(today).subtract(18, 'years').toDate()}
+              minimumDate={moment(today).subtract(18, 'years').toDate()}
+              date={
+                props.formattedDate && props.formattedDate !== ''
+                  ? moment(props.formattedDate, 'DD/MM/YYYY').toDate()
+                  : moment(today).subtract(18, 'years').toDate()
+              }
             />
           </View>
 
@@ -370,28 +374,26 @@ const AddFamilyMemberComponent = (props: any) => {
           />
         </View>
         <View
-        style={{
-          paddingBottom:
-             props.insets.bottom + getHeight(10),
-          backgroundColor: Colors.whiteF2,
-          gap: getHeight(8),
-        }}
-      >
-        <CustomButton
-          btnPress={props.handlePressContinue}
-          btnTitle={getTranslation('saveinformation')}
-        />
-        <CustomButton
-          btnPress={()=>props.navigation.goBack()}
-          btnTitle={getTranslation('deletefamily')}
-          style={{ backgroundColor: Colors.redFC }}
-          textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}
-          btnicon={true}
-          btnImage={images.imgDeleteRed}
-        />
-      </View>
+          style={{
+            paddingBottom: props.insets.bottom + getHeight(10),
+            backgroundColor: Colors.whiteF2,
+            gap: getHeight(8),
+          }}
+        >
+          <CustomButton
+            btnPress={props.handlePressContinue}
+            btnTitle={getTranslation('saveinformation')}
+          />
+          <CustomButton
+            btnPress={() => props.navigation.goBack()}
+            btnTitle={getTranslation('deletefamily')}
+            style={{ backgroundColor: Colors.redFC }}
+            textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}
+            btnicon={true}
+            btnImage={images.imgDeleteRed}
+          />
+        </View>
       </KeyboardAwareScrollView>
-     
     </View>
   );
 };

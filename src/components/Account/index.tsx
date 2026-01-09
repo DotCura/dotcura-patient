@@ -134,13 +134,17 @@ const AccountComponent = (props: any) => {
             </TouchableOpacity>
 
             <DateTimePickerModal
+              locale="es"
               isVisible={props.isDatePickerVisible}
               mode="date"
               onConfirm={props.handleConfirm}
               onCancel={props.hideDatePicker}
-              minimumDate={moment(today).subtract(100, 'years').toDate()}
-              maximumDate={moment(today).subtract(18, 'years').toDate()}
-              date={moment(today).subtract(18, 'years').toDate()}
+              minimumDate={moment(today).subtract(18, 'years').toDate()}
+              date={
+                props.formattedDate && props.formattedDate !== ''
+                  ? moment(props.formattedDate, 'DD/MM/YYYY').toDate()
+                  : moment(today).subtract(18, 'years').toDate()
+              }
             />
           </View>
           <PrimaryTitleTextInput
@@ -286,7 +290,9 @@ const AccountComponent = (props: any) => {
                   <View style={styles.vwCategory}>
                     <Text style={styles.lblCategory}>{item.name}</Text>
                     <TouchableOpacity
-                      onPress={() => props.onDeleteMedical(item.deleteid, 'allergie')}
+                      onPress={() =>
+                        props.onDeleteMedical(item.deleteid, 'allergie')
+                      }
                     >
                       <Image source={images.imgDeleteRound} />
                     </TouchableOpacity>

@@ -99,6 +99,8 @@ export const images = {
   imgTestRedShadow: require('../assets/images/TestRedShadow.png'),
   imgTestYellowShadow: require('../assets/images/TestYellowShadow.png'),
   imgTopShadow: require('../assets/images/topshadow.png'),
+  imgTopRedShadow: require('../assets/images/redShadowHome.png'),
+  imgTopBlueShadow: require('../assets/images/blueShadowHome.png'),
   imgfavblack: require('../assets/images/fav-filled-black.png'),
   imgRateReview: require('../assets/images/ratereview.png'),
   imgRateFillStar: require('../assets/images/ratefillStar.png'),

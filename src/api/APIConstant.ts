@@ -19,6 +19,9 @@ export const ApiEndPoints = {
     KITLIST: `${PATIENT_PREFIX}getKitList`,
     KITDETAILS: `${PATIENT_PREFIX}getKitDetails`,
   },
+  HOME:{
+    GETANALITILIST: `${PATIENT_PREFIX}getAnalitiList`,
+  },
   SETTINGS: {
     GETNOTIFICATIONTYPE: `${PATIENT_PREFIX}getNotificationTypes`,
     ADDUPDATENOTICATIONTYPE: `${PATIENT_PREFIX}addOrUpdateNotificationPermission`,
