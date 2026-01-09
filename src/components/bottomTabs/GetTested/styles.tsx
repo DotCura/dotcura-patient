@@ -6,6 +6,13 @@ import { fontSize } from '../../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
   //TAB SELECT
+  lblNoAddressFound: {
+    fontSize: fontSize.size20,
+    textAlign: 'center',
+    marginHorizontal: getWidth(40),
+    fontFamily: fontsfamily.gsemiBold,
+    color: Colors.blue002,
+  },
   btnAnlaiti: {
     flexDirection: 'row',
     gap: getWidth(6),

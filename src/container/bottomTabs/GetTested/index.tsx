@@ -272,8 +272,8 @@ const GetTestedContainer = ({ navigation }: any) => {
   const [selectedAge, setSelectedAge] = useState<number | null>(null);
 
   const [selectedTab, setSelectedTab] = useState('checkup'); // 'checkup' or 'analiti'
-  const [checkupcount, setCheckupCount] = useState(31);
-  const [analiticount, setAnalitiCount] = useState(31);
+  const [checkupcount, setCheckupCount] = useState(0);
+  const [analiticount, setAnalitiCount] = useState(0);
 
   const [searchHistory, setSeachHistory] = useState('');
 
@@ -496,6 +496,12 @@ const GetTestedContainer = ({ navigation }: any) => {
         },
       });
 
+      // ✅ set counts here
+      if (res?.data?.kitTypeTotals) {
+        setCheckupCount(res.data.kitTypeTotals.CHECKUP ?? 0);
+        setAnalitiCount(res.data.kitTypeTotals.ANALYSIS ?? 0);
+      }
+
       // 🔥 NORMALIZE RESPONSE
       return {
         ...res,
@@ -527,11 +533,17 @@ const GetTestedContainer = ({ navigation }: any) => {
           ...(searchQuery ? { search: searchQuery } : {}),
         },
       });
+      
+      // ✅ set counts here
+      if (res?.data?.kitTypeTotals) {
+        setCheckupCount(res.data.kitTypeTotals.CHECKUP ?? 0);
+        setAnalitiCount(res.data.kitTypeTotals.ANALYSIS ?? 0);
+      }
 
       // 🔥 NORMALIZE RESPONSE
       return {
         ...res,
-        data: res?.data?.items ?? [], // ✅ always array
+        data: res?.data?.items ?? [],
       };
     },
     [navigation],
@@ -557,6 +569,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       setKitData(checkup.data);
     }
   }, [checkup.data]);
+
 
   //local analiti data state whenever it changes
   useEffect(() => {

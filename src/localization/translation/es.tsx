@@ -539,4 +539,6 @@ export default {
   addresstypeother: 'Otro',
   addresstypemedical: 'Clínica / Hospital',
   noaddressfoundlabel: 'No se encontró ninguna dirección',
+  nocheckoutlistfound:"No se encontró ningún kit",
+  noAnlitilistfound:"No se encontró Analiti",
 };

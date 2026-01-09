@@ -1,4 +1,4 @@
-package com.dotcura_patient
+package com.dotcura.app
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

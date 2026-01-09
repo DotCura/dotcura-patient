@@ -217,7 +217,7 @@ const GetTestedComponent = (props: any) => {
               },
             ]}
           >
-            {getTranslation('analitiheadertext')} ({props.checkupcount})
+            {getTranslation('analitiheadertext')} ({props.analiticount})
           </Text>
         </TouchableOpacity>
       </View>
@@ -232,6 +232,24 @@ const GetTestedComponent = (props: any) => {
           ListFooterComponent={
             props.checkup.loadingMore ? (
               <ActivityIndicator size="large" color={Colors.blue002} />
+            ) : null
+          }
+          ListEmptyComponent={
+            !props.checkup.loading ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: getHeight(20),
+                  marginTop: getHeight(100),
+                }}
+              >
+                <Image source={images.imgNoDataFoundAddress} />
+                <Text style={styles.lblNoAddressFound}>
+                  {getTranslation('nocheckoutlistfound')}
+                </Text>
+              </View>
             ) : null
           }
           numColumns={2}
@@ -255,6 +273,24 @@ const GetTestedComponent = (props: any) => {
           ListFooterComponent={
             props.analiti.loadingMore ? (
               <ActivityIndicator size="large" color={Colors.blue002} />
+            ) : null
+          }
+          ListEmptyComponent={
+            !props.analiti.loading ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: getHeight(20),
+                  marginTop: getHeight(100),
+                }}
+              >
+                <Image source={images.imgNoDataFoundAddress} />
+                <Text style={styles.lblNoAddressFound}>
+                  {getTranslation('noAnlitilistfound')}
+                </Text>
+              </View>
             ) : null
           }
           key={'analiti-1'}

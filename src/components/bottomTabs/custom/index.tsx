@@ -280,6 +280,7 @@ import { BlurView } from '@react-native-community/blur';
 import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { useIsFocused } from '@react-navigation/native';
+import { isPlatformiOS } from '../../../constants/AppConstants';
 
 const TAB_WIDTH = getWidth(250) / 3; // 👈 3 tabs
 
@@ -338,7 +339,7 @@ const CustomBottomTabsComponent = (props: any) => {
   return (
     <>
       {/* 🔹 PERFECT MASKED BLUR (NO TOP LINE) */}
-      {isFocused && (
+      {/* {isFocused && !isPlatformiOS && (
         <MaskedView
           pointerEvents="none"
           style={{
@@ -363,7 +364,7 @@ const CustomBottomTabsComponent = (props: any) => {
             reducedTransparencyFallbackColor="transparent"
           />
         </MaskedView>
-      )}
+      )} */}
 
       <View
         style={{
