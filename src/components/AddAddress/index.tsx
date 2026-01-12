@@ -16,19 +16,23 @@ import { activityOpacity } from '../../constants/GConstant';
 import CustomDropdown from '../../global/DropDown/CustomDropDown';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import AppHeader from '../../global/Header';
+import { isPlatformiOS } from '../../constants/AppConstants';
+import { GlobalVar } from '../../constants/GlobalVar';
 
 const AddAddressComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
 
   // 🔥 Moved styles here (no global style)
-  const customStylesTextInput = {
+  const customStylesTextInput :any = {
     container: {
       flex: 1,
       borderRadius: 12,
     },
     input: {
+      textAlignVertical: 'top', // Aligns the text to the top for multiline
+      height: '100%',
       overflow: 'hidden',
-      height: getHeight(56),
+      // height: getHeight(56),
       borderWidth: 2,
       borderRadius: 12,
       fontSize: fontSize.size16,
@@ -41,12 +45,12 @@ const AddAddressComponent = (props: any) => {
     },
     suggestionsContainer: {
       backgroundColor: '#ffffff',
-      maxHeight: 250,
+      maxHeight: 200,
       position: 'absolute',
       top: 50,
-      left: -35,
+      left: 0,
       right: 0,
-      width: '120%',
+      width: '100%',
       zIndex: 1000,
     },
     suggestionItem: {
@@ -113,23 +117,28 @@ const AddAddressComponent = (props: any) => {
             </Text>
             <View style={{ marginTop: 1 }}>
               <GooglePlacesTextInput
+                multiline
                 ref={props.searchRef}
-                apiKey={''}
+                apiKey={
+                  isPlatformiOS
+                    ? GlobalVar.google_map_api_key_ios
+                    : GlobalVar.google_map_api_key_android
+                }
+                value={props.searchAddress} // ✅ REQUIRED
                 placeHolderText={getTranslation('addaddressplacholder') || ''}
                 onPlaceSelect={(place: any) => {
                   props.handlePlaceSelect(place);
-                  props.setSearchAddress(place?.fullText || ''); // Store selected address
                 }}
                 onChangeText={(text: any) => {
                   props.setSearchAddress(text); // store every typed change
                 }}
                 cursorColor={Colors.blue002}
                 selectionColor={Colors.blue002}
-                languageCode="en"
+                languageCode="es"
                 style={customStylesTextInput}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                showClearButton={false}
+                showClearButton={true}
                 showLoadingIndicator={false}
               />
             </View>

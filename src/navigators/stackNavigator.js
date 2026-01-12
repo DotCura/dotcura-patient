@@ -406,6 +406,9 @@ const MainNavigation = props => {
         {_addScreen(NativeStack, ScreenNames.ANALITITESTDETAILSCONTAINER, {
           headerShown: false,
         })}
+        {_addScreen(NativeStack, ScreenNames.CMSPAGECONTAINER, {
+          headerShown: true,
+        })}
 
         {/* 🔥 TRANSITION ENTRY */}
         <NativeStack.Screen

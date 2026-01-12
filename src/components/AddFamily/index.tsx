@@ -1,9 +1,8 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
-  StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
@@ -11,7 +10,6 @@ import { constnatStyles } from '../../constants/Styles';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { styles } from './styles';
 import { images } from '../../constants/Images';
-import { activityOpacity } from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import CustomButton from '../../global/Buttons';
 import { Colors } from '../../constants/Colors';
@@ -42,7 +40,6 @@ const AddFamilyComponent = (props: any) => {
       <AppHeader
         startBtnOnPress={() => {
           console.log('hy');
-          // navigation.navigate(ScreenNames.PROFILECONTAINER);
           props.navigation.goBack();
         }}
         dontShowStartBtn={false}
@@ -51,48 +48,69 @@ const AddFamilyComponent = (props: any) => {
         showEndBtn={false}
         centerTitle={getTranslation('family')}
       />
-      {/* vwEmpty */}
-      {props.showEmpty && (
-        <View style={styles.vwEmpty}>
-          <Image
-            source={images.imgFamilyEmpty}
-            style={{ marginVertical: getHeight(76), alignSelf: 'center' }}
-          />
-          <View style={{ marginHorizontal: getWidth(7), gap: getHeight(2) }}>
-            <Text style={styles.emptyTitle} numberOfLines={1}>
-              {getTranslation('emptyaddfamilytitle')}
-            </Text>
-            <Text style={styles.emptySubtitle} numberOfLines={5}>
-              {getTranslation('emptyaddfamilysubtitle')}
-            </Text>
-          </View>
-          <CustomButton
-            btnPress={() => props.setShowEmpty(false)}
-            btnTitle={getTranslation('addfamilybtn')}
-            style={{
-              backgroundColor: Colors.blueD1,
-            }}
-            textStyle={{
-              color: Colors.blue002,
-              fontsfamily: fontsfamily.gmedium,
-            }}
-          />
-        </View>
-      )}
-      {props.showEmpty == false && (
-        <FlatList
-          data={props.familyMembersData}
-          renderItem={props.renderItemFamilyMember}
-          keyExtractor={item => item.id.toString()}
-          contentContainerStyle={{
-            flexGrow: 1,
-            gap: getHeight(15),
-            marginHorizontal: getWidth(16),
-            marginTop: getHeight(24),
-          }}
-          ListFooterComponent={renderListFooter}
-        />
-      )}
+
+      <FlatList
+        onEndReached={props.familyMemberList.loadMore}
+        onEndReachedThreshold={0.5}
+        refreshing={props.familyMemberList.refreshing}
+        onRefresh={props.familyMemberList.refresh}
+        ListFooterComponent={() =>
+          props.familyMembersData?.length > 0 ? (
+            <>
+              {props.familyMemberList.loadingMore && (
+                <ActivityIndicator
+                  size="large"
+                  color={Colors.blue002}
+                  style={{ marginVertical: getHeight(20) }}
+                />
+              )}
+
+              {renderListFooter()}
+            </>
+          ) : null
+        }
+        ListEmptyComponent={
+          !props.familyMemberList.loading &&
+          !props.familyMemberList.refreshing ? (
+            <View style={styles.vwEmpty}>
+              <Image
+                source={images.imgFamilyEmpty}
+                style={{ marginVertical: getHeight(76), alignSelf: 'center' }}
+              />
+              <View
+                style={{ marginHorizontal: getWidth(7), gap: getHeight(2) }}
+              >
+                <Text style={styles.emptyTitle} numberOfLines={1}>
+                  {getTranslation('emptyaddfamilytitle')}
+                </Text>
+                <Text style={styles.emptySubtitle} numberOfLines={5}>
+                  {getTranslation('emptyaddfamilysubtitle')}
+                </Text>
+              </View>
+              <CustomButton
+                btnPress={props.handleNavigateFamilyMember}
+                btnTitle={getTranslation('addfamilybtn')}
+                style={{
+                  backgroundColor: Colors.blueD1,
+                }}
+                textStyle={{
+                  color: Colors.blue002,
+                  fontsfamily: fontsfamily.gmedium,
+                }}
+              />
+            </View>
+          ) : null
+        }
+        data={props.familyMembersData}
+        renderItem={props.renderItemFamilyMember}
+        keyExtractor={item => item.id}
+        contentContainerStyle={{
+          flexGrow: 1,
+          gap: getHeight(15),
+          marginHorizontal: getWidth(16),
+          marginTop: getHeight(24),
+        }}
+      />
     </View>
   );
 };

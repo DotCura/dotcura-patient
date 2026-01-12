@@ -19,8 +19,15 @@ export const ApiEndPoints = {
     KITLIST: `${PATIENT_PREFIX}getKitList`,
     KITDETAILS: `${PATIENT_PREFIX}getKitDetails`,
   },
-  HOME:{
+  HOME: {
     GETANALITILIST: `${PATIENT_PREFIX}getAnalitiList`,
+  },
+  FAMILY: {
+    GETFAMILYMEMBERLIST: `${PATIENT_PREFIX}getFamilyMember`,
+    ADDFAMILYMEMBER: `${PATIENT_PREFIX}addFamilyMember`,
+    UPDATEFAMILYMEMBER: `${PATIENT_PREFIX}updateFamilyMember`,
+    DELETEFAMILYMEMBER: `${PATIENT_PREFIX}removeFamilyMember`,
+    GETFAMILYMEMBERDETAILS: `${PATIENT_PREFIX}getFamilyMemberDetails`,
   },
   SETTINGS: {
     GETNOTIFICATIONTYPE: `${PATIENT_PREFIX}getNotificationTypes`,
@@ -29,6 +36,7 @@ export const ApiEndPoints = {
     DELETEACCOUNT: `${PATIENT_PREFIX}delete_user`,
     PATIENTDETAILS: `${PATIENT_PREFIX}patient_details`,
     GETLIKEREPORTLIST: `${PATIENT_PREFIX}getLikeReportList`,
+    GETCREDENTIAALS: `${PATIENT_PREFIX}credentials`,
   },
   MEDICAL: {
     GETMEDICALHISTORY: `${PATIENT_PREFIX}getmedicalHistory`,
@@ -44,6 +52,9 @@ export const ApiEndPoints = {
   ORDER: {
     GETORDERHISTORY: `${PATIENT_PREFIX}getOrderList`,
   },
+  OTHER :{
+    GETRELATIONTYPE: `${PATIENT_PREFIX}OtherDetails`,
+  }
 };
 
 // API methods

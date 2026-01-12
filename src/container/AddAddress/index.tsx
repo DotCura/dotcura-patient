@@ -9,7 +9,12 @@ import {
   flashMessageWarning,
 } from '../../constants/GConstant';
 import { ScreenNames } from '../../constants/AppConstants';
-import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
+import {
+  ApiEndPoints,
+  MethodType,
+  StatusCode,
+  toggleLoader,
+} from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
 
 const AddAddressContainer = ({ navigation, route }: any) => {
@@ -53,7 +58,7 @@ const AddAddressContainer = ({ navigation, route }: any) => {
 
   useEffect(() => {
     if (editAddress && editAddressData) {
-      // setSearchAddress(editAddressData.address);
+      setSearchAddress(editAddressData.address);
       setFloor(editAddressData.floor);
       setStairs(editAddressData.stairs);
       setinstructions(editAddressData.instructions);
@@ -130,74 +135,20 @@ const AddAddressContainer = ({ navigation, route }: any) => {
 
   const handleOnPressDeleteAddress = async () => {
     await _deleteAddressApi();
-  }
+  };
 
   const searchRef = useRef<any>(null);
 
   const handlePlaceSelect = async (place: any) => {
     console.log('call', place);
-    // if (place && place.placeId) {
-    //   toggleLoader(true);
-    //   // console.log("Selected place:", JSON.stringify(place));
-    //   searchRef.current?.clear();
-    //   // setSearchText("");
-
-    //   try {
-    //     // Fetch place details to get lat/lng
-    //     const response = await fetch(
-    //       `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place.placeId}&key=${googleApiKey}`
-    //     );
-    //     const data = await response.json();
-
-    //     console.log("selectPlaceData", JSON.stringify(data));
-
-    //     //Update Search Count API Call
-    //     _updateCount();
-    //     Keyboard.dismiss();
-    //     toggleLoader(false);
-    //     if (data.result && data.result.geometry) {
-    //       const { lat, lng } = data.result.geometry.location;
-
-    //       setLocationForLatLong({ lat, lng });
-
-    //       // Update map region to the selected location
-    //       const newRegion = {
-    //         latitude: lat,
-    //         longitude: lng,
-    //         latitudeDelta: 0.001, // Adjust zoom level as needed
-    //         longitudeDelta: 0.001,
-    //       };
-
-    //       // Update map region state
-    //       setMapRegion(newRegion);
-
-    //       // Animate map to the new location
-    //       if (mapRef.current) {
-    //         mapRef.current.animateToRegion(newRegion, 700); // 1000 ms animation duration
-    //       }
-    //       setLatitude(lat);
-    //       setLongitude(lng);
-    //       // _venueList(lat, lng);
-    //       _eventList(lat, lng, 0);
-
-    //       {
-    //         subscriptionData?.is_subscription != 0  &&
-    //           fetchNearbyAirports(lat, lng);
-    //       }
-
-    //       // {
-    //       //   subscriptionData?.is_subscription != 0;
-    //       //   _getNearByDriverApi(lat, lng);
-    //       // }
-
-    //       console.log("Latitude:", lat, "Longitude:", lng);
-    //     } else {
-    //       console.warn("Could not fetch lat/lng");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching place details:", error);
-    //   }
-    // }
+    if (place && place.placeId) {
+      console.log('Selected place:', JSON.stringify(place));
+      console.log("place?.text?.text",place?.text?.text);
+      
+      // searchRef.current?.clear();
+      setSearchAddress(place?.text?.text);
+      // setSearchText("");
+    }
   };
 
   const toggleisDefault = () => {
@@ -231,13 +182,13 @@ const AddAddressContainer = ({ navigation, route }: any) => {
   const _addAddressApi = async () => {
     try {
       const params = {
-        address: 'D-501 Sarjan residency opp',
+        address: searchAddress,
         title: addressTypeItem,
         floor: floor,
         stairs: stairs,
         instructions: instructions,
-        latitude: '34.0522',
-        longitude: '34.0522',
+        latitude: '0',
+        longitude: '0',
         is_default: isdefaultsave == true ? 1 : 0,
       };
 
@@ -265,13 +216,13 @@ const AddAddressContainer = ({ navigation, route }: any) => {
     try {
       const params = {
         address_id: editAddressData.address_id,
-        address: 'D-501 Sarjan residency opp',
+        address: searchAddress,
         title: addressTypeItem,
         floor: floor,
         stairs: stairs,
         instructions: instructions,
-        latitude: '34.0522',
-        longitude: '34.0522',
+        latitude: '0',
+        longitude: '0',
         is_default: isdefaultsave == true ? 1 : 0,
       };
 

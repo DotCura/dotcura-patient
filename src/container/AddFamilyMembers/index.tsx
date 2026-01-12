@@ -1,4 +1,4 @@
-import { Keyboard, View } from 'react-native';
+import { Keyboard } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment';
@@ -11,31 +11,104 @@ import {
 } from '../../constants/GConstant';
 import AppHeader from '../../global/Header';
 import AddFamilyMemberComponent from '../../components/AddFamilyMembers';
-import TopBar from '../../global/TopBar/TopBar';
 import { ScreenNames } from '../../constants/AppConstants';
 import { ImagePickerManager } from '../../constants/utils/NativeImagePicker';
+import { uploadFile } from '../../global/AWSUploadManager';
+import {
+  ApiEndPoints,
+  MethodType,
+  StatusCode,
+  toggleLoader,
+} from '../../api/APIConstant';
+import { APIManager } from '../../api/APIManager';
 
-const AddFamilyMemberContainer = ({ navigation }: any) => {
+const AddFamilyMemberContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
+  const isEdit = route?.params?.editFamilyMember === true;
+  const editData = route?.params?.editFamilyMemberData;
+  const familyMemberId = route?.params?.familyMemberId;
+
+  useEffect(() => {
+    if (isEdit && editData) {
+      // BASIC DETAILS
+      setFullName(editData.first_name || '');
+      setSurname(editData.last_name || '');
+      setAppTypeValue(editData.relationship_id?.toString());
+      setIdentityValue(editData.document_id?.toString());
+      setSelectedGender(editData.gender === 'male' ? 1 : 2);
+      setTaxCode(editData.tax_code || '');
+
+      // DOB
+      if (editData.dob) {
+        setFormatedDateForApi(editData.dob);
+        setFormattedDate(moment(editData.dob).format('DD/MM/YYYY'));
+      }
+
+      // DOCUMENT IMAGES
+      setFrontSide(editData.document_front_image);
+      setBackSide(editData.document_back_image);
+      setFrontImageAdd(true);
+      setBackImageAdd(true);
+
+      // 🩺 MEDICAL INFO (MOST IMPORTANT)
+      const medicalInfo = editData.medical_info || {};
+
+      setMedicazioni(
+        (medicalInfo.M || []).map((item: any) => ({
+          id: item.medical_id, // used for submit
+          deleteid: item.id, // used for delete API
+          name: item.name,
+          type: 'M',
+        })),
+      );
+
+      setAllergie(
+        (medicalInfo.A || []).map((item: any) => ({
+          id: item.medical_id,
+          deleteid: item.id,
+          name: item.name,
+          type: 'A',
+        })),
+      );
+
+      setPatologie(
+        (medicalInfo.P || []).map((item: any) => ({
+          id: item.medical_id,
+          deleteid: item.id,
+          name: item.name,
+          type: 'P',
+        })),
+      );
+    }
+  }, [isEdit, editData]);
 
   const genders = [
     { id: 1, label: getTranslation('gender1') },
     { id: 2, label: getTranslation('gender2') },
   ];
-  const IdentityData = [
-    { label: getTranslation('passport'), value: '1' },
-    { label: getTranslation('electronicsidcard'), value: '2' },
-  ];
+
   const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
 
   const [fullName, setFullName] = useState<any>('');
   const [surname, setSurname] = useState<any>('');
+
+  const [AppTypeData, setAppTypeData] = useState<
+    { label: string; value: string }[]
+  >([]);
   const [appTypeValue, setAppTypeValue] = useState<any>('');
+
+  const [IdentityData, setIdentityData] = useState<
+    { label: string; value: string }[]
+  >([]);
   const [identityValue, setIdentityValue] = useState<any>('');
+
   const [frontSide, setFrontSide] = useState(undefined);
   const [frontImageAdd, setFrontImageAdd] = useState(false);
+  const [frontImageFile, setFrontImageFile] = useState<any>(undefined);
+
   const [backSide, setBackSide] = useState(undefined);
   const [backImageAdd, setBackImageAdd] = useState(false);
+  const [backImageFile, setBackImageFile] = useState<any>(undefined);
 
   const [taxCode, setTaxCode] = useState<any>('');
   const [dateOfBirth, setDateOfBirth] = useState<any>('');
@@ -48,14 +121,6 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
   const [formatedDateForApi, setFormatedDateForApi] = useState('');
-
-  const AppTypeData = [
-    { label: 'Padre', value: '1' },
-    { label: 'Madre', value: '2' },
-    { label: 'Hermano', value: '3' },
-    { label: 'Hermana', value: '4' },
-    { label: 'Esposa', value: '5' },
-  ];
 
   const handleSetRole = (item: any) => {
     setAppTypeValue(item.value);
@@ -93,7 +158,38 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
     setTaxCode(formatted);
   };
 
-  const handlePressContinue = () => {
+  const extractS3Key = (urlOrKey: string) => {
+    if (!urlOrKey) return '';
+
+    // If already a key (document/xxx.jpg), return as-is
+    if (!urlOrKey.startsWith('http')) {
+      return urlOrKey;
+    }
+
+    // If full URL, extract key after .com/
+    const parts = urlOrKey.split('.com/');
+    return parts[1] || urlOrKey;
+  };
+
+  const uploadImagesIfNeeded = async () => {
+    let frontUrl: any = frontSide;
+    let backUrl: any = backSide;
+
+    if (frontImageFile) {
+      frontUrl = await uploadFile(frontImageFile);
+    }
+
+    if (backImageFile) {
+      backUrl = await uploadFile(backImageFile);
+    }
+
+    return {
+      frontUrl: extractS3Key(frontUrl),
+      backUrl: extractS3Key(backUrl),
+    };
+  };
+
+  const handlePressContinue = async () => {
     // Reset previous errors
     setFullNameError('');
     setTaxCodeError('');
@@ -124,8 +220,20 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
     } else if (frontSide == undefined || backSide == undefined) {
       flashMessageWarning(getTranslation('pleaseuploadfrontandbackside'));
     } else {
-      console.log('hy');
-      navigation.popTo(ScreenNames.ADDFAMILYCONTAINER);
+      try {
+        const { frontUrl, backUrl } = await uploadImagesIfNeeded();
+
+        console.log('Uploaded Front URL:', frontUrl);
+        console.log('Uploaded Back URL:', backUrl);
+
+        if (isEdit) {
+          await _updateFamilyMemberDetails(frontUrl, backUrl);
+        } else {
+          await _addFamilyMemberDetails(frontUrl, backUrl);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -162,12 +270,19 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
 
         return ImagePickerManager.choosePickerOptions('photo');
       })
-      .then((result: any) => {
+      .then(async (result: any) => {
         if (!result) return;
 
         const uri = result[0]?.uri;
         if (!uri) return;
 
+        // const fileName: any = await uploadFile(result[0]);
+        // console.log('Uploaded file name:', fileName);
+        // setFrontUrl(fileName);
+        // setFrontSide(uri);
+        // setFrontImageAdd(true);
+        // Store the file object and URI, but don't upload yet
+        setFrontImageFile(result[0]);
         setFrontSide(uri);
         setFrontImageAdd(true);
       })
@@ -187,101 +302,41 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
 
         return ImagePickerManager.choosePickerOptions('photo');
       })
-      .then((result: any) => {
+      .then(async (result: any) => {
         if (!result) return;
 
         const uri = result[0]?.uri;
         if (!uri) return;
 
+        // const fileName: any = await uploadFile(result[0]);
+        // console.log('Uploaded file name:', fileName);
+        // setBacktUrl(fileName);
+        // setBackSide(uri);
+        // setBackImageAdd(true);
+        // Store the file object and URI, but don't upload yet
+        // Store the file object and URI, but don't upload yet
+        setBackImageFile(result[0]);
         setBackSide(uri);
         setBackImageAdd(true);
+
+        console.log('Front image selected:', uri);
       })
       .catch(error => {
-        console.log('🔥 Error in pickBackImage():', error);
+        console.log('🔥 Error in pickImage():', error);
       });
   };
 
   //model
-  const [patologie, setPatologie] = useState([
-    {
-      id: 1,
-      name: 'Disordine alimentare',
-    },
-  ]);
-  const [medicazioni, setMedicazioni] = useState([]);
-  const [allergie, setAllergie] = useState([]);
+
+  const [patologie, setPatologie] = useState<any>([]);
+  const [medicazioni, setMedicazioni] = useState<any>([]);
+  const [allergie, setAllergie] = useState<any>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState<any>('');
   const [modalData, setModalData] = useState<any>([]);
   const [modalSelected, setModalSelected] = useState<any>([]);
   const [modalType, setModalType] = useState<any>('');
-
-  const patologieData = [
-    { id: 1, name: 'Disordine alimentare' },
-    { id: 2, name: 'Disordine renale' },
-    { id: 3, name: 'Disordine del fegato' },
-    { id: 4, name: 'Disordine di alterazione mentale' },
-  ];
-
-  const allergieData = [
-    { id: 10, name: 'Polline' },
-    { id: 11, name: 'Polvere' },
-    { id: 12, name: 'Lattosio' },
-    { id: 13, name: 'Glutine' },
-  ];
-  const medicazioneData = [
-    { id: 14, name: 'Aspirina' },
-    { id: 15, name: 'Ibuprofene' },
-    { id: 16, name: 'Paracetamolo' },
-  ];
-
-  const openModal = (type: any) => {
-    setModalType(type);
-
-    if (type === 'patologie') {
-      setModalTitle('Aggiungi patologia');
-      setModalData(patologieData);
-      setModalSelected(patologie);
-    }
-
-    if (type === 'medicazioni') {
-      setModalTitle('Aggiungi medicazione');
-      setModalData(medicazioneData);
-      setModalSelected(medicazioni);
-    }
-
-    if (type === 'allergie') {
-      setModalTitle('Aggiungi allergia');
-      setModalData(allergieData);
-      setModalSelected(allergie);
-    }
-
-    setModalVisible(true);
-  };
-
-  const handleSave = (selected: any) => {
-    if (modalType === 'patologie') setPatologie(selected);
-
-    if (modalType === 'medicazioni') setMedicazioni(selected);
-
-    if (modalType === 'allergie') setAllergie(selected);
-
-    setModalVisible(false);
-  };
-
-  const handleDeleteItem = (type: any, id: any) => {
-    if (type === 'patologie') {
-      setPatologie(prev => prev.filter(item => item.id !== id));
-    }
-
-    if (type === 'medicazioni') {
-      setMedicazioni(prev => prev.filter((item: any) => item.id !== id));
-    }
-
-    if (type === 'allergie') {
-      setAllergie(prev => prev.filter((item: any) => item.id !== id));
-    }
-  };
+  const [medicalList, setMedicalList] = useState<any[]>([]);
 
   const header = () => {
     navigation.setOptions({
@@ -305,9 +360,310 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
     header();
   }, []);
 
+  //===================== API ===========================
+
+  const openModal = async (type: 'patologie' | 'medicazioni' | 'allergie') => {
+    setModalType(type);
+
+    if (type === 'patologie') {
+      setModalTitle('Aggiungi patologia');
+      await _getMedicalHistory('P');
+      setModalSelected(patologie);
+    }
+
+    if (type === 'medicazioni') {
+      setModalTitle('Aggiungi medicazione');
+      await _getMedicalHistory('M');
+      setModalSelected(medicazioni);
+    }
+
+    if (type === 'allergie') {
+      setModalTitle('Aggiungi allergia');
+      await _getMedicalHistory('A');
+      setModalSelected(allergie);
+    }
+
+    setModalVisible(true);
+  };
+
+  const handleSave = async (selected: any[]) => {
+    if (modalType === 'patologie') setPatologie(selected);
+    if (modalType === 'medicazioni') setMedicazioni(selected);
+    if (modalType === 'allergie') setAllergie(selected);
+    setModalVisible(false);
+  };
+
+  const handleDeleteItem = (type: any, id: any) => {
+    console.log('id------', id);
+
+    if (type === 'patologie') {
+      setPatologie((prev: any) =>
+        prev.filter((item: any) => item.deleteid !== id),
+      );
+    }
+
+    if (type === 'medicazioni') {
+      setMedicazioni((prev: any) =>
+        prev.filter((item: any) => item.deleteid !== id),
+      );
+    }
+
+    if (type === 'allergie') {
+      setAllergie((prev: any) =>
+        prev.filter((item: any) => item.deleteid !== id),
+      );
+    }
+  };
+
+  //GETMEDICALHISTORY
+  const _getMedicalHistory = async (
+    type: 'P' | 'M' | 'A',
+    search: string = '',
+  ) => {
+    try {
+      const params: any = {
+        type,
+      };
+
+      // ✅ Add search ONLY if not empty
+      if (search.trim().length > 0) {
+        params.search = search.trim();
+      }
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setMedicalList(responseData.data);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.MEDICAL.GETMEDICALHISTORY,
+        callback,
+        showLoader: search.trim().length === 0,
+        params,
+      });
+    } catch (error) {
+      console.log('medicalhistory error:', error);
+    }
+  };
+
+  //GETRELATIONSHIPTYPE
+  const _getRelationTypes = async () => {
+    try {
+      const params = {
+        type: 'relationship_type',
+      };
+
+      const callback = async (responseData: any) => {
+        console.log(responseData, 'reponseData of api getrelationshiptype');
+        toggleLoader(false);
+        if (responseData.code === StatusCode.SUCCESS) {
+          const formattedData = responseData?.data?.map((item: any) => ({
+            label: item.name, // shown in dropdown
+            value: item.id.toString(), // stored value
+          }));
+
+          setAppTypeData(formattedData);
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.OTHER.GETRELATIONTYPE,
+        callback,
+        params,
+        showLoader: false,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('getrelationshiptype error:', error);
+    }
+  };
+
+  //GETDOCUMENTTYPE
+  const _getDocumentTypes = async () => {
+    try {
+      const params = {
+        type: 'document',
+      };
+
+      const callback = async (responseData: any) => {
+        console.log(responseData, 'reponseData of api _getDocumentTypes');
+        toggleLoader(false);
+        if (responseData.code === StatusCode.SUCCESS) {
+          const formattedData = responseData?.data?.map((item: any) => ({
+            label: item.name, // shown in dropdown
+            value: item.id.toString(), // stored value
+          }));
+
+          setIdentityData(formattedData);
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.OTHER.GETRELATIONTYPE,
+        callback,
+        params,
+        showLoader: false,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('_getDocumentTypes error:', error);
+    }
+  };
+
+  //GETALLMEDICALIDS
+  const getAllMedicalIds = () => {
+    const patologieIds = patologie.map((i: any) => i.id);
+    const medicazioniIds = medicazioni.map((i: any) => i.id);
+    const allergieIds = allergie.map((i: any) => i.id);
+
+    return [...medicazioniIds, ...patologieIds, ...allergieIds];
+  };
+
+  //ADDFAMILYMEMBERDETAILS
+  const _addFamilyMemberDetails = async (frontUrl: string, backUrl: string) => {
+    try {
+      // 2️⃣ Combine medical IDs
+      const detailTypeIds = getAllMedicalIds();
+      const params = {
+        name: fullName + ' ' + surname,
+        first_name: fullName,
+        last_name: surname,
+        relationship_id: appTypeValue,
+        gender: selectedGender == 1 ? 'male' : 'female',
+        dob: formatedDateForApi,
+        document_id: identityValue,
+        document_front_image: frontUrl,
+        document_back_image: backUrl,
+        tax_code: taxCode,
+        detail_type_ids: detailTypeIds,
+      };
+      console.log('Params for Add Family Member:', params);
+
+      const callback = async (responseData: any) => {
+        console.log(responseData, 'reponseData of api Add Family Member');
+        toggleLoader(false);
+        navigation.popTo(ScreenNames.ADDFAMILYCONTAINER);
+        if (responseData.code === StatusCode.SUCCESS) {
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.FAMILY.ADDFAMILYMEMBER,
+        callback,
+        params,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('Add Family Member error:', error);
+    }
+  };
+
+  //UPDATEFAMILYMEMBERDETAILS
+  const _updateFamilyMemberDetails = async (
+    frontUrl: string,
+    backUrl: string,
+  ) => {
+    try {
+      // 2️⃣ Combine medical IDs
+      const detailTypeIds = getAllMedicalIds();
+      const params = {
+        family_member_id: familyMemberId,
+        name: fullName + ' ' + surname,
+        first_name: fullName,
+        last_name: surname,
+        relationship_id: appTypeValue,
+        gender: selectedGender == 1 ? 'male' : 'female',
+        dob: formatedDateForApi,
+        document_id: identityValue,
+        document_front_image: frontUrl,
+        document_back_image: backUrl,
+        tax_code: taxCode,
+        detail_type_ids: detailTypeIds,
+      };
+      console.log('Params for update Family Member:', params);
+
+      const callback = async (responseData: any) => {
+        console.log(responseData, 'reponseData of api Add Family Member');
+        toggleLoader(false);
+        navigation.popTo(ScreenNames.ADDFAMILYCONTAINER);
+        if (responseData.code === StatusCode.SUCCESS) {
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.FAMILY.UPDATEFAMILYMEMBER,
+        callback,
+        params,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('Add Family Member error:', error);
+    }
+  };
+
+  //REMOVEFAMILYMEMBER
+  const _removeFamilyMember = async () => {
+    try {
+      // 2️⃣ Combine medical IDs
+      const detailTypeIds = getAllMedicalIds();
+      const params = {
+        family_member_id: familyMemberId,
+      };
+
+      const callback = async (responseData: any) => {
+        console.log(responseData, 'reponseData of api Remove Family Member');
+        toggleLoader(false);
+        navigation.popTo(ScreenNames.ADDFAMILYCONTAINER);
+        if (responseData.code === StatusCode.SUCCESS) {
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.FAMILY.DELETEFAMILYMEMBER,
+        callback,
+        params,
+        showLoader: false,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('Remove Family Member error:', error);
+    }
+  };
+
+  //CALLAPI
+  useEffect(() => {
+    _getRelationTypes();
+    _getDocumentTypes();
+  }, []);
+
   return (
     <AddFamilyMemberComponent
-    navigation={navigation}
+      navigation={navigation}
       formattedDate={formattedDate}
       insets={insets}
       fullName={fullName}
@@ -349,7 +705,6 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
       AppTypeData={AppTypeData}
       appTypeValue={appTypeValue}
       handleSetRole={handleSetRole}
-      navigation={navigation}
       surname={surname}
       surnameError={surnameError}
       setSurnameError={setSurnameError}
@@ -365,6 +720,10 @@ const AddFamilyMemberContainer = ({ navigation }: any) => {
       IdentityData={IdentityData}
       identityValue={identityValue}
       handleSetIdentity={handleSetIdentity}
+      medicalList={medicalList}
+      _getMedicalHistory={_getMedicalHistory}
+      isEdit={isEdit}
+      _removeFamilyMember={_removeFamilyMember}
     />
   );
 };

@@ -21,6 +21,7 @@ export const NotificationTypes = {
 export const ScreenNames = {
   //auth
   ONBOARDINGCONTAINER: 'OnBoardingContainer',
+  CMSPAGECONTAINER:"CMSPagesContainer",
   LOGINCONTAINER: 'LoginContainer',
   OTPCONTAINER: 'OTPContainer',
   COMPLETEPROFILECONTAINER: 'CompleteProfileContainer',

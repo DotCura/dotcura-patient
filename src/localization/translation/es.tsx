@@ -331,7 +331,7 @@ export default {
     'Questo indirizzo sarà salvato e disponibile per future visite a domicilio.',
   editaddresssubtitle:
     'Esta información se editará y estará disponible para futuras visitas domiciliarias',
-  deleteaddresssbtn:"Elimina questo indirizzo",
+  deleteaddresssbtn: 'Elimina questo indirizzo',
   searchaddress: 'Cerca indirizzo',
   addaddressplacholder: 'Via, piazza, strada...',
   errorselectaddress: 'Por favor, elija una dirección',
@@ -531,7 +531,7 @@ export default {
 
   versionname: 'Versione',
   nodatafound: 'No se encontraron datos',
-  nodatafoundlikereport:"Aún no has añadido nada a favoritos.",
+  nodatafoundlikereport: 'Aún no has añadido nada a favoritos.',
 
   //ADDRESSTYPE
   addresstypehome: 'Casa',
@@ -539,6 +539,10 @@ export default {
   addresstypeother: 'Otro',
   addresstypemedical: 'Clínica / Hospital',
   noaddressfoundlabel: 'No se encontró ninguna dirección',
-  nocheckoutlistfound:"No se encontró ningún kit",
-  noAnlitilistfound:"No se encontró Analiti",
+  nocheckoutlistfound: 'No se encontró ningún kit',
+  noAnlitilistfound: 'No se encontró Analiti',
+
+  //FAMILY
+  editfamilymembertitle: 'Modifica familiare',
+  editinformationbtn:"Modifica informazioni",
 };

@@ -37,72 +37,74 @@ const NotificationSwitchComponent = (props: any) => {
         showEndBtn={false}
         centerTitle={getTranslation('notifications')}
       />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
-        contentContainerStyle={{
-          paddingBottom: getHeight(50),
-          backgroundColor: Colors.whiteF2,
-        }}
-      >
-        {/* ---------------- EMAIL ---------------- */}
-        <View style={{ marginTop: getHeight(24) }}>
-          <ModalTitleSubtitle
-            title={getTranslation('notificationemail')}
-            subtitle={getTranslation('notificationemailsubtitle')}
-            subtitleTwo={props.emailNotification}
-            isAdd={true}
-          />
-        </View>
-        <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
-          {props?.notificationSettings?.email?.map((item: any) => (
-            <SettingItem
-              key={item.id}
-              label={item.name}
-              value={item.is_enabled === 1}
-              onToggle={() => props.toggleNotification('email', item.id)}
+      {props.isLoaderEmpty == false && (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
+          contentContainerStyle={{
+            paddingBottom: getHeight(50),
+            backgroundColor: Colors.whiteF2,
+          }}
+        >
+          {/* ---------------- EMAIL ---------------- */}
+          <View style={{ marginTop: getHeight(24) }}>
+            <ModalTitleSubtitle
+              title={getTranslation('notificationemail')}
+              subtitle={getTranslation('notificationemailsubtitle')}
+              subtitleTwo={props.emailNotification}
+              isAdd={true}
             />
-          ))}
-        </View>
+          </View>
+          <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
+            {props?.notificationSettings?.email?.map((item: any) => (
+              <SettingItem
+                key={item.id}
+                label={item.name}
+                value={item.is_enabled === 1}
+                onToggle={() => props.toggleNotification('email', item.id)}
+              />
+            ))}
+          </View>
 
-        {/* ---------------- SMS ---------------- */}
-        <View style={{ marginTop: getHeight(24) }}>
-          <ModalTitleSubtitle
-            title={getTranslation('notificationsms')}
-            subtitle={getTranslation('notificationsmssubtitle')}
-            subtitleTwo={props.countryCodeWithMobileNumber}
-            isAdd={true}
-          />
-        </View>
-        <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
-          {props?.notificationSettings?.sms?.map((item: any) => (
-            <SettingItem
-              key={item.id}
-              label={item.name}
-              value={item.is_enabled === 1}
-              onToggle={() => props.toggleNotification('sms', item.id)}
+          {/* ---------------- SMS ---------------- */}
+          <View style={{ marginTop: getHeight(24) }}>
+            <ModalTitleSubtitle
+              title={getTranslation('notificationsms')}
+              subtitle={getTranslation('notificationsmssubtitle')}
+              subtitleTwo={props.countryCodeWithMobileNumber}
+              isAdd={true}
             />
-          ))}
-        </View>
+          </View>
+          <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
+            {props?.notificationSettings?.sms?.map((item: any) => (
+              <SettingItem
+                key={item.id}
+                label={item.name}
+                value={item.is_enabled === 1}
+                onToggle={() => props.toggleNotification('sms', item.id)}
+              />
+            ))}
+          </View>
 
-        {/* ---------------- PUSH ---------------- */}
-        <View style={{ marginTop: getHeight(24) }}>
-          <ModalTitleSubtitle
-            title={getTranslation('notificationpush')}
-            subtitle={''}
-          />
-        </View>
-        <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
-          {props?.notificationSettings?.push?.map((item: any) => (
-            <SettingItem
-              key={item.id}
-              label={item.name}
-              value={item.is_enabled === 1}
-              onToggle={() => props.toggleNotification('push', item.id)}
+          {/* ---------------- PUSH ---------------- */}
+          <View style={{ marginTop: getHeight(24) }}>
+            <ModalTitleSubtitle
+              title={getTranslation('notificationpush')}
+              subtitle={''}
             />
-          ))}
-        </View>
-      </ScrollView>
+          </View>
+          <View style={{ gap: getHeight(8), marginTop: getHeight(20) }}>
+            {props?.notificationSettings?.push?.map((item: any) => (
+              <SettingItem
+                key={item.id}
+                label={item.name}
+                value={item.is_enabled === 1}
+                onToggle={() => props.toggleNotification('push', item.id)}
+              />
+            ))}
+          </View>
+        </ScrollView>
+      )}
     </>
   );
 };

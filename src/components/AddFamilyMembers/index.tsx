@@ -44,7 +44,11 @@ const AddFamilyMemberComponent = (props: any) => {
       >
         <View style={{ marginTop: getHeight(22) }}>
           <TitleSubtitle
-            title={getTranslation('addfamilymembertitle')}
+            title={
+              props.isEdit
+                ? getTranslation('editfamilymembertitle')
+                : getTranslation('addfamilymembertitle')
+            }
             subtitle={getTranslation('addfamilymembersubtitle')}
           />
         </View>
@@ -205,14 +209,13 @@ const AddFamilyMemberComponent = (props: any) => {
               </View>
               <View style={{ gap: getHeight(8) }}>
                 {props.medicazioni.map((item: any) => (
-                  // <Text key={item}>• {item}</Text>
                   <View style={styles.vwCategory}>
                     <Text style={styles.lblCategory} numberOfLines={1}>
                       {item.name}
                     </Text>
                     <TouchableOpacity
                       onPress={() =>
-                        props.handleDeleteItem('medicazioni', item.id)
+                        props.handleDeleteItem('medicazioni', item.deleteid)
                       }
                     >
                       <Image source={images.imgDeleteRound} />
@@ -248,7 +251,7 @@ const AddFamilyMemberComponent = (props: any) => {
                     </Text>
                     <TouchableOpacity
                       onPress={() =>
-                        props.handleDeleteItem('patologie', item.id)
+                        props.handleDeleteItem('patologie', item.deleteid)
                       }
                     >
                       <Image source={images.imgDeleteRound} />
@@ -284,7 +287,7 @@ const AddFamilyMemberComponent = (props: any) => {
                     <Text style={styles.lblCategory}>{item.name}</Text>
                     <TouchableOpacity
                       onPress={() =>
-                        props.handleDeleteItem('allergie', item.id)
+                        props.handleDeleteItem('allergie', item.deleteid)
                       }
                     >
                       <Image source={images.imgDeleteRound} />
@@ -363,14 +366,21 @@ const AddFamilyMemberComponent = (props: any) => {
             )}
           </View>
 
-          {/* Reusable Modal */}
           <AddItemModal
             visible={props.modalVisible}
             title={props.modalTitle}
-            data={props.modalData}
+            data={props.medicalList}
             selectedItems={props.modalSelected}
             onSave={props.handleSave}
             onClose={() => props.setModalVisible(false)}
+            onSearch={(text: string) => {
+              if (props.modalType === 'patologie')
+                props._getMedicalHistory('P', text);
+              if (props.modalType === 'medicazioni')
+                props._getMedicalHistory('M', text);
+              if (props.modalType === 'allergie')
+                props._getMedicalHistory('A', text);
+            }}
           />
         </View>
         <View
@@ -382,16 +392,22 @@ const AddFamilyMemberComponent = (props: any) => {
         >
           <CustomButton
             btnPress={props.handlePressContinue}
-            btnTitle={getTranslation('saveinformation')}
+            btnTitle={
+              props.isEdit
+                ? getTranslation('editinformationbtn')
+                : getTranslation('saveinformation')
+            }
           />
-          <CustomButton
-            btnPress={() => props.navigation.goBack()}
-            btnTitle={getTranslation('deletefamily')}
-            style={{ backgroundColor: Colors.redFC }}
-            textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}
-            btnicon={true}
-            btnImage={images.imgDeleteRed}
-          />
+          {props.isEdit && (
+            <CustomButton
+              btnPress={props._removeFamilyMember}
+              btnTitle={getTranslation('deletefamily')}
+              style={{ backgroundColor: Colors.redFC }}
+              textStyle={{ color: Colors.red40, fontSize: fontSize.size16 }}
+              btnicon={true}
+              btnImage={images.imgDeleteRed}
+            />
+          )}
         </View>
       </KeyboardAwareScrollView>
     </View>

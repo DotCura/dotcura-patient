@@ -33,10 +33,13 @@ import { CommonActions, useFocusEffect } from '@react-navigation/native';
 import { ZustandStores } from '../../store';
 import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
+import { GlobalVar } from '../../constants/GlobalVar';
 
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
+  console.log("GlobalVar.terms_and_conditions_es",GlobalVar.terms_and_conditions_es);
+  
 
   const data = [
     {
@@ -102,7 +105,9 @@ const ProfileContainer = ({ navigation, route }: any) => {
       title: getTranslation('termsandconditions'),
       image: images.imgShareProfile,
       onpressfun: () => {
-        console.log('Terms');
+        navigation.navigate(ScreenNames.CMSPAGECONTAINER, {
+          cmsUrl: GlobalVar.terms_and_conditions_es,
+        });
       },
       iscurv: false,
     },
@@ -111,7 +116,9 @@ const ProfileContainer = ({ navigation, route }: any) => {
       title: getTranslation('privacypolicy'),
       image: images.imgShareProfile,
       onpressfun: () => {
-        console.log('Terms');
+        navigation.navigate(ScreenNames.CMSPAGECONTAINER, {
+          cmsUrl: GlobalVar.privacy_policy_es,
+        });
       },
       iscurv: false,
     },

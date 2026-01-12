@@ -22,7 +22,7 @@ import CustomDropdown from '../../global/DropDown/CustomDropDown';
 import CustomButton from '../../global/Buttons';
 import TimeSlotPicker from '../../global/TimeSlotPicker';
 import AddressModel from '../../global/AddressModel/AddressModel';
-import { ScreenNames } from '../../constants/AppConstants';
+import { isPlatformiOS, ScreenNames } from '../../constants/AppConstants';
 import TitleSubtitle from '../../global/TitleSubtitle';
 import { fontSize } from '../../constants/FontSizes';
 import GooglePlacesTextInput from 'react-native-google-places-textinput';
@@ -32,6 +32,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { BlurView } from '@react-native-community/blur';
 import PressScale from '../../global/PressScale';
+import { GlobalVar } from '../../constants/GlobalVar';
 
 const CheckoutComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
@@ -43,8 +44,10 @@ const CheckoutComponent = (props: any) => {
       borderRadius: 12,
     },
     input: {
+      textAlignVertical: 'top', // Aligns the text to the top for multiline
+      height: '100%',
       overflow: 'hidden',
-      height: getHeight(56),
+      // height: getHeight(56),
       borderWidth: 2,
       borderRadius: 12,
       fontSize: fontSize.size16,
@@ -57,12 +60,12 @@ const CheckoutComponent = (props: any) => {
     },
     suggestionsContainer: {
       backgroundColor: '#ffffff',
-      maxHeight: 250,
+      maxHeight: 200,
       position: 'absolute',
       top: 50,
-      left: -35,
+      left: 0,
       right: 0,
-      width: '120%',
+      width: '100%',
       zIndex: 1000,
     },
     suggestionItem: {
@@ -1034,13 +1037,17 @@ const CheckoutComponent = (props: any) => {
 
                   <GooglePlacesTextInput
                     ref={props.searchRef}
-                    apiKey=""
+                    apiKey={
+                      isPlatformiOS
+                        ? GlobalVar.google_map_api_key_ios
+                        : GlobalVar.google_map_api_key_android
+                    }
                     placeHolderText={
                       getTranslation('addaddressplacholder') || ''
                     }
                     onPlaceSelect={(place: any) => {
                       props.handlePlaceSelect(place);
-                      props.setSearchAddress(place?.fullText || '');
+                      props.setSearchAddress(place?.text?.text || ''); // Store selected address
                     }}
                     onChangeText={props.setSearchAddress}
                     cursorColor={Colors.blue002}

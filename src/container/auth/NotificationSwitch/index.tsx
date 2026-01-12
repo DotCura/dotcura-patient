@@ -20,9 +20,10 @@ const NotificationSwitchContainer = ({ navigation }: any) => {
     sms: [],
     push: [],
   });
-  const [emailNotification, setEmailNotification] = useState("");
-  const [countryCodeWithMobileNumber, setCountryCodeWithMobileNumber] = useState("");
-  console.log('notificationSettings', notificationSettings);
+  const [emailNotification, setEmailNotification] = useState('');
+  const [countryCodeWithMobileNumber, setCountryCodeWithMobileNumber] =
+    useState('');
+  const [isLoaderEmpty, setIsLoaderEmpty] = useState(true);
 
   const toggleNotification = (type: 'email' | 'sms' | 'push', id: number) => {
     // Find the current item to get its current state
@@ -82,6 +83,7 @@ const NotificationSwitchContainer = ({ navigation }: any) => {
       const callback = async (responseData: any) => {
         console.log(responseData, 'reponseData of api NOTIFICATIONTYPE');
         toggleLoader(false);
+        setIsLoaderEmpty(false);
         if (responseData.code === StatusCode.SUCCESS) {
           setNotificationSettings(responseData.data);
         } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
@@ -140,8 +142,9 @@ const NotificationSwitchContainer = ({ navigation }: any) => {
     MmkvManager.getData(MmkvManager.Keys.userDetails, (value: any) => {
       console.log('Profile Data of user', value);
       setEmailNotification(value.email);
-      setCountryCodeWithMobileNumber("+"+value.country_code+" "+value.phone_number )
-
+      setCountryCodeWithMobileNumber(
+        '+' + value.country_code + ' ' + value.phone_number,
+      );
     });
   }, []);
 
@@ -152,6 +155,7 @@ const NotificationSwitchContainer = ({ navigation }: any) => {
       toggleNotification={toggleNotification}
       emailNotification={emailNotification}
       countryCodeWithMobileNumber={countryCodeWithMobileNumber}
+      isLoaderEmpty={isLoaderEmpty}
     />
   );
 };
