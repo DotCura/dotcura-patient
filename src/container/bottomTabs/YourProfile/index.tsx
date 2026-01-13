@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import YourProfileComponent from '../../../components/bottomTabs/YourProfile';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -13,7 +13,6 @@ import { Colors } from '../../../constants/Colors';
 import {
   getHeight,
   getWidth,
-  ScreenDimensions,
 } from '../../../constants/utils/Dimensions';
 import VerticalBarChartProfile from '../../../global/VerticalBarChartProfile';
 import { ScreenNames } from '../../../constants/AppConstants';
