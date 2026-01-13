@@ -62,7 +62,8 @@ const App = ({ navigation }: any) => {
           GlobalVar.terms_and_conditions_es =
             responseData?.data?.cms_urls?.terms_and_conditions?.es;
         } else {
-          flashMessageWarning(responseData.message);
+          console.log("error credential");
+          
         }
       };
 

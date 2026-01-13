@@ -27,48 +27,9 @@ import { APIManager } from '../../api/APIManager';
 const AnalitiDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
-  const analitidata = [
-    {
-      id: '1',
-      name: 'Colesterolo Totale',
-      desc: 'Quanto colesterolo hai nel sangue',
-      price: 8.0,
-      status: null,
-    },
-    {
-      id: '2',
-      name: 'Colesterolo HDL',
-      desc: "Il colesterolo 'buono' per il cuore",
-      price: 10.0,
-      status: null,
-    },
-    {
-      id: '3',
-      name: 'Colesterolo LDL',
-      desc: "Il colesterolo 'cattivo' da controllare",
-      price: 6.0,
-      status: 'Da fare',
-    },
-    {
-      id: '4',
-      name: 'Trigliceridi',
-      desc: 'Grassi da tenere sotto controllo',
-      price: 11.0,
-      status: null,
-    },
-    {
-      id: '5',
-      name: 'Profilo Lipidico Completo',
-      desc: 'Analisi completa dei grassi nel sangue',
-      price: 10.0,
-      status: null,
-    },
-  ];
-
   const [analitiArrayData, setAnalitiArraysData] = useState<any>({});
   const [selectedTests, setSelectedTests] = useState<number[]>([]);
-
-  console.log('selectedTests', selectedTests);
+  const [emptyLoading, setIsEmptyLoading] = useState(true);
 
   const toggleSelect = (test_id: number) => {
     setSelectedTests((prev: number[]) => {
@@ -227,6 +188,7 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
 
       const callback = async (responseData: any) => {
         toggleLoader(false);
+        setIsEmptyLoading(false);
         console.log(responseData, 'reponseData of api Kit Details');
         if (responseData.code === StatusCode.SUCCESS) {
           setAnalitiArraysData(responseData.data);
@@ -265,6 +227,7 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
       totalPriceanaliti={totalPriceanaliti}
       selectedTests={selectedTests}
       handleNavigateCheckout={handleNavigateCheckout}
+      emptyLoading={emptyLoading}
     />
   );
 };

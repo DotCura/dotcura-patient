@@ -22,6 +22,7 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
   const [kitsArrayData, setKitsArraysData] = useState<any>({});
+  const [emptyLoading, setIsEmptyLoading] = useState(true);
 
   const renderItemKitsData = ({ item, index }: { item: any; index: any }) => {
     return (
@@ -142,7 +143,7 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
 
       const callback = async (responseData: any) => {
         toggleLoader(false);
-        console.log(responseData, 'reponseData of api Kit Details');
+        setIsEmptyLoading(false);
         if (responseData.code === StatusCode.SUCCESS) {
           setKitsArraysData(responseData.data);
         } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
@@ -176,6 +177,7 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
       handleNavigateCheckout={handleNavigateCheckout}
       kitsArrayData={kitsArrayData}
       totalPrice={getTotalTestPrice()}
+      emptyLoading={emptyLoading}
     />
   );
 };

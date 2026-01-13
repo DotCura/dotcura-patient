@@ -32,139 +32,148 @@ const KitDetailsComponent = (props: any) => {
         showSubTitle={false}
         showEndBtn={false}
       />
-      <ScrollView
-        contentContainerStyle={[constnatStyles.keyboardContainer]}
-        keyboardShouldPersistTaps="handled"
-        bounces={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <ImageBackground
-          source={{uri:props?.kitsArrayData?.kit_image}}
-          style={styles.imgkitdetails}
-        >
-          <View style={styles.vwHeaderTitle}>
-            <Text style={styles.kittitle}>{props?.kitsArrayData?.name}</Text>
-            <Text style={styles.kitsubtitle}>
-              {props?.kitsTestData?.length} {getTranslation('analytesinthekit')}
-            </Text>
-          </View>
-        </ImageBackground>
-
-        {/* vwwarning */}
-        <View style={styles.vwwarningDetails}>
-          <View style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}>
-            <Image
-              source={images.imgWarning}
-              tintColor={Colors.black12}
-            ></Image>
-          </View>
-          <View style={styles.vwInBank}>
-            <Text style={styles.txtBankDetails} numberOfLines={1}>
-              {getTranslation('betterinmorning')}
-            </Text>
-            <Text style={styles.txtWeCanNot} numberOfLines={5}>
-              {getTranslation('betterinmorningsubtitle')}
-            </Text>
-          </View>
-        </View>
-
-        {/* vwTestList */}
-        <View style={{ marginTop: getHeight(24) }}>
-          <View style={styles.vwKitDeatils}>
-            <Text style={styles.lblAnlaytics} numberOfLines={1}>
-              {getTranslation('analytics')}
-            </Text>
-          </View>
-
-          <View>
-            <FlatList
-              onEndReached={() => {
-                console.log('callend');
-              }}
-              bounces={false}
-              data={props.kitsTestData}
-              renderItem={props.renderItemKitsData}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={item => item.test_id}
-              contentContainerStyle={{
-                marginTop: getHeight(16),
-                gap: getHeight(20),
-              }}
-            />
-          </View>
-        </View>
-
-        {/* vwInfoView */}
-        <View
-          style={{
-            marginTop: getHeight(30),
-            gap: getHeight(8),
-            marginBottom: props.insets.bottom + getHeight(100),
-          }}
-        >
-          <View style={styles.vwInfo1}>
-            <View style={styles.vwInBank}>
-              <Text style={styles.txtBankDetails} numberOfLines={1}>
-                {getTranslation('usefullif')}
-              </Text>
-              <Text style={styles.txtinfo1Subtitle} numberOfLines={5}>
-                {getTranslation('usefullifsubtitle1')}{' '}
-                <Text style={styles.txtinfo1SubtitleBold}>
-                  {getTranslation('usefullifsubtitle2')},
-                  {getTranslation('usefullifsubtitle3')}
-                </Text>{' '}
-                {getTranslation('usefullifsubtitle4')}{' '}
-                <Text style={styles.txtinfo1SubtitleBold}>
-                  {getTranslation('usefullifsubtitle5')}
+      {props.emptyLoading === false && (
+        <>
+          <ScrollView
+            contentContainerStyle={[constnatStyles.keyboardContainer]}
+            keyboardShouldPersistTaps="handled"
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+          >
+            <ImageBackground
+              source={{ uri: props?.kitsArrayData?.kit_image }}
+              style={styles.imgkitdetails}
+            >
+              <View style={styles.vwHeaderTitle}>
+                <Text style={styles.kittitle}>
+                  {props?.kitsArrayData?.name}
                 </Text>
-                {getTranslation('usefullifsubtitle6')}
-              </Text>
+                <Text style={styles.kitsubtitle}>
+                  {props?.kitsTestData?.length}{' '}
+                  {getTranslation('analytesinthekit')}
+                </Text>
+              </View>
+            </ImageBackground>
+
+            {/* vwwarning */}
+            <View style={styles.vwwarningDetails}>
+              <View
+                style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
+              >
+                <Image
+                  source={images.imgWarning}
+                  tintColor={Colors.black12}
+                ></Image>
+              </View>
+              <View style={styles.vwInBank}>
+                <Text style={styles.txtBankDetails} numberOfLines={1}>
+                  {getTranslation('betterinmorning')}
+                </Text>
+                <Text style={styles.txtWeCanNot} numberOfLines={5}>
+                  {getTranslation('betterinmorningsubtitle')}
+                </Text>
+              </View>
             </View>
-          </View>
-          <View style={styles.vwInfo2}>
-            <View style={styles.vwInBank}>
-              <Text style={styles.txtBankDetails} numberOfLines={1}>
-                {getTranslation('howtoprepare')}
-              </Text>
-              <Text style={styles.txtlablinfo2} numberOfLines={5}>
-                {getTranslation('howtopreparesubtitle1')}
-                <Text style={styles.txtinfo1SubtitleBold}>
-                  {getTranslation('howtopreparesubtitle2')}
-                </Text>
-                {getTranslation('howtopreparesubtitle3')}{' '}
-                <Text style={styles.txtinfo1SubtitleBold}>
-                  {getTranslation('howtopreparesubtitle4')}
-                </Text>
-                {getTranslation('howtopreparesubtitle5')}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
 
-      {/* vwGotoCart */}
-      <PressScale onPress={props.handleNavigateCheckout}>
-        <View
-          style={[
-            styles.vwGoToCart,
-            {
-              bottom: getHeight(30),
-            },
-          ]}
-        >
-          <View style={styles.vwCartImage}>
-            <Image source={images.imgCartHome} tintColor={Colors.white} />
-            <Text style={styles.lblGoToCart}>
-              {getTranslation('addtoorder')}
-            </Text>
-          </View>
-          <View style={styles.vwPrice}>
-            <Text style={styles.totalprice}>
-            {currency} {props.totalPrice.toFixed(2)}
-          </Text>
-          </View>
-        </View>
-      </PressScale>
+            {/* vwTestList */}
+            <View style={{ marginTop: getHeight(24) }}>
+              <View style={styles.vwKitDeatils}>
+                <Text style={styles.lblAnlaytics} numberOfLines={1}>
+                  {getTranslation('analytics')}
+                </Text>
+              </View>
+
+              <View>
+                <FlatList
+                  onEndReached={() => {
+                    console.log('callend');
+                  }}
+                  bounces={false}
+                  data={props.kitsTestData}
+                  renderItem={props.renderItemKitsData}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={item => item.test_id}
+                  contentContainerStyle={{
+                    marginTop: getHeight(16),
+                    gap: getHeight(20),
+                  }}
+                />
+              </View>
+            </View>
+
+            {/* vwInfoView */}
+            <View
+              style={{
+                marginTop: getHeight(30),
+                gap: getHeight(8),
+                marginBottom: props.insets.bottom + getHeight(100),
+              }}
+            >
+              <View style={styles.vwInfo1}>
+                <View style={styles.vwInBank}>
+                  <Text style={styles.txtBankDetails} numberOfLines={1}>
+                    {getTranslation('usefullif')}
+                  </Text>
+                  <Text style={styles.txtinfo1Subtitle} numberOfLines={5}>
+                    {getTranslation('usefullifsubtitle1')}{' '}
+                    <Text style={styles.txtinfo1SubtitleBold}>
+                      {getTranslation('usefullifsubtitle2')},
+                      {getTranslation('usefullifsubtitle3')}
+                    </Text>{' '}
+                    {getTranslation('usefullifsubtitle4')}{' '}
+                    <Text style={styles.txtinfo1SubtitleBold}>
+                      {getTranslation('usefullifsubtitle5')}
+                    </Text>
+                    {getTranslation('usefullifsubtitle6')}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.vwInfo2}>
+                <View style={styles.vwInBank}>
+                  <Text style={styles.txtBankDetails} numberOfLines={1}>
+                    {getTranslation('howtoprepare')}
+                  </Text>
+                  <Text style={styles.txtlablinfo2} numberOfLines={5}>
+                    {getTranslation('howtopreparesubtitle1')}
+                    <Text style={styles.txtinfo1SubtitleBold}>
+                      {getTranslation('howtopreparesubtitle2')}
+                    </Text>
+                    {getTranslation('howtopreparesubtitle3')}{' '}
+                    <Text style={styles.txtinfo1SubtitleBold}>
+                      {getTranslation('howtopreparesubtitle4')}
+                    </Text>
+                    {getTranslation('howtopreparesubtitle5')}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </ScrollView>
+
+          {/* vwGotoCart */}
+          <PressScale onPress={props.handleNavigateCheckout}>
+            <View
+              style={[
+                styles.vwGoToCart,
+                {
+                  bottom: getHeight(30),
+                },
+              ]}
+            >
+              <View style={styles.vwCartImage}>
+                <Image source={images.imgCartHome} tintColor={Colors.white} />
+                <Text style={styles.lblGoToCart}>
+                  {getTranslation('addtoorder')}
+                </Text>
+              </View>
+              <View style={styles.vwPrice}>
+                <Text style={styles.totalprice}>
+                  {currency} {props.totalPrice.toFixed(2)}
+                </Text>
+              </View>
+            </View>
+          </PressScale>
+        </>
+      )}
     </>
   );
 };
