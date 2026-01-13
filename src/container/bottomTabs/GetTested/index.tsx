@@ -5,16 +5,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { styles } from './styles';
 import GetTestedComponent from '../../../components/bottomTabs/GetTested';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  activityOpacity,
-  currency,
-  flashMessageWarning,
-  getRandomTheme,
-} from '../../../constants/GConstant';
+import { activityOpacity, currency } from '../../../constants/GConstant';
 import {
   getHeight,
   getWidth,
@@ -23,13 +18,7 @@ import {
 import { images } from '../../../constants/Images';
 import { ScreenNames } from '../../../constants/AppConstants';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
-import { APIManager } from '../../../api/APIManager';
-import {
-  ApiEndPoints,
-  MethodType,
-  StatusCode,
-  toggleLoader,
-} from '../../../api/APIConstant';
+import { ApiEndPoints } from '../../../api/APIConstant';
 import { useDebounce } from '../../../constants/utils/useDebounce';
 import {
   LoadType,
@@ -40,202 +29,6 @@ import FastImage from '@d11/react-native-fast-image';
 
 const GetTestedContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
-
-  const kitList = [
-    {
-      id: '1',
-      title: 'Diabete',
-      description: 'Controllo glicemia e zuccheri',
-      price: '35.00',
-      isLiked: false,
-      isAdded: false,
-      status: 'Alta richiesta',
-      kitimages: images.imgkit1,
-    },
-    {
-      id: '2',
-      title: 'Anemia',
-      description: 'Controllo ferro e globuli rossi',
-      price: '35.00',
-      isLiked: false,
-      isAdded: false,
-      status: 'Subito disponibile',
-      kitimages: images.imgkit2,
-    },
-    {
-      id: '3',
-      title: 'Colesterolo',
-      description: 'Controllo colesterolo totale e HDL',
-      price: '40.00',
-      isLiked: false,
-      isAdded: false,
-      status: 'Pronto in 24 ore',
-      kitimages: images.imgkit3,
-    },
-    {
-      id: '4',
-      title: 'Tiroide',
-      description: 'Controllo TSH, FT3, FT4',
-      price: '45.00',
-      isLiked: false,
-      isAdded: false,
-      status: null,
-      kitimages: images.imgkit4,
-    },
-    {
-      id: '5',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-      status: null,
-      kitimages: images.imgkit5,
-    },
-    {
-      id: '6',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-      status: null,
-      kitimages: images.imgkit6,
-    },
-    {
-      id: '7',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-      status: null,
-      kitimages: images.imgkit7,
-    },
-    {
-      id: '8',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-      status: null,
-      kitimages: images.imgkit1,
-    },
-    {
-      id: '9',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-      status: null,
-      kitimages: images.imgkit2,
-    },
-    {
-      id: '10',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-      status: null,
-      kitimages: images.imgkit3,
-    },
-    {
-      id: '11',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-      status: null,
-      kitimages: images.imgkit4,
-    },
-    {
-      id: '12',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-      status: null,
-      kitimages: images.imgkit1,
-    },
-    {
-      id: '13',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-      status: null,
-      kitimages: images.imgkit5,
-    },
-  ];
-
-  const analitiList = [
-    {
-      id: '1',
-      title: 'Cuore e circolazione',
-      price: '6.00',
-      analitiimages: images.imgHeart,
-    },
-    {
-      id: '2',
-      title: 'Reni',
-      price: '6.00',
-      analitiimages: images.imgKidney,
-    },
-    {
-      id: '3',
-      title: 'Fegato',
-      price: '6.00',
-      analitiimages: images.imgSoda,
-    },
-    {
-      id: '4',
-      title: 'Tiroide',
-      price: '6.00',
-      analitiimages: images.imgButterfly,
-    },
-    {
-      id: '5',
-      title: 'Diabete e metabolismo',
-      price: '6.00',
-      analitiimages: images.imgLolipop,
-    },
-    {
-      id: '6',
-      title: 'Anemia e sangue',
-      price: '6.00',
-      analitiimages: images.imgBlood,
-    },
-    {
-      id: '7',
-      title: 'Ossa e vitamina D',
-      price: '6.00',
-      analitiimages: images.imgHadi,
-    },
-    {
-      id: '8',
-      title: 'Difese immunitarie',
-      price: '6.00',
-      analitiimages: images.imgShield,
-    },
-    {
-      id: '9',
-      title: 'Ormone uomo',
-      price: '6.00',
-      analitiimages: images.imgMasrrom,
-    },
-    {
-      id: '10',
-      title: 'Ormone donna',
-      price: '6.00',
-      analitiimages: images.imgFlower,
-    },
-  ];
 
   const categoriesList = [
     { id: 1, name: 'Routine checks' },
@@ -371,7 +164,7 @@ const GetTestedContainer = ({ navigation }: any) => {
 
           {/* veProductDetails */}
           <View>
-            <Text style={styles.lblTitle} numberOfLines={1}>
+            <Text style={styles.lblTitle} numberOfLines={2}>
               {item.kit_name}
             </Text>
             <Text style={styles.lblDescription} numberOfLines={3}>

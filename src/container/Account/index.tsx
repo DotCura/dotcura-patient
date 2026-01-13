@@ -45,6 +45,9 @@ const AccountContainer = ({ navigation }: any) => {
   const [formattedDate, setFormattedDate] = useState('');
   const [formatedDateForApi, setFormatedDateForApi] = useState('');
 
+  console.log("formatedDate", formattedDate,placeOfBirth);
+  
+
   const fullNameRef = useRef<any>(null);
   const placeOfBirthRef = useRef<any>(null);
   const surnameRef = useRef<any>(null);
@@ -90,11 +93,14 @@ const AccountContainer = ({ navigation }: any) => {
   };
 
   const handlePressContinue = async () => {
+    console.log("call");
+    
     // Reset previous errors
     setFullNameError('');
     setEmailError('');
     setTaxCodeError('');
     setSurnameError('');
+    setPlaceOfBirthErrorError('');
 
     if (!fullName.trim()) {
       setFullNameError(getTranslation('errorMessageFullNameRequired'));
@@ -111,12 +117,12 @@ const AccountContainer = ({ navigation }: any) => {
     } else if (!regex.email.test(email.trim())) {
       setEmailError(getTranslation('errorMessageValidEmail'));
       return;
-    } else if (!placeOfBirth.trim()) {
+    } else if (placeOfBirth == null) {
       setPlaceOfBirthErrorError(
         getTranslation('errorMessagePlaceOfBirthRequired'),
       );
       return;
-    } else if (formattedDate == '') {
+    } else if (formattedDate === '') {
       flashMessageWarning(getTranslation('pleaseselectdateofbirth'));
       return;
     } else if (!taxCode.trim()) {

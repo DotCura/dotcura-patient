@@ -15,6 +15,7 @@ import { getTranslation } from '../localization/i18n/i18n.config';
 import { flashMessageWarning } from '../constants/GConstant';
 import { CommonActions } from '@react-navigation/native';
 import { MmkvManager } from '../constants/utils/MmkvManager';
+import { ZustandStores } from '../store';
 
 /* =======================
    Encryption constants
@@ -46,7 +47,7 @@ export const APIManager = {
   getHeader: () => {
     return {
       'api-key': ApiHeaderKeyValue.API_KEY_VALUE,
-      'accept-language': 'en',
+      'accept-language': 'es',
       'content-type': 'text/plain',
     };
   },
@@ -193,6 +194,7 @@ export const APIManager = {
     ======================= */
     function handleUnauthorized() {
       flashMessageWarning(getTranslation('youhavebeenloggedout'));
+      MmkvManager.clearAllExcept([MmkvManager.Keys.isOnBoardingVisisted]);
       navigation.dispatch(
         CommonActions.reset({
           index: 0,

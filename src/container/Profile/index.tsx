@@ -4,29 +4,9 @@ import { images } from '../../constants/Images';
 import AppHeader from '../../global/Header';
 import ProfileComponent from '../../components/Profile';
 import { getTranslation } from '../../localization/i18n/i18n.config';
-import {
-  Alert,
-  Image,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {
-  activityOpacity,
-  appName,
-  currency,
-  flashMessageSucess,
-} from '../../constants/GConstant';
-import {
-  getHeight,
-  getWidth,
-  ScreenDimensions,
-} from '../../constants/utils/Dimensions';
-import { styles } from './styles';
-import { Colors } from '../../constants/Colors';
-import { fontSize } from '../../constants/FontSizes';
-import { fontsfamily } from '../../constants/FontFamily';
+import { Alert } from 'react-native';
+import { appName, flashMessageSucess } from '../../constants/GConstant';
+
 import { ScreenNames } from '../../constants/AppConstants';
 import { MmkvManager } from '../../constants/utils/MmkvManager';
 import { CommonActions, useFocusEffect } from '@react-navigation/native';
@@ -38,8 +18,6 @@ import { GlobalVar } from '../../constants/GlobalVar';
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  console.log("GlobalVar.terms_and_conditions_es",GlobalVar.terms_and_conditions_es);
-  
 
   const data = [
     {

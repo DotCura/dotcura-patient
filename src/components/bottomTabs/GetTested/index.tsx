@@ -301,7 +301,7 @@ const GetTestedComponent = (props: any) => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             gap: getWidth(12),
-            paddingBottom: getHeight(150),
+            paddingBottom: getHeight(200),
             marginTop: getHeight(20),
           }}
         />

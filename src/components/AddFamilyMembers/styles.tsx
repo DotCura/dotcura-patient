@@ -5,6 +5,14 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  btnRemove: {
+    position: 'absolute',
+    top: getHeight(8),
+    right: getWidth(8),
+    backgroundColor: Colors.blue1C,
+    borderRadius: getWidth(20),
+    padding: getWidth(4),
+  },
   lblTitleInput: {
     fontSize: fontSize.size14,
     fontFamily: fontsfamily.gmedium,
@@ -123,7 +131,7 @@ export const styles = StyleSheet.create({
   //confirm identity
   vwFrontSide: {
     marginTop: getHeight(12),
-    backgroundColor:Colors.white,
+    backgroundColor: Colors.white,
     height: getHeight(116),
     borderWidth: 2,
     borderColor: Colors.grayD8,
@@ -146,7 +154,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: getWidth(12),
     alignItems: 'center',
-    gap:getWidth(6)
+    gap: getWidth(6),
   },
   txtUpload: {
     fontFamily: fontsfamily.gmedium,

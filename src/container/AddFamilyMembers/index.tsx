@@ -326,8 +326,19 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
       });
   };
 
-  //model
+  const removeFrontImage = () => {
+    setFrontSide(undefined);
+    setFrontImageFile(undefined);
+    setFrontImageAdd(false);
+  };
 
+  const removeBackImage = () => {
+    setBackSide(undefined);
+    setBackImageFile(undefined);
+    setBackImageAdd(false);
+  };
+
+  //model
   const [patologie, setPatologie] = useState<any>([]);
   const [medicazioni, setMedicazioni] = useState<any>([]);
   const [allergie, setAllergie] = useState<any>([]);
@@ -362,6 +373,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
 
   //===================== API ===========================
 
+  //OPENMEDICALMODEL
   const openModal = async (type: 'patologie' | 'medicazioni' | 'allergie') => {
     setModalType(type);
 
@@ -386,6 +398,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
     setModalVisible(true);
   };
 
+  //HANDLESAVEMEDICALITEM
   const handleSave = async (selected: any[]) => {
     if (modalType === 'patologie') setPatologie(selected);
     if (modalType === 'medicazioni') setMedicazioni(selected);
@@ -393,6 +406,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
     setModalVisible(false);
   };
 
+  //HANDLEDELETEMEDICALITEM
   const handleDeleteItem = (type: any, id: any) => {
     console.log('id------', id);
 
@@ -724,6 +738,8 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
       _getMedicalHistory={_getMedicalHistory}
       isEdit={isEdit}
       _removeFamilyMember={_removeFamilyMember}
+      onRemoveFrontImage={removeFrontImage}
+      onRemoveBackImage={removeBackImage}
     />
   );
 };

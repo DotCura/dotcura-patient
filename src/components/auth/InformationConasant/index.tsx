@@ -17,6 +17,8 @@ import CustomButton from '../../../global/Buttons';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 import { images } from '../../../constants/Images';
 import { Colors } from '../../../constants/Colors';
+import { ScreenNames } from '../../../constants/AppConstants';
+import { GlobalVar } from '../../../constants/GlobalVar';
 
 const InformationConasantComponent = (props: any) => {
   return (
@@ -64,9 +66,9 @@ const InformationConasantComponent = (props: any) => {
                 <Text
                   style={styles.lblHighlight}
                   onPress={() =>
-                    Linking.openURL(
-                      'https://www.oaic.gov.au/privacy/your-privacy-rights/your-personal-information/what-is-a-privacy-policy',
-                    )
+                    props.navigation.navigate(ScreenNames.CMSPAGECONTAINER, {
+                      cmsUrl: GlobalVar.privacy_policy_es,
+                    })
                   }
                 >
                   {getTranslation('constant2')}

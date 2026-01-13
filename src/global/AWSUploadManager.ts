@@ -26,7 +26,7 @@ export const uploadFile = async (file: any): Promise<string> => {
       {
         headers: {
           'api-key': ApiHeaderKeyValue.API_KEY_VALUE,
-          'accept-language': 'en',
+          'accept-language': 'es',
           'user-token': userToken,
         },
       },

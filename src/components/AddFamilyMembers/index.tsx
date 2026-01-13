@@ -312,10 +312,19 @@ const AddFamilyMemberComponent = (props: any) => {
 
           <View style={styles.vwFrontSide}>
             {props.frontImageAdd == true ? (
-              <Image
-                style={styles.imgFrontSide}
-                source={{ uri: props.frontSide }}
-              ></Image>
+              <View style={{}}>
+                <Image
+                  style={styles.imgFrontSide}
+                  source={{ uri: props.frontSide }}
+                ></Image>
+                <TouchableOpacity
+                  style={styles.btnRemove}
+                  onPress={props.onRemoveFrontImage}
+                  activeOpacity={0.8}
+                >
+                  <Image source={images.imgClose} tintColor={Colors.white} />
+                </TouchableOpacity>
+              </View>
             ) : (
               <>
                 <Text style={styles.txtFronSide}>
@@ -341,10 +350,19 @@ const AddFamilyMemberComponent = (props: any) => {
             ]}
           >
             {props.backImageAdd == true ? (
-              <Image
-                style={styles.imgFrontSide}
-                source={{ uri: props.backSide }}
-              ></Image>
+              <View style={{}}>
+                <Image
+                  style={styles.imgFrontSide}
+                  source={{ uri: props.backSide }}
+                ></Image>
+                <TouchableOpacity
+                  style={styles.btnRemove}
+                  onPress={props.onRemoveBackImage}
+                  activeOpacity={0.8}
+                >
+                  <Image source={images.imgClose} tintColor={Colors.white} />
+                </TouchableOpacity>
+              </View>
             ) : (
               <>
                 <Text style={styles.txtFronSide}>
