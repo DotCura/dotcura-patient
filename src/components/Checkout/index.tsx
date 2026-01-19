@@ -38,7 +38,7 @@ const CheckoutComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
 
   // 🔥 Moved styles here (no global style)
-  const customStylesTextInput = {
+  const customStylesTextInput :any = {
     container: {
       flex: 1,
       borderRadius: 12,
@@ -1068,7 +1068,7 @@ const CheckoutComponent = (props: any) => {
                     focusnext={() => props.stairsRef.current?.focus()}
                     inputLabel={getTranslation('florr')}
                     value={props.floor}
-                    onChangeFun={text =>
+                    onChangeFun={(text:any) =>
                       props.handleOnChangeText(text, 'floor')
                     }
                     errorMessage={props.floorError}
@@ -1084,7 +1084,7 @@ const CheckoutComponent = (props: any) => {
                     focusnext={() => props.instructionRef.current?.focus()}
                     inputLabel={getTranslation('stairs')}
                     value={props.stairs}
-                    onChangeFun={text =>
+                    onChangeFun={(text:any) =>
                       props.handleOnChangeText(text, 'stairs')
                     }
                     errorMessage={props.stairsError}
@@ -1100,7 +1100,7 @@ const CheckoutComponent = (props: any) => {
                   refs={props.instructionRef}
                   inputLabel={getTranslation('instruction')}
                   value={props.instructions}
-                  onChangeFun={text =>
+                  onChangeFun={(text:any) =>
                     props.handleOnChangeText(text, 'instruction')
                   }
                   errorMessage={props.instructionsError}

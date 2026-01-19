@@ -9,7 +9,11 @@ import React, { useCallback, useState } from 'react';
 import { styles } from './styles';
 import GetTestedComponent from '../../../components/bottomTabs/GetTested';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { activityOpacity, currency } from '../../../constants/GConstant';
+import {
+  activityOpacity,
+  currency,
+  flashMessageWarning,
+} from '../../../constants/GConstant';
 import {
   getHeight,
   getWidth,
@@ -18,7 +22,7 @@ import {
 import { images } from '../../../constants/Images';
 import { ScreenNames } from '../../../constants/AppConstants';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
-import { ApiEndPoints } from '../../../api/APIConstant';
+import { ApiEndPoints, MethodType, StatusCode } from '../../../api/APIConstant';
 import { useDebounce } from '../../../constants/utils/useDebounce';
 import {
   LoadType,
@@ -26,9 +30,39 @@ import {
 } from '../../../global/ApiHelper/usePaginatedList';
 import { apiPromise } from '../../../global/ApiHelper/apiPromise';
 import FastImage from '@d11/react-native-fast-image';
+import { APIManager } from '../../../api/APIManager';
+import { ZustandStores } from '../../../store';
+import { useFocusEffect } from '@react-navigation/native';
 
 const GetTestedContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+
+  const {  cartCount, cartKitIds,addKit,removeKit } =
+    ZustandStores.CartStore();
+
+  //LocallyMangeIsTick
+  useFocusEffect(
+    useCallback(() => {
+      if (!checkup?.data?.length) return;
+  
+      checkup.updateData((prev: any[]) =>
+        prev.map(item => {
+          const shouldBeInCart = cartKitIds.includes(item.id);
+  
+          // ⛔ prevent unnecessary re-render
+          if (item.is_in_cart === shouldBeInCart) {
+            return item;
+          }
+  
+          return {
+            ...item,
+            is_in_cart: shouldBeInCart,
+          };
+        }),
+      );
+    }, [cartKitIds]),
+  );
+  
 
   const categoriesList = [
     { id: 1, name: 'Routine checks' },
@@ -72,14 +106,29 @@ const GetTestedContainer = ({ navigation }: any) => {
 
   const debouncedSearch = useDebounce(searchHistory, 400);
 
-  const toggleAddKit = (id: string) => {
-    console.log('toggleAddKit', id);
+  const toggleAddKit = (item: any) => {
+    const isRemoving = item.is_in_cart;
 
-    checkup.updateData((prev: any) =>
-      prev.map((item: any) =>
-        item.id === id ? { ...item, is_in_cart: !item.is_in_cart } : item,
+    // 🔁 Optimistic UI toggle
+    checkup.updateData((prev: any[]) =>
+      prev.map(k =>
+        k.id === item.id ? { ...k, is_in_cart: !k.is_in_cart } : k,
       ),
     );
+
+    // 🔢 Update cart count
+    if (isRemoving) {
+      removeKit(item.id);
+    } else {
+      addKit(item.id);
+    }
+
+    // ✅ SAME API CALL (backend decides ADD / REMOVE)
+    addToCart({
+      kit_id: item.id,
+      test_ids: item.test_ids,
+      all_test: 1,
+    });
   };
 
   const darkenColor = (hex: string, amount = 0.25) => {
@@ -121,13 +170,13 @@ const GetTestedContainer = ({ navigation }: any) => {
               <TouchableOpacity
                 style={styles.btnPlusBlue}
                 activeOpacity={activityOpacity}
-                onPress={() => toggleAddKit(item.id)}
+                onPress={() => toggleAddKit(item)}
               >
                 <Image source={images.imgBlueTickRight} />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                onPress={() => toggleAddKit(item.id)}
+                onPress={() => toggleAddKit(item)}
                 style={styles.btnPlusBlack}
                 activeOpacity={activityOpacity}
               >
@@ -356,6 +405,29 @@ const GetTestedContainer = ({ navigation }: any) => {
     fetcher: fetchAnalitiList,
   });
 
+  //ADDTOCART
+  const addToCart = async ({
+    kit_id,
+    test_ids,
+    all_test,
+  }: {
+    kit_id: number;
+    test_ids: number[];
+    all_test: 0 | 1;
+  }) => {
+    try {
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
+        params: { kit_id, test_ids, all_test },
+        callback: () => {},
+      });
+    } catch (e) {
+      console.log('Cart toggle error', e);
+    }
+  };
+
   return (
     <GetTestedComponent
       insets={insets}
@@ -389,6 +461,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       analiticount={analiticount}
       searchHistory={searchHistory}
       setSeachHistory={setSeachHistory}
+      cartCount={cartCount}
     />
   );
 };

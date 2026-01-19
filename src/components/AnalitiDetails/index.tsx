@@ -138,7 +138,11 @@ const AnalitiDetailsComponent = (props: any) => {
               <View style={styles.vwCartImage}>
                 <Image source={images.imgCartHome} tintColor={Colors.white} />
                 <Text style={styles.lblGoToCart}>
-                  {getTranslation('addtoorder')} ({props.selectedTests.length})
+                  {props.isInCart
+                    ? props.isSelectionChanged
+                      ? getTranslation('updatecart')
+                      : getTranslation('gotocarttext')
+                    : getTranslation('addtoorder')}
                 </Text>
               </View>
               <View style={styles.vwPrice}>

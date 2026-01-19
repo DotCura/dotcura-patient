@@ -52,9 +52,16 @@ export const ApiEndPoints = {
   ORDER: {
     GETORDERHISTORY: `${PATIENT_PREFIX}getOrderList`,
   },
-  OTHER :{
+  OTHER: {
     GETRELATIONTYPE: `${PATIENT_PREFIX}OtherDetails`,
-  }
+  },
+  CHECKOUT: {
+    ADDTOCART: `${PATIENT_PREFIX}addToCart`,
+    UPDATETOCART: `${PATIENT_PREFIX}updateCartItem`,
+  },
+  COUNT: {
+    TOTALCOUNT: `${PATIENT_PREFIX}total_count`,
+  },
 };
 
 // API methods

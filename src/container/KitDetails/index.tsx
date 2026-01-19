@@ -17,9 +17,11 @@ import {
   toggleLoader,
 } from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
+import { ZustandStores } from '../../store';
 
 const KitDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
+  const { increment, addKit } = ZustandStores.CartStore();
 
   const [kitsArrayData, setKitsArraysData] = useState<any>({});
   const [emptyLoading, setIsEmptyLoading] = useState(true);
@@ -108,7 +110,12 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
   };
 
   const handleNavigateCheckout = () => {
-    navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+    if (kitsArrayData?.is_in_cart) {
+      // ✅ Already in cart → go directly
+      navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+      return;
+    }
+    _addToCartKitDetails();
   };
 
   const header = () => {
@@ -168,6 +175,43 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
     _kitDetailsApi();
   }, []);
 
+  //================API=========================
+  const _addToCartKitDetails = async () => {
+    try {
+      const allTestIds = kitsArrayData?.tests?.map((t: any) => t.test_id) || [];
+
+      const params = {
+        kit_id: kitsArrayData.id,
+        test_ids: allTestIds, 
+        all_test: 1, 
+      };
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          addKit(kitsArrayData.id);
+          navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+          // ✅ IMPORTANT: update local state
+          setKitsArraysData((prev: any) => ({
+            ...prev,
+            is_in_cart: true,
+          }));
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('Kit details add to cart error:', error);
+    }
+  };
+
   return (
     <KitDetailsComponent
       navigation={navigation}
@@ -178,6 +222,7 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
       kitsArrayData={kitsArrayData}
       totalPrice={getTotalTestPrice()}
       emptyLoading={emptyLoading}
+      isincart={kitsArrayData?.is_in_cart}
     />
   );
 };

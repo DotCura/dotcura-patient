@@ -8,7 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import CheckoutComponent from '../../components/Checkout';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
@@ -32,6 +38,12 @@ import { ZustandStores } from '../../store';
 import { ScreenNames } from '../../constants/AppConstants';
 import RNRestart from 'react-native-restart';
 import { Colors } from '../../constants/Colors';
+import { apiPromise } from '../../global/ApiHelper/apiPromise';
+import { ApiEndPoints } from '../../api/APIConstant';
+import {
+  LoadType,
+  usePaginatedList,
+} from '../../global/ApiHelper/usePaginatedList';
 
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -1270,6 +1282,43 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     header();
   }, []);
 
+  //================= API ==============================
+
+  //FAMILYLIST
+  const fetchFamilyMemberList = useCallback(
+    async ({ page, loadType }: { page: number; loadType: any }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.FAMILY.GETFAMILYMEMBERLIST,
+        method: 'POST',
+        showLoader: loadType === LoadType.INITIAL,
+        params: {
+          page,
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+
+      const formattedData = res?.data?.map((item: any) => ({
+        label: item.name, // shown in dropdown
+        value: item.id.toString(), // stored value
+      }));
+      return {
+        ...res,
+        data: formattedData ?? [], // ✅ always array
+      };
+    },
+    [navigation],
+  );
+
+  const familyMemberList: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: true,
+    fetcher: fetchFamilyMemberList,
+  });
+
+  
+
   return (
     <CheckoutComponent
       navigation={navigation}
@@ -1291,7 +1340,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       onChangeDiscountCode={onChangeDiscountCode}
       setFamilyMemberValue={setFamilyMemberValue}
       familymemberValue={familymemberValue}
-      familyMemberData={familyMemberData}
+      familyMemberData={familyMemberList?.data}
       handleSetFamilyMember={handleSetFamilyMember}
       showPicker={showPicker}
       setShowPicker={setShowPicker}

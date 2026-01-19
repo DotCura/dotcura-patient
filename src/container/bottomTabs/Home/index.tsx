@@ -20,9 +20,14 @@ import {
 import { ScreenNames } from '../../../constants/AppConstants';
 import LinearGradient from 'react-native-linear-gradient';
 import ProgressBar from '../../../global/ProgressBar';
+import { ZustandStores } from '../../../store';
+import { ApiEndPoints, MethodType } from '../../../api/APIConstant';
+import { APIManager } from '../../../api/APIManager';
 
 const HomeContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
+  const { setNotificationCount, setCartCount, cartCount } =
+    ZustandStores.CartStore();
 
   const latestAnalysis = [
     {
@@ -629,7 +634,6 @@ const HomeContainer = ({ navigation }: any) => {
 
   const handleNavigateTestDetailsScreen = () => {
     navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
-    
   };
 
   const handleNavigateYourProfileScreen = () => {
@@ -640,12 +644,41 @@ const HomeContainer = ({ navigation }: any) => {
 
   const handleNavigateAnlitiTestDetails = () => {
     navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
-    
   };
 
   const handleNavigateGetTested = () => {
     navigation.jumpTo(ScreenNames.GETTESTEDCONTAINER);
   };
+
+  //============= API =======================
+  const _totalCount = async () => {
+    const params = {};
+    try {
+      const callback = (responseData: any) => {
+        if (responseData.code === 1) {
+          const { total_cart_kits, unread_notifications } = responseData.data;
+
+          setCartCount(total_cart_kits);
+          setNotificationCount(unread_notifications);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.COUNT.TOTALCOUNT,
+        callback,
+        showLoader: false,
+        params,
+      });
+    } catch (error) {
+      console.log('Count sync error:', error);
+    }
+  };
+
+  useEffect(() => {
+    _totalCount();
+  }, []);
 
   return (
     <HomeComponent
@@ -665,6 +698,7 @@ const HomeContainer = ({ navigation }: any) => {
       appointmentsData={appointmentsData}
       handleNavigateYourProfileScreen={handleNavigateYourProfileScreen}
       handleNavigateGetTested={handleNavigateGetTested}
+      cartCount={cartCount}
     />
   );
 };

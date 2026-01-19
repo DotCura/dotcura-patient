@@ -51,6 +51,7 @@ import PressScale from '../../../global/PressScale';
 
 const HomeComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
+  
   const renderListFooter = () => {
     return (
       <PressScale onPress={props.handleNavigateYourProfileScreen}>
@@ -64,7 +65,7 @@ const HomeComponent = (props: any) => {
   };
   const CARD_WIDTH = getWidth(280); // your card width
   const CARD_GAP = getWidth(8);
-  console.log("render")
+  console.log('render');
   return (
     <View
       style={[
@@ -109,9 +110,11 @@ const HomeComponent = (props: any) => {
               >
                 <Image source={images.imgCartHome} />
               </TouchableOpacity>
-              <View style={styles.vwTextCount}>
-                <Text style={styles.labelTextCount}>2</Text>
-              </View>
+              {props.cartCount > 0 && (
+                <View style={styles.vwTextCount}>
+                  <Text style={styles.labelTextCount}>{props.cartCount}</Text>
+                </View>
+              )}
             </View>
           </View>
         </View>

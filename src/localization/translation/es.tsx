@@ -177,6 +177,8 @@ export default {
   howtopreparesubtitle5: ' il giorno prima e cerca di riposare bene.',
   gotocart: 'Vai al carrello',
   addtoorder: 'Aggiungi all’ordine',
+  gotocarttext:"Vai al carrello",
+  updatecart:"Aggiorna carrello",
 
   //ANALITIDETAILS
   analititextdetails: 'Analiti',

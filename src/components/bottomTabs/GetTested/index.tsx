@@ -95,14 +95,20 @@ const GetTestedComponent = (props: any) => {
             >
               <Image source={images.imgSearchBlack} />
             </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={props.handleNavigateCheckout}
-              activeOpacity={activityOpacity}
-              style={styles.vwHeaderbtn}
-            >
-              <Image source={images.imgCartHome} />
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                onPress={props.handleNavigateCheckout}
+                activeOpacity={activityOpacity}
+                style={styles.vwHeaderbtn}
+              >
+                <Image source={images.imgCartHome} />
+              </TouchableOpacity>
+              {props.cartCount > 0 && (
+                <View style={styles.vwTextCount}>
+                  <Text style={styles.labelTextCount}>{props.cartCount}</Text>
+                </View>
+              )}
+            </View>
           </View>
         </Animated.View>
 

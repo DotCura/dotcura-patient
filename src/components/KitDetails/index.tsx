@@ -19,6 +19,8 @@ import AppHeader from '../../global/Header';
 import PressScale from '../../global/PressScale';
 
 const KitDetailsComponent = (props: any) => {
+  
+  
   return (
     <>
       <AppHeader
@@ -162,7 +164,9 @@ const KitDetailsComponent = (props: any) => {
               <View style={styles.vwCartImage}>
                 <Image source={images.imgCartHome} tintColor={Colors.white} />
                 <Text style={styles.lblGoToCart}>
-                  {getTranslation('addtoorder')}
+                  {props.isincart === true
+                    ? getTranslation('gotocarttext')
+                    : getTranslation('addtoorder')}
                 </Text>
               </View>
               <View style={styles.vwPrice}>

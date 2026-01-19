@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AppHeader from '../../global/Header';
 import { images } from '../../constants/Images';
@@ -9,10 +9,8 @@ import {
 } from '../../constants/GConstant';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
-import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { getWidth } from '../../constants/utils/Dimensions';
 import { Colors } from '../../constants/Colors';
-import { fontsfamily } from '../../constants/FontFamily';
-import { fontSize } from '../../constants/FontSizes';
 import { ScreenNames } from '../../constants/AppConstants';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import AnalitiDetailsComponent from '../../components/AnalitiDetails';
@@ -23,12 +21,16 @@ import {
   toggleLoader,
 } from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
+import { ZustandStores } from '../../store';
 
 const AnalitiDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
+  const { increment, decrement } = ZustandStores.CartStore();
 
   const [analitiArrayData, setAnalitiArraysData] = useState<any>({});
   const [selectedTests, setSelectedTests] = useState<number[]>([]);
+  console.log('selectedTests', selectedTests);
+
   const [emptyLoading, setIsEmptyLoading] = useState(true);
 
   const toggleSelect = (test_id: number) => {
@@ -153,7 +155,28 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
   };
 
   const handleNavigateCheckout = () => {
-    navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+    if (!selectedTests.length) {
+      flashMessageWarning(getTranslation('atleastoneselected'));
+      return;
+    }
+
+    // 🟢 Not in cart → ADD
+    if (!analitiArrayData?.is_in_cart || !analitiArrayData?.cart_kit) {
+      _addToCartAnaliti();
+      return;
+    }
+
+    // 🟡 In cart → check changes
+    const hasChanged = !isSameSelection(originalCartTestIds, selectedTests);
+
+    if (!hasChanged) {
+      // ✅ No change → just navigate
+      navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+      return;
+    }
+
+    // 🔥 Changed → UPDATE
+    _updateCartAnaliti();
   };
 
   const header = () => {
@@ -179,6 +202,7 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
   }, []);
 
   //==================API=========================
+  const [originalCartTestIds, setOriginalCartTestIds] = useState<number[]>([]);
 
   const _analitiDetailsApi = async () => {
     try {
@@ -192,10 +216,20 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
         console.log(responseData, 'reponseData of api Kit Details');
         if (responseData.code === StatusCode.SUCCESS) {
           setAnalitiArraysData(responseData.data);
-          const defaultSelected = responseData.data?.tests?.map(
-            (t: any) => t.test_id,
-          );
-          setSelectedTests(defaultSelected);
+          if (responseData.data.is_in_cart && responseData.data.cart_kit) {
+            const { all_test, test_ids } = responseData.data.cart_kit;
+
+            const selected =
+              all_test === 1
+                ? responseData.data.tests.map((t: any) => t.test_id)
+                : test_ids;
+
+            setSelectedTests(selected);
+            setOriginalCartTestIds(selected); // ✅ SAVE ORIGINAL
+          } else {
+            setSelectedTests([]);
+            setOriginalCartTestIds([]);
+          }
         } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
           flashMessageWarning(responseData.message);
         }
@@ -218,6 +252,102 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
     _analitiDetailsApi();
   }, []);
 
+  const isSameSelection = (a: number[], b: number[]) => {
+    if (a.length !== b.length) return false;
+    const sa = [...a].sort();
+    const sb = [...b].sort();
+    return sa.every((v, i) => v === sb[i]);
+  };
+
+  const _addToCartAnaliti = async () => {
+    try {
+      const allTestIds =
+        analitiArrayData?.tests?.map((t: any) => t.test_id) || [];
+
+      const isAllSelected = selectedTests.length === allTestIds.length;
+
+      const params = {
+        kit_id: analitiArrayData.id,
+        test_ids: isAllSelected ? allTestIds : selectedTests,
+        all_test: isAllSelected ? 1 : 0,
+      };
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          increment();
+          // ✅ IMPORTANT: update local state
+          setAnalitiArraysData((prev: any) => ({
+            ...prev,
+            is_in_cart: true,
+          }));
+          navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('Analiti add to cart error:', error);
+    }
+  };
+
+  const _updateCartAnaliti = async () => {
+    try {
+      const allTestIds =
+        analitiArrayData?.tests?.map((t: any) => t.test_id) || [];
+
+      const isAllSelected = selectedTests.length === allTestIds.length;
+
+      const params = {
+        cart_kit_id: analitiArrayData.cart_kit.cart_kit_id, // 🔑 IMPORTANT
+        cart_item_id: analitiArrayData.cart_kit.cart_id,
+        test_ids: isAllSelected ? allTestIds : selectedTests,
+        all_test: isAllSelected ? 1 : 0,
+      };
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          // ✅ Update local state
+          setAnalitiArraysData((prev: any) => ({
+            ...prev,
+            cart_kit: {
+              ...prev.cart_kit,
+              test_ids: selectedTests,
+              all_test: isAllSelected ? 1 : 0,
+            },
+          }));
+
+          setOriginalCartTestIds(selectedTests); // reset baseline
+
+          navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.UPDATETOCART,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('Update cart error:', error);
+    }
+  };
+  
+  const isSelectionChanged =
+    !!analitiArrayData?.is_in_cart &&
+    !isSameSelection(originalCartTestIds, selectedTests);
+
   return (
     <AnalitiDetailsComponent
       navigation={navigation}
@@ -228,6 +358,8 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
       selectedTests={selectedTests}
       handleNavigateCheckout={handleNavigateCheckout}
       emptyLoading={emptyLoading}
+      isInCart={!!analitiArrayData?.is_in_cart}
+      isSelectionChanged={isSelectionChanged}
     />
   );
 };

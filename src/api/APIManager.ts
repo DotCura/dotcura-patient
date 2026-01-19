@@ -47,7 +47,7 @@ export const APIManager = {
   getHeader: () => {
     return {
       'api-key': ApiHeaderKeyValue.API_KEY_VALUE,
-      'accept-language': 'es',
+      'accept-language': 'en',
       'content-type': 'text/plain',
     };
   },
