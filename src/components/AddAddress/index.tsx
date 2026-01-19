@@ -75,6 +75,7 @@ const AddAddressComponent = (props: any) => {
         scrollEnabled
         showsVerticalScrollIndicator={false}
         bounces={true}
+        keyboardShouldPersistTaps='handled'
         contentContainerStyle={[constnatStyles.keyboardContainer]}
         style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
       >
