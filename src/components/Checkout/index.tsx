@@ -38,7 +38,7 @@ const CheckoutComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false); // Add focus state
 
   // 🔥 Moved styles here (no global style)
-  const customStylesTextInput :any = {
+  const customStylesTextInput: any = {
     container: {
       flex: 1,
       borderRadius: 12,
@@ -235,7 +235,7 @@ const CheckoutComponent = (props: any) => {
                 </Text>
                 <Text style={styles.lblDateAndTimeValue}>
                   {props.selectedAddress
-                    ? `${props.selectedAddress.title} - ${props.selectedAddress.subtitle}`
+                    ? `${props.selectedAddress.title} - ${props.selectedAddress.address}`
                     : 'Via Roma, 31 - Napoli'}
                 </Text>
               </View>
@@ -369,8 +369,7 @@ const CheckoutComponent = (props: any) => {
             style={[
               styles.vwBottomBtn,
               {
-                marginBottom:
-                   props.insets.bottom + getHeight(10),
+                marginBottom: props.insets.bottom + getHeight(10),
               },
             ]}
           >
@@ -657,8 +656,7 @@ const CheckoutComponent = (props: any) => {
                 style={[
                   styles.vwGoToCart,
                   {
-                    bottom:
-                       getHeight(30),
+                    bottom: getHeight(30),
                   },
                 ]}
               >
@@ -882,8 +880,7 @@ const CheckoutComponent = (props: any) => {
                 style={[
                   styles.vwGoToCart,
                   {
-                    bottom:
-                       getHeight(30),
+                    bottom: getHeight(30),
                   },
                 ]}
               >
@@ -910,9 +907,10 @@ const CheckoutComponent = (props: any) => {
       <AddressModel
         visible={props.addressPopupVisible}
         addresses={props.AddressData}
-        selectedId={props?.selectedid}
-        onSelect={props.handleOnPressSetId}
-        onAddAddress={props.handlePressAddAddress}
+        selectedAddress={props.selectedAddress}
+        onSelectAddress={props.setSelectedAddress}
+        onAddAddress={props.funOpenAddAddressPopup}
+        onEditAddress={props.handleEditAddress}   // 👈 ADD THIS
         onClose={props.handleCloseAddress}
         onSave={props.handleOnPressSaveLocation}
       />
@@ -974,6 +972,7 @@ const CheckoutComponent = (props: any) => {
 
             {/* Form */}
             <KeyboardAwareScrollView
+              keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
               bounces
               contentContainerStyle={[
@@ -1036,6 +1035,7 @@ const CheckoutComponent = (props: any) => {
                   </Text>
 
                   <GooglePlacesTextInput
+                    multiline
                     ref={props.searchRef}
                     apiKey={
                       isPlatformiOS
@@ -1047,14 +1047,16 @@ const CheckoutComponent = (props: any) => {
                     }
                     onPlaceSelect={(place: any) => {
                       props.handlePlaceSelect(place);
+
                       props.setSearchAddress(place?.text?.text || ''); // Store selected address
                     }}
+                    value={props.searchAddress} // ✅ REQUIRED
                     onChangeText={props.setSearchAddress}
                     cursorColor={Colors.blue002}
                     selectionColor={Colors.blue002}
                     languageCode="en"
                     style={customStylesTextInput}
-                    showClearButton={false}
+                    showClearButton={true}
                     showLoadingIndicator={false}
                   />
                 </View>
@@ -1068,7 +1070,7 @@ const CheckoutComponent = (props: any) => {
                     focusnext={() => props.stairsRef.current?.focus()}
                     inputLabel={getTranslation('florr')}
                     value={props.floor}
-                    onChangeFun={(text:any) =>
+                    onChangeFun={(text: any) =>
                       props.handleOnChangeText(text, 'floor')
                     }
                     errorMessage={props.floorError}
@@ -1084,7 +1086,7 @@ const CheckoutComponent = (props: any) => {
                     focusnext={() => props.instructionRef.current?.focus()}
                     inputLabel={getTranslation('stairs')}
                     value={props.stairs}
-                    onChangeFun={(text:any) =>
+                    onChangeFun={(text: any) =>
                       props.handleOnChangeText(text, 'stairs')
                     }
                     errorMessage={props.stairsError}
@@ -1100,7 +1102,7 @@ const CheckoutComponent = (props: any) => {
                   refs={props.instructionRef}
                   inputLabel={getTranslation('instruction')}
                   value={props.instructions}
-                  onChangeFun={(text:any) =>
+                  onChangeFun={(text: any) =>
                     props.handleOnChangeText(text, 'instruction')
                   }
                   errorMessage={props.instructionsError}
@@ -1133,26 +1135,42 @@ const CheckoutComponent = (props: any) => {
             {/* Actions */}
             <View
               style={{
-                marginBottom:
-                 props.insets.bottom + getHeight(16),
+                marginBottom: props.insets.bottom + getHeight(16),
                 marginHorizontal: getWidth(16),
               }}
             >
               <CustomButton
                 btnPress={props.handleOnPressSaveAddress}
-                btnTitle={getTranslation('saveaddress')}
+                btnTitle={
+                  props.addressMode === 'edit'
+                    ? getTranslation('savechnages')
+                    : getTranslation('saveaddress')
+                }
               />
-
-              <CustomButton
-                btnicon={false}
-                style={{
-                  backgroundColor: Colors.blueD1,
-                  marginTop: getHeight(8),
-                }}
-                textStyle={{ color: Colors.blue002 }}
-                btnPress={props.funCloseAddAddressPopup}
-                btnTitle={getTranslation('cancleaddress')}
-              />
+              {props.addressMode === 'edit' ? (
+                <CustomButton
+                  btnicon={true}
+                  btnImage={images.imgDeleteRed}
+                  style={{
+                    backgroundColor: Colors.redFC,
+                    marginTop: getHeight(8),
+                  }}
+                  textStyle={{ color: Colors.red40 }}
+                  btnPress={props.handleOnPressDeleteAddress}
+                  btnTitle={getTranslation('deleteaddresssbtn')}
+                />
+              ) : (
+                <CustomButton
+                  btnicon={false}
+                  style={{
+                    backgroundColor: Colors.blueD1,
+                    marginTop: getHeight(8),
+                  }}
+                  textStyle={{ color: Colors.blue002 }}
+                  btnPress={props.funCloseAddAddressPopup}
+                  btnTitle={getTranslation('cancleaddress')}
+                />
+              )}
             </View>
           </View>
         </View>
@@ -1205,8 +1223,7 @@ const CheckoutComponent = (props: any) => {
               <View
                 style={{
                   marginTop: getHeight(123),
-                  marginBottom:
-                    props.insets.bottom + getHeight(10),
+                  marginBottom: props.insets.bottom + getHeight(10),
                 }}
               >
                 <CustomButton

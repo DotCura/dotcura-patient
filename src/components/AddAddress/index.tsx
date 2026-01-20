@@ -129,10 +129,9 @@ const AddAddressComponent = (props: any) => {
                 placeHolderText={getTranslation('addaddressplacholder') || ''}
                 onPlaceSelect={(place: any) => {
                   props.handlePlaceSelect(place);
+                  props.setSearchAddress(place?.text?.text || ''); // Store selected address
                 }}
-                onChangeText={(text: any) => {
-                  props.setSearchAddress(text); // store every typed change
-                }}
+                onChangeText={props.setSearchAddress}
                 cursorColor={Colors.blue002}
                 selectionColor={Colors.blue002}
                 languageCode="es"

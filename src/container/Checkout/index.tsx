@@ -20,6 +20,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import {
   activityOpacity,
+  appName,
   currency,
   flashMessageWarning,
   flashMessageWarningBottom,
@@ -39,11 +40,12 @@ import { ScreenNames } from '../../constants/AppConstants';
 import RNRestart from 'react-native-restart';
 import { Colors } from '../../constants/Colors';
 import { apiPromise } from '../../global/ApiHelper/apiPromise';
-import { ApiEndPoints } from '../../api/APIConstant';
+import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 import {
   LoadType,
   usePaginatedList,
 } from '../../global/ApiHelper/usePaginatedList';
+import { APIManager } from '../../api/APIManager';
 
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -464,10 +466,9 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
   const [showIsKitTestDetails, setShowIsKitTestDetails] = useState(false);
-  const [AddressData, setAddressData] = useState(addressList);
-  const [addressPopupVisible, setAddressPopupVisible] = useState(false);
+
   const [cancleOrderVisible, setCancleOrderVisible] = useState(false);
-  const [addAddressPopupVisible, setAddAddressPopupVisible] = useState(false);
+
   const [editAnlitiPopupVisible, setEditAnalitiPopupVisible] = useState(false);
 
   const pickerBg = useDelayedBg(cancleOrderVisible, 400);
@@ -602,6 +603,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       </TouchableOpacity>
     );
   };
+
   const renderAnalitiData = ({ item, index }: any) => {
     return (
       <TouchableOpacity
@@ -732,18 +734,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const funCloseCancleOrder = () => {
     setCancleOrderVisible(false);
-  };
-
-  const funOpenAddAddressPopup = () => {
-    setAddAddressPopupVisible(true);
-  };
-
-  const funCloseAddAddressPopup = () => {
-    setAddAddressPopupVisible(false);
-    // setAddressPopupVisible(true);
-    setTimeout(() => {
-      setAddressPopupVisible(true);
-    }, 500); // match animationOut duration
   };
 
   const funOpenIsKitTestDetails = () => {
@@ -1070,27 +1060,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     );
   };
 
-  // const handleOnPressSaveChanges = () => {
-  //   navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-  //     screen: ScreenNames.HOMECONTAINER,
-  //   });
-  //   // goToTabScreen(navigation, ScreenNames.HOMECONTAINER);
-  //   setOrderStatus('order_sent');
-  // };
-
-  const handleNavigateAddAddress = () => {
-    setAddressPopupVisible(true);
-  };
-
-  // const handleNavigateHome = () => {
-  //   // goToTabScreen(navigation, ScreenNames.HOMECONTAINER);
-  //   setOrderStatus('');
-  //   setCancleOrderVisible(false);
-  //   navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
-  //     screen: ScreenNames.HOMECONTAINER,
-  //   });
-  // };
-
   const handleOnPressSaveChanges = () => {
     navigation.reset({
       index: 0,
@@ -1132,10 +1101,19 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   //AddAddress
   const addressType = [
-    { label: 'Home', value: '1' },
-    { label: 'Apartment', value: '2' },
-    { label: 'Residency', value: '3' },
+    { label: getTranslation('addresstypehome'), value: '1' },
+    { label: getTranslation('addresstypework'), value: '2' },
+    { label: getTranslation('addresstypemedical'), value: '3' },
+    { label: getTranslation('addresstypeother'), value: '4' },
   ];
+
+  const [AddressData, setAddressData] = useState([]);
+  const [addressPopupVisible, setAddressPopupVisible] = useState(false);
+  const [addAddressPopupVisible, setAddAddressPopupVisible] = useState(false);
+
+  type AddressMode = 'add' | 'edit';
+  const [addressMode, setAddressMode] = useState<AddressMode>('add');
+  const [editAddressData, setEditAddressData] = useState<any>(null);
 
   const [searchAddress, setSearchAddress] = useState('');
   const [searchAddressError, setSearchAddressError] = useState<any>('');
@@ -1154,7 +1132,11 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [instructionsError, setInstructionNameError] = useState<any>('');
 
   const [addressTypeData, setAddressTypeData] = useState(addressType);
-  const [addressTypeValue, setAddressTypeValue] = useState<string | null>('');
+  const [addressTypeValue, setAddressTypeValue] = useState<string | null>('1');
+  const [addressTypeItem, setAddressTypeItem] = useState<string | null>(
+    addressTypeData[0].label,
+  );
+
   const [addressTypeError, setAddressTypeError] = useState<any>('');
   const [selectedid, setSelectedId] = useState<any>('');
 
@@ -1180,6 +1162,10 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     if (addressTypeValue == '') {
       setAddressTypeError(getTranslation('errorselectaddresstype'));
       return;
+    }
+    if (searchAddress.trim() === '') {
+      Alert.alert(getTranslation('emptysearchaddress') || '');
+      return;
     } else if (floor.trim() === '') {
       setFloorError(getTranslation('emptyFloor'));
       return;
@@ -1196,10 +1182,11 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       setInstructionNameError(getTranslation('emptyInstructions'));
       return;
     } else {
-      funCloseAddAddressPopup();
-      setTimeout(() => {
-        setAddressPopupVisible(true);
-      }, 500); // match animationOut duration
+      if (addressMode == 'add') {
+        _addAddressApi();
+      } else {
+        _updateAddressApi();
+      }
     }
   };
 
@@ -1232,14 +1219,85 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     console.log('call', place);
     if (place && place.placeId) {
       console.log('Selected place:', JSON.stringify(place));
+      console.log('place?.text?.text', place?.text?.text);
+
       // searchRef.current?.clear();
-      // setSearchAddress(place?.text?.text);
+      setSearchAddress(place?.text?.text);
       // setSearchText("");
     }
   };
 
   const toggleisDefault = () => {
     setIsDefaultSave(!isdefaultsave);
+  };
+
+  //chekout chnage btn fun
+  const handleNavigateAddAddress = () => {
+    _addressListApi();
+  };
+  const handleOnPressDeleteAddress = async () => {
+    await _deleteAddressApi();
+  };
+
+  //add address btn
+  const funOpenAddAddressPopup = () => {
+    console.log('call add address');
+
+    setAddressMode('add');
+    setEditAddressData(null);
+
+    // reset all fields
+    setSearchAddress('');
+    setFloor('');
+    setStairs('');
+    setinstructions('');
+    setIsDefaultSave(false);
+    setAddressTypeValue('1');
+    setAddressTypeItem(addressTypeData[0].label);
+
+    setAddressPopupVisible(false);
+
+    setTimeout(() => {
+      setAddAddressPopupVisible(true);
+    }, 500);
+  };
+
+  const handleEditAddress = (address: any) => {
+    console.log('call edit address');
+
+    setAddressMode('edit');
+    setEditAddressData(address);
+
+    // prefill fields
+    setSearchAddress(address.address);
+    setFloor(address.floor);
+    setStairs(address.stairs);
+    setinstructions(address.instructions);
+    setIsDefaultSave(address.is_default === 1);
+    // ✅ FIND matching address type
+    const matchedType = addressTypeData.find(
+      item => item.label === address.title,
+    );
+
+    if (matchedType) {
+      setAddressTypeValue(matchedType.value); // ✅ correct
+      setAddressTypeItem(matchedType.label);
+    }
+
+    setAddressPopupVisible(false);
+
+    setTimeout(() => {
+      setAddAddressPopupVisible(true);
+    }, 500);
+  };
+
+  //close add address
+  const funCloseAddAddressPopup = () => {
+    setAddAddressPopupVisible(false);
+    // setAddressPopupVisible(true);
+    setTimeout(() => {
+      setAddressPopupVisible(true);
+    }, 500); // match animationOut duration
   };
 
   const header = () => {
@@ -1317,7 +1375,158 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     fetcher: fetchFamilyMemberList,
   });
 
-  
+  // Api AddressList
+  const _addressListApi = async () => {
+    try {
+      const params = {};
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setAddressPopupVisible(true);
+
+          const list = responseData.data || [];
+          setAddressData(list);
+
+          // ✅ Auto select default address
+          const defaultAddress = list.find(
+            (item: any) => item.is_default === 1,
+          );
+          console.log('defaultAddress', defaultAddress);
+
+          if (defaultAddress) {
+            setSelectedAddress(defaultAddress);
+          } else {
+            setSelectedAddress(null);
+          }
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.ADDRESS.GETADDRESS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('Address List error:', error);
+    }
+  };
+
+  //======================API============================
+
+  const _addAddressApi = async () => {
+    setAddressTypeValue('1');
+    setSearchAddress('');
+    setFloor('');
+    setStairs('');
+    setinstructions('');
+    setIsDefaultSave(false);
+    try {
+      const params = {
+        address: searchAddress,
+        title: addressTypeItem,
+        floor: floor,
+        stairs: stairs,
+        instructions: instructions,
+        latitude: '0',
+        longitude: '0',
+        is_default: isdefaultsave == true ? 1 : 0,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          funCloseAddAddressPopup();
+          setTimeout(() => {
+            _addressListApi();
+            setAddressPopupVisible(true);
+          }, 500); // match animationOut duration
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.ADDRESS.ADDADDRESS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('Add Address error:', error);
+    }
+  };
+
+  const _updateAddressApi = async () => {
+    try {
+      const params = {
+        address_id: editAddressData.address_id,
+        address: searchAddress,
+        title: addressTypeItem,
+        floor: floor,
+        stairs: stairs,
+        instructions: instructions,
+        latitude: '0',
+        longitude: '0',
+        is_default: isdefaultsave == true ? 1 : 0,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          funCloseAddAddressPopup();
+          setTimeout(() => {
+            _addressListApi();
+            setAddressPopupVisible(true);
+          }, 500); // match animationOut duration
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.ADDRESS.UPDATEADDRESS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('Add Address error:', error);
+    }
+  };
+
+  const _deleteAddressApi = async () => {
+    try {
+      const params = {
+        address_id: editAddressData.address_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          funCloseAddAddressPopup();
+          setTimeout(() => {
+            _addressListApi();
+            setAddressPopupVisible(true);
+          }, 500); // match animationOut duration
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.ADDRESS.REMOVEADDRESS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('Remove Address error:', error);
+    }
+  };
 
   return (
     <CheckoutComponent
@@ -1389,6 +1598,9 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       funCloseCancleOrder={funCloseCancleOrder}
       handleNavigateHome={handleNavigateHome}
       //AddAddressModel
+      handleOnPressDeleteAddress={handleOnPressDeleteAddress}
+      handleEditAddress={handleEditAddress}
+      addressMode={addressMode}
       addAddressPopupVisible={addAddressPopupVisible}
       setAddAddressPopupVisible={setAddAddressPopupVisible}
       funOpenAddAddressPopup={funOpenAddAddressPopup}

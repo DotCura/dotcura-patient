@@ -96,11 +96,10 @@ const AddAddressContainer = ({ navigation, route }: any) => {
   };
 
   const handleOnPressSaveAddress = async () => {
-    // if (searchAddress.trim() === '') {
-    //   flashMessageWarning(getTranslation('emptysearchaddress'));
-    //   return;
-    // } else
-    if (floor.trim() === '') {
+    if (searchAddress.trim() === '') {
+      flashMessageWarning(getTranslation('emptysearchaddress'));
+      return;
+    } else if (floor.trim() === '') {
       setFloorError(getTranslation('emptyFloor'));
       return;
     } else if (!/^\d+$/.test(floor)) {
@@ -143,8 +142,8 @@ const AddAddressContainer = ({ navigation, route }: any) => {
     console.log('call', place);
     if (place && place.placeId) {
       console.log('Selected place:', JSON.stringify(place));
-      console.log("place?.text?.text",place?.text?.text);
-      
+      console.log('place?.text?.text', place?.text?.text);
+
       // searchRef.current?.clear();
       setSearchAddress(place?.text?.text);
       // setSearchText("");

@@ -1,15 +1,12 @@
 import {
   FlatList,
   Image,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
 import { Colors } from '../../constants/Colors';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { constnatStyles } from '../../constants/Styles';
 import { styles } from './styles';
 import TitleSubtitle from '../../global/TitleSubtitle';
 import { getTranslation } from '../../localization/i18n/i18n.config';
@@ -21,7 +18,6 @@ import {
   flashMessageWarning,
 } from '../../constants/GConstant';
 import AppHeader from '../../global/Header';
-import FastImage from '@d11/react-native-fast-image';
 
 const AddressListComponent = (props: any) => {
   return (
