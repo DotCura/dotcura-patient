@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   ImageBackground,
@@ -105,7 +106,7 @@ const CheckoutComponent = (props: any) => {
           </View>
         </View>
       </View>
-      {props.testkitsData.length === 0 ? (
+      {!props.cartLoaded ? null : props.testkitsData.length === 0 ? (
         <View style={styles.emptyview}>
           <Image
             source={images.imgMicroscope}
@@ -172,7 +173,7 @@ const CheckoutComponent = (props: any) => {
               data={props.testkitsData}
               renderItem={props.renderItemTestKits}
               showsVerticalScrollIndicator={false}
-              keyExtractor={item => item.id.toString()}
+              keyExtractor={item => item.kit_id}
               contentContainerStyle={{
                 gap: getWidth(8),
                 marginTop: getHeight(24),
@@ -290,9 +291,17 @@ const CheckoutComponent = (props: any) => {
               <View style={{ marginLeft: getWidth(12), gap: getHeight(8) }}>
                 {props.testkitsData.map((kit: any) => (
                   <View key={kit.id} style={styles.summaryItemRow}>
-                    <Text style={styles.summaryLabel}>{kit.name}</Text>
+                    <Text
+                      style={[
+                        styles.summaryLabel,
+                        { marginRight: getWidth(10) },
+                      ]}
+                      numberOfLines={1}
+                    >
+                      {kit.name}
+                    </Text>
                     <Text style={styles.summaryValue}>
-                      {currency} {kit.price.toFixed(2)}
+                      {currency} {Number(kit.price).toFixed(2)}
                     </Text>
                   </View>
                 ))}
@@ -461,7 +470,7 @@ const CheckoutComponent = (props: any) => {
         </View>
       </Modal>
 
-      {/* editmodifyordermodel */}
+      {/* add model additions model */}
       <Modal
         statusBarTranslucent
         useNativeDriverForBackdrop={true}
@@ -585,7 +594,7 @@ const CheckoutComponent = (props: any) => {
                     },
                   ]}
                 >
-                  {getTranslation('analitiheadertext')} ({props.checkupcount})
+                  {getTranslation('analitiheadertext')} ({props.analiticount})
                 </Text>
               </TouchableOpacity>
             </View>
@@ -593,9 +602,36 @@ const CheckoutComponent = (props: any) => {
             {/* Content */}
             {props.selectedTab === 'checkup' ? (
               <FlatList
-                key="checkup-2"
+                key={'checkup-2'}
+                onEndReached={props.checkup.loadMore}
+                onEndReachedThreshold={0.5}
+                refreshing={props.checkup.refreshing}
+                onRefresh={props.checkup.refresh}
+                ListFooterComponent={
+                  props.checkup.loadingMore ? (
+                    <ActivityIndicator size="large" color={Colors.blue002} />
+                  ) : null
+                }
+                ListEmptyComponent={
+                  !props.checkup.loading && !props.checkup.refreshing ? (
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: getHeight(20),
+                        marginTop: getHeight(100),
+                      }}
+                    >
+                      <Image source={images.imgNoDataFoundAddress} />
+                      <Text style={styles.lblNoAddressFound}>
+                        {getTranslation('nocheckoutlistfound')}
+                      </Text>
+                    </View>
+                  ) : null
+                }
                 numColumns={2}
-                data={props.kitData}
+                data={props.checkup.data}
                 renderItem={props.renderKitData}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={item => item.id.toString()}
@@ -608,73 +644,46 @@ const CheckoutComponent = (props: any) => {
               />
             ) : (
               <FlatList
-                key="analiti-1"
+                onEndReached={props.analiti.loadMore}
+                onEndReachedThreshold={0.5}
+                refreshing={props.analiti.refreshing}
+                onRefresh={props.analiti.refresh}
+                ListFooterComponent={
+                  props.analiti.loadingMore ? (
+                    <ActivityIndicator size="large" color={Colors.blue002} />
+                  ) : null
+                }
+                ListEmptyComponent={
+                  !props.analiti.loading && !props.analiti.refreshing ? (
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: getHeight(20),
+                        marginTop: getHeight(100),
+                      }}
+                    >
+                      <Image source={images.imgNoDataFoundAddress} />
+                      <Text style={styles.lblNoAddressFound}>
+                        {getTranslation('noAnlitilistfound')}
+                      </Text>
+                    </View>
+                  ) : null
+                }
+                key={'analiti-1'}
+                keyExtractor={item => item.id.toString()}
                 numColumns={1}
-                data={props.analitiData}
+                data={props.analiti.data}
                 renderItem={props.renderAnalitiData}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={item => item.id.toString()}
                 contentContainerStyle={{
                   gap: getWidth(12),
+                  paddingBottom: getHeight(200),
                   marginTop: getHeight(20),
-                  paddingBottom: getHeight(150),
                 }}
               />
             )}
-
-            {/* 🔹 BLUR BEHIND GO TO CART */}
-            <MaskedView
-              pointerEvents="none"
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                width: '100%',
-                height: 110,
-              }}
-              maskElement={
-                <LinearGradient
-                  colors={[
-                    'transparent', // ❌ no blur at top
-                    'black', // ✅ full blur at bottom
-                  ]}
-                  locations={[0.25, 1]}
-                  style={{ flex: 1 }}
-                />
-              }
-            >
-              <BlurView
-                style={{ flex: 1 }}
-                blurType="light"
-                blurAmount={14}
-                reducedTransparencyFallbackColor="transparent"
-              />
-            </MaskedView>
-
-            {/* Go To Cart */}
-            <PressScale onPress={props.funCloseIsModifyOrder}>
-              <View
-                style={[
-                  styles.vwGoToCart,
-                  {
-                    bottom: getHeight(30),
-                  },
-                ]}
-              >
-                <View style={styles.vwCartImage}>
-                  <Image source={images.imgCartHome} tintColor={Colors.white} />
-                  <Text style={styles.lblGoToCart}>
-                    {getTranslation('gotocart')}
-                  </Text>
-                </View>
-
-                <View style={styles.vwPrice}>
-                  <Text style={styles.totalprice}>
-                    {currency}
-                    {props.total.toFixed(2)}
-                  </Text>
-                </View>
-              </View>
-            </PressScale>
           </View>
         </View>
       </Modal>
@@ -822,22 +831,29 @@ const CheckoutComponent = (props: any) => {
             <View style={styles.imgkitdetails}>
               <View style={styles.vwHeaderTitle}>
                 <Image
-                  source={images.imgHeart}
-                  style={{ height: getHeight(64), aspectRatio: 1 }}
+                  source={{ uri: props?.analitiArrayData?.kit_image }}
+                  style={{
+                    height: getHeight(64),
+                    aspectRatio: 1,
+                    borderRadius: 10,
+                  }}
                 />
-                <Text style={styles.kittitle}>Cuore e circolazione</Text>
+                <Text style={styles.kittitle}>
+                  {props?.analitiArrayData?.name}
+                </Text>
                 <Text style={styles.kitsubtitle}>
-                  9 {getTranslation('analititextdetails')}
+                  {props?.analitiArrayData?.tests?.length}{' '}
+                  {getTranslation('analititextdetails')}
                 </Text>
               </View>
             </View>
 
             {/* Test List */}
             <FlatList
-              data={props.analitiArrayData}
+              data={props?.analitiArrayData?.tests}
               renderItem={props.renderitemanalitidata}
               showsVerticalScrollIndicator={false}
-              keyExtractor={item => item.id.toString()}
+              keyExtractor={item => item.kit_id}
               contentContainerStyle={{
                 marginTop: getHeight(31),
                 gap: getHeight(20),
@@ -846,36 +862,8 @@ const CheckoutComponent = (props: any) => {
               }}
             />
 
-            {/* 🔹 BLUR BEHIND GO TO CART */}
-            <MaskedView
-              pointerEvents="none"
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                width: '100%',
-                height: 110,
-              }}
-              maskElement={
-                <LinearGradient
-                  colors={[
-                    'transparent', // ❌ no blur at top
-                    'black', // ✅ full blur at bottom
-                  ]}
-                  locations={[0.25, 1]}
-                  style={{ flex: 1 }}
-                />
-              }
-            >
-              <BlurView
-                style={{ flex: 1 }}
-                blurType="light"
-                blurAmount={14}
-                reducedTransparencyFallbackColor="transparent"
-              />
-            </MaskedView>
-
             {/* Add To Order */}
-            <PressScale onPress={props.funCloseEditAnaliti}>
+            <PressScale onPress={props.handleNavigateCheckout}>
               <View
                 style={[
                   styles.vwGoToCart,
@@ -887,15 +875,39 @@ const CheckoutComponent = (props: any) => {
                 <View style={styles.vwCartImage}>
                   <Image source={images.imgCartHome} tintColor={Colors.white} />
                   <Text style={styles.lblGoToCart}>
-                    {getTranslation('addtoorder')}
+                    {props.isInCart
+                      ? props.isSelectionChanged
+                        ? getTranslation('updatecart')
+                        : getTranslation('gotocarttext')
+                      : getTranslation('addtoorder')}
                   </Text>
                 </View>
 
                 <View style={styles.vwPrice}>
-                  <Text style={styles.totalprice}>
-                    {currency}
-                    {props.totalPriceAnaliti.toFixed(2)}
-                  </Text>
+                  {props.isAllSelected &&
+                  props.analitiArrayData?.discount_value !== null ? (
+                    <>
+                      <Text
+                        style={[
+                          styles.totalprice,
+                          {
+                            textDecorationLine: 'line-through',
+                            color: Colors.white40,
+                          },
+                        ]}
+                      >
+                        {currency} {props?.totalPriceAnaliti?.toFixed(2)}
+                      </Text>
+                      <Text style={[styles.totalprice]} numberOfLines={1}>
+                        {currency}{' '}
+                        {Number(props.analitiArrayData?.price).toFixed(2)}
+                      </Text>
+                    </>
+                  ) : (
+                    <Text style={[styles.totalprice]}>
+                      {currency} {props?.totalPriceAnaliti?.toFixed(2)}
+                    </Text>
+                  )}
                 </View>
               </View>
             </PressScale>
@@ -910,7 +922,7 @@ const CheckoutComponent = (props: any) => {
         selectedAddress={props.selectedAddress}
         onSelectAddress={props.setSelectedAddress}
         onAddAddress={props.funOpenAddAddressPopup}
-        onEditAddress={props.handleEditAddress}   // 👈 ADD THIS
+        onEditAddress={props.handleEditAddress} // 👈 ADD THIS
         onClose={props.handleCloseAddress}
         onSave={props.handleOnPressSaveLocation}
       />

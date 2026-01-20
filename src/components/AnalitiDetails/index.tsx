@@ -146,9 +146,30 @@ const AnalitiDetailsComponent = (props: any) => {
                 </Text>
               </View>
               <View style={styles.vwPrice}>
-                <Text style={styles.totalprice}>
-                  {currency} {props?.totalPriceanaliti?.toFixed(2)}
-                </Text>
+                {props.isAllSelected &&
+                props.analitiArrayData?.discount_value !== null ? (
+                  <>
+                    <Text
+                      style={[
+                        styles.totalprice,
+                        {
+                          textDecorationLine: 'line-through',
+                          color: Colors.white40,
+                        },
+                      ]}
+                    >
+                      {currency} {props?.totalPriceanaliti?.toFixed(2)}
+                    </Text>
+                    <Text style={[styles.totalprice]} numberOfLines={1}>
+                      {currency}{' '}
+                      {Number(props.analitiArrayData?.price).toFixed(2)}
+                    </Text>
+                  </>
+                ) : (
+                  <Text style={[styles.totalprice]}>
+                    {currency} {props?.totalPriceanaliti?.toFixed(2)}
+                  </Text>
+                )}
               </View>
             </View>
           </PressScale>

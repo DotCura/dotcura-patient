@@ -33,27 +33,28 @@ import FastImage from '@d11/react-native-fast-image';
 import { APIManager } from '../../../api/APIManager';
 import { ZustandStores } from '../../../store';
 import { useFocusEffect } from '@react-navigation/native';
+import { Colors } from '../../../constants/Colors';
 
 const GetTestedContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
-  const {  cartCount, cartKitIds,addKit,removeKit } =
+  const { cartCount, cartKitIds, addKit, removeKit } =
     ZustandStores.CartStore();
 
   //LocallyMangeIsTick
   useFocusEffect(
     useCallback(() => {
       if (!checkup?.data?.length) return;
-  
+
       checkup.updateData((prev: any[]) =>
         prev.map(item => {
           const shouldBeInCart = cartKitIds.includes(item.id);
-  
+
           // ⛔ prevent unnecessary re-render
           if (item.is_in_cart === shouldBeInCart) {
             return item;
           }
-  
+
           return {
             ...item,
             is_in_cart: shouldBeInCart,
@@ -62,7 +63,6 @@ const GetTestedContainer = ({ navigation }: any) => {
       );
     }, [cartKitIds]),
   );
-  
 
   const categoriesList = [
     { id: 1, name: 'Routine checks' },
@@ -128,6 +128,7 @@ const GetTestedContainer = ({ navigation }: any) => {
       kit_id: item.id,
       test_ids: item.test_ids,
       all_test: 1,
+      price: item.price,
     });
   };
 
@@ -219,10 +220,27 @@ const GetTestedContainer = ({ navigation }: any) => {
             <Text style={styles.lblDescription} numberOfLines={3}>
               {item.description}
             </Text>
-            <Text style={styles.lblPrice} numberOfLines={1}>
-              {currency}
-              {item.price}
-            </Text>
+            <View style={{ flexDirection: 'row', gap: getWidth(2) }}>
+              <Text style={styles.lblPrice} numberOfLines={1}>
+                {currency}
+                {item.price}
+              </Text>
+              {item.discount_value !== null && (
+                <Text
+                  style={[
+                    styles.lblPrice,
+                    {
+                      textDecorationLine: 'line-through',
+                      color: Colors.grey29,
+                    },
+                  ]}
+                  numberOfLines={1}
+                >
+                  {currency}
+                  {item.original_price}
+                </Text>
+              )}
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -248,10 +266,22 @@ const GetTestedContainer = ({ navigation }: any) => {
           </Text>
         </View>
         <View style={styles.vwCurrencyPrice}>
-          <Text style={styles.lablCurrency}>
-            {getTranslation('andtext')} {currency}{' '}
+          <Text style={styles.lablCurrency}>{getTranslation('andtext')} </Text>
+          {item.discount_value !== null ? (
+            <Text
+              style={[
+                styles.lblPrice,
+                { textDecorationLine: 'line-through', color: Colors.grey29 },
+              ]}
+              numberOfLines={1}
+            >
+              {currency} {item.original_price}{' '}
+            </Text>
+          ) : null}
+          <Text style={styles.lablPrice}>
+            {currency} {item.price}
           </Text>
-          <Text style={styles.lablPrice}>{item.price}</Text>
+
           <Image source={images.imgRightCurve} />
         </View>
       </TouchableOpacity>
@@ -410,17 +440,19 @@ const GetTestedContainer = ({ navigation }: any) => {
     kit_id,
     test_ids,
     all_test,
+    price,
   }: {
     kit_id: number;
     test_ids: number[];
     all_test: 0 | 1;
+    price: any;
   }) => {
     try {
       await APIManager.makeRequest({
         navigation,
         method: MethodType.POST,
         apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
-        params: { kit_id, test_ids, all_test },
+        params: { kit_id, test_ids, all_test, price },
         callback: () => {},
       });
     } catch (e) {

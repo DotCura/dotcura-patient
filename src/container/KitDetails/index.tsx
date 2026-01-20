@@ -184,7 +184,9 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
         kit_id: kitsArrayData.id,
         test_ids: allTestIds, 
         all_test: 1, 
+        price:  kitsArrayData?.price,
       };
+      
 
       const callback = (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {

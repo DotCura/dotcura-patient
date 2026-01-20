@@ -170,9 +170,22 @@ const KitDetailsComponent = (props: any) => {
                 </Text>
               </View>
               <View style={styles.vwPrice}>
-                <Text style={styles.totalprice}>
-                  {currency} {props.totalPrice.toFixed(2)}
+              {props?.kitsArrayData?.discount_value !== null && (
+                <Text
+                  style={[
+                    styles.totalprice,
+                    { textDecorationLine: 'line-through',color:Colors.white40 },
+                  ]}
+                  numberOfLines={1}
+                >
+                  {currency}
+                  {props?.kitsArrayData?.original_price}
                 </Text>
+              )}
+                <Text style={styles.totalprice}>
+                  {currency} {Number(props?.kitsArrayData?.price).toFixed(2)}
+                </Text>
+                
               </View>
             </View>
           </PressScale>

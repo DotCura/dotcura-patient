@@ -40,16 +40,49 @@ import { ScreenNames } from '../../constants/AppConstants';
 import RNRestart from 'react-native-restart';
 import { Colors } from '../../constants/Colors';
 import { apiPromise } from '../../global/ApiHelper/apiPromise';
-import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
+import {
+  ApiEndPoints,
+  MethodType,
+  StatusCode,
+  toggleLoader,
+} from '../../api/APIConstant';
 import {
   LoadType,
   usePaginatedList,
 } from '../../global/ApiHelper/usePaginatedList';
 import { APIManager } from '../../api/APIManager';
+import FastImage from '@d11/react-native-fast-image';
+import { useFocusEffect } from '@react-navigation/native';
+import { fontsfamily } from '../../constants/FontFamily';
 
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
+  const { cartCount, cartKitIds, addKit, removeKit, increment } =
+    ZustandStores.CartStore();
+
+  //LocallyMangeIsTick
+  useFocusEffect(
+    useCallback(() => {
+      if (!checkup?.data?.length) return;
+
+      checkup.updateData((prev: any[]) =>
+        prev.map(item => {
+          const shouldBeInCart = cartKitIds.includes(item.id);
+
+          // ⛔ prevent unnecessary re-render
+          if (item.is_in_cart === shouldBeInCart) {
+            return item;
+          }
+
+          return {
+            ...item,
+            is_in_cart: shouldBeInCart,
+          };
+        }),
+      );
+    }, [cartKitIds]),
+  );
 
   const testKits = [
     {
@@ -428,16 +461,21 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     },
   ];
 
-  const [testkitsData, setTestsKitData] = useState(testKits);
+  const [testkitsData, setTestsKitData] = useState<any>([]);
   const [kitData, setKitData] = useState(kitList);
   const [analitiData, setAnalitiData] = useState(analitiList);
   const [kitDataAddMore, setKitDataAddMore] = useState(kitListAddMore);
   const [kitsArrayData, setKitsArraysData] = useState(kitsData);
-  const [analitiArrayData, setAnalitiArraysData] = useState(analaitidata);
+  const [analitiArrayData, setAnalitiArraysData] = useState<any>({});
+  const [selectedTests, setSelectedTests] = useState<number[]>([]);
 
-  const [selectedTestsAnaliti, setSelectedTestsAnaliti] = useState(
-    analitiArrayData.map(t => t.id),
-  );
+  const totalPriceanaliti = analitiArrayData?.tests
+    ?.filter((t: any) => selectedTests.includes(t.test_id))
+    ?.reduce((sum: number, t: any) => sum + Number(t.price || 0), 0);
+
+  // const [selectedTestsAnaliti, setSelectedTestsAnaliti] = useState(
+  //   analitiArrayData.map(t => t.id),
+  // );
   const [selectedTestsKits, setSelectedTestsKits] = useState(
     kitsArrayData.map(t => t.id),
   );
@@ -477,7 +515,10 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const homeServiceCharge = 20;
 
   const subtotal = useMemo(() => {
-    return testkitsData.reduce((sum, item) => sum + item.price, 0);
+    return testkitsData.reduce(
+      (sum: number, item: any) => sum + Number(item.price),
+      0,
+    );
   }, [testkitsData]);
 
   const total = useMemo(() => {
@@ -491,80 +532,143 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     }
   };
 
-  const toggleSelect = (id: string) => {
-    setSelectedTestsAnaliti(prev => {
-      // ❌ If only 1 item is selected → DO NOT allow removal
-      if (prev.length === 1 && prev.includes(id)) {
-        Alert.alert(getTranslation('atleastoneselected') || '');
-        return prev; // stop here
+  const toggleSelect = (test_id: number) => {
+    setSelectedTests((prev: number[]) => {
+      if (prev.length === 1 && prev.includes(test_id)) {
+        flashMessageWarning(getTranslation('atleastoneselected'));
+        return prev;
       }
 
-      // Normal add/remove
-      return prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id];
+      // Toggle selection
+      return prev.includes(test_id)
+        ? prev.filter(id => id !== test_id)
+        : [...prev, test_id];
     });
   };
 
-  const totalPriceAnaliti = analitiArrayData
-    .filter(t => selectedTestsAnaliti.includes(t.id))
-    .reduce((sum, t) => sum + t.price, 0);
+  // const toggleSelect = (id: string) => {
+  //   setSelectedTestsAnaliti(prev => {
+  //     // ❌ If only 1 item is selected → DO NOT allow removal
+  //     if (prev.length === 1 && prev.includes(id)) {
+  //       Alert.alert(getTranslation('atleastoneselected') || '');
+  //       return prev; // stop here
+  //     }
+
+  //     // Normal add/remove
+  //     return prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id];
+  //   });
+  // };
+
+  // const totalPriceAnaliti = analitiArrayData
+  //   .filter(t => selectedTestsAnaliti.includes(t.id))
+  //   .reduce((sum, t) => sum + t.price, 0);
 
   const totalPriceKits = kitsArrayData
     .filter(t => selectedTestsKits.includes(t.id))
     .reduce((sum, t) => sum + t.price, 0);
 
-  const handleNavigateKitDetails = () => {
-    // navigation.navigate(ScreenNames.KITDETAILSCONTAINER);
+  const handleNavigateKitDetails = (kitId: any) => {
     setShowIsModifyOrder(false);
     navigation.navigate('TransitionFlow', {
       screen: ScreenNames.KITDETAILSCONTAINER,
+      params: {
+        kitId: kitId,
+      },
     });
   };
 
-  const toggleAddKit = (id: string) => {
-    setKitData(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, isAdded: !item.isAdded } : item,
+  const handleNavigateAnalitiDetails = (analitiId: any) => {
+    setShowIsModifyOrder(false);
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.ANALITIDETAILSCONTAINER,
+      params: {
+        analitiId: analitiId,
+      },
+    });
+  };
+
+  const toggleAddKit = (item: any) => {
+    const isRemoving = item.is_in_cart;
+
+    // 🔁 Optimistic UI toggle
+    checkup.updateData((prev: any[]) =>
+      prev.map(k =>
+        k.id === item.id ? { ...k, is_in_cart: !k.is_in_cart } : k,
       ),
     );
+
+    // 🔢 Update cart count
+    if (isRemoving) {
+      removeKit(item.id);
+    } else {
+      addKit(item.id);
+    }
+
+    // ✅ SAME API CALL (backend decides ADD / REMOVE)
+    addToCart({
+      kit_id: item.id,
+      test_ids: item.test_ids,
+      all_test: 1,
+      price: item?.price,
+    });
+  };
+
+  const darkenColor = (hex: string, amount = 0.25) => {
+    // remove #
+    const color = hex.replace('#', '');
+
+    const num = parseInt(color, 16);
+
+    let r = (num >> 16) & 0xff;
+    let g = (num >> 8) & 0xff;
+    let b = num & 0xff;
+
+    r = Math.max(0, Math.floor(r * (1 - amount)));
+    g = Math.max(0, Math.floor(g * (1 - amount)));
+    b = Math.max(0, Math.floor(b * (1 - amount)));
+
+    return `rgb(${r}, ${g}, ${b})`;
   };
 
   const renderKitData = ({ item, index }: any) => {
-    const { backgroundColor, textColor } = getRandomTheme();
     return (
       <TouchableOpacity
-        onPress={handleNavigateKitDetails}
+        onPress={() => {
+          handleNavigateKitDetails(item.id);
+        }}
         activeOpacity={activityOpacity}
         style={{
           width: ScreenDimensions.screenWidth / 2 - getWidth(32),
           borderRadius: 20,
-          // marginRight: 12,
           marginLeft: index % 2 === 0 ? 0 : getWidth(16),
         }}
       >
         <View style={{ gap: getHeight(8) }}>
-          <ImageBackground source={item.kitimages} style={styles.vwGrey}>
-            {item.isAdded ? (
+          <ImageBackground
+            source={{ uri: item.kit_image }}
+            style={styles.vwGrey}
+          >
+            {item.is_in_cart ? (
               <TouchableOpacity
                 style={styles.btnPlusBlue}
                 activeOpacity={activityOpacity}
-                onPress={() => toggleAddKit(item.id)}
+                onPress={() => toggleAddKit(item)}
               >
                 <Image source={images.imgBlueTickRight} />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                onPress={() => toggleAddKit(item.id)}
+                onPress={() => toggleAddKit(item)}
                 style={styles.btnPlusBlack}
                 activeOpacity={activityOpacity}
               >
                 <Image source={images.imgPlusBlack} />
               </TouchableOpacity>
             )}
-
-            {item.status != null && (
+            {item.kit_label != null && (
               <View
                 style={{
-                  backgroundColor: backgroundColor,
+                  backgroundColor: item.kit_label_color,
                   position: 'absolute',
                   bottom: 8,
                   left: 8,
@@ -577,10 +681,13 @@ const CheckoutContainer = ({ navigation, route }: any) => {
                 }}
               >
                 <Text
-                  style={[styles.lblStatus, { color: textColor }]}
+                  style={[
+                    styles.lblStatus,
+                    { color: darkenColor(item.kit_label_color, 0.8) },
+                  ]}
                   numberOfLines={2}
                 >
-                  {item.status}
+                  {item.kit_label}
                 </Text>
               </View>
             )}
@@ -588,16 +695,33 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
           {/* veProductDetails */}
           <View>
-            <Text style={styles.lblTitle} numberOfLines={1}>
-              {item.title}
+            <Text style={styles.lblTitle} numberOfLines={2}>
+              {item.kit_name}
             </Text>
             <Text style={styles.lblDescription} numberOfLines={3}>
               {item.description}
             </Text>
-            <Text style={styles.lblPrice} numberOfLines={1}>
-              {currency}
-              {item.price}
-            </Text>
+            <View style={{ flexDirection: 'row', gap: getWidth(2) }}>
+              <Text style={styles.lblPrice} numberOfLines={1}>
+                {currency}
+                {item.price}
+              </Text>
+              {item.discount_value !== null && (
+                <Text
+                  style={[
+                    styles.lblPrice,
+                    {
+                      textDecorationLine: 'line-through',
+                      color: Colors.grey29,
+                    },
+                  ]}
+                  numberOfLines={1}
+                >
+                  {currency}
+                  {item.original_price}
+                </Text>
+              )}
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -609,25 +733,36 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       <TouchableOpacity
         activeOpacity={activityOpacity}
         onPress={() => {
-          setShowIsModifyOrder(false);
-          navigation.navigate('TransitionFlow', {
-            screen: ScreenNames.ANALITIDETAILSCONTAINER,
-          });
-          // navigation.navigate(ScreenNames.ANALITIDETAILSCONTAINER);
+          handleNavigateAnalitiDetails(item.id);
         }}
         style={styles.btnAnalitiMain}
       >
         <View style={styles.vwtitleimage}>
-          <Image source={item.analitiimages} />
+          <FastImage
+            source={{ uri: item.kit_image }}
+            style={styles.imganaliti}
+          />
           <Text style={styles.lblAnalitiLabel} numberOfLines={2}>
-            {item.title}
+            {item.kit_name}
           </Text>
         </View>
         <View style={styles.vwCurrencyPrice}>
-          <Text style={styles.lablCurrency}>
-            {getTranslation('andtext')} {currency}{' '}
+          <Text style={styles.lablCurrency}>{getTranslation('andtext')} </Text>
+          {item.discount_value !== null ? (
+            <Text
+              style={[
+                styles.lblPrice,
+                { textDecorationLine: 'line-through', color: Colors.grey29 },
+              ]}
+              numberOfLines={1}
+            >
+              {currency} {item.original_price}{' '}
+            </Text>
+          ) : null}
+          <Text style={styles.lablPrice}>
+            {currency} {item.price}
           </Text>
-          <Text style={styles.lablPrice}>{item.price}</Text>
+
           <Image source={images.imgRightCurve} />
         </View>
       </TouchableOpacity>
@@ -705,9 +840,17 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     }
   };
 
-  const handleDeleteTestKit = (id: any) => {
-    const updated = testkitsData.filter(item => item.id !== id);
-    setTestsKitData(updated);
+  const handleDeleteTestKit = async (item: any) => {
+    // 🔥 Optimistic UI update
+    setTestsKitData((prev: any[]) =>
+      prev.filter(i => i.cart_kit_id !== item.cart_kit_id),
+    );
+
+    // 2️⃣ Update Zustand cart (PASS kit_id)
+    removeKit(item.kit_id);
+
+    // 🔥 API call
+    await _removeCartItem(item.cart_kit_id);
   };
 
   const funOpenIsModifyOrder = () => {
@@ -741,11 +884,11 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     setShowIsKitTestDetails(true);
   };
 
-  const pressHandleCartItem = (type: any) => {
-    if (type === 'kit') {
+  const pressHandleCartItem = (item: any) => {
+    if (item?.kit_type === 'CHECKUP') {
       setShowIsKitTestDetails(true);
     } else {
-      setEditAnalitiPopupVisible(true);
+      _analitiDetailsApi(item?.kit_id);
     }
   };
 
@@ -794,7 +937,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
           }}
         >
           <Image
-            source={item.kitimage}
+            source={{ uri: item.kit_image }}
             style={{
               height: getWidth(43),
               width: getWidth(43),
@@ -803,14 +946,17 @@ const CheckoutContainer = ({ navigation, route }: any) => {
           />
           <View style={{ flex: 1, marginRight: getWidth(25) }}>
             <Text style={styles.cardTitle}>
-              {item.type === 'kit' && getTranslation('kitlabeltextcheckout')}
+              {item.kit_type === 'CHECKUP' &&
+                getTranslation('kitlabeltextcheckout')}
               {item.name}{' '}
-              {item.type !== 'kit' && (
-                <Text style={styles.lblKitCount}>({item.count})</Text>
+              {item.kit_type !== 'CHECKUP' && (
+                <Text style={styles.lblKitCount}>
+                  ({item?.test_ids?.length})
+                </Text>
               )}
             </Text>
             <Text style={styles.cardPrice}>
-              {currency} {item.price.toFixed(2)}
+              {currency} {Number(item.price).toFixed(2)}
             </Text>
           </View>
         </View>
@@ -823,11 +969,11 @@ const CheckoutContainer = ({ navigation, route }: any) => {
             marginTop: getHeight(2),
           }}
         >
-          {item.type !== 'kit' && (
+          {item.kit_type !== 'CHECKUP' && (
             <TouchableOpacity
               // style={styles.editbtn}
               onPress={() => {
-                pressHandleCartItem(item.type);
+                pressHandleCartItem(item);
               }}
               activeOpacity={activityOpacity}
             >
@@ -839,7 +985,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
           )}
           <TouchableOpacity
             activeOpacity={activityOpacity}
-            onPress={() => handleDeleteTestKit(item.id)}
+            onPress={() => handleDeleteTestKit(item)}
           >
             <Image source={images.imgDelete} tintColor={Colors.gray0F} />
           </TouchableOpacity>
@@ -911,18 +1057,14 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     );
   };
 
-  const renderitemanalitidata = ({
-    item,
-    index,
-  }: {
-    item: any;
-    index: any;
-  }) => {
-    const selected = selectedTestsAnaliti.includes(item.id);
-    const isLastSelected = selectedTestsAnaliti.length === 1 && selected;
+  const renderItemAnalitiData = ({ item }: { item: any }) => {
+    console.log('item', item);
+
+    const selected = selectedTests.includes(item.test_id);
+    const isLastSelected = selectedTests.length === 1 && selected;
 
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
         <View
           style={{
             flexDirection: 'row',
@@ -931,42 +1073,47 @@ const CheckoutContainer = ({ navigation, route }: any) => {
             gap: getWidth(12),
           }}
         >
-          <View style={{ flex: 1, marginRight: getWidth(20), gap: 1 }}>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={styles.lblTestName} numberOfLines={2}>
-                {item.name}{' '}
+          <View
+            style={{
+              gap: 2,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}
+            >
+              <Text style={styles.lblTestName} numberOfLines={3}>
+                {item.name}
               </Text>
-              {item.status && (
-                <View style={{ alignItems: 'center' }}>
-                  <Text
-                    style={[
-                      styles.lblStatus,
-                      {
-                        backgroundColor:
-                          index == 2
-                            ? Colors.greenD9
-                            : index == 5
-                            ? Colors.redFC
-                            : Colors.white,
-                        color:
-                          index == 2
-                            ? Colors.green0D
-                            : index == 5
-                            ? Colors.red40
-                            : Colors.white,
-                      },
-                    ]}
-                  >
-                    {item.status}
-                  </Text>
-                </View>
+
+              {item.test_label && (
+                <Text
+                  style={[
+                    styles.lblStatus,
+                    {
+                      backgroundColor: item.test_label_color,
+                      color: darkenColor(item.test_label_color, 0.8),
+                    },
+                  ]}
+                >
+                  {item.test_label}
+                </Text>
               )}
             </View>
-
-            <Text style={styles.lblDesc} numberOfLines={3}>
-              {item.desc}
-            </Text>
-            <Text style={styles.lblCurrencyanaliti}>
+            {item.description && (
+              <Text style={styles.lblDesc} numberOfLines={3}>
+                {item.description}
+              </Text>
+            )}
+            <Text
+              style={[
+                styles.lblCurrency,
+                { fontFamily: fontsfamily.gbold, color: Colors.gray0F },
+              ]}
+            >
               {currency} {item.price.toFixed(2)}
             </Text>
           </View>
@@ -977,7 +1124,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
               activeOpacity={activityOpacity}
               style={styles.btnadd}
               disabled={isLastSelected}
-              onPress={() => toggleSelect(item.id)}
+              onPress={() => toggleSelect(item.test_id)}
             >
               <Image source={images.imgPlusDark} />
               <Text style={styles.lblAdd}>{getTranslation('add')}</Text>
@@ -986,7 +1133,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
             <TouchableOpacity
               activeOpacity={activityOpacity}
               style={[styles.btnadd, { backgroundColor: Colors.white }]}
-              onPress={() => toggleSelect(item.id)}
+              onPress={() => toggleSelect(item.test_id)}
             >
               <Image source={images.imgminusdark} />
               <Text style={styles.lblAdd}>{getTranslation('remove')}</Text>
@@ -1235,6 +1382,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const handleNavigateAddAddress = () => {
     _addressListApi();
   };
+
   const handleOnPressDeleteAddress = async () => {
     await _deleteAddressApi();
   };
@@ -1415,8 +1563,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     }
   };
 
-  //======================API============================
-
   const _addAddressApi = async () => {
     setAddressTypeValue('1');
     setSearchAddress('');
@@ -1528,8 +1674,340 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     }
   };
 
+  //API MODEL ADDITIONS
+
+  const fetchCheckupList = useCallback(
+    async ({ page, loadType }: { page: number; loadType: any }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.BOTTOMTAB.KITLIST,
+        method: 'POST',
+        showLoader:
+          loadType === LoadType.INITIAL || loadType === LoadType.TAB_CHANGE,
+        params: {
+          page,
+          kit_type: 'CHECKUP',
+        },
+      });
+
+      // ✅ set counts here
+      if (res?.data?.kitTypeTotals) {
+        setCheckupCount(res.data.kitTypeTotals.CHECKUP ?? 0);
+        setAnalitiCount(res.data.kitTypeTotals.ANALYSIS ?? 0);
+      }
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data?.items ?? [], // ✅ always array
+      };
+    },
+    [navigation],
+  );
+
+  const fetchAnalitiList = useCallback(
+    async ({ page, loadType }: { page: number; loadType: any }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.BOTTOMTAB.KITLIST,
+        method: 'POST',
+        showLoader:
+          loadType === LoadType.INITIAL || loadType === LoadType.TAB_CHANGE,
+        params: {
+          page,
+          kit_type: 'ANALYSIS',
+        },
+      });
+
+      // ✅ set counts here
+      if (res?.data?.kitTypeTotals) {
+        setCheckupCount(res.data.kitTypeTotals.CHECKUP ?? 0);
+        setAnalitiCount(res.data.kitTypeTotals.ANALYSIS ?? 0);
+      }
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data?.items ?? [],
+      };
+    },
+    [navigation],
+  );
+
+  const checkup: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: selectedTab === 'checkup',
+    fetcher: fetchCheckupList,
+  });
+
+  const analiti: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: selectedTab === 'analiti',
+    fetcher: fetchAnalitiList,
+  });
+
+  //ADDTOCART
+  const addToCart = async ({
+    kit_id,
+    test_ids,
+    all_test,
+    price,
+  }: {
+    kit_id: number;
+    test_ids: number[];
+    all_test: 0 | 1;
+    price: any;
+  }) => {
+    try {
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
+        params: { kit_id, test_ids, all_test, price },
+        callback: (responseData: any) => {
+          if (responseData.code === StatusCode.SUCCESS) {
+            _getCartDetails();
+          } else {
+            flashMessageWarning(responseData.message);
+          }
+        },
+      });
+    } catch (e) {
+      console.log('Cart toggle error', e);
+    }
+  };
+
+  const [cartLoaded, setCartLoaded] = useState(false);
+
+  //GETCARTDETAILS
+  const _getCartDetails = async () => {
+    try {
+      const params = {};
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setTestsKitData(responseData.data);
+        } else {
+          setTestsKitData([]);
+          flashMessageWarning(responseData.message);
+        }
+        setCartLoaded(true); // ✅ API finished
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.CHECKOUT.GETCARTITEMDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('getcartitem details error:', error);
+      setTestsKitData([]);
+      setCartLoaded(true); // ✅ even on error
+    }
+  };
+
+  const _removeCartItem = async (cart_id: number) => {
+    try {
+      const params = {
+        cart_item_id: cart_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.REMOVETOCART,
+        callback,
+        showLoader: false,
+        params,
+      });
+    } catch (error) {
+      console.log('Remove Cart Item error:', error);
+    }
+  };
+
+  useEffect(() => {
+    _getCartDetails();
+  }, []);
+
+  //edit analiti
+
+  //==================API=========================
+  const [originalCartTestIds, setOriginalCartTestIds] = useState<number[]>([]);
+
+  const _analitiDetailsApi = async (analitiId: any) => {
+    try {
+      const params = {
+        kit_id: analitiId,
+      };
+
+      const callback = async (responseData: any) => {
+        toggleLoader(false);
+        console.log(responseData, 'reponseData of api Kit Details');
+        if (responseData.code === StatusCode.SUCCESS) {
+          setEditAnalitiPopupVisible(true);
+          setAnalitiArraysData(responseData.data);
+          if (responseData.data.is_in_cart && responseData.data.cart_kit) {
+            const { all_test, test_ids } = responseData.data.cart_kit;
+
+            const selected =
+              all_test === 1
+                ? responseData.data.tests.map((t: any) => t.test_id)
+                : test_ids;
+
+            setSelectedTests(selected);
+            setOriginalCartTestIds(selected); // ✅ SAVE ORIGINAL
+          } else {
+            setSelectedTests([]);
+            setOriginalCartTestIds([]);
+          }
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.BOTTOMTAB.KITDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      toggleLoader(false);
+      console.log('kit details error:', error);
+    }
+  };
+
+  const isSameSelection = (a: number[], b: number[]) => {
+    if (a.length !== b.length) return false;
+    const sa = [...a].sort();
+    const sb = [...b].sort();
+    return sa.every((v, i) => v === sb[i]);
+  };
+  const allTestIds = analitiArrayData?.tests?.map((t: any) => t.test_id) || [];
+
+  const isAllSelected = selectedTests.length === allTestIds.length;
+  const _addToCartAnaliti = async () => {
+    try {
+      const params = {
+        kit_id: analitiArrayData.id,
+        test_ids: isAllSelected ? allTestIds : selectedTests,
+        all_test: isAllSelected ? 1 : 0,
+        price: isAllSelected ? analitiArrayData.price : totalPriceanaliti,
+      };
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          increment();
+          // ✅ IMPORTANT: update local state
+          setAnalitiArraysData((prev: any) => ({
+            ...prev,
+            is_in_cart: true,
+          }));
+          navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('Analiti add to cart error:', error);
+    }
+  };
+
+  const _updateCartAnaliti = async () => {
+    try {
+    
+
+      const params = {
+        cart_kit_id: analitiArrayData.cart_kit.cart_kit_id, // 🔑 IMPORTANT
+        cart_item_id: analitiArrayData.cart_kit.cart_id,
+        test_ids: isAllSelected ? allTestIds : selectedTests,
+        all_test: isAllSelected ? 1 : 0,
+        price: isAllSelected ? analitiArrayData.price : totalPriceanaliti,
+      };
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          // ✅ Update local state
+          setEditAnalitiPopupVisible(false);
+          _getCartDetails();
+          setAnalitiArraysData((prev: any) => ({
+            ...prev,
+            cart_kit: {
+              ...prev.cart_kit,
+              test_ids: selectedTests,
+              all_test: isAllSelected ? 1 : 0,
+            },
+          }));
+
+          setOriginalCartTestIds(selectedTests); // reset baseline
+
+          navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.UPDATETOCART,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('Update cart error:', error);
+    }
+  };
+
+  const isSelectionChanged =
+    !!analitiArrayData?.is_in_cart &&
+    !isSameSelection(originalCartTestIds, selectedTests);
+
+  const handleNavigateCheckout = () => {
+    if (!selectedTests.length) {
+      flashMessageWarning(getTranslation('atleastoneselected'));
+      return;
+    }
+
+    // 🟢 Not in cart → ADD
+    if (!analitiArrayData?.is_in_cart || !analitiArrayData?.cart_kit) {
+      _addToCartAnaliti();
+      return;
+    }
+
+    // 🟡 In cart → check changes
+    const hasChanged = !isSameSelection(originalCartTestIds, selectedTests);
+
+    if (!hasChanged) {
+      // ✅ No change → just navigate
+      setEditAnalitiPopupVisible(false);
+      return;
+    }
+
+    // 🔥 Changed → UPDATE
+    _updateCartAnaliti();
+  };
   return (
     <CheckoutComponent
+      cartLoaded={cartLoaded}
       navigation={navigation}
       handleDeleteTestKit={handleDeleteTestKit}
       handleNavigateAddAddress={handleNavigateAddAddress}
@@ -1583,8 +2061,13 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       funOpenEditAnaliti={funOpenEditAnaliti}
       funCloseEditAnaliti={funCloseEditAnaliti}
       analitiArrayData={analitiArrayData}
-      renderitemanalitidata={renderitemanalitidata}
-      totalPriceAnaliti={totalPriceAnaliti}
+      renderitemanalitidata={renderItemAnalitiData}
+      totalPriceAnaliti={totalPriceanaliti}
+      isInCart={!!analitiArrayData?.is_in_cart}
+      isSelectionChanged={isSelectionChanged}
+      handleNavigateCheckout={handleNavigateCheckout}
+      selectedTests={selectedTests}
+      isAllSelected={isAllSelected}
       //AddressModel
       AddressData={AddressData}
       addressPopupVisible={addressPopupVisible}
@@ -1639,6 +2122,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       handleCloseAddress={handleCloseAddress}
       handlePressAddAddress={handlePressAddAddress}
       //kitanalitieditmodel
+      checkup={checkup}
+      analiti={analiti}
       renderKitData={renderKitData}
       renderAnalitiData={renderAnalitiData}
       kitData={kitData}

@@ -259,17 +259,17 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
     return sa.every((v, i) => v === sb[i]);
   };
 
+  const allTestIds = analitiArrayData?.tests?.map((t: any) => t.test_id) || [];
+
+  const isAllSelected = selectedTests.length === allTestIds.length;
+
   const _addToCartAnaliti = async () => {
     try {
-      const allTestIds =
-        analitiArrayData?.tests?.map((t: any) => t.test_id) || [];
-
-      const isAllSelected = selectedTests.length === allTestIds.length;
-
       const params = {
         kit_id: analitiArrayData.id,
         test_ids: isAllSelected ? allTestIds : selectedTests,
         all_test: isAllSelected ? 1 : 0,
+        price: isAllSelected ? analitiArrayData.price : totalPriceanaliti,
       };
 
       const callback = (responseData: any) => {
@@ -300,16 +300,12 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
 
   const _updateCartAnaliti = async () => {
     try {
-      const allTestIds =
-        analitiArrayData?.tests?.map((t: any) => t.test_id) || [];
-
-      const isAllSelected = selectedTests.length === allTestIds.length;
-
       const params = {
         cart_kit_id: analitiArrayData.cart_kit.cart_kit_id, // 🔑 IMPORTANT
         cart_item_id: analitiArrayData.cart_kit.cart_id,
         test_ids: isAllSelected ? allTestIds : selectedTests,
         all_test: isAllSelected ? 1 : 0,
+        price: isAllSelected ? analitiArrayData.price : totalPriceanaliti,
       };
 
       const callback = (responseData: any) => {
@@ -343,7 +339,7 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
       console.log('Update cart error:', error);
     }
   };
-  
+
   const isSelectionChanged =
     !!analitiArrayData?.is_in_cart &&
     !isSameSelection(originalCartTestIds, selectedTests);
@@ -360,6 +356,7 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
       emptyLoading={emptyLoading}
       isInCart={!!analitiArrayData?.is_in_cart}
       isSelectionChanged={isSelectionChanged}
+      isAllSelected={isAllSelected}
     />
   );
 };

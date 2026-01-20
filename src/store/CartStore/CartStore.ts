@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,32 +33,31 @@ export const CartStore = create<CartStore>()(
       addKit: (id: number) =>
         set(state => {
           const kitId = Number(id);
-      
+
           if (state.cartKitIds.includes(kitId)) {
             return state;
           }
-      
+
           const updatedIds = [...state.cartKitIds, kitId];
-      
+
           return {
             cartKitIds: updatedIds,
-            cartCount: updatedIds.length, // ✅ derived, always correct
+            cartCount: state.cartCount + 1, // ✅ derived, always correct
           };
         }),
 
-        removeKit: (id: number) =>
-          set(state => {
-            const kitId = Number(id);
-            const updatedIds = state.cartKitIds.filter(x => x !== kitId);
-        
-            return {
-              cartKitIds: updatedIds,
-              cartCount: updatedIds.length,
-            };
-          }),
+      removeKit: (id: number) =>
+        set(state => {
+          const kitId = Number(id);
+          const updatedIds = state.cartKitIds.filter(x => x !== kitId);
 
-      increment: () =>
-        set(state => ({ cartCount: state.cartCount + 1 })),
+          return {
+            cartKitIds: updatedIds,
+            cartCount: state.cartCount - 1,
+          };
+        }),
+
+      increment: () => set(state => ({ cartCount: state.cartCount + 1 })),
 
       decrement: () =>
         set(state => ({
