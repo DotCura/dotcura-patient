@@ -1326,6 +1326,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [latitude, setLatitude] = useState<any>(0);
   const [longitude, setLongitude] = useState<any>(0);
 
+  const [isLoadingAddress, setIsLoadingAddress] = useState(true);
+
   const [tempSelectedAddress, setTempSelectedAddress] = useState<any>(null);
 
   const handleSetAddressType = (item: any) => {
@@ -1391,7 +1393,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const handleOnPressSaveLocation = (item: any) => {
     console.log('item', item);
     if (!tempSelectedAddress) {
-      flashMessageWarning(getTranslation('selectaddress'));
+      Alert.alert(getTranslation('selectaddress') || '');
       return;
     }
     setSelectedAddress(item);
@@ -1488,7 +1490,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   };
 
   const handleEditAddress = (address: any) => {
-    console.log('call edit address',address);
+    console.log('call edit address', address);
 
     setAddressMode('edit');
     setEditAddressData(address);
@@ -1618,6 +1620,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
+          setIsLoadingAddress(false);
           setAddressPopupVisible(true);
 
           const list = responseData.data || [];
@@ -1635,6 +1638,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
             setTempSelectedAddress(null);
           }
         } else {
+          setIsLoadingAddress(false);
+
           flashMessageWarning(responseData.message);
         }
       };
@@ -1643,6 +1648,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         navigation: navigation,
         method: MethodType.GET,
         apiEndPoint: ApiEndPoints.ADDRESS.GETADDRESS,
+        showLoader: false,
         callback,
         params,
       });
@@ -1652,12 +1658,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   };
 
   const _addAddressApi = async () => {
-    setAddressTypeValue('1');
-    setSearchAddress('');
-    setFloor('');
-    setStairs('');
-    setinstructions('');
-    setIsDefaultSave(false);
+    funCloseAddAddressPopup();
+    
     try {
       const params = {
         address: searchAddress,
@@ -1672,7 +1674,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
-          funCloseAddAddressPopup();
           setTimeout(() => {
             _addressListApi();
             setAddressPopupVisible(true);
@@ -1724,6 +1725,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         navigation: navigation,
         method: MethodType.POST,
         apiEndPoint: ApiEndPoints.ADDRESS.UPDATEADDRESS,
+        showLoader:false,
         callback,
         params,
       });
@@ -2098,7 +2100,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       const params = {
         address_id: selectedAddress?.address_id,
         subtotal: subtotal,
-        coupon_id:appliedCouponValue?.id,
+        coupon_id: appliedCouponValue?.id,
         discount: appliedCouponValue?.discount_value,
         total_amount: total,
         note: manageAddress,
@@ -2262,6 +2264,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       selectedTests={selectedTests}
       isAllSelected={isAllSelected}
       //AddressModel
+      isLoadingAddress={isLoadingAddress}
       AddressData={AddressData}
       addressPopupVisible={addressPopupVisible}
       setAddressPopupVisible={setAddressPopupVisible}

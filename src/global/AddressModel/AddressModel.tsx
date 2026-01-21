@@ -34,6 +34,7 @@ const AddressModel = ({
   onSelectAddress,
   onAddAddress,
   onClose,
+  isLoadingAddress,
   onSave,
 }: any) => {
   const insets = useSafeAreaInsets();
@@ -87,6 +88,21 @@ const AddressModel = ({
           </View>
 
           {/* Address List */}
+          {addresses.length === 0 && isLoadingAddress === false ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: getHeight(20),
+            }}
+          >
+            <Image source={images.imgNoDataFoundAddress} />
+            <Text style={styles.lblNoAddressFound}>
+              {getTranslation('noaddressfoundlabel')}
+            </Text>
+          </View>
+        ) : (
           <FlatList
             data={addresses}
             keyExtractor={item => item.address_id}
@@ -164,7 +180,7 @@ const AddressModel = ({
                 </TouchableOpacity>
               );
             }}
-          />
+          />)}
 
           {/* Bottom Buttons */}
           <View

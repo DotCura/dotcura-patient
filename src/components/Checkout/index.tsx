@@ -952,6 +952,7 @@ const CheckoutComponent = (props: any) => {
 
       {/* AddressModel */}
       <AddressModel
+      isLoadingAddress={props.isLoadingAddress}
         visible={props.addressPopupVisible}
         addresses={props.AddressData}
         selectedAddress={props.tempSelectedAddress}
