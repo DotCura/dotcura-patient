@@ -60,6 +60,7 @@ export const ApiEndPoints = {
     UPDATETOCART: `${PATIENT_PREFIX}updateCartItem`,
     GETCARTITEMDETAILS: `${PATIENT_PREFIX}getCartDetails`,
     REMOVETOCART: `${PATIENT_PREFIX}removeCartItem`,
+    BOOKORDER: `${PATIENT_PREFIX}bookOrder`,
   },
   COUNT: {
     TOTALCOUNT: `${PATIENT_PREFIX}total_count`,

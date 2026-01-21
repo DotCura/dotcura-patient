@@ -547,4 +547,13 @@ export default {
   //FAMILY
   editfamilymembertitle: 'Modifica familiare',
   editinformationbtn:"Modifica informazioni",
+
+  
+  //CHECKOUT SAVE
+  selectaddress: "Por favor, selecciona una dirección",
+  selectaddresscheckout: "selecciona una dirección",
+  selecttimeslot: "Por favor, selecciona la fecha y la hora",
+  selecttimeslotcheckout: "selecciona la fecha y la hora",
+  cartempty: "Tu carrito está vacío",
+  youtext:"Tu"
 };

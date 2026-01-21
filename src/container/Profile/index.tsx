@@ -18,7 +18,7 @@ import { GlobalVar } from '../../constants/GlobalVar';
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  const { reset } = ZustandStores.CartStore();
+  const { resetCart } = ZustandStores.CartStore();
 
   const data = [
     {
@@ -109,7 +109,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       image: images.imgShareProfile,
       onpressfun: () => {
         console.log('suppoet');
-        reset();
+        resetCart();
       },
       iscurv: false,
     },

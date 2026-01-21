@@ -420,5 +420,20 @@ export const formatDateToSpanishChart = (dateString: string) => {
   return `${monthName}, ${year}`;
 };
 
+export const formatTestDateForAPI = (uiDate: string) => {
+  // Example: "Gio 22/1"
+  const parts = uiDate.split(' '); // ["Gio", "22/1"]
+  if (parts.length < 2) return '';
+
+  const [day, month] = parts[1].split('/');
+
+  const year = new Date().getFullYear(); // or selected year
+  const mm = month.padStart(2, '0');
+  const dd = day.padStart(2, '0');
+
+  return `${year}-${mm}-${dd}`;
+};
+
+
 
 

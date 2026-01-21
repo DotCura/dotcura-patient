@@ -24,6 +24,7 @@ import {
   currency,
   flashMessageWarning,
   flashMessageWarningBottom,
+  formatTestDateForAPI,
   getRandomTheme,
   goToTabScreen,
   useDelayedBg,
@@ -58,7 +59,7 @@ import { fontsfamily } from '../../constants/FontFamily';
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  const { cartCount, cartKitIds, addKit, removeKit, increment } =
+  const { cartCount, cartKitIds, addKit, removeKit, increment, resetCart } =
     ZustandStores.CartStore();
 
   //LocallyMangeIsTick
@@ -486,9 +487,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const [familyMemberData, setFamilyMemberData] = useState(familymembers);
   const [familymemberValue, setFamilyMemberValue] = useState<string | null>(
-    '1',
+    '0',
   );
-
   const [showPicker, setShowPicker] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<{
     day: string;
@@ -498,6 +498,11 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
   const [selectedTab, setSelectedTab] = useState('checkup'); // 'checkup' or 'analiti'
+
+  // console.log('selecteddate', selectedDate, ' selectedTime', selectedTime);
+  const apiDate = formatTestDateForAPI(selectedDate);
+
+  // console.log(selectedDate == "Oggi"? new Date().toISOString().split('T')[0]:apiDate,"apidate");
 
   const [checkupcount, setCheckupCount] = useState(31);
   const [analiticount, setAnalitiCount] = useState(31);
@@ -511,7 +516,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const pickerBg = useDelayedBg(cancleOrderVisible, 400);
 
-  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState<any>(null);
   const homeServiceCharge = 20;
 
   const subtotal = useMemo(() => {
@@ -1207,23 +1212,40 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     );
   };
 
+  const validateBeforeOrder = () => {
+    // 1️⃣ Family member
+    if (!familymemberValue) {
+      flashMessageWarning(getTranslation('selectfamilymember'));
+      return false;
+    }
+
+    // 3️⃣ Time slot
+    if (!selectedSlot) {
+      flashMessageWarning(getTranslation('selecttimeslot'));
+      return false;
+    }
+
+    // 2️⃣ Address
+    if (!selectedAddress) {
+      flashMessageWarning(getTranslation('selectaddress'));
+      return false;
+    }
+
+    // 4️⃣ Cart empty safeguard (optional)
+    if (!testkitsData.length) {
+      flashMessageWarning(getTranslation('cartempty'));
+      return false;
+    }
+
+    return true; // ✅ All good
+  };
+
   const handleOnPressSaveChanges = () => {
-    navigation.reset({
-      index: 0,
-      routes: [
-        {
-          name: ScreenNames.BOTTOMTABNAVIGATION,
-          state: {
-            routes: [
-              {
-                name: ScreenNames.HOMECONTAINER,
-              },
-            ],
-          },
-        },
-      ],
-    });
-    setOrderStatus('order_sent');
+    const isValid = validateBeforeOrder();
+
+    if (!isValid) return;
+
+    _bookOrder();
   };
 
   const handleNavigateHome = () => {
@@ -1287,11 +1309,15 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [addressTypeError, setAddressTypeError] = useState<any>('');
   const [selectedid, setSelectedId] = useState<any>('');
 
+  const [tempSelectedAddress, setTempSelectedAddress] = useState<any>(null);
+
   const handleSetAddressType = (item: any) => {
     setAddressTypeValue(item.value);
   };
 
   const handleOnChangeText = (text: string, type: string) => {
+    console.log('text', text, 'type', type);
+
     if (type === 'floor') {
       let newText = text.replace(/[^\d]/g, '');
       setFloor(newText);
@@ -1347,6 +1373,10 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const handleOnPressSaveLocation = (item: any) => {
     console.log('item', item);
+    if (!tempSelectedAddress) {
+      flashMessageWarning(getTranslation('selectaddress'));
+      return;
+    }
     setSelectedAddress(item);
     setAddressPopupVisible(false);
   };
@@ -1509,9 +1539,18 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         label: item.name, // shown in dropdown
         value: item.id.toString(), // stored value
       }));
+
+      // ➕ add "Tu" manually at top
+      const finalList = [
+        {
+          label: getTranslation('youtext'),
+          value: '0',
+        },
+        ...formattedData,
+      ];
       return {
         ...res,
-        data: formattedData ?? [], // ✅ always array
+        data: finalList ?? [], // ✅ always array
       };
     },
     [navigation],
@@ -1542,9 +1581,9 @@ const CheckoutContainer = ({ navigation, route }: any) => {
           console.log('defaultAddress', defaultAddress);
 
           if (defaultAddress) {
-            setSelectedAddress(defaultAddress);
+            setTempSelectedAddress(defaultAddress);
           } else {
-            setSelectedAddress(null);
+            setTempSelectedAddress(null);
           }
         } else {
           flashMessageWarning(responseData.message);
@@ -1682,8 +1721,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         navigation,
         apiEndPoint: ApiEndPoints.BOTTOMTAB.KITLIST,
         method: 'POST',
-        showLoader:
-          loadType === LoadType.INITIAL || loadType === LoadType.TAB_CHANGE,
+        showLoader: false,
         params: {
           page,
           kit_type: 'CHECKUP',
@@ -1711,8 +1749,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         navigation,
         apiEndPoint: ApiEndPoints.BOTTOMTAB.KITLIST,
         method: 'POST',
-        showLoader:
-          loadType === LoadType.INITIAL || loadType === LoadType.TAB_CHANGE,
+        showLoader: false,
         params: {
           page,
           kit_type: 'ANALYSIS',
@@ -1764,6 +1801,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         method: MethodType.POST,
         apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
         params: { kit_id, test_ids, all_test, price },
+        showLoader: false,
         callback: (responseData: any) => {
           if (responseData.code === StatusCode.SUCCESS) {
             _getCartDetails();
@@ -1896,6 +1934,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const allTestIds = analitiArrayData?.tests?.map((t: any) => t.test_id) || [];
 
   const isAllSelected = selectedTests.length === allTestIds.length;
+
   const _addToCartAnaliti = async () => {
     try {
       const params = {
@@ -1933,8 +1972,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const _updateCartAnaliti = async () => {
     try {
-    
-
       const params = {
         cart_kit_id: analitiArrayData.cart_kit.cart_kit_id, // 🔑 IMPORTANT
         cart_item_id: analitiArrayData.cart_kit.cart_id,
@@ -2005,6 +2042,62 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     // 🔥 Changed → UPDATE
     _updateCartAnaliti();
   };
+
+  //BOOK ORDER
+  const _bookOrder = async () => {
+    try {
+      const params = {
+        address_id: selectedAddress?.address_id,
+        subtotal: subtotal,
+        // discount: '20',
+        total_amount: total,
+        note: manageAddress,
+        test_date:
+          selectedDate === 'Oggi'
+            ? new Date().toISOString().split('T')[0]
+            : apiDate,
+        test_time: selectedTime,
+        family_member_id: familymemberValue,
+      };
+
+      console.log('params', params);
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          resetCart();
+          navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: ScreenNames.BOTTOMTABNAVIGATION,
+                state: {
+                  routes: [
+                    {
+                      name: ScreenNames.HOMECONTAINER,
+                    },
+                  ],
+                },
+              },
+            ],
+          });
+          // setOrderStatus('order_sent');
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.BOOKORDER,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('BOOKORDER error:', error);
+    }
+  };
+
   return (
     <CheckoutComponent
       cartLoaded={cartLoaded}
@@ -2074,6 +2167,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       setAddressPopupVisible={setAddressPopupVisible}
       selectedAddress={selectedAddress}
       setSelectedAddress={setSelectedAddress}
+      tempSelectedAddress={tempSelectedAddress}
+      setTempSelectedAddress={setTempSelectedAddress}
       //CancleModel
       cancleOrderVisible={cancleOrderVisible}
       setCancleOrderVisible={setCancleOrderVisible}

@@ -15,7 +15,8 @@ interface CartStore {
 
   increment: () => void;
   decrement: () => void;
-  reset: () => void;
+  resetCart: () => void;
+  resetNotificationCount: () => void;
 }
 
 export const CartStore = create<CartStore>()(
@@ -64,11 +65,14 @@ export const CartStore = create<CartStore>()(
           cartCount: Math.max(0, state.cartCount - 1),
         })),
 
-      reset: () =>
+      resetCart: () =>
         set({
           cartCount: 0,
-          notificationCount: 0,
           cartKitIds: [],
+        }),
+      resetNotificationCount: () =>
+        set({
+          notificationCount: 0,
         }),
     }),
     {

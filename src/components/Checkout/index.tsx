@@ -203,7 +203,7 @@ const CheckoutComponent = (props: any) => {
                   <Text style={styles.lblDateAndTimeValue}>
                     {props.selectedSlot
                       ? `${props.selectedSlot.day} ${props.selectedSlot.time}`
-                      : 'Domani entro le 10:00'}
+                      : getTranslation("selecttimeslotcheckout")}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -237,7 +237,7 @@ const CheckoutComponent = (props: any) => {
                 <Text style={styles.lblDateAndTimeValue}>
                   {props.selectedAddress
                     ? `${props.selectedAddress.title} - ${props.selectedAddress.address}`
-                    : 'Via Roma, 31 - Napoli'}
+                    : getTranslation("selectaddresscheckout")}
                 </Text>
               </View>
               <TouchableOpacity
@@ -488,7 +488,7 @@ const CheckoutComponent = (props: any) => {
               backgroundColor: Colors.whiteF2,
               borderTopLeftRadius: getHeight(20),
               borderTopRightRadius: getHeight(20),
-              maxHeight: '92%',
+              height: '85%',
             }}
           >
             {/* Header */}
@@ -601,6 +601,18 @@ const CheckoutComponent = (props: any) => {
 
             {/* Content */}
             {props.selectedTab === 'checkup' ? (
+               props.checkup.loading && props.checkup.data.length === 0 ? (
+                // ✅ CENTER LOADER INSIDE MODAL
+                <View
+                  style={{
+                     height:'85%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <ActivityIndicator size="large" color={Colors.blue002} />
+                </View>
+              ) : (
               <FlatList
                 key={'checkup-2'}
                 onEndReached={props.checkup.loadMore}
@@ -642,7 +654,18 @@ const CheckoutComponent = (props: any) => {
                   paddingBottom: getHeight(150),
                 }}
               />
-            ) : (
+            )) : (
+              props.analiti.loading && props.analiti.data.length === 0 ? (
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height:'85%'
+                  }}
+                >
+                  <ActivityIndicator size="large" color={Colors.blue002} />
+                </View>
+              ) : (
               <FlatList
                 onEndReached={props.analiti.loadMore}
                 onEndReachedThreshold={0.5}
@@ -683,7 +706,7 @@ const CheckoutComponent = (props: any) => {
                   marginTop: getHeight(20),
                 }}
               />
-            )}
+            ))}
           </View>
         </View>
       </Modal>
@@ -919,8 +942,8 @@ const CheckoutComponent = (props: any) => {
       <AddressModel
         visible={props.addressPopupVisible}
         addresses={props.AddressData}
-        selectedAddress={props.selectedAddress}
-        onSelectAddress={props.setSelectedAddress}
+        selectedAddress={props.tempSelectedAddress}
+        onSelectAddress={props.setTempSelectedAddress}
         onAddAddress={props.funOpenAddAddressPopup}
         onEditAddress={props.handleEditAddress} // 👈 ADD THIS
         onClose={props.handleCloseAddress}
