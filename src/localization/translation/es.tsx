@@ -555,5 +555,7 @@ export default {
   selecttimeslot: "Por favor, selecciona la fecha y la hora",
   selecttimeslotcheckout: "selecciona la fecha y la hora",
   cartempty: "Tu carrito está vacío",
-  youtext:"Tu"
+  youtext:"Tu",
+  errorcoupanscode:"Por favor aplique el código de cupón.",
+  appliedtext:"Aplicado",
 };

@@ -37,7 +37,7 @@ export default function TimeSlotPicker({
 
   const generateTimeSlots = () => {
     const slots = [];
-    for (let i = 8; i <= 18; i++) {
+    for (let i = 1; i <= 23; i++) {
       const start = `${i.toString().padStart(2, '0')}:00`;
       const end = `${(i + 1).toString().padStart(2, '0')}:00`;
       slots.push({ display: `${start} - ${end}` });

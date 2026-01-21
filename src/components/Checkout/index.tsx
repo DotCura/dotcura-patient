@@ -203,7 +203,7 @@ const CheckoutComponent = (props: any) => {
                   <Text style={styles.lblDateAndTimeValue}>
                     {props.selectedSlot
                       ? `${props.selectedSlot.day} ${props.selectedSlot.time}`
-                      : getTranslation("selecttimeslotcheckout")}
+                      : getTranslation('selecttimeslotcheckout')}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -237,7 +237,7 @@ const CheckoutComponent = (props: any) => {
                 <Text style={styles.lblDateAndTimeValue}>
                   {props.selectedAddress
                     ? `${props.selectedAddress.title} - ${props.selectedAddress.address}`
-                    : getTranslation("selectaddresscheckout")}
+                    : getTranslation('selectaddresscheckout')}
                 </Text>
               </View>
               <TouchableOpacity
@@ -316,16 +316,18 @@ const CheckoutComponent = (props: any) => {
                 </Text>
               </View>
 
-              {/* {props.discountValue > 0 && ( */}
-              <View style={styles.summaryItemRow}>
-                <Text style={[styles.summaryLabel]}>
-                  {getTranslation('discount')}
-                </Text>
-                <Text style={[styles.summaryValue, { color: Colors.green17 }]}>
-                  -{currency} {props.discountValue.toFixed(2)}
-                </Text>
-              </View>
-              {/* // )} */}
+              {props.discountValue > 0 && (
+                <View style={styles.summaryItemRow}>
+                  <Text style={[styles.summaryLabel]}>
+                    {getTranslation('discount')}
+                  </Text>
+                  <Text
+                    style={[styles.summaryValue, { color: Colors.green17 }]}
+                  >
+                    -{currency} {props.discountValue.toFixed(2)}
+                  </Text>
+                </View>
+              )}
 
               <View style={[styles.summaryItemRow]}>
                 <Text
@@ -368,10 +370,20 @@ const CheckoutComponent = (props: any) => {
                 activeOpacity={activityOpacity}
                 onPress={props.onApplyDiscount}
               >
-                <Text style={styles.lblChnage}>{getTranslation('add')}</Text>
+                <Text style={styles.lblChnage}>
+                  { props.appliedCoupon === true
+                    ? getTranslation('remove')
+                    : getTranslation('add')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
+
+          {props.discountValue > 0 && props.appliedCoupon && (
+            <Text style={{ color: Colors.green17, marginTop: 4 }}>
+              {props.discountCode} {getTranslation("appliedtext")} 🎉
+            </Text>
+          )}
 
           {/* bottom button */}
           <View
@@ -386,14 +398,14 @@ const CheckoutComponent = (props: any) => {
               btnTitle={getTranslation('savechnages')}
               btnPress={props.handleOnPressSaveChanges}
             />
-            <CustomButton
+            {/* <CustomButton
               btnTitle={getTranslation('canclereservation')}
               style={{ backgroundColor: Colors.redFD }}
               btnicon={true}
               btnImage={images.imgDelete}
               textStyle={{ color: Colors.red8C }}
               btnPress={props.funOpenCancleOrder}
-            />
+            /> */}
           </View>
         </KeyboardAwareScrollView>
       )}
@@ -601,11 +613,11 @@ const CheckoutComponent = (props: any) => {
 
             {/* Content */}
             {props.selectedTab === 'checkup' ? (
-               props.checkup.loading && props.checkup.data.length === 0 ? (
+              props.checkup.loading && props.checkup.data.length === 0 ? (
                 // ✅ CENTER LOADER INSIDE MODAL
                 <View
                   style={{
-                     height:'85%',
+                    height: '85%',
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
@@ -613,59 +625,59 @@ const CheckoutComponent = (props: any) => {
                   <ActivityIndicator size="large" color={Colors.blue002} />
                 </View>
               ) : (
-              <FlatList
-                key={'checkup-2'}
-                onEndReached={props.checkup.loadMore}
-                onEndReachedThreshold={0.5}
-                refreshing={props.checkup.refreshing}
-                onRefresh={props.checkup.refresh}
-                ListFooterComponent={
-                  props.checkup.loadingMore ? (
-                    <ActivityIndicator size="large" color={Colors.blue002} />
-                  ) : null
-                }
-                ListEmptyComponent={
-                  !props.checkup.loading && !props.checkup.refreshing ? (
-                    <View
-                      style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: getHeight(20),
-                        marginTop: getHeight(100),
-                      }}
-                    >
-                      <Image source={images.imgNoDataFoundAddress} />
-                      <Text style={styles.lblNoAddressFound}>
-                        {getTranslation('nocheckoutlistfound')}
-                      </Text>
-                    </View>
-                  ) : null
-                }
-                numColumns={2}
-                data={props.checkup.data}
-                renderItem={props.renderKitData}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={item => item.id.toString()}
-                contentContainerStyle={{
-                  gap: getWidth(12),
-                  marginTop: getHeight(20),
-                  alignSelf: 'center',
-                  paddingBottom: getHeight(150),
+                <FlatList
+                  key={'checkup-2'}
+                  onEndReached={props.checkup.loadMore}
+                  onEndReachedThreshold={0.5}
+                  refreshing={props.checkup.refreshing}
+                  onRefresh={props.checkup.refresh}
+                  ListFooterComponent={
+                    props.checkup.loadingMore ? (
+                      <ActivityIndicator size="large" color={Colors.blue002} />
+                    ) : null
+                  }
+                  ListEmptyComponent={
+                    !props.checkup.loading && !props.checkup.refreshing ? (
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          gap: getHeight(20),
+                          marginTop: getHeight(100),
+                        }}
+                      >
+                        <Image source={images.imgNoDataFoundAddress} />
+                        <Text style={styles.lblNoAddressFound}>
+                          {getTranslation('nocheckoutlistfound')}
+                        </Text>
+                      </View>
+                    ) : null
+                  }
+                  numColumns={2}
+                  data={props.checkup.data}
+                  renderItem={props.renderKitData}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={item => item.id.toString()}
+                  contentContainerStyle={{
+                    gap: getWidth(12),
+                    marginTop: getHeight(20),
+                    alignSelf: 'center',
+                    paddingBottom: getHeight(150),
+                  }}
+                />
+              )
+            ) : props.analiti.loading && props.analiti.data.length === 0 ? (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '85%',
                 }}
-              />
-            )) : (
-              props.analiti.loading && props.analiti.data.length === 0 ? (
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height:'85%'
-                  }}
-                >
-                  <ActivityIndicator size="large" color={Colors.blue002} />
-                </View>
-              ) : (
+              >
+                <ActivityIndicator size="large" color={Colors.blue002} />
+              </View>
+            ) : (
               <FlatList
                 onEndReached={props.analiti.loadMore}
                 onEndReachedThreshold={0.5}
@@ -706,7 +718,7 @@ const CheckoutComponent = (props: any) => {
                   marginTop: getHeight(20),
                 }}
               />
-            ))}
+            )}
           </View>
         </View>
       </Modal>

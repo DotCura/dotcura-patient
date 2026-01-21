@@ -1,4 +1,4 @@
-import { TextInput } from 'react-native';
+import { Keyboard, TextInput } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import AddAddressComponent from '../../components/AddAddress';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,7 +8,7 @@ import {
   flashMessageSucess,
   flashMessageWarning,
 } from '../../constants/GConstant';
-import { ScreenNames } from '../../constants/AppConstants';
+import { isPlatformiOS, ScreenNames } from '../../constants/AppConstants';
 import {
   ApiEndPoints,
   MethodType,
@@ -16,6 +16,7 @@ import {
   toggleLoader,
 } from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
+import { GlobalVar } from '../../constants/GlobalVar';
 
 const AddAddressContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -50,6 +51,9 @@ const AddAddressContainer = ({ navigation, route }: any) => {
     addressTypeData[0].label,
   );
 
+  const [latitude, setLatitude] = useState<any>(0);
+  const [longitude, setLongitude] = useState<any>(0);
+
   //EDIT ADDRESS
   const editAddressData = route?.params?.editAddressData;
   const editAddress = route?.params?.editAddress;
@@ -63,6 +67,8 @@ const AddAddressContainer = ({ navigation, route }: any) => {
       setStairs(editAddressData.stairs);
       setinstructions(editAddressData.instructions);
       setIsDefaultSave(editAddressData.is_default === 1 ? true : false);
+      setLatitude(editAddressData.latitude);
+      setLongitude(editAddressData.longitude);
 
       const selectedType = addressType.find(
         item => item.label === editAddressData.title,
@@ -144,9 +150,38 @@ const AddAddressContainer = ({ navigation, route }: any) => {
       console.log('Selected place:', JSON.stringify(place));
       console.log('place?.text?.text', place?.text?.text);
 
-      // searchRef.current?.clear();
       setSearchAddress(place?.text?.text);
-      // setSearchText("");
+
+      try {
+        // Fetch place details to get lat/lng
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/place/details/json?place_id=${
+            place.placeId
+          }&key=${
+            isPlatformiOS
+              ? GlobalVar.google_map_api_key_ios
+              : GlobalVar.google_map_api_key_android
+          }`,
+        );
+        const data = await response.json();
+
+        console.log('selectPlaceData', JSON.stringify(data));
+
+        //Update Search Count API Call
+        Keyboard.dismiss();
+        if (data.result && data.result.geometry) {
+          const { lat, lng } = data.result.geometry.location;
+
+          setLatitude(lat);
+          setLongitude(lng);
+
+          console.log('Latitude:', lat, 'Longitude:', lng);
+        } else {
+          console.warn('Could not fetch lat/lng');
+        }
+      } catch (error) {
+        console.error('Error fetching place details:', error);
+      }
     }
   };
 
@@ -186,8 +221,8 @@ const AddAddressContainer = ({ navigation, route }: any) => {
         floor: floor,
         stairs: stairs,
         instructions: instructions,
-        latitude: '0',
-        longitude: '0',
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
         is_default: isdefaultsave == true ? 1 : 0,
       };
 
@@ -220,8 +255,8 @@ const AddAddressContainer = ({ navigation, route }: any) => {
         floor: floor,
         stairs: stairs,
         instructions: instructions,
-        latitude: '0',
-        longitude: '0',
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
         is_default: isdefaultsave == true ? 1 : 0,
       };
 

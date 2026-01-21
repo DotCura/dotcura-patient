@@ -2,6 +2,7 @@ import {
   Alert,
   Image,
   ImageBackground,
+  Keyboard,
   StyleSheet,
   Text,
   TextInput,
@@ -22,6 +23,7 @@ import {
   activityOpacity,
   appName,
   currency,
+  flashMessageSucess,
   flashMessageWarning,
   flashMessageWarningBottom,
   formatTestDateForAPI,
@@ -37,7 +39,7 @@ import {
   ScreenDimensions,
 } from '../../constants/utils/Dimensions';
 import { ZustandStores } from '../../store';
-import { ScreenNames } from '../../constants/AppConstants';
+import { isPlatformiOS, ScreenNames } from '../../constants/AppConstants';
 import RNRestart from 'react-native-restart';
 import { Colors } from '../../constants/Colors';
 import { apiPromise } from '../../global/ApiHelper/apiPromise';
@@ -55,6 +57,7 @@ import { APIManager } from '../../api/APIManager';
 import FastImage from '@d11/react-native-fast-image';
 import { useFocusEffect } from '@react-navigation/native';
 import { fontsfamily } from '../../constants/FontFamily';
+import { GlobalVar } from '../../constants/GlobalVar';
 
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -470,6 +473,12 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [analitiArrayData, setAnalitiArraysData] = useState<any>({});
   const [selectedTests, setSelectedTests] = useState<number[]>([]);
 
+  //coupans
+  const [appliedCoupon, setAppliedCoupon] = useState<any>(false);
+  const [appliedCouponValue, setAppliedValue] = useState<any>(null);
+  const [discountValue, setDiscountValue] = useState(0); // amount to subtract
+  const [discountCode, setDiscountCode] = useState('');
+
   const totalPriceanaliti = analitiArrayData?.tests
     ?.filter((t: any) => selectedTests.includes(t.test_id))
     ?.reduce((sum: number, t: any) => sum + Number(t.price || 0), 0);
@@ -482,8 +491,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   );
 
   const [manageAddress, setManageAddress] = useState('');
-  const [discountCode, setDiscountCode] = useState('');
-  const [discountValue, setDiscountValue] = useState(20);
 
   const [familyMemberData, setFamilyMemberData] = useState(familymembers);
   const [familymemberValue, setFamilyMemberValue] = useState<string | null>(
@@ -836,12 +843,19 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   };
 
   const handleApplyDiscount = () => {
-    // Just a sample logic
-    if (discountCode === 'AA000000') {
-      setDiscountValue(10);
-      setDiscountCode('');
-    } else {
+    // // Just a sample logic
+    // if (discountCode === 'AA000000') {
+    //   setDiscountValue(10);
+    //   setDiscountCode('');
+    // } else {
+    //   setDiscountValue(0);
+    // }
+    if (appliedCoupon == true) {
       setDiscountValue(0);
+      setDiscountCode('');
+      setAppliedCoupon(false);
+    } else {
+      _checkCouponApi();
     }
   };
 
@@ -1309,6 +1323,9 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [addressTypeError, setAddressTypeError] = useState<any>('');
   const [selectedid, setSelectedId] = useState<any>('');
 
+  const [latitude, setLatitude] = useState<any>(0);
+  const [longitude, setLongitude] = useState<any>(0);
+
   const [tempSelectedAddress, setTempSelectedAddress] = useState<any>(null);
 
   const handleSetAddressType = (item: any) => {
@@ -1398,9 +1415,37 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       console.log('Selected place:', JSON.stringify(place));
       console.log('place?.text?.text', place?.text?.text);
 
-      // searchRef.current?.clear();
       setSearchAddress(place?.text?.text);
-      // setSearchText("");
+      try {
+        // Fetch place details to get lat/lng
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/place/details/json?place_id=${
+            place.placeId
+          }&key=${
+            isPlatformiOS
+              ? GlobalVar.google_map_api_key_ios
+              : GlobalVar.google_map_api_key_android
+          }`,
+        );
+        const data = await response.json();
+
+        console.log('selectPlaceData', JSON.stringify(data));
+
+        //Update Search Count API Call
+        Keyboard.dismiss();
+        if (data.result && data.result.geometry) {
+          const { lat, lng } = data.result.geometry.location;
+
+          setLatitude(lat);
+          setLongitude(lng);
+
+          console.log('Latitude:', lat, 'Longitude:', lng);
+        } else {
+          console.warn('Could not fetch lat/lng');
+        }
+      } catch (error) {
+        console.error('Error fetching place details:', error);
+      }
     }
   };
 
@@ -1432,6 +1477,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     setIsDefaultSave(false);
     setAddressTypeValue('1');
     setAddressTypeItem(addressTypeData[0].label);
+    setLatitude(0);
+    setLongitude(0);
 
     setAddressPopupVisible(false);
 
@@ -1441,7 +1488,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   };
 
   const handleEditAddress = (address: any) => {
-    console.log('call edit address');
+    console.log('call edit address',address);
 
     setAddressMode('edit');
     setEditAddressData(address);
@@ -1452,6 +1499,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     setStairs(address.stairs);
     setinstructions(address.instructions);
     setIsDefaultSave(address.is_default === 1);
+    setLatitude(address.latitude);
+    setLongitude(address.longitude);
     // ✅ FIND matching address type
     const matchedType = addressTypeData.find(
       item => item.label === address.title,
@@ -1616,8 +1665,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         floor: floor,
         stairs: stairs,
         instructions: instructions,
-        latitude: '0',
-        longitude: '0',
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
         is_default: isdefaultsave == true ? 1 : 0,
       };
 
@@ -1654,8 +1703,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         floor: floor,
         stairs: stairs,
         instructions: instructions,
-        latitude: '0',
-        longitude: '0',
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
         is_default: isdefaultsave == true ? 1 : 0,
       };
 
@@ -2049,7 +2098,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       const params = {
         address_id: selectedAddress?.address_id,
         subtotal: subtotal,
-        // discount: '20',
+        coupon_id:appliedCouponValue?.id,
+        discount: appliedCouponValue?.discount_value,
         total_amount: total,
         note: manageAddress,
         test_date:
@@ -2095,6 +2145,56 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       });
     } catch (error) {
       console.log('BOOKORDER error:', error);
+    }
+  };
+
+  const _checkCouponApi = async () => {
+    if (!discountCode.trim()) {
+      flashMessageWarning(getTranslation('errorcoupanscode'));
+      return;
+    }
+
+    try {
+      const params = {
+        coupon_code: discountCode.trim(),
+        subtotal: subtotal,
+      };
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          console.log('insucess');
+
+          const coupon = responseData.data;
+
+          // ✅ Save coupon
+          setAppliedCoupon(true);
+          setAppliedValue(coupon);
+
+          // ✅ Use backend-calculated discount
+          setDiscountValue(Number(coupon.discount_amount));
+
+          flashMessageSucess(responseData.message);
+        } else {
+          // ❌ Invalid coupon
+          setAppliedCoupon(false);
+          setDiscountValue(0);
+          setAppliedValue(null);
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.CHECKCOUPON,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('Check coupon error:', error);
+      setDiscountValue(0);
+      setAppliedCoupon(false);
+      setAppliedValue(null);
     }
   };
 
@@ -2229,6 +2329,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       analiticount={analiticount}
       pickerBg={pickerBg}
       funGetTestedContainer={funGetTestedContainer}
+      appliedCoupon={appliedCoupon}
     />
   );
 };
