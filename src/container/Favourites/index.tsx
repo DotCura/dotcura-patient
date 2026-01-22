@@ -39,6 +39,7 @@ const FavouritesContainer = ({ navigation }: any) => {
         onpressreport={handleNavigateTestDetails}
         isTestCheck={true}
         isUnitShow={true}
+        unitName={item?.latest?.unit}
       />
     );
   };

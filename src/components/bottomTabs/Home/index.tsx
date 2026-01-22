@@ -464,6 +464,7 @@ const HomeComponent = (props: any) => {
             </PressScale>
           </View>
         </View>
+
         {props.isloadingshow && (
           <>
             {/* vwTestReports */}
@@ -533,7 +534,7 @@ const HomeComponent = (props: any) => {
             )}
 
             {/* waitingforresultof */}
-            <View
+            {/* <View
               style={{
                 marginHorizontal: getWidth(16),
                 marginTop: getHeight(29),
@@ -570,7 +571,7 @@ const HomeComponent = (props: any) => {
                     {props.renderItemAppointment({ item, index })}
                   </React.Fragment>
                 ))}
-            </View>
+            </View> */}
 
             {/* vwFamilyMemberReport */}
             <View style={styles.vwFamilyMemberReport}>
@@ -582,16 +583,20 @@ const HomeComponent = (props: any) => {
                         {getTranslation('familymemberanlaysisvalue')}
                       </Text>
                       <TouchableOpacity
-                        activeOpacity={activityOpacity}
+                        activeOpacity={1}
                         style={styles.btnfamilymembername}
                       >
                         <View style={styles.vwfirstchart}>
                           <Text style={styles.lblFirstChar}>
-                            {getInitials(item.familyMemberName)}
+                            {getInitials(item.name)}
                           </Text>
                         </View>
-                        <Text style={styles.lblFamilyMember}>
-                          {item.familyMemberName}
+                        <Text
+                          style={styles.lblFamilyMember}
+                          numberOfLines={1}
+                          ellipsizeMode="tail"
+                        >
+                          {item.name}
                         </Text>
                       </TouchableOpacity>
                       <Text style={styles.lblFamilyMemberAnlaysisTitle}>
@@ -600,27 +605,26 @@ const HomeComponent = (props: any) => {
                       </Text>
                     </View>
                     <View style={{ gap: getHeight(8) }}>
-                      {item.familyMemberReport.map(
-                        (reportItem: any, reportIndex: any) => {
-                          return (
-                            <BarChartComponent
-                              currentValue={reportItem.currentvalue}
-                              minValue={reportItem.minValue}
-                              maxValue={reportItem.maxvalue}
-                              width={
-                                ScreenDimensions.screenWidth - getWidth(40)
-                              }
-                              height={getHeight(30)}
-                              reportName={reportItem.reportname}
-                              reportValue={reportItem.reportValue}
-                              reportItem={reportItem}
-                              onpressreport={
-                                props.handleNavigateTestDetailsScreen
-                              }
-                            />
-                          );
-                        },
-                      )}
+                      {item.reports.map((reportItem: any, reportIndex: any) => {
+                        return (
+                          <BarChartComponent
+                            currentValue={reportItem.reportDetails.value}
+                            minValue={reportItem.reportDetails.minvalue}
+                            maxValue={reportItem.reportDetails.maxvalue}
+                            width={ScreenDimensions.screenWidth - getWidth(40)}
+                            height={getHeight(30)}
+                            reportName={reportItem.testname}
+                            reportValue={reportItem.reportDetails.value}
+                            reportItem={reportItem}
+                            onpressreport={
+                              props.handleNavigateTestDetailsScreen
+                            }
+                            isTestCheck={true}
+                            isUnitShow={true}
+                            unitName={reportItem.reportDetails.unit}
+                          />
+                        );
+                      })}
                     </View>
                   </View>
                 );

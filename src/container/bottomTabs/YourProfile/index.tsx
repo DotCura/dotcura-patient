@@ -1,5 +1,5 @@
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import YourProfileComponent from '../../../components/bottomTabs/YourProfile';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
@@ -17,6 +17,10 @@ import {
 import VerticalBarChartProfile from '../../../global/VerticalBarChartProfile';
 import { ScreenNames } from '../../../constants/AppConstants';
 import ProgressBar from '../../../global/ProgressBar';
+import { apiPromise } from '../../../global/ApiHelper/apiPromise';
+import { ApiEndPoints } from '../../../api/APIConstant';
+import { LoadType, usePaginatedList } from '../../../global/ApiHelper/usePaginatedList';
+import { useDebounce } from '../../../constants/utils/useDebounce';
 
 const YourProfileContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -682,21 +686,24 @@ const YourProfileContainer = ({ navigation }: any) => {
       >
         <View style={styles.lblTestImage}>
           <Text style={styles.lblTestName} numberOfLines={1}>
-            {item.testname}
+          {item?.name}
           </Text>
-          <Image source={item.reportimage} />
+          <Image
+            source={{ uri: item?.kit_image_url }}
+            style={{ height: getHeight(30), aspectRatio: 1, borderRadius: 100 }}
+          />
         </View>
         <View>
           <Text style={styles.lblTotalAnalysis}>
             <Text style={styles.lblCurrentanalysis}>
-              {item.currentanalysis}{' '}
+            {item.completed_tests}{' '}
             </Text>
-            {getTranslation('ditext')} {item.totalanalysis}{' '}
+            {getTranslation('ditext')} {item.total_tests}{' '}
             {getTranslation('analitietext')}
           </Text>
           <ProgressBar
-            current={item.currentanalysis}
-            total={item.totalanalysis}
+            current={item.completed_tests}
+            total={item.total_tests}
             height={6}
             backgroundColor={Colors.blueEF}
             gradientColors={[Colors.blue00250, Colors.blue002]}
@@ -928,6 +935,40 @@ const YourProfileContainer = ({ navigation }: any) => {
     navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
   };
 
+  // ====================== API ===============================
+  const [searchHistory, setSeachHistory] = useState('');
+  const debouncedSearch = useDebounce(searchHistory, 400);
+  //ANALITILIST
+  const fetchAnalitiList = useCallback(
+    async ({ page,  searchQuery, loadType }: { page: number; loadType: any, searchQuery?: string; }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.HOME.GETANALITILIST,
+        method: 'POST',
+        showLoader:
+          loadType === LoadType.INITIAL || loadType === LoadType.TAB_CHANGE,
+        params: {
+          page,
+          ...(searchQuery ? { search: searchQuery } : {}),
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data?.analysis_list ?? [], // ✅ always array
+      };
+    },
+    [navigation],
+  );
+
+  const AnalitiList: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: true,
+    searchQuery: debouncedSearch,
+    fetcher: fetchAnalitiList,
+  });
+
   return (
     <YourProfileComponent
       insets={insets}
@@ -937,7 +978,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       userReportData={userReportData}
       renderUserReportData={renderUserReportData}
       renderTestReportData={renderTestReportData}
-      testReportData={testReportData}
+      testReportData={AnalitiList?.data}
       setSearchVisible={setSearchVisible}
       searchVisible={searchVisible}
       renderItemAppointment={renderItemAppointment}
@@ -950,6 +991,9 @@ const YourProfileContainer = ({ navigation }: any) => {
       handlePressProfile={handlePressProfile}
       handleNavigateHistoricalAnlysis={handleNavigateHistoricalAnlysis}
       hanldeNavigateKitAnalysis={hanldeNavigateKitAnalysis}
+      AnalitiList={AnalitiList}
+      searchHistory={searchHistory}
+      setSeachHistory={setSeachHistory}
     />
   );
 };

@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Pressable,
@@ -65,7 +66,7 @@ const YourProfileComponent = (props: any) => {
     return (
       <>
         {/* LatestAnalysis */}
-        <View style={{ marginTop: getHeight(24), marginBottom: getHeight(20) }}>
+        <View style={{ marginBottom: getHeight(20) }}>
           <View style={styles.vwSeeall}>
             <Text style={styles.latestanlaysis}>
               {getTranslation('latestanalysis')}
@@ -250,11 +251,18 @@ const YourProfileComponent = (props: any) => {
               cursorColor={Colors.gray0F}
               selectionColor={Colors.gray0F}
               autoFocus={props.searchVisible}
+              value={props.searchHistory}
+              onChangeText={(text: any) => {
+                props.setSeachHistory(text);
+              }}
             />
           </View>
 
           <TouchableOpacity
-            onPress={() => props.setSearchVisible(false)}
+            onPress={() => {
+              props.setSearchVisible(false);
+              props.setSeachHistory('');
+            }}
             style={styles.btnClose}
             activeOpacity={activityOpacity}
           >
@@ -428,14 +436,38 @@ const YourProfileComponent = (props: any) => {
 
       {/* vwTestReports */}
       <FlatList
-        // onEndReached={() => {
-        //   console.log('callend');
-        // }}
+        onEndReached={props.AnalitiList.loadMore}
+        onEndReachedThreshold={0.5}
+        refreshing={props.AnalitiList.refreshing}
+        onRefresh={props.AnalitiList.refresh}
+        ListFooterComponent={
+          props.AnalitiList.loadingMore ? (
+            <ActivityIndicator size="large" color={Colors.blue002} />
+          ) : null
+        }
+        ListEmptyComponent={
+          !props.AnalitiList.loading && !props.AnalitiList.refreshing ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: getHeight(20),
+                marginTop: '50%',
+              }}
+            >
+              <Image source={images.imgNoDataFoundAddress} />
+              <Text style={styles.lblNoAddressFound}>
+                {getTranslation('noAnlitilistfound')}
+              </Text>
+            </View>
+          ) : null
+        }
         onScroll={() => {
           props.setShowPopup(false);
         }}
         style={{ flex: 1 }}
-        ListHeaderComponent={renderListHeader}
+        // ListHeaderComponent={renderListHeader}
         data={props.testReportData}
         renderItem={props.renderTestReportData}
         showsVerticalScrollIndicator={false}
@@ -443,6 +475,7 @@ const YourProfileComponent = (props: any) => {
         contentContainerStyle={{
           gap: getHeight(12),
           paddingBottom: getHeight(130),
+          paddingTop: getHeight(24),
         }}
       />
     </View>

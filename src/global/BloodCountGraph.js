@@ -1255,6 +1255,7 @@ const BarChartComponent = ({
           alignItems: 'center',
           justifyContent: 'space-between',
           marginHorizontal: getWidth(16),
+          flex:1,
         }}
       >
         <Text
@@ -1262,7 +1263,9 @@ const BarChartComponent = ({
             fontSize: fontSize.size16,
             fontFamily: fontsfamily.gmedium,
             color: Colors.gray0F,
+            flex:1,
           }}
+          numberOfLines={2}
         >
           {props.reportName}
         </Text>
@@ -1291,7 +1294,7 @@ const BarChartComponent = ({
                 {props.reportValue}
               </Text>{' '}
               {props.isUnitShow === true
-                ? props.reportItem?.latest.unit
+                ? props.unitName
                 : props.reportItem.reportunit}
             </Text>
             <Image source={images.imgRightCurve} style={{ marginTop: 3 }} />

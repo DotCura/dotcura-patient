@@ -722,6 +722,7 @@ import VerticalBarChart from '../../../global/VerticalBarChartHome';
 import {
   activityOpacity,
   currency,
+  flashMessageWarning,
   formatDateToSpanish,
 } from '../../../constants/GConstant';
 import { ScreenNames } from '../../../constants/AppConstants';
@@ -730,7 +731,7 @@ import ProgressBar from '../../../global/ProgressBar';
 import { useFocusEffect } from '@react-navigation/native';
 import { MmkvManager } from '../../../constants/utils/MmkvManager';
 import { apiPromise } from '../../../global/ApiHelper/apiPromise';
-import { ApiEndPoints, MethodType } from '../../../api/APIConstant';
+import { ApiEndPoints, MethodType, StatusCode } from '../../../api/APIConstant';
 import {
   LoadType,
   usePaginatedList,
@@ -1046,8 +1047,7 @@ const HomeContainer = ({ navigation }: any) => {
   const [testReportData, setTestReportData] = useState<any>([]);
   const [recommandAnalysisData, setrecommandAnalysisData] =
     useState(recommandAnalysis);
-  const [familyMemberAnalysisData, setFamilyMemberAnalysisData] =
-    useState(familyMemberAnalysis);
+  const [familyMemberAnalysisData, setFamilyMemberAnalysisData] = useState([]);
   const totalStars = 5;
 
   const [expandedWaiting, setExpandedWaiting] = useState<any>({});
@@ -1472,12 +1472,13 @@ const HomeContainer = ({ navigation }: any) => {
     setRefreshing(true);
     try {
       await Promise.all([favourites.refresh?.(), AnalitiList.refresh?.()]);
+      await _familyMemberReportList();
     } finally {
       setRefreshing(false);
     }
   };
 
-    const { setNotificationCount, setCartCount, cartCount } =
+  const { setNotificationCount, setCartCount, cartCount } =
     ZustandStores.CartStore();
 
   const _totalCount = async () => {
@@ -1505,8 +1506,34 @@ const HomeContainer = ({ navigation }: any) => {
     }
   };
 
+  // Api AddressList
+  const _familyMemberReportList = async () => {
+    try {
+      const params = {};
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setFamilyMemberAnalysisData(responseData?.data);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.FAMILY.FAMILYMEMBERREPORTDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('FAMILYMEMBERREPORTDETAILS List error:', error);
+    }
+  };
+
   useEffect(() => {
     _totalCount();
+    _familyMemberReportList();
   }, []);
 
   return (
@@ -1529,7 +1556,7 @@ const HomeContainer = ({ navigation }: any) => {
       handleNavigateGetTested={handleNavigateGetTested}
       firstName={firstName}
       favourites={favourites}
-      isloadingshow={favourites.loading == false}
+      isloadingshow={AnalitiList.loading == false}
       onRefresh={onRefresh}
       refreshing={refreshing}
       cartCount={cartCount}
@@ -1538,5 +1565,3 @@ const HomeContainer = ({ navigation }: any) => {
 };
 
 export default HomeContainer;
-
-

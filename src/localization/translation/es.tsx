@@ -558,4 +558,6 @@ export default {
   youtext:"Tu",
   errorcoupanscode:"Por favor aplique el código de cupón.",
   appliedtext:"Aplicado",
+  timetosoon : "La hora seleccionada debe comenzar al menos 1 hora a partir del momento actual."
+
 };

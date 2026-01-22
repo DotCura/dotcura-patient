@@ -28,6 +28,7 @@ export const ApiEndPoints = {
     UPDATEFAMILYMEMBER: `${PATIENT_PREFIX}updateFamilyMember`,
     DELETEFAMILYMEMBER: `${PATIENT_PREFIX}removeFamilyMember`,
     GETFAMILYMEMBERDETAILS: `${PATIENT_PREFIX}getFamilyMemberDetails`,
+    FAMILYMEMBERREPORTDETAILS: `${PATIENT_PREFIX}family_report`,
   },
   SETTINGS: {
     GETNOTIFICATIONTYPE: `${PATIENT_PREFIX}getNotificationTypes`,

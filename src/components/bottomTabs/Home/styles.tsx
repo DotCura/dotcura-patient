@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: getHeight(12),
+    flexWrap: 'nowrap',
   },
   vwfirstchart: {
     justifyContent: 'center',
@@ -24,6 +25,8 @@ export const styles = StyleSheet.create({
     borderRadius: 321,
   },
   btnfamilymembername: {
+    maxWidth: '70%',        // 🔥 CRITICAL
+  flexShrink: 1,          // 🔥 CRITICAL
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.grayD8,
@@ -124,6 +127,7 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size7,
   },
   lblFamilyMember: {
+    flexShrink: 1,        // 🔥 REQUIRED
     color: Colors.gray2A,
     fontFamily: fontsfamily.gsemiBold,
     fontSize: fontSize.size20,

@@ -24,6 +24,7 @@ import {
   flashMessageSucess,
   flashMessageWarning,
   formatTestDateForAPI,
+  showAlert,
 } from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { images } from '../../constants/Images';
@@ -51,6 +52,7 @@ import FastImage from '@d11/react-native-fast-image';
 import { useFocusEffect } from '@react-navigation/native';
 import { fontsfamily } from '../../constants/FontFamily';
 import { GlobalVar } from '../../constants/GlobalVar';
+import { DateFormatsManager } from '../../constants/utils/DateFormats';
 
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -118,6 +120,16 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
   const [selectedTab, setSelectedTab] = useState('checkup'); // 'checkup' or 'analiti'
   const apiDate = formatTestDateForAPI(selectedDate);
+  const startTime = selectedTime.split(' - ')[0];
+  console.log(startTime);
+
+  // const sendapistarttimeutc = DateFormatsManager.convertLocalToUTC(
+  //   selectedDate === 'Oggi'
+  //     ? new Date().toISOString().split('T')[0]
+  //     : apiDate + startTime,
+  //   DateFormatsManager.DateTimeFormatsWithTimezone.YYYYMMDDTHHmmssZ,
+  // );
+  // console.log('sendapistarttimeutc', sendapistarttimeutc);
 
   //MODELADDTIONSVARIABLES
   const [checkupcount, setCheckupCount] = useState(31);
@@ -309,11 +321,64 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     await _removeCartItem(item.cart_kit_id);
   };
 
+  // const handleBookSlot = () => {
+  //   const givenUTC = new Date(
+  //     DateFormatsManager.convertLocalToUTC(
+  //       selectedDate === 'Oggi'
+  //         ? new Date().toISOString().split('T')[0]
+  //         : apiDate + startTime,
+  //       DateFormatsManager.DateTimeFormatsWithTimezone.YYYYMMDDTHHmmssZ,
+  //     ),
+  //   ); // given UTC time
+  //   const givenUTCPlus1Hr = new Date(givenUTC.getTime() + 60 * 60 * 1000);
+  //   const currentUTC = new Date();
+  //   const currentUTCPlus1Hr = new Date(currentUTC.getTime() + 60 * 60 * 1000);
+
+  //   console.log('givenutc', givenUTC);
+  //   console.log('givenutc+1hr', givenUTCPlus1Hr);
+  //   console.log('currentutc', currentUTC);
+  //   console.log('currentutc+1hr', currentUTCPlus1Hr);
+  //   console.log("givenUTCPlus1Hr < currentUTC",givenUTCPlus1Hr < currentUTCPlus1Hr);
+
+  //   if (selectedDate && selectedTime) {
+  //     if (givenUTCPlus1Hr < currentUTCPlus1Hr) {
+  //       Alert.alert(getTranslation('timetosoon') || '');
+  //     } else {
+  //       console.log(
+  //         'sekectredDate',
+  //         selectedDate,
+  //         'selectedTime',
+  //         selectedTime,
+  //       );
+  //       setSelectedSlot({ day: selectedDate, time: selectedTime });
+  //       setShowPicker(false);
+  //     }
+  //   }
+  // };
   const handleBookSlot = () => {
-    if (selectedDate && selectedTime) {
-      setSelectedSlot({ day: selectedDate, time: selectedTime });
-      setShowPicker(false);
+    const localDate =
+      selectedDate === 'Oggi'
+        ? new Date().toLocaleDateString('en-CA') // YYYY-MM-DD LOCAL
+        : apiDate;
+
+    const localDateTime = `${localDate}T${startTime}:00`;
+
+    const givenUTC = new Date(localDateTime);
+
+    const currentUTC = new Date();
+    const currentUTCPlus1Hr = new Date(currentUTC.getTime() + 60 * 60 * 1000);
+
+    console.log('givenutc', givenUTC);
+    console.log('currentutc', currentUTC);
+    console.log('currentutc+1hr', currentUTCPlus1Hr);
+
+    if (givenUTC < currentUTCPlus1Hr) {
+      Alert.alert(getTranslation('timetosoon') || '');
+      return;
     }
+
+    setSelectedSlot({ day: selectedDate, time: selectedTime });
+    setShowPicker(false);
   };
 
   const handleApplyDiscount = () => {
@@ -1442,7 +1507,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         family_member_id: familymemberValue,
       };
 
-      console.log('params', params);
+      // console.log('params', params);
 
       const callback = (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
