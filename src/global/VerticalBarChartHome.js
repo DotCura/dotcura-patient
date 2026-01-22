@@ -1,2037 +1,7 @@
-// // first working with color aaray
-// // import React from 'react';
-// // import {
-// //   View,
-// //   Text,
-// //   StyleSheet,
-// //   Dimensions,
-// //   TouchableOpacity,
-// // } from 'react-native';
-// // import Svg, { Path } from 'react-native-svg';
-// // import { getHeight } from '../constants/utils/Dimensions';
-// // import { Colors } from '../constants/Colors';
-// // import { fontsfamily } from '../constants/FontFamily';
-// // import { fontSize } from '../constants/FontSizes';
 
-// // const { width } = Dimensions.get('window');
 
-// // // --- Component Definition ---
-// // const VerticalBarChart = ({
-// //   data,
-// //   title = 'Glicemia',
-// //   subtitleText = 'Ultimo valore',
-// //   chartMaxValue, // New Prop
-// //   navigation,
-// //   chartMinValue, // New Prop
-// // }) => {
-// //   const getValueColor = (value, minValue, maxValue) => {
-// //     let rangeType = 'normal';
 
-// //     if (value < minValue) {
-// //       const extremeThreshold = minValue * 0.3;
-// //       if (value <= extremeThreshold) rangeType = 'extreme';
-// //       else rangeType = 'moderate';
-// //     } else if (value > maxValue) {
-// //       const extremeThreshold = maxValue * 1.5;
-// //       if (value >= extremeThreshold) rangeType = 'extreme';
-// //       else rangeType = 'moderate';
-// //     } else {
-// //       rangeType = 'normal';
-// //     }
-
-// //     switch (rangeType) {
-// //       case 'normal':
-// //         return Colors.blue1C; // main normal color
-// //       case 'moderate':
-// //         return Colors.goldenCA; // moderate zone color
-// //       case 'extreme':
-// //         return Colors.redCA; // extreme zone color
-// //       default:
-// //         return Colors.grayED;
-// //     }
-// //   };
-
-// //   // 1. Dynamic Data Preparation
-// //   // const updatedData = data.map(item => ({
-// //   //   ...item,
-// //   //   pathColor: item.pathColor || item.color,
-// //   // }));
-
-// //   // const updatedData = data.map(item => {
-// //   //   const autoColor = getValueColor(item.value, finalChartMinValue, finalChartMaxValue);
-// //   //   return { ...item, color: autoColor, pathColor: autoColor };
-// //   // });
-
-// //   // const values = updatedData.map(item => item.value);
-// //   const values = data.map(item => item.value);
-
-// //   // Calculate Max/Min dynamically
-// //   const dynamicMaxValue = Math.max(...values);
-// //   const dynamicMinValue = Math.min(...values);
-
-// //   // Use a slight buffer for the max value to keep the top dot from hitting the very top edge
-// //   // const maxValue = dynamicMaxValue * 1.05;
-// //   // const minValue = dynamicMinValue;
-
-// //   // const maxValue = dynamicMaxValue * 1.05;
-// //   // const minValue = dynamicMinValue;
-// //   // Determine the final chart range: Use props if provided, otherwise use dynamic calculation
-// //   const finalChartMaxValue =
-// //     chartMaxValue !== undefined ? chartMaxValue : dynamicMaxValue * 1.05; // Use 1.05 buffer if dynamic
-
-// //   const finalChartMinValue =
-// //     chartMinValue !== undefined ? chartMinValue : dynamicMinValue;
-
-// //   // AFTER min and max are known → NOW create updatedData
-// //   const updatedData = data.map(item => {
-// //     const autoColor = getValueColor(
-// //       item.value,
-// //       finalChartMinValue,
-// //       finalChartMaxValue,
-// //     );
-// //     return {
-// //       ...item,
-// //       color: autoColor,
-// //       pathColor: autoColor,
-// //     };
-// //   });
-
-// //   // The values used for normalization calculation
-// //   const maxValue = finalChartMaxValue;
-// //   const minValue = finalChartMinValue;
-
-// //   // 2. Fixed Dimension Constants
-// //   const chartHeight = 90;
-// //   const chartWidth = width - 125;
-// //   const barWidth = chartWidth / updatedData.length;
-// //   const paddingVertical = 7;
-
-// //   // Segment Dimensions (Total height: 20 + 40 + 20 = 80px)
-// //   const SEG_HEIGHT_THIN = 20;
-// //   const SEG_HEIGHT_THICK = 40;
-
-// //   // Margin Calculation: (90 - 80) / 4 = 2.5px
-// //   const MARGIN_HEIGHT = 2.5;
-
-// //   const SEG_WIDTH_THIN = 4;
-// //   const SEG_WIDTH_THICK = 6;
-// //   const GRAY_COLOR = Colors.grayED;
-// //   const COLOR_OPACITY = 0.3;
-// //   const GRAY_OPACITY = 0.7;
-
-// //   const lastValue = updatedData[updatedData.length - 1].value;
-
-// //   // 3. Positioning Function
-// //   // const getPosition = (index, value) => {
-// //   //   // If max and min are the same, prevent division by zero and center the dot
-// //   //   const usableHeight = chartHeight - 2 * paddingVertical;
-// //   //   let normalizedValue;
-
-// //   //   if (maxValue - minValue === 0) {
-// //   //     normalizedValue = 0.5; // Center vertically if all values are the same
-// //   //   } else {
-// //   //     normalizedValue = (value - minValue) / (maxValue - minValue);
-// //   //   }
-
-// //   //   // Y position (from top): Min value maps to the bottom, Max value maps to the top
-// //   //   const y = chartHeight - paddingVertical - normalizedValue * usableHeight;
-// //   //   const x = index * barWidth + barWidth / 2;
-// //   //   return { x, y };
-// //   // };
-
-// //   // 3. Positioning Function
-// //   const getPosition = (index, value) => {
-// //     // --- CLAMPING LOGIC ADDED HERE ---
-// //     // Ensure the value used for positioning is within the defined chart range
-// //     let clampedValue = Math.max(minValue, value); // Cap at minValue
-// //     clampedValue = Math.min(maxValue, clampedValue); // Cap at maxValue
-
-// //     const usableHeight = chartHeight - 2 * paddingVertical;
-// //     let normalizedValue;
-
-// //     if (maxValue - minValue === 0) {
-// //       normalizedValue = 0.5; // Center vertically if the range is zero
-// //     } else {
-// //       // Use the clamped value for normalization
-// //       normalizedValue = (clampedValue - minValue) / (maxValue - minValue);
-// //     }
-
-// //     // Y position (from top): Min value maps to the bottom, Max value maps to the top
-// //     const y = chartHeight - paddingVertical - normalizedValue * usableHeight;
-// //     const x = index * barWidth + barWidth / 2;
-// //     return { x, y };
-// //   };
-// //   // 4. Path Generation (Cubic Bezier)
-// //   const createPathSegments = () => {
-// //     const positions = updatedData.map((item, index) =>
-// //       getPosition(index, item.value),
-// //     );
-// //     const segments = [];
-
-// //     if (positions.length < 2) return segments;
-
-// //     for (let i = 1; i < positions.length; i++) {
-// //       const p0 = positions[i - 1];
-// //       const p1 = positions[i];
-
-// //       const cX1 = p0.x + (p1.x - p0.x) / 2;
-// //       const cY1 = p0.y;
-// //       const cX2 = p1.x - (p1.x - p0.x) / 2;
-// //       const cY2 = p1.y;
-
-// //       const segmentPath = `M ${p0.x} ${p0.y} C ${cX1} ${cY1}, ${cX2} ${cY2}, ${p1.x} ${p1.y}`;
-
-// //       segments.push({
-// //         path: segmentPath,
-// //         color: updatedData[i].pathColor,
-// //       });
-// //     }
-
-// //     return segments;
-// //   };
-
-// //   // 6. Vertical Line Assembly Component (with coloring logic)
-// //   const VerticalLineAssembly = ({ item, index }) => {
-// //     const { color, value } = item;
-// //     const centerX = index * barWidth + barWidth / 2;
-// //     const { y: dotY } = getPosition(index, value);
-
-// //     let topColor = color;
-// //     let middleColor = color;
-// //     let bottomColor = color;
-
-// //     // Define segment visual boundaries from the top (0)
-// //     const topSegStart = MARGIN_HEIGHT;
-// //     const middleSegStart = topSegStart + SEG_HEIGHT_THIN + MARGIN_HEIGHT; // 2.5 + 20 + 2.5 = 25
-// //     const middleSegEnd = middleSegStart + SEG_HEIGHT_THICK; // 25 + 40 = 65
-// //     const bottomSegStart = middleSegEnd + MARGIN_HEIGHT; // 65 + 2.5 = 67.5
-
-// //     // Logic: Color the segment based on which zone the dotY falls into.
-// //     if (dotY <= middleSegStart) {
-// //       // Dot is in the top zone (y <= 25)
-// //       topColor = color;
-// //     } else if (dotY > middleSegStart && dotY <= bottomSegStart) {
-// //       // Dot is in the middle zone (25 < y <= 67.5)
-// //       middleColor = color;
-// //     } else {
-// //       // Dot is in the bottom zone (y > 67.5)
-// //       bottomColor = color;
-// //     }
-
-// //     return (
-// //       <View
-// //         style={[
-// //           styles.verticalLineContainer,
-// //           { left: centerX - SEG_WIDTH_THICK / 2 },
-// //         ]}
-// //       >
-// //         {/* Top Spacer/Margin */}
-// //         <View style={{ height: MARGIN_HEIGHT }} />
-
-// //         {/* Top Thin Segment */}
-// //         <View
-// //           style={[
-// //             styles.verticalSegment,
-// //             {
-// //               height: SEG_HEIGHT_THIN,
-// //               width: SEG_WIDTH_THIN,
-// //               backgroundColor: topColor,
-// //               opacity: topColor === GRAY_COLOR ? GRAY_OPACITY : COLOR_OPACITY,
-// //               borderRadius: 10,
-// //             },
-// //           ]}
-// //         />
-
-// //         {/* Middle Spacer/Margin */}
-// //         <View style={{ height: MARGIN_HEIGHT }} />
-
-// //         {/* Middle Thick Segment */}
-// //         <View
-// //           style={[
-// //             styles.verticalSegment,
-// //             {
-// //               height: SEG_HEIGHT_THICK,
-// //               width: SEG_WIDTH_THICK,
-// //               backgroundColor: middleColor,
-// //               opacity:
-// //                 middleColor === GRAY_COLOR ? GRAY_OPACITY : COLOR_OPACITY,
-// //               borderRadius: 10,
-// //             },
-// //           ]}
-// //         />
-
-// //         {/* Bottom Spacer/Margin */}
-// //         <View style={{ height: MARGIN_HEIGHT }} />
-
-// //         {/* Bottom Thin Segment */}
-// //         <View
-// //           style={[
-// //             styles.verticalSegment,
-// //             {
-// //               height: SEG_HEIGHT_THIN,
-// //               width: SEG_WIDTH_THIN,
-// //               backgroundColor: bottomColor,
-// //               opacity:
-// //                 bottomColor === GRAY_COLOR ? GRAY_OPACITY : COLOR_OPACITY,
-// //               borderRadius: 10,
-// //             },
-// //           ]}
-// //         />
-
-// //         {/* Bottom-most Spacer/Margin */}
-// //         <View style={{ height: MARGIN_HEIGHT }} />
-// //       </View>
-// //     );
-// //   };
-// //   // --------------------------------------------------------
-
-// //   return (
-// //     <View
-// //       style={styles.container}
-// //       activeOpacity={0.8}
-// //       // onPress={() => navigation.navigate('BottomTab')}
-// //     >
-// //       {/* Chart Container */}
-// //       <View style={styles.chartContainer}>
-// //         {/* Vertical Lines */}
-// //         <View style={styles.backgroundLines}>
-// //           {updatedData.map((item, index) => (
-// //             <VerticalLineAssembly key={index} item={item} index={index} />
-// //           ))}
-// //         </View>
-
-// //         {/* SVG for curved connecting line with segment colors */}
-// //         <Svg
-// //           height={chartHeight}
-// //           width={chartWidth}
-// //           style={styles.svgContainer}
-// //         >
-// //           {createPathSegments().map((segment, index) => (
-// //             <Path
-// //               key={index}
-// //               d={segment.path}
-// //               stroke={segment.color}
-// //               strokeWidth="5"
-// //               fill="none"
-// //               opacity={0.2}
-// //             />
-// //           ))}
-// //         </Svg>
-
-// //         {/* Bars/Dots positioned exactly on the line */}
-// //         <View style={styles.barsContainer}>
-// //           {updatedData.map((item, index) => {
-// //             const position = getPosition(index, item.value);
-
-// //             return (
-// //               <View
-// //                 key={index}
-// //                 style={[
-// //                   styles.dotContainer,
-// //                   {
-// //                     left: position.x - 12,
-// //                     top: position.y - 6,
-// //                   },
-// //                 ]}
-// //               >
-// //                 {/* Subtle Outer Glow/Ring */}
-// //                 <View
-// //                   style={[
-// //                     styles.glowEffect,
-// //                     {
-// //                       backgroundColor: Colors.white,
-// //                       borderRadius: 100,
-// //                       ...((item.color === '#3182CE' ||
-// //                         item.color === '#D4A928' ||
-// //                         item.color === '#E53E3E') && {
-// //                         shadowColor: '#000',
-// //                         shadowOffset: {
-// //                           width: 0,
-// //                           height: 2,
-// //                         },
-// //                         shadowOpacity: 0.25,
-// //                         shadowRadius: 3.84,
-
-// //                         elevation: 5,
-// //                       }),
-// //                     },
-// //                   ]}
-// //                 />
-
-// //                 {/* The main rounded rectangle bar */}
-// //                 <View
-// //                   style={[
-// //                     styles.coloredBar,
-// //                     {
-// //                       backgroundColor: item.color,
-// //                     },
-// //                   ]}
-// //                 />
-// //               </View>
-// //             );
-// //           })}
-// //         </View>
-// //       </View>
-
-// //       {/* Values and Dates */}
-// //       <View style={styles.labelsContainer}>
-// //         {updatedData.map((item, index) => {
-// //           const centerX = index * barWidth + barWidth / 2;
-// //           return (
-// //             <View
-// //               key={index}
-// //               style={[
-// //                 styles.labelContainer,
-// //                 {
-// //                   position: 'absolute',
-// //                   left: centerX - 25,
-// //                   width: 50,
-// //                 },
-// //               ]}
-// //             >
-// //               <Text style={[styles.valueText]}>{item.value}</Text>
-// //               <Text style={styles.dateText}>{item.date}</Text>
-// //             </View>
-// //           );
-// //         })}
-// //       </View>
-// //     </View>
-// //   );
-// // };
-
-// // const styles = StyleSheet.create({
-// //   container: {
-// //     marginLeft: -5,
-// //   },
-// //   emptyContainer: {
-// //     height: 180,
-// //     justifyContent: 'center',
-// //     alignItems: 'center',
-// //   },
-// //   chevronLine1: {
-// //     width: 8,
-// //     height: 2,
-// //     backgroundColor: '#999999',
-// //     transform: [{ rotate: '45deg' }, { translateY: -2 }],
-// //     position: 'absolute',
-// //   },
-// //   chevronLine2: {
-// //     width: 8,
-// //     height: 2,
-// //     backgroundColor: '#999999',
-// //     transform: [{ rotate: '-45deg' }, { translateY: 2 }],
-// //     position: 'absolute',
-// //   },
-// //   chartContainer: {
-// //     height: 90,
-// //     position: 'relative',
-// //     marginBottom: getHeight(8),
-// //   },
-// //   backgroundLines: {
-// //     position: 'absolute',
-// //     width: '100%',
-// //     height: '100%',
-// //   },
-// //   verticalLineContainer: {
-// //     position: 'absolute',
-// //     height: '100%',
-// //     flexDirection: 'column',
-// //     justifyContent: 'flex-start',
-// //     alignItems: 'center',
-// //   },
-// //   verticalSegment: {
-// //     alignSelf: 'center',
-// //   },
-// //   svgContainer: {
-// //     position: 'absolute',
-// //     top: 0,
-// //     left: 0,
-// //   },
-// //   barsContainer: {
-// //     position: 'absolute',
-// //     width: '100%',
-// //     height: '100%',
-// //   },
-// //   dotContainer: {
-// //     position: 'absolute',
-// //     width: 24,
-// //     height: 11,
-// //     justifyContent: 'center',
-// //     alignItems: 'center',
-// //   },
-// //   coloredBar: {
-// //     width: 24,
-// //     height: 8,
-// //     borderRadius: 6,
-// //     zIndex: 1,
-// //   },
-// //   glowEffect: {
-// //     position: 'absolute',
-// //     width: 30,
-// //     height: 13,
-// //     borderRadius: 4,
-// //     left: -3,
-// //     top: -1,
-// //     zIndex: 0,
-// //   },
-// //   labelsContainer: {
-// //     position: 'relative',
-// //     height: 40,
-// //   },
-// //   labelContainer: {
-// //     alignItems: 'center',
-// //     fontFamily: fontsfamily.bold,
-// //     fontSize: fontSize.size12,
-// //   },
-// //   valueText: {
-// //     color: Colors.gray0F,
-// //     fontFamily: fontsfamily.bold,
-// //     fontSize: fontSize.size12,
-// //     marginBottom: 4,
-// //   },
-// //   dateText: {
-// //     color: Colors.gray55,
-// //     fontFamily: fontsfamily.regular,
-// //     fontSize: fontSize.size12,
-// //   },
-// // });
-
-// // export default VerticalBarChart;
-
-// //color logic is working but some issue 
-
-// // import React from 'react';
-// // import {
-// //   View,
-// //   Text,
-// //   StyleSheet,
-// //   Dimensions,
-// // } from 'react-native';
-// // import Svg, { Path } from 'react-native-svg';
-// // import { getHeight } from '../constants/utils/Dimensions';
-// // import { Colors } from '../constants/Colors';
-// // import { fontsfamily } from '../constants/FontFamily';
-// // import { fontSize } from '../constants/FontSizes';
-
-// // const { width } = Dimensions.get('window');
-
-// // const VerticalBarChart = ({
-// //   data,
-// //   chartMaxValue,
-// //   chartMinValue,
-// // }) => {
-
-// //   // -----------------------------------------------
-// //   // 1️⃣ SELECT COLOR BASED ON RANGE
-// //   // -----------------------------------------------
-// //   const getValueColor = (value, minValue, maxValue) => {
-// //     if (value < minValue) return Colors.goldenCA;   // Below range (bottom)
-// //     if (value > maxValue) return Colors.redCA;      // Above range (top)
-// //     return Colors.blue1C;                            // Within range (middle)
-// //   };
-
-// //   // -----------------------------------------------
-// //   // 2️⃣ FIRST: Get min/max BEFORE coloring
-// //   // -----------------------------------------------
-// //   const rawValues = data.map(i => i.value);
-
-// //   const dynamicMaxValue = Math.max(...rawValues);
-// //   const dynamicMinValue = Math.min(...rawValues);
-
-// //   const finalChartMaxValue =
-// //     chartMaxValue !== undefined ? chartMaxValue : dynamicMaxValue * 1.05;
-
-// //   const finalChartMinValue =
-// //     chartMinValue !== undefined ? chartMinValue : dynamicMinValue;
-
-// //   // -----------------------------------------------
-// //   // 3️⃣ NOW PREPARE UPDATED DATA WITH AUTO COLORS
-// //   // -----------------------------------------------
-// //   const updatedData = data.map(item => {
-// //     const autoColor = getValueColor(
-// //       item.value,
-// //       finalChartMinValue,
-// //       finalChartMaxValue,
-// //     );
-// //     return {
-// //       ...item,
-// //       color: autoColor,
-// //       pathColor: autoColor,
-// //     };
-// //   });
-
-// //   // -----------------------------------------------
-// //   // 4️⃣ CONSTANTS
-// //   // -----------------------------------------------
-// //   const chartHeight = 90;
-// //   const chartWidth = width - 125;
-// //   const barWidth = chartWidth / updatedData.length;
-// //   const paddingVertical = 7;
-
-// //   const SEG_HEIGHT_THIN = 20;
-// //   const SEG_HEIGHT_THICK = 40;
-// //   const MARGIN_HEIGHT = 2.5;
-// //   const SEG_WIDTH_THIN = 4;
-// //   const SEG_WIDTH_THICK = 6;
-
-// //   const GRAY_COLOR = Colors.grayED;
-// //   const COLOR_OPACITY = 0.3;
-// //   const GRAY_OPACITY = 0.7;
-
-// //   // -----------------------------------------------
-// //   // 5️⃣ POSITIONING
-// //   // -----------------------------------------------
-// //   const getPosition = (index, value) => {
-// //     const clampedValue = Math.min(
-// //       finalChartMaxValue,
-// //       Math.max(finalChartMinValue, value),
-// //     );
-
-// //     const usableHeight = chartHeight - paddingVertical * 2;
-
-// //     const normalized =
-// //       finalChartMaxValue - finalChartMinValue === 0
-// //         ? 0.5
-// //         : (clampedValue - finalChartMinValue) /
-// //           (finalChartMaxValue - finalChartMinValue);
-
-// //     return {
-// //       x: index * barWidth + barWidth / 2,
-// //       y: chartHeight - paddingVertical - normalized * usableHeight,
-// //     };
-// //   };
-
-// //   // -----------------------------------------------
-// //   // 6️⃣ CURVED PATH
-// //   // -----------------------------------------------
-// //   const createPathSegments = () => {
-// //     const positions = updatedData.map((item, index) =>
-// //       getPosition(index, item.value),
-// //     );
-
-// //     const segments = [];
-// //     if (positions.length < 2) return segments;
-
-// //     for (let i = 1; i < positions.length; i++) {
-// //       const p0 = positions[i - 1];
-// //       const p1 = positions[i];
-
-// //       const path = `M ${p0.x},${p0.y} 
-// //         C ${(p0.x + p1.x) / 2},${p0.y},
-// //           ${(p0.x + p1.x) / 2},${p1.y},
-// //           ${p1.x},${p1.y}`;
-
-// //       segments.push({
-// //         path,
-// //         color: updatedData[i].pathColor,
-// //       });
-// //     }
-// //     return segments;
-// //   };
-
-// //   // -----------------------------------------------
-// //   // 7️⃣ SEGMENT LOGIC BASED ON RANGE
-// //   // -----------------------------------------------
-// //   const VerticalLineAssembly = ({ item, index }) => {
-// //     const { color, value } = item;
-// //     const centerX = index * barWidth + barWidth / 2;
-
-// //     // VALUE-BASED coloring
-// //     let topColor = GRAY_COLOR;
-// //     let middleColor = GRAY_COLOR;
-// //     let bottomColor = GRAY_COLOR;
-
-// //     if (value < finalChartMinValue) {
-// //       bottomColor = color;          // below range
-// //     } else if (value > finalChartMaxValue) {
-// //       topColor = color;             // above range
-// //     } else {
-// //       middleColor = color;          // inside range
-// //     }
-
-// //     return (
-// //       <View
-// //         style={[
-// //           styles.verticalLineContainer,
-// //           { left: centerX - SEG_WIDTH_THICK / 2 },
-// //         ]}
-// //       >
-// //         <View style={{ height: MARGIN_HEIGHT }} />
-
-// //         {/* TOP */}
-// //         <View
-// //           style={[
-// //             styles.verticalSegment,
-// //             {
-// //               height: SEG_HEIGHT_THIN,
-// //               width: SEG_WIDTH_THIN,
-// //               backgroundColor: topColor,
-// //               opacity: topColor === GRAY_COLOR ? GRAY_OPACITY : COLOR_OPACITY,
-// //             },
-// //           ]}
-// //         />
-
-// //         <View style={{ height: MARGIN_HEIGHT }} />
-
-// //         {/* MIDDLE */}
-// //         <View
-// //           style={[
-// //             styles.verticalSegment,
-// //             {
-// //               height: SEG_HEIGHT_THICK,
-// //               width: SEG_WIDTH_THICK,
-// //               backgroundColor: middleColor,
-// //               opacity:
-// //                 middleColor === GRAY_COLOR ? GRAY_OPACITY : COLOR_OPACITY,
-// //             },
-// //           ]}
-// //         />
-
-// //         <View style={{ height: MARGIN_HEIGHT }} />
-
-// //         {/* BOTTOM */}
-// //         <View
-// //           style={[
-// //             styles.verticalSegment,
-// //             {
-// //               height: SEG_HEIGHT_THIN,
-// //               width: SEG_WIDTH_THIN,
-// //               backgroundColor: bottomColor,
-// //               opacity:
-// //                 bottomColor === GRAY_COLOR ? GRAY_OPACITY : COLOR_OPACITY,
-// //             },
-// //           ]}
-// //         />
-
-// //         <View style={{ height: MARGIN_HEIGHT }} />
-// //       </View>
-// //     );
-// //   };
-
-// //   // -----------------------------------------------
-// //   // 8️⃣ RENDER
-// //   // -----------------------------------------------
-// //   return (
-// //     <View style={styles.container}>
-// //       <View style={styles.chartContainer}>
-        
-// //         {/* Vertical segments */}
-// //         <View style={styles.backgroundLines}>
-// //           {updatedData.map((item, index) => (
-// //             <VerticalLineAssembly key={index} item={item} index={index} />
-// //           ))}
-// //         </View>
-
-// //         {/* Curved Path */}
-// //         <Svg height={chartHeight} width={chartWidth} style={styles.svgContainer}>
-// //           {createPathSegments().map((seg, i) => (
-// //             <Path
-// //               key={i}
-// //               d={seg.path}
-// //               stroke={seg.color}
-// //               strokeWidth={5}
-// //               opacity={0.2}
-// //               fill="none"
-// //             />
-// //           ))}
-// //         </Svg>
-
-// //         {/* Dots */}
-// //         <View style={styles.barsContainer}>
-// //           {updatedData.map((item, index) => {
-// //             const pos = getPosition(index, item.value);
-// //             return (
-// //               <View
-// //                 key={index}
-// //                 style={[
-// //                   styles.dotContainer,
-// //                   { top: pos.y - 6, left: pos.x - 12 },
-// //                 ]}
-// //               >
-// //                 <View style={[styles.glowEffect]} />
-// //                 <View
-// //                   style={[
-// //                     styles.coloredBar,
-// //                     { backgroundColor: item.color },
-// //                   ]}
-// //                 />
-// //               </View>
-// //             );
-// //           })}
-// //         </View>
-// //       </View>
-
-// //       {/* LABELS */}
-// //       <View style={styles.labelsContainer}>
-// //         {updatedData.map((item, index) => {
-// //           const centerX = index * barWidth + barWidth / 2;
-// //           return (
-// //             <View
-// //               key={index}
-// //               style={[
-// //                 styles.labelContainer,
-// //                 { left: centerX - 25, width: 50 },
-// //               ]}
-// //             >
-// //               <Text style={styles.valueText}>{item.value}</Text>
-// //               <Text style={styles.dateText}>{item.date}</Text>
-// //             </View>
-// //           );
-// //         })}
-// //       </View>
-// //     </View>
-// //   );
-// // };
-
-// // // -----------------------------------------------
-// // // STYLES
-// // // -----------------------------------------------
-// // const styles = StyleSheet.create({
-// //   container: { marginLeft: -5 },
-// //   chartContainer: { height: 90, position: 'relative', marginBottom: getHeight(8) },
-// //   backgroundLines: { position: 'absolute', width: '100%', height: '100%' },
-// //   verticalLineContainer: {
-// //     position: 'absolute',
-// //     height: '100%',
-// //     alignItems: 'center',
-// //   },
-// //   verticalSegment: { borderRadius: 10 },
-// //   svgContainer: { position: 'absolute', top: 0, left: 0 },
-// //   barsContainer: { position: 'absolute', width: '100%', height: '100%' },
-// //   dotContainer: { position: 'absolute', width: 24, height: 12 },
-// //   coloredBar: { width: 24, height: 8, borderRadius: 6 },
-// //   glowEffect: { position: 'absolute', width: 30, height: 13, borderRadius: 4, left: -3, top: -1 },
-// //   labelsContainer: { height: 40 },
-// //   labelContainer: { position: 'absolute', alignItems: 'center' },
-// //   valueText: { fontFamily: fontsfamily.bold, fontSize: fontSize.size12 },
-// //   dateText: { fontFamily: fontsfamily.regular, fontSize: fontSize.size12 },
-// // });
-
-// // export default VerticalBarChart;
-
-//final previous code
-// import React from 'react';
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   Dimensions,
-// } from 'react-native';
-// import Svg, { Path } from 'react-native-svg';
-// import { getHeight } from '../constants/utils/Dimensions';
-// import { Colors } from '../constants/Colors';
-// import { fontsfamily } from '../constants/FontFamily';
-// import { fontSize } from '../constants/FontSizes';
-
-// const { width } = Dimensions.get('window');
-
-// const VerticalBarChart = ({
-//   data = [],
-//   chartMaxValue,
-//   chartMinValue,
-// }) => {
-//   // -------------------------
-//   // Threshold configuration
-//   // -------------------------
-//   // moderate = max/min ± (span * MODERATE_FACTOR)
-//   // extreme  = max/min ± (span * EXTREME_FACTOR)
-//   const MODERATE_FACTOR = 0.5; // e.g. if span = 0.4 and max=0.54 -> moderateHigh = 0.54 + 0.4*0.5 = 0.74
-//   const EXTREME_FACTOR = 1.5; // used if you need explicit extreme bound (not strictly required to compute color)
-
-//   // -------------------------
-//   // 1) compute dynamic min/max first
-//   // -------------------------
-//   const rawValues = data.length ? data.map(i => Number(i.value) || 0) : [0];
-//   const dynamicMaxValue = Math.max(...rawValues);
-//   const dynamicMinValue = Math.min(...rawValues);
-
-//   const finalChartMaxValue =
-//     chartMaxValue !== undefined ? chartMaxValue : dynamicMaxValue * 1.05;
-//   const finalChartMinValue =
-//     chartMinValue !== undefined ? chartMinValue : dynamicMinValue;
-
-//   const span = Math.abs(finalChartMaxValue - finalChartMinValue) || 1;
-
-//   // moderate thresholds (upper and lower)
-//   const moderateHighThreshold = finalChartMaxValue + span * MODERATE_FACTOR;
-//   const moderateLowThreshold = finalChartMinValue - span * MODERATE_FACTOR;
-
-//   // extreme thresholds (optional if you want explicit check)
-//   const extremeHighThreshold = finalChartMaxValue + span * EXTREME_FACTOR;
-//   const extremeLowThreshold = finalChartMinValue - span * EXTREME_FACTOR;
-
-//   // -------------------------
-//   // 2) value -> (color, severity) mapping
-//   // severity one of:
-//   // 'middle' | 'top-moderate' | 'top-extreme' | 'bottom-moderate' | 'bottom-extreme'
-//   // -------------------------
-//   const getValueColorAndSeverity = value => {
-//     const v = Number(value);
-
-//     // inside range → middle (blue)
-//     if (v >= finalChartMinValue && v <= finalChartMaxValue) {
-//       return { color: Colors.blue1C, severity: 'middle' };
-//     }
-
-//     // above max
-//     if (v > finalChartMaxValue) {
-//       if (v >= moderateHighThreshold) {
-//         // extremely high
-//         return { color: Colors.redCA, severity: 'top-extreme' };
-//       } else {
-//         // moderately high
-//         return { color: Colors.goldenCA, severity: 'top-moderate' };
-//       }
-//     }
-
-//     // below min
-//     if (v < finalChartMinValue) {
-//       if (v <= moderateLowThreshold) {
-//         // extremely low
-//         return { color: Colors.redCA, severity: 'bottom-extreme' };
-//       } else {
-//         // moderately low
-//         return { color: Colors.goldenCA, severity: 'bottom-moderate' };
-//       }
-//     }
-
-//     // fallback
-//     return { color: Colors.grayED, severity: 'middle' };
-//   };
-
-//   // -------------------------
-//   // 3) build updatedData using computed colors
-//   // -------------------------
-//   const updatedData = data.map(item => {
-//     const { color, severity } = getValueColorAndSeverity(item.value);
-//     return {
-//       ...item,
-//       color,
-//       pathColor: color,
-//       _severity: severity,
-//     };
-//   });
-
-//   // -------------------------
-//   // layout constants
-//   // -------------------------
-//   const chartHeight = 90;
-//   const chartWidth = width - 125;
-//   const barWidth = chartWidth / Math.max(updatedData.length, 1);
-//   const paddingVertical = 7;
-
-//   const SEG_HEIGHT_THIN = 20;
-//   const SEG_HEIGHT_THICK = 40;
-//   const MARGIN_HEIGHT = 2.5;
-//   const SEG_WIDTH_THIN = 4;
-//   const SEG_WIDTH_THICK = 6;
-
-//   const GRAY_COLOR = Colors.grayED;
-//   const COLOR_OPACITY = 0.25; // visibility for active segments
-//   const INACTIVE_OPACITY = 1;
-
-//   // -------------------------
-//   // positioning
-//   // -------------------------
-//   // const getPosition = (index, value) => {
-//   //   const clampedValue = Math.min(
-//   //     finalChartMaxValue,
-//   //     Math.max(finalChartMinValue, Number(value)),
-//   //   );
-
-//   //   const usableHeight = chartHeight - paddingVertical * 2;
-
-//   //   const normalized =
-//   //     finalChartMaxValue - finalChartMinValue === 0
-//   //       ? 0.5
-//   //       : (clampedValue - finalChartMinValue) /
-//   //         (finalChartMaxValue - finalChartMinValue);
-
-//   //   const x = index * barWidth + barWidth / 2;
-//   //   const y = chartHeight - paddingVertical - normalized * usableHeight;
-//   //   return { x, y };
-//   // };
-//   // const getPosition = (index, value) => {
-//   //   const v = Number(value);
-  
-//   //   // Clamp only inside the middle logical range, not whole chart
-//   //   const unclamped = (v - finalChartMinValue) / (finalChartMaxValue - finalChartMinValue);
-  
-//   //   // clamp between 0–1
-//   //   const normalized = Math.max(0, Math.min(1, unclamped));
-  
-//   //   // MIDDLE SEGMENT POSITION RANGE
-//   //   const middleStartY = MARGIN_HEIGHT + SEG_HEIGHT_THIN + MARGIN_HEIGHT;      // start of thick segment
-//   //   const middleEndY = middleStartY + SEG_HEIGHT_THICK;                        // end of thick segment
-  
-//   //   // We want maxValue → middleStartY (top of middle)
-//   //   // We want minValue → middleEndY (bottom of middle)
-//   //   const y = middleEndY - normalized * (middleEndY - middleStartY);
-  
-//   //   const x = index * barWidth + barWidth / 2;
-//   //   return { x, y };
-//   // };
-//   const getPosition = (index, value) => {
-//     const v = Number(value);
-  
-//     // SEGMENT Y POSITIONS
-//     const topStartY = MARGIN_HEIGHT;                                         // top segment TOP
-//     const topEndY = topStartY + SEG_HEIGHT_THIN;                             // top segment BOTTOM
-  
-//     const middleStartY = topEndY + MARGIN_HEIGHT;                            // middle segment TOP
-//     const middleEndY = middleStartY + SEG_HEIGHT_THICK;                      // middle segment BOTTOM
-  
-//     const bottomStartY = middleEndY + MARGIN_HEIGHT;                         // bottom segment TOP
-//     const bottomEndY = bottomStartY + SEG_HEIGHT_THIN;                       // bottom segment BOTTOM
-  
-//     let y;
-  
-//     // -----------------------
-//     // 1) EXTREME HIGH
-//     // -----------------------
-//     if (v >= moderateHighThreshold) {
-//       y = topStartY;  // stick dot at very top
-//     }
-  
-//     // -----------------------
-//     // 2) MODERATE HIGH
-//     // -----------------------
-//     else if (v > finalChartMaxValue) {
-//       // proportional mapping inside top thin segment
-//       const ratio = (v - finalChartMaxValue) / (moderateHighThreshold - finalChartMaxValue);
-//       y = topEndY - ratio * (topEndY - topStartY);
-//     }
-  
-//     // -----------------------
-//     // 3) NORMAL RANGE (middle)
-//     // -----------------------
-//     else if (v >= finalChartMinValue && v <= finalChartMaxValue) {
-//       const ratio = (v - finalChartMinValue) / (finalChartMaxValue - finalChartMinValue);
-//       y = middleEndY - ratio * (middleEndY - middleStartY);
-//     }
-  
-//     // -----------------------
-//     // 4) MODERATE LOW
-//     // -----------------------
-//     else if (v >= moderateLowThreshold) {
-//       const ratio = (finalChartMinValue - v) / (finalChartMinValue - moderateLowThreshold);
-//       y = bottomStartY + ratio * (bottomEndY - bottomStartY);
-//     }
-  
-//     // -----------------------
-//     // 5) EXTREME LOW
-//     // -----------------------
-//     else {
-//       y = bottomEndY; // stick dot at very bottom
-//     }
-  
-//     const x = index * barWidth + barWidth / 2;
-//     return { x, y };
-//   };
-  
-  
-
-//   // -------------------------
-//   // path segments (curved line)
-//   // use the color of the target point for each segment (as before)
-//   // -------------------------
-//   const createPathSegments = () => {
-//     const positions = updatedData.map((item, index) =>
-//       getPosition(index, item.value),
-//     );
-//     const segments = [];
-//     if (positions.length < 2) return segments;
-
-//     for (let i = 1; i < positions.length; i++) {
-//       const p0 = positions[i - 1];
-//       const p1 = positions[i];
-
-//       const cX1 = p0.x + (p1.x - p0.x) / 2;
-//       const cY1 = p0.y;
-//       const cX2 = p1.x - (p1.x - p0.x) / 2;
-//       const cY2 = p1.y;
-
-//       const segmentPath = `M ${p0.x} ${p0.y} C ${cX1} ${cY1}, ${cX2} ${cY2}, ${p1.x} ${p1.y}`;
-
-//       segments.push({
-//         path: segmentPath,
-//         color: updatedData[i].pathColor,
-//       });
-//     }
-
-//     return segments;
-//   };
-
-//   // -------------------------
-//   // Vertical segments component
-//   // Use severity to decide which part to color and whether yellow/red for moderate/extreme
-//   // -------------------------
-//   const VerticalLineAssembly = ({ item, index }) => {
-//     const { value, color, _severity } = item;
-//     const centerX = index * barWidth + barWidth / 2;
-
-//     // default grey
-//     let topColor = GRAY_COLOR;
-//     let middleColor = GRAY_COLOR;
-//     let bottomColor = GRAY_COLOR;
-
-//     // fill according to severity
-//     if (_severity === 'middle') {
-//       middleColor = color; // blue
-//     } else if (_severity === 'top-moderate') {
-//       topColor = color; // yellow
-//     } else if (_severity === 'top-extreme') {
-//       topColor = color; // red
-//     } else if (_severity === 'bottom-moderate') {
-//       bottomColor = color; // yellow
-//     } else if (_severity === 'bottom-extreme') {
-//       bottomColor = color; // red
-//     }
-
-//     // opacities
-//     const topOpacity = topColor === GRAY_COLOR ? INACTIVE_OPACITY : COLOR_OPACITY;
-//     const middleOpacity = middleColor === GRAY_COLOR ? INACTIVE_OPACITY : COLOR_OPACITY;
-//     const bottomOpacity = bottomColor === GRAY_COLOR ? INACTIVE_OPACITY : COLOR_OPACITY;
-
-//     return (
-//       <View
-//         style={[
-//           styles.verticalLineContainer,
-//           { left: centerX - SEG_WIDTH_THICK / 2 },
-//         ]}
-//       >
-//         <View style={{ height: MARGIN_HEIGHT }} />
-
-//         {/* TOP (thin) */}
-//         <View
-//           style={[
-//             styles.verticalSegment,
-//             {
-//               height: SEG_HEIGHT_THIN,
-//               width: SEG_WIDTH_THIN,
-//               backgroundColor: topColor,
-//               opacity: topOpacity,
-//               borderRadius: 10,
-//             },
-//           ]}
-//         />
-
-//         <View style={{ height: MARGIN_HEIGHT }} />
-
-//         {/* MIDDLE (thick) */}
-//         <View
-//           style={[
-//             styles.verticalSegment,
-//             {
-//               height: SEG_HEIGHT_THICK,
-//               width: SEG_WIDTH_THICK,
-//               backgroundColor: middleColor,
-//               opacity: middleOpacity,
-//               borderRadius: 10,
-//             },
-//           ]}
-//         />
-
-//         <View style={{ height: MARGIN_HEIGHT }} />
-
-//         {/* BOTTOM (thin) */}
-//         <View
-//           style={[
-//             styles.verticalSegment,
-//             {
-//               height: SEG_HEIGHT_THIN,
-//               width: SEG_WIDTH_THIN,
-//               backgroundColor: bottomColor,
-//               opacity: bottomOpacity,
-//               borderRadius: 10,
-//             },
-//           ]}
-//         />
-
-//         <View style={{ height: MARGIN_HEIGHT }} />
-//       </View>
-//     );
-//   };
-
-//   // -------------------------
-//   // Render
-//   // -------------------------
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.chartContainer}>
-//         <View style={styles.backgroundLines}>
-//           {updatedData.map((item, idx) => (
-//             <VerticalLineAssembly key={idx} item={item} index={idx} />
-//           ))}
-//         </View>
-
-//         <Svg height={chartHeight} width={chartWidth} style={styles.svgContainer}>
-//           {createPathSegments().map((segment, i) => (
-//             <Path
-//               key={i}
-//               d={segment.path}
-//               stroke={segment.color}
-//               strokeWidth="5"
-//               fill="none"
-//               opacity={0.25}
-//             />
-//           ))}
-//         </Svg>
-
-//         <View style={styles.barsContainer}>
-//           {updatedData.map((item, index) => {
-//             const pos = getPosition(index, item.value);
-
-//             // Glow style: stronger for moderate/extreme
-//             const glowShadow =
-//               item._severity === 'middle'
-//                 ? {}
-//                 : {
-//                     shadowColor: '#000',
-//                     shadowOffset: { width: 0, height: 2 },
-//                     shadowOpacity: 0.25,
-//                     shadowRadius: 3.84,
-//                     elevation: 5,
-//                   };
-
-//             return (
-//               <View
-//                 key={index}
-//                 style={[
-//                   styles.dotContainer,
-//                   { left: pos.x - 12, top: pos.y - 6 },
-//                 ]}
-//               >
-//                 <View
-//                   style={[
-//                     styles.glowEffect,
-//                     { backgroundColor: Colors.white, borderRadius: 100 },
-//                     glowShadow,
-//                   ]}
-//                 />
-//                 <View
-//                   style={[
-//                     styles.coloredBar,
-//                     { backgroundColor: item.color },
-//                   ]}
-//                 />
-//               </View>
-//             );
-//           })}
-//         </View>
-//       </View>
-
-//       {/* labels */}
-//       <View style={styles.labelsContainer}>
-//         {updatedData.map((item, index) => {
-//           const centerX = index * barWidth + barWidth / 2;
-//           return (
-//             <View
-//               key={index}
-//               style={[
-//                 styles.labelContainer,
-//                 { left: centerX - 25, width: 50 },
-//               ]}
-//             >
-//               <Text style={styles.valueText}>{String(item.value)}</Text>
-//               <Text style={styles.dateText}>{item.date}</Text>
-//             </View>
-//           );
-//         })}
-//       </View>
-//     </View>
-//   );
-// };
-
-// // -------------------------
-// // Styles
-// // -------------------------
-// const styles = StyleSheet.create({
-//   container: { marginLeft: -5 },
-//   chartContainer: { height: 90, position: 'relative', marginBottom: getHeight(8) },
-//   backgroundLines: { position: 'absolute', width: '100%', height: '100%' },
-//   verticalLineContainer: { position: 'absolute', height: '100%', alignItems: 'center' },
-//   verticalSegment: { alignSelf: 'center' },
-//   svgContainer: { position: 'absolute', top: 0, left: 0 },
-//   barsContainer: { position: 'absolute', width: '100%', height: '100%' },
-//   dotContainer: { position: 'absolute', width: 24, height: 11, justifyContent: 'center', alignItems: 'center' },
-//   coloredBar: { width: 24, height: 8, borderRadius: 6, zIndex: 1 },
-//   glowEffect: { position: 'absolute', width: 30, height: 13, borderRadius: 4, left: -3, top: -1, zIndex: 0 },
-//   labelsContainer: { position: 'relative', height: 40 },
-//   labelContainer: { position: 'absolute', alignItems: 'center', fontFamily: fontsfamily.bold, fontSize: fontSize.size12 },
-//   valueText: { color: Colors.gray0F, fontFamily: fontsfamily.bold, fontSize: fontSize.size12, marginBottom: 4 },
-//   dateText: { color: Colors.gray55, fontFamily: fontsfamily.regular, fontSize: fontSize.size12 },
-// });
-
-// export default VerticalBarChart;
-
-
-
-// import React from "react";
-// import { View, Text, StyleSheet, Dimensions } from "react-native";
-// import Svg, { Polyline, Circle } from "react-native-svg";
-// import { Colors } from "../constants/Colors";
-// import { fontsfamily } from "../constants/FontFamily";
-// import { fontSize } from "../constants/FontSizes";
-// import { getHeight, ScreenDimensions } from "../constants/utils/Dimensions";
-
-// const { width } = Dimensions.get("window");
-
-// const VerticalBarChart = ({
-//   data = [],
-//   chartMinValue = 0.15,  // LOW threshold
-//   chartMaxValue = 0.35,  // NORMAL high threshold
-// }) => {
-//   if (!data.length) return null;
-
-//   // Values
-//   const values = data.map((i) => Number(i.value));
-//   const maxValue = Math.max(...values);
-//   const minValue = Math.min(...values);
-
-//   // Layout
-//   // const chartWidth = width - 110;
-//   const cardWidth = ScreenDimensions.screenWidth * 0.75;  // your TouchableOpacity width
-//   const chartWidth = cardWidth - 32;     // minus horizontal padding
-
-//   const chartHeight = 90;
-//   const barWidth = chartWidth / (data.length - 1);
-//   const paddingVertical = 10;
-
-//   // -------------------------------------
-//   // ✔ Apple-style dot color system
-//   // -------------------------------------
-//   const getColor = (value) => {
-//     const v = Number(value);
-
-//     if (v === maxValue) return Colors.blue1C;   // Peak → BLUE
-//     if (v < chartMinValue) return Colors.redCA; // Low → RED
-//     return Colors.goldenCA;                     // Normal → YELLOW
-//   };
-
-//   // -------------------------------------
-//   // Convert value ➝ point on chart
-//   // -------------------------------------
-//   const getPoint = (index, value) => {
-//     const range = maxValue - minValue || 1;
-
-//     const normalized = (value - minValue) / range;
-
-//     const x = index * barWidth;
-
-//     const y =
-//       chartHeight -
-//       paddingVertical -
-//       normalized * (chartHeight - paddingVertical * 2);
-
-//     return { x, y };
-//   };
-
-//   const points = data.map((item, index) =>
-//     getPoint(index, Number(item.value))
-//   );
-
-//   return (
-//     <View style={styles.container}>
-
-//       {/* ---------------- SVG CHART AREA ---------------- */}
-//       <Svg width={chartWidth} height={chartHeight}>
-
-//         {/* ----------------------------------------------------
-//             Vertical faded bars (top + bottom for each point)
-//         -----------------------------------------------------*/}
-//         {points.map((p, index) => (
-//           <React.Fragment key={`bar-${index}`}>
-
-//             {/* TOP faded bar */}
-//             <Polyline
-//               points={`${p.x},0 ${p.x},25`}
-//               stroke="#E5E5E5"
-//               strokeWidth={4}
-//               strokeLinecap="round"
-//               opacity={0.45}
-//             />
-
-//             {/* BOTTOM faded bar */}
-//             <Polyline
-//               points={`${p.x},65 ${p.x},90`}
-//               stroke="#E5E5E5"
-//               strokeWidth={4}
-//               strokeLinecap="round"
-//               opacity={0.45}
-//             />
-
-//           </React.Fragment>
-//         ))}
-
-//         {/* ---------------------------------------
-//            TWO dashed horizontal lines (TOP & BOTTOM)
-//         ---------------------------------------- */}
-
-//         {/* Top dashed horizontal line */}
-//         <Polyline
-//           points={`0,25 ${chartWidth},25`}
-//           stroke="#DADADA"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* Bottom dashed horizontal line */}
-//         <Polyline
-//           points={`0,70 ${chartWidth},70`}
-//           stroke="#DADADA"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* ---------------------------------------
-//            Main connecting GREY line
-//         ---------------------------------------- */}
-//         <Polyline
-//           points={points.map((p) => `${p.x},${p.y}`).join(" ")}
-//           stroke="#BEBEBE"
-//           strokeWidth={2}
-//           fill="none"
-//         />
-
-//         {/* ---------------------------------------
-//            Colored Dots
-//         ---------------------------------------- */}
-//         {points.map((p, index) => (
-//           <Circle
-//             key={index}
-//             cx={p.x}
-//             cy={p.y}
-//             r={7}
-//             fill={getColor(data[index].value)}
-//           />
-//         ))}
-
-//       </Svg>
-
-//       {/* ---------------- LABELS (Value + Date) ---------------- */}
-//       <View style={styles.labelsContainer}>
-//         {data.map((item, index) => {
-//           const posX = points[index].x - 22;
-//           const isLast = index === data.length - 1;
-
-//           return (
-//             <View key={index} style={[styles.labelBox, { left: posX }]}>
-
-//               {/* Value number above dot */}
-//               <Text
-//                 style={[
-//                   styles.valueText,
-//                   isLast && styles.lastValueText,
-//                 ]}
-//               >
-//                 {String(item.value)}
-//               </Text>
-
-//               {/* Date below */}
-//               <Text style={styles.dateText}>{item.date}</Text>
-
-//             </View>
-//           );
-//         })}
-//       </View>
-
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     paddingTop: 10,
-//   },
-
-//   labelsContainer: {
-//     width: "100%",
-//     height: 40,
-//     marginTop: 4,
-//     position: "relative",
-//   },
-
-//   labelBox: {
-//     position: "absolute",
-//     width: 50,
-//     alignItems: "center",
-//   },
-
-//   valueText: {
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray0F,
-//   },
-
-//   lastValueText: {
-//     color: Colors.black,
-//     fontFamily: fontsfamily.bold,
-//   },
-
-//   dateText: {
-//     marginTop: 2,
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray55,
-//   },
-// });
-
-// export default VerticalBarChart;
-
-
-//working chart new
-// import React from "react";
-// import { View, Text, StyleSheet, Dimensions } from "react-native";
-// import Svg, { Polyline, Circle } from "react-native-svg";
-// import { Colors } from "../constants/Colors";
-// import { fontsfamily } from "../constants/FontFamily";
-// import { fontSize } from "../constants/FontSizes";
-// import { getHeight } from "../constants/utils/Dimensions";
-
-// const VerticalBarChart = ({
-//   data = [],
-//   chartMinValue = 0.15,
-//   chartMaxValue = 0.35,
-// }) => {
-//   if (!data.length) return null;
-
-//   // -------------------------
-//   // PARENT CARD WIDTH MATCHING
-//   // -------------------------
-//   const screenWidth = Dimensions.get("window").width;
-//   const cardWidth = screenWidth * 0.75; // Your card width
-//   const horizontalPadding = 12; // Prevent dots from being cut
-
-//   // Extract numeric values
-//   const values = data.map((i) => Number(i.value));
-//   const maxValue = Math.max(...values);
-//   const minValue = Math.min(...values);
-
-//   // SVG chart width inside card
-//   const chartWidth = (cardWidth - 32) - horizontalPadding * 2;
-//   const chartHeight = 90;
-
-//   const barWidth = chartWidth / (data.length - 1);
-//   const paddingVertical = 10;
-
-//   // -------------------------
-//   // DOT COLOR LOGIC (Apple Style)
-//   // -------------------------
-//   const getColor = (value) => {
-//     const v = Number(value);
-//     if (v === maxValue) return Colors.blue1C;     // peak = blue
-//     if (v < chartMinValue) return Colors.redCA;   // low = red
-//     return Colors.goldenCA;                       // normal = yellow
-//   };
-
-//   // -------------------------
-//   // MAP VALUE → SVG POSITION
-//   // -------------------------
-//   const getPoint = (index, value) => {
-//     const range = maxValue - minValue || 1;
-//     const normalized = (value - minValue) / range;
-
-//     const x = horizontalPadding + index * barWidth;
-
-//     const y =
-//       chartHeight -
-//       paddingVertical -
-//       normalized * (chartHeight - paddingVertical * 2);
-
-//     return { x, y };
-//   };
-
-//   const points = data.map((item, index) =>
-//     getPoint(index, Number(item.value))
-//   );
-
-//   return (
-//     <View style={styles.container}>
-
-//       <Svg width={chartWidth + horizontalPadding * 2} height={chartHeight}>
-
-//         {/* ----------------------------------
-//             Vertical faded bars (top + bottom)
-//         ---------------------------------- */}
-//         {points.map((p, index) => (
-//           <React.Fragment key={`bar-${index}`}>
-
-//             <Polyline
-//               points={`${p.x},0 ${p.x},25`}
-//               stroke="#E5E5E5"
-//               strokeWidth={4}
-//               strokeLinecap="round"
-//               opacity={0.45}
-//             />
-
-//             <Polyline
-//               points={`${p.x},65 ${p.x},90`}
-//               stroke="#E5E5E5"
-//               strokeWidth={4}
-//               strokeLinecap="round"
-//               opacity={0.45}
-//             />
-
-//           </React.Fragment>
-//         ))}
-
-        
-
-//         {/* ------------------------------
-//             Top dashed horizontal line
-//         ------------------------------ */}
-//         <Polyline
-//           points={`0,25 ${(chartWidth + horizontalPadding * 2)},25`}
-//           stroke="#EDEDF0"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* ------------------------------
-//             Bottom dashed horizontal line
-//         ------------------------------ */}
-//         <Polyline
-//           points={`0,62 ${(chartWidth + horizontalPadding * 2)},62`}
-//           stroke="#EDEDF0"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* ------------------------------
-//             Main connecting grey line
-//         ------------------------------ */}
-//         <Polyline
-//           points={points.map((p) => `${p.x},${p.y}`).join(" ")}
-//           stroke="#BEBEBE"
-//           strokeWidth={2}
-//           fill="none"
-//         />
-
-//         {/* ------------------------------
-//             Colored dots
-//         ------------------------------ */}
-//         {points.map((p, index) => (
-//           <Circle
-//             key={index}
-//             cx={p.x}
-//             cy={p.y}
-//             r={7}
-//             fill={getColor(data[index].value)}
-//           />
-//         ))}
-
-//       </Svg>
-
-//       {/* ---------------- LABELS (Value + Date) ---------------- */}
-//       <View style={styles.labelsContainer}>
-//         {data.map((item, index) => {
-//           const posX = points[index].x - 22;
-//           const isLast = index === data.length - 1;
-
-//           return (
-//             <View key={index} style={[styles.labelBox, { left: posX }]}>
-
-//               <Text
-//                 style={[
-//                   styles.valueText,
-//                   isLast && styles.lastValueText,
-//                 ]}
-//               >
-//                 {String(item.value)}
-//               </Text>
-
-//               <Text style={styles.dateText}>{item.date}</Text>
-
-//             </View>
-//           );
-//         })}
-//       </View>
-
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     paddingTop: 10,
-//   },
-
-//   labelsContainer: {
-//     width: "100%",
-//     height: 40,
-//     marginTop: 4,
-//     position: "relative",
-//   },
-
-//   labelBox: {
-//     position: "absolute",
-//     width: 50,
-//     alignItems: "center",
-//   },
-
-//   valueText: {
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray0F,
-//   },
-
-//   lastValueText: {
-//     color: Colors.black,
-//     fontFamily: fontsfamily.bold,
-//   },
-
-//   dateText: {
-//     marginTop: 2,
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray55,
-//   },
-// });
-
-// export default VerticalBarChart;
-
-// import React from "react";
-// import { View, Text, StyleSheet, Dimensions } from "react-native";
-// import Svg, { Polyline, Circle, Defs, LinearGradient, Stop, Path } from "react-native-svg";
-// import { Colors } from "../constants/Colors";
-// import { fontsfamily } from "../constants/FontFamily";
-// import { fontSize } from "../constants/FontSizes";
-
-// const VerticalBarChart = ({
-//   data = [],
-//   chartMinValue = 0.15,
-//   chartMaxValue = 0.35,
-// }) => {
-//   if (!data.length) return null;
-
-//   const screenWidth = Dimensions.get("window").width;
-//   const cardWidth = screenWidth * 0.75;
-//   const horizontalPadding = 12;
-
-//   const values = data.map((i) => Number(i.value));
-//   const maxValue = Math.max(...values);
-//   const minValue = Math.min(...values);
-
-//   const chartWidth = (cardWidth - 32) - horizontalPadding * 2;
-//   const chartHeight = 90;
-
-//   const barWidth = chartWidth / (data.length - 1);
-//   const paddingVertical = 10;
-
-//   // ----------------------------------
-//   // Dot color logic
-//   // ----------------------------------
-//   const getColor = (value) => {
-//     const v = Number(value);
-//     if (v === maxValue) return Colors.blue1C;
-//     if (v < chartMinValue) return Colors.redCA;
-//     return Colors.goldenCA;
-//   };
-
-//   // ----------------------------------
-//   // Mapping values into chart coordinates
-//   // ----------------------------------
-//   // const getPoint = (index, value) => {
-//   //   const range = maxValue - minValue || 1;
-//   //   const normalized = (value - minValue) / range;
-
-//   //   const x = horizontalPadding + index * barWidth;
-
-//   //   const y =
-//   //     chartHeight -
-//   //     paddingVertical -
-//   //     normalized * (chartHeight - paddingVertical * 2);
-
-//   //   return { x, y };
-//   // };
-//   // const getPoint = (index, value) => {
-//   //   const v = Number(value);
-  
-//   //   // ----- Y ZONE POSITIONS (fixed visually) -----
-//   //   const topBarY = 0;                     // top faded bar start
-//   //   const topBarEndY = 25;                 // top faded bar end
-//   //   const upperDashY = 25;                 // upper dashed line
-//   //   const lowerDashY = 62;                 // lower dashed line
-//   //   const bottomBarStartY = 62;            // start of bottom bar
-//   //   const bottomBarEndY = 90;              // bottom faded bar end
-  
-//   //   // ----- MULTIPLIERS -----
-//   //   const span = Math.abs(chartMaxValue - chartMinValue) || 1;
-//   //   const moderateHigh = chartMaxValue + span * 0.5;
-//   //   const extremeHigh = chartMaxValue + span * 1.5;
-  
-//   //   const moderateLow = chartMinValue - span * 0.5;
-//   //   const extremeLow = chartMinValue - span * 1.5;
-  
-//   //   let y;
-  
-//   //   // ---------- EXTREME HIGH ----------
-//   //   if (v >= extremeHigh) {
-//   //     y = topBarY; // push dot to top
-//   //   }
-  
-//   //   // ---------- MODERATE HIGH ----------
-//   //   else if (v > chartMaxValue) {
-//   //     const ratio = (v - chartMaxValue) / (moderateHigh - chartMaxValue);
-//   //     y = upperDashY - ratio * (upperDashY - topBarEndY);
-//   //   }
-  
-//   //   // ---------- NORMAL RANGE ----------
-//   //   else if (v >= chartMinValue && v <= chartMaxValue) {
-//   //     const ratio = (v - chartMinValue) / (chartMaxValue - chartMinValue);
-//   //     y = lowerDashY - ratio * (lowerDashY - upperDashY);
-//   //   }
-  
-//   //   // ---------- MODERATE LOW ----------
-//   //   else if (v >= moderateLow) {
-//   //     const ratio = (chartMinValue - v) / (chartMinValue - moderateLow);
-//   //     y = lowerDashY + ratio * (bottomBarStartY - lowerDashY);
-//   //   }
-  
-//   //   // ---------- EXTREME LOW ----------
-//   //   else {
-//   //     y = bottomBarEndY; // push dot to bottom
-//   //   }
-  
-//   //   // X POSITION
-//   //   const x = horizontalPadding + index * barWidth;
-  
-//   //   return { x, y };
-//   // };
-//   const getPoint = (index, value) => {
-//     const v = Number(value);
-  
-//     // FIXED VISUAL Y POSITIONS
-//     const topStart = 0;      // very top
-//     const topEnd = 25;       // bottom of top faded bar
-//     const midTop = 25;       // upper dashed line
-//     const midBottom = 62;    // lower dashed line
-//     const botStart = 62;     // top of bottom faded bar
-//     const botEnd = 90;       // very bottom
-  
-//     // DEFINE RANGE FROM PROPS
-//     const minR = chartMinValue;
-//     const maxR = chartMaxValue;
-  
-//     // DEFINE OUTER LIMITS (HOW MUCH TO ALLOW OVERFLOW)
-//     const span = maxR - minR || 1;
-//     const moderateHigh = maxR + span * 0.5;
-//     const extremeHigh = maxR + span * 1.5;
-  
-//     const moderateLow = minR - span * 0.5;
-//     const extremeLow = minR - span * 1.5;
-  
-//     let y;
-  
-//     // ---------- EXTREME HIGH ----------
-//     if (v >= extremeHigh) {
-//       y = topStart;
-//     }
-//     // ---------- MODERATE HIGH ----------
-//     else if (v > maxR) {
-//       const ratio = (v - maxR) / (moderateHigh - maxR);
-//       y = midTop - ratio * (midTop - topEnd);
-//     }
-//     // ---------- MID RANGE ----------
-//     else if (v >= minR && v <= maxR) {
-//       const ratio = (v - minR) / (maxR - minR);
-//       y = midBottom - ratio * (midBottom - midTop);
-//     }
-//     // ---------- MODERATE LOW ----------
-//     else if (v >= moderateLow) {
-//       const ratio = (minR - v) / (minR - moderateLow);
-//       y = midBottom + ratio * (botStart - midBottom);
-//     }
-//     // ---------- EXTREME LOW ----------
-//     else {
-//       y = botEnd;
-//     }
-  
-//     // X POSITION
-//     const x = horizontalPadding + index * barWidth;
-  
-//     return { x, y };
-//   };
-  
-  
-
-//   const points = data.map((item, index) =>
-//     getPoint(index, Number(item.value))
-//   );
-
-//   return (
-//     <View style={styles.container}>
-//       <Svg width={chartWidth + horizontalPadding * 2} height={chartHeight}>
-
-//         {/* ---------------------------------------------------
-//             GRADIENTS FOR CONNECTING LINE (segment by segment)
-//         ---------------------------------------------------- */}
-//         <Defs>
-//           {points.slice(0, -1).map((p, i) => {
-//             const c1 = getColor(data[i].value);
-//             const c2 = getColor(data[i + 1].value);
-//             return (
-//               <LinearGradient
-//                 key={`grad-${i}`}
-//                 id={`grad_${i}`}
-//                 x1={p.x}
-//                 y1={p.y}
-//                 x2={points[i + 1].x}
-//                 y2={points[i + 1].y}
-//                 gradientUnits="userSpaceOnUse"
-//               >
-//                 <Stop offset="0%" stopColor={c1} />
-//                 <Stop offset="100%" stopColor={c2} />
-//               </LinearGradient>
-//             );
-//           })}
-//         </Defs>
-
-//         {/* ----------------------------------
-//             Vertical faded bars
-//         ---------------------------------- */}
-//         {points.map((p, index) => (
-//           <React.Fragment key={`bar-${index}`}>
-//             <Polyline
-//               points={`${p.x},0 ${p.x},25`}
-//               stroke="#E5E5E5"
-//               strokeWidth={4}
-//               strokeLinecap="round"
-//               opacity={0.45}
-//             />
-
-//             <Polyline
-//               points={`${p.x},65 ${p.x},90`}
-//               stroke="#E5E5E5"
-//               strokeWidth={4}
-//               strokeLinecap="round"
-//               opacity={0.45}
-//             />
-//           </React.Fragment>
-//         ))}
-
-//         {/* ----------------------------------
-//             Top dashed horizontal line
-//         ---------------------------------- */}
-//         <Polyline
-//           points={`0,25 ${(chartWidth + horizontalPadding * 2)},25`}
-//           stroke="#EDEDF0"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* ----------------------------------
-//             Bottom dashed horizontal line
-//         ---------------------------------- */}
-//         <Polyline
-//           points={`0,62 ${(chartWidth + horizontalPadding * 2)},62`}
-//           stroke="#EDEDF0"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* ----------------------------------
-//             GRADIENT CONNECTING LINE
-//             (Piecewise segment-by-segment)
-//         ---------------------------------- */}
-//         {points.slice(0, -1).map((p0, i) => {
-//           const p1 = points[i + 1];
-//           return (
-//             <Path
-//               key={`seg-${i}`}
-//               d={`M ${p0.x},${p0.y} L ${p1.x},${p1.y}`}
-//               stroke={`url(#grad_${i})`}
-//               strokeWidth={2}
-//               fill="none"
-//             />
-//           );
-//         })}
-
-//         {/* ----------------------------------
-//             Colored dots
-//         ---------------------------------- */}
-//         {points.map((p, index) => (
-//           <Circle
-//             key={index}
-//             cx={p.x}
-//             cy={p.y}
-//             r={7}
-//             fill={getColor(data[index].value)}
-//           />
-//         ))}
-//       </Svg>
-
-//       {/* ----------------------------------
-//           Labels (value + date)
-//       ---------------------------------- */}
-//       <View style={styles.labelsContainer}>
-//         {data.map((item, index) => {
-//           const posX = points[index].x - 22;
-//           const isLast = index === data.length - 1;
-
-//           return (
-//             <View key={index} style={[styles.labelBox, { left: posX }]}>
-
-//               <Text
-//                 style={[
-//                   styles.valueText,
-//                   isLast && styles.lastValueText,
-//                 ]}
-//               >
-//                 {String(item.value)}
-//               </Text>
-
-//               <Text style={styles.dateText}>{item.date}</Text>
-
-//             </View>
-//           );
-//         })}
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     paddingTop: 10,
-//   },
-//   labelsContainer: {
-//     width: "100%",
-//     height: 40,
-//     marginTop: 4,
-//     position: "relative",
-//   },
-//   labelBox: {
-//     position: "absolute",
-//     width: 50,
-//     alignItems: "center",
-//   },
-//   valueText: {
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray0F,
-//   },
-//   lastValueText: {
-//     color: Colors.black,
-//     fontFamily: fontsfamily.bold,
-//   },
-//   dateText: {
-//     marginTop: 2,
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray55,
-//   },
-// });
-
-// export default VerticalBarChart;
-
+// //latest workign code
 // import React from "react";
 // import { View, Text, StyleSheet, Dimensions } from "react-native";
 // import Svg, { Polyline, Circle, Defs, LinearGradient, Stop, Path } from "react-native-svg";
@@ -2046,870 +16,64 @@
 // }) => {
 //   if (!data.length) return null;
 
-//   // Chart Layout Values
 //   const screenWidth = Dimensions.get("window").width;
-//   const cardWidth = screenWidth * 0.75;
-//   const horizontalPadding = 12;
-//   const chartWidth = (cardWidth - 32) - horizontalPadding * 2;
-//   const chartHeight = 90;
-//   const barWidth = chartWidth / (data.length - 1);
-
-//   // ------------------------------
-//   // 1) COLOR LOGIC (Apple-like)
-//   // ------------------------------
-//   const getColor = (value) => {
-//     const v = Number(value);
-
-//     if (v > chartMaxValue) return Colors.redCA;   // High
-//     if (v < chartMinValue) return Colors.redCA;   // Low
-
-//     return Colors.goldenCA;                       // Normal yellow
-//   };
-
-//   // ------------------------------
-//   // 2) POINT POSITION LOGIC
-//   //    Apple Health Zone Mapping
-//   // ------------------------------
-//   const getPoint = (index, value) => {
-//     const v = Number(value);
-
-//     // Fixed Y zones
-//     const topStart = 0;
-//     const topEnd = 25;
-//     const midTop = 25;
-//     const midBottom = 62;
-//     const botStart = 62;
-//     const botEnd = 90;
-
-//     // Range Mapping
-//     const minR = chartMinValue;
-//     const maxR = chartMaxValue;
-
-//     const span = maxR - minR || 1;
-
-//     const moderateHigh = maxR + span * 0.5;
-//     const extremeHigh = maxR + span * 1.5;
-
-//     const moderateLow = minR - span * 0.5;
-//     const extremeLow = minR - span * 1.5;
-
-//     let y;
-
-//     // EXTREME HIGH
-//     if (v >= extremeHigh) {
-//       y = topStart;
-//     }
-
-//     // MODERATE HIGH
-//     else if (v > maxR) {
-//       const ratio = (v - maxR) / (moderateHigh - maxR);
-//       y = midTop - ratio * (midTop - topEnd);
-//     }
-
-//     // MID RANGE
-//     else if (v >= minR && v <= maxR) {
-//       const ratio = (v - minR) / (maxR - minR);
-//       y = midBottom - ratio * (midBottom - midTop);
-//     }
-
-//     // MODERATE LOW
-//     else if (v >= moderateLow) {
-//       const ratio = (minR - v) / (minR - moderateLow);
-//       y = midBottom + ratio * (botStart - midBottom);
-//     }
-
-//     // EXTREME LOW
-//     else {
-//       y = botEnd;
-//     }
-
-//     // X
-//     const x = horizontalPadding + index * barWidth;
-
-//     return { x, y };
-//   };
-
-//   const points = data.map((item, index) => getPoint(index, item.value));
-
-//   return (
-//     <View style={styles.container}>
-//       <Svg width={chartWidth + horizontalPadding * 2} height={chartHeight}>
-
-//         {/* ----------------------------------------------------
-//              GRADIENTS FOR CONNECTING LINES (Segment by segment)
-//         ----------------------------------------------------- */}
-//         <Defs>
-//           {points.slice(0, -1).map((p, i) => {
-//             const c1 = getColor(data[i].value);
-//             const c2 = getColor(data[i + 1].value);
-
-//             return (
-//               <LinearGradient
-//                 key={`grad-${i}`}
-//                 id={`grad_${i}`}
-//                 x1={p.x}
-//                 y1={p.y}
-//                 x2={points[i + 1].x}
-//                 y2={points[i + 1].y}
-//                 gradientUnits="userSpaceOnUse"
-//               >
-//                 <Stop offset="0%" stopColor={c1} />
-//                 <Stop offset="100%" stopColor={c2} />
-//               </LinearGradient>
-//             );
-//           })}
-//         </Defs>
-
-//         {/* ----------------------------------
-//             Vertical faded bars
-//         ---------------------------------- */}
-//         {points.map((p, index) => (
-//           <React.Fragment key={`bar-${index}`}>
-//             <Polyline
-//               points={`${p.x},0 ${p.x},25`}
-//               stroke="#E5E5E5"
-//               strokeWidth={4}
-//               strokeLinecap="round"
-//               opacity={0.45}
-//             />
-
-//             <Polyline
-//               points={`${p.x},65 ${p.x},90`}
-//               stroke="#E5E5E5"
-//               strokeWidth={4}
-//               strokeLinecap="round"
-//               opacity={0.45}
-//             />
-//           </React.Fragment>
-//         ))}
-
-//         {/* ----------------------------------
-//             Top dashed line
-//         ---------------------------------- */}
-//         <Polyline
-//           points={`0,25 ${(chartWidth + horizontalPadding * 2)},25`}
-//           stroke="#EDEDF0"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* ----------------------------------
-//             Bottom dashed line
-//         ---------------------------------- */}
-//         <Polyline
-//           points={`0,62 ${(chartWidth + horizontalPadding * 2)},62`}
-//           stroke="#EDEDF0"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* ----------------------------------
-//             CONNECTING GRADIENT LINE
-//         ---------------------------------- */}
-//         {points.slice(0, -1).map((p0, i) => {
-//           const p1 = points[i + 1];
-//           return (
-//             <Path
-//               key={`seg-${i}`}
-//               d={`M ${p0.x},${p0.y} L ${p1.x},${p1.y}`}
-//               stroke={`url(#grad_${i})`}
-//               strokeWidth={2}
-//               fill="none"
-//             />
-//           );
-//         })}
-
-//         {/* ----------------------------------
-//             Data Dots
-//         ---------------------------------- */}
-//         {points.map((p, i) => (
-//           <Circle
-//             key={i}
-//             cx={p.x}
-//             cy={p.y}
-//             r={7}
-//             fill={getColor(data[i].value)}
-//           />
-//         ))}
-
-//       </Svg>
-
-//       {/* ----------------------------------
-//           Labels (Value + Date)
-//       ---------------------------------- */}
-//       <View style={styles.labelsContainer}>
-//         {data.map((item, index) => {
-//           const posX = points[index].x - 22;
-//           const isLast = index === data.length - 1;
-
-//           return (
-//             <View key={index} style={[styles.labelBox, { left: posX }]}>
-
-//               <Text
-//                 style={[styles.valueText, isLast && styles.lastValueText]}
-//               >
-//                 {String(item.value)}
-//               </Text>
-
-//               <Text style={styles.dateText}>{item.date}</Text>
-//             </View>
-//           );
-//         })}
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     paddingTop: 10,
-//   },
-
-//   labelsContainer: {
-//     width: "100%",
-//     height: 40,
-//     marginTop: 4,
-//     position: "relative",
-//   },
-
-//   labelBox: {
-//     position: "absolute",
-//     width: 50,
-//     alignItems: "center",
-//   },
-
-//   valueText: {
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray0F,
-//   },
-
-//   lastValueText: {
-//     color: Colors.black,
-//     fontFamily: fontsfamily.bold,
-//   },
-
-//   dateText: {
-//     marginTop: 2,
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray55,
-//   },
-// });
-
-// export default VerticalBarChart;
-
-// import React from "react";
-// import { View, Text, StyleSheet, Dimensions } from "react-native";
-// import Svg, {
-//   Polyline,
-//   Circle,
-//   Defs,
-//   LinearGradient,
-//   Stop,
-//   Path,
-// } from "react-native-svg";
-
-// import { Colors } from "../constants/Colors";
-// import { fontsfamily } from "../constants/FontFamily";
-// import { fontSize } from "../constants/FontSizes";
-
-// const VerticalBarChart = ({
-//   data = [],
-//   chartMinValue,
-//   chartMaxValue,
-// }) => {
-//   if (!data.length) return null;
-
-//   // Layout
-//   const screenWidth = Dimensions.get("window").width;
-//   const cardWidth = screenWidth * 0.75;
-//   const horizontalPadding = 12;
-//   const chartWidth = cardWidth - 32 - horizontalPadding * 2;
-//   const chartHeight = 90;
-
-//   const barWidth = chartWidth / (data.length - 1);
-
-//   // --------------------------------------------------
-//   // DOT COLOR LOGIC
-//   // --------------------------------------------------
-//   const getColor = (v) => {
-//     const value = Number(v);
-
-//     if (value > chartMaxValue) return Colors.redCA;     // high
-//     if (value < chartMinValue) return Colors.redCA;     // low
-//     return Colors.goldenCA;                             // normal
-//   };
-
-//   // --------------------------------------------------
-//   // POINT POSITION LOGIC (APPLE-STYLE ZONES)
-//   // --------------------------------------------------
-//   const getPoint = (index, value) => {
-//     const v = Number(value);
-
-//     // ⚠ These match your actual faded bars visually
-//     const topStart = 0;    // extreme top
-//     const topEnd = 32;     // bottom of top faded bar
-//     const midTop = 32;     // upper dashed line
-//     const midBottom = 62;  // lower dashed line
-//     const botStart = 62;   // upper point of bottom faded bar
-//     const botEnd = 90;     // extreme bottom
-
-//     const minR = chartMinValue;
-//     const maxR = chartMaxValue;
-
-//     const span = maxR - minR || 1;
-
-//     const moderateHigh = maxR + span * 0.5;
-//     const extremeHigh = maxR + span * 1.5;
-
-//     const moderateLow = minR - span * 0.5;
-//     const extremeLow = minR - span * 1.5;
-
-//     let y;
-
-//     // EXTREME HIGH
-//     if (v >= extremeHigh) {
-//       y = topStart;
-//     }
-
-//     // HIGH ZONE (between top faded bar & dashed)
-//     else if (v > maxR) {
-//       const ratio = (v - maxR) / (moderateHigh - maxR);
-//       y = midTop - ratio * (midTop - topEnd); // 32 → 0
-//     }
-
-//     // NORMAL RANGE
-//     else if (v >= minR && v <= maxR) {
-//       const ratio = (v - minR) / (maxR - minR);
-//       y = midBottom - ratio * (midBottom - midTop); // 62 → 32
-//     }
-
-//     // LOW ZONE (between dashed & bottom faded bar)
-//     else if (v >= moderateLow) {
-//       const ratio = (minR - v) / (minR - moderateLow);
-//       y = midBottom + ratio * (botStart - midBottom); // 62 → 90
-//     }
-
-//     // EXTREME LOW
-//     else {
-//       y = botEnd;
-//     }
-
-//     const x = horizontalPadding + index * barWidth;
-//     return { x, y };
-//   };
-
-//   const points = data.map((item, idx) =>
-//     getPoint(idx, item.value)
-//   );
-
-//   // --------------------------------------------------
-//   // RENDER
-//   // --------------------------------------------------
-
-//   return (
-//     <View style={styles.container}>
-//       <Svg
-//         width={chartWidth + horizontalPadding * 2}
-//         height={chartHeight}
-//       >
-
-//         {/* -------------------------------------------
-//           GRADIENTS FOR CONNECTING PATH
-//         ------------------------------------------- */}
-//         <Defs>
-//           {points.slice(0, -1).map((p, i) => {
-//             const c1 = getColor(data[i].value);
-//             const c2 = getColor(data[i + 1].value);
-
-//             return (
-//               <LinearGradient
-//                 key={`grad-${i}`}
-//                 id={`grad_${i}`}
-//                 x1={p.x}
-//                 y1={p.y}
-//                 x2={points[i + 1].x}
-//                 y2={points[i + 1].y}
-//                 gradientUnits="userSpaceOnUse"
-//               >
-//                 <Stop offset="0%" stopColor={c1} />
-//                 <Stop offset="100%" stopColor={c2} />
-//               </LinearGradient>
-//             );
-//           })}
-//         </Defs>
-
-//         {/* -------------------------------------------
-//           VERTICAL FADED BARS (TOP & BOTTOM)
-//         ------------------------------------------- */}
-//         {points.map((p, index) => (
-//           <React.Fragment key={`bar-${index}`}>
-//             {/* top faded bar */}
-//             <Polyline
-//               points={`${p.x},0 ${p.x},32`}
-//               stroke="#E5E5E5"
-//               strokeWidth={4}
-//               strokeLinecap="round"
-//               opacity={0.45}
-//             />
-
-//             {/* bottom faded bar */}
-//             <Polyline
-//               points={`${p.x},62 ${p.x},90`}
-//               stroke="#E5E5E5"
-//               strokeWidth={4}
-//               strokeLinecap="round"
-//               opacity={0.45}
-//             />
-//           </React.Fragment>
-//         ))}
-
-//         {/* -------------------------------------------
-//           TOP DASHED LINE
-//         ------------------------------------------- */}
-//         <Polyline
-//           points={`0,32 ${(chartWidth + horizontalPadding * 2)},32`}
-//           stroke="#EDEDF0"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* -------------------------------------------
-//           BOTTOM DASHED LINE
-//         ------------------------------------------- */}
-//         <Polyline
-//           points={`0,62 ${(chartWidth + horizontalPadding * 2)},62`}
-//           stroke="#EDEDF0"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* -------------------------------------------
-//           CONNECTING GRADIENT SEGMENTS
-//         ------------------------------------------- */}
-//         {points.slice(0, -1).map((p0, i) => {
-//           const p1 = points[i + 1];
-
-//           return (
-//             <Path
-//               key={`seg-${i}`}
-//               d={`M ${p0.x},${p0.y} L ${p1.x},${p1.y}`}
-//               stroke={`url(#grad_${i})`}
-//               strokeWidth={2}
-//               fill="none"
-//             />
-//           );
-//         })}
-
-//         {/* -------------------------------------------
-//           DOT POINTS
-//         ------------------------------------------- */}
-//         {points.map((p, index) => (
-//           <Circle
-//             key={index}
-//             cx={p.x}
-//             cy={p.y}
-//             r={7}
-//             fill={getColor(data[index].value)}
-//           />
-//         ))}
-
-//       </Svg>
-
-//       {/* -------------------------------------------
-//         LABELS (VALUE + DATE)
-//       ------------------------------------------- */}
-//       <View style={styles.labelsContainer}>
-//         {data.map((item, index) => {
-//           const posX = points[index].x - 22;
-//           const isLast = index === data.length - 1;
-
-//           return (
-//             <View
-//               key={index}
-//               style={[styles.labelBox, { left: posX }]}
-//             >
-//               <Text
-//                 style={[
-//                   styles.valueText,
-//                   isLast && styles.lastValueText,
-//                 ]}
-//               >
-//                 {String(item.value)}
-//               </Text>
-
-//               <Text style={styles.dateText}>
-//                 {item.date}
-//               </Text>
-//             </View>
-//           );
-//         })}
-//       </View>
-//     </View>
-//   );
-// };
-
-// // --------------------------------------------------
-// // STYLES
-// // --------------------------------------------------
-// const styles = StyleSheet.create({
-//   container: {
-//     paddingTop: 10,
-//   },
-
-//   labelsContainer: {
-//     width: "100%",
-//     height: 40,
-//     marginTop: 4,
-//     position: "relative",
-//   },
-
-//   labelBox: {
-//     position: "absolute",
-//     width: 50,
-//     alignItems: "center",
-//   },
-
-//   valueText: {
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray0F,
-//   },
-
-//   lastValueText: {
-//     color: Colors.black,
-//     fontFamily: fontsfamily.bold,
-//   },
-
-//   dateText: {
-//     marginTop: 2,
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray55,
-//   },
-// });
-
-// export default VerticalBarChart;
-
-// import React from "react";
-// import { View, Text, StyleSheet, Dimensions } from "react-native";
-// import Svg, { Polyline, Circle, Defs, LinearGradient, Stop, Path } from "react-native-svg";
-// import { Colors } from "../constants/Colors";
-// import { fontsfamily } from "../constants/FontFamily";
-// import { fontSize } from "../constants/FontSizes";
-
-// const VerticalBarChart = ({
-//   data = [],
-//   chartMinValue = 0.15,
-//   chartMaxValue = 0.35,
-// }) => {
-//   if (!data.length) return null;
-
-//   const screenWidth = Dimensions.get("window").width;
-//   const cardWidth = screenWidth * 0.75;
-
+//   const cardWidth = screenWidth * 0.85;
 //   const horizontalPadding = 12;
 
 //   const values = data.map((i) => Number(i.value));
 
-//   const maxValue = Math.max(...values);
-//   const minValue = Math.min(...values);
+//   const chartHeight = 90;
+//   const SAFE_PADDING = 8;                            // <-- NEW FIX
+//   const svgHeight = chartHeight + SAFE_PADDING * 2;   // <-- EXTRA HEIGHT
 
 //   const chartWidth = (cardWidth - 32) - horizontalPadding * 2;
-//   const chartHeight = 90;
-
 //   const barWidth = chartWidth / (data.length - 1);
 
-//   // ---------------------------------------------------
+//   // --------------------------------------------------------------------
 //   // COLOR LOGIC
-//   // ---------------------------------------------------
+//   // --------------------------------------------------------------------
+//   // const getColor = (value) => {
+//   //   const v = Number(value);
+//   //   if (v > chartMaxValue) return Colors.redCA;
+//   //   if (v < chartMinValue) return Colors.redCA;
+//   //   if (v === Math.max(...values)) return Colors.blue1C;
+//   //   return Colors.goldenCA;
+//   // };
 //   const getColor = (value) => {
 //     const v = Number(value);
-//     if (v > chartMaxValue) return Colors.redCA;
-//     if (v < chartMinValue) return Colors.redCA;
-//     if (v === maxValue) return Colors.blue1C;
-//     return Colors.goldenCA;
-//   };
-
-//   // ---------------------------------------------------
-//   // STRONG ZONE FIX — FINAL CORRECT VERSION
-//   // ---------------------------------------------------
-//   const getPoint = (index, value) => {
-//     const v = Number(value);
-
-//     // FIXED VISUAL POSITIONS
-//     const topStart = 0;      // very top
-//     const topEnd = 32;       // bottom of top faded bar
-//     const midTop = 32;       // upper dashed line
-//     const midBottom = 62;    // lower dashed line
-//     const botStart = 62;     // top of bottom faded bar
-//     const botEnd = 90;       // bottom
-
-//     const minR = chartMinValue;
-//     const maxR = chartMaxValue;
-
-//     const span = maxR - minR || 1;
-
-//     // STRONG EXTREME ZONE RANGE (much wider!)
-//     const extremeHigh = maxR + span * 2.0;
-//     const extremeLow = minR - span * 2.0;
-
-//     const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
-
-//     let y;
-
-//     // EXTREME HIGH
-//     if (v >= extremeHigh) {
-//       y = topStart;
-//     }
-
-//     // HIGH ZONE (smooth mapping into top faded bar)
-//     else if (v > maxR) {
-//       const ratio = (v - maxR) / (extremeHigh - maxR);
-//       const r = clamp(ratio, 0, 1);
-//       y = midTop - r * (midTop - topEnd);  // maps 32 → 0
-//     }
-
-//     // MID RANGE (between dashed lines)
-//     else if (v >= minR && v <= maxR) {
-//       const ratio = (v - minR) / (maxR - minR);
-//       y = midBottom - ratio * (midBottom - midTop); // 62 → 32
-//     }
-
-//     // LOW ZONE
-//     else if (v >= extremeLow) {
-//       const ratio = (minR - v) / (minR - extremeLow);
-//       const r = clamp(ratio, 0, 1);
-//       y = midBottom + r * (botEnd - midBottom); // 62 → 90
-//     }
-
-//     // EXTREME LOW
-//     else {
-//       y = botEnd;
-//     }
-
-//     const x = horizontalPadding + index * barWidth;
-//     return { x, y };
-//   };
-
-//   const points = data.map((item, index) => getPoint(index, item.value));
-
-//   return (
-//     <View style={styles.container}>
-
-//       <Svg width={chartWidth + horizontalPadding * 2} height={chartHeight}>
-
-//         {/* ------------------------------------------
-//             GRADIENTS FOR SEGMENT-TO-SEGMENT LINES
-//         ------------------------------------------- */}
-//         <Defs>
-//           {points.slice(0, -1).map((p, i) => {
-//             const c1 = getColor(data[i].value);
-//             const c2 = getColor(data[i + 1].value);
-//             return (
-//               <LinearGradient
-//                 key={`grad-${i}`}
-//                 id={`grad_${i}`}
-//                 x1={p.x}
-//                 y1={p.y}
-//                 x2={points[i + 1].x}
-//                 y2={points[i + 1].y}
-//                 gradientUnits="userSpaceOnUse"
-//               >
-//                 <Stop offset="0%" stopColor={c1} />
-//                 <Stop offset="100%" stopColor={c2} />
-//               </LinearGradient>
-//             );
-//           })}
-//         </Defs>
-
-//         {/* ------------------------------------------
-//             TOP FADED BARS
-//         ------------------------------------------- */}
-//         {points.map((p, index) => (
-//           <Polyline
-//             key={`top-${index}`}
-//             points={`${p.x},0 ${p.x},32`}
-//             stroke="#E5E5E5"
-//             strokeWidth={4}
-//             strokeLinecap="round"
-//             opacity={0.40}
-//           />
-//         ))}
-
-//         {/* ------------------------------------------
-//             BOTTOM FADED BARS
-//         ------------------------------------------- */}
-//         {points.map((p, index) => (
-//           <Polyline
-//             key={`bottom-${index}`}
-//             points={`${p.x},62 ${p.x},90`}
-//             stroke="#E5E5E5"
-//             strokeWidth={4}
-//             strokeLinecap="round"
-//             opacity={0.40}
-//           />
-//         ))}
-
-//         {/* ------------------------------------------
-//             DASHED MID LINES
-//         ------------------------------------------- */}
-//         <Polyline
-//           points={`0,32 ${(chartWidth + horizontalPadding * 2)},32`}
-//           stroke="#EDEDF0"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         <Polyline
-//           points={`0,62 ${(chartWidth + horizontalPadding * 2)},62`}
-//           stroke="#EDEDF0"
-//           strokeWidth={2}
-//           strokeDasharray="6,6"
-//           opacity={0.55}
-//         />
-
-//         {/* ------------------------------------------
-//             SEGMENTED GRADIENT LINE
-//         ------------------------------------------- */}
-//         {points.slice(0, -1).map((p0, i) => {
-//           const p1 = points[i + 1];
-//           return (
-//             <Path
-//               key={`seg-${i}`}
-//               d={`M ${p0.x},${p0.y} L ${p1.x},${p1.y}`}
-//               stroke={`url(#grad_${i})`}
-//               strokeWidth={2}
-//               fill="none"
-//             />
-//           );
-//         })}
-
-//         {/* ------------------------------------------
-//             DOTS
-//         ------------------------------------------- */}
-//         {points.map((p, index) => (
-//           <Circle
-//             key={index}
-//             cx={p.x}
-//             cy={p.y}
-//             r={7}
-//             fill={getColor(data[index].value)}
-//           />
-//         ))}
-
-//       </Svg>
-
-//       {/* ------------------------------------------
-//           LABELS
-//       ------------------------------------------- */}
-//       <View style={styles.labelsContainer}>
-//         {data.map((item, index) => {
-//           const posX = points[index].x - 22;
-//           const isLast = index === data.length - 1;
-
-//           return (
-//             <View key={index} style={[styles.labelBox, { left: posX }]}>
-//               <Text style={[styles.valueText, isLast && styles.lastValueText]}>
-//                 {String(item.value)}
-//               </Text>
-//               <Text style={styles.dateText}>{item.date}</Text>
-//             </View>
-//           );
-//         })}
-//       </View>
-
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: { paddingTop: 10 },
-//   labelsContainer: {
-//     width: "100%",
-//     height: 40,
-//     marginTop: 4,
-//     position: "relative",
-//   },
-//   labelBox: { position: "absolute", width: 50, alignItems: "center" },
-//   valueText: {
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray0F,
-//   },
-//   lastValueText: { color: Colors.black, fontFamily: fontsfamily.bold },
-//   dateText: {
-//     marginTop: 2,
-//     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.regular,
-//     color: Colors.gray55,
-//   },
-// });
-
-// export default VerticalBarChart;
-
-
-// import React from "react";
-// import { View, Text, StyleSheet, Dimensions } from "react-native";
-// import Svg, { Polyline, Circle, Defs, LinearGradient, Stop, Path } from "react-native-svg";
-// import { Colors } from "../constants/Colors";
-// import { fontsfamily } from "../constants/FontFamily";
-// import { fontSize } from "../constants/FontSizes";
-
-// const VerticalBarChart = ({
-//   data = [],
-//   chartMinValue,
-//   chartMaxValue,
-// }) => {
-//   if (!data.length) return null;
-
-//   const screenWidth = Dimensions.get("window").width;
-//   const cardWidth = screenWidth * 0.75;
-//   const horizontalPadding = 12;
-
-//   const values = data.map((i) => Number(i.value));
-//   const chartWidth = (cardWidth - 32) - horizontalPadding * 2;
-//   const chartHeight = 90;
-//   const barWidth = chartWidth / (data.length - 1);
-
-//   // --------------------------------------------------------------------
-//   // DOT COLOR LOGIC
-//   // --------------------------------------------------------------------
-//   const getColor = (value) => {
-//     const v = Number(value);
-//     if (v > chartMaxValue) return Colors.redCA;
-//     if (v < chartMinValue) return Colors.redCA;
-//     if (v === Math.max(...values)) return Colors.blue1C;
-//     return Colors.goldenCA;
+  
+//     // EXTREME HIGH / EXTREME LOW
+//     if (v > extendedMax) return Colors.redCA;
+//     if (v < extendedMin) return Colors.redCA;
+  
+//     // Slightly above or below
+//     if (v > chartMaxValue) return Colors.goldenCA;
+//     if (v < chartMinValue) return Colors.goldenCA;
+  
+//     // Within safe range
+//     return Colors.blue1C;
 //   };
 
 //   // --------------------------------------------------------------------
-//   // EXTENDED RANGE LOGIC (NO STATIC VALUES)
+//   // EXTENDED RANGE LOGIC (dynamic — no static values)
 //   // --------------------------------------------------------------------
 //   const span = chartMaxValue - chartMinValue || 1;
-
-//   const extendedMax = chartMaxValue + span; // TOP EXTRA ZONE
-//   const extendedMin = chartMinValue - span; // BOTTOM EXTRA ZONE
+//   const extendedMax = chartMaxValue + span; // TOP extra range
+//   const extendedMin = chartMinValue - span; // BOTTOM extra range
 
 //   // --------------------------------------------------------------------
-//   // ZONE MAPPING
+//   // POSITION CALCULATION WITH SAFE PADDING
 //   // --------------------------------------------------------------------
 //   const getPoint = (index, value) => {
 //     const v = Number(value);
 
-//     // FIXED Y POSITIONS FOR VISUAL MATCHING YOUR DESIGN
-//     const Y_TOP_START = 0;
-//     const Y_TOP_END = 32;
-//     const Y_MID_TOP = 32;
-//     const Y_MID_BOTTOM = 62;
-//     const Y_BOTTOM_START = 62;
-//     const Y_BOTTOM_END = 90;
+//     // FIXED Y POSITIONS + SAFE PADDING ADDED
+//     const Y_TOP_START = 0 + SAFE_PADDING;
+//     const Y_TOP_END = 32 + SAFE_PADDING;
+//     const Y_MID_TOP = 32 + SAFE_PADDING;
+//     const Y_MID_BOTTOM = 62 + SAFE_PADDING;
+//     const Y_BOTTOM_START = 62 + SAFE_PADDING;
+//     const Y_BOTTOM_END = 90 + SAFE_PADDING;
 
 //     const clamp = (x, min, max) => Math.min(Math.max(x, min), max);
 
@@ -2920,19 +84,19 @@
 //       y = Y_TOP_START;
 //     }
 
-//     // HIGH ZONE (chartMax → extendedMax) = map 32 → 0
+//     // HIGH ZONE (chartMax → extendedMax)
 //     else if (v > chartMaxValue) {
 //       const r = (v - chartMaxValue) / (extendedMax - chartMaxValue);
 //       y = Y_MID_TOP - r * (Y_MID_TOP - Y_TOP_END);
 //     }
 
-//     // NORMAL ZONE (chartMin → chartMax) = map 62 → 32
+//     // MID ZONE (chartMin → chartMax)
 //     else if (v >= chartMinValue) {
 //       const r = (v - chartMinValue) / (chartMaxValue - chartMinValue);
 //       y = Y_MID_BOTTOM - r * (Y_MID_BOTTOM - Y_MID_TOP);
 //     }
 
-//     // LOW ZONE (extendedMin → chartMin) = map 62 → 90
+//     // LOW ZONE (extendedMin → chartMin)
 //     else if (v >= extendedMin) {
 //       const r = (chartMinValue - v) / (chartMinValue - extendedMin);
 //       y = Y_MID_BOTTOM + r * (Y_BOTTOM_END - Y_MID_BOTTOM);
@@ -2952,38 +116,33 @@
 //   return (
 //     <View style={styles.container}>
 
-//       <Svg width={chartWidth + horizontalPadding * 2} height={chartHeight}>
+//       <Svg width={chartWidth + horizontalPadding * 2} height={svgHeight}>
 
 //         {/* -----------------------------------------------------
-//             GRADIENT DEFINITIONS FOR CONNECTING LINE SEGMENTS
+//             GRADIENT DEFINITIONS
 //         ------------------------------------------------------ */}
 //         <Defs>
-//           {points.slice(0, -1).map((p, i) => {
-//             const c1 = getColor(data[i].value);
-//             const c2 = getColor(data[i + 1].value);
-
-//             return (
-//               <LinearGradient
-//                 key={`grad-${i}`}
-//                 id={`grad_${i}`}
-//                 x1={p.x}
-//                 y1={p.y}
-//                 x2={points[i + 1].x}
-//                 y2={points[i + 1].y}
-//                 gradientUnits="userSpaceOnUse"
-//               >
-//                 <Stop offset="0%" stopColor={c1} />
-//                 <Stop offset="100%" stopColor={c2} />
-//               </LinearGradient>
-//             );
-//           })}
+//           {points.slice(0, -1).map((p, i) => (
+//             <LinearGradient
+//               key={`grad-${i}`}
+//               id={`grad_${i}`}
+//               x1={p.x}
+//               y1={p.y}
+//               x2={points[i + 1].x}
+//               y2={points[i + 1].y}
+//               gradientUnits="userSpaceOnUse"
+//             >
+//               <Stop offset="0%" stopColor={getColor(data[i].value)} />
+//               <Stop offset="100%" stopColor={getColor(data[i + 1].value)} />
+//             </LinearGradient>
+//           ))}
 //         </Defs>
 
 //         {/* TOP FADED BARS */}
 //         {points.map((p, i) => (
 //           <Polyline
-//             key={`top-bar-${i}`}
-//             points={`${p.x},0 ${p.x},32`}
+//             key={`topbar-${i}`}
+//             points={`${p.x},${SAFE_PADDING} ${p.x},${32 + SAFE_PADDING}`}
 //             stroke="#E5E5E5"
 //             strokeWidth={4}
 //             strokeLinecap="round"
@@ -2994,8 +153,8 @@
 //         {/* BOTTOM FADED BARS */}
 //         {points.map((p, i) => (
 //           <Polyline
-//             key={`bottom-bar-${i}`}
-//             points={`${p.x},62 ${p.x},90`}
+//             key={`botbar-${i}`}
+//             points={`${p.x},${62 + SAFE_PADDING} ${p.x},${90 + SAFE_PADDING}`}
 //             stroke="#E5E5E5"
 //             strokeWidth={4}
 //             strokeLinecap="round"
@@ -3003,16 +162,17 @@
 //           />
 //         ))}
 
-//         {/* DASHED MIDDLE LINES */}
+//         {/* DASHED MID LINES */}
 //         <Polyline
-//           points={`0,32 ${(chartWidth + horizontalPadding * 2)},32`}
+//           points={`0,${32 + SAFE_PADDING} ${(chartWidth + horizontalPadding * 2)},${32 + SAFE_PADDING}`}
 //           stroke="#EDEDF0"
 //           strokeWidth={2}
 //           strokeDasharray="6,6"
 //           opacity={0.55}
 //         />
+
 //         <Polyline
-//           points={`0,62 ${(chartWidth + horizontalPadding * 2)},62`}
+//           points={`0,${62 + SAFE_PADDING} ${(chartWidth + horizontalPadding * 2)},${62 + SAFE_PADDING}`}
 //           stroke="#EDEDF0"
 //           strokeWidth={2}
 //           strokeDasharray="6,6"
@@ -3020,18 +180,15 @@
 //         />
 
 //         {/* GRADIENT CONNECTING LINES */}
-//         {points.slice(0, -1).map((p0, i) => {
-//           const p1 = points[i + 1];
-//           return (
-//             <Path
-//               key={`seg-${i}`}
-//               d={`M ${p0.x},${p0.y} L ${p1.x},${p1.y}`}
-//               stroke={`url(#grad_${i})`}
-//               strokeWidth={2}
-//               fill="none"
-//             />
-//           );
-//         })}
+//         {points.slice(0, -1).map((p0, i) => (
+//           <Path
+//             key={`seg-${i}`}
+//             d={`M ${p0.x},${p0.y} L ${points[i + 1].x},${points[i + 1].y}`}
+//             stroke={`url(#grad_${i})`}
+//             strokeWidth={2}
+//             fill="none"
+//           />
+//         ))}
 
 //         {/* DOTS */}
 //         {points.map((p, index) => (
@@ -3039,7 +196,7 @@
 //             key={index}
 //             cx={p.x}
 //             cy={p.y}
-//             r={7}
+//             r={8}
 //             fill={getColor(data[index].value)}
 //           />
 //         ))}
@@ -3048,8 +205,8 @@
 //       {/* LABELS */}
 //       <View style={styles.labelsContainer}>
 //         {data.map((item, index) => {
-//           const isLast = index === data.length - 1;
 //           const left = points[index].x - 22;
+//           const isLast = index === data.length - 1;
 
 //           return (
 //             <View key={index} style={[styles.labelBox, { left }]}>
@@ -3068,54 +225,63 @@
 
 // const styles = StyleSheet.create({
 //   container: { paddingTop: 10 },
-//   labelsContainer: { position: "relative", height: 40, width: "100%",marginTop:10 },
+//   labelsContainer: {
+//     position: "relative",
+//     width: "100%",
+//     height: 40,
+//     marginTop: 4,
+//   },
 //   labelBox: { position: "absolute", width: 50, alignItems: "center" },
 //   valueText: {
-//     fontSize: fontSize.size14,
-//     fontFamily: fontsfamily.gregular,
+//     fontSize: fontSize.size12,
+//     fontFamily: fontsfamily.regular,
 //     color: Colors.gray0F,
 //   },
 //   lastValueText: {
 //     color: Colors.black,
-//     fontFamily: fontsfamily.gbold,
+//     fontFamily: fontsfamily.bold,
 //   },
 //   dateText: {
 //     marginTop: 2,
 //     fontSize: fontSize.size12,
-//     fontFamily: fontsfamily.gregular,
-//     color: Colors.grey29,
+//     fontFamily: fontsfamily.regular,
+//     color: Colors.gray55,
 //   },
 // });
 
 // export default VerticalBarChart;
 
 
-//latest workign code
-import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
-import Svg, { Polyline, Circle, Defs, LinearGradient, Stop, Path } from "react-native-svg";
-import { Colors } from "../constants/Colors";
-import { fontsfamily } from "../constants/FontFamily";
-import { fontSize } from "../constants/FontSizes";
+//latest workign code api
+import React from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import Svg, {
+  Polyline,
+  Circle,
+  Defs,
+  LinearGradient,
+  Stop,
+  Path,
+} from 'react-native-svg';
+import { Colors } from '../constants/Colors';
+import { fontsfamily } from '../constants/FontFamily';
+import { fontSize } from '../constants/FontSizes';
+import { formatDateToSpanishChart } from '../constants/GConstant';
 
-const VerticalBarChart = ({
-  data = [],
-  chartMinValue,
-  chartMaxValue,
-}) => {
+const VerticalBarChart = ({ data = [], chartMinValue, chartMaxValue }) => {
   if (!data.length) return null;
 
-  const screenWidth = Dimensions.get("window").width;
+  const screenWidth = Dimensions.get('window').width;
   const cardWidth = screenWidth * 0.85;
   const horizontalPadding = 12;
 
-  const values = data.map((i) => Number(i.value));
+  const values = data.map(i => Number(i.value));
 
   const chartHeight = 90;
-  const SAFE_PADDING = 8;                            // <-- NEW FIX
-  const svgHeight = chartHeight + SAFE_PADDING * 2;   // <-- EXTRA HEIGHT
+  const SAFE_PADDING = 8; // <-- NEW FIX
+  const svgHeight = chartHeight + SAFE_PADDING * 2; // <-- EXTRA HEIGHT
 
-  const chartWidth = (cardWidth - 32) - horizontalPadding * 2;
+  const chartWidth = cardWidth - 32 - horizontalPadding * 2;
   const barWidth = chartWidth / (data.length - 1);
 
   // --------------------------------------------------------------------
@@ -3128,17 +294,17 @@ const VerticalBarChart = ({
   //   if (v === Math.max(...values)) return Colors.blue1C;
   //   return Colors.goldenCA;
   // };
-  const getColor = (value) => {
+  const getColor = value => {
     const v = Number(value);
-  
+
     // EXTREME HIGH / EXTREME LOW
     if (v > extendedMax) return Colors.redCA;
     if (v < extendedMin) return Colors.redCA;
-  
+
     // Slightly above or below
     if (v > chartMaxValue) return Colors.goldenCA;
     if (v < chartMinValue) return Colors.goldenCA;
-  
+
     // Within safe range
     return Colors.blue1C;
   };
@@ -3204,9 +370,7 @@ const VerticalBarChart = ({
 
   return (
     <View style={styles.container}>
-
       <Svg width={chartWidth + horizontalPadding * 2} height={svgHeight}>
-
         {/* -----------------------------------------------------
             GRADIENT DEFINITIONS
         ------------------------------------------------------ */}
@@ -3253,7 +417,9 @@ const VerticalBarChart = ({
 
         {/* DASHED MID LINES */}
         <Polyline
-          points={`0,${32 + SAFE_PADDING} ${(chartWidth + horizontalPadding * 2)},${32 + SAFE_PADDING}`}
+          points={`0,${32 + SAFE_PADDING} ${
+            chartWidth + horizontalPadding * 2
+          },${32 + SAFE_PADDING}`}
           stroke="#EDEDF0"
           strokeWidth={2}
           strokeDasharray="6,6"
@@ -3261,7 +427,9 @@ const VerticalBarChart = ({
         />
 
         <Polyline
-          points={`0,${62 + SAFE_PADDING} ${(chartWidth + horizontalPadding * 2)},${62 + SAFE_PADDING}`}
+          points={`0,${62 + SAFE_PADDING} ${
+            chartWidth + horizontalPadding * 2
+          },${62 + SAFE_PADDING}`}
           stroke="#EDEDF0"
           strokeWidth={2}
           strokeDasharray="6,6"
@@ -3302,12 +470,13 @@ const VerticalBarChart = ({
               <Text style={[styles.valueText, isLast && styles.lastValueText]}>
                 {String(item.value)}
               </Text>
-              <Text style={styles.dateText}>{item.date}</Text>
+              <Text style={styles.dateText}>
+                {formatDateToSpanishChart(item.date)}
+              </Text>
             </View>
           );
         })}
       </View>
-
     </View>
   );
 };
@@ -3315,12 +484,12 @@ const VerticalBarChart = ({
 const styles = StyleSheet.create({
   container: { paddingTop: 10 },
   labelsContainer: {
-    position: "relative",
-    width: "100%",
+    position: 'relative',
+    width: '100%',
     height: 40,
     marginTop: 4,
   },
-  labelBox: { position: "absolute", width: 50, alignItems: "center" },
+  labelBox: { position: 'absolute', width: 50, alignItems: 'center' },
   valueText: {
     fontSize: fontSize.size12,
     fontFamily: fontsfamily.regular,
@@ -3332,6 +501,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     marginTop: 2,
+    textAlign: 'center',
     fontSize: fontSize.size12,
     fontFamily: fontsfamily.regular,
     color: Colors.gray55,
@@ -3339,8 +509,6 @@ const styles = StyleSheet.create({
 });
 
 export default VerticalBarChart;
-
-
 
 
 

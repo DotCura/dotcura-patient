@@ -1,5 +1,5 @@
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AppHeader from '../../global/Header';
 import { images } from '../../constants/Images';
 import {
@@ -22,6 +22,7 @@ import {
 } from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
 import { ZustandStores } from '../../store';
+import { useFocusEffect } from '@react-navigation/native';
 
 const AnalitiDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -248,9 +249,11 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
     }
   };
 
-  useEffect(() => {
-    _analitiDetailsApi();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      _analitiDetailsApi();
+    }, []),
+  );
 
   const isSameSelection = (a: number[], b: number[]) => {
     if (a.length !== b.length) return false;

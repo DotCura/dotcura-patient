@@ -14,11 +14,12 @@ import { ZustandStores } from '../../store';
 import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
 import { GlobalVar } from '../../constants/GlobalVar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  const { resetCart } = ZustandStores.CartStore();
+  const { resetCart,resetNotificationCount } = ZustandStores.CartStore();
 
   const data = [
     {
@@ -204,6 +205,10 @@ const ProfileContainer = ({ navigation, route }: any) => {
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           handleNavigation();
+          await AsyncStorage.removeItem('cart-store');
+          resetCart();
+          resetNotificationCount();
+
           flashMessageSucess(responseData.message);
         } else {
           flashMessageSucess(responseData.message);

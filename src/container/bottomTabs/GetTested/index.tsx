@@ -42,27 +42,29 @@ const GetTestedContainer = ({ navigation }: any) => {
     ZustandStores.CartStore();
 
   //LocallyMangeIsTick
-  useFocusEffect(
-    useCallback(() => {
-      if (!checkup?.data?.length) return;
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (!checkup?.data?.length) return;
 
-      checkup.updateData((prev: any[]) =>
-        prev.map(item => {
-          const shouldBeInCart = cartKitIds.includes(item.id);
+  //     console.log("cartKitIds",cartKitIds);
+  //     checkup.updateData((prev: any[]) =>
+  //       prev.map(item => {
+  //         const shouldBeInCart = cartKitIds.includes(item.id);
+  //         console.log("item.id,shouldBeInCart);",item.id,shouldBeInCart);
 
-          // ⛔ prevent unnecessary re-render
-          if (item.is_in_cart === shouldBeInCart) {
-            return item;
-          }
+  //         // ⛔ prevent unnecessary re-render
+  //         if (item.is_in_cart === shouldBeInCart) {
+  //           return item;
+  //         }
 
-          return {
-            ...item,
-            is_in_cart: shouldBeInCart,
-          };
-        }),
-      );
-    }, [cartKitIds]),
-  );
+  //         return {
+  //           ...item,
+  //           is_in_cart: shouldBeInCart,
+  //         };
+  //       }),
+  //     );
+  //   }, [cartKitIds]),
+  // );
 
   const categoriesList = [
     { id: 1, name: 'Routine checks' },
@@ -459,6 +461,12 @@ const GetTestedContainer = ({ navigation }: any) => {
       console.log('Cart toggle error', e);
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      checkup?.reset?.();
+    }, []),
+  );
 
   return (
     <GetTestedComponent

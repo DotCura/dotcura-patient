@@ -61,27 +61,27 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     ZustandStores.CartStore();
 
   //LocallyMangeIsTick
-  useFocusEffect(
-    useCallback(() => {
-      if (!checkup?.data?.length) return;
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (!checkup?.data?.length) return;
 
-      checkup.updateData((prev: any[]) =>
-        prev.map(item => {
-          const shouldBeInCart = cartKitIds.includes(item.id);
+  //     checkup.updateData((prev: any[]) =>
+  //       prev.map(item => {
+  //         const shouldBeInCart = cartKitIds.includes(item.id);
 
-          // ⛔ prevent unnecessary re-render
-          if (item.is_in_cart === shouldBeInCart) {
-            return item;
-          }
+  //         // ⛔ prevent unnecessary re-render
+  //         if (item.is_in_cart === shouldBeInCart) {
+  //           return item;
+  //         }
 
-          return {
-            ...item,
-            is_in_cart: shouldBeInCart,
-          };
-        }),
-      );
-    }, [cartKitIds]),
-  );
+  //         return {
+  //           ...item,
+  //           is_in_cart: shouldBeInCart,
+  //         };
+  //       }),
+  //     );
+  //   }, [cartKitIds]),
+  // );
 
   //CHECKOUT VARIABLES
   const [testkitsData, setTestsKitData] = useState<any>([]);

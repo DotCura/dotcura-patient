@@ -16,6 +16,7 @@ import { flashMessageWarning } from '../constants/GConstant';
 import { CommonActions } from '@react-navigation/native';
 import { MmkvManager } from '../constants/utils/MmkvManager';
 import { ZustandStores } from '../store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /* =======================
    Encryption constants
@@ -194,6 +195,10 @@ export const APIManager = {
     ======================= */
     function handleUnauthorized() {
       flashMessageWarning(getTranslation('youhavebeenloggedout'));
+      const { resetCart, resetNotificationCount } = ZustandStores.CartStore();
+      resetCart();
+      resetNotificationCount();
+      AsyncStorage.removeItem('cart-store');
       MmkvManager.clearAllExcept([MmkvManager.Keys.isOnBoardingVisisted]);
       navigation.dispatch(
         CommonActions.reset({
