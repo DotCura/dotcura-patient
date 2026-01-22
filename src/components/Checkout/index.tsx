@@ -3,7 +3,6 @@ import {
   FlatList,
   Image,
   ImageBackground,
-  Pressable,
   Text,
   TextInput,
   TouchableOpacity,
@@ -23,22 +22,18 @@ import CustomDropdown from '../../global/DropDown/CustomDropDown';
 import CustomButton from '../../global/Buttons';
 import TimeSlotPicker from '../../global/TimeSlotPicker';
 import AddressModel from '../../global/AddressModel/AddressModel';
-import { isPlatformiOS, ScreenNames } from '../../constants/AppConstants';
+import { isPlatformiOS } from '../../constants/AppConstants';
 import TitleSubtitle from '../../global/TitleSubtitle';
 import { fontSize } from '../../constants/FontSizes';
 import GooglePlacesTextInput from 'react-native-google-places-textinput';
 import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
 import Modal from 'react-native-modal';
-import LinearGradient from 'react-native-linear-gradient';
-import MaskedView from '@react-native-masked-view/masked-view';
-import { BlurView } from '@react-native-community/blur';
 import PressScale from '../../global/PressScale';
 import { GlobalVar } from '../../constants/GlobalVar';
 
 const CheckoutComponent = (props: any) => {
-  const [isFocused, setIsFocused] = useState(false); // Add focus state
+  const [isFocused, setIsFocused] = useState(false);
 
-  // 🔥 Moved styles here (no global style)
   const customStylesTextInput: any = {
     container: {
       flex: 1,
@@ -75,37 +70,38 @@ const CheckoutComponent = (props: any) => {
   };
   return (
     <>
-      <View style={{}}>
-        <View
-          style={[
-            styles.vwMain,
-            {
-              paddingTop:
-                props.orderStatus == '' ? props.insets.top + 10 : getHeight(25),
-              paddingHorizontal: getWidth(16),
-            },
-          ]}
-        >
-          <View style={styles.vwHeaderLeft}>
-            <TouchableOpacity
-              activeOpacity={activityOpacity}
-              style={styles.btnBack}
-              onPress={() => {
-                props.navigation.goBack();
-              }}
-            >
-              <Image source={images.imgLeftArrow} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.vwHelp}
-              activeOpacity={activityOpacity}
-            >
-              <Image source={images.imgHelp} />
-              <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
-            </TouchableOpacity>
-          </View>
+      {/* HeaderView */}
+      <View
+        style={[
+          styles.vwMain,
+          {
+            paddingTop:
+              props.orderStatus == '' ? props.insets.top + 10 : getHeight(25),
+            paddingHorizontal: getWidth(16),
+          },
+        ]}
+      >
+        <View style={styles.vwHeaderLeft}>
+          <TouchableOpacity
+            activeOpacity={activityOpacity}
+            style={styles.btnBack}
+            onPress={() => {
+              props.navigation.goBack();
+            }}
+          >
+            <Image source={images.imgLeftArrow} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.vwHelp}
+            activeOpacity={activityOpacity}
+          >
+            <Image source={images.imgHelp} />
+            <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
+          </TouchableOpacity>
         </View>
       </View>
+
+      {/* CartDetails */}
       {!props.cartLoaded ? null : props.testkitsData.length === 0 ? (
         <View style={styles.emptyview}>
           <Image
@@ -168,7 +164,6 @@ const CheckoutComponent = (props: any) => {
           <View>
             <FlatList
               onEndReached={() => {
-                // console.log('callend');
               }}
               data={props.testkitsData}
               renderItem={props.renderItemTestKits}
@@ -371,7 +366,7 @@ const CheckoutComponent = (props: any) => {
                 onPress={props.onApplyDiscount}
               >
                 <Text style={styles.lblChnage}>
-                  { props.appliedCoupon === true
+                  {props.appliedCoupon === true
                     ? getTranslation('remove')
                     : getTranslation('add')}
                 </Text>
@@ -381,7 +376,7 @@ const CheckoutComponent = (props: any) => {
 
           {props.discountValue > 0 && props.appliedCoupon && (
             <Text style={{ color: Colors.green17, marginTop: 4 }}>
-              {props.discountCode} {getTranslation("appliedtext")} 🎉
+              {props.discountCode} {getTranslation('appliedtext')} 🎉
             </Text>
           )}
 
@@ -410,7 +405,7 @@ const CheckoutComponent = (props: any) => {
         </KeyboardAwareScrollView>
       )}
 
-      {/* datetimeslotmodel */}
+      {/* TIMESLOTMODEL */}
       <Modal
         statusBarTranslucent
         isVisible={props.showPicker}
@@ -482,7 +477,7 @@ const CheckoutComponent = (props: any) => {
         </View>
       </Modal>
 
-      {/* add model additions model */}
+      {/* ADDMODELADDTIONSMODEL */}
       <Modal
         statusBarTranslucent
         useNativeDriverForBackdrop={true}
@@ -614,7 +609,6 @@ const CheckoutComponent = (props: any) => {
             {/* Content */}
             {props.selectedTab === 'checkup' ? (
               props.checkup.loading && props.checkup.data.length === 0 ? (
-                // ✅ CENTER LOADER INSIDE MODAL
                 <View
                   style={{
                     height: '85%',
@@ -723,113 +717,7 @@ const CheckoutComponent = (props: any) => {
         </View>
       </Modal>
 
-      {/* editkitTestDetails */}
-      {/* <Modal
-        transparent={true}
-        animationType="slide"
-        visible={props.showIsKitTestDetails}
-        statusBarTranslucent={true}
-        onRequestClose={props.funCloseEditKit}
-      >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: '#00000060',
-          }}
-        >
-          <Pressable style={{ flex: 1 }} onPress={props.funCloseEditKit} />
-
-          <View
-            style={{
-              backgroundColor: Colors.whiteF2,
-              borderTopLeftRadius: getHeight(34),
-              borderTopRightRadius: getHeight(34),
-              maxHeight: '85%',
-              overflow: 'hidden',
-            }}
-          >
-          
-            <ImageBackground
-              source={images.imgkit1}
-              style={[styles.vwMainModelHeaderTestDetails]}
-            >
-              <View
-                style={{ paddingHorizontal: getWidth(16), gap: getHeight(3) }}
-              >
-                <TouchableOpacity
-                  style={styles.btnBack}
-                  onPress={props.funCloseEditKit} // close modal
-                >
-                  <Image source={images.imgLeftArrow} />
-                </TouchableOpacity>
-                <View style={{ marginBottom: getHeight(40) }}>
-                  <Text style={styles.lblKittitleModel}>Anemia</Text>
-                  <Text style={styles.lblKitselectTitle}>
-                    1 {getTranslation('selected')}
-                  </Text>
-                </View>
-              </View>
-            </ImageBackground>
-
-            <View
-              style={{
-                backgroundColor: Colors.whiteF2,
-                borderTopLeftRadius: 36,
-                borderTopRightRadius: 36,
-                overflow: 'hidden',
-                marginTop: -35,
-              }}
-            >
-              <Text style={styles.lblKitTitleInner}>
-                {getTranslation('analitiheadertext')}
-              </Text>
-              <FlatList
-                onEndReached={() => {
-                  // console.log('callend');
-                }}
-                bounces={false}
-                data={props.kitsArrayData}
-                renderItem={props.renderItemKitsData}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={item => item.id.toString()}
-                contentContainerStyle={{
-                  gap: getHeight(20),
-                  paddingHorizontal: getWidth(16),
-                  paddingTop: getHeight(25),
-                  paddingBottom: getHeight(320),
-                }}
-              />
-            </View>
-           
-            <TouchableOpacity
-              style={[
-                styles.vwGoToCart,
-                {
-                  bottom:
-                     props.insets.bottom + getHeight(10),
-                },
-              ]}
-              activeOpacity={activityOpacity}
-              onPress={props.funCloseIsKitTestDetails}
-            >
-              <View style={styles.vwCartImage}>
-                <Image source={images.imgCartHome} tintColor={Colors.white} />
-                <Text style={styles.lblGoToCart}>
-                  {getTranslation('addtoorder')}
-                </Text>
-              </View>
-              <View style={styles.vwPrice}>
-                <Text style={styles.totalprice}>
-                  {currency}
-                  {props.totalPriceKits.toFixed(2)}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal> */}
-
-      {/* editAnalitidetails */}
+      {/* EDITANALITIDETAILSMODEL */}
       <Modal
         statusBarTranslucent
         useNativeDriverForBackdrop={true}
@@ -839,7 +727,7 @@ const CheckoutComponent = (props: any) => {
         backdropOpacity={0.6}
         onBackdropPress={props.funCloseEditAnaliti}
         onBackButtonPress={props.funCloseEditAnaliti}
-        style={{ margin: 0 }} // full screen
+        style={{ margin: 0 }} 
       >
         <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View
@@ -950,20 +838,20 @@ const CheckoutComponent = (props: any) => {
         </View>
       </Modal>
 
-      {/* AddressModel */}
+      {/* ADDRESSLISTMODEL */}
       <AddressModel
-      isLoadingAddress={props.isLoadingAddress}
+        isLoadingAddress={props.isLoadingAddress}
         visible={props.addressPopupVisible}
         addresses={props.AddressData}
         selectedAddress={props.tempSelectedAddress}
         onSelectAddress={props.setTempSelectedAddress}
         onAddAddress={props.funOpenAddAddressPopup}
-        onEditAddress={props.handleEditAddress} // 👈 ADD THIS
+        onEditAddress={props.handleEditAddress}
         onClose={props.handleCloseAddress}
         onSave={props.handleOnPressSaveLocation}
       />
 
-      {/* AddAddressModel */}
+      {/* ADDADDRESSMODEL */}
       <Modal
         statusBarTranslucent
         useNativeDriverForBackdrop={true}
@@ -1096,7 +984,7 @@ const CheckoutComponent = (props: any) => {
                     onPlaceSelect={(place: any) => {
                       props.handlePlaceSelect(place);
 
-                      props.setSearchAddress(place?.text?.text || ''); // Store selected address
+                      props.setSearchAddress(place?.text?.text || ''); 
                     }}
                     value={props.searchAddress} // ✅ REQUIRED
                     onChangeText={props.setSearchAddress}
@@ -1224,7 +1112,7 @@ const CheckoutComponent = (props: any) => {
         </View>
       </Modal>
 
-      {/* CancleModel */}
+      {/* CANCLEMODEL */}
       <Modal
         statusBarTranslucent
         useNativeDriverForBackdrop={true}
@@ -1234,7 +1122,7 @@ const CheckoutComponent = (props: any) => {
         backdropOpacity={0.6}
         onBackdropPress={props.funCloseCancleOrder}
         onBackButtonPress={props.funCloseCancleOrder}
-        style={{ margin: 0 }} // full screen
+        style={{ margin: 0 }} 
       >
         <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View
