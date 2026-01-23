@@ -1229,7 +1229,7 @@ const BarChartComponent = ({
   }));
 
   const isTestedReport =
-    props.isTestCheck == true ? true : props.reportItem.isTest === true;
+    props.isTestCheck == true ? true : props.reportItem.has_report === true;
 
   return (
     <TouchableOpacity

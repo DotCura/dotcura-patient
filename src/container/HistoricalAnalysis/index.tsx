@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import OrderHistoryComponent from '../../components/HistoricalAnalysis';
 import AppHeader from '../../global/Header';
 import { getTranslation } from '../../localization/i18n/i18n.config';
@@ -14,8 +14,11 @@ import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { styles } from './styles';
 import { ScreenNames } from '../../constants/AppConstants';
 import HistoricalAnalysisComponent from '../../components/HistoricalAnalysis';
+import { apiPromise } from '../../global/ApiHelper/apiPromise';
+import { ApiEndPoints } from '../../api/APIConstant';
+import { LoadType, usePaginatedList } from '../../global/ApiHelper/usePaginatedList';
 
-const HistoricalAnalysisContainer = ({ navigation }: any) => {
+const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
   const historicalanalysis = [
@@ -319,26 +322,92 @@ const HistoricalAnalysisContainer = ({ navigation }: any) => {
   };
 
   const renderItemHistoricalAnalisis = ({ item, index }: any) => {
+    // const isExpanded = expandedItems.includes(index);
+    // const visibleTags = isExpanded ? item.tags : item.tags.slice(0, 2);
+    // const extraCount = item.tags.length - 2;
+    // return (
+    //   <TouchableOpacity
+    //     activeOpacity={activityOpacity}
+    //     style={styles.btnOrderHistory}
+    //     onPress={() => {
+    //       navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+    //     }}
+    //   >
+    //     {/* orderDetailsView */}
+    //     <View style={styles.vwMainOrderDetails}>
+    //       <View style={{ flex: 1 }}>
+    //         <Text style={styles.lblOrderTitle}>
+    //           {getTranslation('analsisOf')} {formatDateToSpanish(item.date)}
+    //         </Text>
+    //         <Text style={styles.lblOrderID}>
+    //           {getTranslation('orderidlabel')} {item.orderid}
+    //         </Text>
+    //         <Text style={styles.kitandtestdetails}>
+    //           {formatKits(item.kits)}
+    //         </Text>
+    //       </View>
+    //       <TouchableOpacity>
+    //         <Image source={images.imgRightBlack} />
+    //       </TouchableOpacity>
+    //     </View>
+
+    //     {/* tags */}
+    //     <View style={styles.vwTagMain}>
+    //       {visibleTags.map((tag: any, index: any) => (
+    //         <View key={index} style={styles.vwTagInner}>
+    //           <Text style={styles.lblTag}>{tag}</Text>
+    //         </View>
+    //       ))}
+
+    //       {/* Show +count only when collapsed */}
+    //       {!isExpanded && extraCount > 0 && (
+    //         <TouchableOpacity
+    //           onPress={() => {
+    //             setExpandedItems(prev => [...prev, index]); // add index to expanded list
+    //           }}
+    //           style={styles.btnExtraCount}
+    //         >
+    //           <Text style={styles.lblTag}>+{extraCount}</Text>
+    //         </TouchableOpacity>
+    //       )}
+    //     </View>
+    //     {/* nurseView */}
+    //     <View style={styles.nurseview}>
+    //       <Image source={images.imgInjection} />
+    //       <Text style={styles.lblNurseName}>{item.nurse.name}</Text>
+
+    //       <View style={styles.starRow}>
+    //         {[...Array(totalStars)].map((_, index) => {
+    //           const isFilled = index < item.nurse.rating; // fill up to ratingStar
+    //           const iconName = isFilled && images.imgStarFill;
+
+    //           return <Image key={index} source={iconName} />;
+    //         })}
+    //       </View>
+    //     </View>
+    //   </TouchableOpacity>
+    // );
     const isExpanded = expandedItems.includes(index);
-    const visibleTags = isExpanded ? item.tags : item.tags.slice(0, 2);
-    const extraCount = item.tags.length - 2;
+    const tests = item.all_tests ?? [];
+    const visibleTags = isExpanded ? tests : tests.slice(0, 2);
+    const extraCount = tests.length - 2;
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
         style={styles.btnOrderHistory}
         onPress={() => {
           navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
-         
         }}
       >
         {/* orderDetailsView */}
         <View style={styles.vwMainOrderDetails}>
           <View style={{ flex: 1 }}>
             <Text style={styles.lblOrderTitle}>
-              {getTranslation('analsisOf')} {formatDateToSpanish(item.date)}
+              {getTranslation('analsisOf')}
+              {formatDateToSpanish(item.test_date)}
             </Text>
             <Text style={styles.lblOrderID}>
-              {getTranslation('orderidlabel')} {item.orderid}
+              {getTranslation('orderidlabel')} #{item.booking_number}
             </Text>
             <Text style={styles.kitandtestdetails}>
               {formatKits(item.kits)}
@@ -348,12 +417,10 @@ const HistoricalAnalysisContainer = ({ navigation }: any) => {
             <Image source={images.imgRightBlack} />
           </TouchableOpacity>
         </View>
-
-        {/* tags */}
         <View style={styles.vwTagMain}>
-          {visibleTags.map((tag: any, index: any) => (
-            <View key={index} style={styles.vwTagInner}>
-              <Text style={styles.lblTag}>{tag}</Text>
+          {visibleTags.map((test: string, idx: number) => (
+            <View key={idx} style={styles.vwTagInner}>
+              <Text style={styles.lblTag}>{test}</Text>
             </View>
           ))}
 
@@ -370,19 +437,21 @@ const HistoricalAnalysisContainer = ({ navigation }: any) => {
           )}
         </View>
         {/* nurseView */}
-        <View style={styles.nurseview}>
-          <Image source={images.imgInjection} />
-          <Text style={styles.lblNurseName}>{item.nurse.name}</Text>
+        {item.nurse !== null && (
+          <View style={styles.nurseview}>
+            <Image source={images.imgInjection} />
+            <Text style={styles.lblNurseName}>{item.nurse.name}</Text>
 
-          <View style={styles.starRow}>
-            {[...Array(totalStars)].map((_, index) => {
-              const isFilled = index < item.nurse.rating; // fill up to ratingStar
-              const iconName = isFilled && images.imgStarFill;
+            <View style={styles.starRow}>
+              {[...Array(totalStars)].map((_, index) => {
+                const isFilled = index < item.nurse.rating; // fill up to ratingStar
+                const iconName = isFilled && images.imgStarFill;
 
-              return <Image key={index} source={iconName} />;
-            })}
+                return <Image key={index} source={iconName} />;
+              })}
+            </View>
           </View>
-        </View>
+        )}
       </TouchableOpacity>
     );
   };
@@ -409,12 +478,53 @@ const HistoricalAnalysisContainer = ({ navigation }: any) => {
     header();
   }, []);
 
+  // ================= API ===============================
+
+  const fetchOrderList = useCallback(
+    async ({
+      page,
+      loadType,
+      additionalParams,
+    }: {
+      page: number;
+      loadType: any;
+      additionalParams?: any;
+    }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.ORDER.GETORDERHISTORY,
+        method: 'POST',
+        showLoader: loadType === LoadType.INITIAL,
+        params: {
+          page,
+          payment_status: 'unpaid',
+          ...additionalParams,
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data ?? [],
+      };
+    },
+    [navigation],
+  );
+
+  const orders: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: true,
+    additionalParams: { family_id: route?.params?.family_memeber_id }, // ✅ Pass it here
+    fetcher: fetchOrderList,
+  });
+
   return (
     <HistoricalAnalysisComponent
-    navigation={navigation}
+      navigation={navigation}
       insets={insets}
-      historicalanalysisData={historicalanalysisData}
+      historicalanalysisData={orders?.data}
       renderItemHistoricalAnalisis={renderItemHistoricalAnalisis}
+      orders={orders}
     />
   );
 };

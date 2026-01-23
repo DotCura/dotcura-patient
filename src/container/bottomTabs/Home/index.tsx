@@ -1333,7 +1333,7 @@ const HomeContainer = ({ navigation }: any) => {
       <TouchableOpacity
         activeOpacity={activityOpacity}
         style={styles.btnTestReport}
-        onPress={handleNavigateAnlitiTestDetails}
+        onPress={()=>{handleNavigateAnlitiTestDetails(item?.id)}}
       >
         <View style={styles.lblTestImage}>
           <Text style={styles.lblTestName} numberOfLines={1}>
@@ -1385,8 +1385,10 @@ const HomeContainer = ({ navigation }: any) => {
     navigation.jumpTo(ScreenNames.YOURPROFILECONAINER);
   };
 
-  const handleNavigateAnlitiTestDetails = () => {
-    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
+  const handleNavigateAnlitiTestDetails = (analiti_id:any) => {
+    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER,{
+      analitiId: analiti_id,
+    });
   };
 
   const handleNavigateGetTested = () => {

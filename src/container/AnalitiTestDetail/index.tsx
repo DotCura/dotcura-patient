@@ -5,9 +5,11 @@ import AppHeader from '../../global/Header';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../../constants/Images';
 import { ScreenNames } from '../../constants/AppConstants';
-import { goToTabScreen } from '../../constants/GConstant';
+import { flashMessageWarning, goToTabScreen } from '../../constants/GConstant';
+import { APIManager } from '../../api/APIManager';
+import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 
-const AnalitiTestDetailContainer = ({ navigation }: any) => {
+const AnalitiTestDetailContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
   const AnalitiTestdetails = {
@@ -108,7 +110,8 @@ const AnalitiTestDetailContainer = ({ navigation }: any) => {
   };
 
   const [AnalitiTestDetailsData, setAnalitiTestDetailsData] =
-    useState(AnalitiTestdetails);
+    useState([]);
+    const [isEmptyLoading,setIsEmptyLoading]=useState(true);
 
   const header = () => {
     navigation.setOptions({
@@ -128,21 +131,53 @@ const AnalitiTestDetailContainer = ({ navigation }: any) => {
 
   const navigateTestDetailsScreen = () => {
     navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
-   
   };
   const navigateTestGetTestedScreem = () => {
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
       screen: ScreenNames.GETTESTEDCONTAINER,
     });
     // goToTabScreen(navigation, ScreenNames.GETTESTEDCONTAINER);
-
   };
 
   useEffect(() => {
     header();
+    _getAnalitiDetails();
   }, []);
+
+  // ======================== API ====================================
+  const _getAnalitiDetails = async () => {
+    try {
+      const params = {
+        kit_id: route?.params?.analitiId,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setIsEmptyLoading(false);
+          setAnalitiTestDetailsData(responseData.data.analysis_list[0]);
+        } else {
+          setIsEmptyLoading(false);
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.ANALITI.GETANALITIDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      setIsEmptyLoading(false);
+
+      console.log('Analiti details error:', error);
+    }
+  };
+
   return (
     <AnalitiTestDetailComponent
+    isEmptyLoading={isEmptyLoading}
       insets={insets}
       navigation={navigation}
       AnalitiTestDetailsData={AnalitiTestDetailsData}

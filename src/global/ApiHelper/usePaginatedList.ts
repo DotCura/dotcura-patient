@@ -26,10 +26,12 @@ interface UsePaginatedListProps<T> {
   pageSize: number;
   enabled?: boolean;
   searchQuery?: string; // debounced externally
+  additionalParams?: Record<string, any>; // ✅ Add this
   fetcher: (params: {
     page: number;
     searchQuery?: string;
     loadType: LoadType;
+    additionalParams?: Record<string, any>; // ✅ Add this
   }) => Promise<ApiResponse<T>>;
 }
 
@@ -37,6 +39,7 @@ export function usePaginatedList<T>({
   pageSize,
   enabled = true,
   searchQuery,
+  additionalParams, // ✅ Add this
   fetcher,
 }: UsePaginatedListProps<T>) {
   const [data, setData] = useState<T[]>([]);
@@ -80,7 +83,7 @@ export function usePaginatedList<T>({
 
       const requestId = nextRequestId();
 
-      const res = await fetcher({ page: pageToLoad, searchQuery, loadType });
+      const res = await fetcher({ page: pageToLoad, searchQuery, loadType, additionalParams  });
 
       // Ignore stale responses
       if (requestId !== requestIdRef.current) return;
@@ -134,7 +137,7 @@ export function usePaginatedList<T>({
         stopLoaders();
       }
     },
-    [enabled, fetcher, pageSize, searchQuery],
+    [enabled, fetcher, pageSize, searchQuery,additionalParams],
   );
 
   // In usePaginatedList.ts - add this function
@@ -178,10 +181,28 @@ export function usePaginatedList<T>({
   }, [request]);
 
   /* React to debounced search */
-  useEffect(() => {
-    if (!enabled) return;
+  // useEffect(() => {
+  //   if (!enabled) return;
+  //   reset();
+  // }, [searchQuery]);
+  /* React to debounced search */
+const previousSearchQuery = useRef<string | undefined>(undefined);
+
+useEffect(() => {
+  if (!enabled) return;
+  
+  // ✅ Skip initial mount (when both current and previous are undefined/empty)
+  if (previousSearchQuery.current === undefined && !searchQuery) {
+    previousSearchQuery.current = searchQuery;
+    return;
+  }
+  
+  // ✅ Only reset if searchQuery actually changed
+  if (previousSearchQuery.current !== searchQuery) {
+    previousSearchQuery.current = searchQuery;
     reset();
-  }, [searchQuery]);
+  }
+}, [searchQuery, enabled, reset]);
 
   /* Initial load & enable switch */
   useEffect(() => {

@@ -1,5 +1,11 @@
-import { Image, Text, TouchableOpacity, View } from 'react-native';
-import React, { useCallback, useState } from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
 import YourProfileComponent from '../../../components/bottomTabs/YourProfile';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
@@ -10,16 +16,16 @@ import {
 import { getTranslation } from '../../../localization/i18n/i18n.config';
 import { images } from '../../../constants/Images';
 import { Colors } from '../../../constants/Colors';
-import {
-  getHeight,
-  getWidth,
-} from '../../../constants/utils/Dimensions';
+import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 import VerticalBarChartProfile from '../../../global/VerticalBarChartProfile';
 import { ScreenNames } from '../../../constants/AppConstants';
 import ProgressBar from '../../../global/ProgressBar';
 import { apiPromise } from '../../../global/ApiHelper/apiPromise';
 import { ApiEndPoints } from '../../../api/APIConstant';
-import { LoadType, usePaginatedList } from '../../../global/ApiHelper/usePaginatedList';
+import {
+  LoadType,
+  usePaginatedList,
+} from '../../../global/ApiHelper/usePaginatedList';
 import { useDebounce } from '../../../constants/utils/useDebounce';
 
 const YourProfileContainer = ({ navigation }: any) => {
@@ -595,7 +601,11 @@ const YourProfileContainer = ({ navigation }: any) => {
   const [searchVisible, setSearchVisible] = useState(false);
   const [showAllTags, setShowAllTags] = useState(false);
   const [showAllTagsBooked, setShowAllTagsBooked] = useState(false);
-  const [selectedName, setSelectedName] = useState('Il tuo quadro');
+  const [selectedFamilyId, setSelectedFamilyId] = useState<string | number>(
+    '0',
+  );
+  console.log('selectedFamilyId', selectedFamilyId);
+
   const [showPopup, setShowPopup] = useState(false);
   const [expandedWaiting, setExpandedWaiting] = useState<any>({});
   const [expandedBooked, setExpandedBooked] = useState<any>({});
@@ -655,6 +665,17 @@ const YourProfileContainer = ({ navigation }: any) => {
     //     </TouchableOpacity>
     //   );
     // }
+    const formatKits = (kits: any[]) => {
+      if (!kits?.length) return '';
+
+      return kits
+        .map(kit => {
+          const kitName = kit?.kit?.name ?? '';
+          const count = kit?.test_count ?? 0;
+          return `${kitName} (${count})`;
+        })
+        .join(' + ');
+    };
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
@@ -666,11 +687,10 @@ const YourProfileContainer = ({ navigation }: any) => {
         <View>
           <Text style={styles.lblDateyear}>
             {getTranslation('analsisOf')}
-            {item.reportdate} {item.reportmonth} {item.reportyear}
+            {formatDateToSpanish(item.test_date)}
           </Text>
-          <Text style={styles.lblKitAndTestName}>
-            {getTranslation('kitlabeltext')} {item.kitname} ({item.kitcount}),{' '}
-            {item.testname} ({item.testcount})
+          <Text style={styles.lblKitAndTestName} numberOfLines={2}>
+            {formatKits(item.kits)}
           </Text>
         </View>
       </TouchableOpacity>
@@ -682,11 +702,13 @@ const YourProfileContainer = ({ navigation }: any) => {
       <TouchableOpacity
         activeOpacity={activityOpacity}
         style={styles.btnTestReport}
-        onPress={handleNavigateAnalitiTestDetails}
+        onPress={() => {
+          handleNavigateAnalitiTestDetails(item?.id);
+        }}
       >
         <View style={styles.lblTestImage}>
           <Text style={styles.lblTestName} numberOfLines={1}>
-          {item?.name}
+            {item?.name}
           </Text>
           <Image
             source={{ uri: item?.kit_image_url }}
@@ -696,7 +718,7 @@ const YourProfileContainer = ({ navigation }: any) => {
         <View>
           <Text style={styles.lblTotalAnalysis}>
             <Text style={styles.lblCurrentanalysis}>
-            {item.completed_tests}{' '}
+              {item.completed_tests}{' '}
             </Text>
             {getTranslation('ditext')} {item.total_tests}{' '}
             {getTranslation('analitietext')}
@@ -929,27 +951,44 @@ const YourProfileContainer = ({ navigation }: any) => {
     // navigation.navigate(ScreenNames.HISTORICALANALYSISCONTAINER);
     navigation.navigate('TransitionFlow', {
       screen: ScreenNames.HISTORICALANALYSISCONTAINER,
+      params: {
+        family_memeber_id: selectedFamilyId,
+      },
     });
   };
-  const handleNavigateAnalitiTestDetails = () => {
-    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER);
+
+  const handleNavigateAnalitiTestDetails = (analiti_id: any) => {
+    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER, {
+      analitiId: analiti_id,
+    });
   };
 
   // ====================== API ===============================
   const [searchHistory, setSeachHistory] = useState('');
   const debouncedSearch = useDebounce(searchHistory, 400);
+
   //ANALITILIST
   const fetchAnalitiList = useCallback(
-    async ({ page,  searchQuery, loadType }: { page: number; loadType: any, searchQuery?: string; }) => {
+    async ({
+      page,
+      searchQuery,
+      loadType,
+      additionalParams,
+    }: {
+      page: number;
+      loadType: any;
+      searchQuery?: string;
+      additionalParams?: any;
+    }) => {
       const res = await apiPromise({
         navigation,
         apiEndPoint: ApiEndPoints.HOME.GETANALITILIST,
         method: 'POST',
-        showLoader:
-          loadType === LoadType.INITIAL || loadType === LoadType.TAB_CHANGE,
+        showLoader: false,
         params: {
           page,
           ...(searchQuery ? { search: searchQuery } : {}),
+          ...additionalParams, // ✅ Spread additional params
         },
       });
 
@@ -966,7 +1005,95 @@ const YourProfileContainer = ({ navigation }: any) => {
     pageSize: 10,
     enabled: true,
     searchQuery: debouncedSearch,
+    additionalParams: { family_member_id: selectedFamilyId }, // ✅ Pass it here
     fetcher: fetchAnalitiList,
+  });
+
+  //  Add this useEffect to trigger reset when family member changes
+  useEffect(() => {
+    if (selectedFamilyId !== undefined) {
+      AnalitiList.reset();
+      orders.reset();
+    }
+  }, [selectedFamilyId]);
+
+  const fetchOrderList = useCallback(
+    async ({
+      page,
+      loadType,
+      additionalParams,
+    }: {
+      page: number;
+      loadType: any;
+      additionalParams?: any;
+    }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.ORDER.GETORDERHISTORY,
+        method: 'POST',
+        showLoader: false,
+        params: {
+          page,
+          payment_status: 'unpaid',
+          ...additionalParams,
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data ?? [],
+      };
+    },
+    [navigation],
+  );
+
+  const orders: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: true,
+    additionalParams: { family_id: selectedFamilyId }, // ✅ Pass it here
+    fetcher: fetchOrderList,
+  });
+
+  //================= API ==============================
+
+  //FAMILYAPI
+  const fetchFamilyMemberList = useCallback(
+    async ({ page, loadType }: { page: number; loadType: any }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.FAMILY.GETFAMILYMEMBERLIST,
+        method: 'POST',
+        showLoader: false,
+        params: {
+          page,
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+
+      const formattedData = res?.data;
+
+      // ➕ add "Tu" manually at top
+      const finalList = [
+        {
+          relationship_name: getTranslation('youtextyourprofile'),
+          id: '0',
+        },
+        ...formattedData,
+      ];
+      return {
+        ...res,
+        data: finalList ?? [], // ✅ always array
+      };
+    },
+    [navigation],
+  );
+
+  const familyMemberList: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: true,
+    fetcher: fetchFamilyMemberList,
   });
 
   return (
@@ -974,7 +1101,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       insets={insets}
       latestanalysisData={latestanalysisData}
       renderItemLatestAnalysis={renderItemLatestAnalysis}
-      modifiedData={modifiedData}
+      modifiedData={orders?.data}
       userReportData={userReportData}
       renderUserReportData={renderUserReportData}
       renderTestReportData={renderTestReportData}
@@ -983,9 +1110,9 @@ const YourProfileContainer = ({ navigation }: any) => {
       searchVisible={searchVisible}
       renderItemAppointment={renderItemAppointment}
       appointmentsData={appointmentsData}
-      familyMembersData={familyMembersData}
-      selectedName={selectedName}
-      setSelectedName={setSelectedName}
+      familyMembersData={familyMemberList?.data}
+      selectedFamilyId={selectedFamilyId}
+      setSelectedFamilyId={setSelectedFamilyId}
       showPopup={showPopup}
       setShowPopup={setShowPopup}
       handlePressProfile={handlePressProfile}
@@ -994,6 +1121,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       AnalitiList={AnalitiList}
       searchHistory={searchHistory}
       setSeachHistory={setSeachHistory}
+      orders={orders}
     />
   );
 };

@@ -393,6 +393,7 @@ const OrderHistoryContainer = ({ navigation }: any) => {
         showLoader: loadType === LoadType.INITIAL,
         params: {
           page,
+          payment_status:"unpaid"
         },
       });
 

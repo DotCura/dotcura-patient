@@ -35,6 +35,38 @@ const TestDetailsContainer = ({ navigation }: any) => {
     setNote(text);
   };
 
+  // ================== API =========================
+
+  // const _getTestDetails = async () => {
+  //   try {
+  //     const params = {
+  //       kit_id: route?.params?.analitiId,
+  //     };
+
+  //     const callback = async (responseData: any) => {
+  //       if (responseData.code === StatusCode.SUCCESS) {
+  //         setIsEmptyLoading(false);
+  //         setAnalitiTestDetailsData(responseData.data.analysis_list[0]);
+  //       } else {
+  //         setIsEmptyLoading(false);
+  //         flashMessageWarning(responseData.message);
+  //       }
+  //     };
+
+  //     await APIManager.makeRequest({
+  //       navigation: navigation,
+  //       method: MethodType.POST,
+  //       apiEndPoint: ApiEndPoints.ANALITI.GETANALITIDETAILS,
+  //       callback,
+  //       params,
+  //     });
+  //   } catch (error) {
+  //     setIsEmptyLoading(false);
+
+  //     console.log('Analiti details error:', error);
+  //   }
+  // };
+
   return (
     <TestDetailsComponents
       insets={insets}

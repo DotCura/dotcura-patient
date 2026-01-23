@@ -66,36 +66,38 @@ const YourProfileComponent = (props: any) => {
     return (
       <>
         {/* LatestAnalysis */}
-        <View style={{ marginBottom: getHeight(20) }}>
-          <View style={styles.vwSeeall}>
-            <Text style={styles.latestanlaysis}>
-              {getTranslation('latestanalysis')}
-            </Text>
-            <TouchableOpacity
-              activeOpacity={activityOpacity}
-              onPress={props.handleNavigateHistoricalAnlysis}
-            >
-              <Text style={styles.seeall}>{getTranslation('seeall')}</Text>
-            </TouchableOpacity>
+        {props.modifiedData.length !== 0 && (
+          <View style={{ marginBottom: getHeight(20) }}>
+            <View style={styles.vwSeeall}>
+              <Text style={styles.latestanlaysis}>
+                {getTranslation('latestanalysis')}
+              </Text>
+              <TouchableOpacity
+                activeOpacity={activityOpacity}
+                onPress={props.handleNavigateHistoricalAnlysis}
+              >
+                <Text style={styles.seeall}>{getTranslation('seeall')}</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ marginTop: getHeight(12) }}>
+              <FlatList
+                data={props.modifiedData.slice(0, 4)}
+                renderItem={props.renderItemLatestAnalysis}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                keyExtractor={item => item.booking_id}
+                contentContainerStyle={{
+                  gap: getWidth(8),
+                  paddingLeft: getWidth(16),
+                  paddingRight: getWidth(16),
+                }}
+              />
+            </View>
           </View>
-          <View style={{ marginTop: getHeight(12) }}>
-            <FlatList
-              data={props.modifiedData.slice(0, 4)}
-              renderItem={props.renderItemLatestAnalysis}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              keyExtractor={item => item.id.toString()}
-              contentContainerStyle={{
-                gap: getWidth(8),
-                paddingLeft: getWidth(16),
-                paddingRight: getWidth(16),
-              }}
-            />
-          </View>
-        </View>
+        )}
 
         {/* waitingforresultof */}
-        <View style={{ marginHorizontal: getWidth(16) }}>
+        {/* <View style={{ marginHorizontal: getWidth(16) }}>
           {props.appointmentsData.some((a: any) => a.status === 'waiting') && (
             <Text style={styles.lblWaitingForResult}>
               {getTranslation('waitingforresultof')}
@@ -123,7 +125,7 @@ const YourProfileComponent = (props: any) => {
                 {props.renderItemAppointment({ item, index })}
               </React.Fragment>
             ))}
-        </View>
+        </View> */}
       </>
     );
   };
@@ -171,6 +173,13 @@ const YourProfileComponent = (props: any) => {
     };
   });
 
+  const selectedMember = props.familyMembersData?.find(
+    (m: any) => m.id === props.selectedFamilyId,
+  );
+
+  const selectedTitle =
+    selectedMember?.relationship_name || getTranslation('youtextyourprofile');
+
   return (
     <View
       style={[
@@ -202,7 +211,7 @@ const YourProfileComponent = (props: any) => {
             onPress={() => props.setShowPopup(true)}
           >
             <Text style={styles.lblHeaderTitle} numberOfLines={1}>
-              {props.selectedName}
+              Il {selectedTitle}
             </Text>
             <Image
               source={images.imgLeftArrow}
@@ -386,7 +395,7 @@ const YourProfileComponent = (props: any) => {
             ]}
           >
             {props.familyMembersData.map((item: any, index: number) => {
-              const isSelected = item.familymembername === props.selectedName;
+              const isSelected = item.id === props.selectedFamilyId;
 
               return (
                 <TouchableOpacity
@@ -394,7 +403,7 @@ const YourProfileComponent = (props: any) => {
                   style={[styles.itemRow, isSelected && styles.selectedRow]}
                   activeOpacity={activityOpacity}
                   onPress={() => {
-                    props.setSelectedName(item.familymembername);
+                    props.setSelectedFamilyId(item.id);
                     props.setShowPopup(false);
                   }}
                 >
@@ -405,7 +414,7 @@ const YourProfileComponent = (props: any) => {
                   <Text
                     style={[styles.itemText, isSelected && styles.selectedText]}
                   >
-                    {item.familymembername}
+                    {item.relationship_name}
                   </Text>
                 </TouchableOpacity>
               );
@@ -435,49 +444,57 @@ const YourProfileComponent = (props: any) => {
       </View> */}
 
       {/* vwTestReports */}
-      <FlatList
-        onEndReached={props.AnalitiList.loadMore}
-        onEndReachedThreshold={0.5}
-        refreshing={props.AnalitiList.refreshing}
-        onRefresh={props.AnalitiList.refresh}
-        ListFooterComponent={
-          props.AnalitiList.loadingMore ? (
-            <ActivityIndicator size="large" color={Colors.blue002} />
-          ) : null
-        }
-        ListEmptyComponent={
-          !props.AnalitiList.loading && !props.AnalitiList.refreshing ? (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: getHeight(20),
-                marginTop: '50%',
-              }}
-            >
-              <Image source={images.imgNoDataFoundAddress} />
-              <Text style={styles.lblNoAddressFound}>
-                {getTranslation('noAnlitilistfound')}
-              </Text>
-            </View>
-          ) : null
-        }
-        onScroll={() => {
-          props.setShowPopup(false);
-        }}
-        style={{ flex: 1 }}
-        // ListHeaderComponent={renderListHeader}
-        data={props.testReportData}
-        renderItem={props.renderTestReportData}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={item => item.id.toString()}
-        contentContainerStyle={{
-          gap: getHeight(12),
-          paddingBottom: getHeight(130),
-          paddingTop: getHeight(24),
-        }}
-      />
+      {props.orders?.loading ? (
+        <ActivityIndicator
+          size="large"
+          color={Colors.blue1C}
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center',marginTop:-100 }}
+        />
+      ) : (
+        <FlatList
+          onEndReached={props.AnalitiList.loadMore}
+          onEndReachedThreshold={0.5}
+          refreshing={props.AnalitiList.refreshing}
+          onRefresh={props.AnalitiList.refresh}
+          ListFooterComponent={
+            props.AnalitiList.loadingMore ? (
+              <ActivityIndicator size="large" color={Colors.blue002} />
+            ) : null
+          }
+          ListEmptyComponent={
+            !props.AnalitiList.loading && !props.AnalitiList.refreshing ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: getHeight(20),
+                  marginTop: '50%',
+                }}
+              >
+                <Image source={images.imgNoDataFoundAddress} />
+                <Text style={styles.lblNoAddressFound}>
+                  {getTranslation('noAnlitilistfound')}
+                </Text>
+              </View>
+            ) : null
+          }
+          onScroll={() => {
+            props.setShowPopup(false);
+          }}
+          style={{ flex: 1 }}
+          ListHeaderComponent={renderListHeader}
+          data={props.testReportData}
+          renderItem={props.renderTestReportData}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.id.toString()}
+          contentContainerStyle={{
+            gap: getHeight(12),
+            paddingBottom: getHeight(130),
+            paddingTop: getHeight(24),
+          }}
+        />
+      )}
     </View>
   );
 };

@@ -67,6 +67,9 @@ export const ApiEndPoints = {
   COUNT: {
     TOTALCOUNT: `${PATIENT_PREFIX}total_count`,
   },
+  ANALITI:{
+    GETANALITIDETAILS: `${PATIENT_PREFIX}getAnalitiDetails`,
+  }
 };
 
 // API methods

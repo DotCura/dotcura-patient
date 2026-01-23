@@ -24,6 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SECRET = CryptoJS.enc.Utf8.parse(ApiKeys.SECRET_KEY);
 const ENC_IV = CryptoJS.enc.Utf8.parse(ApiKeys.IV);
 
+
 /* =======================
    Helper: Await MMKV
 ======================= */
@@ -35,6 +36,7 @@ const getUserToken = () =>
   });
 
 export const APIManager = {
+  
   /* =======================
      Base URL
   ======================= */
@@ -195,10 +197,15 @@ export const APIManager = {
     ======================= */
     function handleUnauthorized() {
       flashMessageWarning(getTranslation('youhavebeenloggedout'));
-      const { resetCart, resetNotificationCount } = ZustandStores.CartStore();
+      console.log("above");
+      const { resetCart, resetNotificationCount } =
+      ZustandStores.CartStore.getState();
+      console.log("below");
+
+      
+      AsyncStorage.removeItem('cart-store');
       resetCart();
       resetNotificationCount();
-      AsyncStorage.removeItem('cart-store');
       MmkvManager.clearAllExcept([MmkvManager.Keys.isOnBoardingVisisted]);
       navigation.dispatch(
         CommonActions.reset({

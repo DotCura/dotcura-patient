@@ -132,6 +132,7 @@ export const styles = StyleSheet.create({
   },
 
   lblKitAndTestName: {
+    maxWidth:200,
     color: Colors.gray55,
     fontSize: fontSize.size12,
     fontFamily: fontsfamily.gregular,
