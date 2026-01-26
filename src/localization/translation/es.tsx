@@ -177,8 +177,8 @@ export default {
   howtopreparesubtitle5: ' il giorno prima e cerca di riposare bene.',
   gotocart: 'Vai al carrello',
   addtoorder: 'Aggiungi all’ordine',
-  gotocarttext:"Vai al carrello",
-  updatecart:"Aggiorna carrello",
+  gotocarttext: 'Vai al carrello',
+  updatecart: 'Aggiorna carrello',
 
   //ANALITIDETAILS
   analititextdetails: 'Analiti',
@@ -546,21 +546,36 @@ export default {
 
   //FAMILY
   editfamilymembertitle: 'Modifica familiare',
-  editinformationbtn:"Modifica informazioni",
+  editinformationbtn: 'Modifica informazioni',
 
-  
   //CHECKOUT SAVE
-  selectaddress: "Por favor, selecciona una dirección",
-  selectaddresscheckout: "selecciona una dirección",
-  selecttimeslot: "Por favor, selecciona la fecha y la hora",
-  selecttimeslotcheckout: "selecciona la fecha y la hora",
-  cartempty: "Tu carrito está vacío",
-  youtext:"Tu",
-  errorcoupanscode:"Por favor aplique el código de cupón.",
-  appliedtext:"Aplicado",
-  timetosoon : "La hora seleccionada debe comenzar al menos 1 hora a partir del momento actual.",
+  selectaddress: 'Por favor, selecciona una dirección',
+  selectaddresscheckout: 'selecciona una dirección',
+  selecttimeslot: 'Por favor, selecciona la fecha y la hora',
+  selecttimeslotcheckout: 'selecciona la fecha y la hora',
+  cartempty: 'Tu carrito está vacío',
+  youtext: 'Tu',
+  errorcoupanscode: 'Por favor aplique el código de cupón.',
+  appliedtext: 'Aplicado',
+  timetosoon:
+    'La hora seleccionada debe comenzar al menos 1 hora a partir del momento actual.',
 
-  youtextyourprofile:"tuo quadro",
-  reportnotavailable:"Informe no disponible para esta prueba",
+  youtextyourprofile: 'tuo quadro',
+  reportnotavailable: 'Informe no disponible para esta prueba',
 
+  //ORDERSTATUS
+  visitconfirm: 'Visita confermata',
+  minitearrive: 'minuti',
+  ishere: 'è qui.',
+  visitmodified: 'Visita modificata',
+  canclevisit: 'Visita cancellata',
+
+  visitconfirmsubtitle: 'Ottime notizie! La visita è confermata per oggi alle',
+  minitarrivesubtitle:
+    'L’operatore è quasi da te.Tieni d’occhio il telefono o il citofono.',
+  isheresubtitle: 'Tempo di farsi visitare.',
+  visitmodifiedsubtitle:
+    'L’infermiere ci ha comunicato che verrà a casa tua entro le',
+  canclevisitsubtitle:
+    'Non aspettare! Puoi richiedere immediatamente una nuova visita.',
 };

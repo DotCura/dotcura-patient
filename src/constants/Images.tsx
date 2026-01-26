@@ -112,6 +112,11 @@ export const images = {
   imgDeleteAddress: require('../assets/images/deleteIcon.png'),
   imgEditAddress: require('../assets/images/editaddress.png'),
   imgNoDataFoundAddress: require('../assets/images/nodatefoundaddress.png'),
+
+  imgvisitconfirmstepper: require('../assets/images/visitconfirmstepper.png'),
+  imgstartvisitstepper: require('../assets/images/startvisitstepper.png'),
+  imgcanclevisitstepper: require('../assets/images/visitcanclestepper.png'),
+  imgeditorderstepper: require('../assets/images/editorderstepper.png'),
   
 
   splashvideo: require('../assets/videos/SplashScreen.mp4'),

@@ -9,18 +9,16 @@ interface AppLayoutProps {
 }
 
 const AppLayout = ({ children, isOrderPlaced }: AppLayoutProps) => {
-  console.log("remder app");
-  
+  console.log('remder app');
+
   return (
     <>
       {/* Header / Order Status */}
-      {isOrderPlaced && (
-          <OrderStatusComponent orderStatus={isOrderPlaced} />
-      )}
+      {isOrderPlaced && <OrderStatusComponent orderStatus={isOrderPlaced} />}
 
       {/* Main Content */}
-    
-    {children}
+
+      {children}
     </>
   );
 };
@@ -34,7 +32,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor:Colors.red8C,
+    backgroundColor: Colors.red8C,
     // overflow: 'hidden',
   },
   roundedTop: {
