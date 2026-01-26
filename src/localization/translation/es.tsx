@@ -560,6 +560,7 @@ export default {
   appliedtext:"Aplicado",
   timetosoon : "La hora seleccionada debe comenzar al menos 1 hora a partir del momento actual.",
 
-  youtextyourprofile:"tuo quadro"
+  youtextyourprofile:"tuo quadro",
+  reportnotavailable:"Informe no disponible para esta prueba",
 
 };

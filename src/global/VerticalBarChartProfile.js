@@ -12,7 +12,6 @@
 // import { fontsfamily } from '../constants/FontFamily';
 // import { fontSize } from '../constants/FontSizes';
 
-
 // const { width } = Dimensions.get('window');
 
 // // // --- Component Definition ---
@@ -577,46 +576,46 @@
 //   // };
 //   // const getPosition = (index, value) => {
 //   //   const v = Number(value);
-  
+
 //   //   // Clamp only inside the middle logical range, not whole chart
 //   //   const unclamped = (v - finalChartMinValue) / (finalChartMaxValue - finalChartMinValue);
-  
+
 //   //   // clamp between 0–1
 //   //   const normalized = Math.max(0, Math.min(1, unclamped));
-  
+
 //   //   // MIDDLE SEGMENT POSITION RANGE
 //   //   const middleStartY = MARGIN_HEIGHT + SEG_HEIGHT_THIN + MARGIN_HEIGHT;      // start of thick segment
 //   //   const middleEndY = middleStartY + SEG_HEIGHT_THICK;                        // end of thick segment
-  
+
 //   //   // We want maxValue → middleStartY (top of middle)
 //   //   // We want minValue → middleEndY (bottom of middle)
 //   //   const y = middleEndY - normalized * (middleEndY - middleStartY);
-  
+
 //   //   const x = index * barWidth + barWidth / 2;
 //   //   return { x, y };
 //   // };
 //   const getPosition = (index, value) => {
 //     const v = Number(value);
-  
+
 //     // SEGMENT Y POSITIONS
 //     const topStartY = MARGIN_HEIGHT;                                         // top segment TOP
 //     const topEndY = topStartY + SEG_HEIGHT_THIN;                             // top segment BOTTOM
-  
+
 //     const middleStartY = topEndY + MARGIN_HEIGHT;                            // middle segment TOP
 //     const middleEndY = middleStartY + SEG_HEIGHT_THICK;                      // middle segment BOTTOM
-  
+
 //     const bottomStartY = middleEndY + MARGIN_HEIGHT;                         // bottom segment TOP
 //     const bottomEndY = bottomStartY + SEG_HEIGHT_THIN;                       // bottom segment BOTTOM
-  
+
 //     let y;
-  
+
 //     // -----------------------
 //     // 1) EXTREME HIGH
 //     // -----------------------
 //     if (v >= moderateHighThreshold) {
 //       y = topStartY;  // stick dot at very top
 //     }
-  
+
 //     // -----------------------
 //     // 2) MODERATE HIGH
 //     // -----------------------
@@ -625,7 +624,7 @@
 //       const ratio = (v - finalChartMaxValue) / (moderateHighThreshold - finalChartMaxValue);
 //       y = topEndY - ratio * (topEndY - topStartY);
 //     }
-  
+
 //     // -----------------------
 //     // 3) NORMAL RANGE (middle)
 //     // -----------------------
@@ -633,7 +632,7 @@
 //       const ratio = (v - finalChartMinValue) / (finalChartMaxValue - finalChartMinValue);
 //       y = middleEndY - ratio * (middleEndY - middleStartY);
 //     }
-  
+
 //     // -----------------------
 //     // 4) MODERATE LOW
 //     // -----------------------
@@ -641,19 +640,17 @@
 //       const ratio = (finalChartMinValue - v) / (finalChartMinValue - moderateLowThreshold);
 //       y = bottomStartY + ratio * (bottomEndY - bottomStartY);
 //     }
-  
+
 //     // -----------------------
 //     // 5) EXTREME LOW
 //     // -----------------------
 //     else {
 //       y = bottomEndY; // stick dot at very bottom
 //     }
-  
+
 //     const x = index * barWidth + barWidth / 2;
 //     return { x, y };
 //   };
-  
-  
 
 //   // -------------------------
 //   // path segments (curved line)
@@ -889,33 +886,42 @@
 
 // export default VerticalBarChartProfile;
 
+import React from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import Svg, {
+  Polyline,
+  Circle,
+  Defs,
+  LinearGradient,
+  Stop,
+  Path,
+} from 'react-native-svg';
+import { Colors } from '../constants/Colors';
+import { fontsfamily } from '../constants/FontFamily';
+import { fontSize } from '../constants/FontSizes';
+import { formatDateToSpanishChart } from '../constants/GConstant';
 
-import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
-import Svg, { Polyline, Circle, Defs, LinearGradient, Stop, Path } from "react-native-svg";
-import { Colors } from "../constants/Colors";
-import { fontsfamily } from "../constants/FontFamily";
-import { fontSize } from "../constants/FontSizes";
-
-const VerticalBarChart = ({
-  data = [],
-  chartMinValue,
-  chartMaxValue,
-}) => {
+const VerticalBarChart = ({ data = [], chartMinValue, chartMaxValue }) => {
   if (!data.length) return null;
 
-  const screenWidth = Dimensions.get("window").width;
-  const cardWidth = screenWidth * 0.90;
+  console.log('VerticalBarChart data:', data);
+  console.log('VerticalBarChart data:', chartMinValue);
+  console.log('VerticalBarChart data:', chartMaxValue);
+
+  
+  const screenWidth = Dimensions.get('window').width;
+  const cardWidth = screenWidth * 0.9;
   const horizontalPadding = 15;
 
-  const values = data.map((i) => Number(i.value));
+  const values = data.map(i => Number(i.value));
 
   const chartHeight = 90;
-  const SAFE_PADDING = 8;                            // <-- NEW FIX
-  const svgHeight = chartHeight + SAFE_PADDING * 2;   // <-- EXTRA HEIGHT
+  const SAFE_PADDING = 8; // <-- NEW FIX
+  const svgHeight = chartHeight + SAFE_PADDING * 2; // <-- EXTRA HEIGHT
 
-  const chartWidth = (cardWidth - 32) - horizontalPadding * 2;
-  const barWidth = chartWidth / (data.length - 1);
+  const chartWidth = cardWidth - 32 - horizontalPadding * 2;
+  const safeLength = Math.max(data.length - 1, 1);
+const barWidth = chartWidth / safeLength;
 
   // --------------------------------------------------------------------
   // COLOR LOGIC
@@ -927,17 +933,17 @@ const VerticalBarChart = ({
   //   if (v === Math.max(...values)) return Colors.blue1C;
   //   return Colors.goldenCA;
   // };
-  const getColor = (value) => {
+  const getColor = value => {
     const v = Number(value);
-  
+
     // EXTREME HIGH / EXTREME LOW
     if (v > extendedMax) return Colors.redCA;
     if (v < extendedMin) return Colors.redCA;
-  
+
     // Slightly above or below
     if (v > chartMaxValue) return Colors.goldenCA;
     if (v < chartMinValue) return Colors.goldenCA;
-  
+
     // Within safe range
     return Colors.blue1C;
   };
@@ -1003,9 +1009,7 @@ const VerticalBarChart = ({
 
   return (
     <View style={styles.container}>
-
       <Svg width={chartWidth + horizontalPadding * 2} height={svgHeight}>
-
         {/* -----------------------------------------------------
             GRADIENT DEFINITIONS
         ------------------------------------------------------ */}
@@ -1052,7 +1056,9 @@ const VerticalBarChart = ({
 
         {/* DASHED MID LINES */}
         <Polyline
-          points={`0,${32 + SAFE_PADDING} ${(chartWidth + horizontalPadding * 2)},${32 + SAFE_PADDING}`}
+          points={`0,${32 + SAFE_PADDING} ${
+            chartWidth + horizontalPadding * 2
+          },${32 + SAFE_PADDING}`}
           stroke="#EDEDF0"
           strokeWidth={2}
           strokeDasharray="6,6"
@@ -1060,7 +1066,9 @@ const VerticalBarChart = ({
         />
 
         <Polyline
-          points={`0,${62 + SAFE_PADDING} ${(chartWidth + horizontalPadding * 2)},${62 + SAFE_PADDING}`}
+          points={`0,${62 + SAFE_PADDING} ${
+            chartWidth + horizontalPadding * 2
+          },${62 + SAFE_PADDING}`}
           stroke="#EDEDF0"
           strokeWidth={2}
           strokeDasharray="6,6"
@@ -1101,12 +1109,14 @@ const VerticalBarChart = ({
               <Text style={[styles.valueText, isLast && styles.lastValueText]}>
                 {String(item.value)}
               </Text>
-              <Text style={styles.dateText}>{item.date}</Text>
+              <Text style={styles.dateText}>
+                {' '}
+                {formatDateToSpanishChart(item.date)}
+              </Text>
             </View>
           );
         })}
       </View>
-
     </View>
   );
 };
@@ -1114,12 +1124,12 @@ const VerticalBarChart = ({
 const styles = StyleSheet.create({
   container: { paddingTop: 10 },
   labelsContainer: {
-    position: "relative",
-    width: "100%",
+    position: 'relative',
+    width: '100%',
     height: 40,
     marginTop: 4,
   },
-  labelBox: { position: "absolute", width: 50, alignItems: "center" },
+  labelBox: { position: 'absolute', width: 50, alignItems: 'center' },
   valueText: {
     fontSize: fontSize.size12,
     fontFamily: fontsfamily.regular,
@@ -1131,6 +1141,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     marginTop: 2,
+    textAlign:'center',
     fontSize: fontSize.size12,
     fontFamily: fontsfamily.regular,
     color: Colors.gray55,

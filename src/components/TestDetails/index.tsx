@@ -24,20 +24,33 @@ import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
 import VerticalBarChartProfile from '../../global/VerticalBarChartProfile';
 import { ZustandStores } from '../../store';
 import BarChartComponent from '../../global/BloodCountGraph';
+import { DateFormatsManager } from '../../constants/utils/DateFormats';
 
 const TestDetailsComponents = (props: any) => {
-  const [rangeType, setRangeType] = React.useState('normal');
+  const [rangeType, setRangeType] = React.useState<any>('normal');
   const { orderStatus } = ZustandStores.OrderstatusStore();
-  const getGradientByRange = () => {
+  const getBackgroundColorLabel = () => {
     switch (rangeType) {
       case 'normal':
-        return [Colors.white, Colors.grayED];
+        return Colors.blue2C;
       case 'moderate':
-        return [Colors.white, Colors.goldenFD];
+        return Colors.goldenCA;
       case 'extreme':
-        return [Colors.white, Colors.redFD];
+        return Colors.redE8;
       default:
-        return [Colors.white, Colors.goldenF9];
+        return Colors.blue2C;
+    }
+  };
+  const getBackgroundColorOuterLabel = () => {
+    switch (rangeType) {
+      case 'normal':
+        return Colors.blue2C_20;
+      case 'moderate':
+        return Colors.goldenCA_20;
+      case 'extreme':
+        return Colors.redE8_20;
+      default:
+        return Colors.blue2C_20;
     }
   };
 
@@ -51,6 +64,8 @@ const TestDetailsComponents = (props: any) => {
     maxvalue: 10000,
     reportunit: 'pH',
   };
+
+  // console.log("DateFormatsManager.formatDate(props?.userReportData?.trend[0]?.date,DateFormatsManager.DateFormats.DDMMYYYY_SLASH",DateFormatsManager.formatDate(props?.userReportData?.trend[0]?.date,DateFormatsManager.DateFormats.DDMMYYYY_SLASH));
 
   return (
     <>
@@ -74,12 +89,12 @@ const TestDetailsComponents = (props: any) => {
         >
           <Image source={images.imgLeftArrow} />
         </TouchableOpacity>
-        <View>
+        <View style={{ flex: 1 }}>
           <Text
             style={[constnatStyles.lblHeaderTitle, props?.headerTextStyle]}
             numberOfLines={2}
           >
-            Glicemia
+            {props?.userReportData?.test?.name}
           </Text>
           <Text
             style={[
@@ -88,7 +103,16 @@ const TestDetailsComponents = (props: any) => {
             ]}
             numberOfLines={2}
           >
-            {'8/8/2025' + '-' + '17:09'}
+            {props?.userReportData?.trend?.[0]?.date &&
+              DateFormatsManager.formatDate(
+                props?.userReportData?.trend?.[0]?.date,
+                DateFormatsManager.DateFormats.DDMMYYYY_SLASH,
+              ) +
+                '-' +
+                DateFormatsManager.formatDate(
+                  props?.userReportData?.trend?.[0]?.date,
+                  DateFormatsManager.TimeFormats.HHmm,
+                )}
           </Text>
         </View>
         <TouchableOpacity
@@ -98,100 +122,134 @@ const TestDetailsComponents = (props: any) => {
           <Image source={images.imgfavblack} />
         </TouchableOpacity>
       </View>
-      <ScrollView
-        contentContainerStyle={[
-          constnatStyles.keyboardContainer,
-          {
-            paddingHorizontal: getWidth(16),
-            paddingBottom: getHeight(110),
-          },
-        ]}
-        bounces={true}
-        showsVerticalScrollIndicator={false}
-        nestedScrollEnabled={true}
-        style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
-      >
-        {/* vwTestDes */}
-        <View style={styles.vwTestDes}>
-          <Text style={styles.lblValueDes}>{getTranslation('thevalueis')}</Text>
-
-          <Text style={styles.lblValue}> glicemia </Text>
-
-          <View style={styles.vwTestTitleInner}>
-            <View style={styles.vwTestTitle}>
-              <Text style={styles.lblValueDes}>
-                {getTranslation('lowethen')}
-              </Text>
-            </View>
-          </View>
-          <Text style={styles.lblValueDes}>
-            {getTranslation('lowethensub')}
-          </Text>
-        </View>
-
-        {/* vwValue */}
-        <View style={{ marginTop: getHeight(18) }}>
-          {/* <LinearGradient
-          colors={getGradientByRange()}
-          start={{ x: 0.5, y: 0 }}
-          end={{ x: 0.5, y: 1 }}
-          style={styles.card}
-        > */}
-          <View style={{}}>
-            <Text style={styles.lblTestValue}>
-              0.37<Text style={styles.lblUnit}>mg/dL</Text>
+      {props.IsEmptyLoading === false && (
+        <ScrollView
+          contentContainerStyle={[
+            constnatStyles.keyboardContainer,
+            {
+              paddingHorizontal: getWidth(16),
+              paddingBottom: getHeight(110),
+            },
+          ]}
+          bounces={true}
+          showsVerticalScrollIndicator={false}
+          nestedScrollEnabled={true}
+          style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
+        >
+          {/* vwTestDes */}
+          <View style={styles.vwTestDes}>
+            <Text style={styles.lblValueDes}>
+              {getTranslation('thevalueis')}
             </Text>
-            <BarChartComponentDetails
-              currentValue={kittestdetails.currentvalue}
-              minValue={kittestdetails.minValue}
-              maxValue={kittestdetails.maxvalue}
-              width={ScreenDimensions.screenWidth - getWidth(40)}
-              height={getHeight(40)}
-              reportItem={kittestdetails}
-            />
-            <View style={styles.vwOptimalAndPercentage}>
-              <View style={styles.vwPercentage}>
-                <Text style={styles.lblPercentage}>
-                  {getTranslation('percentage')}
-                </Text>
-                <Text style={styles.lblValuePecentage}>
-                  0.52 <Text style={styles.lblUnitsmall}>mg/dL</Text>
-                </Text>
-              </View>
-              <View style={styles.vwPercentage}>
-                <Text style={styles.lblPercentage}>
-                  {getTranslation('valueoptimal')}
-                </Text>
-                <Text style={styles.lblValuePecentage}>
-                  0.4 - 1.2 <Text style={styles.lblUnitsmall}>mg/dL</Text>
+
+            <Text
+              style={[
+                styles.lblValue,
+                {
+                  color: getBackgroundColorLabel(),
+                },
+              ]}
+            >
+              {' '}
+              {props?.userReportData?.test?.name}{' '}
+            </Text>
+
+            <View
+              style={[
+                styles.vwTestTitleInner,
+                {
+                  backgroundColor: getBackgroundColorOuterLabel(),
+                },
+              ]}
+            >
+              <View
+                style={[
+                  styles.vwTestTitle,
+                  {
+                    backgroundColor: getBackgroundColorLabel(),
+                  },
+                ]}
+              >
+                <Text style={styles.lblValueDes}>
+                  {props?.userReportData?.latest?.trendLabel}
                 </Text>
               </View>
             </View>
+            <Text style={styles.lblValueDes}>
+              {getTranslation('lowethensub')}
+            </Text>
           </View>
-          {/* </LinearGradient> */}
-        </View>
 
-        {/* veTrade */}
-        <View>
-          <Text style={styles.lblTrade}>{getTranslation('trend')}</Text>
-          <View
-            style={{
-              backgroundColor: Colors.white,
-              borderRadius: 20,
-              padding: 16,
-              gap: getHeight(6),
-              marginTop: getHeight(12),
-            }}
-          >
-            <VerticalBarChartProfile
-              data={props.userReportData.chartData}
-              chartMaxValue={props.userReportData.maxvalue}
-              chartMinValue={props.userReportData.minvalue}
-            />
+          {/* vwValue */}
+          <View style={{ marginTop: getHeight(18) }}>
+            <View style={{}}>
+              <Text style={styles.lblTestValue}>
+                {props?.userReportData?.latest?.value}
+                <Text style={styles.lblUnit}>
+                  {' '}
+                  {props?.userReportData?.latest?.unit}
+                </Text>
+              </Text>
+              <BarChartComponentDetails
+                currentValue={props?.userReportData?.latest?.value}
+                minValue={props?.userReportData?.latest?.minvalue}
+                maxValue={props?.userReportData?.latest?.maxvalue}
+                width={ScreenDimensions.screenWidth - getWidth(40)}
+                height={getHeight(40)}
+                reportItem={kittestdetails}
+                onRangeTypeChange={setRangeType} // ✅ IMPORTANT
+              />
+              <View style={styles.vwOptimalAndPercentage}>
+                {props?.userReportData?.previous !== null && (
+                  <View style={styles.vwPercentage}>
+                    <Text style={styles.lblPercentage}>
+                      {getTranslation('percentage')}
+                    </Text>
+                    <Text style={styles.lblValuePecentage}>
+                      {props?.userReportData?.previous}{' '}
+                      <Text style={styles.lblUnitsmall}>
+                        {props?.userReportData?.latest?.unit}
+                      </Text>
+                    </Text>
+                  </View>
+                )}
+                <View style={styles.vwPercentage}>
+                  <Text style={styles.lblPercentage}>
+                    {getTranslation('valueoptimal')}
+                  </Text>
+                  <Text style={styles.lblValuePecentage}>
+                    {props?.userReportData?.latest?.minvalue} -{' '}
+                    {props?.userReportData?.latest?.maxvalue}{' '}
+                    <Text style={styles.lblUnitsmall}>
+                      {props?.userReportData?.latest?.unit}
+                    </Text>
+                  </Text>
+                </View>
+              </View>
+            </View>
           </View>
-        </View>
-        {/* vwNote */}
-        {/* <View style={{ marginTop: getHeight(24) }}>
+
+          {/* veTrade */}
+          <View>
+            <Text style={styles.lblTrade}>{getTranslation('trend')}</Text>
+            <View
+              style={{
+                backgroundColor: Colors.white,
+                borderRadius: 20,
+                padding: 16,
+                gap: getHeight(6),
+                marginTop: getHeight(12),
+              }}
+            >
+              <VerticalBarChartProfile
+                data={props?.userReportData?.trend}
+                chartMaxValue={props?.userReportData?.latest?.maxvalue}
+                chartMinValue={props?.userReportData?.latest?.minvalue}
+              />
+            </View>
+          </View>
+          {/* vwNote */}
+          {/* <View style={{ marginTop: getHeight(24) }}>
         <PrimaryTitleTextInput
           placHolderLabel={getTranslation('placeholdernote')}
           inputLabel={getTranslation('note')}
@@ -207,38 +265,34 @@ const TestDetailsComponents = (props: any) => {
           isBorder={false}
         />
       </View> */}
-        {/* vwQuery */}
-        <View style={{ marginTop: getHeight(24) }}>
-          {/* vwwarning */}
-          <View
-            style={[styles.vwwarningDetails1, { marginBottom: getHeight(8) }]}
-          >
-            <View style={styles.vwInBank}>
-              <Text style={styles.txtBankDetails} numberOfLines={1}>
-                {getTranslation('high')}
-              </Text>
-              <Text style={styles.txtWeCanNot} numberOfLines={5}>
-                Valori alti indicano troppo zucchero nel sangue, che può
-                derivare da alimentazione ricca di carboidrati, stress o essere
-                segnale di prediabete/diabete.
-              </Text>
+          {/* vwQuery */}
+          <View style={{ marginTop: getHeight(24) }}>
+            {/* vwwarning */}
+            <View
+              style={[styles.vwwarningDetails1, { marginBottom: getHeight(8) }]}
+            >
+              <View style={styles.vwInBank}>
+                <Text style={styles.txtBankDetails} numberOfLines={1}>
+                  {getTranslation('high')}
+                </Text>
+                <Text style={styles.txtWeCanNot} numberOfLines={5}>
+                  {props?.userReportData?.test?.high_description}
+                </Text>
+              </View>
             </View>
-          </View>
-          {/* vwwarning */}
-          <View style={styles.vwwarningDetails1}>
-            <View style={styles.vwInBank}>
-              <Text style={styles.txtBankDetails} numberOfLines={1}>
-                {getTranslation('low')}
-              </Text>
-              <Text style={styles.txtWeCanNot} numberOfLines={5}>
-                Valori bassi di glicemia indicano poco zucchero nel sangue,
-                spesso causato da digiuno prolungato o attività fisica intensa.
-                Potresti aver avvertito tremori, sudorazione o debolezza.
-              </Text>
+            {/* vwwarning */}
+            <View style={styles.vwwarningDetails1}>
+              <View style={styles.vwInBank}>
+                <Text style={styles.txtBankDetails} numberOfLines={1}>
+                  {getTranslation('low')}
+                </Text>
+                <Text style={styles.txtWeCanNot} numberOfLines={5}>
+                  {props?.userReportData?.test?.low_description}
+                </Text>
+              </View>
             </View>
-          </View>
-          {/* vwwarning */}
-          {/* <View style={styles.vwwarningDetails}>
+            {/* vwwarning */}
+            {/* <View style={styles.vwwarningDetails}>
           <View
             style={{
               flexDirection: 'row',
@@ -270,8 +324,9 @@ const TestDetailsComponents = (props: any) => {
             </Text>
           </TouchableOpacity>
         </View> */}
-        </View>
-      </ScrollView>
+          </View>
+        </ScrollView>
+      )}
     </>
   );
 };

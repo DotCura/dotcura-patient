@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   vwTestTitleInner:{
     backgroundColor: Colors.goldenFB,
     borderRadius: 999,
-    paddingHorizontal: getWidth(4),
+    paddingHorizontal: getWidth(2),
     marginHorizontal: getWidth(2),
     paddingVertical: getHeight(2),
   },
@@ -155,7 +155,7 @@ export const styles = StyleSheet.create({
   vwTestTitle: {
     backgroundColor: Colors.goldeenF5,
     borderRadius: 999,
-    paddingHorizontal: getWidth(4),
+    paddingHorizontal: getWidth(8),
     marginHorizontal: getWidth(2),
     paddingVertical: getHeight(2),
   },
@@ -166,7 +166,6 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: getWidth(30),
   },
   lblValueDes: {
     textAlign: 'center',

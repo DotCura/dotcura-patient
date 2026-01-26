@@ -8,6 +8,8 @@ import { ScreenNames } from '../../constants/AppConstants';
 import { flashMessageWarning, goToTabScreen } from '../../constants/GConstant';
 import { APIManager } from '../../api/APIManager';
 import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
+import { getTags } from 'react-native-device-info';
+import { getTranslation } from '../../localization/i18n/i18n.config';
 
 const AnalitiTestDetailContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -109,9 +111,8 @@ const AnalitiTestDetailContainer = ({ navigation, route }: any) => {
     },
   };
 
-  const [AnalitiTestDetailsData, setAnalitiTestDetailsData] =
-    useState([]);
-    const [isEmptyLoading,setIsEmptyLoading]=useState(true);
+  const [AnalitiTestDetailsData, setAnalitiTestDetailsData] = useState([]);
+  const [isEmptyLoading, setIsEmptyLoading] = useState(true);
 
   const header = () => {
     navigation.setOptions({
@@ -129,14 +130,19 @@ const AnalitiTestDetailContainer = ({ navigation, route }: any) => {
     });
   };
 
-  const navigateTestDetailsScreen = () => {
-    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+  const navigateTestDetailsScreen = (item: any) => {
+    {
+      item.has_report === true
+        ? navigation.navigate(ScreenNames.TESTDETAILSCONTAINER, {
+            test_id: item?.test_id,
+          })
+        : flashMessageWarning(getTranslation('reportnotavailable'));
+    }
   };
   const navigateTestGetTestedScreem = () => {
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
       screen: ScreenNames.GETTESTEDCONTAINER,
     });
-    // goToTabScreen(navigation, ScreenNames.GETTESTEDCONTAINER);
   };
 
   useEffect(() => {
@@ -177,7 +183,7 @@ const AnalitiTestDetailContainer = ({ navigation, route }: any) => {
 
   return (
     <AnalitiTestDetailComponent
-    isEmptyLoading={isEmptyLoading}
+      isEmptyLoading={isEmptyLoading}
       insets={insets}
       navigation={navigation}
       AnalitiTestDetailsData={AnalitiTestDetailsData}

@@ -5,8 +5,12 @@ import AppHeader from '../../global/Header';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/Colors';
+import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
+import { APIManager } from '../../api/APIManager';
+import { flashMessageWarning } from '../../constants/GConstant';
+import { DateFormatsManager } from '../../constants/utils/DateFormats';
 
-const TestDetailsContainer = ({ navigation }: any) => {
+const TestDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
   const userReport = {
@@ -29,7 +33,8 @@ const TestDetailsContainer = ({ navigation }: any) => {
     'e.g. Portare analisi al medico di famiglia',
   );
   const [noteError, setNoteError] = useState<any>('');
-  const [userReportData, setUserReportData] = useState(userReport);
+  const [userReportData, setUserReportData] = useState({});
+  const [IsEmptyLoading, setIsEmptyLoading] = useState(true);
 
   const onChangeNotes = (text: any) => {
     setNote(text);
@@ -37,35 +42,39 @@ const TestDetailsContainer = ({ navigation }: any) => {
 
   // ================== API =========================
 
-  // const _getTestDetails = async () => {
-  //   try {
-  //     const params = {
-  //       kit_id: route?.params?.analitiId,
-  //     };
+  const _getTestDetails = async () => {
+    try {
+      const params = {
+        test_id: route?.params?.test_id,
+      };
 
-  //     const callback = async (responseData: any) => {
-  //       if (responseData.code === StatusCode.SUCCESS) {
-  //         setIsEmptyLoading(false);
-  //         setAnalitiTestDetailsData(responseData.data.analysis_list[0]);
-  //       } else {
-  //         setIsEmptyLoading(false);
-  //         flashMessageWarning(responseData.message);
-  //       }
-  //     };
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setIsEmptyLoading(false);
+          setUserReportData(responseData.data);
+        } else {
+          setIsEmptyLoading(false);
+          flashMessageWarning(responseData.message);
+        }
+      };
 
-  //     await APIManager.makeRequest({
-  //       navigation: navigation,
-  //       method: MethodType.POST,
-  //       apiEndPoint: ApiEndPoints.ANALITI.GETANALITIDETAILS,
-  //       callback,
-  //       params,
-  //     });
-  //   } catch (error) {
-  //     setIsEmptyLoading(false);
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.TEST.GETTESTREPORTDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      setIsEmptyLoading(false);
 
-  //     console.log('Analiti details error:', error);
-  //   }
-  // };
+      console.log('Analiti details error:', error);
+    }
+  };
+
+  useEffect(() => {
+    _getTestDetails();
+  }, []);
 
   return (
     <TestDetailsComponents
@@ -76,6 +85,7 @@ const TestDetailsContainer = ({ navigation }: any) => {
       setNoteError={setNoteError}
       userReportData={userReportData}
       navigation={navigation}
+      IsEmptyLoading={IsEmptyLoading}
     />
   );
 };

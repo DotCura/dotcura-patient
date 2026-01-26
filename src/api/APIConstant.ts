@@ -39,6 +39,9 @@ export const ApiEndPoints = {
     GETLIKEREPORTLIST: `${PATIENT_PREFIX}getLikeReportList`,
     GETCREDENTIAALS: `${PATIENT_PREFIX}credentials`,
   },
+  TEST: {
+    GETTESTREPORTDETAILS: `${PATIENT_PREFIX}getTestReportHistory`,
+  },
   MEDICAL: {
     GETMEDICALHISTORY: `${PATIENT_PREFIX}getmedicalHistory`,
     ADDMEDICALHISTORY: `${PATIENT_PREFIX}add_patient_medical`,
@@ -67,9 +70,9 @@ export const ApiEndPoints = {
   COUNT: {
     TOTALCOUNT: `${PATIENT_PREFIX}total_count`,
   },
-  ANALITI:{
+  ANALITI: {
     GETANALITIDETAILS: `${PATIENT_PREFIX}getAnalitiDetails`,
-  }
+  },
 };
 
 // API methods

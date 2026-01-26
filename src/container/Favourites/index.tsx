@@ -36,7 +36,9 @@ const FavouritesContainer = ({ navigation }: any) => {
         reportName={item?.test?.name}
         reportValue={item?.latest?.value}
         reportItem={item}
-        onpressreport={handleNavigateTestDetails}
+        onpressreport={() => {
+          handleNavigateTestDetails(item);
+        }}
         isTestCheck={true}
         isUnitShow={true}
         unitName={item?.latest?.unit}
@@ -57,8 +59,11 @@ const FavouritesContainer = ({ navigation }: any) => {
     setShowDeleteModel(false);
   };
 
-  const handleNavigateTestDetails = () => {
-    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+  const handleNavigateTestDetails = (item: any) => {
+    console.log('item', item);
+    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER, {
+      test_id: item?.test?.id,
+    });
   };
 
   const header = () => {

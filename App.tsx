@@ -30,16 +30,8 @@ const App = ({ navigation }: any) => {
   const [initialRouteName, setInitialRouteName] = useState<string | null>(
     ScreenNames.CUSTOMSPLASHCONTAINER,
   );
-  console.log('Initial Route Name:', initialRouteName);
-
-  useEffect(() => {
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 500);
-  }, []);
-
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-
+  
   const flashMessageRef = useRef(null);
   setFlashMessageRef(flashMessageRef);
 
@@ -62,8 +54,7 @@ const App = ({ navigation }: any) => {
           GlobalVar.terms_and_conditions_es =
             responseData?.data?.cms_urls?.terms_and_conditions?.es;
         } else {
-          console.log("error credential");
-          
+          console.log('error credential');
         }
       };
 
@@ -79,6 +70,12 @@ const App = ({ navigation }: any) => {
       console.log('credentials details error:', error);
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 500);
+  }, []);
 
   useEffect(() => {
     _getCredentials();

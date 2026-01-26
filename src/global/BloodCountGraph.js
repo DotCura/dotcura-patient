@@ -1233,7 +1233,9 @@ const BarChartComponent = ({
 
   return (
     <TouchableOpacity
-      onPress={props.onpressreport}
+      onPress={() => {
+        props.onpressreport(props.reportItem);
+      }}
       style={{
         backgroundColor: Colors.white,
         paddingTop: 20,
@@ -1255,7 +1257,7 @@ const BarChartComponent = ({
           alignItems: 'center',
           justifyContent: 'space-between',
           marginHorizontal: getWidth(16),
-          flex:1,
+          flex: 1,
         }}
       >
         <Text
@@ -1263,7 +1265,7 @@ const BarChartComponent = ({
             fontSize: fontSize.size16,
             fontFamily: fontsfamily.gmedium,
             color: Colors.gray0F,
-            flex:1,
+            flex: 1,
           }}
           numberOfLines={2}
         >

@@ -1257,7 +1257,9 @@ const HomeContainer = ({ navigation }: any) => {
     const shadowImage = shadowBySeverity[severity];
     return (
       <TouchableOpacity
-        onPress={handleNavigateTestDetailsScreen}
+        onPress={() => {
+          handleNavigateTestDetailsScreenBarChart(item);
+        }}
         activeOpacity={activityOpacity}
         style={{
           width: ScreenDimensions.screenWidth * 0.85,
@@ -1333,7 +1335,9 @@ const HomeContainer = ({ navigation }: any) => {
       <TouchableOpacity
         activeOpacity={activityOpacity}
         style={styles.btnTestReport}
-        onPress={()=>{handleNavigateAnlitiTestDetails(item?.id)}}
+        onPress={() => {
+          handleNavigateAnlitiTestDetails(item?.id);
+        }}
       >
         <View style={styles.lblTestImage}>
           <Text style={styles.lblTestName} numberOfLines={1}>
@@ -1375,8 +1379,16 @@ const HomeContainer = ({ navigation }: any) => {
     navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
   };
 
-  const handleNavigateTestDetailsScreen = () => {
-    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+  const handleNavigateTestDetailsScreen = (item: any) => {
+    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER, {
+      test_id: item?.reportDetails?.test_id,
+    });
+  };
+
+  const handleNavigateTestDetailsScreenBarChart = (item: any) => {
+    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER, {
+      test_id: item?.test?.id,
+    });
   };
 
   const handleNavigateYourProfileScreen = () => {
@@ -1385,8 +1397,8 @@ const HomeContainer = ({ navigation }: any) => {
     navigation.jumpTo(ScreenNames.YOURPROFILECONAINER);
   };
 
-  const handleNavigateAnlitiTestDetails = (analiti_id:any) => {
-    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER,{
+  const handleNavigateAnlitiTestDetails = (analiti_id: any) => {
+    navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER, {
       analitiId: analiti_id,
     });
   };

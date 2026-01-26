@@ -256,6 +256,7 @@ const BarChartComponentDetails = ({
   maxValue,
   width = 330,
   height = 40,
+  onRangeTypeChange = () => {},
   ...props
 }) => {
   // ✅ Safe value handling
@@ -300,6 +301,8 @@ const BarChartComponentDetails = ({
   let OUT_COLOR = '#737373';
   let INDICATOR_COLOR = '#CA1C2E';
 
+  
+
   // ✅ Apply color theme based on rangeType
   switch (rangeType) {
     case 'normal': // Within range → Grey + Blue
@@ -319,17 +322,17 @@ const BarChartComponentDetails = ({
       break;
   }
 
-  let shadowImage = images.imgTestBlueShadow;
+  let shadowImage = images.imgTopShadow;
 
   switch (rangeType) {
     case 'normal':
-      shadowImage = images.imgTestBlueShadow;
+      shadowImage = images.imgTopShadowBlue;
       break;
     case 'moderate':
-      shadowImage = images.imgTestYellowShadow;
+      shadowImage = images.imgTopShadow;
       break;
     case 'extreme':
-      shadowImage = images.imgTestRedShadow;
+      shadowImage = images.imgTopShadowRed;
       break;
   }
 
@@ -390,11 +393,15 @@ const BarChartComponentDetails = ({
     x: CHART_PADDING + (i / (DOT_COUNT - 1)) * CHART_WIDTH,
     y: centerY,
   }));
+
+  React.useEffect(() => {
+    onRangeTypeChange(rangeType);
+  }, [rangeType]);
   const isTestedReport = props.reportItem.isTest == true;
   return (
     <View style={{ alignSelf: 'center', marginTop: getHeight(20) }}>
       <Image
-        source={images.imgTopShadow}
+        source={shadowImage}
         style={{ position: 'absolute', top: -117 }}
       />
       <Svg width={width} height={height}>
