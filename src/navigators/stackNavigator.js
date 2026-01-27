@@ -223,6 +223,7 @@ import * as Screen from '../index';
 import { createBlankStackNavigator } from 'react-native-screen-transitions/blank-stack';
 import Transition from 'react-native-screen-transitions';
 import { createStackNavigator } from '@react-navigation/stack';
+import { navigationRef } from '../constants/utils/navigationRef';
 
 /* ---------------- STACKS ---------------- */
 
@@ -422,7 +423,7 @@ const MainNavigation = props => {
 
   /* ---------------- ROOT ---------------- */
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <StatusBar
         barStyle="dark-content"
         translucent

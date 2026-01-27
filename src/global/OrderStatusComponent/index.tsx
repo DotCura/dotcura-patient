@@ -1,5 +1,232 @@
+// import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// import React, { useState } from 'react';
+// import { useSafeAreaInsets } from 'react-native-safe-area-context';
+// import Animated, {
+//   useAnimatedStyle,
+//   useSharedValue,
+//   withTiming,
+//   withSpring,
+//   runOnJS,
+// } from 'react-native-reanimated';
+// import { Colors } from '../../constants/Colors';
+// import { images } from '../../constants/Images';
+// import { fontSize } from '../../constants/FontSizes';
+// import { fontsfamily } from '../../constants/FontFamily';
+// import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+// import { getTranslation } from '../../localization/i18n/i18n.config';
+// import { activityOpacity } from '../../constants/GConstant';
+
+// const OrderStatusComponent = (props: any) => {
+//   const insets = useSafeAreaInsets();
+//   const [showBigView, setShowBigView] = useState(false);
+//   const [isReady, setIsReady] = useState(false); // Track if heights are measured
+
+//   // Animated values
+//   const expandedHeight = useSharedValue(0);
+//   const collapsedHeight = useSharedValue(0);
+//   const animatedHeight = useSharedValue(-1); // Start with -1 to indicate "not set"
+//   const bigViewOpacity = useSharedValue(0);
+//   const smallViewOpacity = useSharedValue(1);
+//   const rotateValue = useSharedValue(0);
+
+//   const toggleView = () => {
+//     if (!showBigView) {
+//       // Expanding
+//       setShowBigView(true);
+//       rotateValue.value = withSpring(1, { damping: 10, stiffness: 150 });
+//       animatedHeight.value = withSpring(expandedHeight.value, {
+//         damping: 80,
+//         stiffness: 120,
+//       });
+//       smallViewOpacity.value = withTiming(0, { duration: 100 });
+//       bigViewOpacity.value = withTiming(1, { duration: 100 });
+//     } else {
+//       // Collapsing
+//       rotateValue.value = withSpring(0, { damping: 10, stiffness: 150 });
+//       animatedHeight.value = withSpring(collapsedHeight.value, {
+//         damping: 80,
+//         stiffness: 120,
+//       });
+//       bigViewOpacity.value = withTiming(0, { duration: 100 });
+//       smallViewOpacity.value = withTiming(1, { duration: 100 }, () => {
+//         runOnJS(setShowBigView)(false);
+//       });
+//     }
+//   };
+
+//   // Animated styles
+//   const containerAnimatedStyle = useAnimatedStyle(() => {
+//     // Only apply height constraint after initial measurement
+//     if (animatedHeight.value === -1) {
+//       return { overflow: 'hidden' };
+//     }
+//     return {
+//       height: animatedHeight.value,
+//       overflow: 'hidden',
+//     };
+//   });
+
+//   const bigViewAnimatedStyle = useAnimatedStyle(() => ({
+//     opacity: bigViewOpacity.value,
+//     transform: [{ scale: 0.95 + bigViewOpacity.value * 0.05 }],
+//   }));
+
+//   const smallViewAnimatedStyle = useAnimatedStyle(() => ({
+//     opacity: smallViewOpacity.value,
+//     transform: [{ scale: 0.95 + smallViewOpacity.value * 0.05 }],
+//   }));
+
+//   const arrowAnimatedStyle = useAnimatedStyle(() => ({
+//     transform: [{ rotate: `${rotateValue.value * 180}deg` }],
+//   }));
+
+//   const ProgressBar = ({ currentStep, totalSteps = 5 }: any) => {
+//     const steps = Array.from({ length: totalSteps }, (_, i) => i + 1);
+
+//     return (
+//       <View style={styles.progressBarContainer}>
+//         {steps.map((step, index) => (
+//           <View
+//             key={index}
+//             style={[
+//               styles.progressStep,
+//               index <= currentStep && styles.progressStepActive,
+//             ]}
+//           />
+//         ))}
+//       </View>
+//     );
+//   };
+
+//   return (
+//     <Animated.View style={[styles.container, { paddingTop: insets.top }]}>
+//       <TouchableOpacity
+//         onPress={toggleView}
+//         activeOpacity={activityOpacity}
+//         style={styles.touchableArea}
+//       >
+//         <Animated.View style={containerAnimatedStyle}>
+//           {/* SMALL VIEW - Always render first to measure */}
+//           <Animated.View
+//             style={[
+//               styles.smallViewContainer,
+//               smallViewAnimatedStyle,
+//               showBigView && {
+//                 position: 'absolute',
+//                 top: 0,
+//                 left: 0,
+//                 right: 0,
+//               },
+//             ]}
+//             onLayout={event => {
+//               if (collapsedHeight.value === 0) {
+//                 const height = event.nativeEvent.layout.height;
+//                 collapsedHeight.value = height;
+//                 if (animatedHeight.value === -1) {
+//                   animatedHeight.value = height;
+//                   setIsReady(true);
+//                 }
+//               }
+//             }}
+//             pointerEvents={!showBigView ? 'auto' : 'none'}
+//           >
+//             <View style={styles.headerRow}>
+//               <View style={{ flex: 1 }}>
+//                 <Text style={styles.lblOrderTitleSmall}>Order sent</Text>
+//                 <Text style={styles.lblOrderDesSmall} numberOfLines={1}>
+//                   We are looking for a nurse for you...
+//                 </Text>
+//                 <ProgressBar currentStep={1} />
+//               </View>
+
+//               <View style={styles.toggleButton}>
+//                 <Animated.View style={arrowAnimatedStyle}>
+//                   <Image
+//                     source={images.imgLeftArrow}
+//                     tintColor={Colors.white}
+//                     style={styles.arrowIcon}
+//                   />
+//                 </Animated.View>
+//               </View>
+//             </View>
+//           </Animated.View>
+
+//           {/* BIG VIEW */}
+//           <Animated.View
+//             style={[
+//               styles.bigViewContainer,
+//               bigViewAnimatedStyle,
+//               !showBigView && {
+//                 position: 'absolute',
+//                 top: 0,
+//                 left: 0,
+//                 right: 0,
+//               },
+//             ]}
+//             onLayout={event => {
+//               if (expandedHeight.value === 0) {
+//                 expandedHeight.value = event.nativeEvent.layout.height;
+//               }
+//             }}
+//             pointerEvents={showBigView ? 'auto' : 'none'}
+//           >
+//             <View style={styles.headerRow}>
+//               <View style={{ flex: 1 }}>
+//                 <Text style={styles.titleOrderStatus}>
+//                   {/* {getTranslation('ordersent')} */}
+//                   {/* {getTranslation('visitconfirm')} */}
+//                   {/* 20-30 minuti */}
+//                   {/* Giovanni {getTranslation("ishere")} */}
+//                   {/* {getTranslation("visitmodified")} */}
+//                   {getTranslation('canclevisit')}
+//                 </Text>
+//                 <Text style={styles.titleOrderStatusDes}>
+//                   {/* {getTranslation('ordersentsubtitle')} */}
+//                   {/* {getTranslation('visitconfirmsubtitle')} */}
+//                   {/* {getTranslation('minitarrivesubtitle')} */}
+//                   {/* {getTranslation('isheresubtitle')} */}
+//                   {/* {getTranslation('visitmodifiedsubtitle')} */}
+//                   {getTranslation('canclevisitsubtitle')}
+//                 </Text>
+//               </View>
+
+//               <View style={styles.toggleButton}>
+//                 <Animated.View style={arrowAnimatedStyle}>
+//                   <Image
+//                     source={images.imgLeftArrow}
+//                     tintColor={Colors.white}
+//                     style={styles.arrowIcon}
+//                   />
+//                 </Animated.View>
+//               </View>
+//             </View>
+
+//             <Image
+//               source={images.imgcanclevisitstepper}
+//               // source={images.imgStepper}
+//               // source={images.imgstartvisitstepper}
+//               // source={images.imgvisitconfirmstepper}
+//               // source={images.imgeditorderstepper}
+//               style={styles.progressImage}
+//             />
+
+//             <TouchableOpacity style={styles.editButton}>
+//               <Image source={images.pencilblue} tintColor={Colors.white} />
+//               <Text style={styles.lblEditOrder}>
+//                 {getTranslation('editorder')}
+//               </Text>
+//             </TouchableOpacity>
+//           </Animated.View>
+//         </Animated.View>
+//       </TouchableOpacity>
+//     </Animated.View>
+//   );
+// };
+
+// export default OrderStatusComponent;
+
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   useAnimatedStyle,
@@ -16,22 +243,79 @@ import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { activityOpacity } from '../../constants/GConstant';
 
-const OrderStatusComponent = (props: any) => {
+const OrderStatusComponent = ({
+  orderStatus,
+  orderData,
+}: {
+  orderStatus: string;
+  orderData: any;
+}) => {
+  // Status configuration
+  const STATUS_CONFIG = {
+    Request: {
+      title: getTranslation('ordersent'),
+      subtitle: getTranslation('ordersentsubtitle'),
+      image: images.imgStepper,
+      currentStep: 0,
+      showEdit: true,
+    },
+    Accept: {
+      title: getTranslation('visitconfirm'),
+      subtitle: getTranslation('visitconfirmsubtitle'),
+      image: images.imgvisitconfirmstepper,
+      currentStep: 1,
+      showEdit: true,
+    },
+    start_visit: {
+      title: orderData?.time, // "20-30 minuti"
+      subtitle: getTranslation('minitarrivesubtitle'),
+      image: images.imgstartvisitstepper,
+      currentStep: 2,
+      showEdit: false,
+    },
+    arrived: {
+      title: (nurseName: string) => `${nurseName} ${getTranslation('ishere')}`,
+      subtitle: getTranslation('isheresubtitle'),
+      image: images.imgstartvisitstepper,
+      currentStep: 3,
+      showEdit: false,
+    },
+    Modified: {
+      title: getTranslation('visitmodified'),
+      subtitle: getTranslation('visitmodifiedsubtitle'),
+      image: images.imgeditorderstepper,
+      currentStep: 1,
+      showEdit: false,
+    },
+    Rejected: {
+      title: getTranslation('canclevisit'),
+      subtitle: getTranslation('canclevisitsubtitle'),
+      image: images.imgcanclevisitstepper,
+      currentStep: 0,
+      showEdit: false,
+    },
+  };
   const insets = useSafeAreaInsets();
   const [showBigView, setShowBigView] = useState(false);
-  const [isReady, setIsReady] = useState(false); // Track if heights are measured
+  // console.log('orderdata', orderData);
+
+  // Get status config
+  const config = useMemo(() => {
+    const statusConfig =
+      STATUS_CONFIG[orderStatus as keyof typeof STATUS_CONFIG];
+    return statusConfig || STATUS_CONFIG.Request;
+  }, [orderStatus]);
 
   // Animated values
   const expandedHeight = useSharedValue(0);
   const collapsedHeight = useSharedValue(0);
-  const animatedHeight = useSharedValue(-1); // Start with -1 to indicate "not set"
+  const animatedHeight = useSharedValue(-1);
   const bigViewOpacity = useSharedValue(0);
   const smallViewOpacity = useSharedValue(1);
   const rotateValue = useSharedValue(0);
 
   const toggleView = () => {
     if (!showBigView) {
-      // Expanding
       setShowBigView(true);
       rotateValue.value = withSpring(1, { damping: 10, stiffness: 150 });
       animatedHeight.value = withSpring(expandedHeight.value, {
@@ -41,7 +325,6 @@ const OrderStatusComponent = (props: any) => {
       smallViewOpacity.value = withTiming(0, { duration: 100 });
       bigViewOpacity.value = withTiming(1, { duration: 100 });
     } else {
-      // Collapsing
       rotateValue.value = withSpring(0, { damping: 10, stiffness: 150 });
       animatedHeight.value = withSpring(collapsedHeight.value, {
         damping: 80,
@@ -54,9 +337,7 @@ const OrderStatusComponent = (props: any) => {
     }
   };
 
-  // Animated styles
   const containerAnimatedStyle = useAnimatedStyle(() => {
-    // Only apply height constraint after initial measurement
     if (animatedHeight.value === -1) {
       return { overflow: 'hidden' };
     }
@@ -91,11 +372,32 @@ const OrderStatusComponent = (props: any) => {
             style={[
               styles.progressStep,
               index <= currentStep && styles.progressStepActive,
+
+              index <= currentStep && {
+                backgroundColor:
+                  currentStep === 0
+                    ? Colors.goldenE8
+                    : currentStep === 1
+                    ? Colors.blue3C
+                    : currentStep === 2
+                    ? Colors.green3C
+                    : currentStep === 3
+                    ? Colors.green3C
+                    : '',
+              },
             ]}
           />
         ))}
       </View>
     );
+  };
+
+  // Get title (handle function titles like for 'arrived')
+  const getTitle = () => {
+    if (typeof config.title === 'function') {
+      return config.title('Giovanni'); // Replace with actual nurse name from orderData
+    }
+    return config.title;
   };
 
   return (
@@ -106,7 +408,7 @@ const OrderStatusComponent = (props: any) => {
         style={styles.touchableArea}
       >
         <Animated.View style={containerAnimatedStyle}>
-          {/* SMALL VIEW - Always render first to measure */}
+          {/* SMALL VIEW */}
           <Animated.View
             style={[
               styles.smallViewContainer,
@@ -124,7 +426,6 @@ const OrderStatusComponent = (props: any) => {
                 collapsedHeight.value = height;
                 if (animatedHeight.value === -1) {
                   animatedHeight.value = height;
-                  setIsReady(true);
                 }
               }
             }}
@@ -132,11 +433,11 @@ const OrderStatusComponent = (props: any) => {
           >
             <View style={styles.headerRow}>
               <View style={{ flex: 1 }}>
-                <Text style={styles.lblOrderTitleSmall}>Order sent</Text>
+                <Text style={styles.lblOrderTitleSmall}>{getTitle()}</Text>
                 <Text style={styles.lblOrderDesSmall} numberOfLines={1}>
-                  We are looking for a nurse for you...
+                  {config.subtitle}
                 </Text>
-                <ProgressBar currentStep={1} />
+                <ProgressBar currentStep={config.currentStep} />
               </View>
 
               <View style={styles.toggleButton}>
@@ -172,21 +473,9 @@ const OrderStatusComponent = (props: any) => {
           >
             <View style={styles.headerRow}>
               <View style={{ flex: 1 }}>
-                <Text style={styles.titleOrderStatus}>
-                  {/* {getTranslation('ordersent')} */}
-                  {/* {getTranslation('visitconfirm')} */}
-                  {/* 20-30 minuti */}
-                  {/* Giovanni {getTranslation("ishere")} */}
-                  {/* {getTranslation("visitmodified")} */}
-                  {getTranslation('canclevisit')}
-                </Text>
+                <Text style={styles.titleOrderStatus}>{getTitle()}</Text>
                 <Text style={styles.titleOrderStatusDes}>
-                  {/* {getTranslation('ordersentsubtitle')} */}
-                  {/* {getTranslation('visitconfirmsubtitle')} */}
-                  {/* {getTranslation('minitarrivesubtitle')} */}
-                  {/* {getTranslation('isheresubtitle')} */}
-                  {/* {getTranslation('visitmodifiedsubtitle')} */}
-                  {getTranslation('canclevisitsubtitle')}
+                  {config.subtitle}
                 </Text>
               </View>
 
@@ -201,21 +490,16 @@ const OrderStatusComponent = (props: any) => {
               </View>
             </View>
 
-            <Image
-              source={images.imgcanclevisitstepper}
-              // source={images.imgStepper}
-              // source={images.imgstartvisitstepper}
-              // source={images.imgvisitconfirmstepper}
-              // source={images.imgeditorderstepper}
-              style={styles.progressImage}
-            />
+            <Image source={config.image} style={styles.progressImage} />
 
-            <TouchableOpacity style={styles.editButton}>
-              <Image source={images.pencilblue} tintColor={Colors.white} />
-              <Text style={styles.lblEditOrder}>
-                {getTranslation('editorder')}
-              </Text>
-            </TouchableOpacity>
+            {config.showEdit && (
+              <TouchableOpacity style={styles.editButton}>
+                <Image source={images.pencilblue} tintColor={Colors.white} />
+                <Text style={styles.lblEditOrder}>
+                  {getTranslation('editorder')}
+                </Text>
+              </TouchableOpacity>
+            )}
           </Animated.View>
         </Animated.View>
       </TouchableOpacity>

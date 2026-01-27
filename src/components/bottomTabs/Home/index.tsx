@@ -472,10 +472,7 @@ const HomeComponent = (props: any) => {
               <Text style={styles.lblMyHealth}>
                 {getTranslation('myhealtthtext')}
               </Text>
-              <FlatList
-                onEndReached={() => {
-                  console.log('callend');
-                }}
+              <FlatList   
                 data={props.testReportData}
                 renderItem={props.renderTestReportData}
                 showsVerticalScrollIndicator={false}

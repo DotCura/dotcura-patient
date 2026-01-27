@@ -1512,6 +1512,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       const callback = (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           resetCart();
+          // Set initial order status
+          setOrderStatus('Request');
           navigation.reset({
             index: 0,
             routes: [

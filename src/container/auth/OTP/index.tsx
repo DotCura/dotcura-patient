@@ -27,6 +27,7 @@ import {
 import { APIManager } from '../../../api/APIManager';
 import { MmkvManager } from '../../../constants/utils/MmkvManager';
 import { CommonActions } from '@react-navigation/native';
+import { ZustandStores } from '../../../store';
 
 interface OtpArray {
   value: string;
@@ -35,6 +36,8 @@ interface OtpArray {
 
 const OTPContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
+  const { setPatientId } = ZustandStores.UserStore();
+
   const [countrycode, setCountryCode] = useState('+39');
   const [phoneNumber, setPhoneNumber] = useState('1234561234');
   const [otpArray, setOtpArray] = useState<OtpArray[]>([
@@ -263,12 +266,13 @@ const OTPContainer = ({ navigation, route }: any) => {
               routes: [{ name: ScreenNames.BOTTOMTABNAVIGATION }],
             }),
           );
+          setPatientId(responseData.data.id);
+
         } else if (responseData.code === StatusCode.STEP_ONE) {
           console.log(
             'responseData.data.device.token',
             responseData.data.device.token,
           );
-
           await MmkvManager.setData(
             MmkvManager.Keys.userToken,
             responseData.data.device.token,
@@ -284,12 +288,13 @@ const OTPContainer = ({ navigation, route }: any) => {
           navigation.navigate(ScreenNames.COMPLETEPROFILECONTAINER, {
             LoginData: responseData.data,
           });
+          setPatientId(responseData.data.id);
+
         } else if (responseData.code === StatusCode.STEP_TWO) {
           console.log(
             'responseData.data.device.token',
             responseData.data.device.token,
           );
-
           await MmkvManager.setData(
             MmkvManager.Keys.userToken,
             responseData.data.device.token,
@@ -305,6 +310,8 @@ const OTPContainer = ({ navigation, route }: any) => {
           navigation.navigate(ScreenNames.INFOATIONCONASATNTCONTAINER, {
             LoginData: responseData.data,
           });
+          setPatientId(responseData.data.id);
+
         } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
           flashMessageWarning(responseData.message);
         }

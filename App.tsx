@@ -1,5 +1,5 @@
 import { LogBox } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import MainNavigation from './src/navigators/stackNavigator';
 import { ScreenNames } from './src/constants/AppConstants';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
@@ -7,6 +7,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './src/localization/i18n/i18n.config';
 import FlashMessage from 'react-native-flash-message';
 import {
+  bootstrapUser,
   flashMessageWarning,
   setFlashMessageRef,
 } from './src/constants/GConstant';
@@ -23,15 +24,23 @@ import {
 } from './src/api/APIConstant';
 import { APIManager } from './src/api/APIManager';
 import { GlobalVar } from './src/constants/GlobalVar';
+import { useSocketConnection } from './src/socket/useSocketConnection';
+import { useFocusEffect } from '@react-navigation/native';
+import { MmkvManager } from './src/constants/utils/MmkvManager';
 
 LogBox.ignoreAllLogs();
 
 const App = ({ navigation }: any) => {
-  const [initialRouteName, setInitialRouteName] = useState<string | null>(
-    ScreenNames.CUSTOMSPLASHCONTAINER,
-  );
-  const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
+  // const [initialRouteName, setInitialRouteName] = useState<string | null>(
+  //   ScreenNames.CUSTOMSPLASHCONTAINER,
+  // );
+  console.log("render App.tsx");
   
+  const orderStatus = ZustandStores.OrderstatusStore(state => state.orderStatus);
+  const patientId = ZustandStores.UserStore(state => state.patientId);
+
+  const { isConnected } = useSocketConnection(patientId);
+
   const flashMessageRef = useRef(null);
   setFlashMessageRef(flashMessageRef);
 
@@ -72,21 +81,24 @@ const App = ({ navigation }: any) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 500);
+    _getCredentials();
   }, []);
 
   useEffect(() => {
-    _getCredentials();
+    bootstrapUser(); // 👈 ONE LINE MAGIC
+    SplashScreen.hide(); // after bootstrapUser()
   }, []);
+
+  // useEffect(() => {
+  //   console.log('🔁 Socket status:', isConnected);
+  // }, [isConnected]);
 
   return (
     <SafeAreaProvider>
       <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
         <I18nextProvider i18n={i18n}>
           <AppLayout isOrderPlaced={orderStatus}>
-            <MainNavigation initialRouteName={initialRouteName} />
+            <MainNavigation initialRouteName={ScreenNames.CUSTOMSPLASHCONTAINER} />
           </AppLayout>
           <Loader ref={ref => setLoaderRef(ref)} />
           <FlashMessage ref={flashMessageRef} position="top" floating={true} />

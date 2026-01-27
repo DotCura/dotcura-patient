@@ -17,6 +17,8 @@ import { fontSize } from './FontSizes';
 import { getHeight, getWidth } from './utils/Dimensions';
 import { ScreenNames } from './AppConstants';
 import { useEffect, useState } from 'react';
+import { MmkvManager } from './utils/MmkvManager';
+import UserStore from '../store/UserStore/UserStore';
 
 export const appName = getTranslation('appname') || 'DotCura';
 
@@ -432,6 +434,17 @@ export const formatTestDateForAPI = (uiDate: string) => {
   const dd = day.padStart(2, '0');
 
   return `${year}-${mm}-${dd}`;
+};
+
+export const bootstrapUser = () => {
+  MmkvManager.getData(MmkvManager.Keys.userDetails, (value: any) => {
+    if (value?.id) {
+      UserStore.getState().setPatientId(value.id);
+      console.log('✅ User bootstrapped:', value.id);
+    } else {
+      console.log('ℹ️ No user found in storage');
+    }
+  });
 };
 
 

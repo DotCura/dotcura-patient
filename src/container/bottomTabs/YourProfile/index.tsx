@@ -29,6 +29,7 @@ import {
 import { useDebounce } from '../../../constants/utils/useDebounce';
 
 const YourProfileContainer = ({ navigation }: any) => {
+  
   const insets = useSafeAreaInsets();
   const analysisArray = [
     {

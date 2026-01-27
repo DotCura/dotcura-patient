@@ -15,11 +15,14 @@ import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
 import { GlobalVar } from '../../constants/GlobalVar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SocketService from '../../socket/SocketService';
 
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
   const { resetCart,resetNotificationCount } = ZustandStores.CartStore();
+  const { clearOrderData } = ZustandStores.OrderstatusStore();
+  const { logout } = ZustandStores.UserStore();
 
   const data = [
     {
@@ -197,6 +200,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
 
   // ========================== API ==========================
 
+
   // Api Logout
   const _logoutApi = async () => {
     try {
@@ -208,7 +212,8 @@ const ProfileContainer = ({ navigation, route }: any) => {
           await AsyncStorage.removeItem('cart-store');
           resetCart();
           resetNotificationCount();
-
+          clearOrderData();
+          logout();
           flashMessageSucess(responseData.message);
         } else {
           flashMessageSucess(responseData.message);

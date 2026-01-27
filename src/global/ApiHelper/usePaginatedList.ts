@@ -157,11 +157,11 @@ export function usePaginatedList<T>({
   }, [request]);
 
   const loadMore = useCallback(() => {
-    console.log('loading', loading);
-    console.log('loadingMore', loadingMore);
-    console.log('refreshing', refreshing);
-    console.log('onEndReachedGuard', onEndReachedGuard);
-    console.log('hasMore', hasMore);
+    // console.log('loading', loading);
+    // console.log('loadingMore', loadingMore);
+    // console.log('refreshing', refreshing);
+    // console.log('onEndReachedGuard', onEndReachedGuard);
+    // console.log('hasMore', hasMore);
     if (blockLoadMoreRef.current) return;
 
     if (loading || loadingMore || refreshing) return;

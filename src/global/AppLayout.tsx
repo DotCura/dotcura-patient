@@ -2,6 +2,7 @@ import React, { ReactNode, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import OrderStatusComponent from './OrderStatusComponent';
 import { Colors } from '../constants/Colors';
+import { ZustandStores } from '../store';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -10,11 +11,12 @@ interface AppLayoutProps {
 
 const AppLayout = ({ children, isOrderPlaced }: AppLayoutProps) => {
   console.log('remder app');
+  const {orderData} = ZustandStores.OrderstatusStore();
 
   return (
     <>
       {/* Header / Order Status */}
-      {isOrderPlaced && <OrderStatusComponent orderStatus={isOrderPlaced} />}
+      {isOrderPlaced && <OrderStatusComponent orderStatus={isOrderPlaced} orderData={orderData}/>}
 
       {/* Main Content */}
 

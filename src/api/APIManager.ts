@@ -17,13 +17,13 @@ import { CommonActions } from '@react-navigation/native';
 import { MmkvManager } from '../constants/utils/MmkvManager';
 import { ZustandStores } from '../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import UserStore from '../store/UserStore/UserStore';
 
 /* =======================
    Encryption constants
 ======================= */
 const SECRET = CryptoJS.enc.Utf8.parse(ApiKeys.SECRET_KEY);
 const ENC_IV = CryptoJS.enc.Utf8.parse(ApiKeys.IV);
-
 
 /* =======================
    Helper: Await MMKV
@@ -36,7 +36,6 @@ const getUserToken = () =>
   });
 
 export const APIManager = {
-  
   /* =======================
      Base URL
   ======================= */
@@ -197,15 +196,17 @@ export const APIManager = {
     ======================= */
     function handleUnauthorized() {
       flashMessageWarning(getTranslation('youhavebeenloggedout'));
-      console.log("above");
+      console.log('above');
       const { resetCart, resetNotificationCount } =
-      ZustandStores.CartStore.getState();
-      console.log("below");
+        ZustandStores.CartStore.getState();
+      const { clearOrderData } = ZustandStores.OrderstatusStore.getState();
+      console.log('below');
 
-      
       AsyncStorage.removeItem('cart-store');
       resetCart();
       resetNotificationCount();
+      clearOrderData();
+      UserStore.getState().logout();
       MmkvManager.clearAllExcept([MmkvManager.Keys.isOnBoardingVisisted]);
       navigation.dispatch(
         CommonActions.reset({
