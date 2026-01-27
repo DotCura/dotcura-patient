@@ -16,7 +16,12 @@ import { ScreenNames } from '../../constants/AppConstants';
 import HistoricalAnalysisComponent from '../../components/HistoricalAnalysis';
 import { apiPromise } from '../../global/ApiHelper/apiPromise';
 import { ApiEndPoints } from '../../api/APIConstant';
-import { LoadType, usePaginatedList } from '../../global/ApiHelper/usePaginatedList';
+import {
+  LoadType,
+  usePaginatedList,
+} from '../../global/ApiHelper/usePaginatedList';
+import { fontsfamily } from '../../constants/FontFamily';
+import { fontSize } from '../../constants/FontSizes';
 
 const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -321,76 +326,72 @@ const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
       .join(' + ');
   };
 
+  const getStatusStyle = (status: string) => {
+    switch (status) {
+      case 'Request':
+        return {
+          label: 'Requested',
+          bg: '#FFF8E1',
+          text: '#F9A825',
+        };
+
+      case 'Accept':
+        return {
+          label: 'Accepted',
+          bg: '#E3F2FD',
+          text: '#1976D2',
+        };
+
+      case 'Cancel':
+        return {
+          label: 'Cancelled',
+          bg: '#FFE5E5',
+          text: '#D32F2F',
+        };
+
+      case 'Reject':
+        return {
+          label: 'Rejected',
+          bg: '#FCE4EC',
+          text: '#C2185B',
+        };
+
+      case 'Completed':
+        return {
+          label: 'Completed',
+          bg: '#E8F5E9',
+          text: '#2E7D32',
+        };
+
+      case 'ReportPending':
+        return {
+          label: 'Report Pending',
+          bg: '#E1F5FE',
+          text: '#0288D1',
+        };
+
+      case 'Modified':
+        return {
+          label: 'Modified',
+          bg: '#F3E5F5',
+          text: '#7B1FA2',
+        };
+
+      default:
+        return {
+          label: status ?? 'Unknown',
+          bg: '#EEEEEE',
+          text: '#616161',
+        };
+    }
+  };
+
   const renderItemHistoricalAnalisis = ({ item, index }: any) => {
-    // const isExpanded = expandedItems.includes(index);
-    // const visibleTags = isExpanded ? item.tags : item.tags.slice(0, 2);
-    // const extraCount = item.tags.length - 2;
-    // return (
-    //   <TouchableOpacity
-    //     activeOpacity={activityOpacity}
-    //     style={styles.btnOrderHistory}
-    //     onPress={() => {
-    //       navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
-    //     }}
-    //   >
-    //     {/* orderDetailsView */}
-    //     <View style={styles.vwMainOrderDetails}>
-    //       <View style={{ flex: 1 }}>
-    //         <Text style={styles.lblOrderTitle}>
-    //           {getTranslation('analsisOf')} {formatDateToSpanish(item.date)}
-    //         </Text>
-    //         <Text style={styles.lblOrderID}>
-    //           {getTranslation('orderidlabel')} {item.orderid}
-    //         </Text>
-    //         <Text style={styles.kitandtestdetails}>
-    //           {formatKits(item.kits)}
-    //         </Text>
-    //       </View>
-    //       <TouchableOpacity>
-    //         <Image source={images.imgRightBlack} />
-    //       </TouchableOpacity>
-    //     </View>
-
-    //     {/* tags */}
-    //     <View style={styles.vwTagMain}>
-    //       {visibleTags.map((tag: any, index: any) => (
-    //         <View key={index} style={styles.vwTagInner}>
-    //           <Text style={styles.lblTag}>{tag}</Text>
-    //         </View>
-    //       ))}
-
-    //       {/* Show +count only when collapsed */}
-    //       {!isExpanded && extraCount > 0 && (
-    //         <TouchableOpacity
-    //           onPress={() => {
-    //             setExpandedItems(prev => [...prev, index]); // add index to expanded list
-    //           }}
-    //           style={styles.btnExtraCount}
-    //         >
-    //           <Text style={styles.lblTag}>+{extraCount}</Text>
-    //         </TouchableOpacity>
-    //       )}
-    //     </View>
-    //     {/* nurseView */}
-    //     <View style={styles.nurseview}>
-    //       <Image source={images.imgInjection} />
-    //       <Text style={styles.lblNurseName}>{item.nurse.name}</Text>
-
-    //       <View style={styles.starRow}>
-    //         {[...Array(totalStars)].map((_, index) => {
-    //           const isFilled = index < item.nurse.rating; // fill up to ratingStar
-    //           const iconName = isFilled && images.imgStarFill;
-
-    //           return <Image key={index} source={iconName} />;
-    //         })}
-    //       </View>
-    //     </View>
-    //   </TouchableOpacity>
-    // );
     const isExpanded = expandedItems.includes(index);
     const tests = item.all_tests ?? [];
     const visibleTags = isExpanded ? tests : tests.slice(0, 2);
     const extraCount = tests.length - 2;
+    const statusStyle = getStatusStyle(item?.status);
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
@@ -437,21 +438,52 @@ const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
           )}
         </View>
         {/* nurseView */}
-        {item.nurse !== null && (
-          <View style={styles.nurseview}>
-            <Image source={images.imgInjection} />
-            <Text style={styles.lblNurseName}>{item.nurse.name}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: getHeight(10),
+            flex: 1,
+          }}
+        >
+          {item.nurse !== null && (
+            <View style={styles.nurseview}>
+              <Image source={images.imgInjection} />
+              <Text style={styles.lblNurseName}>{item.nurse.name}</Text>
 
-            <View style={styles.starRow}>
-              {[...Array(totalStars)].map((_, index) => {
-                const isFilled = index < item.nurse.rating; // fill up to ratingStar
-                const iconName = isFilled && images.imgStarFill;
+              <View style={styles.starRow}>
+                {[...Array(totalStars)].map((_, index) => {
+                  const isFilled = index < item.nurse.rating; // fill up to ratingStar
+                  const iconName = isFilled && images.imgStarFill;
 
-                return <Image key={index} source={iconName} />;
-              })}
+                  return <Image key={index} source={iconName} />;
+                })}
+              </View>
             </View>
+          )}
+          <View
+            style={{
+              marginLeft: 'auto',
+              backgroundColor: statusStyle.bg,
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              borderRadius: 12,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text
+              style={{
+                color: statusStyle.text,
+                fontSize: fontSize.size12,
+                fontFamily: fontsfamily.gsemiBold,
+                textTransform: 'capitalize',
+              }}
+            >
+              {item?.status}
+            </Text>
           </View>
-        )}
+        </View>
       </TouchableOpacity>
     );
   };

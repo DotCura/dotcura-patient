@@ -258,6 +258,7 @@ const OrderStatusComponent = ({
       image: images.imgStepper,
       currentStep: 0,
       showEdit: true,
+      showSmallProgressBar: true,
     },
     Accept: {
       title: getTranslation('visitconfirm'),
@@ -265,6 +266,7 @@ const OrderStatusComponent = ({
       image: images.imgvisitconfirmstepper,
       currentStep: 1,
       showEdit: true,
+      showSmallProgressBar: true,
     },
     start_visit: {
       title: orderData?.time, // "20-30 minuti"
@@ -272,6 +274,7 @@ const OrderStatusComponent = ({
       image: images.imgstartvisitstepper,
       currentStep: 2,
       showEdit: false,
+      showSmallProgressBar: true,
     },
     arrived: {
       title: (nurseName: string) => `${nurseName} ${getTranslation('ishere')}`,
@@ -279,6 +282,7 @@ const OrderStatusComponent = ({
       image: images.imgstartvisitstepper,
       currentStep: 3,
       showEdit: false,
+      showSmallProgressBar: true,
     },
     Modified: {
       title: getTranslation('visitmodified'),
@@ -286,6 +290,7 @@ const OrderStatusComponent = ({
       image: images.imgeditorderstepper,
       currentStep: 1,
       showEdit: false,
+      showSmallProgressBar: false,
     },
     Rejected: {
       title: getTranslation('canclevisit'),
@@ -293,6 +298,7 @@ const OrderStatusComponent = ({
       image: images.imgcanclevisitstepper,
       currentStep: 0,
       showEdit: false,
+      showSmallProgressBar: false,
     },
   };
   const insets = useSafeAreaInsets();
@@ -361,7 +367,7 @@ const OrderStatusComponent = ({
     transform: [{ rotate: `${rotateValue.value * 180}deg` }],
   }));
 
-  const ProgressBar = ({ currentStep, totalSteps = 5 }: any) => {
+  const ProgressBar = ({ currentStep, totalSteps = 4 }: any) => {
     const steps = Array.from({ length: totalSteps }, (_, i) => i + 1);
 
     return (
@@ -437,7 +443,9 @@ const OrderStatusComponent = ({
                 <Text style={styles.lblOrderDesSmall} numberOfLines={1}>
                   {config.subtitle}
                 </Text>
-                <ProgressBar currentStep={config.currentStep} />
+                {config.showSmallProgressBar && (
+                  <ProgressBar currentStep={config.currentStep} />
+                )}
               </View>
 
               <View style={styles.toggleButton}>

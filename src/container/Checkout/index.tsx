@@ -53,6 +53,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { fontsfamily } from '../../constants/FontFamily';
 import { GlobalVar } from '../../constants/GlobalVar';
 import { DateFormatsManager } from '../../constants/utils/DateFormats';
+import SocketService from '../../socket/SocketService';
 
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -1512,8 +1513,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       const callback = (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           resetCart();
-          // Set initial order status
-          setOrderStatus('Request');
+          // setOrderStatus('Request');
           navigation.reset({
             index: 0,
             routes: [
@@ -1529,6 +1529,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
               },
             ],
           });
+          SocketService.emit("patient_join_booking");
           // setOrderStatus('order_sent');
         } else {
           flashMessageWarning(responseData.message);

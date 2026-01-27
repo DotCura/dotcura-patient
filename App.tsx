@@ -31,15 +31,14 @@ import { MmkvManager } from './src/constants/utils/MmkvManager';
 LogBox.ignoreAllLogs();
 
 const App = ({ navigation }: any) => {
-  // const [initialRouteName, setInitialRouteName] = useState<string | null>(
-  //   ScreenNames.CUSTOMSPLASHCONTAINER,
-  // );
-  console.log("render App.tsx");
-  
+  const [initialRouteName, setInitialRouteName] = useState<string | null>(
+    ScreenNames.CUSTOMSPLASHCONTAINER,
+  );
+
   const orderStatus = ZustandStores.OrderstatusStore(state => state.orderStatus);
   const patientId = ZustandStores.UserStore(state => state.patientId);
 
-  const { isConnected } = useSocketConnection(patientId);
+  useSocketConnection(patientId);
 
   const flashMessageRef = useRef(null);
   setFlashMessageRef(flashMessageRef);
@@ -86,12 +85,9 @@ const App = ({ navigation }: any) => {
 
   useEffect(() => {
     bootstrapUser(); // 👈 ONE LINE MAGIC
-    SplashScreen.hide(); // after bootstrapUser()
   }, []);
 
-  // useEffect(() => {
-  //   console.log('🔁 Socket status:', isConnected);
-  // }, [isConnected]);
+ 
 
   return (
     <SafeAreaProvider>

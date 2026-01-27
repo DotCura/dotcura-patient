@@ -55,8 +55,9 @@ export const styles = StyleSheet.create({
   nurseview: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: getHeight(10),
+    // marginTop: getHeight(10),
     gap: getWidth(4),
+    flex:1,
   },
   starRow: {
     flexDirection: 'row',
