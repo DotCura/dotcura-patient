@@ -1,3 +1,5 @@
+
+
 //AUTH
 export CustomSplashContainer from "./container/CustomSplash";
 export LoginContainer from "./container/auth/Login";
@@ -44,6 +46,8 @@ export OrderHistoryContainer from "./container/OrderHistory";
 export NotificationListContainer from "./container/Notification";
 export RateAndReviewContainer from "./container/RateAndReview";
 export EditOrderContainer from "./container/EditOrder";
+export ContactUsContainer from "./container/ContactUs";
+
 
 
 

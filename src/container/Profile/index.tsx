@@ -20,7 +20,7 @@ import SocketService from '../../socket/SocketService';
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  const { resetCart,resetNotificationCount } = ZustandStores.CartStore();
+  const { resetCart, resetNotificationCount } = ZustandStores.CartStore();
   const { clearOrderData } = ZustandStores.OrderstatusStore();
   const { logout } = ZustandStores.UserStore();
 
@@ -112,8 +112,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       title: getTranslation('supportprofile'),
       image: images.imgShareProfile,
       onpressfun: () => {
-        console.log('suppoet');
-        resetCart();
+        navigation.navigate(ScreenNames.CONTACTUSCONTAINER);
       },
       iscurv: false,
     },
@@ -199,7 +198,6 @@ const ProfileContainer = ({ navigation, route }: any) => {
   }, []);
 
   // ========================== API ==========================
-
 
   // Api Logout
   const _logoutApi = async () => {

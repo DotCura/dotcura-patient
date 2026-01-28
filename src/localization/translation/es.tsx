@@ -578,4 +578,12 @@ export default {
     'L’infermiere ci ha comunicato che verrà a casa tua entro le',
   canclevisitsubtitle:
     'Non aspettare! Puoi richiedere immediatamente una nuova visita.',
+
+    supporttitle:"Serve supporto?",
+    whattapptitle:"Chatta su WhatsApp",
+    whatappsubtitle:"Inviaci un messaggio, ti risponderemo il prima possibile",
+    contacttitle:"Chiamaci",
+    contactsubtitle:"Abbiamo un operatore che risponderà a ogni tua richiesta",
+    whatappbtnname:"Apri WhatsApp",
+    contactbtnname:"Chiama il "
 };

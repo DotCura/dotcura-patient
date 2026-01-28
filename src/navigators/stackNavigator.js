@@ -410,6 +410,9 @@ const MainNavigation = props => {
         {_addScreen(NativeStack, ScreenNames.CMSPAGECONTAINER, {
           headerShown: true,
         })}
+        {_addScreen(NativeStack, ScreenNames.CONTACTUSCONTAINER, {
+          headerShown: false,
+        })}
 
         {/* 🔥 TRANSITION ENTRY */}
         <NativeStack.Screen
