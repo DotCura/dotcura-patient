@@ -139,7 +139,7 @@ const AnalitiTestDetailContainer = ({ navigation, route }: any) => {
         : flashMessageWarning(getTranslation('reportnotavailable'));
     }
   };
-  const navigateTestGetTestedScreem = () => {
+  const handleNavigateBookNow = () => {
     navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
       screen: ScreenNames.GETTESTEDCONTAINER,
     });
@@ -188,7 +188,7 @@ const AnalitiTestDetailContainer = ({ navigation, route }: any) => {
       navigation={navigation}
       AnalitiTestDetailsData={AnalitiTestDetailsData}
       navigateTestDetailsScreen={navigateTestDetailsScreen}
-      navigateTestGetTestedScreem={navigateTestGetTestedScreem}
+      handleNavigateBookNow={handleNavigateBookNow}
     />
   );
 };

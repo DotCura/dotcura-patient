@@ -101,6 +101,7 @@ const AnalitiTestDetailComponent = (props: any) => {
                   reportName={kit?.test_name}
                   reportValue={kit?.report_results[0]?.result_value}
                   reportItem={kit}
+                  onpressBookNow={props.handleNavigateBookNow}
                   onpressreport={props.navigateTestDetailsScreen}
                   isTestCheck={false}
                   isUnitShow={true}

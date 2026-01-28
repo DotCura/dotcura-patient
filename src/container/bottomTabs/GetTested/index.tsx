@@ -455,7 +455,7 @@ const GetTestedContainer = ({ navigation }: any) => {
         method: MethodType.POST,
         apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
         params: { kit_id, test_ids, all_test, price },
-        showLoader:false,
+        showLoader:true,
         callback: () => {},
       });
     } catch (e) {
