@@ -11,12 +11,11 @@ interface AppLayoutProps {
 
 const AppLayout = ({ children, isOrderPlaced }: AppLayoutProps) => {
   console.log('remder app');
-  const {orderData} = ZustandStores.OrderstatusStore();
 
   return (
     <>
       {/* Header / Order Status */}
-      {isOrderPlaced && <OrderStatusComponent orderStatus={isOrderPlaced} orderData={orderData}/>}
+      {isOrderPlaced && <OrderStatusComponent orderStatus={isOrderPlaced} />}
 
       {/* Main Content */}
 

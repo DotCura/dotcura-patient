@@ -226,7 +226,7 @@
 // export default OrderStatusComponent;
 
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   useAnimatedStyle,
@@ -242,16 +242,17 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { activityOpacity } from '../../constants/GConstant';
+import { ZustandStores } from '../../store';
 
 const OrderStatusComponent = ({
   orderStatus,
-  orderData,
 }: {
   orderStatus: string;
-  orderData: any;
 }) => {
   // Status configuration
-  const STATUS_CONFIG = {
+  const orderData :any = ZustandStores.OrderstatusStore(state => state.orderData);
+
+  let STATUS_CONFIG = {
     Request: {
       title: getTranslation('ordersent'),
       subtitle: getTranslation('ordersentsubtitle'),
@@ -277,7 +278,7 @@ const OrderStatusComponent = ({
       showSmallProgressBar: true,
     },
     arrived: {
-      title: (nurseName: string) => `${nurseName} ${getTranslation('ishere')}`,
+      title:`${orderData?.name} + ${getTranslation('ishere')}`,
       subtitle: getTranslation('isheresubtitle'),
       image: images.imgstartvisitstepper,
       currentStep: 3,
@@ -301,9 +302,10 @@ const OrderStatusComponent = ({
       showSmallProgressBar: false,
     },
   };
+  
   const insets = useSafeAreaInsets();
   const [showBigView, setShowBigView] = useState(false);
-  // console.log('orderdata', orderData);
+  console.log('orderdata', orderData);
 
   // Get status config
   const config = useMemo(() => {
@@ -399,12 +401,12 @@ const OrderStatusComponent = ({
   };
 
   // Get title (handle function titles like for 'arrived')
-  const getTitle = () => {
-    if (typeof config.title === 'function') {
-      return config.title('Giovanni'); // Replace with actual nurse name from orderData
-    }
-    return config.title;
-  };
+  // const getTitle = () => {
+  //   if (typeof config.title === 'function') {
+  //     return config.title(orderData?.name); // Replace with actual nurse name from orderData
+  //   }
+  //   return config.title;
+  // };
 
   return (
     <Animated.View style={[styles.container, { paddingTop: insets.top }]}>
@@ -439,7 +441,7 @@ const OrderStatusComponent = ({
           >
             <View style={styles.headerRow}>
               <View style={{ flex: 1 }}>
-                <Text style={styles.lblOrderTitleSmall}>{getTitle()}</Text>
+                <Text style={styles.lblOrderTitleSmall}>{config.title}</Text>
                 <Text style={styles.lblOrderDesSmall} numberOfLines={1}>
                   {config.subtitle}
                 </Text>
@@ -481,7 +483,7 @@ const OrderStatusComponent = ({
           >
             <View style={styles.headerRow}>
               <View style={{ flex: 1 }}>
-                <Text style={styles.titleOrderStatus}>{getTitle()}</Text>
+                <Text style={styles.titleOrderStatus}>{config.title}</Text>
                 <Text style={styles.titleOrderStatusDes}>
                   {config.subtitle}
                 </Text>

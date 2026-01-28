@@ -102,12 +102,13 @@ export const useSocketConnection = (patientId?: string | null) => {
     const handleBookingStatus = (data: any) => {
       console.log('📦 Booking Status Update:', data);
 
-      const { booking_id, status, time } = data;
+      const { booking_id, status, time,name } = data;
 
       setOrderData({
         booking_id,
         status,
         time,
+        name
       });
     };
 

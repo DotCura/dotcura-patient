@@ -47,6 +47,7 @@ interface OrderData {
   booking_id: string | null;
   status: ORDERSTATUS;
   time: string | null;
+  name:string | null;
   nurseInfo?: any; // Add nurse details if needed
 }
 

@@ -85,6 +85,7 @@ const App = ({ navigation }: any) => {
 
   useEffect(() => {
     bootstrapUser(); // 👈 ONE LINE MAGIC
+    SplashScreen.hide();
   }, []);
 
  
