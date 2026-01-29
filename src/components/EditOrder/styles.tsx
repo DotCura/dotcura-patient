@@ -9,6 +9,13 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 
 export const styles = StyleSheet.create({
+  lblNoAddressFound: {
+    fontSize: fontSize.size20,
+    textAlign: 'center',
+    marginHorizontal: getWidth(40),
+    fontFamily: fontsfamily.gsemiBold,
+    color: Colors.blue002,
+  },
   btnAnlaiti: {
     flexDirection: 'row',
     gap: getWidth(6),

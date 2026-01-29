@@ -5,6 +5,11 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { fontSize } from '../../constants/FontSizes';
 
 export const styles = StyleSheet.create({
+  imganaliti:{
+    height:getHeight(25),
+    width:getWidth(25),
+    borderRadius:100,
+  },
   btnPlusBlue: {
     justifyContent: 'center',
     alignItems: 'center',

@@ -326,57 +326,90 @@ const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
       .join(' + ');
   };
 
-  const getStatusStyle = (status: string) => {
-    switch (status) {
-      case 'Request':
+  const getStatusStyle = (status?: string) => {
+    const normalizedStatus = status?.toLowerCase();
+
+    switch (normalizedStatus) {
+      // 🟡 Initial / Requested
+      case 'request':
         return {
           label: 'Requested',
           bg: '#FFF8E1',
           text: '#F9A825',
         };
 
-      case 'Accept':
+      // 🔵 Accepted / In progress (before visit)
+      case 'accept':
+      case 'accepted':
+      case 'start_visit':
+      case 'arrived':
         return {
           label: 'Accepted',
           bg: '#E3F2FD',
           text: '#1976D2',
         };
 
-      case 'Cancel':
+      // 🟣 Visit completed
+      case 'complete_visit':
+      case 'confirm':
         return {
-          label: 'Cancelled',
-          bg: '#FFE5E5',
-          text: '#D32F2F',
+          label: 'Visit Completed',
+          bg: '#E8F5E9',
+          text: '#2E7D32',
         };
 
-      case 'Reject':
+      // 🚚 Delivery started
+      case 'start_delivery':
         return {
-          label: 'Rejected',
-          bg: '#FCE4EC',
-          text: '#C2185B',
+          label: 'Delivery Started',
+          bg: '#E1F5FE',
+          text: '#0288D1',
         };
 
-      case 'Completed':
+      // ✅ Fully completed
+      case 'complete_delivery':
+      case 'completed':
         return {
           label: 'Completed',
           bg: '#E8F5E9',
           text: '#2E7D32',
         };
 
-      case 'ReportPending':
+      // 📄 Report pending
+      case 'reportpending':
         return {
           label: 'Report Pending',
           bg: '#E1F5FE',
           text: '#0288D1',
         };
 
-      case 'Modified':
+      // ✏️ Modified
+      case 'modified':
         return {
           label: 'Modified',
           bg: '#F3E5F5',
           text: '#7B1FA2',
         };
 
+      // ❌ Cancelled
+      case 'cancel':
+      case 'cancelled':
+        return {
+          label: 'Cancelled',
+          bg: '#FFE5E5',
+          text: '#D32F2F',
+        };
+
+      // ⛔ Rejected
+      case 'reject':
+      case 'rejected':
+        return {
+          label: 'Rejected',
+          bg: '#FCE4EC',
+          text: '#C2185B',
+        };
+
+      // ⚪ Fallback
       default:
         return {
           label: status ?? 'Unknown',
@@ -391,7 +424,7 @@ const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
     const tests = item.all_tests ?? [];
     const visibleTags = isExpanded ? tests : tests.slice(0, 2);
     const extraCount = tests.length - 2;
-    const statusStyle = getStatusStyle(item?.status);
+    const statusStyle = getStatusStyle(item?.agenda_status);
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
