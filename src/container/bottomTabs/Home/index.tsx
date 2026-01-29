@@ -1,5 +1,3 @@
-
-
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { styles } from './styles';
@@ -350,31 +348,37 @@ const HomeContainer = ({ navigation }: any) => {
   const [expandedBooked, setExpandedBooked] = useState<any>({});
 
   const formatKits = (kits: any[]) => {
+    if (!kits?.length) return '';
+
     return kits
-      .map(item => {
-        const kitName = item?.kitname || '';
-        const count = item?.kittest?.length || 0;
-        const label =
-          item.kitype === 'kit' ? getTranslation('kitlabeltextcheckout') : '';
-        return `${label}${kitName} (${count})`;
+      .map(kit => {
+        const kitName = kit?.kit?.name ?? '';
+        const count = kit?.test_count ?? 0;
+        return `${kitName} (${count})`;
       })
-      .join(' , ');
+      .join(' + ');
   };
 
   const renderItemAppointment = ({ item, index }: any) => {
-    const isExpanded = expandedWaiting[item.id]; // for waiting items
-    const isExpandedBooked = expandedBooked[item.id]; // for booked items
+    const tests = item.all_tests ?? [];
+    const hasExtra = tests.length > 2;
 
-    const visibleTags = isExpanded ? item.tags : item.tags.slice(0, 2);
-    const extraCount = item.tags.length - 2;
+    const isExpandedWaiting = expandedWaiting[item.id];
+    const visibleTagsAppointment = isExpandedWaiting
+      ? tests
+      : tests.slice(0, 2);
+    const extraCountAppointment = tests.length - 2;
 
-    const visibleTagsAppoint = isExpandedBooked
-      ? item.tags
-      : item.tags.slice(0, 2);
-    const extraCountAppoint = item.tags.length - 2;
+    const isExpandedBooked = expandedBooked[item.id];
+    const visibleTagsBooked = isExpandedBooked ? tests : tests.slice(0, 2);
+    const extraCountBooked = tests.length - 2;
+
     return (
       <>
-        {item.status === 'waiting' && (
+        {(item.agenda_status === 'complete_visit' ||
+          item.agenda_status === 'start_delivery' ||
+          item.agenda_status === 'complete_delivery' ||
+          item.agenda_status === 'ReportPending') && (
           <TouchableOpacity
             activeOpacity={activityOpacity}
             style={styles.btnwaitingview1}
@@ -389,7 +393,7 @@ const HomeContainer = ({ navigation }: any) => {
                       <Text style={styles.lblOrderTitle}>
                         {' '}
                         {getTranslation('analsisOf')}{' '}
-                        {formatDateToSpanish(item.date)}
+                        {formatDateToSpanish(item.test_date)}
                       </Text>
                       <View
                         style={{
@@ -398,7 +402,7 @@ const HomeContainer = ({ navigation }: any) => {
                         }}
                       >
                         <Text style={styles.lblOrderID}>
-                          {getTranslation('orderidlabel')} {item.orderid}
+                          {getTranslation('orderidlabel')} #{item.booking_id}
                         </Text>
                         <Text style={styles.lblKitsandAnaliti}>
                           {formatKits(item.kits)}
@@ -411,13 +415,13 @@ const HomeContainer = ({ navigation }: any) => {
                   </View>
                   {/* tags */}
                   <View style={styles.vwTags}>
-                    {visibleTags.map((tag: any, index: any) => (
+                    {visibleTagsAppointment.map((tag: any, index: any) => (
                       <View key={index} style={styles.vwBackTagWaiting}>
                         <Text style={styles.lblTag}>{tag}</Text>
                       </View>
                     ))}
 
-                    {!isExpanded && extraCount > 0 && (
+                    {!isExpandedWaiting && hasExtra && (
                       <TouchableOpacity
                         style={styles.btnextracount}
                         onPress={() =>
@@ -427,30 +431,37 @@ const HomeContainer = ({ navigation }: any) => {
                           }))
                         }
                       >
-                        <Text style={styles.lblTag}>+{extraCount}</Text>
+                        <Text style={styles.lblTag}>
+                          +{extraCountAppointment}
+                        </Text>
                       </TouchableOpacity>
                     )}
                   </View>
                   {/* nurseView */}
-                  <View style={styles.nurseview}>
-                    <Image source={images.imgInjection} />
-                    <Text>{item.nurse.name}</Text>
+                  {item.nurse !== null && (
+                    <View style={styles.nurseview}>
+                      <Image source={images.imgInjection} />
+                      <Text>{item.nurse.name}</Text>
 
-                    <View style={styles.starRow}>
-                      {[...Array(totalStars)].map((_, index) => {
-                        const isFilled = index < item.nurse.rating; // fill up to ratingStar
-                        const iconName = isFilled && images.imgStarFill;
+                      <View style={styles.starRow}>
+                        {[...Array(totalStars)].map((_, index) => {
+                          const isFilled = index < item.rating; // fill up to ratingStar
+                          const iconName = isFilled && images.imgStarFill;
 
-                        return <Image key={index} source={iconName} />;
-                      })}
+                          return <Image key={index} source={iconName} />;
+                        })}
+                      </View>
                     </View>
-                  </View>
+                  )}
                 </View>
               </View>
             </View>
           </TouchableOpacity>
         )}
-        {item.status === 'booked' && (
+        {(item.agenda_status == 'Request' ||
+          item.agenda_status == 'Accept' ||
+          item.agenda_status == 'start_visit' ||
+          item.agenda_status == 'arrived') && (
           <TouchableOpacity
             activeOpacity={activityOpacity}
             style={styles.btnBooked}
@@ -467,7 +478,7 @@ const HomeContainer = ({ navigation }: any) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text style={styles.lblOrderTitleBooked}>
                     {getTranslation('analsisOf')}{' '}
-                    {formatDateToSpanish(item.date)}
+                    {formatDateToSpanish(item.test_date)}
                   </Text>
                   <TouchableOpacity>
                     <Image
@@ -480,7 +491,7 @@ const HomeContainer = ({ navigation }: any) => {
                   {item.appointmentMessage}
                 </Text>
                 <View style={[styles.vwTags, { marginTop: getHeight(10) }]}>
-                  {visibleTagsAppoint.map((tag: any, index: any) => (
+                  {visibleTagsBooked.map((tag: any, index: any) => (
                     <View key={index} style={styles.vwTagBooked}>
                       <Text style={[styles.lblTag, { color: Colors.white }]}>
                         {tag}
@@ -488,7 +499,7 @@ const HomeContainer = ({ navigation }: any) => {
                     </View>
                   ))}
 
-                  {!isExpandedBooked && extraCountAppoint > 0 && (
+                  {!isExpandedBooked && hasExtra && (
                     <TouchableOpacity
                       style={styles.btnBookedExtraCount}
                       onPress={() =>
@@ -499,7 +510,7 @@ const HomeContainer = ({ navigation }: any) => {
                       }
                     >
                       <Text style={[styles.lblTag, { color: Colors.white }]}>
-                        +{extraCountAppoint}
+                        +{extraCountBooked}
                       </Text>
                     </TouchableOpacity>
                   )}
@@ -507,8 +518,18 @@ const HomeContainer = ({ navigation }: any) => {
               </View>
             </View>
             <ProgressBar
-              current={50}
-              total={100}
+              current={
+                item.agenda_status == 'Request'
+                  ? 1
+                  : item.agenda_status == 'Accept'
+                  ? 2
+                  : item.agenda_status == 'start_visit'
+                  ? 3
+                  : item.agenda_status == 'arrived'
+                  ? 4
+                  : 0
+              }
+              total={4}
               height={6}
               backgroundColor={Colors.grey9224}
               gradientColors={[Colors.blue00250, Colors.blue3C78]}
@@ -791,7 +812,9 @@ const HomeContainer = ({ navigation }: any) => {
   // ✅ FIX: Use selectors
   const cartCount = ZustandStores.CartStore(state => state.cartCount);
   const setCartCount = ZustandStores.CartStore(state => state.setCartCount);
-  const setNotificationCount = ZustandStores.CartStore(state => state.setNotificationCount);
+  const setNotificationCount = ZustandStores.CartStore(
+    state => state.setNotificationCount,
+  );
 
   const _totalCount = async () => {
     const params = {};
@@ -848,10 +871,37 @@ const HomeContainer = ({ navigation }: any) => {
     _familyMemberReportList();
   }, []);
 
- 
+  const fetchOrderList = useCallback(
+    async ({ page, loadType }: { page: number; loadType: any }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.ORDER.GETORDERHISTORY,
+        method: 'POST',
+        showLoader: loadType === LoadType.INITIAL,
+        params: {
+          page,
+          status: 'RUNNING',
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data ?? [],
+      };
+    },
+    [navigation],
+  );
+
+  const pendingOrder: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: true,
+    fetcher: fetchOrderList,
+  });
 
   return (
     <HomeComponent
+      pendingOrder={pendingOrder}
       insets={insets}
       outdated={outdated}
       latestAnalysisData={favourites?.data}
@@ -865,7 +915,7 @@ const HomeContainer = ({ navigation }: any) => {
       handleNavigateCheckoutScreen={handleNavigateCheckoutScreen}
       handleNavigateTestDetailsScreen={handleNavigateTestDetailsScreen}
       renderItemAppointment={renderItemAppointment}
-      appointmentsData={appointmentsData}
+      appointmentsData={pendingOrder?.data}
       handleNavigateYourProfileScreen={handleNavigateYourProfileScreen}
       handleNavigateGetTested={handleNavigateGetTested}
       firstName={firstName}

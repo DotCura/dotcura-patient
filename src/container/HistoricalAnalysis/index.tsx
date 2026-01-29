@@ -315,13 +315,13 @@ const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
   const totalStars = 5;
 
   const formatKits = (kits: any[]) => {
+    if (!kits?.length) return '';
+
     return kits
-      .map(item => {
-        const kitName = item?.kitname || '';
-        const count = item?.kittest?.length || 0;
-        const label =
-          item.kitype === 'kit' ? getTranslation('kitlabeltextcheckout') : '';
-        return `${label}${kitName} (${count})`;
+      .map(kit => {
+        const kitName = kit?.kit?.name ?? '';
+        const count = kit?.test_count ?? 0;
+        return `${kitName} (${count})`;
       })
       .join(' + ');
   };
@@ -480,7 +480,7 @@ const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
                 textTransform: 'capitalize',
               }}
             >
-              {item?.status}
+              {item?.agenda_status}
             </Text>
           </View>
         </View>

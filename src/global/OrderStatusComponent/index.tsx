@@ -411,6 +411,8 @@ const OrderStatusComponent = memo(({ orderStatus }: OrderStatusComponentProps) =
 
   // Get order data from store
   const orderData: any = ZustandStores.OrderstatusStore(state => state.orderData);
+  console.log("🚀 ~ file: index.tsx:75 ~ OrderStatusComponent ~ orderData:", orderData);
+  
 
   // Status configuration - memoized to prevent recalculation
   const STATUS_CONFIG = useMemo(() => ({

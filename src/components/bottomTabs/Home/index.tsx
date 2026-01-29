@@ -472,7 +472,7 @@ const HomeComponent = (props: any) => {
               <Text style={styles.lblMyHealth}>
                 {getTranslation('myhealtthtext')}
               </Text>
-              <FlatList   
+              <FlatList
                 data={props.testReportData}
                 renderItem={props.renderTestReportData}
                 showsVerticalScrollIndicator={false}
@@ -531,14 +531,18 @@ const HomeComponent = (props: any) => {
             )}
 
             {/* waitingforresultof */}
-            {/* <View
+            <View
               style={{
                 marginHorizontal: getWidth(16),
                 marginTop: getHeight(29),
               }}
             >
               {props.appointmentsData.some(
-                (a: any) => a.status === 'waiting',
+                (a: any) =>
+                  (a.agenda_status === 'complete_visit' ||
+                  a.agenda_status === 'start_delivery' ||
+                  a.agenda_status === 'complete_delivery' ||
+                  a.agenda_status === 'ReportPending')
               ) && (
                 <Text style={styles.lblWaitingForResult}>
                   {getTranslation('waitingforresultof')}
@@ -546,7 +550,13 @@ const HomeComponent = (props: any) => {
               )}
 
               {props.appointmentsData
-                .filter((a: any) => a.status === 'waiting')
+                .filter(
+                  (a: any) =>
+                    (a.agenda_status === 'complete_visit' ||
+                      a.agenda_status === 'start_delivery' ||
+                      a.agenda_status === 'complete_delivery' ||
+                      a.agenda_status === 'ReportPending')
+                )
                 .map((item: any, index: any) => (
                   <React.Fragment key={`waiting-${index}`}>
                     {props.renderItemAppointment({ item, index })}
@@ -554,7 +564,11 @@ const HomeComponent = (props: any) => {
                 ))}
 
               {props.appointmentsData.some(
-                (a: any) => a.status === 'booked',
+                (a: any) =>
+                  a.agenda_status === 'Request' ||
+                  a.agenda_status === 'Accept' ||
+                  a.agenda_status === 'start_visit' ||
+                  a.agenda_status === 'arrived',
               ) && (
                 <Text style={styles.lblWaitingForResult}>
                   {getTranslation('appointmentbook')}
@@ -562,13 +576,19 @@ const HomeComponent = (props: any) => {
               )}
 
               {props.appointmentsData
-                .filter((a: any) => a.status === 'booked')
+                .filter(
+                  (a: any) =>
+                    a.agenda_status === 'Request' ||
+                    a.agenda_status === 'Accept' ||
+                    a.agenda_status === 'start_visit' ||
+                    a.agenda_status === 'arrived',
+                )
                 .map((item: any, index: any) => (
                   <React.Fragment key={`booked-${index}`}>
                     {props.renderItemAppointment({ item, index })}
                   </React.Fragment>
                 ))}
-            </View> */}
+            </View>
 
             {/* vwFamilyMemberReport */}
             <View style={styles.vwFamilyMemberReport}>

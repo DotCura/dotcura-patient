@@ -71,9 +71,9 @@ export const styles = StyleSheet.create({
     marginRight: getWidth(2),
   },
   vwTagBooked: {
+    paddingVertical:getHeight(4),
     backgroundColor: Colors.white08,
     paddingHorizontal: getWidth(8),
-    height: getHeight(24),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 999,

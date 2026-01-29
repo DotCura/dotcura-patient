@@ -1323,6 +1323,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   useEffect(() => {
     _getCartDetails();
+    _getEditOrderItem();
   }, []);
 
   //EDITANALITIAPI
@@ -1597,6 +1598,37 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       setAppliedValue(null);
     }
   };
+
+
+  //EDITORDERAPI
+  const _getEditOrderItem = async () => {
+    try {
+      const params = {
+        booking_id:"103"
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.ORDER.GETORDERDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('getOrderDetails details error:', error);
+    }
+  }
+
+  const _editOrder = async () => {
+
+  }
 
   return (
     <CheckoutComponent
