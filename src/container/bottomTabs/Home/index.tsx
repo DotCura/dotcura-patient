@@ -488,7 +488,15 @@ const HomeContainer = ({ navigation }: any) => {
                   </TouchableOpacity>
                 </View>
                 <Text style={styles.lblOrderDesBooked}>
-                  {item.appointmentMessage}
+                  {item.agenda_status == 'Request'
+                    ? getTranslation('ordersentsubtitle')
+                    : item.agenda_status == 'Accept'
+                    ? getTranslation('visitconfirmsubtitle')
+                    : item.agenda_status == 'start_visit'
+                    ? getTranslation('minitarrivesubtitle')
+                    : item.agenda_status == 'arrived'
+                    ? getTranslation('isheresubtitle')
+                    : ''}
                 </Text>
                 <View style={[styles.vwTags, { marginTop: getHeight(10) }]}>
                   {visibleTagsBooked.map((tag: any, index: any) => (

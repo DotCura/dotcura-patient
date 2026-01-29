@@ -1,5 +1,3 @@
-
-
 import {
   Alert,
   Image,
@@ -1532,7 +1530,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
               },
             ],
           });
-          SocketService.emit("patient_join_booking");
+          SocketService.emit('patient_join_booking');
           // setOrderStatus('order_sent');
         } else {
           flashMessageWarning(responseData.message);
@@ -1601,12 +1599,11 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     }
   };
 
-
   //EDITORDERAPI
   const _getEditOrderItem = async () => {
     try {
       const params = {
-        booking_id:"103"
+        booking_id: 103,
       };
 
       const callback = async (responseData: any) => {
@@ -1626,11 +1623,9 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     } catch (error) {
       console.log('getOrderDetails details error:', error);
     }
-  }
+  };
 
-  const _editOrder = async () => {
-
-  }
+  const _editOrder = async () => {};
 
   return (
     <CheckoutComponent

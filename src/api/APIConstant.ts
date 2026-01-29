@@ -55,7 +55,7 @@ export const ApiEndPoints = {
   },
   ORDER: {
     GETORDERHISTORY: `${PATIENT_PREFIX}getOrderList`,
-    GETORDERDETAILS: `${PATIENT_PREFIX}getOrderDetails`,
+    GETORDERDETAILS: `${PATIENT_PREFIX}get-edit-booking-details`,
     UPDATEORDERBOOKIN: `${PATIENT_PREFIX}updatebookingOrder`,
   },
   OTHER: {

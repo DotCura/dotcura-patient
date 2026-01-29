@@ -24,7 +24,6 @@ import {
   flashMessageSucess,
   flashMessageWarning,
   formatTestDateForAPI,
-  showAlert,
 } from '../../constants/GConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { images } from '../../constants/Images';
@@ -49,10 +48,8 @@ import {
 } from '../../global/ApiHelper/usePaginatedList';
 import { APIManager } from '../../api/APIManager';
 import FastImage from '@d11/react-native-fast-image';
-import { useFocusEffect } from '@react-navigation/native';
 import { fontsfamily } from '../../constants/FontFamily';
 import { GlobalVar } from '../../constants/GlobalVar';
-import { DateFormatsManager } from '../../constants/utils/DateFormats';
 import SocketService from '../../socket/SocketService';
 
 const CheckoutContainer = ({ navigation, route }: any) => {
@@ -62,29 +59,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
   const { cartKitIds, addKit, removeKit, increment, resetCart } =
     ZustandStores.CartStore();
-
-  //LocallyMangeIsTick
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     if (!checkup?.data?.length) return;
-
-  //     checkup.updateData((prev: any[]) =>
-  //       prev.map(item => {
-  //         const shouldBeInCart = cartKitIds.includes(item.id);
-
-  //         // ⛔ prevent unnecessary re-render
-  //         if (item.is_in_cart === shouldBeInCart) {
-  //           return item;
-  //         }
-
-  //         return {
-  //           ...item,
-  //           is_in_cart: shouldBeInCart,
-  //         };
-  //       }),
-  //     );
-  //   }, [cartKitIds]),
-  // );
 
   //CHECKOUT VARIABLES
   const [testkitsData, setTestsKitData] = useState<any>([]);
@@ -117,20 +91,14 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     day: string;
     time: string;
   } | null>(null);
+  // console.log("selectedSlot",selectedSlot);
+
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
   const [selectedTab, setSelectedTab] = useState('checkup'); // 'checkup' or 'analiti'
   const apiDate = formatTestDateForAPI(selectedDate);
   const startTime = selectedTime.split(' - ')[0];
   console.log(startTime);
-
-  // const sendapistarttimeutc = DateFormatsManager.convertLocalToUTC(
-  //   selectedDate === 'Oggi'
-  //     ? new Date().toISOString().split('T')[0]
-  //     : apiDate + startTime,
-  //   DateFormatsManager.DateTimeFormatsWithTimezone.YYYYMMDDTHHmmssZ,
-  // );
-  // console.log('sendapistarttimeutc', sendapistarttimeutc);
 
   //MODELADDTIONSVARIABLES
   const [checkupcount, setCheckupCount] = useState(31);
@@ -322,40 +290,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     await _removeCartItem(item.cart_kit_id);
   };
 
-  // const handleBookSlot = () => {
-  //   const givenUTC = new Date(
-  //     DateFormatsManager.convertLocalToUTC(
-  //       selectedDate === 'Oggi'
-  //         ? new Date().toISOString().split('T')[0]
-  //         : apiDate + startTime,
-  //       DateFormatsManager.DateTimeFormatsWithTimezone.YYYYMMDDTHHmmssZ,
-  //     ),
-  //   ); // given UTC time
-  //   const givenUTCPlus1Hr = new Date(givenUTC.getTime() + 60 * 60 * 1000);
-  //   const currentUTC = new Date();
-  //   const currentUTCPlus1Hr = new Date(currentUTC.getTime() + 60 * 60 * 1000);
-
-  //   console.log('givenutc', givenUTC);
-  //   console.log('givenutc+1hr', givenUTCPlus1Hr);
-  //   console.log('currentutc', currentUTC);
-  //   console.log('currentutc+1hr', currentUTCPlus1Hr);
-  //   console.log("givenUTCPlus1Hr < currentUTC",givenUTCPlus1Hr < currentUTCPlus1Hr);
-
-  //   if (selectedDate && selectedTime) {
-  //     if (givenUTCPlus1Hr < currentUTCPlus1Hr) {
-  //       Alert.alert(getTranslation('timetosoon') || '');
-  //     } else {
-  //       console.log(
-  //         'sekectredDate',
-  //         selectedDate,
-  //         'selectedTime',
-  //         selectedTime,
-  //       );
-  //       setSelectedSlot({ day: selectedDate, time: selectedTime });
-  //       setShowPicker(false);
-  //     }
-  //   }
-  // };
   const handleBookSlot = () => {
     const localDate =
       selectedDate === 'Oggi'
@@ -1323,7 +1257,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   useEffect(() => {
     _getCartDetails();
-    _getEditOrderItem();
   }, []);
 
   //EDITANALITIAPI
@@ -1530,7 +1463,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
               },
             ],
           });
-          SocketService.emit("patient_join_booking");
+          SocketService.emit('patient_join_booking');
           // setOrderStatus('order_sent');
         } else {
           flashMessageWarning(responseData.message);
@@ -1599,36 +1532,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     }
   };
 
-
-  //EDITORDERAPI
-  const _getEditOrderItem = async () => {
-    try {
-      const params = {
-        booking_id:"103"
-      };
-
-      const callback = async (responseData: any) => {
-        if (responseData.code === StatusCode.SUCCESS) {
-        } else {
-          flashMessageWarning(responseData.message);
-        }
-      };
-
-      await APIManager.makeRequest({
-        navigation: navigation,
-        method: MethodType.POST,
-        apiEndPoint: ApiEndPoints.ORDER.GETORDERDETAILS,
-        callback,
-        params,
-      });
-    } catch (error) {
-      console.log('getOrderDetails details error:', error);
-    }
-  }
-
-  const _editOrder = async () => {
-
-  }
+  
 
   return (
     <CheckoutComponent
