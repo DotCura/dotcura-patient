@@ -126,6 +126,65 @@ const YourProfileComponent = (props: any) => {
               </React.Fragment>
             ))}
         </View> */}
+
+        {/* waitingforresultof */}
+        <View
+          style={{
+            marginHorizontal: getWidth(16),
+          }}
+        >
+          {props.appointmentsData.some(
+            (a: any) =>
+              a.agenda_status === 'complete_visit' ||
+              a.agenda_status === 'start_delivery' ||
+              a.agenda_status === 'complete_delivery' ||
+              a.agenda_status === 'ReportPending',
+          ) && (
+            <Text style={styles.lblWaitingForResult}>
+              {getTranslation('waitingforresultof')}
+            </Text>
+          )}
+
+          {props.appointmentsData
+            .filter(
+              (a: any) =>
+                a.agenda_status === 'complete_visit' ||
+                a.agenda_status === 'start_delivery' ||
+                a.agenda_status === 'complete_delivery' ||
+                a.agenda_status === 'ReportPending',
+            )
+            .map((item: any, index: any) => (
+              <React.Fragment key={`waiting-${index}`}>
+                {props.renderItemAppointment({ item, index })}
+              </React.Fragment>
+            ))}
+
+          {props.appointmentsData.some(
+            (a: any) =>
+              a.agenda_status === 'Request' ||
+              a.agenda_status === 'Accept' ||
+              a.agenda_status === 'start_visit' ||
+              a.agenda_status === 'arrived',
+          ) && (
+            <Text style={styles.lblWaitingForResult}>
+              {getTranslation('appointmentbook')}
+            </Text>
+          )}
+
+          {props.appointmentsData
+            .filter(
+              (a: any) =>
+                a.agenda_status === 'Request' ||
+                a.agenda_status === 'Accept' ||
+                a.agenda_status === 'start_visit' ||
+                a.agenda_status === 'arrived',
+            )
+            .map((item: any, index: any) => (
+              <React.Fragment key={`booked-${index}`}>
+                {props.renderItemAppointment({ item, index })}
+              </React.Fragment>
+            ))}
+        </View>
       </>
     );
   };
@@ -448,7 +507,12 @@ const YourProfileComponent = (props: any) => {
         <ActivityIndicator
           size="large"
           color={Colors.blue1C}
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center',marginTop:-100 }}
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: -100,
+          }}
         />
       ) : (
         <FlatList

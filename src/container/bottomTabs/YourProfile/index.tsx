@@ -29,7 +29,6 @@ import {
 import { useDebounce } from '../../../constants/utils/useDebounce';
 
 const YourProfileContainer = ({ navigation }: any) => {
-  
   const insets = useSafeAreaInsets();
   const analysisArray = [
     {
@@ -785,21 +784,182 @@ const YourProfileContainer = ({ navigation }: any) => {
     );
   };
 
+  // const renderItemAppointment = ({ item, index }: any) => {
+  //   const isExpanded = expandedWaiting[item.id]; // for waiting items
+  //   const isExpandedBooked = expandedBooked[item.id]; // for booked items
+
+  //   const visibleTags = isExpanded ? item.tags : item.tags.slice(0, 2);
+  //   const extraCount = item.tags.length - 2;
+
+  //   const visibleTagsAppoint = isExpandedBooked
+  //     ? item.tags
+  //     : item.tags.slice(0, 2);
+  //   const extraCountAppoint = item.tags.length - 2;
+  //   return (
+  //     <>
+  //       {item.status === 'waiting' && (
+  //         <TouchableOpacity activeOpacity={1} style={styles.btnwaitingview1}>
+  //           <View style={styles.btnwaitingview2}>
+  //             <View style={styles.btnwaitingview3}>
+  //               <Image source={images.imgkit7} style={styles.imgkit} />
+  //               <View style={{ flex: 1 }}>
+  //                 {/* orderDetailsView */}
+  //                 <View style={styles.vwMainOrderDetails}>
+  //                   <View style={{ flex: 1, gap: getHeight(2) }}>
+  //                     <Text style={styles.lblOrderTitle}>
+  //                       {' '}
+  //                       {getTranslation('analsisOf')}{' '}
+  //                       {formatDateToSpanish(item.date)}
+  //                     </Text>
+  //                     <View
+  //                       style={{
+  //                         marginTop: getHeight(6),
+  //                         marginBottom: getHeight(10),
+  //                       }}
+  //                     >
+  //                       <Text style={styles.lblOrderID}>
+  //                         {getTranslation('orderidlabel')} {item.orderid}
+  //                       </Text>
+  //                       <Text style={styles.lblKitsandAnaliti}>
+  //                         {formatKits(item.kits)}
+  //                       </Text>
+  //                     </View>
+  //                   </View>
+  //                   <TouchableOpacity>
+  //                     <Image source={images.imgRightBlack} />
+  //                   </TouchableOpacity>
+  //                 </View>
+  //                 {/* tags */}
+  //                 <View style={styles.vwTags}>
+  //                   {visibleTags.map((tag: any, index: any) => (
+  //                     <View key={index} style={styles.vwBackTagWaiting}>
+  //                       <Text style={styles.lblTag}>{tag}</Text>
+  //                     </View>
+  //                   ))}
+
+  //                   {!isExpanded && extraCount > 0 && (
+  //                     <TouchableOpacity
+  //                       style={styles.btnextracount}
+  //                       onPress={() =>
+  //                         setExpandedWaiting((prev: any) => ({
+  //                           ...prev,
+  //                           [item.id]: true,
+  //                         }))
+  //                       }
+  //                     >
+  //                       <Text style={styles.lblTag}>+{extraCount}</Text>
+  //                     </TouchableOpacity>
+  //                   )}
+  //                 </View>
+  //                 {/* nurseView */}
+  //                 <View style={styles.nurseview}>
+  //                   <Image source={images.imgInjection} />
+  //                   <Text>{item.nurse.name}</Text>
+
+  //                   <View style={styles.starRow}>
+  //                     {[...Array(totalStars)].map((_, index) => {
+  //                       const isFilled = index < item.nurse.rating; // fill up to ratingStar
+  //                       const iconName = isFilled && images.imgStarFill;
+
+  //                       return <Image key={index} source={iconName} />;
+  //                     })}
+  //                   </View>
+  //                 </View>
+  //               </View>
+  //             </View>
+  //           </View>
+  //         </TouchableOpacity>
+  //       )}
+  //       {item.status === 'booked' && (
+  //         <TouchableOpacity activeOpacity={1} style={styles.btnBooked}>
+  //           <View
+  //             style={{
+  //               flexDirection: 'row',
+  //               gap: getWidth(10),
+  //               marginBottom: getHeight(12),
+  //             }}
+  //           >
+  //             <Image source={images.imgkit7} style={styles.imgkit} />
+  //             <View style={{ flex: 1 }}>
+  //               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+  //                 <Text style={styles.lblOrderTitleBooked}>
+  //                   {getTranslation('analsisOf')}{' '}
+  //                   {formatDateToSpanish(item.date)}
+  //                 </Text>
+  //                 <TouchableOpacity>
+  //                   <Image
+  //                     source={images.imgRightBlack}
+  //                     tintColor={Colors.white}
+  //                   />
+  //                 </TouchableOpacity>
+  //               </View>
+  //               <Text style={styles.lblOrderDesBooked}>
+  //                 {item.appointmentMessage}
+  //               </Text>
+  //               <View style={[styles.vwTags, { marginTop: getHeight(10) }]}>
+  //                 {visibleTagsAppoint.map((tag: any, index: any) => (
+  //                   <View key={index} style={styles.vwTagBooked}>
+  //                     <Text style={[styles.lblTag, { color: Colors.white }]}>
+  //                       {tag}
+  //                     </Text>
+  //                   </View>
+  //                 ))}
+
+  //                 {!isExpandedBooked && extraCountAppoint > 0 && (
+  //                   <TouchableOpacity
+  //                     style={styles.btnBookedExtraCount}
+  //                     onPress={() =>
+  //                       setExpandedBooked((prev: any) => ({
+  //                         ...prev,
+  //                         [item.id]: true,
+  //                       }))
+  //                     }
+  //                   >
+  //                     <Text style={[styles.lblTag, { color: Colors.white }]}>
+  //                       +{extraCountAppoint}
+  //                     </Text>
+  //                   </TouchableOpacity>
+  //                 )}
+  //               </View>
+  //             </View>
+  //           </View>
+  //           <ProgressBar
+  //             current={50}
+  //             total={100}
+  //             height={6}
+  //             backgroundColor={Colors.grey9224}
+  //             gradientColors={[Colors.blue00250, Colors.blue3C78]}
+  //           />
+  //         </TouchableOpacity>
+  //       )}
+  //     </>
+  //   );
+  // };
+
   const renderItemAppointment = ({ item, index }: any) => {
-    const isExpanded = expandedWaiting[item.id]; // for waiting items
-    const isExpandedBooked = expandedBooked[item.id]; // for booked items
+    const tests = item.all_tests ?? [];
+    const hasExtra = tests.length > 2;
 
-    const visibleTags = isExpanded ? item.tags : item.tags.slice(0, 2);
-    const extraCount = item.tags.length - 2;
+    const isExpandedWaiting = expandedWaiting[item.id];
+    const visibleTagsAppointment = isExpandedWaiting
+      ? tests
+      : tests.slice(0, 2);
+    const extraCountAppointment = tests.length - 2;
 
-    const visibleTagsAppoint = isExpandedBooked
-      ? item.tags
-      : item.tags.slice(0, 2);
-    const extraCountAppoint = item.tags.length - 2;
+    const isExpandedBooked = expandedBooked[item.id];
+    const visibleTagsBooked = isExpandedBooked ? tests : tests.slice(0, 2);
+    const extraCountBooked = tests.length - 2;
+
     return (
       <>
-        {item.status === 'waiting' && (
-          <TouchableOpacity activeOpacity={1} style={styles.btnwaitingview1}>
+        {(item.agenda_status === 'complete_visit' ||
+          item.agenda_status === 'start_delivery' ||
+          item.agenda_status === 'complete_delivery' ||
+          item.agenda_status === 'ReportPending') && (
+          <TouchableOpacity
+            activeOpacity={activityOpacity}
+            style={styles.btnwaitingview1}
+          >
             <View style={styles.btnwaitingview2}>
               <View style={styles.btnwaitingview3}>
                 <Image source={images.imgkit7} style={styles.imgkit} />
@@ -810,7 +970,7 @@ const YourProfileContainer = ({ navigation }: any) => {
                       <Text style={styles.lblOrderTitle}>
                         {' '}
                         {getTranslation('analsisOf')}{' '}
-                        {formatDateToSpanish(item.date)}
+                        {formatDateToSpanish(item.test_date)}
                       </Text>
                       <View
                         style={{
@@ -819,7 +979,7 @@ const YourProfileContainer = ({ navigation }: any) => {
                         }}
                       >
                         <Text style={styles.lblOrderID}>
-                          {getTranslation('orderidlabel')} {item.orderid}
+                          {getTranslation('orderidlabel')} #{item.booking_id}
                         </Text>
                         <Text style={styles.lblKitsandAnaliti}>
                           {formatKits(item.kits)}
@@ -832,13 +992,13 @@ const YourProfileContainer = ({ navigation }: any) => {
                   </View>
                   {/* tags */}
                   <View style={styles.vwTags}>
-                    {visibleTags.map((tag: any, index: any) => (
+                    {visibleTagsAppointment.map((tag: any, index: any) => (
                       <View key={index} style={styles.vwBackTagWaiting}>
                         <Text style={styles.lblTag}>{tag}</Text>
                       </View>
                     ))}
 
-                    {!isExpanded && extraCount > 0 && (
+                    {!isExpandedWaiting && hasExtra && (
                       <TouchableOpacity
                         style={styles.btnextracount}
                         onPress={() =>
@@ -848,31 +1008,41 @@ const YourProfileContainer = ({ navigation }: any) => {
                           }))
                         }
                       >
-                        <Text style={styles.lblTag}>+{extraCount}</Text>
+                        <Text style={styles.lblTag}>
+                          +{extraCountAppointment}
+                        </Text>
                       </TouchableOpacity>
                     )}
                   </View>
                   {/* nurseView */}
-                  <View style={styles.nurseview}>
-                    <Image source={images.imgInjection} />
-                    <Text>{item.nurse.name}</Text>
+                  {item.nurse !== null && (
+                    <View style={styles.nurseview}>
+                      <Image source={images.imgInjection} />
+                      <Text>{item.nurse.name}</Text>
 
-                    <View style={styles.starRow}>
-                      {[...Array(totalStars)].map((_, index) => {
-                        const isFilled = index < item.nurse.rating; // fill up to ratingStar
-                        const iconName = isFilled && images.imgStarFill;
+                      <View style={styles.starRow}>
+                        {[...Array(totalStars)].map((_, index) => {
+                          const isFilled = index < item.rating; // fill up to ratingStar
+                          const iconName = isFilled && images.imgStarFill;
 
-                        return <Image key={index} source={iconName} />;
-                      })}
+                          return <Image key={index} source={iconName} />;
+                        })}
+                      </View>
                     </View>
-                  </View>
+                  )}
                 </View>
               </View>
             </View>
           </TouchableOpacity>
         )}
-        {item.status === 'booked' && (
-          <TouchableOpacity activeOpacity={1} style={styles.btnBooked}>
+        {(item.agenda_status == 'Request' ||
+          item.agenda_status == 'Accept' ||
+          item.agenda_status == 'start_visit' ||
+          item.agenda_status == 'arrived') && (
+          <TouchableOpacity
+            activeOpacity={activityOpacity}
+            style={styles.btnBooked}
+          >
             <View
               style={{
                 flexDirection: 'row',
@@ -885,7 +1055,7 @@ const YourProfileContainer = ({ navigation }: any) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text style={styles.lblOrderTitleBooked}>
                     {getTranslation('analsisOf')}{' '}
-                    {formatDateToSpanish(item.date)}
+                    {formatDateToSpanish(item.test_date)}
                   </Text>
                   <TouchableOpacity>
                     <Image
@@ -895,10 +1065,18 @@ const YourProfileContainer = ({ navigation }: any) => {
                   </TouchableOpacity>
                 </View>
                 <Text style={styles.lblOrderDesBooked}>
-                  {item.appointmentMessage}
+                  {item.agenda_status == 'Request'
+                    ? getTranslation('ordersentsubtitle')
+                    : item.agenda_status == 'Accept'
+                    ? getTranslation('visitconfirmsubtitle')
+                    : item.agenda_status == 'start_visit'
+                    ? getTranslation('minitarrivesubtitle')
+                    : item.agenda_status == 'arrived'
+                    ? getTranslation('isheresubtitle')
+                    : ''}
                 </Text>
                 <View style={[styles.vwTags, { marginTop: getHeight(10) }]}>
-                  {visibleTagsAppoint.map((tag: any, index: any) => (
+                  {visibleTagsBooked.map((tag: any, index: any) => (
                     <View key={index} style={styles.vwTagBooked}>
                       <Text style={[styles.lblTag, { color: Colors.white }]}>
                         {tag}
@@ -906,7 +1084,7 @@ const YourProfileContainer = ({ navigation }: any) => {
                     </View>
                   ))}
 
-                  {!isExpandedBooked && extraCountAppoint > 0 && (
+                  {!isExpandedBooked && hasExtra && (
                     <TouchableOpacity
                       style={styles.btnBookedExtraCount}
                       onPress={() =>
@@ -917,7 +1095,7 @@ const YourProfileContainer = ({ navigation }: any) => {
                       }
                     >
                       <Text style={[styles.lblTag, { color: Colors.white }]}>
-                        +{extraCountAppoint}
+                        +{extraCountBooked}
                       </Text>
                     </TouchableOpacity>
                   )}
@@ -925,8 +1103,18 @@ const YourProfileContainer = ({ navigation }: any) => {
               </View>
             </View>
             <ProgressBar
-              current={50}
-              total={100}
+              current={
+                item.agenda_status == 'Request'
+                  ? 1
+                  : item.agenda_status == 'Accept'
+                  ? 2
+                  : item.agenda_status == 'start_visit'
+                  ? 3
+                  : item.agenda_status == 'arrived'
+                  ? 4
+                  : 0
+              }
+              total={4}
               height={6}
               backgroundColor={Colors.grey9224}
               gradientColors={[Colors.blue00250, Colors.blue3C78]}
@@ -1015,6 +1203,7 @@ const YourProfileContainer = ({ navigation }: any) => {
     if (selectedFamilyId !== undefined) {
       AnalitiList.reset();
       orders.reset();
+      pendingOrder.reset();
     }
   }, [selectedFamilyId]);
 
@@ -1054,6 +1243,44 @@ const YourProfileContainer = ({ navigation }: any) => {
     enabled: true,
     additionalParams: { family_id: selectedFamilyId }, // ✅ Pass it here
     fetcher: fetchOrderList,
+  });
+
+  const fetchPendingOrderList = useCallback(
+    async ({
+      page,
+      loadType,
+      additionalParams,
+    }: {
+      page: number;
+      loadType: any;
+      additionalParams?: any;
+    }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.ORDER.GETORDERHISTORY,
+        method: 'POST',
+        showLoader: loadType === LoadType.INITIAL,
+        params: {
+          page,
+          status: 'RUNNING',
+          ...additionalParams,
+        },
+      });
+
+      // 🔥 NORMALIZE RESPONSE
+      return {
+        ...res,
+        data: res?.data ?? [],
+      };
+    },
+    [navigation],
+  );
+
+  const pendingOrder: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: true,
+    additionalParams: { family_id: selectedFamilyId }, // ✅ Pass it here
+    fetcher: fetchPendingOrderList,
   });
 
   //================= API ==============================
@@ -1099,6 +1326,7 @@ const YourProfileContainer = ({ navigation }: any) => {
 
   return (
     <YourProfileComponent
+      pendingOrder={pendingOrder}
       insets={insets}
       latestanalysisData={latestanalysisData}
       renderItemLatestAnalysis={renderItemLatestAnalysis}
@@ -1110,7 +1338,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       setSearchVisible={setSearchVisible}
       searchVisible={searchVisible}
       renderItemAppointment={renderItemAppointment}
-      appointmentsData={appointmentsData}
+      appointmentsData={pendingOrder?.data}
       familyMembersData={familyMemberList?.data}
       selectedFamilyId={selectedFamilyId}
       setSelectedFamilyId={setSelectedFamilyId}
