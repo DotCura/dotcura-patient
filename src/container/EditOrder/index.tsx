@@ -1529,7 +1529,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
           setAppliedCoupon(false);
           setDiscountValue(0);
           setAppliedValue(null);
-          setDiscountCode("");
+          setDiscountCode('');
           flashMessageWarning(responseData.message);
         }
       };
@@ -1800,10 +1800,58 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   };
 
   useEffect(() => {
-    if (discountCode !== "" && subtotal) {
+    if (discountCode !== '' && subtotal) {
       _checkCouponApiverify(discountCode, subtotal);
     }
   }, [subtotal]);
+
+  const _cancleOrder = async () => {
+    try {
+      const params = {
+        booking_id: booking_order_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setCancleOrderVisible(false);
+          navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: ScreenNames.BOTTOMTABNAVIGATION,
+                state: {
+                  routes: [
+                    {
+                      name: ScreenNames.HOMECONTAINER,
+                    },
+                  ],
+                },
+              },
+            ],
+          });
+          SocketService.emit('booking_cancle', {
+            booking_id: booking_order_id,
+          });
+          console.log('before patient_join');
+
+          SocketService.emit('patient_join_booking');
+          console.log('after patient_join');
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.ORDER.CANCLEORDER,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('cancle Order error:', error);
+    }
+  };
 
   return (
     <EditOrderComponent
@@ -1919,6 +1967,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       funGetTestedContainer={funGetTestedContainer}
       appliedCoupon={appliedCoupon}
       _cancleOrderItem={_cancleOrderItem}
+      _cancleOrder={_cancleOrder}
     />
   );
 };

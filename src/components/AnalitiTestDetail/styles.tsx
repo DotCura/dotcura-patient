@@ -13,7 +13,14 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.2,
     marginBottom: getHeight(22),
   },
-  imgTest: { height: getHeight(64), width: getWidth(50),borderRadius:10 },
+  imgTest: {
+    height: getHeight(64),
+    width: getWidth(50),
+    aspectRatio:1,
+    borderRadius: 100,
+    resizeMode: 'center',
+    overflow: 'hidden',
+  },
   lblAnalyses: {
     fontSize: fontSize.size14,
     fontFamily: fontsfamily.gbold,

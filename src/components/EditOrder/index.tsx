@@ -1161,7 +1161,7 @@ const EditOrderComponent = (props: any) => {
               >
                 <CustomButton
                   btnTitle={getTranslation('cancletext')}
-                  // btnPress={props.handleNavigateHome}
+                  btnPress={props._cancleOrder}
                   style={{ backgroundColor: Colors.redFC }}
                   textStyle={{ color: Colors.red8C }}
                 />
@@ -1173,7 +1173,7 @@ const EditOrderComponent = (props: any) => {
                     marginTop: getHeight(8),
                   }}
                   textStyle={{ color: Colors.gray0F }}
-                  // btnPress={props.funCloseCancleOrder}
+                  btnPress={props.funCloseCancleOrder}
                 />
               </View>
             </View>
