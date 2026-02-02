@@ -1259,7 +1259,7 @@ const YourProfileContainer = ({ navigation }: any) => {
         navigation,
         apiEndPoint: ApiEndPoints.ORDER.GETORDERHISTORY,
         method: 'POST',
-        showLoader: loadType === LoadType.INITIAL,
+        showLoader: false,
         params: {
           page,
           status: 'RUNNING',
