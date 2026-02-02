@@ -1,6 +1,6 @@
 import { createNavigationContainerRef } from '@react-navigation/native';
 
-export const navigationRef = createNavigationContainerRef();
+export const navigationRef :any= createNavigationContainerRef();
 
 export function getCurrentRouteName() {
   if (navigationRef.isReady()) {

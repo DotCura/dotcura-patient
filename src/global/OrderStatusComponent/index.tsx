@@ -401,6 +401,8 @@ import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { activityOpacity } from '../../constants/GConstant';
 import { ZustandStores } from '../../store';
+import { ScreenNames } from '../../constants/AppConstants';
+import { navigationRef } from '../../constants/utils/navigationRef';
 
 interface OrderStatusComponentProps {
   orderStatus: string;
@@ -453,7 +455,7 @@ const OrderStatusComponent = memo(({ orderStatus }: OrderStatusComponentProps) =
       subtitle: getTranslation('visitmodifiedsubtitle'),
       image: images.imgeditorderstepper,
       currentStep: 1,
-      showEdit: false,
+      showEdit: true,
       showSmallProgressBar: false,
     },
     Rejected: {
@@ -563,6 +565,8 @@ const OrderStatusComponent = memo(({ orderStatus }: OrderStatusComponentProps) =
 
   ProgressBar.displayName = 'ProgressBar';
 
+  
+
   return (
     <Animated.View style={[styles.container, { paddingTop: insets.top }]}>
       <TouchableOpacity
@@ -658,7 +662,11 @@ const OrderStatusComponent = memo(({ orderStatus }: OrderStatusComponentProps) =
             <Image source={config.image} style={styles.progressImage} />
 
             {config.showEdit && (
-              <TouchableOpacity style={styles.editButton}>
+              <TouchableOpacity style={styles.editButton} onPress={()=>{
+                navigationRef.navigate(ScreenNames.EDITORDERCONTAINER,{
+                  booking_order_id:orderData?.booking_id
+                })
+              }}>
                 <Image source={images.pencilblue} tintColor={Colors.white} />
                 <Text style={styles.lblEditOrder}>
                   {getTranslation('editorder')}

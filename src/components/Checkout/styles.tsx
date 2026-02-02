@@ -241,14 +241,14 @@ export const styles = StyleSheet.create({
   },
   vwDateTimeMain: {
     backgroundColor: Colors.redFC,
-    padding: 4,
+    // padding: 4,
     borderRadius: 20,
-    marginTop: getHeight(4),
+    marginTop: getHeight(8),
   },
   vwDateTimeInner: {
     flexDirection: 'row',
-    borderWidth: 2,
-    borderColor: Colors.redCA,
+    // borderWidth: 2,
+    // borderColor: Colors.redCA,
     borderRadius: 20,
     paddingVertical: getHeight(12),
     paddingHorizontal: getWidth(16),

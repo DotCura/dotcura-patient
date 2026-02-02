@@ -1431,7 +1431,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         address_id: selectedAddress?.address_id,
         subtotal: subtotal,
         coupon_id: appliedCouponValue?.id,
-        discount: appliedCouponValue?.discount_value,
+        discount: appliedCouponValue?.discount_amount,
         total_amount: total,
         note: manageAddress,
         test_date:

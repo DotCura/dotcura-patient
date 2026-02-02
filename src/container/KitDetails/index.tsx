@@ -1,5 +1,5 @@
 import { Image, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import KitDetailsComponent from '../../components/KitDetails';
 import AppHeader from '../../global/Header';
 import { images } from '../../constants/Images';
@@ -18,10 +18,12 @@ import {
 } from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
 import { ZustandStores } from '../../store';
+import { useFocusEffect } from '@react-navigation/native';
 
 const KitDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { increment, addKit } = ZustandStores.CartStore();
+  console.log('route?.params?.is_order_edit', route?.params?.is_order_edit);
 
   const [kitsArrayData, setKitsArraysData] = useState<any>({});
   const [emptyLoading, setIsEmptyLoading] = useState(true);
@@ -110,12 +112,21 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
   };
 
   const handleNavigateCheckout = () => {
-    if (kitsArrayData?.is_in_cart) {
-      // ✅ Already in cart → go directly
-      navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
-      return;
+    if (route?.params?.is_order_edit === true) {
+      if (kitsArrayData?.is_in_cart) {
+        navigation.navigate(ScreenNames.EDITORDERCONTAINER, {
+          booking_order_id: route?.params?.booking_order_id,
+        });
+        return;
+      }
+      _addToCartKitDetailsEdit();
+    } else {
+      if (kitsArrayData?.is_in_cart) {
+        navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+        return;
+      }
+      _addToCartKitDetails();
     }
-    _addToCartKitDetails();
   };
 
   const header = () => {
@@ -171,9 +182,12 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
     }
   };
 
-  useEffect(() => {
-    _kitDetailsApi();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      _kitDetailsApi();
+      return () => {};
+    }, []),
+  );
 
   //================API=========================
   const _addToCartKitDetails = async () => {
@@ -182,16 +196,54 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
 
       const params = {
         kit_id: kitsArrayData.id,
-        test_ids: allTestIds, 
-        all_test: 1, 
-        price:  kitsArrayData?.price,
+        test_ids: allTestIds,
+        all_test: 1,
+        price: kitsArrayData?.price,
       };
-      
 
       const callback = (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           addKit(kitsArrayData.id);
           navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+          // ✅ IMPORTANT: update local state
+          setKitsArraysData((prev: any) => ({
+            ...prev,
+            is_in_cart: true,
+          }));
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('Kit details add to cart error:', error);
+    }
+  };
+
+  const _addToCartKitDetailsEdit = async () => {
+    try {
+      const allTestIds = kitsArrayData?.tests?.map((t: any) => t.test_id) || [];
+
+      const params = {
+        kit_id: kitsArrayData.id,
+        test_ids: allTestIds,
+        all_test: 1,
+        price: kitsArrayData?.price,
+        is_edit: 1,
+      };
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          navigation.navigate(ScreenNames.EDITORDERCONTAINER, {
+            booking_order_id: route?.params?.booking_order_id,
+          });
           // ✅ IMPORTANT: update local state
           setKitsArraysData((prev: any) => ({
             ...prev,

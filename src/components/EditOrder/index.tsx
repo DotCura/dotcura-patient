@@ -85,9 +85,7 @@ const EditOrderComponent = (props: any) => {
           <TouchableOpacity
             activeOpacity={activityOpacity}
             style={styles.btnBack}
-            onPress={() => {
-              props.navigation.goBack();
-            }}
+            onPress={props._cancleOrderItem}
           >
             <Image source={images.imgLeftArrow} />
           </TouchableOpacity>
@@ -392,14 +390,14 @@ const EditOrderComponent = (props: any) => {
               btnTitle={getTranslation('savechnages')}
               btnPress={props.handleOnPressSaveChanges}
             />
-            {/* <CustomButton
+            <CustomButton
               btnTitle={getTranslation('canclereservation')}
               style={{ backgroundColor: Colors.redFD }}
               btnicon={true}
               btnImage={images.imgDelete}
               textStyle={{ color: Colors.red8C }}
               btnPress={props.funOpenCancleOrder}
-            /> */}
+            />
           </View>
         </KeyboardAwareScrollView>
       )}
@@ -1163,7 +1161,7 @@ const EditOrderComponent = (props: any) => {
               >
                 <CustomButton
                   btnTitle={getTranslation('cancletext')}
-                  btnPress={props.handleNavigateHome}
+                  // btnPress={props.handleNavigateHome}
                   style={{ backgroundColor: Colors.redFC }}
                   textStyle={{ color: Colors.red8C }}
                 />
@@ -1175,7 +1173,7 @@ const EditOrderComponent = (props: any) => {
                     marginTop: getHeight(8),
                   }}
                   textStyle={{ color: Colors.gray0F }}
-                  btnPress={props.funCloseCancleOrder}
+                  // btnPress={props.funCloseCancleOrder}
                 />
               </View>
             </View>

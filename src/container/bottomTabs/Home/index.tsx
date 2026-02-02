@@ -877,6 +877,7 @@ const HomeContainer = ({ navigation }: any) => {
   useEffect(() => {
     _totalCount();
     _familyMemberReportList();
+    _cancleOrderItem();
   }, []);
 
   const fetchOrderList = useCallback(
@@ -907,6 +908,29 @@ const HomeContainer = ({ navigation }: any) => {
     fetcher: fetchOrderList,
   });
 
+  const _cancleOrderItem = async () => {
+    try {
+      const params = {};
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.ORDER.CANCLEEDITORDER,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('cancle Edit Order details error:', error);
+    }
+  };
+
   return (
     <HomeComponent
       pendingOrder={pendingOrder}
@@ -932,6 +956,7 @@ const HomeContainer = ({ navigation }: any) => {
       onRefresh={onRefresh}
       refreshing={refreshing}
       cartCount={cartCount}
+      AnalitiList={AnalitiList}
     />
   );
 };

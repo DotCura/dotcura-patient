@@ -54,37 +54,18 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { GlobalVar } from '../../constants/GlobalVar';
 import { DateFormatsManager } from '../../constants/utils/DateFormats';
 import SocketService from '../../socket/SocketService';
+import EditOrderComponent from '../../components/EditOrder';
 
 const EditOrderContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
+  const booking_order_id = route?.params?.booking_order_id;
+
+  console.log("'booking_order_id'", booking_order_id);
 
   //ZUSTANDVARIABLES
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
   const { cartKitIds, addKit, removeKit, increment, resetCart } =
     ZustandStores.CartStore();
-
-  //LocallyMangeIsTick
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     if (!checkup?.data?.length) return;
-
-  //     checkup.updateData((prev: any[]) =>
-  //       prev.map(item => {
-  //         const shouldBeInCart = cartKitIds.includes(item.id);
-
-  //         // ⛔ prevent unnecessary re-render
-  //         if (item.is_in_cart === shouldBeInCart) {
-  //           return item;
-  //         }
-
-  //         return {
-  //           ...item,
-  //           is_in_cart: shouldBeInCart,
-  //         };
-  //       }),
-  //     );
-  //   }, [cartKitIds]),
-  // );
 
   //CHECKOUT VARIABLES
   const [testkitsData, setTestsKitData] = useState<any>([]);
@@ -122,15 +103,8 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const [selectedTab, setSelectedTab] = useState('checkup'); // 'checkup' or 'analiti'
   const apiDate = formatTestDateForAPI(selectedDate);
   const startTime = selectedTime.split(' - ')[0];
-  console.log(startTime);
-
-  // const sendapistarttimeutc = DateFormatsManager.convertLocalToUTC(
-  //   selectedDate === 'Oggi'
-  //     ? new Date().toISOString().split('T')[0]
-  //     : apiDate + startTime,
-  //   DateFormatsManager.DateTimeFormatsWithTimezone.YYYYMMDDTHHmmssZ,
-  // );
-  // console.log('sendapistarttimeutc', sendapistarttimeutc);
+  const isBackendDate = (date: string) => /^\d{4}-\d{2}-\d{2}$/.test(date);
+  // console.log(startTime);
 
   //MODELADDTIONSVARIABLES
   const [checkupcount, setCheckupCount] = useState(31);
@@ -148,8 +122,20 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     return subtotal + homeServiceCharge - discountValue;
   }, [subtotal, discountValue]);
 
+  //SCHEDULE
+  const originalScheduleRef = useRef<{
+    address_id: number | null;
+    test_date: string | null;
+    test_time: string | null;
+  }>({
+    address_id: null,
+    test_date: null,
+    test_time: null,
+  });
+
   //CHECKOUTFUNCTIONS
   const renderItemTestKits = ({ item }: any) => {
+    const isLastItem = testkitsData.length === 1;
     return (
       <View style={styles.card}>
         <View
@@ -207,12 +193,14 @@ const EditOrderContainer = ({ navigation, route }: any) => {
                   </Text> */}
             </TouchableOpacity>
           )}
-          <TouchableOpacity
-            activeOpacity={activityOpacity}
-            onPress={() => handleDeleteTestKit(item)}
-          >
-            <Image source={images.imgDelete} tintColor={Colors.gray0F} />
-          </TouchableOpacity>
+          {isLastItem === false && (
+            <TouchableOpacity
+              activeOpacity={activityOpacity}
+              onPress={() => handleDeleteTestKit(item)}
+            >
+              <Image source={images.imgDelete} tintColor={Colors.gray0F} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );
@@ -314,48 +302,12 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     setTestsKitData((prev: any[]) =>
       prev.filter(i => i.cart_kit_id !== item.cart_kit_id),
     );
-
-    // 2️⃣ Update Zustand cart (PASS kit_id)
-    removeKit(item.kit_id);
-
     // 🔥 API call
     await _removeCartItem(item.cart_kit_id);
+    checkup?.reset();
+    analiti?.reset();
   };
 
-  // const handleBookSlot = () => {
-  //   const givenUTC = new Date(
-  //     DateFormatsManager.convertLocalToUTC(
-  //       selectedDate === 'Oggi'
-  //         ? new Date().toISOString().split('T')[0]
-  //         : apiDate + startTime,
-  //       DateFormatsManager.DateTimeFormatsWithTimezone.YYYYMMDDTHHmmssZ,
-  //     ),
-  //   ); // given UTC time
-  //   const givenUTCPlus1Hr = new Date(givenUTC.getTime() + 60 * 60 * 1000);
-  //   const currentUTC = new Date();
-  //   const currentUTCPlus1Hr = new Date(currentUTC.getTime() + 60 * 60 * 1000);
-
-  //   console.log('givenutc', givenUTC);
-  //   console.log('givenutc+1hr', givenUTCPlus1Hr);
-  //   console.log('currentutc', currentUTC);
-  //   console.log('currentutc+1hr', currentUTCPlus1Hr);
-  //   console.log("givenUTCPlus1Hr < currentUTC",givenUTCPlus1Hr < currentUTCPlus1Hr);
-
-  //   if (selectedDate && selectedTime) {
-  //     if (givenUTCPlus1Hr < currentUTCPlus1Hr) {
-  //       Alert.alert(getTranslation('timetosoon') || '');
-  //     } else {
-  //       console.log(
-  //         'sekectredDate',
-  //         selectedDate,
-  //         'selectedTime',
-  //         selectedTime,
-  //       );
-  //       setSelectedSlot({ day: selectedDate, time: selectedTime });
-  //       setShowPicker(false);
-  //     }
-  //   }
-  // };
   const handleBookSlot = () => {
     const localDate =
       selectedDate === 'Oggi'
@@ -407,6 +359,8 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   };
 
   const funOpenIsModifyOrder = () => {
+    analiti.reset();
+    checkup.reset();
     setShowIsModifyOrder(true);
   };
 
@@ -459,7 +413,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
     if (!isValid) return;
 
-    _bookOrder();
+    _editOrder();
   };
 
   const handleNavigateHome = () => {
@@ -507,6 +461,8 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       screen: ScreenNames.KITDETAILSCONTAINER,
       params: {
         kitId: kitId,
+        is_order_edit: true,
+        booking_order_id: booking_order_id,
       },
     });
   };
@@ -517,26 +473,19 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       screen: ScreenNames.ANALITIDETAILSCONTAINER,
       params: {
         analitiId: analitiId,
+        is_order_edit: true,
+        booking_order_id: booking_order_id,
       },
     });
   };
 
   const toggleAddKit = (item: any) => {
-    const isRemoving = item.is_in_cart;
-
     // 🔁 Optimistic UI toggle
     checkup.updateData((prev: any[]) =>
       prev.map(k =>
         k.id === item.id ? { ...k, is_in_cart: !k.is_in_cart } : k,
       ),
     );
-
-    // 🔢 Update cart count
-    if (isRemoving) {
-      removeKit(item.id);
-    } else {
-      addKit(item.id);
-    }
 
     // ✅ SAME API CALL (backend decides ADD / REMOVE)
     addToCart({
@@ -1177,6 +1126,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
         params: {
           page,
           kit_type: 'CHECKUP',
+          is_edit: 1,
         },
       });
 
@@ -1205,6 +1155,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
         params: {
           page,
           kit_type: 'ANALYSIS',
+          is_edit: 1,
         },
       });
 
@@ -1251,11 +1202,12 @@ const EditOrderContainer = ({ navigation, route }: any) => {
         navigation,
         method: MethodType.POST,
         apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
-        params: { kit_id, test_ids, all_test, price },
+        params: { kit_id, test_ids, all_test, price, is_edit: 1 },
         showLoader: false,
         callback: (responseData: any) => {
           if (responseData.code === StatusCode.SUCCESS) {
-            _getCartDetails();
+            // _getCartDetails();
+            _getEditOrderItemOnly();
           } else {
             flashMessageWarning(responseData.message);
           }
@@ -1322,7 +1274,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   };
 
   useEffect(() => {
-    _getCartDetails();
+    // _getCartDetails();
     _getEditOrderItem();
   }, []);
 
@@ -1347,6 +1299,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     try {
       const params = {
         kit_id: analitiId,
+        is_edit: 1,
       };
 
       const callback = async (responseData: any) => {
@@ -1398,13 +1351,12 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
       const callback = (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
-          increment();
           // ✅ IMPORTANT: update local state
           setAnalitiArraysData((prev: any) => ({
             ...prev,
             is_in_cart: true,
           }));
-          navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+          navigation.navigate(ScreenNames.EDITORDERCONTAINER);
         } else {
           flashMessageWarning(responseData.message);
         }
@@ -1436,7 +1388,8 @@ const EditOrderContainer = ({ navigation, route }: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           // ✅ Update local state
           setEditAnalitiPopupVisible(false);
-          _getCartDetails();
+          // _getCartDetails();
+          _getEditOrderItemOnly();
           setAnalitiArraysData((prev: any) => ({
             ...prev,
             cart_kit: {
@@ -1448,7 +1401,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
           setOriginalCartTestIds(selectedTests); // reset baseline
 
-          navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+          // navigation.navigate(ScreenNames.EDITORDERCONTAINER);
         } else {
           flashMessageWarning(responseData.message);
         }
@@ -1492,65 +1445,9 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   };
 
   //BOOKORDERAPI
-  const _bookOrder = async () => {
-    try {
-      const params = {
-        address_id: selectedAddress?.address_id,
-        subtotal: subtotal,
-        coupon_id: appliedCouponValue?.id,
-        discount: appliedCouponValue?.discount_value,
-        total_amount: total,
-        note: manageAddress,
-        test_date:
-          selectedDate === 'Oggi'
-            ? new Date().toISOString().split('T')[0]
-            : apiDate,
-        test_time: selectedTime,
-        family_member_id: familymemberValue,
-      };
-
-      // console.log('params', params);
-
-      const callback = (responseData: any) => {
-        if (responseData.code === StatusCode.SUCCESS) {
-          resetCart();
-          // setOrderStatus('Request');
-          navigation.reset({
-            index: 0,
-            routes: [
-              {
-                name: ScreenNames.BOTTOMTABNAVIGATION,
-                state: {
-                  routes: [
-                    {
-                      name: ScreenNames.HOMECONTAINER,
-                    },
-                  ],
-                },
-              },
-            ],
-          });
-          SocketService.emit('patient_join_booking');
-          // setOrderStatus('order_sent');
-        } else {
-          flashMessageWarning(responseData.message);
-        }
-      };
-
-      await APIManager.makeRequest({
-        navigation,
-        method: MethodType.POST,
-        apiEndPoint: ApiEndPoints.CHECKOUT.BOOKORDER,
-        params,
-        callback,
-      });
-    } catch (error) {
-      console.log('BOOKORDER error:', error);
-    }
-  };
 
   const _checkCouponApi = async () => {
-    if (!discountCode.trim()) {
+    if (!discountCode?.trim()) {
       flashMessageWarning(getTranslation('errorcoupanscode'));
       return;
     }
@@ -1598,16 +1495,157 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       setAppliedValue(null);
     }
   };
+  const _checkCouponApiverify = async (
+    discountCode: any,
+    subtotlavalue: any,
+  ) => {
+    // if (!discountCode?.trim()) {
+    //   flashMessageWarning(getTranslation('errorcoupanscode'));
+    //   return;
+    // }
+
+    try {
+      const params = {
+        coupon_code: discountCode,
+        subtotal: subtotlavalue,
+      };
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          console.log('insucess');
+
+          const coupon = responseData.data;
+
+          // ✅ Save coupon
+          setAppliedCoupon(true);
+          setAppliedValue(coupon);
+
+          // ✅ Use backend-calculated discount
+          setDiscountValue(Number(coupon.discount_amount));
+
+          // flashMessageSucess(responseData.message);
+        } else {
+          // ❌ Invalid coupon
+          setAppliedCoupon(false);
+          setDiscountValue(0);
+          setAppliedValue(null);
+          setDiscountCode("");
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.CHECKCOUPON,
+        params,
+        callback,
+        showLoader: false,
+      });
+    } catch (error) {
+      console.log('Check coupon error:', error);
+      setDiscountValue(0);
+      setAppliedCoupon(false);
+      setAppliedValue(null);
+    }
+  };
+
+  const mapEditOrderResponse = (data: any) => {
+    const booking = data.booking;
+    const address = booking.address;
+    const kits = booking.kits;
+
+    // 🔒 Save ORIGINAL values ONCE
+    originalScheduleRef.current = {
+      address_id: address.id,
+      test_date: booking.test_date,
+      test_time: booking.test_time,
+    };
+
+    // 1️⃣ Address
+    setSelectedAddress({
+      address_id: address.id,
+      title: address.title,
+      address: address.address,
+      floor: address.floor,
+      stairs: address.stairs,
+      instructions: address.instructions,
+      latitude: address.latitude,
+      longitude: address.longitude,
+    });
+
+    // 2️⃣ Family Member
+    setFamilyMemberValue(String(booking.family_id ?? '0'));
+
+    // 3️⃣ Date & Time
+    setSelectedDate(booking.test_date);
+    setSelectedTime(booking.test_time);
+    setSelectedSlot({
+      day: booking.test_date,
+      time: booking.test_time,
+    });
+
+    // 4️⃣ Notes
+    setManageAddress(booking.notes || '');
+
+    // 5️⃣ Coupon
+    if (booking.coupon_id) {
+      setAppliedCoupon(true);
+      setAppliedValue({
+        id: booking.coupon_id,
+        discount_amount: booking.discount_amount,
+      });
+      setDiscountValue(Number(booking.discount_amount));
+      setDiscountCode(booking?.Coupon?.coupon_code);
+
+      _checkCouponApiverify(booking?.Coupon?.coupon_code, booking?.sub_total);
+    }
+
+    // 6️⃣ Kits (MOST IMPORTANT)
+    const formattedKits = kits.map((k: any) => ({
+      cart_kit_id: k.id,
+      kit_id: k.kit_id,
+      name: k.kit?.name,
+      price: k.price,
+      test_ids: k.test_ids,
+      kit_type: k.kit?.kit_type, // or CHECKUP based on backend
+      kit_image: k.kit?.kit_image_url,
+    }));
+
+    setTestsKitData(formattedKits);
+
+    // 7️⃣ Cart is already loaded
+    setCartLoaded(true);
+  };
+
+  const mapEditOrderResponseOnly = (data: any) => {
+    const booking = data.booking;
+    const kits = booking.kits;
+
+    // 6️⃣ Kits (MOST IMPORTANT)
+    const formattedKits = kits.map((k: any) => ({
+      cart_kit_id: k.id,
+      kit_id: k.kit_id,
+      name: k.kit?.name,
+      price: k.price,
+      test_ids: k.test_ids,
+      kit_type: k.kit?.kit_type, // or CHECKUP based on backend
+      kit_image: k.kit?.kit_image_url,
+    }));
+
+    setTestsKitData(formattedKits);
+  };
 
   //EDITORDERAPI
   const _getEditOrderItem = async () => {
     try {
       const params = {
-        booking_id: 103,
+        booking_id: booking_order_id,
       };
 
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
+          mapEditOrderResponse(responseData.data);
         } else {
           flashMessageWarning(responseData.message);
         }
@@ -1625,10 +1663,150 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     }
   };
 
-  const _editOrder = async () => {};
+  const _getEditOrderItemOnly = async () => {
+    try {
+      const params = {
+        booking_id: booking_order_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          mapEditOrderResponseOnly(responseData.data);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.ORDER.GETORDERDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('getOrderDetails details error:', error);
+    }
+  };
+
+  const _cancleOrderItem = async () => {
+    try {
+      const params = {};
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          navigation.popTo(ScreenNames.BOTTOMTABNAVIGATION);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.ORDER.CANCLEEDITORDER,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('cancle Edit Order details error:', error);
+    }
+  };
+
+  const isScheduleChanged = () => {
+    const original = originalScheduleRef.current;
+
+    const currentDate =
+      selectedDate === 'Oggi'
+        ? new Date().toISOString().split('T')[0]
+        : isBackendDate(selectedDate)
+        ? selectedDate
+        : formatTestDateForAPI(selectedDate);
+
+    return (
+      original.address_id !== selectedAddress?.address_id ||
+      original.test_date !== currentDate ||
+      original.test_time !== selectedTime
+    );
+  };
+
+  const _editOrder = async () => {
+    const resolvedTestDate =
+      selectedDate === 'Oggi'
+        ? new Date().toISOString().split('T')[0]
+        : isBackendDate(selectedDate)
+        ? selectedDate
+        : formatTestDateForAPI(selectedDate);
+    const scheduleChanged = isScheduleChanged();
+
+    try {
+      const params = {
+        address_id: selectedAddress?.address_id,
+        subtotal: subtotal,
+        coupon_id: appliedCouponValue?.id,
+        discount: appliedCouponValue?.discount_amount,
+        total_amount: total,
+        note: manageAddress,
+        test_date: resolvedTestDate,
+        test_time: selectedTime,
+        family_member_id: familymemberValue,
+        booking_ids: booking_order_id,
+        is_schedule_changed: scheduleChanged === true ? 1 : 0,
+      };
+
+      console.log('params', params);
+
+      const callback = (responseData: any) => {
+        console.log('in edit order callback');
+
+        if (responseData.code === StatusCode.SUCCESS) {
+          navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: ScreenNames.BOTTOMTABNAVIGATION,
+                state: {
+                  routes: [
+                    {
+                      name: ScreenNames.HOMECONTAINER,
+                    },
+                  ],
+                },
+              },
+            ],
+          });
+          SocketService.emit('booking_update', {
+            booking_id: booking_order_id,
+          });
+          console.log('before patient_join');
+
+          SocketService.emit('patient_join_booking');
+          console.log('after patient_join');
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.BOOKORDER,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('BOOKORDER error:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (discountCode !== "" && subtotal) {
+      _checkCouponApiverify(discountCode, subtotal);
+    }
+  }, [subtotal]);
 
   return (
-    <CheckoutComponent
+    <EditOrderComponent
       cartLoaded={cartLoaded}
       navigation={navigation}
       handleDeleteTestKit={handleDeleteTestKit}
@@ -1740,6 +1918,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       analiticount={analiticount}
       funGetTestedContainer={funGetTestedContainer}
       appliedCoupon={appliedCoupon}
+      _cancleOrderItem={_cancleOrderItem}
     />
   );
 };

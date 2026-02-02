@@ -27,6 +27,7 @@ import { useFocusEffect } from '@react-navigation/native';
 const AnalitiDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { increment, decrement } = ZustandStores.CartStore();
+  console.log('route?.params?.is_order_edit', route?.params?.is_order_edit);
 
   const [analitiArrayData, setAnalitiArraysData] = useState<any>({});
   const [selectedTests, setSelectedTests] = useState<number[]>([]);
@@ -160,6 +161,29 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
       flashMessageWarning(getTranslation('atleastoneselected'));
       return;
     }
+    const isOrderEdit = route?.params?.is_order_edit === true;
+    const hasChanged = !isSameSelection(originalCartTestIds, selectedTests);
+
+    // 🟣 EDIT ORDER FLOW
+    if (isOrderEdit) {
+      // Not in cart → ADD (EDIT)
+      if (!analitiArrayData?.is_in_cart) {
+        _addToCartAnalitiEdit();
+        return;
+      }
+
+      // In cart + NO CHANGE → just navigate
+      if (!hasChanged) {
+        navigation.navigate(ScreenNames.EDITORDERCONTAINER, {
+          booking_order_id: route?.params?.booking_order_id,
+        });
+        return;
+      }
+
+      // In cart + CHANGED → UPDATE (EDIT)
+      _updateCartAnalitiEdit();
+      return;
+    }
 
     // 🟢 Not in cart → ADD
     if (!analitiArrayData?.is_in_cart || !analitiArrayData?.cart_kit) {
@@ -168,7 +192,6 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
     }
 
     // 🟡 In cart → check changes
-    const hasChanged = !isSameSelection(originalCartTestIds, selectedTests);
 
     if (!hasChanged) {
       // ✅ No change → just navigate
@@ -209,6 +232,7 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
     try {
       const params = {
         kit_id: route?.params?.analitiId,
+        is_edit: route?.params?.is_order_edit === true ? 1 : 0,
       };
 
       const callback = async (responseData: any) => {
@@ -301,6 +325,42 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
     }
   };
 
+  const _addToCartAnalitiEdit = async () => {
+    try {
+      const params = {
+        kit_id: analitiArrayData.id,
+        test_ids: isAllSelected ? allTestIds : selectedTests,
+        all_test: isAllSelected ? 1 : 0,
+        price: isAllSelected ? analitiArrayData.price : totalPriceanaliti,
+        is_edit: 1,
+      };
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setAnalitiArraysData((prev: any) => ({
+            ...prev,
+            is_in_cart: true,
+          }));
+          navigation.navigate(ScreenNames.EDITORDERCONTAINER, {
+            booking_order_id: route?.params?.booking_order_id,
+          });
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('Analiti add to cart error:', error);
+    }
+  };
+
   const _updateCartAnaliti = async () => {
     try {
       const params = {
@@ -326,6 +386,50 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
           setOriginalCartTestIds(selectedTests); // reset baseline
 
           navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.UPDATETOCART,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('Update cart error:', error);
+    }
+  };
+
+  const _updateCartAnalitiEdit = async () => {
+    try {
+      const params = {
+        cart_kit_id: analitiArrayData.cart_kit.cart_kit_id, // 🔑 IMPORTANT
+        cart_item_id: analitiArrayData.cart_kit.cart_id,
+        test_ids: isAllSelected ? allTestIds : selectedTests,
+        all_test: isAllSelected ? 1 : 0,
+        price: isAllSelected ? analitiArrayData.price : totalPriceanaliti,
+      };
+
+      const callback = (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          // ✅ Update local state
+          setAnalitiArraysData((prev: any) => ({
+            ...prev,
+            cart_kit: {
+              ...prev.cart_kit,
+              test_ids: selectedTests,
+              all_test: isAllSelected ? 1 : 0,
+            },
+          }));
+
+          setOriginalCartTestIds(selectedTests); // reset baseline
+
+          navigation.navigate(ScreenNames.EDITORDERCONTAINER, {
+            booking_order_id: route?.params?.booking_order_id,
+          });
         } else {
           flashMessageWarning(responseData.message);
         }
