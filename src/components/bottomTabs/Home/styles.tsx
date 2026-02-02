@@ -25,8 +25,8 @@ export const styles = StyleSheet.create({
     borderRadius: 321,
   },
   btnfamilymembername: {
-    maxWidth: '70%',        // 🔥 CRITICAL
-  flexShrink: 1,          // 🔥 CRITICAL
+    maxWidth: '70%', // 🔥 CRITICAL
+    flexShrink: 1, // 🔥 CRITICAL
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.grayD8,
@@ -100,7 +100,7 @@ export const styles = StyleSheet.create({
     paddingVertical: getHeight(19),
     paddingHorizontal: getWidth(16),
     borderRadius: 20,
-    marginTop:getHeight(11)
+    marginTop: getHeight(11),
   },
   vwTextCount: {
     justifyContent: 'center',
@@ -127,7 +127,7 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.size7,
   },
   lblFamilyMember: {
-    flexShrink: 1,        // 🔥 REQUIRED
+    flexShrink: 1, // 🔥 REQUIRED
     color: Colors.gray2A,
     fontFamily: fontsfamily.gsemiBold,
     fontSize: fontSize.size20,
@@ -229,7 +229,8 @@ export const styles = StyleSheet.create({
   vwEmpty: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
+    marginTop: '30%',
     gap: getHeight(24),
   },
   vwMain: {

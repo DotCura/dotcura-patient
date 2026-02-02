@@ -469,20 +469,44 @@ const HomeComponent = (props: any) => {
           <>
             {/* vwTestReports */}
             <View style={styles.vwTestReports}>
-              <Text style={styles.lblMyHealth}>
-                {getTranslation('myhealtthtext')}
-              </Text>
-              <FlatList
-                data={props.testReportData}
-                renderItem={props.renderTestReportData}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={item => item.id.toString()}
-                contentContainerStyle={{
-                  gap: getHeight(12),
-                  marginTop: getHeight(12),
-                }}
-                ListFooterComponent={renderListFooter}
-              />
+              {props.testReportData.length === 0 ? (
+                <View style={styles.vwEmpty}>
+                  <View
+                    style={{ marginHorizontal: getWidth(7), gap: getHeight(2) }}
+                  >
+                    <Text style={styles.emptyTitle} numberOfLines={1}>
+                      {getTranslation('emptytitle')}
+                    </Text>
+                    <Text style={styles.emptySubtitle} numberOfLines={5}>
+                      {getTranslation('emptysubtitle')}
+                    </Text>
+                  </View>
+                  <CustomButton
+                    btnTitle={getTranslation('booktext')}
+                    style={{ backgroundColor: Colors.blueD1 }}
+                    btnPress={props.handleNavigateGetTested}
+                    textStyle={{ color: Colors.blue002 }}
+                  />
+                </View>
+              ) : (
+                <>
+                  <Text style={styles.lblMyHealth}>
+                    {getTranslation('myhealtthtext')}
+                  </Text>
+
+                  <FlatList
+                    data={props.testReportData}
+                    renderItem={props.renderTestReportData}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={item => item.id.toString()}
+                    contentContainerStyle={{
+                      gap: getHeight(12),
+                      marginTop: getHeight(12),
+                    }}
+                    ListFooterComponent={renderListFooter}
+                  />
+                </>
+              )}
             </View>
 
             {/* vwLatestValue */}
@@ -539,10 +563,10 @@ const HomeComponent = (props: any) => {
             >
               {props.appointmentsData.some(
                 (a: any) =>
-                  (a.agenda_status === 'complete_visit' ||
+                  a.agenda_status === 'complete_visit' ||
                   a.agenda_status === 'start_delivery' ||
                   a.agenda_status === 'complete_delivery' ||
-                  a.agenda_status === 'ReportPending')
+                  a.agenda_status === 'ReportPending',
               ) && (
                 <Text style={styles.lblWaitingForResult}>
                   {getTranslation('waitingforresultof')}
@@ -552,10 +576,10 @@ const HomeComponent = (props: any) => {
               {props.appointmentsData
                 .filter(
                   (a: any) =>
-                    (a.agenda_status === 'complete_visit' ||
-                      a.agenda_status === 'start_delivery' ||
-                      a.agenda_status === 'complete_delivery' ||
-                      a.agenda_status === 'ReportPending')
+                    a.agenda_status === 'complete_visit' ||
+                    a.agenda_status === 'start_delivery' ||
+                    a.agenda_status === 'complete_delivery' ||
+                    a.agenda_status === 'ReportPending',
                 )
                 .map((item: any, index: any) => (
                   <React.Fragment key={`waiting-${index}`}>
