@@ -223,7 +223,7 @@ const App = ({ navigation }: any) => {
     };
 
     initializeApp();
-  }, []); // Empty dependency array - run only once
+  }, []); 
 
   return (
     <SafeAreaProvider>

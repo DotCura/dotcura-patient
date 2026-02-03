@@ -380,7 +380,7 @@ const HomeContainer = ({ navigation }: any) => {
           item.agenda_status === 'complete_delivery' ||
           item.agenda_status === 'ReportPending') && (
           <TouchableOpacity
-            activeOpacity={activityOpacity}
+            activeOpacity={1}
             style={styles.btnwaitingview1}
           >
             <View style={styles.btnwaitingview2}>
@@ -463,7 +463,7 @@ const HomeContainer = ({ navigation }: any) => {
           item.agenda_status == 'start_visit' ||
           item.agenda_status == 'arrived') && (
           <TouchableOpacity
-            activeOpacity={activityOpacity}
+            activeOpacity={1}
             style={styles.btnBooked}
           >
             <View

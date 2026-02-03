@@ -636,15 +636,15 @@ const YourProfileContainer = ({ navigation }: any) => {
   };
 
   const formatKits = (kits: any[]) => {
+    if (!kits?.length) return '';
+
     return kits
-      .map(item => {
-        const kitName = item?.kitname || '';
-        const count = item?.kittest?.length || 0;
-        const label =
-          item.kitype === 'kit' ? getTranslation('kitlabeltextcheckout') : '';
-        return `${label}${kitName} (${count})`;
+      .map(kit => {
+        const kitName = kit?.kit?.name ?? '';
+        const count = kit?.test_count ?? 0;
+        return `${kitName} (${count})`;
       })
-      .join(' , ');
+      .join(' + ');
   };
 
   const renderItemLatestAnalysis = ({ item, index }: any) => {
@@ -957,7 +957,7 @@ const YourProfileContainer = ({ navigation }: any) => {
           item.agenda_status === 'complete_delivery' ||
           item.agenda_status === 'ReportPending') && (
           <TouchableOpacity
-            activeOpacity={activityOpacity}
+            activeOpacity={1}
             style={styles.btnwaitingview1}
           >
             <View style={styles.btnwaitingview2}>
@@ -1040,7 +1040,7 @@ const YourProfileContainer = ({ navigation }: any) => {
           item.agenda_status == 'start_visit' ||
           item.agenda_status == 'arrived') && (
           <TouchableOpacity
-            activeOpacity={activityOpacity}
+            activeOpacity={1}
             style={styles.btnBooked}
           >
             <View
