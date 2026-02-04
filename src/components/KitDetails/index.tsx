@@ -4,7 +4,6 @@ import {
   ImageBackground,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
@@ -14,13 +13,11 @@ import { styles } from './styles';
 import { images } from '../../constants/Images';
 import { Colors } from '../../constants/Colors';
 import { getHeight } from '../../constants/utils/Dimensions';
-import { activityOpacity, currency } from '../../constants/GConstant';
+import { currency } from '../../constants/GConstant';
 import AppHeader from '../../global/Header';
 import PressScale from '../../global/PressScale';
 
 const KitDetailsComponent = (props: any) => {
-  
-  
   return (
     <>
       <AppHeader
@@ -170,22 +167,24 @@ const KitDetailsComponent = (props: any) => {
                 </Text>
               </View>
               <View style={styles.vwPrice}>
-              {props?.kitsArrayData?.discount_value !== null && (
-                <Text
-                  style={[
-                    styles.totalprice,
-                    { textDecorationLine: 'line-through',color:Colors.white40 },
-                  ]}
-                  numberOfLines={1}
-                >
-                  {currency}
-                  {props?.kitsArrayData?.original_price}
-                </Text>
-              )}
+                {props?.kitsArrayData?.discount_value !== null && (
+                  <Text
+                    style={[
+                      styles.totalprice,
+                      {
+                        textDecorationLine: 'line-through',
+                        color: Colors.white40,
+                      },
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {currency}
+                    {props?.kitsArrayData?.original_price}
+                  </Text>
+                )}
                 <Text style={styles.totalprice}>
                   {currency} {Number(props?.kitsArrayData?.price).toFixed(2)}
                 </Text>
-                
               </View>
             </View>
           </PressScale>

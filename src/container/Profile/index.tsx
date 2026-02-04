@@ -15,7 +15,6 @@ import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
 import { GlobalVar } from '../../constants/GlobalVar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import SocketService from '../../socket/SocketService';
 
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -82,6 +81,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       iscurv: true,
     },
   ];
+
   const dataTwo = [
     {
       id: '2',
@@ -106,6 +106,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       iscurv: false,
     },
   ];
+  
   const dataThree = [
     {
       id: '1',

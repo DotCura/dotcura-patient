@@ -9,11 +9,7 @@ import React, { useCallback, useState } from 'react';
 import { styles } from './styles';
 import GetTestedComponent from '../../../components/bottomTabs/GetTested';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  activityOpacity,
-  currency,
-  flashMessageWarning,
-} from '../../../constants/GConstant';
+import { activityOpacity, currency } from '../../../constants/GConstant';
 import {
   getHeight,
   getWidth,
@@ -22,7 +18,7 @@ import {
 import { images } from '../../../constants/Images';
 import { ScreenNames } from '../../../constants/AppConstants';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
-import { ApiEndPoints, MethodType, StatusCode } from '../../../api/APIConstant';
+import { ApiEndPoints, MethodType } from '../../../api/APIConstant';
 import { useDebounce } from '../../../constants/utils/useDebounce';
 import {
   LoadType,
@@ -38,33 +34,8 @@ import { Colors } from '../../../constants/Colors';
 const GetTestedContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
-  const { cartCount, cartKitIds, addKit, removeKit } =
+  const { cartCount, addKit, removeKit } =
     ZustandStores.CartStore();
-
-  //LocallyMangeIsTick
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     if (!checkup?.data?.length) return;
-
-  //     console.log("cartKitIds",cartKitIds);
-  //     checkup.updateData((prev: any[]) =>
-  //       prev.map(item => {
-  //         const shouldBeInCart = cartKitIds.includes(item.id);
-  //         console.log("item.id,shouldBeInCart);",item.id,shouldBeInCart);
-
-  //         // ⛔ prevent unnecessary re-render
-  //         if (item.is_in_cart === shouldBeInCart) {
-  //           return item;
-  //         }
-
-  //         return {
-  //           ...item,
-  //           is_in_cart: shouldBeInCart,
-  //         };
-  //       }),
-  //     );
-  //   }, [cartKitIds]),
-  // );
 
   const categoriesList = [
     { id: 1, name: 'Routine checks' },
@@ -455,7 +426,7 @@ const GetTestedContainer = ({ navigation }: any) => {
         method: MethodType.POST,
         apiEndPoint: ApiEndPoints.CHECKOUT.ADDTOCART,
         params: { kit_id, test_ids, all_test, price },
-        showLoader:true,
+        showLoader: true,
         callback: () => {},
       });
     } catch (e) {

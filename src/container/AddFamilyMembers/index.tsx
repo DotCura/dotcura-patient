@@ -308,13 +308,6 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
         const uri = result[0]?.uri;
         if (!uri) return;
 
-        // const fileName: any = await uploadFile(result[0]);
-        // console.log('Uploaded file name:', fileName);
-        // setBacktUrl(fileName);
-        // setBackSide(uri);
-        // setBackImageAdd(true);
-        // Store the file object and URI, but don't upload yet
-        // Store the file object and URI, but don't upload yet
         setBackImageFile(result[0]);
         setBackSide(uri);
         setBackImageAdd(true);

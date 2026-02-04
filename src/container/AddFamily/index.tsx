@@ -1,7 +1,6 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { styles } from './styles';
-import AddCardComponent from '../../components/auth/AddCard';
 import AddFamilyComponent from '../../components/AddFamily';
 import AppHeader from '../../global/Header';
 import { getTranslation } from '../../localization/i18n/i18n.config';
@@ -119,7 +118,6 @@ const AddFamilyContainer = ({ navigation }: any) => {
 
   useFocusEffect(
     useCallback(() => {
-      // Reset pagination & re-call API
       familyMemberList?.reset?.();
     }, []),
   );

@@ -339,80 +339,6 @@ const YourProfileComponent = (props: any) => {
         </Animated.View>
       </View>
 
-      {/* POPUP */}
-      {/* {props.showPopup == true && (
-        <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 999,
-          }}
-        >
-         
-          <Pressable
-            style={{ flex: 1 }}
-            onPress={() => props.setShowPopup(false)}
-          />
-          <View
-            style={{
-              position: 'absolute',
-              zIndex: 1,
-              left: 16,
-              top: 35,
-              borderRadius: 16,
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.23,
-              shadowRadius: 2.62,
-              padding: 6,
-              gap: getHeight(7),
-              elevation: 4,
-              backgroundColor: Colors.white,
-              marginTop:
-                orderStatus == '' ? props.insets.top + 10 : getHeight(25),
-            }}
-          >
-            {props.familyMembersData.map((item: any, index: any) => {
-              const isSelected = item.familymembername === props.selectedName;
-              return (
-                <TouchableOpacity
-                  key={`family-${index}`}
-                  style={[styles.itemRow, isSelected && styles.selectedRow]}
-                  onPress={() => {
-                    props.setSelectedName(item.familymembername);
-                    props.setShowPopup(false);
-                  }}
-                >
-                  {isSelected ? (
-                    <Image source={images.imgRightTickBlack} />
-                  ) : (
-                    <Image
-                      source={images.imgRightTickBlack}
-                      style={{ opacity: 0 }}
-                    />
-                  )}
-                  <View style={{ alignSelf: 'flex-start' }}>
-                    <Text
-                      style={[
-                        styles.itemText,
-                        isSelected && styles.selectedText,
-                      ]}
-                    >
-                      {item.familymembername}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-      )} */}
       {/* POPUP WITH ANIMATION */}
       {dropdownVisible && (
         <View
@@ -481,26 +407,6 @@ const YourProfileComponent = (props: any) => {
           </Animated.View>
         </View>
       )}
-
-      {/* vwEmpty */}
-      {/* <View style={styles.vwEmpty}>
-        <View style={{ marginHorizontal: getWidth(7), gap: getHeight(2) }}>
-          <Text style={styles.emptyTitle} numberOfLines={1}>
-            {getTranslation('emptytitleprofile')}
-          </Text>
-          <Text style={styles.emptySubtitle} numberOfLines={5}>
-            {getTranslation('emptysubtitleprofile')}
-          </Text>
-        </View>
-        <CustomButton
-          //  btnPress={props.handlePressLoginFun}
-          btnTitle={getTranslation('bookorder')}
-          style={{
-            backgroundColor: Colors.lightBlurE4,
-          }}
-          textStyle={{ color: Colors.blue17 }}
-        />
-      </View> */}
 
       {/* vwTestReports */}
       {props.orders?.loading ? (

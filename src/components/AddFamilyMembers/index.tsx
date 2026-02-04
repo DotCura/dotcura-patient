@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { constnatStyles } from '../../constants/Styles';
@@ -9,11 +9,10 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import { ValidationConstant } from '../../constants/TextInputConstant';
 import { images } from '../../constants/Images';
-import { getHeight, getWidth } from '../../constants/utils/Dimensions';
+import { getHeight } from '../../constants/utils/Dimensions';
 import { activityOpacity } from '../../constants/GConstant';
 import AddItemModal from '../../global/AddItemModel/AddItemModal';
 import TitleSubtitle from '../../global/TitleSubtitle';
-import TopBar from '../../global/TopBar/TopBar';
 import { Colors } from '../../constants/Colors';
 import CustomButton from '../../global/Buttons';
 import CustomDropdown from '../../global/DropDown/CustomDropDown';

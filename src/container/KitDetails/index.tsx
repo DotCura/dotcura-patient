@@ -7,7 +7,6 @@ import { currency, flashMessageWarning } from '../../constants/GConstant';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { getWidth } from '../../constants/utils/Dimensions';
-import { Colors } from '../../constants/Colors';
 import { ScreenNames } from '../../constants/AppConstants';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import {
@@ -23,7 +22,6 @@ import { useFocusEffect } from '@react-navigation/native';
 const KitDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { increment, addKit } = ZustandStores.CartStore();
-  console.log('route?.params?.is_order_edit', route?.params?.is_order_edit);
 
   const [kitsArrayData, setKitsArraysData] = useState<any>({});
   const [emptyLoading, setIsEmptyLoading] = useState(true);
@@ -147,10 +145,6 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
     });
   };
 
-  useEffect(() => {
-    header();
-  }, []);
-
   //==================API=========================
 
   const _kitDetailsApi = async () => {
@@ -182,14 +176,6 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      _kitDetailsApi();
-      return () => {};
-    }, []),
-  );
-
-  //================API=========================
   const _addToCartKitDetails = async () => {
     try {
       const allTestIds = kitsArrayData?.tests?.map((t: any) => t.test_id) || [];
@@ -265,6 +251,17 @@ const KitDetailsContainer = ({ navigation, route }: any) => {
       console.log('Kit details add to cart error:', error);
     }
   };
+
+  useEffect(() => {
+    header();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      _kitDetailsApi();
+      return () => {};
+    }, []),
+  );
 
   return (
     <KitDetailsComponent

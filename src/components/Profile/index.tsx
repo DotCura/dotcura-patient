@@ -5,9 +5,6 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
-  Modal,
-  Pressable,
-  ImageBackground,
 } from 'react-native';
 import React from 'react';
 import { styles } from './styles';
@@ -18,13 +15,10 @@ import { Colors } from '../../constants/Colors';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import {
   activityOpacity,
-  currency,
   getInitialsTwoDigit,
 } from '../../constants/GConstant';
 import { fontSize } from '../../constants/FontSizes';
 import { constnatStyles } from '../../constants/Styles';
-import { fontsfamily } from '../../constants/FontFamily';
-import AddressModel from '../../global/AddressModel/AddressModel';
 import { ScreenNames } from '../../constants/AppConstants';
 import AppHeader from '../../global/Header';
 import DeviceInfo from 'react-native-device-info';

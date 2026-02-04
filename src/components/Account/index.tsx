@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { constnatStyles } from '../../constants/Styles';
@@ -44,7 +44,7 @@ const AccountComponent = (props: any) => {
           <PrimaryTitleTextInput
             placHolderLabel={getTranslation('fullnameplaceholder')}
             refs={props.fullNameRef}
-            focusnext={() => props.surnameRef.current?.focus()} // ✅ Now this works
+            focusnext={() => props.surnameRef.current?.focus()}
             inputLabel={getTranslation('fullnametitle')}
             blur={false}
             leftIcon={false}
@@ -53,7 +53,7 @@ const AccountComponent = (props: any) => {
             onChangeFun={props.onChangeFullName}
             autoCapitalize={'none'}
             errorMessage={props.fullNameError}
-            setErrorMessage={props.setFullNameError} // ✅ Just pass this once
+            setErrorMessage={props.setFullNameError}
             maxlength={200}
             isMultiline={false}
             isBorder={false}
@@ -61,7 +61,7 @@ const AccountComponent = (props: any) => {
           <PrimaryTitleTextInput
             placHolderLabel={getTranslation('surnameplaceholder')}
             refs={props.surnameRef}
-            focusnext={() => props.emailRef.current?.focus()} // ✅ Now this works
+            focusnext={() => props.emailRef.current?.focus()}
             inputLabel={getTranslation('surnametitle')}
             blur={false}
             leftIcon={false}
@@ -70,7 +70,7 @@ const AccountComponent = (props: any) => {
             onChangeFun={props.onChangeSurname}
             autoCapitalize={'none'}
             errorMessage={props.surnameError}
-            setErrorMessage={props.setSurnameError} // ✅ Just pass this once
+            setErrorMessage={props.setSurnameError}
             maxlength={200}
             isMultiline={false}
             isBorder={false}

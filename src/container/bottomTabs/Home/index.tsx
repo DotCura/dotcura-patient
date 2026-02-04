@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { styles } from './styles';
 import HomeComponent from '../../../components/bottomTabs/Home';
@@ -19,7 +19,6 @@ import {
   formatDateToSpanish,
 } from '../../../constants/GConstant';
 import { ScreenNames } from '../../../constants/AppConstants';
-import LinearGradient from 'react-native-linear-gradient';
 import ProgressBar from '../../../global/ProgressBar';
 import { useFocusEffect } from '@react-navigation/native';
 import { MmkvManager } from '../../../constants/utils/MmkvManager';
@@ -31,321 +30,33 @@ import {
 } from '../../../global/ApiHelper/usePaginatedList';
 import { APIManager } from '../../../api/APIManager';
 import { ZustandStores } from '../../../store';
-import { useSocketConnection } from '../../../socket/useSocketConnection';
 
 const HomeContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
 
-  const latestAnalysis = [
-    {
-      id: '1',
-      chartData: [
-        { value: 0, date: 'Set 23' },
-        { value: 800, date: 'Set 24' },
-        { value: 600, date: 'Dic 24' },
-        { value: 500, date: 'Gen 25' },
-        { value: 3000, date: 'Set 25' },
-      ],
-      maxvalue: 1000,
-      minvalue: 100,
-      reporttitle: 'Glicemia',
-      reportlastValue: 0.37,
-    },
-    {
-      id: '2',
-      chartData: [
-        { value: 1800, date: 'Set 23' },
-        { value: 0.14, date: 'Set 24' },
-        { value: 0.1, date: 'Dic 24' },
-        { value: 0.26, date: 'Gen 25' },
-        { value: 0.37, date: 'Set 25' },
-      ],
-      maxvalue: 0.54,
-      minvalue: 0.14,
-      reporttitle: 'Glicemia',
-      reportlastValue: 0.37,
-    },
-    {
-      id: '3',
-      chartData: [
-        { value: 1800, date: 'Set 23' },
-        { value: 0.14, date: 'Set 24' },
-        { value: 0.1, date: 'Dic 24' },
-        { value: 0.26, date: 'Gen 25' },
-        { value: 0.37, date: 'Set 25' },
-      ],
-      maxvalue: 0.54,
-      minvalue: 0.14,
-      reporttitle: 'Glicemia',
-      reportlastValue: 0.37,
-    },
-    {
-      id: '4',
-      chartData: [
-        { value: 1800, date: 'Set 23', color: '#D4A928' },
-        { value: 0.14, date: 'Set 24', color: '#E53E3E' },
-        { value: 0.1, date: 'Dic 24', color: '#D4A928' },
-        { value: 0.26, date: 'Gen 25', color: '#D4A928' },
-        { value: 0.37, date: 'Set 25', color: '#D4A928' },
-      ],
-      maxvalue: 0.54,
-      minvalue: 0.14,
-      reporttitle: 'Glicemia',
-      reportlastValue: 0.37,
-    },
-  ];
+  // ✅ FIX: Use selectors
+  const cartCount = ZustandStores.CartStore(state => state.cartCount);
+  const setCartCount = ZustandStores.CartStore(state => state.setCartCount);
+  const setNotificationCount = ZustandStores.CartStore(
+    state => state.setNotificationCount,
+  );
 
-  const recommandAnalysis = [
-    {
-      id: '1',
-      title: 'Diabete',
-      description: 'Controllo glicemia e zuccheri',
-      price: '35.00',
-      isLiked: false,
-      isAdded: false,
-    },
-    {
-      id: '2',
-      title: 'Anemia',
-      description: 'Controllo ferro e globuli rossi',
-      price: '35.00',
-      isLiked: false,
-      isAdded: false,
-    },
-    {
-      id: '3',
-      title: 'Colesterolo',
-      description: 'Controllo colesterolo totale e HDL',
-      price: '40.00',
-      isLiked: false,
-      isAdded: false,
-    },
-    {
-      id: '4',
-      title: 'Tiroide',
-      description: 'Controllo TSH, FT3, FT4',
-      price: '45.00',
-      isLiked: false,
-      isAdded: false,
-    },
-    {
-      id: '5',
-      title: 'Vitamina D',
-      description: 'Controllo livello vitamina D nel sangue',
-      price: '30.00',
-      isLiked: false,
-      isAdded: false,
-    },
-  ];
+  const shadowBySeverity = {
+    normal: images.imgTopBlueShadow,
+    'moderate-high': images.imgYellowShadow,
+    'moderate-low': images.imgYellowShadow,
+    'extreme-high': images.imgTopRedShadow,
+    'extreme-low': images.imgTopRedShadow,
+  };
 
-  const familyMemberAnalysis = [
-    {
-      id: '1',
-      familyMemberName: 'Maria',
-      familyMemberReport: [
-        {
-          id: '1',
-          isTest: true,
-          reportname: 'Urine',
-          reportunit: 'pH',
-          reportValue: '2.2',
-          currentvalue: 800,
-          minValue: 1000,
-          maxvalue: 10000,
-        },
-      ],
-    },
-    {
-      id: '2',
-      familyMemberName: 'Pasquale',
-      familyMemberReport: [
-        {
-          id: '1',
-          isTest: true,
-          reportname: 'Glicemia',
-          reportunit: 'mg/dL',
-          reportValue: '0.37',
-          currentvalue: 60,
-          minValue: 30,
-          maxvalue: 60,
-        },
-        {
-          id: '2',
-          isTest: true,
-          reportname: 'Urine',
-          reportunit: 'pH',
-          reportValue: '2.2',
-          currentvalue: 0,
-          minValue: 0.5,
-          maxvalue: 0.7,
-        },
-      ],
-    },
-  ];
-
-  const testReportList = [
-    {
-      id: 1,
-      reportimage: images.imgHeart,
-      totalanalysis: 22,
-      currentanalysis: 17,
-      testname: 'Cuore',
-    },
-    {
-      id: 2,
-      reportimage: images.imgKidney,
-      totalanalysis: 22,
-      currentanalysis: 0,
-      testname: 'Reni',
-    },
-    {
-      id: 3,
-      reportimage: images.imgSoda,
-      totalanalysis: 22,
-      currentanalysis: 12,
-      testname: 'Fegato',
-    },
-    {
-      id: 4,
-      reportimage: images.imgLolipop,
-      totalanalysis: 22,
-      currentanalysis: 18,
-      testname: 'Diabete',
-    },
-  ];
-
-  const appointments = [
-    {
-      id: '3',
-      status: 'booked',
-      orderid: '#121314',
-      date: '2025-12-24',
-      appointmentMessage:
-        'The appointment is confirmed for Wednesday 10/8 by 10:00',
-      price: '35.00',
-      time: '10:00',
-      dayname: 'Wednesday',
-      kits: [
-        {
-          kitype: 'kit',
-          kitname: 'Diabete',
-          kittest: [
-            {
-              id: '1',
-              reportname: 'Urine',
-              reportValue: '2.2',
-              currentvalue: 11000,
-              minValue: 1000,
-              maxvalue: 10000,
-              reportunit: 'pH',
-            },
-            {
-              id: '1',
-              reportname: 'Emoglobina glicata',
-              reportValue: '0.37',
-              currentvalue: 11000,
-              minValue: 1000,
-              maxvalue: 10000,
-              reportunit: 'mg/g',
-            },
-            {
-              id: '2',
-              reportname: 'Microalbuminuria',
-              reportValue: '18',
-              currentvalue: 2000,
-              minValue: 1000,
-              maxvalue: 10000,
-              reportunit: 'mg/g',
-            },
-            {
-              id: '3',
-              reportname: 'Urine',
-              reportValue: '2.2',
-              currentvalue: 100,
-              minValue: 1000,
-              maxvalue: 10000,
-              reportunit: 'pH',
-            },
-            {
-              id: '4',
-              reportname: 'Creatininemia',
-              reportValue: '18 mg/g',
-              currentvalue: 4000,
-              minValue: 1000,
-              maxvalue: 10000,
-            },
-            {
-              id: '5',
-              reportname: 'Urine',
-              reportValue: '2.2',
-              currentvalue: 100,
-              minValue: 1000,
-              maxvalue: 10000,
-              reportunit: 'pH',
-            },
-            {
-              id: '6',
-              reportname: 'Urine',
-              reportValue: '2.2',
-              currentvalue: 11000,
-              minValue: 1000,
-              maxvalue: 10000,
-              reportunit: 'pH',
-            },
-          ],
-        },
-        {
-          kitype: 'analiti',
-          kitname: 'Cuore',
-          kittest: [
-            {
-              id: '1',
-              reportname: 'Urine',
-              reportValue: '2.2',
-              currentvalue: 11000,
-              minValue: 1000,
-              maxvalue: 10000,
-              reportunit: 'pH',
-            },
-            {
-              id: '2',
-              reportname: 'Microalbuminuria',
-              reportValue: '18',
-              currentvalue: 2000,
-              minValue: 1000,
-              maxvalue: 10000,
-              reportunit: 'mg/g',
-            },
-          ],
-        },
-      ],
-      tags: [
-        'Urine',
-        'Blood sugar',
-        'Urine',
-        'Blood sugar',
-        'Urine',
-        'Blood sugar',
-      ],
-      nurse: {
-        nurseid: '1',
-        name: 'Federica S.',
-        rating: 3,
-      },
-    },
-  ];
-
-  const [outdated, setOutdated] = useState(true);
-  const [latestAnalysisData, setLatestAnalysisData] = useState(latestAnalysis);
-  const [appointmentsData, setAppointmentsData] = useState(appointments);
-  const [testReportData, setTestReportData] = useState<any>([]);
-  const [recommandAnalysisData, setrecommandAnalysisData] =
-    useState(recommandAnalysis);
+  const [refreshing, setRefreshing] = useState(false);
   const [familyMemberAnalysisData, setFamilyMemberAnalysisData] = useState([]);
   const totalStars = 5;
 
   const [expandedWaiting, setExpandedWaiting] = useState<any>({});
   const [expandedBooked, setExpandedBooked] = useState<any>({});
+  
+  const [firstName, setFirstName] = useState('');
 
   const formatKits = (kits: any[]) => {
     if (!kits?.length) return '';
@@ -357,6 +68,22 @@ const HomeContainer = ({ navigation }: any) => {
         return `${kitName} (${count})`;
       })
       .join(' + ');
+  };
+
+  const getSeverityByValue = (value: any, min: any, max: any) => {
+    const v = Number(value);
+    const span = max - min || 1;
+
+    const extendedMax = max + span;
+    const extendedMin = min - span;
+
+    if (v > extendedMax) return 'extreme-high';
+    if (v < extendedMin) return 'extreme-low';
+
+    if (v > max) return 'moderate-high';
+    if (v < min) return 'moderate-low';
+
+    return 'normal';
   };
 
   const renderItemAppointment = ({ item, index }: any) => {
@@ -379,10 +106,7 @@ const HomeContainer = ({ navigation }: any) => {
           item.agenda_status === 'start_delivery' ||
           item.agenda_status === 'complete_delivery' ||
           item.agenda_status === 'ReportPending') && (
-          <TouchableOpacity
-            activeOpacity={1}
-            style={styles.btnwaitingview1}
-          >
+          <TouchableOpacity activeOpacity={1} style={styles.btnwaitingview1}>
             <View style={styles.btnwaitingview2}>
               <View style={styles.btnwaitingview3}>
                 <Image source={images.imgkit7} style={styles.imgkit} />
@@ -462,10 +186,7 @@ const HomeContainer = ({ navigation }: any) => {
           item.agenda_status == 'Accept' ||
           item.agenda_status == 'start_visit' ||
           item.agenda_status == 'arrived') && (
-          <TouchableOpacity
-            activeOpacity={1}
-            style={styles.btnBooked}
-          >
+          <TouchableOpacity activeOpacity={1} style={styles.btnBooked}>
             <View
               style={{
                 flexDirection: 'row',
@@ -546,30 +267,6 @@ const HomeContainer = ({ navigation }: any) => {
         )}
       </>
     );
-  };
-
-  const getSeverityByValue = (value: any, min: any, max: any) => {
-    const v = Number(value);
-    const span = max - min || 1;
-
-    const extendedMax = max + span;
-    const extendedMin = min - span;
-
-    if (v > extendedMax) return 'extreme-high';
-    if (v < extendedMin) return 'extreme-low';
-
-    if (v > max) return 'moderate-high';
-    if (v < min) return 'moderate-low';
-
-    return 'normal';
-  };
-
-  const shadowBySeverity = {
-    normal: images.imgTopBlueShadow,
-    'moderate-high': images.imgYellowShadow,
-    'moderate-low': images.imgYellowShadow,
-    'extreme-high': images.imgTopRedShadow,
-    'extreme-low': images.imgTopRedShadow,
   };
 
   const renderLatestAnlaysisData = ({ item, index }: any) => {
@@ -734,19 +431,6 @@ const HomeContainer = ({ navigation }: any) => {
 
   //====================== API ============================
 
-  //FETCH FIRST NAME
-  const [firstName, setFirstName] = useState('');
-  useFocusEffect(
-    useCallback(() => {
-      MmkvManager.getData(MmkvManager.Keys.userDetails, (value: any) => {
-        console.log('checking userdetails', value);
-        setFirstName(value?.first_name || '');
-      });
-      return () => {};
-    }, []),
-  );
-
-  //ANALITILIST
   const fetchAnalitiList = useCallback(
     async ({ page, loadType }: { page: number; loadType: any }) => {
       const res = await apiPromise({
@@ -775,9 +459,6 @@ const HomeContainer = ({ navigation }: any) => {
     fetcher: fetchAnalitiList,
   });
 
-  //FAVOURITESLIST
-  // ========================== API ==========================
-
   const fetchFavouritesList = useCallback(
     async ({ page, loadType }: { page: number; loadType: any }) => {
       const res = await apiPromise({
@@ -805,8 +486,6 @@ const HomeContainer = ({ navigation }: any) => {
     fetcher: fetchFavouritesList,
   });
 
-  const [refreshing, setRefreshing] = useState(false);
-
   const onRefresh = async () => {
     setRefreshing(true);
     try {
@@ -816,13 +495,6 @@ const HomeContainer = ({ navigation }: any) => {
       setRefreshing(false);
     }
   };
-
-  // ✅ FIX: Use selectors
-  const cartCount = ZustandStores.CartStore(state => state.cartCount);
-  const setCartCount = ZustandStores.CartStore(state => state.setCartCount);
-  const setNotificationCount = ZustandStores.CartStore(
-    state => state.setNotificationCount,
-  );
 
   const _totalCount = async () => {
     const params = {};
@@ -849,7 +521,6 @@ const HomeContainer = ({ navigation }: any) => {
     }
   };
 
-  // Api AddressList
   const _familyMemberReportList = async () => {
     try {
       const params = {};
@@ -874,12 +545,6 @@ const HomeContainer = ({ navigation }: any) => {
     }
   };
 
-  useEffect(() => {
-    _totalCount();
-    _familyMemberReportList();
-    _cancleOrderItem();
-  }, []);
-
   const fetchOrderList = useCallback(
     async ({ page, loadType }: { page: number; loadType: any }) => {
       const res = await apiPromise({
@@ -893,7 +558,6 @@ const HomeContainer = ({ navigation }: any) => {
         },
       });
 
-      // 🔥 NORMALIZE RESPONSE
       return {
         ...res,
         data: res?.data ?? [],
@@ -931,14 +595,28 @@ const HomeContainer = ({ navigation }: any) => {
     }
   };
 
+  useEffect(() => {
+    _totalCount();
+    _familyMemberReportList();
+    _cancleOrderItem();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      MmkvManager.getData(MmkvManager.Keys.userDetails, (value: any) => {
+        console.log('checking userdetails', value);
+        setFirstName(value?.first_name || '');
+      });
+      return () => {};
+    }, []),
+  );
+
   return (
     <HomeComponent
       pendingOrder={pendingOrder}
       insets={insets}
-      outdated={outdated}
       latestAnalysisData={favourites?.data}
       renderLatestAnlaysisData={renderLatestAnlaysisData}
-      recommandAnalysisData={recommandAnalysisData}
       renderRecommandAnlaysisData={renderRecommandAnlaysisData}
       renderTestReportData={renderTestReportData}
       testReportData={AnalitiList?.data}

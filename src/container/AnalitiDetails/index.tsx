@@ -27,11 +27,9 @@ import { useFocusEffect } from '@react-navigation/native';
 const AnalitiDetailsContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const { increment, decrement } = ZustandStores.CartStore();
-  console.log('route?.params?.is_order_edit', route?.params?.is_order_edit);
 
   const [analitiArrayData, setAnalitiArraysData] = useState<any>({});
   const [selectedTests, setSelectedTests] = useState<number[]>([]);
-  console.log('selectedTests', selectedTests);
 
   const [emptyLoading, setIsEmptyLoading] = useState(true);
 

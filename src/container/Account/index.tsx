@@ -45,9 +45,6 @@ const AccountContainer = ({ navigation }: any) => {
   const [formattedDate, setFormattedDate] = useState('');
   const [formatedDateForApi, setFormatedDateForApi] = useState('');
 
-  console.log("formatedDate", formattedDate,placeOfBirth);
-  
-
   const fullNameRef = useRef<any>(null);
   const placeOfBirthRef = useRef<any>(null);
   const surnameRef = useRef<any>(null);
@@ -93,8 +90,8 @@ const AccountContainer = ({ navigation }: any) => {
   };
 
   const handlePressContinue = async () => {
-    console.log("call");
-    
+    console.log('call');
+
     // Reset previous errors
     setFullNameError('');
     setEmailError('');
@@ -266,15 +263,21 @@ const AccountContainer = ({ navigation }: any) => {
 
   const handleDeleteItem = (type: any, id: any) => {
     if (type === 'patologie') {
-      setPatologie((prev: any) => prev.filter((item: any) => item.deleteid !== id));
+      setPatologie((prev: any) =>
+        prev.filter((item: any) => item.deleteid !== id),
+      );
     }
 
     if (type === 'medicazioni') {
-      setMedicazioni((prev: any) => prev.filter((item: any) => item.deleteid !== id));
+      setMedicazioni((prev: any) =>
+        prev.filter((item: any) => item.deleteid !== id),
+      );
     }
 
     if (type === 'allergie') {
-      setAllergie((prev: any) => prev.filter((item: any) => item.deleteid !== id));
+      setAllergie((prev: any) =>
+        prev.filter((item: any) => item.deleteid !== id),
+      );
     }
   };
 
@@ -343,7 +346,7 @@ const AccountContainer = ({ navigation }: any) => {
           const normalizeMedical = (arr: any[]) =>
             arr.map(item => ({
               id: item.medicalid,
-              deleteid: item.id, 
+              deleteid: item.id,
               name: item.name,
               type: item.type,
             }));

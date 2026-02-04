@@ -3,7 +3,6 @@ import {
   Image,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
@@ -13,7 +12,7 @@ import { styles } from './styles';
 import { images } from '../../constants/Images';
 import { Colors } from '../../constants/Colors';
 import { getHeight } from '../../constants/utils/Dimensions';
-import { activityOpacity, currency } from '../../constants/GConstant';
+import {  currency } from '../../constants/GConstant';
 import AppHeader from '../../global/Header';
 import PressScale from '../../global/PressScale';
 

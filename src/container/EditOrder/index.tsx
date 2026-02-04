@@ -15,7 +15,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import CheckoutComponent from '../../components/Checkout';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import {
@@ -49,10 +48,8 @@ import {
 } from '../../global/ApiHelper/usePaginatedList';
 import { APIManager } from '../../api/APIManager';
 import FastImage from '@d11/react-native-fast-image';
-import { useFocusEffect } from '@react-navigation/native';
 import { fontsfamily } from '../../constants/FontFamily';
 import { GlobalVar } from '../../constants/GlobalVar';
-import { DateFormatsManager } from '../../constants/utils/DateFormats';
 import SocketService from '../../socket/SocketService';
 import EditOrderComponent from '../../components/EditOrder';
 
@@ -61,6 +58,8 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const booking_order_id = route?.params?.booking_order_id;
 
   console.log("'booking_order_id'", booking_order_id);
+  console.log("timezone", typeof Intl.DateTimeFormat().resolvedOptions().timeZone);
+  
 
   //ZUSTANDVARIABLES
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
@@ -307,6 +306,8 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     checkup?.reset();
     analiti?.reset();
   };
+ 
+  
 
   const handleBookSlot = () => {
     const localDate =
@@ -1752,6 +1753,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
         family_member_id: familymemberValue,
         booking_ids: booking_order_id,
         is_schedule_changed: scheduleChanged === true ? 1 : 0,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       };
 
       console.log('params', params);

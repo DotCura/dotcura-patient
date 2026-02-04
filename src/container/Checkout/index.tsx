@@ -57,7 +57,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   //ZUSTANDVARIABLES
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  const { cartKitIds, addKit, removeKit, increment, resetCart } =
+  const {  addKit, removeKit, increment, resetCart } =
     ZustandStores.CartStore();
 
   //CHECKOUT VARIABLES
@@ -71,6 +71,9 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [editAnlitiPopupVisible, setEditAnalitiPopupVisible] = useState(false);
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
   const [cartLoaded, setCartLoaded] = useState(false);
+
+  console.log("Intl.DateTimeFormat().resolvedOptions().timeZone",typeof Intl.DateTimeFormat().resolvedOptions().timeZone);
+  
 
   //EDITANALITIVARIABLES
   const [analitiArrayData, setAnalitiArraysData] = useState<any>({});
@@ -95,6 +98,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
+  
   const [selectedTab, setSelectedTab] = useState('checkup'); // 'checkup' or 'analiti'
   const apiDate = formatTestDateForAPI(selectedDate);
   const startTime = selectedTime.split(' - ')[0];
@@ -1159,13 +1163,13 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const checkup: any = usePaginatedList<any>({
     pageSize: 10,
-    enabled: selectedTab === 'checkup',
+    enabled: showIsModifyOrder && selectedTab === 'checkup',
     fetcher: fetchCheckupList,
   });
 
   const analiti: any = usePaginatedList<any>({
     pageSize: 10,
-    enabled: selectedTab === 'analiti',
+    enabled: showIsModifyOrder && selectedTab === 'analiti',
     fetcher: fetchAnalitiList,
   });
 
@@ -1424,6 +1428,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     _updateCartAnaliti();
   };
 
+  
+
   //BOOKORDERAPI
   const _bookOrder = async () => {
     try {
@@ -1440,6 +1446,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
             : apiDate,
         test_time: selectedTime,
         family_member_id: familymemberValue,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       };
 
       // console.log('params', params);

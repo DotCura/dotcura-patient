@@ -51,6 +51,7 @@ export const APIManager = {
       'api-key': ApiHeaderKeyValue.API_KEY_VALUE,
       'accept-language': 'en',
       'content-type': 'text/plain',
+      "timezone": Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
   },
 
@@ -98,6 +99,8 @@ export const APIManager = {
   }: any) => {
     /* ---- Internet check ---- */
     const netInfo = await NetInfo.fetch();
+    console.log("netInfo.isConnected",netInfo.isConnected);
+    
     if (!netInfo.isConnected) {
       callback({
         code: 97,
