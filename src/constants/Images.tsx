@@ -117,6 +117,7 @@ export const images = {
   imgstartvisitstepper: require('../assets/images/startvisitstepper.png'),
   imgcanclevisitstepper: require('../assets/images/visitcanclestepper.png'),
   imgeditorderstepper: require('../assets/images/editorderstepper.png'),
+  imgnursearrivedstepper: require('../assets/images/nurseArrived.png'),
   
 
   splashvideo: require('../assets/videos/SplashScreen.mp4'),

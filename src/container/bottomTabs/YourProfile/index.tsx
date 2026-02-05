@@ -49,23 +49,6 @@ const YourProfileContainer = ({ navigation }: any) => {
   };
 
   const renderItemLatestAnalysis = ({ item, index }: any) => {
-    // if (item.type === 'see_all') {
-    //   return (
-    //     <TouchableOpacity
-    //       activeOpacity={activityOpacity}
-    //       onPress={handleNavigateOrderHistory}
-    //       style={[
-    //         styles.vwReportDate,
-    //         {
-    //           flexDirection: 'row',
-    //         },
-    //       ]}
-    //     >
-    //       <Text style={[styles.lblReportName]}>{getTranslation('seeall')}</Text>
-    //       <Image source={images.imgRightBlack} />
-    //     </TouchableOpacity>
-    //   );
-    // }
     const formatKits = (kits: any[]) => {
       if (!kits?.length) return '';
 
@@ -82,7 +65,9 @@ const YourProfileContainer = ({ navigation }: any) => {
         activeOpacity={activityOpacity}
         key={index}
         style={styles.vwReportDate}
-        onPress={hanldeNavigateKitAnalysis}
+        // onPress={() => {
+        //   hanldeNavigateKitAnalysis(item?.booking_id);
+        // }}
       >
         <View style={styles.vwLightBlue}></View>
         <View>
@@ -375,8 +360,10 @@ const YourProfileContainer = ({ navigation }: any) => {
     });
   };
 
-  const hanldeNavigateKitAnalysis = () => {
-    navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+  const hanldeNavigateKitAnalysis = (booking_order_id: any) => {
+    navigation.navigate(ScreenNames.KITANALYSISCONTAINER, {
+      booking_id: booking_order_id,
+    });
   };
 
   const handleNavigateHistoricalAnlysis = () => {

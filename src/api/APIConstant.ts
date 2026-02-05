@@ -77,6 +77,10 @@ export const ApiEndPoints = {
   ANALITI: {
     GETANALITIDETAILS: `${PATIENT_PREFIX}getAnalitiDetails`,
   },
+  REPORT: {
+    GETREPORTDETAILS: `${PATIENT_PREFIX}getReportDetails`,
+    REORDER: `${PATIENT_PREFIX}reorder`,
+  },
 };
 
 // API methods

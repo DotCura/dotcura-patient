@@ -1,5 +1,3 @@
-
-
 // import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // import React, { useState, useMemo, useEffect } from 'react';
 // import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -408,280 +406,299 @@ interface OrderStatusComponentProps {
   orderStatus: string;
 }
 
-const OrderStatusComponent = memo(({ orderStatus }: OrderStatusComponentProps) => {
-  console.log('🎯 OrderStatusComponent render - status:', orderStatus);
+const OrderStatusComponent = memo(
+  ({ orderStatus }: OrderStatusComponentProps) => {
+    console.log('🎯 OrderStatusComponent render - status:', orderStatus);
 
-  // Get order data from store
-  const orderData: any = ZustandStores.OrderstatusStore(state => state.orderData);
-  console.log("🚀 ~ file: index.tsx:75 ~ OrderStatusComponent ~ orderData:", orderData);
-  
+    // Get order data from store
+    const orderData: any = ZustandStores.OrderstatusStore(
+      state => state.orderData,
+    );
+    console.log(
+      '🚀 ~ file: index.tsx:75 ~ OrderStatusComponent ~ orderData:',
+      orderData,
+    );
 
-  // Status configuration - memoized to prevent recalculation
-  const STATUS_CONFIG = useMemo(() => ({
-    Request: {
-      title: getTranslation('ordersent'),
-      subtitle: getTranslation('ordersentsubtitle'),
-      image: images.imgStepper,
-      currentStep: 0,
-      showEdit: true,
-      showSmallProgressBar: true,
-    },
-    Accept: {
-      title: getTranslation('visitconfirm'),
-      subtitle: getTranslation('visitconfirmsubtitle'),
-      image: images.imgvisitconfirmstepper,
-      currentStep: 1,
-      showEdit: true,
-      showSmallProgressBar: true,
-    },
-    start_visit: {
-      title: orderData?.time || '20-30 minuti',
-      subtitle: getTranslation('minitarrivesubtitle'),
-      image: images.imgstartvisitstepper,
-      currentStep: 2,
-      showEdit: false,
-      showSmallProgressBar: true,
-    },
-    arrived: {
-      title: `${orderData?.name || 'Nurse'} ${getTranslation('ishere')}`,
-      subtitle: getTranslation('isheresubtitle'),
-      image: images.imgstartvisitstepper,
-      currentStep: 3,
-      showEdit: false,
-      showSmallProgressBar: true,
-    },
-    Modified: {
-      title: getTranslation('visitmodified'),
-      subtitle: getTranslation('visitmodifiedsubtitle'),
-      image: images.imgeditorderstepper,
-      currentStep: 1,
-      showEdit: true,
-      showSmallProgressBar: false,
-    },
-    Rejected: {
-      title: getTranslation('canclevisit'),
-      subtitle: getTranslation('canclevisitsubtitle'),
-      image: images.imgcanclevisitstepper,
-      currentStep: 0,
-      showEdit: false,
-      showSmallProgressBar: false,
-    },
-  }), [orderData?.time, orderData?.name]);
+    // Status configuration - memoized to prevent recalculation
+    const STATUS_CONFIG = useMemo(
+      () => ({
+        Request: {
+          title: getTranslation('ordersent'),
+          subtitle: getTranslation('ordersentsubtitle'),
+          image: images.imgStepper,
+          currentStep: 0,
+          showEdit: true,
+          showSmallProgressBar: true,
+        },
+        Accept: {
+          title: getTranslation('visitconfirm'),
+          subtitle: getTranslation('visitconfirmsubtitle'),
+          image: images.imgvisitconfirmstepper,
+          currentStep: 1,
+          showEdit: true,
+          showSmallProgressBar: true,
+        },
+        start_visit: {
+          title: orderData?.time || '20-30 minuti',
+          subtitle: getTranslation('minitarrivesubtitle'),
+          image: images.imgstartvisitstepper,
+          currentStep: 2,
+          showEdit: false,
+          showSmallProgressBar: true,
+        },
+        arrived: {
+          title: `${orderData?.name || 'Nurse'} ${getTranslation('ishere')}`,
+          subtitle: getTranslation('isheresubtitle'),
+          image: images.imgnursearrivedstepper,
+          currentStep: 3,
+          showEdit: false,
+          showSmallProgressBar: true,
+        },
+        Modified: {
+          title: getTranslation('visitmodified'),
+          subtitle: getTranslation('visitmodifiedsubtitle'),
+          image: images.imgeditorderstepper,
+          currentStep: 1,
+          showEdit: true,
+          showSmallProgressBar: false,
+        },
+        Rejected: {
+          title: getTranslation('canclevisit'),
+          subtitle: getTranslation('canclevisitsubtitle'),
+          image: images.imgcanclevisitstepper,
+          currentStep: 0,
+          showEdit: false,
+          showSmallProgressBar: false,
+        },
+      }),
+      [orderData?.time, orderData?.name],
+    );
 
-  const insets = useSafeAreaInsets();
-  const [showBigView, setShowBigView] = useState(false);
+    const insets = useSafeAreaInsets();
+    const [showBigView, setShowBigView] = useState(false);
 
-  // Get status config - memoized
-  const config = useMemo(() => {
-    const statusConfig = STATUS_CONFIG[orderStatus as keyof typeof STATUS_CONFIG];
-    return statusConfig || STATUS_CONFIG.Request;
-  }, [orderStatus, STATUS_CONFIG]);
+    // Get status config - memoized
+    const config = useMemo(() => {
+      const statusConfig =
+        STATUS_CONFIG[orderStatus as keyof typeof STATUS_CONFIG];
+      return statusConfig || STATUS_CONFIG.Request;
+    }, [orderStatus, STATUS_CONFIG]);
 
-  // Animated values
-  const expandedHeight = useSharedValue(0);
-  const collapsedHeight = useSharedValue(0);
-  const animatedHeight = useSharedValue(-1);
-  const bigViewOpacity = useSharedValue(0);
-  const smallViewOpacity = useSharedValue(1);
-  const rotateValue = useSharedValue(0);
+    // Animated values
+    const expandedHeight = useSharedValue(0);
+    const collapsedHeight = useSharedValue(0);
+    const animatedHeight = useSharedValue(-1);
+    const bigViewOpacity = useSharedValue(0);
+    const smallViewOpacity = useSharedValue(1);
+    const rotateValue = useSharedValue(0);
 
-  const toggleView = () => {
-    if (!showBigView) {
-      setShowBigView(true);
-      rotateValue.value = withSpring(1, { damping: 10, stiffness: 150 });
-      animatedHeight.value = withSpring(expandedHeight.value, {
-        damping: 80,
-        stiffness: 120,
-      });
-      smallViewOpacity.value = withTiming(0, { duration: 100 });
-      bigViewOpacity.value = withTiming(1, { duration: 100 });
-    } else {
-      rotateValue.value = withSpring(0, { damping: 10, stiffness: 150 });
-      animatedHeight.value = withSpring(collapsedHeight.value, {
-        damping: 80,
-        stiffness: 120,
-      });
-      bigViewOpacity.value = withTiming(0, { duration: 100 });
-      smallViewOpacity.value = withTiming(1, { duration: 100 }, () => {
-        runOnJS(setShowBigView)(false);
-      });
-    }
-  };
-
-  const containerAnimatedStyle = useAnimatedStyle(() => {
-    if (animatedHeight.value === -1) {
-      return { overflow: 'hidden' };
-    }
-    return {
-      height: animatedHeight.value,
-      overflow: 'hidden',
+    const toggleView = () => {
+      if (!showBigView) {
+        setShowBigView(true);
+        rotateValue.value = withSpring(1, { damping: 10, stiffness: 150 });
+        animatedHeight.value = withSpring(expandedHeight.value, {
+          damping: 80,
+          stiffness: 120,
+        });
+        smallViewOpacity.value = withTiming(0, { duration: 100 });
+        bigViewOpacity.value = withTiming(1, { duration: 100 });
+      } else {
+        rotateValue.value = withSpring(0, { damping: 10, stiffness: 150 });
+        animatedHeight.value = withSpring(collapsedHeight.value, {
+          damping: 80,
+          stiffness: 120,
+        });
+        bigViewOpacity.value = withTiming(0, { duration: 100 });
+        smallViewOpacity.value = withTiming(1, { duration: 100 }, () => {
+          runOnJS(setShowBigView)(false);
+        });
+      }
     };
-  });
 
-  const bigViewAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: bigViewOpacity.value,
-    transform: [{ scale: 0.95 + bigViewOpacity.value * 0.05 }],
-  }));
+    const containerAnimatedStyle = useAnimatedStyle(() => {
+      if (animatedHeight.value === -1) {
+        return { overflow: 'hidden' };
+      }
+      return {
+        height: animatedHeight.value,
+        overflow: 'hidden',
+      };
+    });
 
-  const smallViewAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: smallViewOpacity.value,
-    transform: [{ scale: 0.95 + smallViewOpacity.value * 0.05 }],
-  }));
+    const bigViewAnimatedStyle = useAnimatedStyle(() => ({
+      opacity: bigViewOpacity.value,
+      transform: [{ scale: 0.95 + bigViewOpacity.value * 0.05 }],
+    }));
 
-  const arrowAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [{ rotate: `${rotateValue.value * 180}deg` }],
-  }));
+    const smallViewAnimatedStyle = useAnimatedStyle(() => ({
+      opacity: smallViewOpacity.value,
+      transform: [{ scale: 0.95 + smallViewOpacity.value * 0.05 }],
+    }));
 
-  // Memoized ProgressBar component
-  const ProgressBar = memo(({ currentStep, totalSteps = 4 }: any) => {
-    const steps = Array.from({ length: totalSteps }, (_, i) => i + 1);
+    const arrowAnimatedStyle = useAnimatedStyle(() => ({
+      transform: [{ rotate: `${rotateValue.value * 180}deg` }],
+    }));
+
+    // Memoized ProgressBar component
+    const ProgressBar = memo(({ currentStep, totalSteps = 4 }: any) => {
+      const steps = Array.from({ length: totalSteps }, (_, i) => i + 1);
+
+      return (
+        <View style={styles.progressBarContainer}>
+          {steps.map((step, index) => (
+            <View
+              key={index}
+              style={[
+                styles.progressStep,
+                index <= currentStep && styles.progressStepActive,
+                index <= currentStep && {
+                  backgroundColor:
+                    currentStep === 0
+                      ? Colors.goldenE8
+                      : currentStep === 1
+                      ? Colors.blue3C
+                      : currentStep === 2
+                      ? Colors.green3C
+                      : currentStep === 3
+                      ? Colors.green3C
+                      : Colors.goldenE8,
+                },
+              ]}
+            />
+          ))}
+        </View>
+      );
+    });
+
+    ProgressBar.displayName = 'ProgressBar';
 
     return (
-      <View style={styles.progressBarContainer}>
-        {steps.map((step, index) => (
-          <View
-            key={index}
-            style={[
-              styles.progressStep,
-              index <= currentStep && styles.progressStepActive,
-              index <= currentStep && {
-                backgroundColor:
-                  currentStep === 0
-                    ? Colors.goldenE8
-                    : currentStep === 1
-                    ? Colors.blue3C
-                    : currentStep === 2
-                    ? Colors.green3C
-                    : currentStep === 3
-                    ? Colors.green3C
-                    : Colors.goldenE8,
-              },
-            ]}
-          />
-        ))}
-      </View>
-    );
-  });
-
-  ProgressBar.displayName = 'ProgressBar';
-
-  
-
-  return (
-    <Animated.View style={[styles.container, { paddingTop: insets.top }]}>
-      <TouchableOpacity
-        onPress={toggleView}
-        activeOpacity={activityOpacity}
-        style={styles.touchableArea}
-      >
-        <Animated.View style={containerAnimatedStyle}>
-          {/* SMALL VIEW */}
-          <Animated.View
-            style={[
-              styles.smallViewContainer,
-              smallViewAnimatedStyle,
-              showBigView && {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-              },
-            ]}
-            onLayout={event => {
-              if (collapsedHeight.value === 0) {
-                const height = event.nativeEvent.layout.height;
-                collapsedHeight.value = height;
-                if (animatedHeight.value === -1) {
-                  animatedHeight.value = height;
+      <Animated.View style={[styles.container, { paddingTop: insets.top }]}>
+        <TouchableOpacity
+          onPress={toggleView}
+          activeOpacity={activityOpacity}
+          style={styles.touchableArea}
+        >
+          <Animated.View style={containerAnimatedStyle}>
+            {/* SMALL VIEW */}
+            <Animated.View
+              style={[
+                styles.smallViewContainer,
+                smallViewAnimatedStyle,
+                showBigView && {
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                },
+              ]}
+              onLayout={event => {
+                if (collapsedHeight.value === 0) {
+                  const height = event.nativeEvent.layout.height;
+                  collapsedHeight.value = height;
+                  if (animatedHeight.value === -1) {
+                    animatedHeight.value = height;
+                  }
                 }
-              }
-            }}
-            pointerEvents={!showBigView ? 'auto' : 'none'}
-          >
-            <View style={styles.headerRow}>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.lblOrderTitleSmall}>{config.title}</Text>
-                <Text style={styles.lblOrderDesSmall} numberOfLines={1}>
-                  {config.subtitle}
-                </Text>
-                {config.showSmallProgressBar && (
-                  <ProgressBar currentStep={config.currentStep} />
-                )}
+              }}
+              pointerEvents={!showBigView ? 'auto' : 'none'}
+            >
+              <View style={styles.headerRow}>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.lblOrderTitleSmall}>{config.title}</Text>
+                  <Text style={styles.lblOrderDesSmall} numberOfLines={1}>
+                    {config.subtitle}
+                  </Text>
+                  {config.showSmallProgressBar && (
+                    <ProgressBar currentStep={config.currentStep} />
+                  )}
+                </View>
+
+                <View style={styles.toggleButton}>
+                  <Animated.View style={arrowAnimatedStyle}>
+                    <Image
+                      source={images.imgLeftArrow}
+                      tintColor={Colors.white}
+                      style={styles.arrowIcon}
+                    />
+                  </Animated.View>
+                </View>
+              </View>
+            </Animated.View>
+
+            {/* BIG VIEW */}
+            <Animated.View
+              style={[
+                styles.bigViewContainer,
+                bigViewAnimatedStyle,
+                !showBigView && {
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                },
+              ]}
+              onLayout={event => {
+                if (expandedHeight.value === 0) {
+                  expandedHeight.value = event.nativeEvent.layout.height;
+                }
+              }}
+              pointerEvents={showBigView ? 'auto' : 'none'}
+            >
+              <View style={styles.headerRow}>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.titleOrderStatus}>{config.title}</Text>
+                  <Text style={styles.titleOrderStatusDes}>
+                    {config.subtitle}
+                  </Text>
+                </View>
+
+                <View style={styles.toggleButton}>
+                  <Animated.View style={arrowAnimatedStyle}>
+                    <Image
+                      source={images.imgLeftArrow}
+                      tintColor={Colors.white}
+                      style={styles.arrowIcon}
+                    />
+                  </Animated.View>
+                </View>
               </View>
 
-              <View style={styles.toggleButton}>
-                <Animated.View style={arrowAnimatedStyle}>
-                  <Image
-                    source={images.imgLeftArrow}
-                    tintColor={Colors.white}
-                    style={styles.arrowIcon}
-                  />
-                </Animated.View>
-              </View>
-            </View>
+              <Image
+                source={config.image}
+                style={
+                  orderStatus === 'arrived'
+                    ? styles.progressImage2
+                    : styles.progressImage
+                }
+              />
+
+              {config.showEdit && (
+                <TouchableOpacity
+                  style={styles.editButton}
+                  onPress={() => {
+                    navigationRef.navigate(ScreenNames.EDITORDERCONTAINER, {
+                      booking_order_id: orderData?.booking_id,
+                    });
+                  }}
+                >
+                  <Image source={images.pencilblue} tintColor={Colors.white} />
+                  <Text style={styles.lblEditOrder}>
+                    {getTranslation('editorder')}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </Animated.View>
           </Animated.View>
-
-          {/* BIG VIEW */}
-          <Animated.View
-            style={[
-              styles.bigViewContainer,
-              bigViewAnimatedStyle,
-              !showBigView && {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-              },
-            ]}
-            onLayout={event => {
-              if (expandedHeight.value === 0) {
-                expandedHeight.value = event.nativeEvent.layout.height;
-              }
-            }}
-            pointerEvents={showBigView ? 'auto' : 'none'}
-          >
-            <View style={styles.headerRow}>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.titleOrderStatus}>{config.title}</Text>
-                <Text style={styles.titleOrderStatusDes}>
-                  {config.subtitle}
-                </Text>
-              </View>
-
-              <View style={styles.toggleButton}>
-                <Animated.View style={arrowAnimatedStyle}>
-                  <Image
-                    source={images.imgLeftArrow}
-                    tintColor={Colors.white}
-                    style={styles.arrowIcon}
-                  />
-                </Animated.View>
-              </View>
-            </View>
-
-            <Image source={config.image} style={styles.progressImage} />
-
-            {config.showEdit && (
-              <TouchableOpacity style={styles.editButton} onPress={()=>{
-                navigationRef.navigate(ScreenNames.EDITORDERCONTAINER,{
-                  booking_order_id:orderData?.booking_id
-                })
-              }}>
-                <Image source={images.pencilblue} tintColor={Colors.white} />
-                <Text style={styles.lblEditOrder}>
-                  {getTranslation('editorder')}
-                </Text>
-              </TouchableOpacity>
-            )}
-          </Animated.View>
-        </Animated.View>
-      </TouchableOpacity>
-    </Animated.View>
-  );
-}, (prevProps, nextProps) => {
-  // Only re-render if orderStatus actually changes
-  return prevProps.orderStatus === nextProps.orderStatus;
-});
+        </TouchableOpacity>
+      </Animated.View>
+    );
+  },
+  (prevProps, nextProps) => {
+    // Only re-render if orderStatus actually changes
+    return prevProps.orderStatus === nextProps.orderStatus;
+  },
+);
 
 OrderStatusComponent.displayName = 'OrderStatusComponent';
 
@@ -730,6 +747,13 @@ const styles = StyleSheet.create({
     fontFamily: fontsfamily.regular,
     color: Colors.grayAD,
     marginTop: getHeight(4),
+  },
+  progressImage2: {
+    marginBottom: 20,
+    resizeMode: 'stretch',
+    width: '100%',
+    height: 40,
+    marginTop: 20,
   },
   progressImage: {
     width: '100%',

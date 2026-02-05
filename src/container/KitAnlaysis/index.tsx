@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styles } from './styles';
 import KitAnalysisComponent from '../../components/KitAnlaysis';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenNames } from '../../constants/AppConstants';
+import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
+import { flashMessageWarning } from '../../constants/GConstant';
+import { APIManager } from '../../api/APIManager';
 
-const KitAnalysisContainer = ({ navigation }: any) => {
+const KitAnalysisContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
   // const KitAnalysis = {
@@ -215,12 +218,68 @@ const KitAnalysisContainer = ({ navigation }: any) => {
   };
 
   const handlePressCheckout = () => {
-    navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+    // navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+    _reOrder();
   };
 
   const handleNavigationTestDetails = (item: any) => {
     navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
   };
+
+  const _getReportDetails = async () => {
+    try {
+      const params = {
+        booking_id: route?.params?.booking_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.REPORT.GETREPORTDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('getOrderDetails details error:', error);
+    }
+  };
+
+  const _reOrder = async () => {
+    try {
+      const params = {
+        booking_id: route?.params?.booking_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.REPORT.REORDER,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('_reorder details error:', error);
+    }
+  };
+
+  useEffect(() => {
+    _getReportDetails();
+  }, []);
 
   return (
     <KitAnalysisComponent
@@ -229,6 +288,7 @@ const KitAnalysisContainer = ({ navigation }: any) => {
       handleNavigationGoBack={handleNavigationGoBack}
       handleNavigationTestDetails={handleNavigationTestDetails}
       handlePressCheckout={handlePressCheckout}
+      bookingIDParams={route?.params?.booking_id}
     />
   );
 };
