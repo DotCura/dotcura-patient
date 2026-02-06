@@ -224,6 +224,7 @@ import { createBlankStackNavigator } from 'react-native-screen-transitions/blank
 import Transition from 'react-native-screen-transitions';
 import { createStackNavigator } from '@react-navigation/stack';
 import { navigationRef } from '../constants/utils/navigationRef';
+import { useNavigationStore } from '../store/NavigationStore';
 
 /* ---------------- STACKS ---------------- */
 
@@ -413,7 +414,7 @@ const MainNavigation = props => {
         {_addScreen(NativeStack, ScreenNames.CONTACTUSCONTAINER, {
           headerShown: false,
         })}
-
+        
         {/* 🔥 TRANSITION ENTRY */}
         <NativeStack.Screen
           name="TransitionFlow"
@@ -426,12 +427,20 @@ const MainNavigation = props => {
 
   /* ---------------- ROOT ---------------- */
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer ref={navigationRef}  onReady={() => {
+      const route = navigationRef.getCurrentRoute()?.name;
+      useNavigationStore.getState().setCurrentRoute(route);
+    }}
+    onStateChange={() => {
+      const route = navigationRef.getCurrentRoute()?.name;
+      useNavigationStore.getState().setCurrentRoute(route);
+    }}>
       <StatusBar
         barStyle="dark-content"
         translucent
         backgroundColor="transparent"
       />
+      
       <ModalStack.Navigator screenOptions={{ headerShown: false }}>
         <ModalStack.Screen
           name="MainStackScreen"

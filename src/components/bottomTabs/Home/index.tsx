@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { styles } from './styles';
 import { constnatStyles } from '../../../constants/Styles';
 import CustomButton from '../../../global/Buttons';
@@ -27,7 +27,7 @@ import PressScale from '../../../global/PressScale';
 
 const HomeComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
-  
+
   const renderListFooter = () => {
     return (
       <PressScale onPress={props.handleNavigateYourProfileScreen}>

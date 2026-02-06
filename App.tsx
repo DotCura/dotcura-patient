@@ -88,8 +88,6 @@
 //     SplashScreen.hide();
 //   }, []);
 
- 
-
 //   return (
 //     <SafeAreaProvider>
 //       <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
@@ -134,6 +132,9 @@ import {
 import { APIManager } from './src/api/APIManager';
 import { GlobalVar } from './src/constants/GlobalVar';
 import { useSocketConnection } from './src/socket/useSocketConnection';
+import { StripeProvider } from '@stripe/stripe-react-native';
+import { usePaymentInitializer } from './src/global/PaymentModelHelper/usePaymentInitializer';
+import { PaymentPendingModal } from './src/global/PaymentModelHelper/PaymentPendingModal';
 
 LogBox.ignoreAllLogs();
 
@@ -141,13 +142,15 @@ const App = ({ navigation }: any) => {
   // 🔥 CRITICAL: Prevent re-renders by using ref for initialization
   const isAppInitialized = useRef(false);
   const hasHiddenSplash = useRef(false);
-  
+
   const [initialRouteName] = useState<string>(
     ScreenNames.CUSTOMSPLASHCONTAINER,
   );
 
   // Get orderStatus but DON'T cause re-render during splash
-  const orderStatus = ZustandStores.OrderstatusStore(state => state.orderStatus);
+  const orderStatus = ZustandStores.OrderstatusStore(
+    state => state.orderStatus,
+  );
   const patientId = ZustandStores.UserStore(state => state.patientId);
 
   // 🔥 IMPORTANT: Only connect socket AFTER splash is done
@@ -201,15 +204,12 @@ const App = ({ navigation }: any) => {
 
     const initializeApp = async () => {
       console.log('🚀 Initializing app...');
-      
+
       // Run all initialization tasks
-      await Promise.all([
-        bootstrapUser(),
-        _getCredentials(),
-      ]);
+      await Promise.all([bootstrapUser(), _getCredentials()]);
 
       isAppInitialized.current = true;
-      
+
       // Hide splash only once
       if (!hasHiddenSplash.current) {
         SplashScreen.hide();
@@ -223,20 +223,34 @@ const App = ({ navigation }: any) => {
     };
 
     initializeApp();
-  }, []); 
+  }, []);
+
+  usePaymentInitializer(navigation);
 
   return (
-    <SafeAreaProvider>
-      <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
-        <I18nextProvider i18n={i18n}>
-          <AppLayout isOrderPlaced={orderStatus}>
-            <MainNavigation initialRouteName={initialRouteName} />
-          </AppLayout>
-          <Loader ref={ref => setLoaderRef(ref)} />
-          <FlashMessage ref={flashMessageRef} position="top" floating={true} />
-        </I18nextProvider>
-      </KeyboardProvider>
-    </SafeAreaProvider>
+    <StripeProvider
+      publishableKey="pk_test_51SSEO1CS48NNUfFtQxPp5RRBlS7JNu8Bk2VqBYRdA7URh0AxrJHGNGndHDXGNntYfwrfy9ebXKu76P2HSiyqa0jb00ZbUUvy5d"
+      urlScheme="dotcurapatient"
+      // merchantIdentifier="merchant.com.YOURAPP.applepay" // required for Apple Pay
+      setReturnUrlSchemeOnAndroid={true}
+    >
+      <SafeAreaProvider>
+        <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
+          <I18nextProvider i18n={i18n}>
+            <AppLayout isOrderPlaced={orderStatus}>
+              <MainNavigation initialRouteName={initialRouteName} />
+              <PaymentPendingModal />
+            </AppLayout>
+            <Loader ref={ref => setLoaderRef(ref)} />
+            <FlashMessage
+              ref={flashMessageRef}
+              position="top"
+              floating={true}
+            />
+          </I18nextProvider>
+        </KeyboardProvider>
+      </SafeAreaProvider>
+    </StripeProvider>
   );
 };
 

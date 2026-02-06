@@ -73,11 +73,15 @@
 import { useEffect, useRef } from 'react';
 import { ZustandStores } from '../store';
 import SocketService from './SocketService';
+import { usePaymentStore } from '../store/PaymentStore/PaymentStore';
+
 
 const SOCKET_URL = 'http://3.108.139.142:6013/booking';
 
 export const useSocketConnection = (patientId?: string | null) => {
   const { setOrderData, clearOrderData } = ZustandStores.OrderstatusStore();
+  const { setPendingPayment } = usePaymentStore();
+
   
   // 🔥 Prevent multiple connections
   const isConnecting = useRef(false);
@@ -152,10 +156,21 @@ export const useSocketConnection = (patientId?: string | null) => {
       clearOrderData();
     };
 
+    const handleOrderComplete = (data: any) => {
+      console.log('✅ Order completed:', data);
+    
+      const { booking_id } = data;
+    
+      // 🔒 Force payment modal
+      setPendingPayment(booking_id);
+    };
+    
+
     // Register event listeners
     SocketService.on('booking_status', handleBookingStatus);
-    SocketService.on('nurse_assigned', handleNurseAssigned);
-    SocketService.on('order_cancelled', handleOrderCancelled);
+    // SocketService.on('nurse_assigned', handleNurseAssigned);
+    // SocketService.on('order_cancelled', handleOrderCancelled);
+    SocketService.on('order_complete', handleOrderComplete);
 
     isConnecting.current = false;
 
@@ -164,8 +179,10 @@ export const useSocketConnection = (patientId?: string | null) => {
       console.log('🧹 Cleaning up socket listeners');
       
       SocketService.off('booking_status', handleBookingStatus);
-      SocketService.off('nurse_assigned', handleNurseAssigned);
-      SocketService.off('order_cancelled', handleOrderCancelled);
+      SocketService.off('order_complete', handleOrderComplete);
+
+      // SocketService.off('nurse_assigned', handleNurseAssigned);
+      // SocketService.off('order_cancelled', handleOrderCancelled);
       
       // Only disconnect if patient changed or component unmounted
       if (lastPatientId.current !== patientId) {

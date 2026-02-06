@@ -81,6 +81,9 @@ export const ApiEndPoints = {
     GETREPORTDETAILS: `${PATIENT_PREFIX}getReportDetails`,
     REORDER: `${PATIENT_PREFIX}reorder`,
   },
+  PAYMENT: {
+    GETPAYMENTDETAILS: `${PATIENT_PREFIX}get_payment_details`,
+  },
 };
 
 // API methods

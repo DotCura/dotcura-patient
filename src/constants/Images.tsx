@@ -57,6 +57,9 @@ export const images = {
   imgRightTickBlack: require('../assets/images/checkBlack.png'),
   upload: require('../assets/images/upload.png'),
 
+  //PAYMENT
+  imgcallpaymenthistory: require('../assets/images/callpaymentmodel.png'),
+
   //PORFILE
   imgUserProfile: require('../assets/images/userProfile.png'),
   imgBell: require('../assets/images/bell.png'),

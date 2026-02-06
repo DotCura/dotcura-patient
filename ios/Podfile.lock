@@ -3750,7 +3750,7 @@ SPEC CHECKSUMS:
   StripePaymentsUI: 1ae73daeaa9f8006df9f82c45b6b0448722a9d45
   StripeUICore: 08df139d6407e525c14c1edcf8f7fe6802be68ec
   SwiftUIIntrospect: fee9aa07293ee280373a591e1824e8ddc869ba5d
-  Yoga: 922d794dce2af9c437f864bf4093abfa7a131adb
+  Yoga: a3ed390a19db0459bd6839823a6ac6d9c6db198d
 
 PODFILE CHECKSUM: fdc8a65baa53e138cc7757f5a9e9a1abd768abde
 

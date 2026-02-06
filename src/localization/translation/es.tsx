@@ -570,6 +570,11 @@ export default {
   visitmodified: 'Visita modificata',
   canclevisit: 'Visita cancellata',
 
+  ordercompletetitlemodel: 'La visita è conclusa?',
+  ordercompletesubtitlemodel:
+    'Conferma che il prelievo è andato a buon fine e l’infermiere ha finito.',
+    finishorder:"Si, ha finito",
+
   visitconfirmsubtitle: 'Ottime notizie! La visita è confermata per oggi alle',
   minitarrivesubtitle:
     'L’operatore è quasi da te.Tieni d’occhio il telefono o il citofono.',
@@ -579,11 +584,11 @@ export default {
   canclevisitsubtitle:
     'Non aspettare! Puoi richiedere immediatamente una nuova visita.',
 
-    supporttitle:"Serve supporto?",
-    whattapptitle:"Chatta su WhatsApp",
-    whatappsubtitle:"Inviaci un messaggio, ti risponderemo il prima possibile",
-    contacttitle:"Chiamaci",
-    contactsubtitle:"Abbiamo un operatore che risponderà a ogni tua richiesta",
-    whatappbtnname:"Apri WhatsApp",
-    contactbtnname:"Chiama il "
+  supporttitle: 'Serve supporto?',
+  whattapptitle: 'Chatta su WhatsApp',
+  whatappsubtitle: 'Inviaci un messaggio, ti risponderemo il prima possibile',
+  contacttitle: 'Chiamaci',
+  contactsubtitle: 'Abbiamo un operatore che risponderà a ogni tua richiesta',
+  whatappbtnname: 'Apri WhatsApp',
+  contactbtnname: 'Chiama il ',
 };
