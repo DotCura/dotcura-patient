@@ -24,13 +24,16 @@ import { APIManager } from '../../api/APIManager';
 import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 
 export const PaymentPendingModal = () => {
-  const { status, orderDetails } = usePaymentStore();
+  const { status, orderDetails, markPaymentSuccess, activateNext } =
+    usePaymentStore();
 
   console.log('💳 PaymentPendingModal Render:', status, orderDetails);
 
   const currentRoute = useNavigationStore((s: any) => s.currentRoute);
   const isSplash = currentRoute === ScreenNames.CUSTOMSPLASHCONTAINER;
   if (isSplash) return null;
+
+  if (status !== 'pending' || !orderDetails) return null;
 
   const handleFinishOrder = async () => {
     if (!orderDetails?.booking_id) {
@@ -128,6 +131,10 @@ export const PaymentPendingModal = () => {
       Alert.alert(`Error code: ${error.code}`, error.message);
     } else {
       console.log('sucess_payment');
+
+      markPaymentSuccess();
+      activateNext(); // 🔥 MOVE TO NEXT UNPAID
+
       // Example (optimistic):
       // usePaymentStore.getState().markPaymentSuccess();
       // usePaymentStore.getState().resetPayment();
@@ -140,7 +147,7 @@ export const PaymentPendingModal = () => {
 
   return (
     <Modal
-      isVisible={status === 'idle'}
+      isVisible
       animationIn="slideInUp"
       animationOut="slideOutDown"
       backdropOpacity={0.6}
@@ -218,7 +225,7 @@ export const PaymentPendingModal = () => {
                 {getTranslation('service')}
               </Text>
               <Text style={paymentstyles.summaryValue}>
-                {/* {currency} {orderDetails?.homeServiceCharge.toFixed(2)} */}
+                {currency} {orderDetails?.homeServiceCharge}
               </Text>
             </View>
 
@@ -267,7 +274,7 @@ export const PaymentPendingModal = () => {
             btnPress={handleFinishOrder}
           />
           <CustomButton
-            btnTitle={getTranslation('canclereservation')}
+            btnTitle={getTranslation('contactuspaymentmodel')}
             style={{ backgroundColor: Colors.blueD1 }}
             btnicon={true}
             btnImage={images.imgcallpaymenthistory}

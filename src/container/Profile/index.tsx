@@ -15,6 +15,7 @@ import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 import { APIManager } from '../../api/APIManager';
 import { GlobalVar } from '../../constants/GlobalVar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePaymentStore } from '../../store/PaymentStore/PaymentStore';
 
 const ProfileContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -106,7 +107,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       iscurv: false,
     },
   ];
-  
+
   const dataThree = [
     {
       id: '1',
@@ -208,11 +209,13 @@ const ProfileContainer = ({ navigation, route }: any) => {
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           handleNavigation();
-          await AsyncStorage.removeItem('cart-store');
           resetCart();
           resetNotificationCount();
           clearOrderData();
+          usePaymentStore.getState().resetAll();
           logout();
+          await AsyncStorage.removeItem('cart-store');
+          await AsyncStorage.removeItem('payment-store');
           flashMessageSucess(responseData.message);
         } else {
           flashMessageSucess(responseData.message);

@@ -574,6 +574,7 @@ export default {
   ordercompletesubtitlemodel:
     'Conferma che il prelievo è andato a buon fine e l’infermiere ha finito.',
     finishorder:"Si, ha finito",
+    contactuspaymentmodel:"Contatta il supporto",
 
   visitconfirmsubtitle: 'Ottime notizie! La visita è confermata per oggi alle',
   minitarrivesubtitle:

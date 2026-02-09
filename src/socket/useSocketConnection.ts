@@ -1,86 +1,19 @@
 
 
-// import { useEffect } from 'react';
-// import { ZustandStores } from '../store';
-// import SocketService from './SocketService';
-
-// const SOCKET_URL = 'http://3.108.139.142:6013/booking';
-
-// export const useSocketConnection = (patientId?: string | null) => {
-//   const { setOrderData, clearOrderData } =
-//     ZustandStores.OrderstatusStore();
-
-//   useEffect(() => {
-//     // 🔴 No patient → disconnect socket
-//     if (!patientId) {
-//       if (SocketService.isConnected()) {
-//         console.log('🔌 Disconnecting socket (no patient)');
-//         SocketService.disconnect();
-//       }
-//       clearOrderData();
-//       return;
-//     }
-
-//     // 🟢 Patient available → connect socket
-//     console.log('🔌 Connecting socket for patient:', patientId);
-
-//     SocketService.connect({
-//       url: SOCKET_URL,
-//       userId: patientId,
-//       role: 'P', // Patient
-//     });
-
-//     // ---- SOCKET EVENTS ----
-
-//     const handleBookingStatus = (data: any) => {
-//       console.log('📦 Booking Status Update:', data);
-
-//       const { booking_id, status, time,name } = data;
-
-//       setOrderData({
-//         booking_id,
-//         status,
-//         time,
-//         name
-//       });
-//     };
-
-//     SocketService.on('booking_status', handleBookingStatus);
-
-//     SocketService.on('nurse_assigned', (data:any) => {
-//       console.log('👨‍⚕️ Nurse Assigned:', data);
-//     });
-
-//     SocketService.on('order_cancelled', (data:any) => {
-//       console.log('❌ Order Cancelled:', data);
-//       clearOrderData();
-//     });
-
-//     // 🧹 Cleanup on patient change / unmount
-//     return () => {
-//       SocketService.off('booking_status', handleBookingStatus);
-//       SocketService.off('nurse_assigned');
-//       SocketService.off('order_cancelled');
-//       SocketService.disconnect();
-//     };
-//   }, [patientId, setOrderData, clearOrderData]);
-
-//   return {
-//     isConnected: SocketService.isConnected(),
-//   };
-// };
-
 import { useEffect, useRef } from 'react';
 import { ZustandStores } from '../store';
 import SocketService from './SocketService';
 import { usePaymentStore } from '../store/PaymentStore/PaymentStore';
+import { APIManager } from '../api/APIManager';
+import { navigationRef } from '../constants/utils/navigationRef';
+import { ApiEndPoints, MethodType } from '../api/APIConstant';
 
 
 const SOCKET_URL = 'http://3.108.139.142:6013/booking';
 
 export const useSocketConnection = (patientId?: string | null) => {
   const { setOrderData, clearOrderData } = ZustandStores.OrderstatusStore();
-  const { setPendingPayment } = usePaymentStore();
+  const hydrateQueue = usePaymentStore((s) => s.hydrateQueue);
 
   
   // 🔥 Prevent multiple connections
@@ -156,13 +89,30 @@ export const useSocketConnection = (patientId?: string | null) => {
       clearOrderData();
     };
 
-    const handleOrderComplete = (data: any) => {
-      console.log('✅ Order completed:', data);
+    // const handleOrderComplete = (data: any) => {
+    //   console.log('✅ Order completed:', data);
     
-      const { booking_id } = data;
+    //   const { booking_id } = data;
     
-      // 🔒 Force payment modal
-      setPendingPayment(booking_id);
+    //   // 🔒 Force payment modal
+    //   setPendingPayment(booking_id);
+    // };
+
+    const refreshPayments = async () => {
+      await APIManager.makeRequest({
+        navigation: navigationRef,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.PAYMENT.GET_PENDING_PAYMENT_LIST,
+        callback: (res: any) => {
+          if (res.code === 1) {
+            const unpaid = res.data
+              .filter((b: any) => b.payment_status === 'unpaid')
+              .map((b: any) => b.booking_id);
+
+            hydrateQueue(unpaid);
+          }
+        },
+      });
     };
     
 
@@ -170,7 +120,7 @@ export const useSocketConnection = (patientId?: string | null) => {
     SocketService.on('booking_status', handleBookingStatus);
     // SocketService.on('nurse_assigned', handleNurseAssigned);
     // SocketService.on('order_cancelled', handleOrderCancelled);
-    SocketService.on('order_complete', handleOrderComplete);
+    SocketService.on('order_complete', refreshPayments);
 
     isConnecting.current = false;
 
@@ -179,7 +129,7 @@ export const useSocketConnection = (patientId?: string | null) => {
       console.log('🧹 Cleaning up socket listeners');
       
       SocketService.off('booking_status', handleBookingStatus);
-      SocketService.off('order_complete', handleOrderComplete);
+      SocketService.off('order_complete', refreshPayments);
 
       // SocketService.off('nurse_assigned', handleNurseAssigned);
       // SocketService.off('order_cancelled', handleOrderCancelled);

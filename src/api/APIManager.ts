@@ -18,6 +18,7 @@ import { MmkvManager } from '../constants/utils/MmkvManager';
 import { ZustandStores } from '../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserStore from '../store/UserStore/UserStore';
+import { usePaymentStore } from '../store/PaymentStore/PaymentStore';
 
 /* =======================
    Encryption constants
@@ -51,7 +52,7 @@ export const APIManager = {
       'api-key': ApiHeaderKeyValue.API_KEY_VALUE,
       'accept-language': 'en',
       'content-type': 'text/plain',
-      "timezone": Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
   },
 
@@ -99,7 +100,7 @@ export const APIManager = {
   }: any) => {
     /* ---- Internet check ---- */
     const netInfo = await NetInfo.fetch();
-    
+
     if (!netInfo.isConnected) {
       callback({
         code: 97,
@@ -209,6 +210,7 @@ export const APIManager = {
       resetNotificationCount();
       clearOrderData();
       UserStore.getState().logout();
+      usePaymentStore.getState().resetAll();
       MmkvManager.clearAllExcept([MmkvManager.Keys.isOnBoardingVisisted]);
       navigation.dispatch(
         CommonActions.reset({
