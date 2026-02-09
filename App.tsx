@@ -229,7 +229,7 @@ const App = ({ navigation }: any) => {
 
   return (
     <StripeProvider
-      publishableKey="pk_test_51SSEO1CS48NNUfFtQxPp5RRBlS7JNu8Bk2VqBYRdA7URh0AxrJHGNGndHDXGNntYfwrfy9ebXKu76P2HSiyqa0jb00ZbUUvy5d"
+      publishableKey="pk_test_51SSFGhEHGGgg2T7x7trk2rIV2mIoZo2u3jERAm2PXCPVYCBmCyjVynjpursvu49ixVQeZ4LjyqkuwX02RkmnDuFc00EpCuEJjI"
       urlScheme="dotcurapatient"
       // merchantIdentifier="merchant.com.YOURAPP.applepay" // required for Apple Pay
       setReturnUrlSchemeOnAndroid={true}

@@ -538,6 +538,7 @@ const HomeContainer = ({ navigation }: any) => {
         method: MethodType.POST,
         apiEndPoint: ApiEndPoints.FAMILY.FAMILYMEMBERREPORTDETAILS,
         callback,
+        showLoader:false,
         params,
       });
     } catch (error) {

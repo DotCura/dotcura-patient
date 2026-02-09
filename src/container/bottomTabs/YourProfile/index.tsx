@@ -65,9 +65,9 @@ const YourProfileContainer = ({ navigation }: any) => {
         activeOpacity={activityOpacity}
         key={index}
         style={styles.vwReportDate}
-        // onPress={() => {
-        //   hanldeNavigateKitAnalysis(item?.booking_id);
-        // }}
+        onPress={() => {
+          hanldeNavigateKitAnalysis(item?.booking_id);
+        }}
       >
         <View style={styles.vwLightBlue}></View>
         <View>

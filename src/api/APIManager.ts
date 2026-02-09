@@ -99,7 +99,6 @@ export const APIManager = {
   }: any) => {
     /* ---- Internet check ---- */
     const netInfo = await NetInfo.fetch();
-    console.log("netInfo.isConnected",netInfo.isConnected);
     
     if (!netInfo.isConnected) {
       callback({

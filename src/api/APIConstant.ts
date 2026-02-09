@@ -83,6 +83,7 @@ export const ApiEndPoints = {
   },
   PAYMENT: {
     GETPAYMENTDETAILS: `${PATIENT_PREFIX}get_payment_details`,
+    CREATEPAYMENTINTENT: `${PATIENT_PREFIX}create_payment_intent`,
   },
 };
 

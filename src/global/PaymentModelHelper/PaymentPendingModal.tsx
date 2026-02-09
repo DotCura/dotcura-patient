@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import Modal from 'react-native-modal';
 import { usePaymentStore } from '../../store/PaymentStore/PaymentStore';
 import { Colors } from '../../constants/Colors';
@@ -21,62 +21,57 @@ import {
   presentPaymentSheet,
 } from '@stripe/stripe-react-native';
 import { APIManager } from '../../api/APIManager';
-import { ApiEndPoints, MethodType } from '../../api/APIConstant';
+import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 
 export const PaymentPendingModal = () => {
   const { status, orderDetails } = usePaymentStore();
 
-  //   console.log('💳 PaymentPendingModal Render:', status, orderDetails);
+  console.log('💳 PaymentPendingModal Render:', status, orderDetails);
 
   const currentRoute = useNavigationStore((s: any) => s.currentRoute);
   const isSplash = currentRoute === ScreenNames.CUSTOMSPLASHCONTAINER;
   if (isSplash) return null;
 
-//   const handleFinishOrder = async () => {
-//     try {
-//       if (!orderDetails?.booking_id) {
-//         flashMessageWarning('Booking not found');
-//         return;
-//       }
-  
-//       // 1️⃣ Call backend to create payment intent
-//       const params = {
-//         booking_id: orderDetails.booking_id,
-//       };
-  
-//       const callback = async (responseData: any) => {
-//         if (responseData.code !== 200) {
-//           flashMessageWarning(responseData.message);
-//           return;
-//         }
-  
-//         const { customer, ephemeralKey, paymentIntent } =
-//           responseData.data;
-  
-//         // 2️⃣ Initialize Stripe Payment Sheet
-//         await initializePaymentSheet(
-//           customer,
-//           ephemeralKey,
-//           paymentIntent
-//         );
-  
-//         // 3️⃣ Open Stripe UI
-//         await openPaymentSheet();
-//       };
-  
-//       await APIManager.makeRequest({
-//         navigation: navigationRef,
-//         method: MethodType.POST,
-//         apiEndPoint: ApiEndPoints.PAYMENT.CREATEPAYMENTINTENT,
-//         callback,
-//         params,
-//       });
-//     } catch (error) {
-//       console.log('❌ Payment init error:', error);
-//       flashMessageWarning('Unable to start payment');
-//     }
-//   };
-  
+  const handleFinishOrder = async () => {
+    if (!orderDetails?.booking_id) {
+      flashMessageWarning('Booking not found');
+      return;
+    }
+
+    try {
+      const params = {
+        booking_id: orderDetails.booking_id,
+        amount: orderDetails?.summary?.total,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          console.log('insucess');
+          const { customer, ephemeralKey, paymentIntent } = responseData.data;
+
+          // 2️⃣ Initialize Stripe Payment Sheet
+          await initializePaymentSheet(customer, ephemeralKey, paymentIntent);
+
+          // 3️⃣ Open Stripe UI
+          setTimeout(async () => {
+            await openPaymentSheet();
+          }, 500);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigationRef,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.PAYMENT.CREATEPAYMENTINTENT,
+        params,
+        callback,
+      });
+    } catch (error) {
+      console.log('create payment intent error:', error);
+    }
+  };
 
   // <##################### Stripe Start ###########################>
 
@@ -85,6 +80,8 @@ export const PaymentPendingModal = () => {
     ephemeralKey: any,
     paymentIntent: any,
   ) => {
+    console.log('💳 initializePaymentSheet called');
+
     try {
       const { error } = await initPaymentSheet({
         // Required - client secret from your payment intent
@@ -98,11 +95,11 @@ export const PaymentPendingModal = () => {
         merchantDisplayName: 'Dotcura',
         style: 'automatic',
 
-        applePay: {
-          merchantCountryCode: 'US',
-        },
+        // applePay: {
+        //   merchantCountryCode: 'US',
+        // },
         googlePay: {
-          testEnv: false,
+          testEnv: true,
           merchantCountryCode: 'US',
           buttonType: 0,
         },
@@ -122,16 +119,20 @@ export const PaymentPendingModal = () => {
   };
 
   const openPaymentSheet = async () => {
+    console.log('💳 openPaymentSheet called');
+
     const { error } = await presentPaymentSheet();
 
     if (error) {
       flashMessageWarning(error.message);
-      // Alert.alert(`Error code: ${error.code}`, error.message);
+      Alert.alert(`Error code: ${error.code}`, error.message);
     } else {
-      //   navigationRef?.navigate(ScreenNames.RATEANDREVIEWCONTAINER);
       console.log('sucess_payment');
+      // Example (optimistic):
+      // usePaymentStore.getState().markPaymentSuccess();
+      // usePaymentStore.getState().resetPayment();
 
-      //   setModelVisible(true);
+      //   navigationRef?.navigate(ScreenNames.RATEANDREVIEWCONTAINER);
     }
   };
 
@@ -139,7 +140,7 @@ export const PaymentPendingModal = () => {
 
   return (
     <Modal
-      isVisible={status === 'pending'}
+      isVisible={status === 'idle'}
       animationIn="slideInUp"
       animationOut="slideOutDown"
       backdropOpacity={0.6}
@@ -263,7 +264,7 @@ export const PaymentPendingModal = () => {
           <CustomButton
             btnTitle={getTranslation('finishorder')}
             btnicon={false}
-            // btnPress={handleFinishOrder}
+            btnPress={handleFinishOrder}
           />
           <CustomButton
             btnTitle={getTranslation('canclereservation')}
