@@ -30,6 +30,7 @@ import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
 import Modal from 'react-native-modal';
 import PressScale from '../../global/PressScale';
 import { GlobalVar } from '../../constants/GlobalVar';
+import { CustomerSheet } from '@stripe/stripe-react-native';
 
 const CheckoutComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -163,8 +164,7 @@ const CheckoutComponent = (props: any) => {
           {/* vwkitList */}
           <View>
             <FlatList
-              onEndReached={() => {
-              }}
+              onEndReached={() => {}}
               data={props.testkitsData}
               renderItem={props.renderItemTestKits}
               showsVerticalScrollIndicator={false}
@@ -403,6 +403,29 @@ const CheckoutComponent = (props: any) => {
             /> */}
           </View>
         </KeyboardAwareScrollView>
+      )}
+
+      {props.showCustomerSheet && (
+        <CustomerSheet.Component
+          visible={props.showCustomerSheet}
+          customerId={props.stripeCustomerId}
+          customerEphemeralKeySecret={props.stripeEphemeralKey}
+          merchantDisplayName="DotCura"
+          onResult={(result: any) => {
+            console.log('result', result);
+
+            if (result.error) {
+              console.log('CustomerSheet Error:', result.error);
+              props.setShowCustomerSheet(false);
+              return;
+            }
+
+            if (result.paymentMethod?.id) {
+              console.log('Selected PM ID:', result.paymentMethod.id);
+              props._addCardapi(result.paymentMethod?.id);
+            }
+          }}
+        />
       )}
 
       {/* TIMESLOTMODEL */}
@@ -727,7 +750,7 @@ const CheckoutComponent = (props: any) => {
         backdropOpacity={0.6}
         onBackdropPress={props.funCloseEditAnaliti}
         onBackButtonPress={props.funCloseEditAnaliti}
-        style={{ margin: 0 }} 
+        style={{ margin: 0 }}
       >
         <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View
@@ -984,7 +1007,7 @@ const CheckoutComponent = (props: any) => {
                     onPlaceSelect={(place: any) => {
                       props.handlePlaceSelect(place);
 
-                      props.setSearchAddress(place?.text?.text || ''); 
+                      props.setSearchAddress(place?.text?.text || '');
                     }}
                     value={props.searchAddress} // ✅ REQUIRED
                     onChangeText={props.setSearchAddress}
@@ -1122,7 +1145,7 @@ const CheckoutComponent = (props: any) => {
         backdropOpacity={0.6}
         onBackdropPress={props.funCloseCancleOrder}
         onBackButtonPress={props.funCloseCancleOrder}
-        style={{ margin: 0 }} 
+        style={{ margin: 0 }}
       >
         <View style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View

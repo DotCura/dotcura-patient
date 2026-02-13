@@ -584,6 +584,7 @@ export default {
     'L’infermiere ci ha comunicato che verrà a casa tua entro le',
   canclevisitsubtitle:
     'Non aspettare! Puoi richiedere immediatamente una nuova visita.',
+    ratingvalidation:"Seleccione una calificación antes de enviar su reseña.",
 
   supporttitle: 'Serve supporto?',
   whattapptitle: 'Chatta su WhatsApp',
@@ -592,4 +593,5 @@ export default {
   contactsubtitle: 'Abbiamo un operatore che risponderà a ogni tua richiesta',
   whatappbtnname: 'Apri WhatsApp',
   contactbtnname: 'Chiama il ',
+  indevelopment:"In fase di sviluppo",
 };

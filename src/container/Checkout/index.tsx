@@ -51,14 +51,14 @@ import FastImage from '@d11/react-native-fast-image';
 import { fontsfamily } from '../../constants/FontFamily';
 import { GlobalVar } from '../../constants/GlobalVar';
 import SocketService from '../../socket/SocketService';
+import { CustomerSheet } from '@stripe/stripe-react-native';
 
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
 
   //ZUSTANDVARIABLES
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
-  const {  addKit, removeKit, increment, resetCart } =
-    ZustandStores.CartStore();
+  const { addKit, removeKit, increment, resetCart } = ZustandStores.CartStore();
 
   //CHECKOUT VARIABLES
   const [testkitsData, setTestsKitData] = useState<any>([]);
@@ -72,8 +72,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
   const [cartLoaded, setCartLoaded] = useState(false);
 
-  console.log("Intl.DateTimeFormat().resolvedOptions().timeZone",typeof Intl.DateTimeFormat().resolvedOptions().timeZone);
-  
+  // console.log("Intl.DateTimeFormat().resolvedOptions().timeZone",typeof Intl.DateTimeFormat().resolvedOptions().timeZone);
+  console.log('testkitdata', testkitsData[0]?.has_card);
 
   //EDITANALITIVARIABLES
   const [analitiArrayData, setAnalitiArraysData] = useState<any>({});
@@ -98,7 +98,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
-  
+
   const [selectedTab, setSelectedTab] = useState('checkup'); // 'checkup' or 'analiti'
   const apiDate = formatTestDateForAPI(selectedDate);
   const startTime = selectedTime.split(' - ')[0];
@@ -397,6 +397,13 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
     if (!isValid) return;
 
+    // 🔥 If user has NO card → open Stripe
+    if (testkitsData[0]?.has_card === 0) {
+      openCustomerSheet();
+      return;
+    }
+
+    // ✅ If user already has card → directly book order
     _bookOrder();
   };
 
@@ -1428,9 +1435,66 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     _updateCartAnaliti();
   };
 
-  
-
   //BOOKORDERAPI
+
+  const [showCustomerSheet, setShowCustomerSheet] = useState(false);
+  const [stripeCustomerId, setStripeCustomerId] = useState<string>('');
+  const [stripeEphemeralKey, setStripeEphemeralKey] = useState<string>('');
+
+  const openCustomerSheet = async () => {
+    try {
+      const callback = async (responseData: any) => {
+        if (responseData.code !== StatusCode.SUCCESS) {
+          flashMessageWarning(responseData.message);
+          return;
+        }
+
+        const { customer, ephemeralKey } = responseData.data;
+
+        setStripeCustomerId(customer);
+        setStripeEphemeralKey(ephemeralKey);
+
+        // 🔥 show sheet
+        setShowCustomerSheet(true);
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.PAYMENT.CREATECUSTOMERCARDINTENT,
+        callback,
+      });
+    } catch (error) {
+      console.log('CreateIntent error:', error);
+    }
+  };
+
+  const _addCardapi = async (payment_Method_Id: any) => {
+    try {
+      const params = {
+        paymentMethodId: payment_Method_Id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          _bookOrder();
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.PAYMENT.ADDCARD,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('_addCardapi error:', error);
+    }
+  };
+
   const _bookOrder = async () => {
     try {
       const params = {
@@ -1538,8 +1602,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       setAppliedValue(null);
     }
   };
-
-  
 
   return (
     <CheckoutComponent
@@ -1654,6 +1716,12 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       analiticount={analiticount}
       funGetTestedContainer={funGetTestedContainer}
       appliedCoupon={appliedCoupon}
+      showCustomerSheet={showCustomerSheet}
+      setShowCustomerSheet={setShowCustomerSheet}
+      stripeCustomerId={stripeCustomerId}
+      stripeEphemeralKey={stripeEphemeralKey}
+      _bookOrder={_bookOrder}
+      _addCardapi={_addCardapi}
     />
   );
 };

@@ -61,6 +61,7 @@ const ContactUsComponent = (props: any) => {
                   {item.subtitle}
                 </Text>
                 <CustomButton
+                  btnPress={item.btnPressfun}
                   btnTitle={item.btnName}
                   style={{ backgroundColor: Colors.blueD1 }}
                   textStyle={{ color: Colors.blue002 }}

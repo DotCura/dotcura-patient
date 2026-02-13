@@ -227,11 +227,12 @@ const App = ({ navigation }: any) => {
 
   usePaymentInitializer(navigation);
 
+  //jayshaikey:pk_test_51SSFGhEHGGgg2T7x7trk2rIV2mIoZo2u3jERAm2PXCPVYCBmCyjVynjpursvu49ixVQeZ4LjyqkuwX02RkmnDuFc00EpCuEJjI
   return (
     <StripeProvider
-      publishableKey="pk_test_51SSFGhEHGGgg2T7x7trk2rIV2mIoZo2u3jERAm2PXCPVYCBmCyjVynjpursvu49ixVQeZ4LjyqkuwX02RkmnDuFc00EpCuEJjI"
-      urlScheme="dotcurapatient"
-      // merchantIdentifier="merchant.com.YOURAPP.applepay" // required for Apple Pay
+      publishableKey="pk_test_51SSEOACJL1MzBMMlLtkE5S91t0A9SfWFAPAI2PyPTuaXflMRIkfgT9sNee2uPPTBqxiSedyMDV4AFxlq6m63dyNS00zSzuaGdv"
+      urlScheme="dotcura"
+      merchantIdentifier="merchant.com.dotcura.app" // required for Apple Pay
       setReturnUrlSchemeOnAndroid={true}
     >
       <SafeAreaProvider>
@@ -239,7 +240,7 @@ const App = ({ navigation }: any) => {
           <I18nextProvider i18n={i18n}>
             <AppLayout isOrderPlaced={orderStatus}>
               <MainNavigation initialRouteName={initialRouteName} />
-              <PaymentPendingModal />
+              {/* <PaymentPendingModal /> */}
             </AppLayout>
             <Loader ref={ref => setLoaderRef(ref)} />
             <FlashMessage

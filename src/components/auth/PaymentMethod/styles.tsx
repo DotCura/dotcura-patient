@@ -25,4 +25,6 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: getHeight(8),
   },
+  btnDelete: {
+  },
 });

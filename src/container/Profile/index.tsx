@@ -63,15 +63,15 @@ const ProfileContainer = ({ navigation, route }: any) => {
       },
       iscurv: true,
     },
-    // {
-    //   id: '4',
-    //   title: getTranslation('paymentmethod'),
-    //   image: images.imgCard,
-    //   onpressfun: () => {
-    //     navigation.navigate(ScreenNames.PAYMENTMETHODCONTAINER);
-    //   },
-    //   iscurv: true,
-    // },
+    {
+      id: '4',
+      title: getTranslation('paymentmethod'),
+      image: images.imgCard,
+      onpressfun: () => {
+        navigation.navigate(ScreenNames.PAYMENTMETHODCONTAINER);
+      },
+      iscurv: true,
+    },
     {
       id: '5',
       title: getTranslation('addresss'),

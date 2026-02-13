@@ -84,7 +84,13 @@ export const ApiEndPoints = {
   PAYMENT: {
     GETPAYMENTDETAILS: `${PATIENT_PREFIX}get_payment_details`,
     CREATEPAYMENTINTENT: `${PATIENT_PREFIX}create_payment_intent`,
+    CREATECUSTOMERCARDINTENT: `${PATIENT_PREFIX}create_customer_card_intent`,
     GET_PENDING_PAYMENT_LIST: `${PATIENT_PREFIX}get_pending_payment_list`,
+    RATEANDREVIEW: `${PATIENT_PREFIX}addEditRate`,
+    CARDLIST: `${PATIENT_PREFIX}get_card`,
+    ADDCARD: `${PATIENT_PREFIX}add_card`,
+    SETDEFAULTCARD: `${PATIENT_PREFIX}default_card`,
+    DELETECARD: `${PATIENT_PREFIX}delete_card`,
   },
 };
 
