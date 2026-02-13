@@ -50,7 +50,7 @@ export const APIManager = {
   getHeader: () => {
     return {
       'api-key': ApiHeaderKeyValue.API_KEY_VALUE,
-      'accept-language': 'en',
+      'accept-language': 'es',
       'content-type': 'text/plain',
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };

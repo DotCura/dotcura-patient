@@ -424,8 +424,12 @@ const YourProfileComponent = (props: any) => {
         <FlatList
           onEndReached={props.AnalitiList.loadMore}
           onEndReachedThreshold={0.5}
-          refreshing={props.AnalitiList.refreshing}
-          onRefresh={props.AnalitiList.refresh}
+          refreshing={
+            props.AnalitiList.refreshing ||
+            props.familyMemberList.refreshing ||
+            props.pendingOrder.refreshing
+          }
+          onRefresh={props.handleRefresh}
           ListFooterComponent={
             props.AnalitiList.loadingMore ? (
               <ActivityIndicator size="large" color={Colors.blue002} />

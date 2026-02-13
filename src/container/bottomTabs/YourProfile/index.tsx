@@ -547,8 +547,15 @@ const YourProfileContainer = ({ navigation }: any) => {
     }
   }, [selectedFamilyId]);
 
+  const handleRefresh = () => {
+    AnalitiList.refresh();
+    familyMemberList.refresh();
+    pendingOrder.refresh();
+  };
+
   return (
     <YourProfileComponent
+      handleRefresh={handleRefresh}
       pendingOrder={pendingOrder}
       insets={insets}
       renderItemLatestAnalysis={renderItemLatestAnalysis}
@@ -572,6 +579,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       searchHistory={searchHistory}
       setSeachHistory={setSeachHistory}
       orders={orders}
+      familyMemberList={familyMemberList}
     />
   );
 };
