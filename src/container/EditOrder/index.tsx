@@ -58,8 +58,10 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const booking_order_id = route?.params?.booking_order_id;
 
   console.log("'booking_order_id'", booking_order_id);
-  console.log("timezone", typeof Intl.DateTimeFormat().resolvedOptions().timeZone);
-  
+  console.log(
+    'timezone',
+    typeof Intl.DateTimeFormat().resolvedOptions().timeZone,
+  );
 
   //ZUSTANDVARIABLES
   const { orderStatus, setOrderStatus } = ZustandStores.OrderstatusStore();
@@ -68,6 +70,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
   //CHECKOUT VARIABLES
   const [testkitsData, setTestsKitData] = useState<any>([]);
+
   const [familymemberValue, setFamilyMemberValue] = useState<string | null>(
     '0',
   );
@@ -77,6 +80,8 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const [editAnlitiPopupVisible, setEditAnalitiPopupVisible] = useState(false);
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
   const [cartLoaded, setCartLoaded] = useState(false);
+  const [hasCard, setHasCard] = useState(null);
+  console.log('hasCard===============', hasCard);
 
   //EDITANALITIVARIABLES
   const [analitiArrayData, setAnalitiArraysData] = useState<any>({});
@@ -306,8 +311,6 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     checkup?.reset();
     analiti?.reset();
   };
- 
-  
 
   const handleBookSlot = () => {
     const localDate =
@@ -413,6 +416,12 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     const isValid = validateBeforeOrder();
 
     if (!isValid) return;
+
+    // 🔥 If user has NO card → open Stripe
+    if (hasCard === 0) {
+      openCustomerSheet();
+      return;
+    }
 
     _editOrder();
   };
@@ -1496,6 +1505,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       setAppliedValue(null);
     }
   };
+
   const _checkCouponApiverify = async (
     discountCode: any,
     subtotlavalue: any,
@@ -1614,6 +1624,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     }));
 
     setTestsKitData(formattedKits);
+    setHasCard(data?.has_card);
 
     // 7️⃣ Cart is already loaded
     setCartLoaded(true);
@@ -1855,6 +1866,64 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     }
   };
 
+  const [showCustomerSheet, setShowCustomerSheet] = useState(false);
+  const [stripeCustomerId, setStripeCustomerId] = useState<string>('');
+  const [stripeEphemeralKey, setStripeEphemeralKey] = useState<string>('');
+
+  const openCustomerSheet = async () => {
+    try {
+      const callback = async (responseData: any) => {
+        if (responseData.code !== StatusCode.SUCCESS) {
+          flashMessageWarning(responseData.message);
+          return;
+        }
+
+        const { customer, ephemeralKey } = responseData.data;
+
+        setStripeCustomerId(customer);
+        setStripeEphemeralKey(ephemeralKey);
+
+        // 🔥 show sheet
+        setShowCustomerSheet(true);
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.PAYMENT.CREATECUSTOMERCARDINTENT,
+        callback,
+      });
+    } catch (error) {
+      console.log('CreateIntent error:', error);
+    }
+  };
+
+  const _addCardapi = async (payment_Method_Id: any) => {
+    try {
+      const params = {
+        paymentMethodId: payment_Method_Id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          _editOrder();
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.PAYMENT.ADDCARD,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('_addCardapi error:', error);
+    }
+  };
+
   return (
     <EditOrderComponent
       cartLoaded={cartLoaded}
@@ -1970,6 +2039,12 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       appliedCoupon={appliedCoupon}
       _cancleOrderItem={_cancleOrderItem}
       _cancleOrder={_cancleOrder}
+      showCustomerSheet={showCustomerSheet}
+      setShowCustomerSheet={setShowCustomerSheet}
+      stripeCustomerId={stripeCustomerId}
+      stripeEphemeralKey={stripeEphemeralKey}
+      _editOrder={_editOrder}
+      _addCardapi={_addCardapi}
     />
   );
 };

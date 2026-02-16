@@ -30,6 +30,7 @@ import PrimaryTitleTextInput from '../../global/PrimaryTitleTextInput';
 import Modal from 'react-native-modal';
 import PressScale from '../../global/PressScale';
 import { GlobalVar } from '../../constants/GlobalVar';
+import { CustomerSheet } from '@stripe/stripe-react-native';
 
 const EditOrderComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -400,6 +401,29 @@ const EditOrderComponent = (props: any) => {
             />
           </View>
         </KeyboardAwareScrollView>
+      )}
+
+      {props.showCustomerSheet && (
+        <CustomerSheet.Component
+          visible={props.showCustomerSheet}
+          customerId={props.stripeCustomerId}
+          customerEphemeralKeySecret={props.stripeEphemeralKey}
+          merchantDisplayName="DotCura"
+          onResult={(result: any) => {
+            console.log('result', result);
+
+            if (result.error) {
+              console.log('CustomerSheet Error:', result.error);
+              props.setShowCustomerSheet(false);
+              return;
+            }
+
+            if (result.paymentMethod?.id) {
+              console.log('Selected PM ID:', result.paymentMethod.id);
+              props._addCardapi(result.paymentMethod?.id);
+            }
+          }}
+        />
       )}
 
       {/* TIMESLOTMODEL */}

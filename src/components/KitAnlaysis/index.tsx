@@ -25,6 +25,7 @@ import {
   activityOpacity,
   currency,
   formatDateToSpanish,
+  formatSampleDate24,
 } from '../../constants/GConstant';
 import CustomButton from '../../global/Buttons';
 import { fontsfamily } from '../../constants/FontFamily';
@@ -32,19 +33,30 @@ import { fontSize } from '../../constants/FontSizes';
 
 const KitAnalysisComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
-  const KitAnalysisProps = props.KitAnalysisData;
+  const KitAnalysisProps = props?.KitAnalysisData;
   const totalStars = 5;
 
+  // const formatKits = (kits: any[]) => {
+  //   return kits
+  //     .map(item => {
+  //       const kitName = item?.kitname || '';
+  //       const count = item?.kittest?.length || 0;
+  //       const label =
+  //         item.kitype === 'kit' ? getTranslation('kitlabeltextcheckout') : '';
+  //       return `${label}${kitName} (${count})`;
+  //     })
+  //     .join(' , ');
+  // };
   const formatKits = (kits: any[]) => {
+    if (!kits?.length) return '';
+
     return kits
-      .map(item => {
-        const kitName = item?.kitname || '';
-        const count = item?.kittest?.length || 0;
-        const label =
-          item.kitype === 'kit' ? getTranslation('kitlabeltextcheckout') : '';
-        return `${label}${kitName} (${count})`;
+      .map(kit => {
+        const kitName = kit?.kit?.name ?? '';
+        const count = kit?.total_tests ?? 0;
+        return `${kitName} (${count})`;
       })
-      .join(' , ');
+      .join(' + ');
   };
 
   const RenderHeader = ({ KitAnalysisProps, totalStars }: any) => {
@@ -56,27 +68,32 @@ const KitAnalysisComponent = (props: any) => {
           style={styles.imgKitAnalysisBack}
         >
           <Text style={styles.lblCurrency}>
-            {currency} {KitAnalysisProps.price}
+            {currency} {KitAnalysisProps?.booking_details?.total}
           </Text>
 
           <View style={styles.vwAnlysisOfAndDate}>
             <Text style={styles.lblAnalysisOf}>
               {getTranslation('analsisOf')}
             </Text>
-            <Text style={styles.lblOrderPlaceDate}>
-              {formatDateToSpanish(KitAnalysisProps.date)}
-            </Text>
+            {KitAnalysisProps?.booking_details?.test_date && (
+              <Text style={styles.lblOrderPlaceDate}>
+                {formatDateToSpanish(
+                  KitAnalysisProps?.booking_details?.test_date,
+                )}
+              </Text>
+            )}
           </View>
         </ImageBackground>
 
         {/* ORDER ID + KIT DETAILS */}
         <View style={styles.veOrderIdKitDetails}>
           <Text style={styles.lblOrderId}>
-            {getTranslation('orderidlabel')} {KitAnalysisProps.orderid}
+            {getTranslation('orderidlabel')} #
+            {KitAnalysisProps?.booking_details?.booking_number}
           </Text>
 
           <Text style={styles.kitandtestdetails}>
-            {formatKits(KitAnalysisProps.kits)}
+            {formatKits(KitAnalysisProps?.kits)}
           </Text>
         </View>
 
@@ -126,7 +143,9 @@ const KitAnalysisComponent = (props: any) => {
                     {getTranslation('samplecollectedon')}
                   </Text>
                   <Text style={styles.lblSubtitle}>
-                    {KitAnalysisProps.dateandtime}
+                    {formatSampleDate24(
+                      KitAnalysisProps?.booking_details?.sample_collected_on,
+                    )}
                   </Text>
                 </View>
               </View>
@@ -160,10 +179,10 @@ const KitAnalysisComponent = (props: any) => {
                   }}
                 >
                   <Text style={styles.lblSubtitle}>
-                    {KitAnalysisProps.nurse.name}
+                    {KitAnalysisProps?.booking_details?.nurse?.name}
                   </Text>
 
-                  <View style={styles.starRow}>
+                  {/* <View style={styles.starRow}>
                     {[...Array(totalStars)].map((_, index) => {
                       const filled = index < KitAnalysisProps.nurse.rating;
                       return (
@@ -173,7 +192,7 @@ const KitAnalysisComponent = (props: any) => {
                         />
                       );
                     })}
-                  </View>
+                  </View> */}
                 </View>
               </View>
             </View>
@@ -192,7 +211,9 @@ const KitAnalysisComponent = (props: any) => {
                   {getTranslation('diagnose')}
                 </Text>
                 <Text style={styles.lblSubtitle}>
-                  {KitAnalysisProps.deliverdatetime}
+                  {formatSampleDate24(
+                    KitAnalysisProps?.booking_details?.latest_report_created_on,
+                  )}
                 </Text>
               </View>
             </View>
@@ -228,9 +249,9 @@ const KitAnalysisComponent = (props: any) => {
             <Text style={styles.txtInvoteFriendSubtitle} numberOfLines={5}>
               {getTranslation('collectondes')}{' '}
               <Text style={styles.lblLeboName}>
-                {KitAnalysisProps.leboname},{' '}
+                {KitAnalysisProps?.lab_details?.name},{' '}
               </Text>
-              {KitAnalysisProps.address}
+              {KitAnalysisProps?.lab_details?.address}
             </Text>
             <TouchableOpacity style={styles.btnInviteFriend}>
               <Text style={styles.lblOpenMap}>
@@ -536,7 +557,7 @@ const KitAnalysisComponent = (props: any) => {
           <Image source={images.imgLeftArrow} />
         </TouchableOpacity>
         <TouchableOpacity
-        activeOpacity={activityOpacity}
+          activeOpacity={activityOpacity}
           style={styles.btnBack}
           // onPress={props.handleNavigationGoBack}
         >
@@ -553,10 +574,10 @@ const KitAnalysisComponent = (props: any) => {
         nestedScrollEnabled={true}
         contentContainerStyle={{
           paddingBottom: getHeight(110),
-          backgroundColor:Colors.whiteF2
+          backgroundColor: Colors.whiteF2,
         }}
         style={{
-          backgroundColor:Colors.whiteF2
+          backgroundColor: Colors.whiteF2,
         }}
         ListHeaderComponent={
           <RenderHeader
@@ -566,24 +587,42 @@ const KitAnalysisComponent = (props: any) => {
         }
         renderItem={({ item: kit, index: kitIndex }) => (
           <View style={{ marginHorizontal: getWidth(16) }}>
-            <Text style={styles.kitnamearray}>
-              {kit.kitype === 'kit' && getTranslation('kitlabeltext')}{' '}
-              {kit.kitname}
+            <Text style={styles.kitnamearray} numberOfLines={1}>
+              {kit?.kit?.kit_type === 'CHECKUP' &&
+                getTranslation('kitlabeltext')}
+              {kit?.kit?.kit_type === 'CHECKUP' && ' '}
+              {kit?.kit?.name}
             </Text>
 
             <View style={{ gap: getHeight(12) }}>
-              {kit.kittest.map((reportItem: any, reportIndex: any) => (
+              {kit.results.map((reportItem: any, reportIndex: any) => (
+                // <BarChartComponent
+                //   key={`${kitIndex}-${reportIndex}`}
+                //   currentValue={reportItem?.value}
+                //   minValue={reportItem?.minvalue}
+                //   maxValue={reportItem?.maxvalue}
+                //   width={ScreenDimensions.screenWidth - getWidth(40)}
+                //   height={getHeight(50)}
+                //   reportName={reportItem.reportname}
+                //   reportValue={reportItem.reportValue}
+                //   reportItem={reportItem}
+                //   onpressreport={props.handleNavigationTestDetails}
+                // />
                 <BarChartComponent
-                  key={`${kitIndex}-${reportIndex}`}
-                  currentValue={reportItem.currentvalue}
-                  minValue={reportItem.minValue}
-                  maxValue={reportItem.maxvalue}
+                  key={reportItem?.test_id}
+                  currentValue={reportItem?.value}
+                  minValue={reportItem?.minvalue}
+                  maxValue={reportItem?.maxvalue}
                   width={ScreenDimensions.screenWidth - getWidth(40)}
                   height={getHeight(50)}
-                  reportName={reportItem.reportname}
-                  reportValue={reportItem.reportValue}
+                  reportName={reportItem?.test?.name}
+                  reportValue={reportItem?.value}
                   reportItem={reportItem}
-                  onpressreport={props.handleNavigationTestDetails}
+                  // onpressBookNow={props.handleNavigateBookNow}
+                  // onpressreport={props.navigateTestDetailsScreen}
+                  isTestCheck={false}
+                  isUnitShow={true}
+                  unitName={reportItem?.unit}
                 />
               ))}
             </View>

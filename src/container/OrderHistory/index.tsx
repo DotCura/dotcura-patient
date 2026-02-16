@@ -311,7 +311,9 @@ const OrderHistoryContainer = ({ navigation }: any) => {
         activeOpacity={activityOpacity}
         style={styles.btnOrderHistory}
         onPress={() => {
-          navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+          navigation.navigate(ScreenNames.KITANALYSISCONTAINER, {
+            booking_id: item?.booking_id,
+          });
         }}
       >
         {/* orderDetailsView */}
@@ -393,7 +395,7 @@ const OrderHistoryContainer = ({ navigation }: any) => {
         showLoader: loadType === LoadType.INITIAL,
         params: {
           page,
-          payment_status:"unpaid"
+          payment_status: 'paid',
         },
       });
 

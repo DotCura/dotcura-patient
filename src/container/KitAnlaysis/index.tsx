@@ -211,14 +211,14 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
     },
   };
 
-  const [KitAnalysisData, setKitAnalysisData] = useState(kitAnalysis);
+  const [KitAnalysisData, setKitAnalysisData] = useState({});
 
   const handleNavigationGoBack = () => {
     navigation.goBack();
   };
 
   const handlePressCheckout = () => {
-    return
+    return;
     // navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
     // _reOrder();
   };
@@ -227,30 +227,31 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
     navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
   };
 
-  // const _getReportDetails = async () => {
-  //   try {
-  //     const params = {
-  //       booking_id: route?.params?.booking_id,
-  //     };
+  const _getReportDetails = async () => {
+    try {
+      const params = {
+        booking_id: route?.params?.booking_id,
+      };
 
-  //     const callback = async (responseData: any) => {
-  //       if (responseData.code === StatusCode.SUCCESS) {
-  //       } else {
-  //         flashMessageWarning(responseData.message);
-  //       }
-  //     };
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setKitAnalysisData(responseData.data);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
 
-  //     await APIManager.makeRequest({
-  //       navigation: navigation,
-  //       method: MethodType.POST,
-  //       apiEndPoint: ApiEndPoints.REPORT.GETREPORTDETAILS,
-  //       callback,
-  //       params,
-  //     });
-  //   } catch (error) {
-  //     console.log('getOrderDetails details error:', error);
-  //   }
-  // };
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.REPORT.GETREPORTDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('getOrderDetails details error:', error);
+    }
+  };
 
   // const _reOrder = async () => {
   //   try {
@@ -278,9 +279,9 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
   //   }
   // };
 
-  // useEffect(() => {
-  //   _getReportDetails();
-  // }, []);
+  useEffect(() => {
+    _getReportDetails();
+  }, []);
 
   return (
     <KitAnalysisComponent

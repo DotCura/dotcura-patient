@@ -7,6 +7,7 @@ import { images } from '../../constants/Images';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import {
   activityOpacity,
+  flashMessageWarning,
   formatDateToSpanish,
 } from '../../constants/GConstant';
 import { Colors } from '../../constants/Colors';
@@ -430,7 +431,13 @@ const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
         activeOpacity={activityOpacity}
         style={styles.btnOrderHistory}
         onPress={() => {
-          navigation.navigate(ScreenNames.KITANALYSISCONTAINER);
+          if (item?.is_report_available === false) {
+            flashMessageWarning(getTranslation('reportnotavailableprofile'));
+          } else {
+            navigation.navigate(ScreenNames.KITANALYSISCONTAINER, {
+              booking_id: item?.booking_id,
+            });
+          }
         }}
       >
         {/* orderDetailsView */}

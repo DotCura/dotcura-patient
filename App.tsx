@@ -232,7 +232,7 @@ const App = ({ navigation }: any) => {
     <StripeProvider
       publishableKey="pk_test_51SSEOACJL1MzBMMlLtkE5S91t0A9SfWFAPAI2PyPTuaXflMRIkfgT9sNee2uPPTBqxiSedyMDV4AFxlq6m63dyNS00zSzuaGdv"
       urlScheme="dotcura"
-      merchantIdentifier="merchant.com.dotcura.app" // required for Apple Pay
+      merchantIdentifier="merchant.com.dotcura.app" // required for Apple Pay this is parth sir key
       setReturnUrlSchemeOnAndroid={true}
     >
       <SafeAreaProvider>

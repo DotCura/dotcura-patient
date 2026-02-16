@@ -447,6 +447,24 @@ export const bootstrapUser = () => {
   });
 };
 
+export const formatSampleDate24 = (isoString: string) => {
+  if (!isoString) return '';
+
+  const date = new Date(isoString);
+
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+  return `${day}/${month}/${year} alle ${hours}:${formattedMinutes}`;
+};
+
+
 
 
 

@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import {
   activityOpacity,
+  flashMessageWarning,
   formatDateToSpanish,
 } from '../../../constants/GConstant';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
@@ -66,7 +67,11 @@ const YourProfileContainer = ({ navigation }: any) => {
         key={index}
         style={styles.vwReportDate}
         onPress={() => {
-          hanldeNavigateKitAnalysis(item?.booking_id);
+          if (item?.is_report_available === false) {
+           flashMessageWarning(getTranslation('reportnotavailableprofile'));
+          } else {
+            hanldeNavigateKitAnalysis(item?.booking_id);
+          }
         }}
       >
         <View style={styles.vwLightBlue}></View>

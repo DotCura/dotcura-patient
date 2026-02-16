@@ -573,8 +573,8 @@ export default {
   ordercompletetitlemodel: 'La visita è conclusa?',
   ordercompletesubtitlemodel:
     'Conferma che il prelievo è andato a buon fine e l’infermiere ha finito.',
-    finishorder:"Si, ha finito",
-    contactuspaymentmodel:"Contatta il supporto",
+  finishorder: 'Si, ha finito',
+  contactuspaymentmodel: 'Contatta il supporto',
 
   visitconfirmsubtitle: 'Ottime notizie! La visita è confermata per oggi alle',
   minitarrivesubtitle:
@@ -584,7 +584,7 @@ export default {
     'L’infermiere ci ha comunicato che verrà a casa tua entro le',
   canclevisitsubtitle:
     'Non aspettare! Puoi richiedere immediatamente una nuova visita.',
-    ratingvalidation:"Seleccione una calificación antes de enviar su reseña.",
+  ratingvalidation: 'Seleccione una calificación antes de enviar su reseña.',
 
   supporttitle: 'Serve supporto?',
   whattapptitle: 'Chatta su WhatsApp',
@@ -593,5 +593,8 @@ export default {
   contactsubtitle: 'Abbiamo un operatore che risponderà a ogni tua richiesta',
   whatappbtnname: 'Apri WhatsApp',
   contactbtnname: 'Chiama il ',
-  indevelopment:"In fase di sviluppo",
+  indevelopment: 'In fase di sviluppo',
+
+  reportnotavailableprofile:
+    'la tua segnalazione è attualmente in fase di elaborazione. Sarà presto disponibile.',
 };
