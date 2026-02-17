@@ -67,11 +67,11 @@ const YourProfileContainer = ({ navigation }: any) => {
         key={index}
         style={styles.vwReportDate}
         onPress={() => {
-          // if (item?.is_report_available === false) {
-          //  flashMessageWarning(getTranslation('reportnotavailableprofile'));
-          // } else {
+          if (item?.is_report_available === false) {
+            flashMessageWarning(getTranslation('reportnotavailableprofile'));
+          } else {
             hanldeNavigateKitAnalysis(item?.booking_id);
-          // }
+          }
         }}
       >
         <View style={styles.vwLightBlue}></View>

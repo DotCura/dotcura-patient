@@ -144,22 +144,24 @@ const TestDetailsComponents = (props: any) => {
           style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
         >
           {/* vwTestDes */}
-          <View style={styles.vwTestDes}>
-            <Text style={styles.lblValueDes}>
-              {getTranslation('thevalueis')}
-            </Text>
+          <View>
+            <View style={styles.vwTestDes}>
+              <Text style={styles.lblValueDes}>
+                {getTranslation('thevalueis')}
+              </Text>
 
-            <Text
-              style={[
-                styles.lblValue,
-                {
-                  color: getBackgroundColorLabel(),
-                },
-              ]}
-            >
-              {' '}
-              {props?.userReportData?.test?.name}{' '}
-            </Text>
+              <Text
+                style={[
+                  styles.lblValue,
+                  {
+                    color: getBackgroundColorLabel(),
+                  },
+                ]}
+              >
+                {' '}
+                {props?.userReportData?.test?.name}{' '}
+              </Text>
+            </View>
 
             <View
               style={[
@@ -182,6 +184,7 @@ const TestDetailsComponents = (props: any) => {
                 </Text>
               </View>
             </View>
+
             <Text style={styles.lblValueDes}>
               {getTranslation('lowethensub')}
             </Text>
