@@ -72,6 +72,39 @@ const TestDetailsContainer = ({ navigation, route }: any) => {
     }
   };
 
+  const _likeUnlikeReport = async () => {
+    try {
+      const params = {
+        test_id: route?.params?.test_id,
+      };
+  
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setUserReportData((prev: any) => ({
+            ...prev,
+            test: {
+              ...prev?.test,
+              is_liked: !prev?.test?.is_liked,
+            },
+          }));
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+  
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.REPORT.LIKEUNLIKEREPORT,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('Like Unlike error:', error);
+    }
+  };
+  
+
   useEffect(() => {
     _getTestDetails();
   }, []);
@@ -86,6 +119,7 @@ const TestDetailsContainer = ({ navigation, route }: any) => {
       userReportData={userReportData}
       navigation={navigation}
       IsEmptyLoading={IsEmptyLoading}
+      _likeUnlikeReport={_likeUnlikeReport}
     />
   );
 };

@@ -282,8 +282,9 @@ const VerticalBarChart = ({ data = [], chartMinValue, chartMaxValue }) => {
   const svgHeight = chartHeight + SAFE_PADDING * 2; // <-- EXTRA HEIGHT
 
   const chartWidth = cardWidth - 32 - horizontalPadding * 2;
-  const barWidth = chartWidth / (data.length - 1);
-
+  // const barWidth = chartWidth / (data.length - 1);
+  const safeLength = Math.max(data.length - 1, 1);
+  const barWidth = chartWidth / safeLength;
   // --------------------------------------------------------------------
   // COLOR LOGIC
   // --------------------------------------------------------------------

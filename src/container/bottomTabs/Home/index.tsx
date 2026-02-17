@@ -307,7 +307,7 @@ const HomeContainer = ({ navigation }: any) => {
         </View>
         {/* chartView */}
         <VerticalBarChart
-          data={item.trend}
+          data={item?.trend}
           chartMaxValue={item?.latest?.maxvalue}
           chartMinValue={item?.latest?.minvalue}
         />

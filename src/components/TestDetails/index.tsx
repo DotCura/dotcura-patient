@@ -117,9 +117,16 @@ const TestDetailsComponents = (props: any) => {
         </View>
         <TouchableOpacity
           style={styles.btnBack}
+          onPress={props._likeUnlikeReport}
           activeOpacity={activityOpacity}
         >
-          <Image source={images.imgfavblack} />
+          <Image
+            source={
+              props?.userReportData?.test?.is_liked
+                ? images.imgfavblack // ❤️ liked image
+                : images.imgFavUnfiled // 🤍 unlike image
+            }
+          />
         </TouchableOpacity>
       </View>
       {props.IsEmptyLoading === false && (

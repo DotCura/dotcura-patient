@@ -7,9 +7,11 @@ import { ScreenNames } from '../../constants/AppConstants';
 import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 import { flashMessageWarning } from '../../constants/GConstant';
 import { APIManager } from '../../api/APIManager';
+import { ZustandStores } from '../../store';
 
 const KitAnalysisContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
+  const setCartCount = ZustandStores.CartStore(state => state.setCartCount);
 
   // const KitAnalysis = {
   //   kitname: 'diabete',
@@ -218,13 +220,15 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
   };
 
   const handlePressCheckout = () => {
-    return;
-    // navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
-    // _reOrder();
+    _reOrder();
   };
 
   const handleNavigationTestDetails = (item: any) => {
-    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER);
+    console.log('item=======>', item);
+
+    navigation.navigate(ScreenNames.TESTDETAILSCONTAINER, {
+      test_id: item?.test_id,
+    });
   };
 
   const _getReportDetails = async () => {
@@ -253,31 +257,32 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
     }
   };
 
-  // const _reOrder = async () => {
-  //   try {
-  //     const params = {
-  //       booking_id: route?.params?.booking_id,
-  //     };
+  const _reOrder = async () => {
+    try {
+      const params = {
+        booking_id: route?.params?.booking_id,
+      };
 
-  //     const callback = async (responseData: any) => {
-  //       if (responseData.code === StatusCode.SUCCESS) {
-  //         navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
-  //       } else {
-  //         flashMessageWarning(responseData.message);
-  //       }
-  //     };
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          navigation.navigate(ScreenNames.CHECKOUTCONTAINER);
+          setCartCount(responseData?.data?.total_items);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
 
-  //     await APIManager.makeRequest({
-  //       navigation: navigation,
-  //       method: MethodType.POST,
-  //       apiEndPoint: ApiEndPoints.REPORT.REORDER,
-  //       callback,
-  //       params,
-  //     });
-  //   } catch (error) {
-  //     console.log('_reorder details error:', error);
-  //   }
-  // };
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.REPORT.REORDER,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('_reorder details error:', error);
+    }
+  };
 
   useEffect(() => {
     _getReportDetails();

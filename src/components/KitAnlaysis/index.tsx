@@ -619,7 +619,7 @@ const KitAnalysisComponent = (props: any) => {
                   reportValue={reportItem?.value}
                   reportItem={reportItem}
                   // onpressBookNow={props.handleNavigateBookNow}
-                  // onpressreport={props.navigateTestDetailsScreen}
+                  onpressreport={props.handleNavigationTestDetails}
                   isTestCheck={false}
                   isUnitShow={true}
                   unitName={reportItem?.unit}

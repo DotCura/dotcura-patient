@@ -908,7 +908,6 @@ const VerticalBarChart = ({ data = [], chartMinValue, chartMaxValue }) => {
   console.log('VerticalBarChart data:', chartMinValue);
   console.log('VerticalBarChart data:', chartMaxValue);
 
-  
   const screenWidth = Dimensions.get('window').width;
   const cardWidth = screenWidth * 0.9;
   const horizontalPadding = 15;
@@ -921,7 +920,7 @@ const VerticalBarChart = ({ data = [], chartMinValue, chartMaxValue }) => {
 
   const chartWidth = cardWidth - 32 - horizontalPadding * 2;
   const safeLength = Math.max(data.length - 1, 1);
-const barWidth = chartWidth / safeLength;
+  const barWidth = chartWidth / safeLength;
 
   // --------------------------------------------------------------------
   // COLOR LOGIC
@@ -1141,7 +1140,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     marginTop: 2,
-    textAlign:'center',
+    textAlign: 'center',
     fontSize: fontSize.size12,
     fontFamily: fontsfamily.regular,
     color: Colors.gray55,
