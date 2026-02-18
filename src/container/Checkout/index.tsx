@@ -73,7 +73,6 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [cartLoaded, setCartLoaded] = useState(false);
 
   // console.log("Intl.DateTimeFormat().resolvedOptions().timeZone",typeof Intl.DateTimeFormat().resolvedOptions().timeZone);
-  console.log('testkitdata', testkitsData[0]?.has_card);
 
   //EDITANALITIVARIABLES
   const [analitiArrayData, setAnalitiArraysData] = useState<any>({});
@@ -1219,11 +1218,12 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           setTestsKitData(responseData.data);
+          setCartLoaded(true);
         } else {
+          setCartLoaded(true);
           setTestsKitData([]);
           flashMessageWarning(responseData.message);
         }
-        setCartLoaded(true); // ✅ API finished
       };
 
       await APIManager.makeRequest({
