@@ -382,7 +382,7 @@
 // });
 
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState, useMemo, memo } from 'react';
+import React, { useState, useMemo, memo, useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   useAnimatedStyle,
@@ -486,6 +486,12 @@ const OrderStatusComponent = memo(
 
     // Animated values
     const expandedHeight = useSharedValue(0);
+
+    // Reset expandedHeight when config changes when the show edit btn hide and show
+    useEffect(() => {
+      expandedHeight.value = 0;
+    }, [config.showEdit]);
+
     const collapsedHeight = useSharedValue(0);
     const animatedHeight = useSharedValue(-1);
     const bigViewOpacity = useSharedValue(0);

@@ -229,6 +229,8 @@ const AccountContainer = ({ navigation }: any) => {
   };
 
   const handleSave = async (selected: any[]) => {
+    console.log("selected",selected);
+    
     const medical_ids = selected.map(item => item.id);
     const type = getMedicalType(modalType); // 🔥 IMPORTANT
 
@@ -416,6 +418,8 @@ const AccountContainer = ({ navigation }: any) => {
     medicalId: number,
     modalType: 'patologie' | 'medicazioni' | 'allergie',
   ) => {
+    console.log("medicalId",medicalId);
+    
     try {
       const params: any = {
         id: medicalId,

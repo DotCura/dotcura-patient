@@ -237,7 +237,7 @@ const YourProfileComponent = (props: any) => {
   );
 
   const selectedTitle =
-    selectedMember?.relationship_name || getTranslation('youtextyourprofile');
+    selectedMember?.first_name || getTranslation('youtextyourprofile');
 
   return (
     <View
@@ -399,7 +399,7 @@ const YourProfileComponent = (props: any) => {
                   <Text
                     style={[styles.itemText, isSelected && styles.selectedText]}
                   >
-                    {item.relationship_name}
+                    {item?.first_name}
                   </Text>
                 </TouchableOpacity>
               );

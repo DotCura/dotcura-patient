@@ -86,7 +86,7 @@ export default {
   // All set
   gototheapp: 'Vai all’app',
   allready: 'Tutto pronto!',
-  youarereadytostart: 'Sei pronto per iniziare ad usare Doctura.',
+  youarereadytostart: 'Sei pronto per iniziare ad usare dotCura.',
 
   //Welcome
   applyasnurse: 'Applica come infermiere',
@@ -218,7 +218,7 @@ export default {
   haveyoucoupans: 'Hai un codice sconto?',
   placholdercoupans: 'AA00000',
   whoshoulddotest: 'Chi deve fare le analisi?',
-  selectfamilymember: 'Selezionare chi dovrebbe eseguire i test',
+  selectfamilymember: 'Seleziona chi deve eseguire i test.',
   canclebooking: 'cancelar reserva',
   selected: 'selezionato',
   modifyorder: 'Modifica ordine',
@@ -254,7 +254,7 @@ export default {
   //ORDERSTATYS
   ordersent: 'Ordine inviato',
   ordersentsubtitle:
-    'La tua richiesta é stata registrata.Stiamo cercando un infermiere per te...',
+    'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
   editorder: 'Modifica ordine',
 
   //ANALITIDETAILSTEST
@@ -336,13 +336,13 @@ export default {
   deleteaddresssbtn: 'Elimina questo indirizzo',
   searchaddress: 'Cerca indirizzo',
   addaddressplacholder: 'Via, piazza, strada...',
-  errorselectaddress: 'Por favor, elija una dirección',
+  errorselectaddress: 'Per favore, scegli un indirizzo.',
   editaddressbtn: 'Modifica indirizzo',
   addaddresspopuptitle:
     'Questo indirizzo sarà salvato e disponibile per future visite a domicilio.',
   cancleaddress: 'Annulla',
   selectaddressplaceholder: 'Seleziona',
-  errorselectaddresstype: 'Por favor seleccione el tipo de dirección.',
+  errorselectaddresstype: 'Per favore, seleziona il tipo di indirizzo.',
 
   //COMPLETEADDRESS
   completeaddresstitle: 'Completa l’indirizzo',
@@ -357,13 +357,13 @@ export default {
   stairsplaceholder: 'e.g. B',
   florrplaceholder: 'e.g. 2',
   typeplaceholder: 'e.g. Home',
-  emptyHomeType: 'Por favor ingrese el tipo de vivienda.',
-  emptyFloor: 'Por favor ingrese el número de piso.',
-  invalidFloor: 'El piso debe contener solo números.',
-  invalidStairs: 'Las escaleras deben contener solo letras.',
-  instructionTooLong: 'La instrucción es demasiado larga.',
-  emptyStairs: 'Por favor ingrese el nombre de las escaleras.',
-  emptyInstructions: 'Por favor ingrese las instrucciones.',
+  emptyHomeType: 'Per favore, inserisci il tipo di abitazione.',
+  emptyFloor: 'Per favore, inserisci il numero del piano.',
+  invalidFloor: 'Il piano deve contenere solo numeri.',
+  invalidStairs: 'Le scale devono contenere solo lettere.',
+  instructionTooLong: "L'istruzione è troppo lunga.",
+  emptyStairs: 'Per favore, inserisci il nome delle scale.',
+  emptyInstructions: 'Per favore, inserisci le istruzioni.',
 
   //LOGOUT
   logoutText: '¿Estás seguro de que deseas cerrar sesión?',
@@ -376,7 +376,7 @@ export default {
   placeofbirthtitle: 'Luogo di nascita',
   account: 'Account',
   save: 'Salva',
-  pleaseselectdateofbirth: 'Por favor seleccione su fecha de nacimiento.',
+  pleaseselectdateofbirth: 'Per favore, seleziona la tua data di nascita.',
   medica: 'Medicazioni',
   pato: 'Patologie',
   allergie: 'Allergie',
@@ -461,11 +461,11 @@ export default {
     'Aggiungi le informazioni della persona che vuoi aggiungere alla tua famiglia',
   typeofrelationship: 'Tipo di relazione',
   typeofrelationshipplaceholder: 'Seleccione el tipo de relación',
-  pleaseselecttypeofrelationship: 'Por favor seleccione el tipo de relación',
+  pleaseselecttypeofrelationship: 'Per favore, seleziona il tipo di relazione.',
   addfavouriteaddresslabel: 'Rendi indirizzo preferito',
   saveaddress: 'Salva indirizzo',
   typology: 'Tipologia',
-  emptysearchaddress: 'Por favor selecciona la dirección de búsqueda',
+  emptysearchaddress: 'Per favore, seleziona l’indirizzo di ricerca.',
 
   //ADDRESSLIST
   addresstitle: 'Indirizzi',
@@ -475,20 +475,23 @@ export default {
   default: 'PREDEFINITO',
 
   //ERROR
-  errorMessagePlaceOfBirthRequired: 'Inserisci il luogo di nascita',
-  errorMessageOtp: 'Por favor, introduzca el código OTP',
-  errorMessageInvalidOtp: 'Código OTP no válido',
-  errorMessageCountryCode: 'Por favor, seleccione el código de país',
-  errorMessageName: 'Por favor, introduzca el nombre',
-  errorMessagePhoneNumber: 'Por favor, introduzca su número de teléfono',
-  errorMessageAllZero: 'El número de móvil no debe contener solo ceros',
+  errorMessageCountryCode: 'Per favore, seleziona il codice del paese',
+  errorMessagePhoneNumber: 'Per favore, inserisci il tuo numero di telefono.',
+  errorMessageAllZero: 'Il numero di cellulare non deve contenere solo zeri.',
+  errorMessageOtp: 'Per favore, inserisci il codice OTP',
+  errorMessageInvalidOtp: 'Codice OTP non valido',
   errorMesaageValidPhoenNumber:
-    'Por favor, introduzca un número de móvil válido',
-  errorMessageEmail: 'Por favor, introduzca el correo electrónico',
-  errorMessageValidEmail: 'Por favor, introduzca un correo electrónico válido',
+    'Per favore, inserisci un numero di cellulare valido.',
+  errorMessageEmail: "Per favore, inserisci l'indirizzo email",
+  errorMessageName: 'Per favore, inserisci il nome',
+  errorMessageValidEmail: 'Per favore, inserisci un indirizzo email valido',
+  errorMessageTaxCodeRequired: 'Per favore, inserisci il tuo codice fiscale',
+  errorMessageTaxCodeValid: 'Il codice fiscale deve avere 16 caratteri',
+  errorMessageFullNameRequired: 'Per favore inserisci il nome',
+  errorMessageFullNameTooShort: 'Il nome deve avere almeno 2 caratteri',
+  errorMessageSurnameRequired: 'Per favore, inserisci il cognome.',
+  errorMessagePlaceOfBirthRequired: 'Per favore, inserisci il luogo di nascita',
   errorMessageDescription: 'Por favor, introduzca la descripción',
-  errorMessageFullNameRequired: 'Por favor ingrese el nombre',
-  errorMessageFullNameTooShort: 'el nombre debe tener al menos 2 caracteres',
   errorMessageBlockHouseNumberRequired:
     'Por favor, introduzca el número de bloque/número de casa',
   errorMessageBuildingNameRequired:
@@ -505,8 +508,7 @@ export default {
   errorMessageIFSC: 'Por favor, introduzca el código IFSC.',
   errorMessageIFSCValid:
     'Por favor, introduzca un código IFSC válido (por ejemplo, HDFC0001234).',
-  errorMessageTaxCodeRequired: 'Por favor, introduzca su código fiscal',
-  errorMessageTaxCodeValid: 'El código fiscal debe tener 16 caracteres',
+
   emptyCardNumber: 'Por favor, introduzca el número de la tarjeta',
   invalidCardNumber: 'Por favor, introduzca un número de tarjeta válido',
   emptyCardHolderName:
@@ -520,48 +522,47 @@ export default {
   emptyPostalCode: 'Por favor, introduzca el código postal',
   invalidPostalCode: 'Por favor, introduzca un código postal válido',
   cardNumberZero: 'El número de la tarjeta no debe ser cero',
-  pleaseselectdocument: 'Por favor, selecciona el documento.',
+  pleaseselectdocument: 'Per favore, seleziona il documento.',
   pleaseuploadfrontandbackside:
-    'Por favor, carga fotos de tu documento por ambos lados (frontal y posterior)',
-  errorMessageSurnameRequired: 'Por favor, ingrese el apellido',
-  please_select_address: 'Por favor, seleccione una dirección para editar',
+    'Per favore, carica le foto del tuo documento su entrambi i lati (fronte e retro).',
+  please_select_address: 'Per favore, seleziona un indirizzo da modificare.',
 
   // No internet connection
-  nointernetconnection: 'Sin conexión a Internet',
+  nointernetconnection: 'Senza connessione a Internet.',
   youhavebeenloggedout:
-    'Has sido cerrado de sesión porque tu cuenta inició sesión en otro dispositivo o fue desactivada por el administrador.',
+    'Sei stato disconnesso perché il tuo account ha effettuato l’accesso su un altro dispositivo o è stato disattivato dall’amministratore.',
 
   versionname: 'Versione',
-  nodatafound: 'No se encontraron datos',
-  nodatafoundlikereport: 'Aún no has añadido nada a favoritos.',
+  nodatafound: 'Nessun dato trovato.',
+  nodatafoundlikereport: 'Non hai ancora aggiunto nulla ai preferiti.',
 
   //ADDRESSTYPE
   addresstypehome: 'Casa',
-  addresstypework: 'Trabajar',
-  addresstypeother: 'Otro',
-  addresstypemedical: 'Clínica / Hospital',
-  noaddressfoundlabel: 'No se encontró ninguna dirección',
-  nocheckoutlistfound: 'No se encontró ningún kit',
-  noAnlitilistfound: 'No se encontró Analiti',
+  addresstypework: 'Lavoro',
+  addresstypeother: 'Altro',
+  addresstypemedical: 'Clinica / Ospedale',
+  noaddressfoundlabel: 'Nessun indirizzo trovato.',
+  nocheckoutlistfound: 'Nessun kit trovato.',
+  noAnlitilistfound: 'Nessun analito trovato.',
 
   //FAMILY
   editfamilymembertitle: 'Modifica familiare',
   editinformationbtn: 'Modifica informazioni',
 
   //CHECKOUT SAVE
-  selectaddress: 'Por favor, selecciona una dirección',
-  selectaddresscheckout: 'selecciona una dirección',
-  selecttimeslot: 'Por favor, selecciona la fecha y la hora',
-  selecttimeslotcheckout: 'selecciona la fecha y la hora',
-  cartempty: 'Tu carrito está vacío',
+  selectaddress: 'Per favore, seleziona un indirizzo.',
+  selectaddresscheckout: 'Seleziona un indirizzo.',
+  selecttimeslot: 'Per favore, seleziona la data e l’orario.',
+  selecttimeslotcheckout: 'Seleziona la data e l’orario.',
+  cartempty: 'Il tuo carrello è vuoto.',
   youtext: 'Tu',
-  errorcoupanscode: 'Por favor aplique el código de cupón.',
-  appliedtext: 'Aplicado',
+  errorcoupanscode: 'Per favore, applica il codice coupon.',
+  appliedtext: 'Applicato.',
   timetosoon:
-    'La hora seleccionada debe comenzar al menos 1 hora a partir del momento actual.',
+    'L’orario selezionato deve iniziare almeno 1 ora dopo l’orario attuale.',
 
   youtextyourprofile: 'tuo quadro',
-  reportnotavailable: 'Informe no disponible para esta prueba',
+  reportnotavailable: 'Referto non disponibile per questo test.',
 
   //ORDERSTATUS
   visitconfirm: 'Visita confermata',
@@ -576,10 +577,10 @@ export default {
   finishorder: 'Si, ha finito',
   contactuspaymentmodel: 'Contatta il supporto',
 
-  visitconfirmsubtitle: 'Ottime notizie! La visita è confermata per oggi alle',
+  visitconfirmsubtitle: 'Ottime notizie! La visita è confermata per oggi alle.',
   minitarrivesubtitle:
-    'L’operatore è quasi da te.Tieni d’occhio il telefono o il citofono.',
-  isheresubtitle: 'Tempo di farsi visitare.',
+    'L’operatore è quasi da te. Tieni d’occhio il telefono o il citofono.',
+  isheresubtitle: 'È il momento di farsi visitare.',
   visitmodifiedsubtitle:
     'L’infermiere ci ha comunicato che verrà a casa tua entro le',
   canclevisitsubtitle:
@@ -593,8 +594,8 @@ export default {
   contactsubtitle: 'Abbiamo un operatore che risponderà a ogni tua richiesta',
   whatappbtnname: 'Apri WhatsApp',
   contactbtnname: 'Chiama il ',
-  indevelopment: 'In fase di sviluppo',
+  indevelopment: 'In fase di sviluppo.',
 
   reportnotavailableprofile:
-    'la tua segnalazione è attualmente in fase di elaborazione. Sarà presto disponibile.',
+    'La tua segnalazione è attualmente in fase di elaborazione. Sarà presto disponibile.',
 };

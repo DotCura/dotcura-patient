@@ -525,7 +525,7 @@ const YourProfileContainer = ({ navigation }: any) => {
       // ➕ add "Tu" manually at top
       const finalList = [
         {
-          relationship_name: getTranslation('youtextyourprofile'),
+          first_name: getTranslation('youtextyourprofile'),
           id: '0',
         },
         ...formattedData,

@@ -377,11 +377,12 @@ const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
         };
 
       // 📄 Report pending
+      case 'ReportPending':
       case 'reportpending':
         return {
           label: 'Report Pending',
-          bg: '#E1F5FE',
-          text: '#0288D1',
+          bg: '#F3410020',
+          text: '#F34100',
         };
 
       // ✏️ Modified

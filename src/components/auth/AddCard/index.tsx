@@ -22,6 +22,7 @@ const AddCardComponent = (props: any) => {
           onClickBack={() => props.navigation.goBack()}
         />
       </View>
+      
       <KeyboardAwareScrollView
         contentContainerStyle={[constnatStyles.keyboardContainer]}
         keyboardShouldPersistTaps="handled"
