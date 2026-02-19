@@ -3,6 +3,7 @@ import {
   FlatList,
   Image,
   ImageBackground,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -930,10 +931,10 @@ const CheckoutComponent = (props: any) => {
             </View>
 
             {/* Form */}
-            <KeyboardAwareScrollView
+            <ScrollView
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
-              bounces
+              bounces={false}
               contentContainerStyle={[
                 constnatStyles.keyboardContainer,
                 { paddingBottom: getHeight(17) },
@@ -1130,7 +1131,7 @@ const CheckoutComponent = (props: any) => {
                   />
                 )}
               </View>
-            </KeyboardAwareScrollView>
+            </ScrollView>
           </View>
         </View>
       </Modal>
