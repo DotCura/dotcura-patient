@@ -405,20 +405,20 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
 
     if (type === 'patologie') {
       setPatologie((prev: any) =>
-        prev.filter((item: any) => item.deleteid !== id),
-      );
+        prev.filter((item: any) => item.id !== id)
+    );
     }
 
     if (type === 'medicazioni') {
       setMedicazioni((prev: any) =>
-        prev.filter((item: any) => item.deleteid !== id),
-      );
+        prev.filter((item: any) => item.id !== id)
+    );
     }
 
     if (type === 'allergie') {
       setAllergie((prev: any) =>
-        prev.filter((item: any) => item.deleteid !== id),
-      );
+        prev.filter((item: any) => item.id !== id)
+    );
     }
   };
 

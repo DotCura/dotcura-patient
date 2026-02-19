@@ -240,10 +240,11 @@ const AccountContainer = ({ navigation }: any) => {
       const callback = async (res: any) => {
         if (res.code === StatusCode.SUCCESS) {
           flashMessageSucess(res.message);
+          await _getPatientDetails();
 
-          if (modalType === 'patologie') setPatologie(selected);
-          if (modalType === 'medicazioni') setMedicazioni(selected);
-          if (modalType === 'allergie') setAllergie(selected);
+          // if (modalType === 'patologie') setPatologie(selected);
+          // if (modalType === 'medicazioni') setMedicazioni(selected);
+          // if (modalType === 'allergie') setAllergie(selected);
 
           setModalVisible(false);
         } else {

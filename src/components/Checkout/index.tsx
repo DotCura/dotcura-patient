@@ -1089,48 +1089,48 @@ const CheckoutComponent = (props: any) => {
                   </Text>
                 </View>
               </View>
-            </KeyboardAwareScrollView>
 
-            {/* Actions */}
-            <View
-              style={{
-                marginBottom: props.insets.bottom + getHeight(16),
-                marginHorizontal: getWidth(16),
-              }}
-            >
-              <CustomButton
-                btnPress={props.handleOnPressSaveAddress}
-                btnTitle={
-                  props.addressMode === 'edit'
-                    ? getTranslation('savechnages')
-                    : getTranslation('saveaddress')
-                }
-              />
-              {props.addressMode === 'edit' ? (
+              {/* Actions */}
+              <View
+                style={{
+                  marginBottom: props.insets.bottom + getHeight(16),
+                  marginTop: getHeight(28),
+                }}
+              >
                 <CustomButton
-                  btnicon={true}
-                  btnImage={images.imgDeleteRed}
-                  style={{
-                    backgroundColor: Colors.redFC,
-                    marginTop: getHeight(8),
-                  }}
-                  textStyle={{ color: Colors.red40 }}
-                  btnPress={props.handleOnPressDeleteAddress}
-                  btnTitle={getTranslation('deleteaddresssbtn')}
+                  btnPress={props.handleOnPressSaveAddress}
+                  btnTitle={
+                    props.addressMode === 'edit'
+                      ? getTranslation('savechnages')
+                      : getTranslation('saveaddress')
+                  }
                 />
-              ) : (
-                <CustomButton
-                  btnicon={false}
-                  style={{
-                    backgroundColor: Colors.blueD1,
-                    marginTop: getHeight(8),
-                  }}
-                  textStyle={{ color: Colors.blue002 }}
-                  btnPress={props.funCloseAddAddressPopup}
-                  btnTitle={getTranslation('cancleaddress')}
-                />
-              )}
-            </View>
+                {props.addressMode === 'edit' ? (
+                  <CustomButton
+                    btnicon={true}
+                    btnImage={images.imgDeleteRed}
+                    style={{
+                      backgroundColor: Colors.redFC,
+                      marginTop: getHeight(8),
+                    }}
+                    textStyle={{ color: Colors.red40 }}
+                    btnPress={props.handleOnPressDeleteAddress}
+                    btnTitle={getTranslation('deleteaddresssbtn')}
+                  />
+                ) : (
+                  <CustomButton
+                    btnicon={false}
+                    style={{
+                      backgroundColor: Colors.blueD1,
+                      marginTop: getHeight(8),
+                    }}
+                    textStyle={{ color: Colors.blue002 }}
+                    btnPress={props.funCloseAddAddressPopup}
+                    btnTitle={getTranslation('cancleaddress')}
+                  />
+                )}
+              </View>
+            </KeyboardAwareScrollView>
           </View>
         </View>
       </Modal>

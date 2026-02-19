@@ -214,7 +214,7 @@ const AddFamilyMemberComponent = (props: any) => {
                     </Text>
                     <TouchableOpacity
                       onPress={() =>
-                        props.handleDeleteItem('medicazioni', item.deleteid)
+                        props.handleDeleteItem('medicazioni', item.id)
                       }
                     >
                       <Image source={images.imgDeleteRound} />
@@ -250,7 +250,7 @@ const AddFamilyMemberComponent = (props: any) => {
                     </Text>
                     <TouchableOpacity
                       onPress={() =>
-                        props.handleDeleteItem('patologie', item.deleteid)
+                        props.handleDeleteItem('patologie', item.id)
                       }
                     >
                       <Image source={images.imgDeleteRound} />
@@ -286,7 +286,7 @@ const AddFamilyMemberComponent = (props: any) => {
                     <Text style={styles.lblCategory}>{item.name}</Text>
                     <TouchableOpacity
                       onPress={() =>
-                        props.handleDeleteItem('allergie', item.deleteid)
+                        props.handleDeleteItem('allergie', item.id)
                       }
                     >
                       <Image source={images.imgDeleteRound} />
