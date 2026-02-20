@@ -212,6 +212,8 @@ const App = ({ navigation }: any) => {
 
       // Hide splash only once
       if (!hasHiddenSplash.current) {
+        console.log("splash screen hide");
+        
         SplashScreen.hide();
         hasHiddenSplash.current = true;
       }
@@ -219,13 +221,13 @@ const App = ({ navigation }: any) => {
       // Enable socket connection AFTER splash
       setTimeout(() => {
         setShouldConnectSocket(true);
-      }, 500); // Small delay to ensure splash transition completes
+      }, 4700); // Small delay to ensure splash transition completes
     };
 
     initializeApp();
   }, []);
 
-  usePaymentInitializer(navigation);
+  // usePaymentInitializer(navigation);
 
   //jayshaikey:pk_test_51SSFGhEHGGgg2T7x7trk2rIV2mIoZo2u3jERAm2PXCPVYCBmCyjVynjpursvu49ixVQeZ4LjyqkuwX02RkmnDuFc00EpCuEJjI
   return (

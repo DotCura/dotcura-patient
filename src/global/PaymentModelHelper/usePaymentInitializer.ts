@@ -163,6 +163,7 @@ export const usePaymentInitializer = (navigation: any) => {
       navigation,
       method: MethodType.GET,
       apiEndPoint: ApiEndPoints.PAYMENT.GET_PENDING_PAYMENT_LIST,
+      showLoader:false,
       callback: (res: any) => {
         if (res.code === 1 && Array.isArray(res.data)) {
           const unpaid = res.data
@@ -183,6 +184,7 @@ export const usePaymentInitializer = (navigation: any) => {
       navigation,
       method: MethodType.POST,
       apiEndPoint: ApiEndPoints.PAYMENT.GETPAYMENTDETAILS,
+      showLoader:false,
       // params: { booking_id: activeBookingId },
       params: { booking_id: 270 },
       callback: (res: any) => {
