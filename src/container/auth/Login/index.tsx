@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import LoginComponent from '../../../components/auth/Login';
 import AppHeader from '../../../global/Header';
 import { getTranslation } from '../../../localization/i18n/i18n.config';
@@ -13,9 +13,15 @@ import {
   StatusCode,
   toggleLoader,
 } from '../../../api/APIConstant';
-import { flashMessageSucess, flashMessageWarning } from '../../../constants/GConstant';
+import {
+  flashMessageSucess,
+  flashMessageWarning,
+  getStoredFCMToken,
+} from '../../../constants/GConstant';
 import { APIManager } from '../../../api/APIManager';
 import { DeviceInfoManager } from '../../../constants/utils/DeviceInfo';
+import { useFocusEffect } from '@react-navigation/native';
+import { getFCMToken } from '../../../global/PushNotificatioUtils/PushNotificationHelper';
 
 const LoginContainer = ({ navigation }: any) => {
   const insets = useSafeAreaInsets();
@@ -81,6 +87,12 @@ const LoginContainer = ({ navigation }: any) => {
     header();
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      getFCMToken();
+    }, [navigation]),
+  );
+
   //=========================== API ========================================
 
   const _loginApi = async () => {
@@ -91,7 +103,7 @@ const LoginContainer = ({ navigation }: any) => {
       const params = {
         country_code: callingCode,
         phone_number: plainText,
-        device_token: '0',
+        device_token: getStoredFCMToken() || 0,
         device_type: Platform.OS == 'ios' ? 'I' : 'A',
         os_version: DeviceInfoManager.getSystemVersion(),
       };
@@ -104,8 +116,7 @@ const LoginContainer = ({ navigation }: any) => {
           navigation.navigate(ScreenNames.OTPCONTAINER, {
             LoginData: responseData.data,
           });
-        }
-        else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
           flashMessageWarning(responseData.message);
         }
       };

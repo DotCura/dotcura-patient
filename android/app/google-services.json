@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "780918359166",
+    "project_id": "dotcura",
+    "storage_bucket": "dotcura.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780918359166:android:d99a208f68e582571b842f",
+        "android_client_info": {
+          "package_name": "com.Hyperlink.Dotcura.Patient"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMLUURhViuXoYCjbgDPOb6yFl6iWdTiYc"
+        },
+        {
+          "current_key": "AIzaSyBbW2qrR0b978cxXCXcfVRW1ZEUz60HFyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780918359166:android:47e1924123fc81b91b842f",
+        "android_client_info": {
+          "package_name": "com.dotcura.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMLUURhViuXoYCjbgDPOb6yFl6iWdTiYc"
+        },
+        {
+          "current_key": "AIzaSyBbW2qrR0b978cxXCXcfVRW1ZEUz60HFyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780918359166:android:5f663088a982bf5c1b842f",
+        "android_client_info": {
+          "package_name": "com.dotcuranurse.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMLUURhViuXoYCjbgDPOb6yFl6iWdTiYc"
+        },
+        {
+          "current_key": "AIzaSyBbW2qrR0b978cxXCXcfVRW1ZEUz60HFyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

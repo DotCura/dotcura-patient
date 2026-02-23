@@ -41,14 +41,15 @@ export const currency = '€';
 //   });
 // };
 export const goToTabScreen = (
-  navigation:any,
-  tabScreen:any,
-  screenParams = {}
+  navigation: any,
+  tabScreen: any,
+  screenParams = {},
 ) => {
   const state = navigation.getState();
 
-  const isAlreadyInTransitionFlow =
-    state?.routes?.some((r:any) => r.name === 'TransitionFlow');
+  const isAlreadyInTransitionFlow = state?.routes?.some(
+    (r: any) => r.name === 'TransitionFlow',
+  );
 
   if (isAlreadyInTransitionFlow) {
     // ✅ Already inside TransitionFlow → navigate normally
@@ -70,10 +71,10 @@ export const goToTabScreen = (
 
 export const useDelayedBg = (visible: boolean, delay = 500) => {
   const [bgColor, setBgColor] = useState('transparent');
- 
+
   useEffect(() => {
     let timer: any;
- 
+
     if (visible) {
       setBgColor('transparent');
       timer = setTimeout(() => {
@@ -82,13 +83,12 @@ export const useDelayedBg = (visible: boolean, delay = 500) => {
     } else {
       setBgColor('transparent');
     }
- 
+
     return () => clearTimeout(timer);
   }, [visible, delay]);
- 
+
   return bgColor;
 };
-
 
 // Image Transform
 export const imageTransform = isRTLSupport
@@ -158,7 +158,7 @@ export const flashMessageWarning = (message: string | null) => {
 export const flashMessageBottomSucess = (message: string | null) => {
   showMessage({
     message: message || '',
-    position:'bottom',
+    position: 'bottom',
     backgroundColor: Colors.blue0019,
     color: Colors.white,
     duration: 1000,
@@ -166,10 +166,10 @@ export const flashMessageBottomSucess = (message: string | null) => {
     style: {
       marginTop: StatusBar.currentHeight,
       zIndex: 1,
-      bottom:20,
-      alignSelf:'center',
-      borderRadius:999,
-      position:'absolute'
+      bottom: 20,
+      alignSelf: 'center',
+      borderRadius: 999,
+      position: 'absolute',
     },
     titleStyle: {
       fontFamily: fontsfamily.gmedium,
@@ -187,14 +187,14 @@ export const flashMessageWarningBottom = (message: string | null) => {
     color: Colors.white,
     duration: 3000,
     icon: 'none',
-    position:'bottom',
+    position: 'bottom',
     style: {
       marginTop: StatusBar.currentHeight,
       zIndex: 1,
-      bottom:20,
-      alignSelf:'center',
-      borderRadius:999,
-      position:'absolute'
+      bottom: 20,
+      alignSelf: 'center',
+      borderRadius: 999,
+      position: 'absolute',
     },
     titleStyle: {
       fontFamily: fontsfamily.gmedium,
@@ -378,7 +378,7 @@ export const getInitials = (name: any) => {
   return first;
 };
 
-export const getInitialsTwoDigit = (name:any) => {
+export const getInitialsTwoDigit = (name: any) => {
   const parts = name.trim().split(' ');
   const first = parts[0]?.charAt(0).toUpperCase() || '';
   const last = parts[parts.length - 1]?.charAt(0).toUpperCase() || '';
@@ -398,11 +398,21 @@ export const getRandomTheme = () => {
 
 export const formatDateToSpanish = (dateString: string) => {
   const months = [
-    "Ene", "Feb", "Mar", "Abr", "May", "Jun",
-    "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
+    'Ene',
+    'Feb',
+    'Mar',
+    'Abr',
+    'May',
+    'Jun',
+    'Jul',
+    'Ago',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dic',
   ];
 
-  const [year, month, day] = dateString.split("-");
+  const [year, month, day] = dateString.split('-');
 
   const monthName = months[parseInt(month) - 1];
 
@@ -411,11 +421,21 @@ export const formatDateToSpanish = (dateString: string) => {
 
 export const formatDateToSpanishChart = (dateString: string) => {
   const months = [
-    "Ene", "Feb", "Mar", "Abr", "May", "Jun",
-    "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
+    'Ene',
+    'Feb',
+    'Mar',
+    'Abr',
+    'May',
+    'Jun',
+    'Jul',
+    'Ago',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dic',
   ];
 
-  const [year, month, day] = dateString.split("-");
+  const [year, month, day] = dateString.split('-');
 
   const monthName = months[parseInt(month) - 1];
 
@@ -464,7 +484,12 @@ export const formatSampleDate24 = (isoString: string) => {
   return `${day}/${month}/${year} alle ${hours}:${formattedMinutes}`;
 };
 
+export const getStoredFCMToken = (): string | null => {
+  let token: string | null = null;
 
+  MmkvManager.getData(MmkvManager.Keys.fcmToken, value => {
+    token = value as string | null;
+  });
 
-
-
+  return token;
+};

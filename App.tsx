@@ -135,6 +135,8 @@ import { useSocketConnection } from './src/socket/useSocketConnection';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import { usePaymentInitializer } from './src/global/PaymentModelHelper/usePaymentInitializer';
 import { PaymentPendingModal } from './src/global/PaymentModelHelper/PaymentPendingModal';
+import useNotificationService from './src/global/PushNotificatioUtils/useNotificationService';
+import { requestUserForNotificationPermission } from './src/global/PushNotificatioUtils/PushNotificationHelper';
 
 LogBox.ignoreAllLogs();
 
@@ -147,10 +149,14 @@ const App = ({ navigation }: any) => {
     ScreenNames.CUSTOMSPLASHCONTAINER,
   );
 
+  //notification service
+  useNotificationService();
+
   // Get orderStatus but DON'T cause re-render during splash
   const orderStatus = ZustandStores.OrderstatusStore(
     state => state.orderStatus,
   );
+  
   const patientId = ZustandStores.UserStore(state => state.patientId);
 
   // 🔥 IMPORTANT: Only connect socket AFTER splash is done
@@ -212,8 +218,8 @@ const App = ({ navigation }: any) => {
 
       // Hide splash only once
       if (!hasHiddenSplash.current) {
-        console.log("splash screen hide");
-        
+        console.log('splash screen hide');
+
         SplashScreen.hide();
         hasHiddenSplash.current = true;
       }
@@ -225,6 +231,10 @@ const App = ({ navigation }: any) => {
     };
 
     initializeApp();
+  }, []);
+
+  useEffect(() => {
+    requestUserForNotificationPermission();
   }, []);
 
   // usePaymentInitializer(navigation);

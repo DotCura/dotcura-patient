@@ -1,4 +1,4 @@
-import {MMKV} from 'react-native-mmkv';
+import { MMKV } from 'react-native-mmkv';
 
 export const storage = new MMKV();
 
@@ -11,6 +11,7 @@ export const MmkvManager = {
     userToken: 'userToken',
     userDetails: 'userDetails',
     fcmToken: 'fcmToken',
+    notificationPermission: 'notificationPermission',
   },
 
   getData: (
