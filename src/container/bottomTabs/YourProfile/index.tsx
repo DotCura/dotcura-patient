@@ -556,6 +556,7 @@ const YourProfileContainer = ({ navigation }: any) => {
     AnalitiList.refresh();
     familyMemberList.refresh();
     pendingOrder.refresh();
+    orders.refresh();
   };
 
   return (

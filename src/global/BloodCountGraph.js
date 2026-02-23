@@ -1131,8 +1131,10 @@ const BarChartComponent = ({
   height = 40,
   ...props
 }) => {
+  
   // ✅ 1. Safe value handling
   const safeMin = Number.isFinite(minValue) ? minValue : 0;
+  
   const safeMax =
     Number.isFinite(maxValue) && maxValue > safeMin ? maxValue : safeMin + 1;
   const safeValue = Number.isFinite(currentValue) ? currentValue : 0;
@@ -1265,6 +1267,7 @@ const BarChartComponent = ({
             fontSize: fontSize.size16,
             fontFamily: fontsfamily.gmedium,
             color: Colors.gray0F,
+            marginRight:getWidth(10),
             flex: 1,
           }}
           numberOfLines={2}

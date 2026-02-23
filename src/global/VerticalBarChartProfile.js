@@ -1105,7 +1105,7 @@ const VerticalBarChart = ({ data = [], chartMinValue, chartMaxValue }) => {
 
           return (
             <View key={index} style={[styles.labelBox, { left }]}>
-              <Text style={[styles.valueText, isLast && styles.lastValueText]}>
+              <Text style={[styles.valueText, isLast && styles.lastValueText]} numberOfLines={1}>
                 {String(item.value)}
               </Text>
               <Text style={styles.dateText}>

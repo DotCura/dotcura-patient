@@ -221,7 +221,7 @@ const App = ({ navigation }: any) => {
       // Enable socket connection AFTER splash
       setTimeout(() => {
         setShouldConnectSocket(true);
-      }, 4700); // Small delay to ensure splash transition completes
+      }, 4600); // Small delay to ensure splash transition completes
     };
 
     initializeApp();

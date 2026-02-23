@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { styles } from './styles';
 import KitAnalysisComponent from '../../components/KitAnlaysis';
@@ -213,7 +213,7 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
     },
   };
 
-  const [KitAnalysisData, setKitAnalysisData] = useState({});
+  const [KitAnalysisData, setKitAnalysisData] = useState<any>({});
 
   const handleNavigationGoBack = () => {
     navigation.goBack();
@@ -221,6 +221,23 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
 
   const handlePressCheckout = () => {
     _reOrder();
+  };
+
+  const handleOpenPDF = async () => {
+    const pdfUrl = KitAnalysisData?.booking_details?.pdf_url;
+
+    if (!pdfUrl) {
+      Alert.alert('Error', 'PDF not available');
+      return;
+    }
+
+    const supported = await Linking.canOpenURL(pdfUrl);
+
+    if (supported) {
+      await Linking.openURL(pdfUrl);
+    } else {
+      Alert.alert('Error', 'Cannot open PDF');
+    }
   };
 
   const handleNavigationTestDetails = (item: any) => {
@@ -296,6 +313,7 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
       handleNavigationTestDetails={handleNavigationTestDetails}
       handlePressCheckout={handlePressCheckout}
       bookingIDParams={route?.params?.booking_id}
+      handleOpenPDF={handleOpenPDF}
     />
   );
 };

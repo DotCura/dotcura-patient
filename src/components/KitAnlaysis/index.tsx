@@ -230,7 +230,10 @@ const KitAnalysisComponent = (props: any) => {
             <Text style={styles.txtInvoteFriendSubtitle} numberOfLines={5}>
               {getTranslation('viewdocumentsubtitle')}{' '}
             </Text>
-            <TouchableOpacity style={styles.btnInviteFriend}>
+            <TouchableOpacity
+              style={styles.btnInviteFriend}
+              onPress={props.handleOpenPDF}
+            >
               <Text style={styles.lblOpenMap}>
                 {getTranslation('viewpdflebel')}
               </Text>

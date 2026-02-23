@@ -259,6 +259,7 @@ const BarChartComponentDetails = ({
   onRangeTypeChange = () => {},
   ...props
 }) => {
+
   // ✅ Safe value handling
   const safeMin = Number.isFinite(minValue) ? minValue : 0;
   const safeMax =

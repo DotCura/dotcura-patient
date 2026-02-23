@@ -2735,6 +2735,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - RNCPushNotificationIOS (1.12.0):
+    - React-Core
   - RNDateTimePicker (8.5.1):
     - boost
     - DoubleConversion
@@ -2855,6 +2857,11 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - RNNotifee (9.1.8):
+    - React-Core
+    - RNNotifee/NotifeeCore (= 9.1.8)
+  - RNNotifee/NotifeeCore (9.1.8):
+    - React-Core
   - RNPermissions (5.4.4):
     - boost
     - DoubleConversion
@@ -3406,11 +3413,13 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFastImage (from `../node_modules/@d11/react-native-fast-image`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
+  - "RNNotifee (from `../node_modules/@notifee/react-native`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -3611,6 +3620,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
@@ -3621,6 +3632,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
+  RNNotifee:
+    :path: "../node_modules/@notifee/react-native"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNReanimated:
@@ -3724,11 +3737,13 @@ SPEC CHECKSUMS:
   ReactCommon: 00df7b9f859c9d02181844255bb89a8bca544374
   RNCAsyncStorage: 302f2fac014fd450046c120567ca364632da682b
   RNCMaskedView: 63268de1986a098b5f4d1fb5b1bc1e97fade0aee
+  RNCPushNotificationIOS: b9dcb4f28c85f77483c3f86d2fcb1e0f0ab396fa
   RNDateTimePicker: 9d0df1bcce5eabbb670b0b0177fd43d0211bd86a
   RNDeviceInfo: 8b6fa8379062949dd79a009cf3d6b02a9c03ca59
   RNFastImage: e75f88269b52687d6907db4f04f50095a6b1c921
   RNGestureHandler: 92ad734ef0da16d69d0a325b7e1e9ae80bdce1f9
   RNLocalize: 000be4f69edb5cc1b3266379ba6e40ec77a54a3c
+  RNNotifee: 4a6ee5c7deaf00e005050052d73ee6315dff7ec9
   RNPermissions: 307bba75db94ba7979f8a6f4c750ea309a5ebef4
   RNReanimated: f2cdef8c5ec70e440498b949f9af3ea39f70fcec
   RNScreens: 69f68c95d395bc4261d27c3aae7b4a458b947b7e
@@ -3750,8 +3765,8 @@ SPEC CHECKSUMS:
   StripePaymentsUI: 1ae73daeaa9f8006df9f82c45b6b0448722a9d45
   StripeUICore: 08df139d6407e525c14c1edcf8f7fe6802be68ec
   SwiftUIIntrospect: fee9aa07293ee280373a591e1824e8ddc869ba5d
-  Yoga: a3ed390a19db0459bd6839823a6ac6d9c6db198d
+  Yoga: 922d794dce2af9c437f864bf4093abfa7a131adb
 
-PODFILE CHECKSUM: fdc8a65baa53e138cc7757f5a9e9a1abd768abde
+PODFILE CHECKSUM: e1502d6173b1466995e5364058dd548145382ee4
 
 COCOAPODS: 1.15.2
