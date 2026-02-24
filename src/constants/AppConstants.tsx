@@ -13,7 +13,7 @@ export const AppStates = {
 // <============================== Notification Types ==============================>
 
 export const NotificationTypes = {
-  ADMIN_NOTIFICATIONS: 'admin_notification',
+  ADMIN_NOTIFICATIONS: 'admin-notification',
 };
 
 // <============================== Screen Name ==============================>

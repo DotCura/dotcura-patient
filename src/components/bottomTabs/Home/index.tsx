@@ -75,7 +75,7 @@ const HomeComponent = (props: any) => {
 
       // ✅ 2. Prepare params for backend
       const params = {
-        booking_id: 268,
+        booking_id: 497,
         amount: 646.5,
       };
 
@@ -129,7 +129,7 @@ const HomeComponent = (props: any) => {
       }
 
       const params = {
-        booking_id: 268,
+        booking_id: 496,
         amount: 646.5,
       };
 
@@ -177,7 +177,7 @@ const HomeComponent = (props: any) => {
   const handleKlarnaPayment = async () => {
     try {
       const params = {
-        booking_id: 268,
+        booking_id: 497,
         amount: 646.5,
       };
 
@@ -320,7 +320,7 @@ const HomeComponent = (props: any) => {
             </PressScale>
           </View>
         </View>
-        {/* 
+        
         <PlatformPayButton
           type={PlatformPay.ButtonType.Pay}
           onPress={Platform.OS == 'ios' ? handleApplePay : handleGooglePayTest}
@@ -332,7 +332,7 @@ const HomeComponent = (props: any) => {
 
         <TouchableOpacity onPress={handleKlarnaPayment} style={{marginTop:30}}>
           <Text>KLARNA</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
         {props.isloadingshow && (
           <>

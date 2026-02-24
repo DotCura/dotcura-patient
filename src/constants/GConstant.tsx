@@ -493,3 +493,10 @@ export const getStoredFCMToken = (): string | null => {
 
   return token;
 };
+
+// notificationState.ts
+export let openedFromNotification = false;
+
+export const setOpenedFromNotification = (value: boolean) => {
+  openedFromNotification = value;
+};

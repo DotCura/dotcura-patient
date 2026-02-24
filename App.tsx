@@ -152,11 +152,12 @@ const App = ({ navigation }: any) => {
   //notification service
   useNotificationService();
 
+
   // Get orderStatus but DON'T cause re-render during splash
   const orderStatus = ZustandStores.OrderstatusStore(
     state => state.orderStatus,
   );
-  
+
   const patientId = ZustandStores.UserStore(state => state.patientId);
 
   // 🔥 IMPORTANT: Only connect socket AFTER splash is done

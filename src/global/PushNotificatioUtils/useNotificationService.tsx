@@ -2,23 +2,24 @@ import { useEffect } from 'react';
 import messaging from '@react-native-firebase/messaging';
 import notifee, { AndroidImportance, EventType } from '@notifee/react-native';
 
-import { navigate } from './notificationNavigation';
 import {
   AppStates,
   isPlatformiOS,
   NotificationTypes,
   ScreenNames,
 } from '../../constants/AppConstants';
+import { navigationRef } from '../../constants/utils/navigationRef';
+import { setOpenedFromNotification } from '../../constants/GConstant';
 
 const useNotificationService = () => {
-  console.log("call useNotificationService");
-  
+  console.log('call useNotificationService');
+
   const showNotificationWithAlert = (remoteMessage: any) => {
     console.log('Show Notification', remoteMessage);
 
     let notification = isPlatformiOS
       ? remoteMessage.data
-      : JSON.parse(remoteMessage.data.data);
+      : remoteMessage.data;
 
     if (notification) {
       const { title, body } = notification;
@@ -111,6 +112,7 @@ const useNotificationService = () => {
             '🚀🚀🚀 App opened from quit state with notification: 🚀🚀🚀',
             remoteMessage,
           );
+          setOpenedFromNotification(true);
           onNotificationPress(remoteMessage.data, AppStates.KILL);
         }
       })
@@ -163,9 +165,28 @@ const useNotificationService = () => {
       notificationType = notification?.notification_tag;
     }
 
+    console.log('notificationType', notificationType);
+
+    const navigateWhenReady = (routeName: string, params?: any) => {
+      if (navigationRef.isReady()) {
+        navigationRef.navigate(routeName, params);
+      } else {
+        // If not ready, wait 100ms and check again
+        const interval = setInterval(() => {
+          if (navigationRef.isReady()) {
+            navigationRef.navigate(routeName, params);
+            clearInterval(interval);
+          }
+        }, 100);
+  
+        // Safety timeout: stop trying after 5 seconds so you don't leak memory
+        setTimeout(() => clearInterval(interval), 5000);
+      }
+    };
+
     switch (notificationType) {
       case NotificationTypes.ADMIN_NOTIFICATIONS:
-        navigate(ScreenNames.NOTIFICATIONLISTCONTAINER);
+        navigateWhenReady(ScreenNames.NOTIFICATIONLISTCONTAINER);
         break;
 
       default:

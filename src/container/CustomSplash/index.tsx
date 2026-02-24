@@ -4,6 +4,7 @@ import { CommonActions } from '@react-navigation/native';
 import { MmkvManager } from '../../constants/utils/MmkvManager';
 import { ScreenNames } from '../../constants/AppConstants';
 import CustomSplash from '../../components/CustomSplash';
+import { openedFromNotification } from '../../constants/GConstant';
 
 const CustomSplashContainer = ({ navigation }: any) => {
   const navigateNext = () => {
@@ -38,6 +39,11 @@ const CustomSplashContainer = ({ navigation }: any) => {
   };
 
   useEffect(() => {
+    if (openedFromNotification) {
+      // Skip delay if opened from notification
+      navigateNext();
+      return;
+    }
     const timer = setTimeout(
       () => {
         navigateNext();
