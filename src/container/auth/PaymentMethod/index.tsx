@@ -135,25 +135,56 @@ const PaymentMethodContainer = ({ navigation }: any) => {
     }
   };
 
+  // const _getCardList = async () => {
+  //   try {
+  //     const params = {};
+
+  //     const callback = async (responseData: any) => {
+  //       if (responseData.code === StatusCode.SUCCESS) {
+  //         setCardData(responseData?.data);
+  //       } else {
+  //         flashMessageWarning(responseData.message);
+  //       }
+  //     };
+
+  //     await APIManager.makeRequest({
+  //       navigation: navigation,
+  //       method: MethodType.GET,
+  //       showLoader: true,
+  //       apiEndPoint: ApiEndPoints.PAYMENT.CARDLIST,
+  //       callback,
+  //       params,
+  //     });
+  //   } catch (error) {
+  //     console.log('card List error:', error);
+  //   }
+  // };
+
   const _getCardList = async () => {
     try {
-      const params = {};
-
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
-          setCardData(responseData?.data);
+          const response = responseData?.data || [];
+
+          // ✅ Extract default payment method safely
+          const defaultMethod = response[0]?.default_payment_method || null;
+
+          // ✅ Filter only real cards (must have card_id)
+          const onlyCards = response.filter((item: any) => item.card_id);
+
+          setCardData(onlyCards); // only real cards
+          setDefaultType(defaultMethod); // store default type separately
         } else {
           flashMessageWarning(responseData.message);
         }
       };
 
       await APIManager.makeRequest({
-        navigation: navigation,
+        navigation,
         method: MethodType.GET,
         showLoader: true,
         apiEndPoint: ApiEndPoints.PAYMENT.CARDLIST,
         callback,
-        params,
       });
     } catch (error) {
       console.log('card List error:', error);
@@ -168,8 +199,8 @@ const PaymentMethodContainer = ({ navigation }: any) => {
 
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
-          console.log("responseData delete card:", responseData);
-          
+          console.log('responseData delete card:', responseData);
+
           _getCardList();
         } else {
           flashMessageWarning(responseData.message);

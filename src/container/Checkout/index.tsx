@@ -391,19 +391,68 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     return true;
   };
 
+  // const handleOnPressSaveChanges = () => {
+  //   const isValid = validateBeforeOrder();
+
+  //   if (!isValid) return;
+
+  //   const paymentMethod = Number(testkitsData[0]?.default_payment_method);
+  //   const hasCard = Number(testkitsData[0]?.has_card);
+
+  //   console.log('hasCard:', hasCard);
+  //   console.log('paymentMethod:', paymentMethod);
+
+  //   // 🔥 If user has NO card → open Stripe
+  //   if (testkitsData[0]?.has_card === 0) {
+  //     openCustomerSheet();
+  //     return;
+  //   }
+
+  //   // ✅ If user already has card → directly book order
+  //   _bookOrder();
+  // };
+
+  // const handleOnPressSaveChanges = () => {
+  //   const isValid = validateBeforeOrder();
+  //   if (!isValid) return;
+  
+  //   const paymentMethod = Number(testkitsData[0]?.default_payment_method);
+  //   const hasCard = Number(testkitsData[0]?.has_card);
+  
+  //   console.log("hasCard:", hasCard);
+  //   console.log("paymentMethod:", paymentMethod);
+  
+  //   // 🔵 CASE 1 → No card + Stripe selected → Open CustomerSheet
+  //   if (paymentMethod === 4 && hasCard === 0) {
+  //     openCustomerSheet();
+  //     return;
+  //   }
+  
+  //   // 🟢 CASE 2 → Stripe selected but card already exists
+  //   if (paymentMethod === 4 && hasCard === 1) {
+  //     _bookOrder();
+  //     return;
+  //   }
+  
+  //   // 🟢 CASE 3 → Any other payment method
+  //   if ([1, 2, 3].includes(paymentMethod)) {
+  //     _bookOrder();
+  //     return;
+  //   }
+  // };
+
   const handleOnPressSaveChanges = () => {
     const isValid = validateBeforeOrder();
-
     if (!isValid) return;
-
-    // 🔥 If user has NO card → open Stripe
-    if (testkitsData[0]?.has_card === 0) {
+  
+    const paymentMethod = Number(testkitsData[0]?.default_payment_method);
+    const hasCard = Number(testkitsData[0]?.has_card);
+  
+    if (paymentMethod === 4 && hasCard === 0) {
       openCustomerSheet();
-      return;
+    } else {
+      _bookOrder();
     }
-
-    // ✅ If user already has card → directly book order
-    _bookOrder();
   };
 
   const handleNavigateHome = () => {

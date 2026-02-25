@@ -120,16 +120,11 @@
 //   }, [activeBookingId, status]);
 // };
 
-
-//tetsing 
+//tetsing
 
 import { useEffect, useRef } from 'react';
 import { APIManager } from '../../api/APIManager';
-import {
-  ApiEndPoints,
-  MethodType,
-  StatusCode,
-} from '../../api/APIConstant';
+import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 import { usePaymentStore } from '../../store/PaymentStore/PaymentStore';
 import { ZustandStores } from '../../store';
 
@@ -142,7 +137,7 @@ export const usePaymentInitializer = (navigation: any) => {
     setOrderDetails,
   } = usePaymentStore();
 
-  const patientId = ZustandStores.UserStore((s) => s.patientId);
+  const patientId = ZustandStores.UserStore(s => s.patientId);
 
   // 🔒 prevent duplicate API calls
   const hasSyncedRef = useRef(false);
@@ -163,7 +158,7 @@ export const usePaymentInitializer = (navigation: any) => {
       navigation,
       method: MethodType.GET,
       apiEndPoint: ApiEndPoints.PAYMENT.GET_PENDING_PAYMENT_LIST,
-      showLoader:false,
+      showLoader: false,
       callback: (res: any) => {
         if (res.code === 1 && Array.isArray(res.data)) {
           const unpaid = res.data
@@ -184,14 +179,17 @@ export const usePaymentInitializer = (navigation: any) => {
       navigation,
       method: MethodType.POST,
       apiEndPoint: ApiEndPoints.PAYMENT.GETPAYMENTDETAILS,
-      showLoader:false,
-      // params: { booking_id: activeBookingId },
-      params: { booking_id: 432 },
+      showLoader: false,
+      params: { booking_id: activeBookingId },
+      // params: { booking_id: 432 },
       callback: (res: any) => {
         if (res.code === StatusCode.SUCCESS) {
-          console.log("payment details",res.data);
-          
+          console.log('payment details', res.data);
+
           setOrderDetails(res.data);
+        }
+        else{
+          console.log('failed to fetch payment details');
         }
       },
     });

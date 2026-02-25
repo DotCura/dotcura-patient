@@ -51,7 +51,7 @@ const PaymentMethodComponent = (props: any) => {
               subtitle={getTranslation('paymentmethodsubtitle')}
             />
           </View>
-          {props.cardData.length !== 0 && (
+          {props.cardData.length > 0 && (
             <View style={{ marginTop: getHeight(39) }}>
               <ModalTitleSubtitle
                 title={getTranslation('savedcards')}
@@ -69,8 +69,9 @@ const PaymentMethodComponent = (props: any) => {
                 marginTop: getHeight(24),
               }}
               renderItem={({ item }) => {
-                const isSelected =
-                  props.defaultType === '4' && item.is_default === 1;
+                // const isSelected =
+                //   props.defaultType === '4' && item.is_default === 1;
+                const isSelected = item.is_default === 1;
                 return (
                   <TouchableOpacity
                     style={[
@@ -168,9 +169,11 @@ const PaymentMethodComponent = (props: any) => {
                     'props.defaultType',
                   );
 
+                  // const isSelected =
+                  //   props.cardData[0]?.default_payment_method ===
+                  //   item.id.toString();
                   const isSelected =
-                    props.cardData[0]?.default_payment_method ===
-                    item.id.toString();
+  props.defaultType === item.id.toString();
 
                   return (
                     <TouchableOpacity
@@ -184,12 +187,12 @@ const PaymentMethodComponent = (props: any) => {
                           backgroundColor: Colors.white,
                         },
                       ]}
-                      // onPress={() => {
-                      //   props._setDefaultCardApi(item.id.toString(), null);
-                      // }}
                       onPress={() => {
-                        flashMessageSucess(getTranslation('indevelopment'));
+                        props._setDefaultCardApi(item.id.toString(), null);
                       }}
+                      // onPress={() => {
+                      //   flashMessageSucess(getTranslation('indevelopment'));
+                      // }}
                     >
                       <View style={{ flexDirection: 'row' }}>
                         <View

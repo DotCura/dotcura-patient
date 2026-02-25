@@ -308,7 +308,14 @@
 //with apple pay above is payment sheet code
 
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  Platform,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import { usePaymentStore } from '../../store/PaymentStore/PaymentStore';
 import { Colors } from '../../constants/Colors';
@@ -345,13 +352,13 @@ export const PaymentPendingModal = () => {
   const isSplash = currentRoute === ScreenNames.CUSTOMSPLASHCONTAINER;
   if (isSplash) return null;
 
-  // if (status !== 'pending' || !orderDetails) return null; -> uncommetn karvanu ceh 
+  if (status !== 'pending' || !orderDetails) return null;
 
   const handleFinishOrder = async () => {
-    // if (!orderDetails?.booking_id) {
-    //   flashMessageWarning('Booking not found');
-    //   return;
-    // } -> uncomment karvanu che
+    if (!orderDetails?.booking_id) {
+      flashMessageWarning('Booking not found');
+      return;
+    }
 
     const isSupported = await isPlatformPaySupported();
 
@@ -362,29 +369,40 @@ export const PaymentPendingModal = () => {
 
     try {
       const params = {
-        // booking_id: orderDetails.booking_id,   -> uncomment karvanu che
-        // amount: orderDetails?.summary?.total,
-        booking_id: 270,
-        amount: 646.50,
+        booking_id: orderDetails.booking_id,
+        amount: orderDetails?.summary?.total,
       };
 
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           const { paymentIntent } = responseData.data;
+          const isIOS = Platform.OS === 'ios';
 
-          const { error } = await confirmPlatformPayPayment(paymentIntent, {
-            applePay: {
-              merchantCountryCode: 'US',
-              currencyCode: 'USD',
-              cartItems: [
-                {
-                  label: 'Dotcura Service',
-                  amount: orderDetails.summary.total.toFixed(2),
-                  paymentType: PlatformPay.PaymentType.Immediate,
+          const { error } = await confirmPlatformPayPayment(
+            paymentIntent,
+            isIOS
+              ? {
+                  applePay: {
+                    merchantCountryCode: 'US',
+                    currencyCode: 'USD',
+                    cartItems: [
+                      {
+                        label: 'Dotcura Service',
+                        amount: orderDetails.summary.total.toFixed(2),
+                        paymentType: PlatformPay.PaymentType.Immediate,
+                      },
+                    ],
+                  },
+                }
+              : {
+                  googlePay: {
+                    testEnv: true,
+                    merchantName: 'Dotcura',
+                    merchantCountryCode: 'US',
+                    currencyCode: 'USD',
+                  },
                 },
-              ],
-            },
-          });
+          );
 
           if (error) {
             console.log('Apple Pay error:', error);

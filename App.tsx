@@ -238,7 +238,7 @@ const App = ({ navigation }: any) => {
     requestUserForNotificationPermission();
   }, []);
 
-  // usePaymentInitializer(navigation);
+  usePaymentInitializer(navigation);
 
   //jayshaikey:pk_test_51SSFGhEHGGgg2T7x7trk2rIV2mIoZo2u3jERAm2PXCPVYCBmCyjVynjpursvu49ixVQeZ4LjyqkuwX02RkmnDuFc00EpCuEJjI
   return (
@@ -253,7 +253,7 @@ const App = ({ navigation }: any) => {
           <I18nextProvider i18n={i18n}>
             <AppLayout isOrderPlaced={orderStatus}>
               <MainNavigation initialRouteName={initialRouteName} />
-              {/* <PaymentPendingModal /> */}
+              <PaymentPendingModal />
             </AppLayout>
             <Loader ref={ref => setLoaderRef(ref)} />
             <FlashMessage
