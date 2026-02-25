@@ -186,9 +186,11 @@ export const usePaymentInitializer = (navigation: any) => {
       apiEndPoint: ApiEndPoints.PAYMENT.GETPAYMENTDETAILS,
       showLoader:false,
       // params: { booking_id: activeBookingId },
-      params: { booking_id: 270 },
+      params: { booking_id: 432 },
       callback: (res: any) => {
         if (res.code === StatusCode.SUCCESS) {
+          console.log("payment details",res.data);
+          
           setOrderDetails(res.data);
         }
       },

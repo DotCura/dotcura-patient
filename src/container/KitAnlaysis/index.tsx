@@ -5,7 +5,10 @@ import KitAnalysisComponent from '../../components/KitAnlaysis';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenNames } from '../../constants/AppConstants';
 import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
-import { flashMessageWarning } from '../../constants/GConstant';
+import {
+  flashMessageSucess,
+  flashMessageWarning,
+} from '../../constants/GConstant';
 import { APIManager } from '../../api/APIManager';
 import { ZustandStores } from '../../store';
 
@@ -301,6 +304,33 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
     }
   };
 
+  const _saveReport = async () => {
+    try {
+      const params = {
+        booking_id: route?.params?.booking_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          await _getReportDetails();
+          flashMessageSucess(responseData.message);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.REPORT.SAVEREPORT45DAYS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('save report error:', error);
+    }
+  };
+
   useEffect(() => {
     _getReportDetails();
   }, []);
@@ -314,6 +344,7 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
       handlePressCheckout={handlePressCheckout}
       bookingIDParams={route?.params?.booking_id}
       handleOpenPDF={handleOpenPDF}
+      _saveReport={_saveReport}
     />
   );
 };

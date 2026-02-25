@@ -81,6 +81,7 @@ export const ApiEndPoints = {
     GETREPORTDETAILS: `${PATIENT_PREFIX}getReportDetails`,
     REORDER: `${PATIENT_PREFIX}reorder`,
     LIKEUNLIKEREPORT: `${PATIENT_PREFIX}likeUnlikeReport`,
+    SAVEREPORT45DAYS: `${PATIENT_PREFIX}save_report`,
   },
   PAYMENT: {
     GETPAYMENTDETAILS: `${PATIENT_PREFIX}get_payment_details`,

@@ -345,13 +345,13 @@ export const PaymentPendingModal = () => {
   const isSplash = currentRoute === ScreenNames.CUSTOMSPLASHCONTAINER;
   if (isSplash) return null;
 
-  // if (status !== 'pending' || !orderDetails) return null;
+  // if (status !== 'pending' || !orderDetails) return null; -> uncommetn karvanu ceh 
 
   const handleFinishOrder = async () => {
     // if (!orderDetails?.booking_id) {
     //   flashMessageWarning('Booking not found');
     //   return;
-    // }
+    // } -> uncomment karvanu che
 
     const isSupported = await isPlatformPaySupported();
 
@@ -362,7 +362,7 @@ export const PaymentPendingModal = () => {
 
     try {
       const params = {
-        // booking_id: orderDetails.booking_id,
+        // booking_id: orderDetails.booking_id,   -> uncomment karvanu che
         // amount: orderDetails?.summary?.total,
         booking_id: 270,
         amount: 646.50,

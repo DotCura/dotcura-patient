@@ -129,7 +129,7 @@ const HomeComponent = (props: any) => {
       }
 
       const params = {
-        booking_id: 496,
+        // booking_id: 496,
         amount: 646.5,
       };
 
@@ -137,25 +137,28 @@ const HomeComponent = (props: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           const clientSecret = responseData.data.paymentIntent;
 
-          const { error } = await confirmPlatformPayPayment(clientSecret, {
-            applePay: {
-              merchantCountryCode: 'RO', // your Stripe account country
-              currencyCode: 'EUR',
-              cartItems: [
-                {
-                  label: 'Dotcura Service',
-                  amount: params.amount.toFixed(2),
-                  paymentType: PlatformPay.PaymentType.Immediate,
-                },
-              ],
+          const { error, paymentIntent } = await confirmPlatformPayPayment(
+            clientSecret,
+            {
+              applePay: {
+                merchantCountryCode: 'RO', // your Stripe account country
+                currencyCode: 'EUR',
+                cartItems: [
+                  {
+                    label: 'Dotcura Service',
+                    amount: params.amount.toFixed(2),
+                    paymentType: PlatformPay.PaymentType.Immediate,
+                  },
+                ],
+              },
             },
-          });
+          );
 
           if (error) {
             console.log('Apple Pay error:', error);
             flashMessageWarning(error.message);
           } else {
-            console.log('✅ Apple Pay Success');
+            console.log('✅ Apple Pay Success', paymentIntent);
           }
         } else {
           flashMessageWarning(responseData.message);
@@ -320,8 +323,8 @@ const HomeComponent = (props: any) => {
             </PressScale>
           </View>
         </View>
-        
-        <PlatformPayButton
+
+        {/* <PlatformPayButton
           type={PlatformPay.ButtonType.Pay}
           onPress={Platform.OS == 'ios' ? handleApplePay : handleGooglePayTest}
           style={{
@@ -330,9 +333,12 @@ const HomeComponent = (props: any) => {
           }}
         />
 
-        <TouchableOpacity onPress={handleKlarnaPayment} style={{marginTop:30}}>
+        <TouchableOpacity
+          onPress={handleKlarnaPayment}
+          style={{ marginTop: 30 }}
+        >
           <Text>KLARNA</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {props.isloadingshow && (
           <>

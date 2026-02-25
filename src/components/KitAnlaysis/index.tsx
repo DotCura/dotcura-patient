@@ -243,6 +243,7 @@ const KitAnalysisComponent = (props: any) => {
             <Image source={images.imgfolder} tintColor={Colors.blue0019} />
           </View>
         </View>
+
         <View style={[styles.vwInviteDetails, { marginTop: getHeight(12) }]}>
           <View style={styles.vwInBank}>
             <Text style={styles.txtinvitefriendTitle} numberOfLines={1}>
@@ -269,6 +270,13 @@ const KitAnalysisComponent = (props: any) => {
             />
           </View>
         </View>
+        {/* <View style={{ marginHorizontal: getWidth(16) }}>
+          <CustomButton
+            style={{ marginTop: getHeight(24) }}
+            btnPress={props.handleOnPressSaveAddress}
+            btnTitle={getTranslation('storeanalysis')}
+          />
+        </View> */}
       </>
     );
   };
@@ -576,7 +584,7 @@ const KitAnalysisComponent = (props: any) => {
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}
         contentContainerStyle={{
-          paddingBottom: getHeight(110),
+          paddingBottom: getHeight(50),
           backgroundColor: Colors.whiteF2,
         }}
         style={{
@@ -638,6 +646,19 @@ const KitAnalysisComponent = (props: any) => {
           />
         }
       />
+      {KitAnalysisProps?.booking_details?.is_save === 0 && (
+        <View
+          style={{
+            marginHorizontal: getWidth(16),
+            marginBottom: getHeight(40),
+          }}
+        >
+          <CustomButton
+            btnPress={props._saveReport}
+            btnTitle={getTranslation('storeanalysis')}
+          />
+        </View>
+      )}
     </>
   );
 };
