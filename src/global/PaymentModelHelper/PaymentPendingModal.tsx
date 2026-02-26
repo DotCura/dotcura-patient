@@ -311,9 +311,7 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   ScrollView,
-  Alert,
   Platform,
 } from 'react-native';
 import Modal from 'react-native-modal';
@@ -328,13 +326,11 @@ import CustomButton from '../Buttons';
 import { images } from '../../constants/Images';
 import { ScreenNames } from '../../constants/AppConstants';
 import {
-  getCurrentRouteName,
   navigationRef,
 } from '../../constants/utils/navigationRef';
 import { useNavigationStore } from '../../store/NavigationStore';
 import {
   useStripe,
-  PlatformPayButton,
   PlatformPay,
 } from '@stripe/stripe-react-native';
 import { APIManager } from '../../api/APIManager';

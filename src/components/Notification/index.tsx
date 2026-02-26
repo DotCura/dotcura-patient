@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   StyleSheet,
@@ -51,17 +52,44 @@ const NotificationListComponent = (props: any) => {
       />
       <FlatList
         data={props.notificationData}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => item?.notification_id}
+        onEndReached={props.notificationList.loadMore}
+        onEndReachedThreshold={0.5}
+        refreshing={props.notificationList.refreshing}
+        onRefresh={props.notificationList.refresh}
+        ListFooterComponent={
+          props.notificationList.loadingMore ? (
+            <ActivityIndicator size="large" color={Colors.blue002} />
+          ) : null
+        }
+        ListEmptyComponent={
+          !props.notificationList.loading && !props.notificationList.refreshing ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: getHeight(20),
+                marginTop: getHeight(100),
+              }}
+            >
+              <Image source={images.imgNoDataFoundAddress} />
+              <Text style={styles.lblNoAddressFound}>
+                {getTranslation('nonotificationfound')}
+              </Text>
+            </View>
+          ) : null
+        }
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}
         contentContainerStyle={{
-          flexGrow:1,
+          flexGrow: 1,
           paddingBottom: getHeight(60),
           paddingHorizontal: getWidth(16),
           paddingTop: getHeight(10),
-          backgroundColor:Colors.whiteF2
+          backgroundColor: Colors.whiteF2,
         }}
-        style={{ flex: 1,  backgroundColor:Colors.whiteF2 }}
+        style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
         ListHeaderComponent={renderHeaderComponent}
         renderItem={props.renderNotificationData}
       />

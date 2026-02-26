@@ -38,6 +38,7 @@ export const ApiEndPoints = {
     PATIENTDETAILS: `${PATIENT_PREFIX}patient_details`,
     GETLIKEREPORTLIST: `${PATIENT_PREFIX}getLikeReportList`,
     GETCREDENTIAALS: `${PATIENT_PREFIX}credentials`,
+    NOTIFICATIONLIST: `${PATIENT_PREFIX}getNotificationList`,
   },
   TEST: {
     GETTESTREPORTDETAILS: `${PATIENT_PREFIX}getTestReportHistory`,

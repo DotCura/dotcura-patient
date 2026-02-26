@@ -36,4 +36,11 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.2,
     flex: 1,
   },
+  lblNoAddressFound: {
+    fontSize: fontSize.size20,
+    textAlign: 'center',
+    marginHorizontal: getWidth(40),
+    fontFamily: fontsfamily.gsemiBold,
+    color: Colors.blue002,
+  },
 });

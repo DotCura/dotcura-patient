@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import NotificationListComponent from '../../components/Notification';
 import AppHeader from '../../global/Header';
 import { getTranslation } from '../../localization/i18n/i18n.config';
@@ -7,6 +7,12 @@ import { activityOpacity } from '../../constants/GConstant';
 import { styles } from './styles';
 import { images } from '../../constants/Images';
 import { getHeight } from '../../constants/utils/Dimensions';
+import { apiPromise } from '../../global/ApiHelper/apiPromise';
+import { ApiEndPoints } from '../../api/APIConstant';
+import {
+  LoadType,
+  usePaginatedList,
+} from '../../global/ApiHelper/usePaginatedList';
 
 const NotificationListContainer = ({ navigation }: any) => {
   const notification = [
@@ -128,17 +134,20 @@ const NotificationListContainer = ({ navigation }: any) => {
         style={styles.btnNotification}
       >
         <View style={styles.vwTitleImage}>
-          <Text style={styles.title}>{item.notificationtitle}</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.title}>{item?.title}</Text>
+            <Text style={styles.lblOrderID}>{item?.message}</Text>
+          </View>
           <Image
             source={images.imgRightCurve}
             style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
           />
         </View>
         <View>
-          <Text style={styles.lblOrderID}>
+          {/* <Text style={styles.lblOrderID}>
             {getTranslation('orderidlabel')} {item.orderid}
-          </Text>
-          <Text style={styles.kitandtestdetails}>{formatKits(item.kits)}</Text>
+          </Text> */}
+          {/* <Text style={styles.kitandtestdetails}>{formatKits(item.kits)}</Text> */}
         </View>
       </TouchableOpacity>
     );
@@ -165,10 +174,46 @@ const NotificationListContainer = ({ navigation }: any) => {
   useEffect(() => {
     header();
   }, []);
+
+  //======================== API ===========================
+  const fetchNotificationList = useCallback(
+    async ({
+      page,
+      loadType,
+    }: {
+      page: number;
+      searchQuery?: string;
+      loadType: any;
+    }) => {
+      const res = await apiPromise({
+        navigation,
+        apiEndPoint: ApiEndPoints.SETTINGS.NOTIFICATIONLIST,
+        method: 'POST',
+        showLoader: loadType === LoadType.INITIAL,
+        params: {
+          page,
+        },
+      });
+
+      return {
+        ...res,
+        data: res?.data,
+      };
+    },
+    [navigation],
+  );
+
+  const notificationList: any = usePaginatedList<any>({
+    pageSize: 10,
+    enabled: true,
+    fetcher: fetchNotificationList,
+  });
+
   return (
     <NotificationListComponent
+      notificationList={notificationList}
       navigation={navigation}
-      notificationData={notificationData}
+      notificationData={notificationList?.data}
       renderNotificationData={renderNotificationData}
     />
   );

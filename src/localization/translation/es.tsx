@@ -596,7 +596,8 @@ export default {
   contactbtnname: 'Chiama il ',
   indevelopment: 'In fase di sviluppo.',
 
-  storeanalysis:"Conserva analisi",
+  storeanalysis: 'Conserva analisi',
+  nonotificationfound: 'Notifica non trovata',
 
   reportnotavailableprofile:
     'La tua segnalazione è attualmente in fase di elaborazione. Sarà presto disponibile.',
