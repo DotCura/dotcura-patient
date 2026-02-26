@@ -13,6 +13,7 @@ import {
   LoadType,
   usePaginatedList,
 } from '../../global/ApiHelper/usePaginatedList';
+import { ScreenNames } from '../../constants/AppConstants';
 
 const NotificationListContainer = ({ navigation }: any) => {
   const notification = [
@@ -130,18 +131,29 @@ const NotificationListContainer = ({ navigation }: any) => {
   const renderNotificationData = ({ item, index }: any) => {
     return (
       <TouchableOpacity
-        activeOpacity={activityOpacity}
+        activeOpacity={
+          item?.notification_tag === 'report_notification' ? activityOpacity : 1
+        }
         style={styles.btnNotification}
+        onPress={() => {
+          if (item?.notification_tag === 'report_notification') {
+            navigation.navigate(ScreenNames.KITANALYSISCONTAINER, {
+              booking_id: item?.action_id,
+            });
+          }
+        }}
       >
         <View style={styles.vwTitleImage}>
           <View style={{ flex: 1 }}>
             <Text style={styles.title}>{item?.title}</Text>
             <Text style={styles.lblOrderID}>{item?.message}</Text>
           </View>
-          <Image
-            source={images.imgRightCurve}
-            style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
-          />
+          {item?.notification_tag === 'report_notification' ? (
+            <Image
+              source={images.imgRightCurve}
+              style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
+            />
+          ) : null}
         </View>
         <View>
           {/* <Text style={styles.lblOrderID}>

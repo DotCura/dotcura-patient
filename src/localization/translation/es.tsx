@@ -598,6 +598,9 @@ export default {
 
   storeanalysis: 'Conserva analisi',
   nonotificationfound: 'Notifica non trovata',
+  paymentsucesskarla: 'Pagamento riuscito tramite Klarna!',
+  paymentsucesspaypal: 'Pagamento riuscito tramite Paypal!',
+  paymentsucessapplepay: 'Pagamento riuscito tramite Applepay!',
 
   reportnotavailableprofile:
     'La tua segnalazione è attualmente in fase di elaborazione. Sarà presto disponibile.',

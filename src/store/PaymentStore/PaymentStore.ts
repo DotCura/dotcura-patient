@@ -50,7 +50,6 @@
 //   ),
 // );
 
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -66,6 +65,9 @@ interface PaymentState {
   markPaymentSuccess: () => void;
   activateNext: () => void;
   resetAll: () => void;
+  showModal: () => void;
+  hideModal: () => void;
+  isModalVisible: boolean;
 }
 
 export const usePaymentStore = create<PaymentState>()(
@@ -75,6 +77,7 @@ export const usePaymentStore = create<PaymentState>()(
       activeBookingId: null,
       status: 'idle',
       orderDetails: null,
+      isModalVisible: true,
 
       // hydrateQueue: (ids) =>
       //   set({
@@ -83,23 +86,22 @@ export const usePaymentStore = create<PaymentState>()(
       //     status: ids.length ? 'pending' : 'idle',
       //     orderDetails: null,
       //   }),
-      hydrateQueue: (ids) =>
-        set((state) => {
+      hydrateQueue: ids =>
+        set(state => {
           const nextBookingId = ids[0] ?? null;
           const isSameBooking = state.activeBookingId === nextBookingId;
-      
+
           return {
             pendingQueue: ids,
             activeBookingId: nextBookingId,
             status: ids.length ? 'pending' : 'idle',
-      
+
             // 🔥 DO NOT clear details if same booking
             orderDetails: isSameBooking ? state.orderDetails : null,
           };
         }),
-      
 
-      setOrderDetails: (data) =>
+      setOrderDetails: data =>
         set({
           orderDetails: data,
         }),
@@ -118,6 +120,15 @@ export const usePaymentStore = create<PaymentState>()(
           orderDetails: null,
         });
       },
+      showModal: () =>
+        set({
+          isModalVisible: true,
+        }),
+      
+      hideModal: () =>
+        set({
+          isModalVisible: false,
+        }),
 
       resetAll: () =>
         set({

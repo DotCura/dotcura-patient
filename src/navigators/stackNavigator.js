@@ -414,7 +414,10 @@ const MainNavigation = props => {
         {_addScreen(NativeStack, ScreenNames.CONTACTUSCONTAINER, {
           headerShown: false,
         })}
-        
+        {_addScreen(NativeStack, ScreenNames.PAYPALWEBVIEWSCREEN, {
+          headerShown: false,
+        })}
+
         {/* 🔥 TRANSITION ENTRY */}
         <NativeStack.Screen
           name="TransitionFlow"
@@ -427,20 +430,23 @@ const MainNavigation = props => {
 
   /* ---------------- ROOT ---------------- */
   return (
-    <NavigationContainer ref={navigationRef}  onReady={() => {
-      const route = navigationRef.getCurrentRoute()?.name;
-      useNavigationStore.getState().setCurrentRoute(route);
-    }}
-    onStateChange={() => {
-      const route = navigationRef.getCurrentRoute()?.name;
-      useNavigationStore.getState().setCurrentRoute(route);
-    }}>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        const route = navigationRef.getCurrentRoute()?.name;
+        useNavigationStore.getState().setCurrentRoute(route);
+      }}
+      onStateChange={() => {
+        const route = navigationRef.getCurrentRoute()?.name;
+        useNavigationStore.getState().setCurrentRoute(route);
+      }}
+    >
       <StatusBar
         barStyle="dark-content"
         translucent
         backgroundColor="transparent"
       />
-      
+
       <ModalStack.Navigator screenOptions={{ headerShown: false }}>
         <ModalStack.Screen
           name="MainStackScreen"

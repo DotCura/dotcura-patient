@@ -72,6 +72,8 @@ export const ScreenNames = {
   ACCOUNTCONTAINER: 'AccountContainer',
   ADDFAMILYMEMBERSCONTAINER: 'AddFamilyMemberContainer',
   RESULTOPENUPCONTAINER: 'ResultOpenUpContainers',
+
+  PAYPALWEBVIEWSCREEN:"PayPalWebViewScreen",
 };
 
 // <============================== IOS Condition ==============================>

@@ -308,37 +308,41 @@
 //with apple pay above is payment sheet code
 
 import React from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  Platform,
-} from 'react-native';
+import { View, Text, ScrollView, Platform } from 'react-native';
 import Modal from 'react-native-modal';
 import { usePaymentStore } from '../../store/PaymentStore/PaymentStore';
 import { Colors } from '../../constants/Colors';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { paymentstyles } from './paymentstyles';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
-import { currency, flashMessageWarning } from '../../constants/GConstant';
+import {
+  currency,
+  flashMessageSucess,
+  flashMessageWarning,
+} from '../../constants/GConstant';
 import { fontsfamily } from '../../constants/FontFamily';
 import CustomButton from '../Buttons';
 import { images } from '../../constants/Images';
 import { ScreenNames } from '../../constants/AppConstants';
-import {
-  navigationRef,
-} from '../../constants/utils/navigationRef';
+import { navigationRef } from '../../constants/utils/navigationRef';
 import { useNavigationStore } from '../../store/NavigationStore';
 import {
   useStripe,
   PlatformPay,
+  confirmPayment,
 } from '@stripe/stripe-react-native';
 import { APIManager } from '../../api/APIManager';
 import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 
 export const PaymentPendingModal = () => {
-  const { status, orderDetails, markPaymentSuccess, activateNext } =
-    usePaymentStore();
+  const {
+    status,
+    orderDetails,
+    markPaymentSuccess,
+    activateNext,
+    hideModal,
+    isModalVisible,
+  } = usePaymentStore();
 
   const { confirmPlatformPayPayment, isPlatformPaySupported } = useStripe();
 
@@ -348,14 +352,84 @@ export const PaymentPendingModal = () => {
   const isSplash = currentRoute === ScreenNames.CUSTOMSPLASHCONTAINER;
   if (isSplash) return null;
 
-  if (status !== 'pending' || !orderDetails) return null;
+  if (status !== 'pending' || !orderDetails || !isModalVisible) return null;
 
-  const handleFinishOrder = async () => {
-    if (!orderDetails?.booking_id) {
-      flashMessageWarning('Booking not found');
-      return;
-    }
+  // const handleFinishOrder = async () => {
+  //   if (!orderDetails?.booking_id) {
+  //     flashMessageWarning('Booking not found');
+  //     return;
+  //   }
 
+  //   const isSupported = await isPlatformPaySupported();
+
+  //   if (!isSupported) {
+  //     flashMessageWarning('Apple Pay not supported on this device');
+  //     return;
+  //   }
+
+  //   try {
+  //     const params = {
+  //       booking_id: orderDetails.booking_id,
+  //       amount: orderDetails?.summary?.total,
+  //     };
+
+  //     const callback = async (responseData: any) => {
+  //       if (responseData.code === StatusCode.SUCCESS) {
+  //         const { paymentIntent } = responseData.data;
+  //         const isIOS = Platform.OS === 'ios';
+
+  //         const { error } = await confirmPlatformPayPayment(
+  //           paymentIntent,
+  //           isIOS
+  //             ? {
+  //                 applePay: {
+  //                   merchantCountryCode: 'IT',
+  //                   currencyCode: 'EUR',
+  //                   cartItems: [
+  //                     {
+  //                       label: 'Dotcura Service',
+  //                       amount: orderDetails.summary.total.toFixed(2),
+  //                       paymentType: PlatformPay.PaymentType.Immediate,
+  //                     },
+  //                   ],
+  //                 },
+  //               }
+  //             : {
+  //                 googlePay: {
+  //                   testEnv: true,
+  //                   merchantName: 'Dotcura',
+  //                   merchantCountryCode: 'IT',
+  //                   currencyCode: 'EUR',
+  //                 },
+  //               },
+  //         );
+
+  //         if (error) {
+  //           console.log('Apple Pay error:', error);
+  //           flashMessageWarning(error.message);
+  //         } else {
+  //           console.log('✅ Apple Pay Success');
+  //           markPaymentSuccess();
+  //           activateNext();
+  //         }
+  //       } else {
+  //         flashMessageWarning(responseData.message);
+  //       }
+  //     };
+
+  //     await APIManager.makeRequest({
+  //       navigationRef,
+  //       method: MethodType.POST,
+  //       apiEndPoint: ApiEndPoints.PAYMENT.CREATEPAYMENTINTENT,
+  //       params,
+  //       callback,
+  //     });
+  //   } catch (err) {
+  //     console.log('Apple Pay error:', err);
+  //   }
+  // };
+
+  const handleApplePay = async () => {
     const isSupported = await isPlatformPaySupported();
 
     if (!isSupported) {
@@ -379,8 +453,8 @@ export const PaymentPendingModal = () => {
             isIOS
               ? {
                   applePay: {
-                    merchantCountryCode: 'US',
-                    currencyCode: 'USD',
+                    merchantCountryCode: 'IT',
+                    currencyCode: 'EUR',
                     cartItems: [
                       {
                         label: 'Dotcura Service',
@@ -394,8 +468,8 @@ export const PaymentPendingModal = () => {
                   googlePay: {
                     testEnv: true,
                     merchantName: 'Dotcura',
-                    merchantCountryCode: 'US',
-                    currencyCode: 'USD',
+                    merchantCountryCode: 'IT',
+                    currencyCode: 'EUR',
                   },
                 },
           );
@@ -405,6 +479,7 @@ export const PaymentPendingModal = () => {
             flashMessageWarning(error.message);
           } else {
             console.log('✅ Apple Pay Success');
+            flashMessageSucess(getTranslation('paymentsucessapplepay'));
             markPaymentSuccess();
             activateNext();
           }
@@ -422,6 +497,112 @@ export const PaymentPendingModal = () => {
       });
     } catch (err) {
       console.log('Apple Pay error:', err);
+    }
+  };
+
+  const handlePayPal = async () => {
+    try {
+      const params = {
+        booking_id: orderDetails?.booking_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code !== StatusCode.SUCCESS) {
+          flashMessageWarning(responseData.message);
+          return;
+        }
+
+        const { checkoutUrl } = responseData.data;
+        hideModal();
+
+        navigationRef.navigate(ScreenNames.PAYPALWEBVIEWSCREEN, {
+          url: checkoutUrl,
+        });
+      };
+
+      await APIManager.makeRequest({
+        navigationRef,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.PAYMENT.PAYPALCHECKOUTSESSION,
+        params,
+        callback,
+      });
+    } catch (err) {
+      console.log('PayPal error:', err);
+    }
+  };
+
+  const handleKlarna = async () => {
+    try {
+      const params = {
+        booking_id: orderDetails?.booking_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code !== StatusCode.SUCCESS) {
+          flashMessageWarning(responseData.message);
+          return;
+        }
+
+        const { client_secret } = responseData.data;
+
+        const { error, paymentIntent } = await confirmPayment(client_secret, {
+          paymentMethodType: 'Klarna',
+          paymentMethodData: {
+            billingDetails: {
+              name: 'Demo User',
+              email: 'demo@email.com',
+            },
+          },
+        });
+
+        if (error) {
+          console.log('❌ Klarna Error:', error);
+          flashMessageWarning(error.message);
+        } else {
+          console.log('✅ Klarna Success:', paymentIntent?.status);
+          flashMessageSucess(getTranslation('paymentsucesskarla'));
+
+          if (paymentIntent && paymentIntent.status === 'Succeeded') {
+            markPaymentSuccess();
+            activateNext();
+          }
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigationRef,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.PAYMENT.KLARNACHECKOUTSESSION,
+        params,
+        callback,
+      });
+    } catch (err) {
+      console.log('Klarna error:', err);
+    }
+  };
+
+  const handleFinishOrder = async () => {
+    if (!orderDetails?.booking_id) {
+      flashMessageWarning('Booking not found');
+      return;
+    }
+
+    const paymentMethod = orderDetails?.default_payment_method;
+
+    if (paymentMethod === '1') {
+      handleApplePay();
+      return;
+    }
+
+    if (paymentMethod === '2') {
+      handleKlarna();
+      return;
+    }
+
+    if (paymentMethod === '3') {
+      handlePayPal();
+      return;
     }
   };
 

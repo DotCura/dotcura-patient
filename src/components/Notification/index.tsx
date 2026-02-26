@@ -63,7 +63,8 @@ const NotificationListComponent = (props: any) => {
           ) : null
         }
         ListEmptyComponent={
-          !props.notificationList.loading && !props.notificationList.refreshing ? (
+          !props.notificationList.loading &&
+          !props.notificationList.refreshing ? (
             <View
               style={{
                 flex: 1,
@@ -90,7 +91,7 @@ const NotificationListComponent = (props: any) => {
           backgroundColor: Colors.whiteF2,
         }}
         style={{ flex: 1, backgroundColor: Colors.whiteF2 }}
-        ListHeaderComponent={renderHeaderComponent}
+        // ListHeaderComponent={renderHeaderComponent}
         renderItem={props.renderNotificationData}
       />
     </>

@@ -94,6 +94,8 @@ export const ApiEndPoints = {
     ADDCARD: `${PATIENT_PREFIX}add_card`,
     SETDEFAULTCARD: `${PATIENT_PREFIX}default_card`,
     DELETECARD: `${PATIENT_PREFIX}delete_card`,
+    PAYPALCHECKOUTSESSION: `${PATIENT_PREFIX}paypal-checkout-session`,
+    KLARNACHECKOUTSESSION: `${PATIENT_PREFIX}Klarna-checkout-session`,
   },
 };
 
