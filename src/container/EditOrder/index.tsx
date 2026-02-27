@@ -81,6 +81,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
   const [cartLoaded, setCartLoaded] = useState(false);
   const [hasCard, setHasCard] = useState(null);
+  const [defaultpaymentmethod, setdefaultpaymentmethod] = useState(null);
   console.log('hasCard===============', hasCard);
 
   //EDITANALITIVARIABLES
@@ -412,18 +413,33 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     return true;
   };
 
+  // const handleOnPressSaveChanges = () => {
+  //   const isValid = validateBeforeOrder();
+
+  //   if (!isValid) return;
+
+  //   // 🔥 If user has NO card → open Stripe
+  //   if (hasCard === 0) {
+  //     openCustomerSheet();
+  //     return;
+  //   }
+
+  //   _editOrder();
+  // };
   const handleOnPressSaveChanges = () => {
     const isValid = validateBeforeOrder();
-
     if (!isValid) return;
 
-    // 🔥 If user has NO card → open Stripe
-    if (hasCard === 0) {
-      openCustomerSheet();
-      return;
-    }
+    const paymentMethod = Number(defaultpaymentmethod);
+    const hasCardsave = Number(hasCard);
+    console.log('paymentMethod:', paymentMethod);
+    console.log('hasCard:', hasCardsave);
 
-    _editOrder();
+    if (paymentMethod === 4 && hasCardsave === 0) {
+      openCustomerSheet();
+    } else {
+      _editOrder();
+    }
   };
 
   const handleNavigateHome = () => {
@@ -1625,6 +1641,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
     setTestsKitData(formattedKits);
     setHasCard(data?.has_card);
+    setdefaultpaymentmethod(data?.default_payment_method);
 
     // 7️⃣ Cart is already loaded
     setCartLoaded(true);
