@@ -219,7 +219,19 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
   const [KitAnalysisData, setKitAnalysisData] = useState<any>({});
 
   const handleNavigationGoBack = () => {
-    navigation.goBack();
+    if (route?.params?.resultOpenUp) {
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: ScreenNames.BOTTOMTABNAVIGATION,
+            params: { screen: ScreenNames.HOMECONTAINER },
+          },
+        ],
+      });
+    } else {
+      navigation.goBack();
+    }
   };
 
   const handlePressCheckout = () => {

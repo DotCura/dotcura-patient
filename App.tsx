@@ -105,7 +105,7 @@
 
 // export default App;
 
-import { LogBox } from 'react-native';
+import { AppState, LogBox } from 'react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import MainNavigation from './src/navigators/stackNavigator';
 import { ScreenNames } from './src/constants/AppConstants';
@@ -117,6 +117,7 @@ import {
   bootstrapUser,
   flashMessageWarning,
   setFlashMessageRef,
+  setOpenedFromNotification,
 } from './src/constants/GConstant';
 import AppLayout from './src/global/AppLayout';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -152,6 +153,7 @@ const App = ({ navigation }: any) => {
   //notification service
   useNotificationService();
 
+  
 
   // Get orderStatus but DON'T cause re-render during splash
   const orderStatus = ZustandStores.OrderstatusStore(

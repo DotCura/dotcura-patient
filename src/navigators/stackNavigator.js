@@ -386,6 +386,7 @@ const MainNavigation = props => {
         })}
         {_addScreen(NativeStack, ScreenNames.RESULTOPENUPCONTAINER, {
           headerShown: false,
+          gestureEnabled: false,
         })}
         {_addScreen(NativeStack, ScreenNames.ADDCARDPROFILECONTAINER, {
           headerShown: true,
@@ -398,6 +399,7 @@ const MainNavigation = props => {
         })}
         {_addScreen(NativeStack, ScreenNames.KITANALYSISCONTAINER, {
           headerShown: false,
+          gestureEnabled: false,
         })}
         {_addScreen(NativeStack, ScreenNames.NOTIFICATIONLISTCONTAINER, {
           headerShown: false,

@@ -32,26 +32,27 @@ const ResultOpenUpComponents = (props: any) => {
             {getTranslation('resultopenupsubtitle')}
           </Text>
           <TouchableOpacity activeOpacity={activityOpacity}>
-            <Text style={styles.lbldiscoverprivacy}>{getTranslation("discoverourprivacypolicy")}</Text>
+            <Text style={styles.lbldiscoverprivacy}>
+              {getTranslation('discoverourprivacypolicy')}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
       <View
         style={{
           marginTop: getHeight(140),
-          marginBottom:
-             props.insets.bottom + getHeight(10),
+          marginBottom: props.insets.bottom + getHeight(10),
         }}
       >
         <CustomButton
           btnTitle={getTranslation('saveopenupbtn')}
-          // btnPress={props.handleNavigateHome}
+          btnPress={props._saveReport}
         />
         <CustomButton
           btnTitle={getTranslation('continueopenup')}
           style={{ backgroundColor: Colors.white }}
           textStyle={{ color: Colors.gray0F }}
-          // btnPress={props.funCloseCancleOrder}
+          btnPress={props.handleNavigateKitAnlysis}
         />
       </View>
     </View>

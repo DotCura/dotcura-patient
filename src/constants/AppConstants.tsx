@@ -14,6 +14,8 @@ export const AppStates = {
 
 export const NotificationTypes = {
   ADMIN_NOTIFICATIONS: 'admin-notification',
+  REPORT_NOTIFICATIONS:'report_notification',
+
 };
 
 // <============================== Screen Name ==============================>

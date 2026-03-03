@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
+import { AppState, Platform } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import { MmkvManager } from '../../constants/utils/MmkvManager';
 import { ScreenNames } from '../../constants/AppConstants';
 import CustomSplash from '../../components/CustomSplash';
-import { openedFromNotification } from '../../constants/GConstant';
+import {
+  openedFromNotification,
+  setOpenedFromNotification,
+} from '../../constants/GConstant';
 
 const CustomSplashContainer = ({ navigation }: any) => {
+  console.log(
+    'openedFromNotificationopenedFromNotification',
+    openedFromNotification,
+  );
+
   const navigateNext = () => {
     MmkvManager.getData(
       MmkvManager.Keys.isOnBoardingVisisted,
@@ -41,6 +49,7 @@ const CustomSplashContainer = ({ navigation }: any) => {
   useEffect(() => {
     if (openedFromNotification) {
       // Skip delay if opened from notification
+      setOpenedFromNotification(false);
       navigateNext();
       return;
     }

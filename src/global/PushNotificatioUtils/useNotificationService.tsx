@@ -17,9 +17,7 @@ const useNotificationService = () => {
   const showNotificationWithAlert = (remoteMessage: any) => {
     console.log('Show Notification', remoteMessage);
 
-    let notification = isPlatformiOS
-      ? remoteMessage.data
-      : remoteMessage.data;
+    let notification = isPlatformiOS ? remoteMessage.data : remoteMessage.data;
 
     if (notification) {
       const { title, body } = notification;
@@ -113,7 +111,8 @@ const useNotificationService = () => {
             remoteMessage,
           );
           setOpenedFromNotification(true);
-          onNotificationPress(remoteMessage.data, AppStates.KILL);
+          // onNotificationPress(remoteMessage.data, AppStates.KILL);
+          onNotificationPress(remoteMessage, AppStates.KILL);
         }
       })
       .catch(err =>
@@ -125,6 +124,7 @@ const useNotificationService = () => {
         '🚀🚀🚀 App opened from background state with notification: 🚀🚀🚀',
         remoteMessage,
       );
+      setOpenedFromNotification(true);
       onNotificationPress(
         isPlatformiOS ? remoteMessage : remoteMessage.data,
         AppStates.BACKGROUND,
@@ -162,7 +162,7 @@ const useNotificationService = () => {
         ? notification.tag || notification?.data?.notification_tag
         : notification.notification_tag;
     } else if (appState === AppStates.KILL) {
-      notificationType = notification?.notification_tag;
+      notificationType = notification?.data?.notification_tag;
     }
 
     console.log('notificationType', notificationType);
@@ -178,7 +178,7 @@ const useNotificationService = () => {
             clearInterval(interval);
           }
         }, 100);
-  
+
         // Safety timeout: stop trying after 5 seconds so you don't leak memory
         setTimeout(() => clearInterval(interval), 5000);
       }
@@ -189,6 +189,17 @@ const useNotificationService = () => {
         navigateWhenReady(ScreenNames.NOTIFICATIONLISTCONTAINER);
         break;
 
+      case NotificationTypes.REPORT_NOTIFICATIONS: {
+        const currentRoute = navigationRef.getCurrentRoute();
+
+        if (currentRoute?.name !== ScreenNames.RESULTOPENUPCONTAINER) {
+          navigateWhenReady(ScreenNames.RESULTOPENUPCONTAINER, {
+            booking_id: notification?.data?.action_id,
+          });
+        }
+
+        break;
+      }
       default:
         console.log('Unhandled notification type:', notificationType);
         break;
