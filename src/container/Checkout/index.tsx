@@ -1268,6 +1268,11 @@ const CheckoutContainer = ({ navigation, route }: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           setTestsKitData(responseData.data);
           setCartLoaded(true);
+
+          // Handle PreviousBookingDetails
+          if (responseData.data?.[0]?.PreviousBookingDetails) {
+            setSelectedAddress(responseData.data[0].PreviousBookingDetails);
+          }
         } else {
           setCartLoaded(true);
           setTestsKitData([]);
