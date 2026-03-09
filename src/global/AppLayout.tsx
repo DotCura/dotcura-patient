@@ -42,7 +42,6 @@
 //   },
 // });
 
-
 //working two time show splash screen
 // import React, { ReactNode, memo, useEffect, useState } from 'react';
 // import { View, StyleSheet } from 'react-native';
@@ -116,12 +115,18 @@
 //   },
 // });
 
-import React, { ReactNode, memo } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { ReactNode, memo, useEffect, useRef } from 'react';
+import { Platform, StyleSheet } from 'react-native';
 import OrderStatusComponent from './OrderStatusComponent';
 import { Colors } from '../constants/Colors';
 import { ScreenNames } from '../constants/AppConstants';
 import { useNavigationStore } from '../store/NavigationStore';
+import { ZustandStores } from '../store';
+import {
+  endLiveActivity,
+  startLiveActivity,
+  updateLiveActivity,
+} from '../liveactivity/LiveActivityService';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -130,18 +135,76 @@ interface AppLayoutProps {
 
 const AppLayout = memo(
   ({ children, isOrderPlaced }: AppLayoutProps) => {
-
     const currentRouteName = useNavigationStore(
-      (state:any) => state.currentRoute,
+      (state: any) => state.currentRoute,
     );
 
     console.log('🔄 AppLayout render - orderStatus:', isOrderPlaced);
     console.log('📍 Current Route:', currentRouteName);
 
+    // Get order data from store
+    const orderData: any = ZustandStores.OrderstatusStore(
+      state => state.orderData,
+    );
+    console.log(
+      '🚀 ~ file: index.tsx:75 ~ OrderStatusComponent ~ orderData:',
+      orderData,
+    );
+
     // 🔥 Treat NULL as splash
     const shouldHideOrderStatus =
       !currentRouteName ||
       currentRouteName === ScreenNames.CUSTOMSPLASHCONTAINER;
+
+    const hasStartedLiveActivity = useRef(false);
+
+    useEffect(() => {
+      if (Platform.OS !== 'ios') return;
+      // if (!orderStatus || !orderData?.booking_id) return;
+
+      console.log('📱 Live Activity status update:', orderData?.status);
+      console.log('📱 Live Activity status update:data', orderData);
+
+      if (orderData?.status === 'Request' && !hasStartedLiveActivity.current) {
+        startLiveActivity(
+          orderData.booking_id,
+          'Order Sent',
+          'Waiting for confirmation',
+          0,
+        );
+
+        hasStartedLiveActivity.current = true;
+      }
+
+      if (orderData?.status === 'Accept') {
+        updateLiveActivity('Visit Confirmed', 'Nurse assigned', 1);
+      }
+
+      if (orderData?.status === 'start_visit') {
+        updateLiveActivity(
+          orderData?.time || '20-30 minutes',
+          'Nurse on the way',
+          2,
+        );
+      }
+
+      if (orderData?.status === 'arrived') {
+        updateLiveActivity(
+          `${orderData?.name || 'Nurse'} is here`,
+          'Please open the door',
+          3,
+        );
+      }
+
+      if (orderData?.status === 'Rejected') {
+        endLiveActivity();
+        hasStartedLiveActivity.current = false;
+      }
+      if (orderData?.status === '') {
+        endLiveActivity();
+        hasStartedLiveActivity.current = false;
+      }
+    }, [orderData?.status, orderData]);
 
     return (
       <>
@@ -153,8 +216,7 @@ const AppLayout = memo(
       </>
     );
   },
-  (prevProps, nextProps) =>
-    prevProps.isOrderPlaced === nextProps.isOrderPlaced,
+  (prevProps, nextProps) => prevProps.isOrderPlaced === nextProps.isOrderPlaced,
 );
 
 AppLayout.displayName = 'AppLayout';

@@ -381,8 +381,15 @@
 //   },
 // });
 
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState, useMemo, memo, useEffect } from 'react';
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, { useState, useMemo, memo, useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   useAnimatedStyle,
@@ -401,6 +408,11 @@ import { activityOpacity } from '../../constants/GConstant';
 import { ZustandStores } from '../../store';
 import { ScreenNames } from '../../constants/AppConstants';
 import { navigationRef } from '../../constants/utils/navigationRef';
+import {
+  endLiveActivity,
+  startLiveActivity,
+  updateLiveActivity,
+} from '../../liveactivity/LiveActivityService';
 
 interface OrderStatusComponentProps {
   orderStatus: string;
@@ -577,6 +589,54 @@ const OrderStatusComponent = memo(
     });
 
     ProgressBar.displayName = 'ProgressBar';
+    // const hasStartedLiveActivity = useRef(false);
+
+    // useEffect(() => {
+    //   if (Platform.OS !== 'ios') return;
+    //   // if (!orderStatus || !orderData?.booking_id) return;
+
+    //   console.log('📱 Live Activity status update:', orderStatus);
+
+    //   if (orderStatus === 'Request' && !hasStartedLiveActivity.current) {
+    //     startLiveActivity(
+    //       orderData.booking_id,
+    //       'Order Sent',
+    //       'Waiting for confirmation',
+    //       0,
+    //     );
+
+    //     hasStartedLiveActivity.current = true;
+    //   }
+
+    //   if (orderStatus === 'Accept') {
+    //     updateLiveActivity('Visit Confirmed', 'Nurse assigned', 1);
+    //   }
+
+    //   if (orderStatus === 'start_visit') {
+    //     updateLiveActivity(
+    //       orderData?.time || '20-30 minutes',
+    //       'Nurse on the way',
+    //       2,
+    //     );
+    //   }
+
+    //   if (orderStatus === 'arrived') {
+    //     updateLiveActivity(
+    //       `${orderData?.name || 'Nurse'} is here`,
+    //       'Please open the door',
+    //       3,
+    //     );
+    //   }
+
+    //   if (orderStatus === 'Rejected') {
+    //     endLiveActivity();
+    //     hasStartedLiveActivity.current = false;
+    //   }
+    //   if (orderStatus === '') {
+    //     endLiveActivity();
+    //     hasStartedLiveActivity.current = false;
+    //   }
+    // }, [orderStatus, orderData]);
 
     return (
       <Animated.View style={[styles.container, { paddingTop: insets.top }]}>

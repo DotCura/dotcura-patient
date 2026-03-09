@@ -54,6 +54,8 @@
 	<string>La aplicación Doctura necesita permiso para guardar fotos en tu biblioteca.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>La aplicación Doctura necesita acceso a tu biblioteca de fotos.</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UIAppFonts</key>
