@@ -233,6 +233,11 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
       navigation.goBack();
     }
   };
+  const handleGotoYourProfile = () => {
+    navigation.navigate(ScreenNames.BOTTOMTABNAVIGATION, {
+      screen: ScreenNames.YOURPROFILECONAINER,
+    });
+  };
 
   const handlePressCheckout = () => {
     _reOrder();
@@ -357,6 +362,7 @@ const KitAnalysisContainer = ({ navigation, route }: any) => {
       bookingIDParams={route?.params?.booking_id}
       handleOpenPDF={handleOpenPDF}
       _saveReport={_saveReport}
+      handleGotoYourProfile={handleGotoYourProfile}
     />
   );
 };

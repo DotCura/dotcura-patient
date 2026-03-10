@@ -280,7 +280,8 @@ import { BlurView } from '@react-native-community/blur';
 import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { useIsFocused } from '@react-navigation/native';
-import { isPlatformiOS } from '../../../constants/AppConstants';
+import { isPlatformiOS, ScreenNames } from '../../../constants/AppConstants';
+import { navigationRef } from '../../../constants/utils/navigationRef';
 
 const TAB_WIDTH = getWidth(250) / 3; // 👈 3 tabs
 
@@ -414,6 +415,9 @@ const CustomBottomTabsComponent = (props: any) => {
           pointerEvents={props.state.index === 1 ? 'auto' : 'none'}
         >
           <TouchableOpacity
+            onPress={() => {
+              navigationRef.navigate(ScreenNames.CONTACTUSCONTAINER);
+            }}
             activeOpacity={0.9}
             style={{
               width: getWidth(80),

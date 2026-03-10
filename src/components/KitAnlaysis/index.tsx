@@ -570,7 +570,7 @@ const KitAnalysisComponent = (props: any) => {
         <TouchableOpacity
           activeOpacity={activityOpacity}
           style={styles.btnBack}
-          // onPress={props.handleNavigationGoBack}
+          onPress={props.handleGotoYourProfile}
         >
           {/* <Image source={images.imgLeftArrow} /> */}
           <Text style={styles.lblseefullpicture}>
