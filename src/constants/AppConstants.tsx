@@ -15,6 +15,11 @@ export const AppStates = {
 export const NotificationTypes = {
   ADMIN_NOTIFICATIONS: 'admin-notification',
   REPORT_NOTIFICATIONS:'report_notification',
+  BOOKING_CANCLE:'booking_cancelled',
+  BOOKING_ACCEPT:'booking_accepted',
+  BOOKING_STARTED:'booking_started',
+  PAYMNET_CAPTURED:'payment_captured',
+  SAMPLE_DELIVERED:'samples_delivered',
 
 };
 

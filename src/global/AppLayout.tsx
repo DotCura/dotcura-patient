@@ -185,6 +185,14 @@ const AppLayout = memo(
           2,
         );
       }
+      if (orderData?.status === 'Modified') {
+        updateLiveActivity(
+          'Modified',
+          'Visita modificata',
+          'L’infermiere ci ha comunicato che verrà a casa tua entro le',
+          1,
+        );
+      }
 
       if (orderData?.status === 'start_visit') {
         updateLiveActivity(

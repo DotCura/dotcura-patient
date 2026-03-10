@@ -188,6 +188,21 @@ const useNotificationService = () => {
       case NotificationTypes.ADMIN_NOTIFICATIONS:
         navigateWhenReady(ScreenNames.NOTIFICATIONLISTCONTAINER);
         break;
+      case NotificationTypes.BOOKING_CANCLE:
+        navigateWhenReady(ScreenNames.NOTIFICATIONLISTCONTAINER);
+        break;
+      case NotificationTypes.BOOKING_ACCEPT:
+        navigateWhenReady(ScreenNames.NOTIFICATIONLISTCONTAINER);
+        break;
+      case NotificationTypes.BOOKING_STARTED:
+        navigateWhenReady(ScreenNames.NOTIFICATIONLISTCONTAINER);
+        break;
+      case NotificationTypes.PAYMNET_CAPTURED:
+        navigateWhenReady(ScreenNames.NOTIFICATIONLISTCONTAINER);
+        break;
+      case NotificationTypes.SAMPLE_DELIVERED:
+        navigateWhenReady(ScreenNames.NOTIFICATIONLISTCONTAINER);
+        break;
 
       case NotificationTypes.REPORT_NOTIFICATIONS: {
         const currentRoute = navigationRef.getCurrentRoute();
