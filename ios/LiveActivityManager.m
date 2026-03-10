@@ -14,7 +14,8 @@ RCT_EXTERN_METHOD(startActivity:(NSString *)bookingId
                   subtitle:(NSString *)subtitle
                   progress:(nonnull NSNumber *)progress)
 
-RCT_EXTERN_METHOD(updateActivity:(NSString *)title
+RCT_EXTERN_METHOD(updateActivity:(NSString *)status
+                  title:(NSString *)title
                   subtitle:(NSString *)subtitle
                   progress:(nonnull NSNumber *)progress)
 

@@ -18,16 +18,19 @@ export const startLiveActivity = (
 }
 
 export const updateLiveActivity = (
+  status: string,
   title: string,
   subtitle: string,
   progress: number
 ) => {
 
   LiveActivityManager.updateActivity(
+    status,
     title,
     subtitle,
     progress
   )
+  
 }
 
 export const endLiveActivity = () => {

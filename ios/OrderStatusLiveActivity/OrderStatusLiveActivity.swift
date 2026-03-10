@@ -1,57 +1,4 @@
 
-// import ActivityKit
-// import WidgetKit
-// import SwiftUI
-
-// struct OrderStatusLiveActivity: Widget {
-
-//     var body: some WidgetConfiguration {
-
-//         ActivityConfiguration(for: OrderStatusAttributes.self) { context in
-
-//             VStack(alignment: .leading) {
-
-//                 Text(context.state.title)
-//                     .font(.headline)
-
-//                 Text(context.state.subtitle)
-//                     .font(.subheadline)
-
-//                 ProgressView(value: Float(context.state.progress), total: 4)
-
-//             }
-//             .padding()
-//         }
-
-//         dynamicIsland: { context in
-
-//             DynamicIsland {
-
-//                 DynamicIslandExpandedRegion(.center) {
-
-//                     VStack {
-//                         Text(context.state.title)
-//                         Text(context.state.subtitle)
-//                     }
-
-//                 }
-
-//             } compactLeading: {
-
-//                 Image(systemName: "heart.fill")
-
-//             } compactTrailing: {
-
-//                 Text("\(context.state.progress)/4")
-
-//             } minimal: {
-
-//                 Image(systemName: "heart")
-//             }
-//         }
-//     }
-// }
-
 import ActivityKit
 import WidgetKit
 import SwiftUI
@@ -62,103 +9,130 @@ struct OrderStatusLiveActivity: Widget {
 
         ActivityConfiguration(for: OrderStatusAttributes.self) { context in
 
-            VStack(alignment: .leading, spacing: 12) {
-
-                HStack {
-
-                    VStack(alignment: .leading) {
-
-                        Text(context.state.title)
-                            .font(.headline)
-                            .foregroundColor(.white)
-
-                        Text(context.state.subtitle)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                    }
-
-                    Spacer()
-
-                    
-                }
-
-                statusImage(status: context.state.status)
-            }
-            .padding()
-            .background(Color.black)
-            .activityBackgroundTint(.black)
-            .activitySystemActionForegroundColor(.white)
+            // LOCK SCREEN VIEW
+            OrderStatusView(context: context)
+                .activityBackgroundTint(.black)
+                .activitySystemActionForegroundColor(.white)
 
         } dynamicIsland: { context in
 
             DynamicIsland {
 
                 DynamicIslandExpandedRegion(.center) {
-
-                    VStack(spacing: 4) {
-
-                        Text(context.state.title)
-                            .font(.headline)
-
-                        Text(context.state.subtitle)
-                            .font(.caption)
-                    }
+                    DynamicIslandOrderStatusView(context: context)
                 }
 
             } compactLeading: {
 
-                Image(systemName: "clock")
+                Image(systemName: "clock.fill")
+                    .foregroundColor(.white)
 
             } compactTrailing: {
 
                 Text("\(context.state.progress)/4")
+                    .foregroundColor(.white)
+                    .font(.caption)
 
             } minimal: {
 
-                Image(systemName: "clock")
+                Image(systemName: "clock.fill")
+                    .foregroundColor(.white)
             }
         }
     }
 }
 
-@ViewBuilder
-func statusImage(status: String) -> some View {
+//# MARK: LOCK SCREEN VIEW
 
-    switch status {
+struct OrderStatusView: View {
 
-    case "Request":
-        Image("Stepper")
+    let context: ActivityViewContext<OrderStatusAttributes>
+
+    var body: some View {
+
+        VStack(alignment: .leading, spacing: 12) {
+
+            HStack {
+
+                VStack(alignment: .leading, spacing: 4) {
+
+                    Text(context.state.title)
+                        .font(.headline)
+                        .foregroundColor(.white)
+
+                    Text(context.state.subtitle)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+
+                Spacer()
+            }
+
+            StatusImage(status: context.state.status)
+                .frame(height: 50)
+
+        }
+        .padding()
+        .background(Color.black)
+    }
+}
+
+//# MARK: DYNAMIC ISLAND VIEW
+struct DynamicIslandOrderStatusView: View {
+
+    let context: ActivityViewContext<OrderStatusAttributes>
+
+    var body: some View {
+
+        VStack(alignment: .leading, spacing: 6) {
+
+            Text(context.state.title)
+                .font(.caption)
+                .foregroundColor(.white)
+                .lineLimit(1)
+
+            Text(context.state.subtitle)
+                .font(.caption2)
+                .foregroundColor(.gray)
+                .lineLimit(1)
+
+            StatusImage(status: context.state.status)
+        }
+        .padding(.horizontal, 8)
+    }
+}
+
+//# MARK: STATUS IMAGE VIEW
+
+struct StatusImage: View {
+
+    let status: String
+
+    var body: some View {
+        Image(imageName)
             .resizable()
-            .scaledToFit()
+            .scaledToFill()          // fill instead of fit
+            .frame(height: 50)       // bigger height
+            .frame(maxWidth: .infinity)
+            .clipped()
+    }
 
-    case "Accept":
-        Image("visitconfirmstepper")
-            .resizable()
-            .scaledToFit()
-
-    case "start_visit":
-        Image("startvisitstepper")
-            .resizable()
-            .scaledToFit()
-
-    case "arrived":
-        Image("nurseArrived")
-            .resizable()
-            .scaledToFit()
-
-    case "Modified":
-        Image("editorderstepper")
-            .resizable()
-            .scaledToFit()
-
-    case "Rejected":
-        Image("visitcanclestepper")
-            .resizable()
-            .scaledToFit()
-
-    default:
-        Image("Stepper")
-            .resizable()
-            .scaledToFit()
+    var imageName: String {
+        switch status {
+        case "Request":
+            return "Stepper"
+        case "Accept":
+            return "visitconfirmstepper"
+        case "start_visit":
+            return "startvisitstepper"
+        case "arrived":
+            return "nurseArrived"
+        case "Modified":
+            return "editorderstepper"
+        case "Rejected":
+            return "visitcanclestepper"
+        default:
+            return "Stepper"
+        }
     }
 }

@@ -127,6 +127,7 @@ import {
   startLiveActivity,
   updateLiveActivity,
 } from '../liveactivity/LiveActivityService';
+import { getTranslation } from '../localization/i18n/i18n.config';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -168,31 +169,38 @@ const AppLayout = memo(
       if (orderData?.status === 'Request' && !hasStartedLiveActivity.current) {
         startLiveActivity(
           orderData.booking_id,
-          'Order Sent',
-          'Waiting for confirmation',
-          0,
+          'Ordine inviato',
+          'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
+          1,
         );
 
         hasStartedLiveActivity.current = true;
       }
 
       if (orderData?.status === 'Accept') {
-        updateLiveActivity('Visit Confirmed', 'Nurse assigned', 1);
+        updateLiveActivity(
+          'Accept',
+          'Visita confermata',
+          'Ottime notizie! La visita è confermata per oggi alle.',
+          2,
+        );
       }
 
       if (orderData?.status === 'start_visit') {
         updateLiveActivity(
-          orderData?.time || '20-30 minutes',
-          'Nurse on the way',
-          2,
+          'start_visit',
+          orderData?.time || '20-30 minuti',
+          'L’operatore è quasi da te. Tieni d’occhio il telefono o il citofono.',
+          3,
         );
       }
 
       if (orderData?.status === 'arrived') {
         updateLiveActivity(
-          `${orderData?.name || 'Nurse'} is here`,
-          'Please open the door',
-          3,
+          'arrived',
+          `${orderData?.name || 'Nurse'} è qui.`,
+          'È il momento di farsi visitare.',
+          4,
         );
       }
 
