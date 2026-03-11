@@ -822,7 +822,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   progressImage: {
+    marginBottom: 20,
+    // resizeMode: 'stretch',
     width: '100%',
+    height: 60,
     marginTop: 20,
   },
   editButton: {
@@ -831,7 +834,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: getHeight(16),
+    // marginTop: getHeight(16),
     flexDirection: 'row',
     gap: getWidth(6),
   },

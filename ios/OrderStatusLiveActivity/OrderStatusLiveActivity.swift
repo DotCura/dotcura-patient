@@ -50,9 +50,9 @@ struct OrderStatusView: View {
 
     var body: some View {
 
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 1) {
 
-            HStack {
+           
 
                 VStack(alignment: .leading, spacing: 4) {
 
@@ -66,10 +66,11 @@ struct OrderStatusView: View {
                 }
 
                 Spacer()
-            }
-
+           
+       
             StatusImage(status: context.state.status)
                 .frame(height: 50)
+                .padding(.top, 10)
 
         }
         .padding()
@@ -94,9 +95,10 @@ struct DynamicIslandOrderStatusView: View {
             Text(context.state.subtitle)
                 .font(.caption2)
                 .foregroundColor(.gray)
-                .lineLimit(1)
+                .lineLimit(5)
 
             StatusImage(status: context.state.status)
+            .padding(.top, 10)
         }
         .padding(.horizontal, 8)
     }
@@ -111,7 +113,7 @@ struct StatusImage: View {
     var body: some View {
         Image(imageName)
             .resizable()
-            .scaledToFill()          // fill instead of fit
+            .scaledToFit()          // fill instead of fit
             .frame(height: 50)       // bigger height
             .frame(maxWidth: .infinity)
             .clipped()
