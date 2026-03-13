@@ -235,6 +235,7 @@ const OTPContainer = ({ navigation, route }: any) => {
         country_code: loginDataParams?.country_code,
         phone_number: loginDataParams?.phone_number,
         otp_code: validateOtp,
+        
       };
 
       const callback = async (responseData: any) => {

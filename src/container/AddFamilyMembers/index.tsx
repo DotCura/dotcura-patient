@@ -26,6 +26,10 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const isEdit = route?.params?.editFamilyMember === true;
   const editData = route?.params?.editFamilyMemberData;
+  console.log("editData",editData);
+  console.log("Taxcode",editData?.tax_code);
+  
+  
   const familyMemberId = route?.params?.familyMemberId;
 
   useEffect(() => {
@@ -36,7 +40,9 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
       setAppTypeValue(editData.relationship_id?.toString());
       setIdentityValue(editData.document_id?.toString());
       setSelectedGender(editData.gender === 'male' ? 1 : 2);
-      setTaxCode(editData.tax_code || '');
+      if (editData.tax_code) {
+        setTaxCode(String(editData.tax_code));
+      }
 
       // DOB
       if (editData.dob) {

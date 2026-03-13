@@ -1,10 +1,19 @@
 import Foundation
 import ActivityKit
+import React
 
 @objc(LiveActivityManager)
-class LiveActivityManager: NSObject {
+class LiveActivityManager: RCTEventEmitter {
 
     static var activity: Activity<OrderStatusAttributes>?
+  
+  override static func requiresMainQueueSetup() -> Bool {
+         return true
+     }
+
+     override func supportedEvents() -> [String]! {
+         return ["LiveActivityPushToken"]
+     }
 
     @objc
     func startActivity(
@@ -37,11 +46,33 @@ class LiveActivityManager: NSObject {
                 LiveActivityManager.activity = try Activity.request(
                     attributes: attributes,
                     content: content,
-                    pushType: nil
+                    pushType: .token
                 )
 
                 print("✅ Live Activity started")
 
+                // 🔴 GET PUSH TOKEN
+            Task {
+                    print("✅ Live Activity Task Above await")
+                for await pushToken in LiveActivityManager.activity!.pushTokenUpdates {
+                    print("✅ Live Activity Task below await")
+                    let token = pushToken.map { String(format: "%02x", $0) }.joined()
+                    print("📲 Live Activity Push Token:", token)
+                  
+                  // 🔥 Send token to React Native
+                  self.sendEvent(
+                      withName: "LiveActivityPushToken",
+                      body: [
+                          "token": token
+                      ]
+                  )
+
+                    // TODO: send this token to your backend
+                    // Example:
+                    // sendPushTokenToServer(token)
+                }
+            }
+            
             } catch {
                 print("❌ Live Activity start error:", error)
             }
@@ -78,8 +109,8 @@ class LiveActivityManager: NSObject {
     //         }
     //     }
     // }
-    @objc(updateActivity:title:subtitle:progress:)
-func updateActivity(
+//    @objc(updateActivity:title:subtitle:progress:)
+  @objc func updateActivity(
     _ status: String,
     title: String,
     subtitle: String,

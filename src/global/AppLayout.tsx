@@ -116,7 +116,12 @@
 // });
 
 import React, { ReactNode, memo, useEffect, useRef } from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import {
+  NativeEventEmitter,
+  NativeModules,
+  Platform,
+  StyleSheet,
+} from 'react-native';
 import OrderStatusComponent from './OrderStatusComponent';
 import { Colors } from '../constants/Colors';
 import { ScreenNames } from '../constants/AppConstants';
@@ -128,6 +133,9 @@ import {
   updateLiveActivity,
 } from '../liveactivity/LiveActivityService';
 import { getTranslation } from '../localization/i18n/i18n.config';
+import { APIManager } from '../api/APIManager';
+import { navigationRef } from '../constants/utils/navigationRef';
+import { ApiEndPoints, MethodType, StatusCode } from '../api/APIConstant';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -185,6 +193,7 @@ const AppLayout = memo(
           2,
         );
       }
+
       if (orderData?.status === 'Modified') {
         updateLiveActivity(
           'Modified',
@@ -216,11 +225,72 @@ const AppLayout = memo(
         endLiveActivity();
         hasStartedLiveActivity.current = false;
       }
+
       if (orderData?.status === '') {
         endLiveActivity();
         hasStartedLiveActivity.current = false;
       }
     }, [orderData?.status, orderData]);
+
+    const [liveActivityToken, setLiveActivityToken] = React.useState<
+      string | null
+    >(null);
+
+    useEffect(() => {
+      if (Platform.OS !== 'ios') return;
+
+      const { LiveActivityManager } = NativeModules;
+
+      if (!LiveActivityManager) return;
+
+      const eventEmitter = new NativeEventEmitter(LiveActivityManager);
+
+      const subscription = eventEmitter.addListener(
+        'LiveActivityPushToken',
+        event => {
+          console.log('📲 Live Activity Token from iOS:', event.token);
+
+          setLiveActivityToken(event.token);
+        },
+      );
+
+      return () => subscription.remove();
+    }, []);
+    useEffect(() => {
+      if (Platform.OS !== 'ios') return;
+      if (!orderData?.booking_id) return;
+      if (!liveActivityToken) return;
+
+      console.log('🚀 Sending Live Activity Token API');
+
+      _sendLiveActivityToken(liveActivityToken);
+    }, [orderData?.booking_id, liveActivityToken]);
+
+    const _sendLiveActivityToken = async (liveactivity_token: any) => {
+      try {
+        const params = {
+          liveactivitytoken: liveactivity_token,
+          booking_id: orderData?.booking_id,
+        };
+
+        const callback = async (responseData: any) => {
+          if (responseData.code === StatusCode.SUCCESS) {
+          } else {
+          }
+        };
+
+        await APIManager.makeRequest({
+          navigation: navigationRef,
+          method: MethodType.POST,
+          apiEndPoint: ApiEndPoints.LIVEACTIVITYTOKEN.GETLIVEACTIVITYTOKEN,
+          callback,
+          showLoader: false,
+          params,
+        });
+      } catch (error) {
+        console.log('send live activity token error:', error);
+      }
+    };
 
     return (
       <>

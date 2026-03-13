@@ -97,6 +97,9 @@ export const ApiEndPoints = {
     PAYPALCHECKOUTSESSION: `${PATIENT_PREFIX}paypal-checkout-session`,
     KLARNACHECKOUTSESSION: `${PATIENT_PREFIX}Klarna-checkout-session`,
   },
+  LIVEACTIVITYTOKEN: {
+    GETLIVEACTIVITYTOKEN: `${PATIENT_PREFIX}send_live_activity_token`,
+  },
 };
 
 // API methods

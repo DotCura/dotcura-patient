@@ -106,6 +106,7 @@ const LoginContainer = ({ navigation }: any) => {
         device_token: getStoredFCMToken() || 0,
         device_type: Platform.OS == 'ios' ? 'I' : 'A',
         os_version: DeviceInfoManager.getSystemVersion(),
+        ip_address: await DeviceInfoManager.getIpAddress(),
       };
 
       const callback = async (responseData: any) => {
