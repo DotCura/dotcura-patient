@@ -1,6 +1,6 @@
-import { NativeModules } from 'react-native'
+import { NativeModules } from 'react-native';
 
-const { LiveActivityManager } = NativeModules
+const { LiveActivityManager } = NativeModules;
 
 export const startLiveActivity = (
   bookingId: string,
@@ -8,33 +8,25 @@ export const startLiveActivity = (
   subtitle: string,
   progress: number,
 ) => {
-
-  LiveActivityManager.startActivity(
-    bookingId,
-    title,
-    subtitle,
-    progress
-  )
-}
+  LiveActivityManager.startActivity(bookingId, title, subtitle, progress);
+};
 
 export const updateLiveActivity = (
+  bookingId: string,
   status: string,
   title: string,
   subtitle: string,
-  progress: number
+  progress: number,
 ) => {
-
   LiveActivityManager.updateActivity(
+    bookingId,
     status,
     title,
     subtitle,
-    progress
-  )
-  
-}
+    progress,
+  );
+};
 
-export const endLiveActivity = () => {
-
-  LiveActivityManager.endActivity()
-
-}
+export const endLiveActivity = (bookingId: string) => {
+  LiveActivityManager.endActivity(bookingId);
+};

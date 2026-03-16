@@ -59,7 +59,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const booking_order_id = route?.params?.booking_order_id;
 
-  console.log("'booking_order_id'", booking_order_id);
+  console.log("'booking_order_id'", typeof booking_order_id);
   console.log(
     'timezone',
     typeof Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -447,11 +447,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const handleNavigateHome = () => {
     setOrderStatus('');
     setCancleOrderVisible(false);
-    if (isPlatformiOS) {
-      endLiveActivity();
-    } else {
-      LiveActivityModule.stop();
-    }
+
     navigation.reset({
       index: 0,
       routes: [
@@ -1851,6 +1847,11 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           setCancleOrderVisible(false);
+          if (isPlatformiOS) {
+            endLiveActivity(String(booking_order_id));
+          } else {
+            LiveActivityModule.stop();
+          }
           navigation.reset({
             index: 0,
             routes: [

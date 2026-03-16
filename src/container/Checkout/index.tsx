@@ -52,7 +52,10 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { GlobalVar } from '../../constants/GlobalVar';
 import SocketService from '../../socket/SocketService';
 import { CustomerSheet } from '@stripe/stripe-react-native';
-import { endLiveActivity } from '../../liveactivity/LiveActivityService';
+import {
+  endLiveActivity,
+  startLiveActivity,
+} from '../../liveactivity/LiveActivityService';
 
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -459,7 +462,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const handleNavigateHome = () => {
     setOrderStatus('');
     setCancleOrderVisible(false);
-    endLiveActivity();
+
     navigation.reset({
       index: 0,
       routes: [
@@ -1572,9 +1575,21 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       // console.log('params', params);
 
       const callback = (responseData: any) => {
+        console.log(
+          'responsedata_bookorder',
+          typeof responseData?.data?.data?.id,
+        );
+
         if (responseData.code === StatusCode.SUCCESS) {
           resetCart();
-          // setOrderStatus('Request');
+          if (isPlatformiOS) {
+            startLiveActivity(
+              String(responseData?.data?.data?.id),
+              'Ordine inviato',
+              'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
+              1,
+            );
+          }
           navigation.reset({
             index: 0,
             routes: [

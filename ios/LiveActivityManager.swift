@@ -1,3 +1,5 @@
+
+
 import Foundation
 import ActivityKit
 import React
@@ -5,113 +7,21 @@ import React
 @objc(LiveActivityManager)
 class LiveActivityManager: RCTEventEmitter {
 
-    static var activity: Activity<OrderStatusAttributes>?
-  
-  override static func requiresMainQueueSetup() -> Bool {
-         return true
-     }
+    // Store multiple activities by bookingId
+    static var activities: [String: Activity<OrderStatusAttributes>] = [:]
 
-     override func supportedEvents() -> [String]! {
-         return ["LiveActivityPushToken"]
-     }
-
-    @objc
-    func startActivity(
-        _ bookingId: String,
-        title: String,
-        subtitle: String,
-        progress: NSNumber
-    ) {
-
-        if #available(iOS 16.2, *) {
-
-            let attributes = OrderStatusAttributes(
-                bookingId: bookingId
-            )
-
-            let state = OrderStatusAttributes.ContentState(
-                status: "Request",
-                title: title,
-                subtitle: subtitle,
-                progress: progress.intValue
-            )
-
-            let content = ActivityContent(
-                state: state,
-                staleDate: nil
-            )
-
-            do {
-
-                LiveActivityManager.activity = try Activity.request(
-                    attributes: attributes,
-                    content: content,
-                    pushType: .token
-                )
-
-                print("✅ Live Activity started")
-
-                // 🔴 GET PUSH TOKEN
-            Task {
-                    print("✅ Live Activity Task Above await")
-                for await pushToken in LiveActivityManager.activity!.pushTokenUpdates {
-                    print("✅ Live Activity Task below await")
-                    let token = pushToken.map { String(format: "%02x", $0) }.joined()
-                    print("📲 Live Activity Push Token:", token)
-                  
-                  // 🔥 Send token to React Native
-                  self.sendEvent(
-                      withName: "LiveActivityPushToken",
-                      body: [
-                          "token": token
-                      ]
-                  )
-
-                    // TODO: send this token to your backend
-                    // Example:
-                    // sendPushTokenToServer(token)
-                }
-            }
-            
-            } catch {
-                print("❌ Live Activity start error:", error)
-            }
-        }
+    override static func requiresMainQueueSetup() -> Bool {
+        return true
     }
 
-    // @objc
-    // func updateActivity(
-    //     _ status: String,
-    //     _ title: String,
-    //     _ subtitle: String,
-    //     _ progress: NSNumber
-    // ) {
+    override func supportedEvents() -> [String]! {
+        return ["LiveActivityPushToken"]
+    }
 
-    //     if #available(iOS 16.2, *) {
-
-    //         guard let activity = LiveActivityManager.activity else { return }
-
-    //         let updatedState = OrderStatusAttributes.ContentState(
-    //             status: status,
-    //             title: title,
-    //             subtitle: subtitle,
-    //             progress: progress.intValue
-    //         )
-
-    //         let updatedContent = ActivityContent(
-    //             state: updatedState,
-    //             staleDate: Date().addingTimeInterval(60)
-    //         )
-
-    //         Task {
-    //             await activity.update(updatedContent)
-    //            print("📡 Updating Activity:", status, title)
-    //         }
-    //     }
-    // }
-//    @objc(updateActivity:title:subtitle:progress:)
-  @objc func updateActivity(
-    _ status: String,
+   
+@objc
+func startActivity(
+    _ bookingId: String,
     title: String,
     subtitle: String,
     progress: NSNumber
@@ -119,42 +29,112 @@ class LiveActivityManager: RCTEventEmitter {
 
     if #available(iOS 16.2, *) {
 
-        guard let activity = LiveActivityManager.activity else {
-            print("❌ No active activity")
-            return
-        }
+        let attributes = OrderStatusAttributes(
+            bookingId: bookingId
+        )
 
-        let updatedState = OrderStatusAttributes.ContentState(
-            status: status,
+        let state = OrderStatusAttributes.ContentState(
+            status: "Request",
             title: title,
             subtitle: subtitle,
             progress: progress.intValue
         )
 
-        let updatedContent = ActivityContent(
-            state: updatedState,
+        let content = ActivityContent(
+            state: state,
             staleDate: nil
         )
 
-        Task {
-            print("📡 Updating Activity:", status)
-            await activity.update(updatedContent)
-            print("🔄 Live Activity updated")
+        do {
+
+            let activity = try Activity.request(
+                attributes: attributes,
+                content: content,
+                pushType: .token
+            )
+
+            LiveActivityManager.activities[bookingId] = activity
+
+            print("✅ Live Activity started for booking:", bookingId)
+
+            // capture bookingId for async
+            let capturedBookingId = bookingId
+
+            Task { [weak self] in
+                for await pushToken in activity.pushTokenUpdates {
+
+                    let token = pushToken.map { String(format: "%02x", $0) }.joined()
+
+                    print("📲 Token:", token)
+                    print("📦 BookingId:", capturedBookingId)
+
+                    self?.sendEvent(
+                        withName: "LiveActivityPushToken",
+                        body: [
+                            "token": token,
+                            "bookingId": capturedBookingId
+                        ]
+                    )
+                }
+            }
+
+        } catch {
+            print("❌ Live Activity start error:", error)
         }
     }
 }
 
+    // MARK: - Update Activity
     @objc
-    func endActivity() {
+    func updateActivity(
+        _ bookingId: String,
+        status: String,
+        title: String,
+        subtitle: String,
+        progress: NSNumber
+    ) {
 
         if #available(iOS 16.2, *) {
 
-            guard let activity = LiveActivityManager.activity else { return }
+            guard let activity = LiveActivityManager.activities[bookingId] else {
+                print("❌ No activity found for booking:", bookingId)
+                return
+            }
+
+            let updatedState = OrderStatusAttributes.ContentState(
+                status: status,
+                title: title,
+                subtitle: subtitle,
+                progress: progress.intValue
+            )
+
+            let updatedContent = ActivityContent(
+                state: updatedState,
+                staleDate: nil
+            )
+
+            Task {
+                await activity.update(updatedContent)
+                print("🔄 Updated activity for booking:", bookingId)
+            }
+        }
+    }
+
+    // MARK: - End Activity
+    @objc
+    func endActivity(_ bookingId: String) {
+
+        if #available(iOS 16.2, *) {
+
+            guard let activity = LiveActivityManager.activities[bookingId] else {
+                print("❌ No activity found for booking:", bookingId)
+                return
+            }
 
             let finalState = OrderStatusAttributes.ContentState(
                 status: "Completed",
-                title: "Visit Completed",
-                subtitle: "Thank you!",
+                title: "Visita completata",
+                subtitle: "Grazie per aver scelto il nostro servizio.",
                 progress: 4
             )
 
@@ -164,11 +144,16 @@ class LiveActivityManager: RCTEventEmitter {
             )
 
             Task {
+
                 await activity.end(
                     finalContent,
-                    dismissalPolicy: .immediate
+                    dismissalPolicy: ActivityUIDismissalPolicy.immediate
                 )
-                print("🛑 Live Activity ended")
+
+                // Remove from dictionary
+                LiveActivityManager.activities.removeValue(forKey: bookingId)
+
+                print("🛑 Ended activity for booking:", bookingId)
             }
         }
     }

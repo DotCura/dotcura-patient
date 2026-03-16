@@ -1,33 +1,4 @@
-// package com.dotcura.app
 
-// import com.facebook.react.bridge.*
-
-// class LiveActivityModule(private val reactContext: ReactApplicationContext) :
-//     ReactContextBaseJavaModule(reactContext) {
-
-//     override fun getName(): String {
-//         return "LiveActivityModule"
-//     }
-
-//     @ReactMethod
-//     fun show(title:String, subtitle:String, status:String){
-
-//         LiveActivityHelper.showLiveActivity(
-//             reactContext,
-//             title,
-//             subtitle,
-//             status
-//         )
-
-//     }
-
-//     @ReactMethod
-//     fun stop(){
-
-//         LiveActivityHelper.stopLiveActivity(reactContext)
-
-//     }
-// }
 
 package com.dotcura.app
 
