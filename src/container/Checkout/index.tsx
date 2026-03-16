@@ -52,6 +52,7 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { GlobalVar } from '../../constants/GlobalVar';
 import SocketService from '../../socket/SocketService';
 import { CustomerSheet } from '@stripe/stripe-react-native';
+import { endLiveActivity } from '../../liveactivity/LiveActivityService';
 
 const CheckoutContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -415,25 +416,25 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   // const handleOnPressSaveChanges = () => {
   //   const isValid = validateBeforeOrder();
   //   if (!isValid) return;
-  
+
   //   const paymentMethod = Number(testkitsData[0]?.default_payment_method);
   //   const hasCard = Number(testkitsData[0]?.has_card);
-  
+
   //   console.log("hasCard:", hasCard);
   //   console.log("paymentMethod:", paymentMethod);
-  
+
   //   // 🔵 CASE 1 → No card + Stripe selected → Open CustomerSheet
   //   if (paymentMethod === 4 && hasCard === 0) {
   //     openCustomerSheet();
   //     return;
   //   }
-  
+
   //   // 🟢 CASE 2 → Stripe selected but card already exists
   //   if (paymentMethod === 4 && hasCard === 1) {
   //     _bookOrder();
   //     return;
   //   }
-  
+
   //   // 🟢 CASE 3 → Any other payment method
   //   if ([1, 2, 3].includes(paymentMethod)) {
   //     _bookOrder();
@@ -444,10 +445,10 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const handleOnPressSaveChanges = () => {
     const isValid = validateBeforeOrder();
     if (!isValid) return;
-  
+
     const paymentMethod = Number(testkitsData[0]?.default_payment_method);
     const hasCard = Number(testkitsData[0]?.has_card);
-  
+
     if (paymentMethod === 4 && hasCard === 0) {
       openCustomerSheet();
     } else {
@@ -458,6 +459,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const handleNavigateHome = () => {
     setOrderStatus('');
     setCancleOrderVisible(false);
+    endLiveActivity();
     navigation.reset({
       index: 0,
       routes: [

@@ -19,6 +19,8 @@ const useNotificationService = () => {
 
     let notification = isPlatformiOS ? remoteMessage.data : remoteMessage.data;
 
+    
+
     if (notification) {
       const { title, body } = notification;
       console.log('title', title);
@@ -52,9 +54,10 @@ const useNotificationService = () => {
   };
 
   const handleForegroundNotification = () => {
-    messaging().onMessage(async remoteMessage => {
+    messaging().onMessage(async (remoteMessage: any) => {
       console.log('Foreground notification received:', remoteMessage);
       showNotificationWithAlert(remoteMessage);
+
       // incCountOfNotificationBadge();
     });
 

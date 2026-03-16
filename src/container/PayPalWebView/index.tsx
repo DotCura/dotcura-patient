@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { WebView } from 'react-native-webview';
 import { usePaymentStore } from '../../store/PaymentStore/PaymentStore';
-import { flashMessageSucess, flashMessageWarning } from '../../constants/GConstant';
+import {
+  flashMessageSucess,
+  flashMessageWarning,
+} from '../../constants/GConstant';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { getTranslation } from '../../localization/i18n/i18n.config';
+import { getHeight } from '../../constants/utils/Dimensions';
 
 const PayPalWebViewScreen = ({ route, navigation }: any) => {
   const { markPaymentSuccess, activateNext } = usePaymentStore();

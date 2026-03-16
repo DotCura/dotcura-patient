@@ -150,7 +150,7 @@ const AppLayout = memo(
 
     console.log('🔄 AppLayout render - orderStatus:', isOrderPlaced);
     console.log('📍 Current Route:', currentRouteName);
-
+    const { LiveActivityModule } = NativeModules;
     // Get order data from store
     const orderData: any = ZustandStores.OrderstatusStore(
       state => state.orderData,
@@ -207,7 +207,7 @@ const AppLayout = memo(
         updateLiveActivity(
           'start_visit',
           orderData?.time || '20-30 minuti',
-          'L’operatore è quasi da te. Tieni d’occhio il telefono o il citofono.',
+          "L'infermiere ha iniziato la visita.",
           3,
         );
       }
@@ -228,6 +228,70 @@ const AppLayout = memo(
 
       if (orderData?.status === '') {
         endLiveActivity();
+        hasStartedLiveActivity.current = false;
+      }
+    }, [orderData?.status, orderData]);
+
+    //for android
+    useEffect(() => {
+      if (Platform.OS !== 'android') return;
+      // if (!orderStatus || !orderData?.booking_id) return;
+
+      console.log(
+        '📱 Live Activity status update: android ',
+        orderData?.status,
+      );
+      console.log('📱 Live Activity status update:data android', orderData);
+
+      if (orderData?.status === 'Request' && !hasStartedLiveActivity.current) {
+        LiveActivityModule.show(
+          'Ordine inviato',
+          'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
+          'Request',
+        );
+
+        hasStartedLiveActivity.current = true;
+      }
+
+      if (orderData?.status === 'Accept') {
+        LiveActivityModule.show(
+          'Visita confermata',
+          'Ottime notizie! La visita è confermata per oggi alle.',
+          'Accept',
+        );
+      }
+
+      if (orderData?.status === 'Modified') {
+        LiveActivityModule.show(
+          'Visita modificata',
+          'L’infermiere ci ha comunicato che verrà a casa tua entro le',
+          'Modified',
+        );
+      }
+
+      if (orderData?.status === 'start_visit') {
+        LiveActivityModule.show(
+          orderData?.time || '20-30 minuti',
+          "L'infermiere ha iniziato la visita.",
+          'start_visit',
+        );
+      }
+
+      if (orderData?.status === 'arrived') {
+        LiveActivityModule.show(
+          `${orderData?.name || 'Nurse'} è qui.`,
+          'È il momento di farsi visitare.',
+          'arrived',
+        );
+      }
+
+      if (orderData?.status === 'Rejected') {
+        LiveActivityModule.stop();
+        hasStartedLiveActivity.current = false;
+      }
+
+      if (orderData?.status === '') {
+        LiveActivityModule.stop();
         hasStartedLiveActivity.current = false;
       }
     }, [orderData?.status, orderData]);
@@ -256,6 +320,7 @@ const AppLayout = memo(
 
       return () => subscription.remove();
     }, []);
+    
     useEffect(() => {
       if (Platform.OS !== 'ios') return;
       if (!orderData?.booking_id) return;

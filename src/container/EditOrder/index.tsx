@@ -3,6 +3,7 @@ import {
   Image,
   ImageBackground,
   Keyboard,
+  NativeModules,
   Text,
   TextInput,
   TouchableOpacity,
@@ -52,6 +53,7 @@ import { fontsfamily } from '../../constants/FontFamily';
 import { GlobalVar } from '../../constants/GlobalVar';
 import SocketService from '../../socket/SocketService';
 import EditOrderComponent from '../../components/EditOrder';
+import { endLiveActivity } from '../../liveactivity/LiveActivityService';
 
 const EditOrderContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
@@ -441,10 +443,15 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       _editOrder();
     }
   };
-
+  const { LiveActivityModule } = NativeModules;
   const handleNavigateHome = () => {
     setOrderStatus('');
     setCancleOrderVisible(false);
+    if (isPlatformiOS) {
+      endLiveActivity();
+    } else {
+      LiveActivityModule.stop();
+    }
     navigation.reset({
       index: 0,
       routes: [
