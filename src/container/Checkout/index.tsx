@@ -3,6 +3,7 @@ import {
   Image,
   ImageBackground,
   Keyboard,
+  NativeModules,
   Text,
   TextInput,
   TouchableOpacity,
@@ -1553,7 +1554,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       console.log('_addCardapi error:', error);
     }
   };
-
+  const { LiveActivityModule } = NativeModules;
   const _bookOrder = async () => {
     try {
       const params = {
@@ -1588,6 +1589,13 @@ const CheckoutContainer = ({ navigation, route }: any) => {
               'Ordine inviato',
               'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
               1,
+            );
+          }else{
+            LiveActivityModule.show(
+              String(responseData?.data?.data?.id),
+              'Ordine inviato',
+              'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
+              'Request',
             );
           }
           navigation.reset({

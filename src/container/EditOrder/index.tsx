@@ -1790,9 +1790,15 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       console.log('params', params);
 
       const callback = (responseData: any) => {
-        console.log('in edit order callback');
+        console.log('in edit order callback', responseData?.data?.data?.id);
 
         if (responseData.code === StatusCode.SUCCESS) {
+          LiveActivityModule.show(
+            String(responseData?.data?.data?.id),
+            'Visita modificata',
+            'L’infermiere ci ha comunicato che verrà a casa tua entro le',
+            'Modified',
+          );
           navigation.reset({
             index: 0,
             routes: [
@@ -1850,7 +1856,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
           if (isPlatformiOS) {
             endLiveActivity(String(booking_order_id));
           } else {
-            LiveActivityModule.stop();
+            LiveActivityModule.stop(String(booking_order_id));
           }
           navigation.reset({
             index: 0,

@@ -12,25 +12,48 @@ class LiveActivityModule(private val reactContext: ReactApplicationContext) :
         return "LiveActivityModule"
     }
 
+    // @ReactMethod
+    // fun show(title: String, subtitle: String, status: String) {
+
+    //     val intent = Intent(reactContext, LiveActivityService::class.java)
+
+    //     intent.putExtra("title", title)
+    //     intent.putExtra("subtitle", subtitle)
+    //     intent.putExtra("status", status)
+
+    //     reactContext.startService(intent)
+    // }
+
+    // @ReactMethod
+    // fun stop() {
+
+    //     val intent = Intent(reactContext, LiveActivityService::class.java)
+
+    //     reactContext.stopService(intent)
+
+    //     LiveActivityHelper.stopLiveActivity(reactContext)
+    // }
     @ReactMethod
-    fun show(title: String, subtitle: String, status: String) {
+fun show(bookingId: String, title: String, subtitle: String, status: String){
 
-        val intent = Intent(reactContext, LiveActivityService::class.java)
+    val intent = Intent(reactContext, LiveActivityService::class.java)
 
-        intent.putExtra("title", title)
-        intent.putExtra("subtitle", subtitle)
-        intent.putExtra("status", status)
+    intent.putExtra("bookingId", bookingId)
+    intent.putExtra("title", title)
+    intent.putExtra("subtitle", subtitle)
+    intent.putExtra("status", status)
 
-        reactContext.startService(intent)
-    }
+    reactContext.startService(intent)
+}
 
-    @ReactMethod
-    fun stop() {
+@ReactMethod
+fun stop(bookingId: String){
 
-        val intent = Intent(reactContext, LiveActivityService::class.java)
+    val intent = Intent(reactContext, LiveActivityService::class.java)
+    intent.putExtra("bookingId", bookingId)
 
-        reactContext.stopService(intent)
+    reactContext.stopService(intent)
 
-        LiveActivityHelper.stopLiveActivity(reactContext)
-    }
+    LiveActivityHelper.stopLiveActivity(reactContext, bookingId)
+}
 }

@@ -11,22 +11,39 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val data = remoteMessage.data
         
 
+        // if (data["type"] == "live_activity_update") {
+
+        //     val intent = Intent(this, LiveActivityService::class.java)
+
+        //     intent.putExtra("title", data["title"])
+        //     intent.putExtra("subtitle", data["subtitle"])
+        //     intent.putExtra("status", data["status"])
+
+           
+        //     startService(intent)
+        // }
+
+        // if (data["type"] == "live_activity_end") {
+
+        //     LiveActivityHelper.stopLiveActivity(applicationContext)
+
+        // }
         if (data["type"] == "live_activity_update") {
 
             val intent = Intent(this, LiveActivityService::class.java)
-
+        
+            intent.putExtra("bookingId", data["bookingId"])
             intent.putExtra("title", data["title"])
             intent.putExtra("subtitle", data["subtitle"])
             intent.putExtra("status", data["status"])
-
-           
+        
             startService(intent)
         }
-
+        
         if (data["type"] == "live_activity_end") {
-
-            LiveActivityHelper.stopLiveActivity(applicationContext)
-
+        
+            val bookingId = data["bookingId"] ?: return
+            LiveActivityHelper.stopLiveActivity(applicationContext, bookingId)
         }
     }
 }
