@@ -54,8 +54,6 @@ struct OrderStatusView: View {
 
         VStack(alignment: .leading, spacing: 1) {
 
-           
-
                 VStack(alignment: .leading, spacing: 4) {
 
                     Text(context.state.title)
