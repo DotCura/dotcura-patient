@@ -111,7 +111,7 @@ export async function requestUserForNotificationPermission() {
       await getFCMToken();
     } else {
       console.log('Notification permission denied');
-      MmkvManager.setData(
+      await MmkvManager.setData(
         MmkvManager.Keys.notificationPermission,
         'false',
       );
@@ -141,7 +141,7 @@ export async function requestUserForNotificationPermission() {
     }
 
     // ✅ Store using MMKV
-    MmkvManager.setData(
+    await MmkvManager.setData(
       MmkvManager.Keys.notificationPermission,
       enabled ? 'true' : 'false',
     );
@@ -161,7 +161,7 @@ export const getFCMToken = async () => {
     // ✅ Get from MMKV (sync)
     let token: string | null = null;
 
-    MmkvManager.getData(MmkvManager.Keys.fcmToken, value => {
+    await MmkvManager.getData(MmkvManager.Keys.fcmToken, value => {
       token = value as string | null;
     });
 
@@ -174,7 +174,7 @@ export const getFCMToken = async () => {
         console.log('New FCM TOKEN ========>', fcmToken);
 
         // ✅ Store in MMKV
-        MmkvManager.setData(
+        await MmkvManager.setData(
           MmkvManager.Keys.fcmToken,
           fcmToken,
         );

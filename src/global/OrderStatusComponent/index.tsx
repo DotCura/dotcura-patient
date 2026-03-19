@@ -777,7 +777,7 @@ const styles = StyleSheet.create({
   },
   progressImageIos: {
     marginBottom: 20,
-    // resizeMode: 'stretch',
+    resizeMode: 'stretch',
     width: '100%',
     height: 60,
     marginTop: 20,

@@ -12,8 +12,8 @@ import SwiftUI
 struct OrderStatusLiveActivityBundle: WidgetBundle {
     var body: some Widget {
         OrderStatusLiveActivity()
-        OrderStatusLiveActivityControl()
-        OrderStatusLiveActivityLiveActivity()
+//        OrderStatusLiveActivityControl()
+//        OrderStatusLiveActivityLiveActivity()
         
     }
 }

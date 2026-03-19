@@ -9,10 +9,12 @@ struct OrderStatusLiveActivity: Widget {
 
         ActivityConfiguration(for: OrderStatusAttributes.self) { context in
 
-            // LOCK SCREEN VIEW
-            OrderStatusView(context: context)
-                .activityBackgroundTint(.black)
-                .activitySystemActionForegroundColor(.white)
+            // // LOCK SCREEN VIEW
+             OrderStatusView(context: context)
+                 .activityBackgroundTint(.black)
+                 .activitySystemActionForegroundColor(.white)
+          
+  
 
         } dynamicIsland: { context in
 
