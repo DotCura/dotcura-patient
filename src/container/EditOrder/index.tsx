@@ -4,6 +4,7 @@ import {
   ImageBackground,
   Keyboard,
   NativeModules,
+  Platform,
   Text,
   TextInput,
   TouchableOpacity,
@@ -1794,12 +1795,15 @@ const EditOrderContainer = ({ navigation, route }: any) => {
         console.log('in edit order callback', responseData?.data?.data?.id);
 
         if (responseData.code === StatusCode.SUCCESS) {
-          LiveActivityModule.show(
-            String(responseData?.data?.data?.id),
-            'Visita modificata',
-            'L’infermiere ci ha comunicato che verrà a casa tua entro le',
-            'Modified',
-          );
+          if (Platform.OS == 'android') {
+            LiveActivityModule.show(
+              String(responseData?.data?.data?.id),
+              'Visita modificata',
+              'L’infermiere ci ha comunicato che verrà a casa tua entro le',
+              'Modified',
+            );
+          }
+
           navigation.reset({
             index: 0,
             routes: [
@@ -1856,11 +1860,6 @@ const EditOrderContainer = ({ navigation, route }: any) => {
         setIsCancelLoading(false);
         if (responseData.code === StatusCode.SUCCESS) {
           setCancleOrderVisible(false);
-          if (isPlatformiOS) {
-            endLiveActivity(String(booking_order_id));
-          } else {
-            LiveActivityModule.stop(String(booking_order_id));
-          }
           navigation.reset({
             index: 0,
             routes: [
@@ -1883,6 +1882,12 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
           SocketService.emit('patient_join_booking');
           console.log('after patient_join');
+          
+          if (isPlatformiOS) {
+            endLiveActivity(String(booking_order_id));
+          } else {
+            LiveActivityModule.stop(String(booking_order_id));
+          }
         } else {
           flashMessageWarning(responseData.message);
         }

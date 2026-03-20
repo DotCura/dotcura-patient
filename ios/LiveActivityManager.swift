@@ -24,7 +24,8 @@ func startActivity(
     _ bookingId: String,
     title: String,
     subtitle: String,
-    progress: NSNumber
+    progress: NSNumber,
+    data: String
 ) {
 
     if #available(iOS 16.2, *) {
@@ -37,7 +38,8 @@ func startActivity(
             status: "Request",
             title: title,
             subtitle: subtitle,
-            progress: progress.intValue
+            progress: progress.intValue,
+            data: data
         )
 
         let content = ActivityContent(
@@ -91,7 +93,8 @@ func startActivity(
         status: String,
         title: String,
         subtitle: String,
-        progress: NSNumber
+        progress: NSNumber,
+        data: String
     ) {
 
         if #available(iOS 16.2, *) {
@@ -105,7 +108,8 @@ func startActivity(
                 status: status,
                 title: title,
                 subtitle: subtitle,
-                progress: progress.intValue
+                progress: progress.intValue,
+                data: data   // 👈 required
             )
 
             let updatedContent = ActivityContent(
@@ -135,7 +139,8 @@ func startActivity(
                 status: "Completed",
                 title: "Visita completata",
                 subtitle: "Grazie per aver scelto il nostro servizio.",
-                progress: 4
+                progress: 4,
+                data: "{\"text\":\"Fatto!\"}"
             )
 
             let finalContent = ActivityContent(

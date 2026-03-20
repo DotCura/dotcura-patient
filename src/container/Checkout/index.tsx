@@ -1586,14 +1586,15 @@ const CheckoutContainer = ({ navigation, route }: any) => {
           if (isPlatformiOS) {
             startLiveActivity(
               String(responseData?.data?.data?.id),
-              'Ordine inviato',
+              'Stiamo cercando un infermiere per te...',
               'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
               1,
+              JSON.stringify({ text: "In attesa" }) // 👈 REQUIRED
             );
           }else{
             LiveActivityModule.show(
               String(responseData?.data?.data?.id),
-              'Ordine inviato',
+              'Stiamo cercando un infermiere per te...',
               'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
               'Request',
             );

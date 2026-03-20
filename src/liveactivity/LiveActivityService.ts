@@ -7,8 +7,9 @@ export const startLiveActivity = (
   title: string,
   subtitle: string,
   progress: number,
+  data: string, // 👈 ADD THIS
 ) => {
-  LiveActivityManager.startActivity(bookingId, title, subtitle, progress);
+  LiveActivityManager.startActivity(bookingId, title, subtitle, progress, data,);
 };
 
 export const updateLiveActivity = (
@@ -17,6 +18,7 @@ export const updateLiveActivity = (
   title: string,
   subtitle: string,
   progress: number,
+  data: string, // 👈 ADD THIS
 ) => {
   LiveActivityManager.updateActivity(
     bookingId,
@@ -24,6 +26,7 @@ export const updateLiveActivity = (
     title,
     subtitle,
     progress,
+    data, // 👈 PASS IT
   );
 };
 

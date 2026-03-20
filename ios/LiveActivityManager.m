@@ -12,13 +12,15 @@
 RCT_EXTERN_METHOD(startActivity:(NSString *)bookingId
                   title:(NSString *)title
                   subtitle:(NSString *)subtitle
-                  progress:(nonnull NSNumber *)progress)
+                  progress:(nonnull NSNumber *)progress
+                  data:(NSString *)data)
                   
 RCT_EXTERN_METHOD(updateActivity:(NSString *)bookingId
                   status:(NSString *)status
                   title:(NSString *)title
                   subtitle:(NSString *)subtitle
-                  progress:(nonnull NSNumber *)progress)
+                  progress:(nonnull NSNumber *)progress
+                  data:(NSString *)data)
 
 RCT_EXTERN_METHOD(endActivity:(NSString *)bookingId)
 

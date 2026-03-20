@@ -18,7 +18,8 @@ const InformationConasantContainer = ({ navigation }: any) => {
 
   const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
 
-  const [selectedInfo, setSelectedInfo] = useState(1);
+  const [isPrivacyAccepted, setIsPrivacyAccepted] = useState(false);
+  const [isOtherAccepted, setIsOtherAccepted] = useState(false);
 
   const handlePressContinue = async () => {
     await _infoConstantApi();
@@ -30,7 +31,7 @@ const InformationConasantContainer = ({ navigation }: any) => {
     try {
       const params = {
         steps: '2',
-        terms: selectedInfo == 1 ? 0 : 2,
+        terms: isOtherAccepted ? 1 : 0,
       };
 
       const callback = async (responseData: any) => {
@@ -65,8 +66,10 @@ const InformationConasantContainer = ({ navigation }: any) => {
     <InformationConasantComponent
       insets={insets}
       headerArray={headerArray}
-      selectedInfo={selectedInfo}
-      setSelectedInfo={setSelectedInfo}
+      isPrivacyAccepted={isPrivacyAccepted}
+      setIsPrivacyAccepted={setIsPrivacyAccepted}
+      isOtherAccepted={isOtherAccepted}
+      setIsOtherAccepted={setIsOtherAccepted}
       handlePressContinue={handlePressContinue}
       navigation={navigation}
     />

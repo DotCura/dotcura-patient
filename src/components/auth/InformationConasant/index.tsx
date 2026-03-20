@@ -50,12 +50,14 @@ const InformationConasantComponent = (props: any) => {
           <View style={styles.optionContainer}>
             <View style={styles.option}>
               <TouchableOpacity
-                onPress={() => props.setSelectedInfo(1)}
+                onPress={() =>
+                  props.setIsPrivacyAccepted(!props.isPrivacyAccepted)
+                }
                 style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
               >
                 <Image
                   source={
-                    props.selectedInfo === 1
+                    props.isPrivacyAccepted
                       ? images.imgSelectRadio
                       : images.imgUnselectRadio
                   }
@@ -78,12 +80,12 @@ const InformationConasantComponent = (props: any) => {
 
             <View style={styles.option}>
               <TouchableOpacity
-                onPress={() => props.setSelectedInfo(2)}
+                onPress={() => props.setIsOtherAccepted(!props.isOtherAccepted)}
                 style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
               >
                 <Image
                   source={
-                    props.selectedInfo === 2
+                    props.isOtherAccepted
                       ? images.imgSelectRadio
                       : images.imgUnselectRadio
                   }
@@ -106,6 +108,8 @@ const InformationConasantComponent = (props: any) => {
           <CustomButton
             btnPress={props.handlePressContinue}
             btnTitle={getTranslation('continue')}
+            disabled={!props.isPrivacyAccepted}
+            style={{ opacity: props.isPrivacyAccepted ? 1 : 0.5 }}
           />
         </View>
       </KeyboardAwareScrollView>

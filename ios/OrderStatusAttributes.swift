@@ -15,6 +15,7 @@ struct OrderStatusAttributes: ActivityAttributes {
         var title: String
         var subtitle: String
         var progress: Int
+        var data: String   // 👈 ADD THIS (JSON string from backend)
     }
 
     var bookingId: String
