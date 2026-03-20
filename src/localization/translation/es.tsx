@@ -604,4 +604,8 @@ export default {
 
   reportnotavailableprofile:
     'La tua segnalazione è attualmente in fase di elaborazione. Sarà presto disponibile.',
+
+  waitingreporttitle: 'Stiamo processando il tuo campione',
+  waitingreportsubtitle: 'Ti avviseremo appena i risultati saranno pronti.',
+  waitingreportbtn: 'Torna allo storico',
 };

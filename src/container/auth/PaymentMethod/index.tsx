@@ -31,12 +31,12 @@ const PaymentMethodContainer = ({ navigation }: any) => {
       images: images.imgapplepay,
       apipasskey: 'applepay',
     },
-    {
-      id: 2,
-      title: 'Klarna',
-      images: images.imgkalrnapay,
-      apipasskey: 'klarna',
-    },
+    // {
+    //   id: 2,
+    //   title: 'Klarna',
+    //   images: images.imgkalrnapay,
+    //   apipasskey: 'klarna',
+    // },
     { id: 3, title: 'PayPal', images: images.imgpaypal, apipasskey: 'paypal' },
   ];
 

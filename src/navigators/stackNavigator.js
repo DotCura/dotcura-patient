@@ -419,6 +419,9 @@ const MainNavigation = props => {
         {_addScreen(NativeStack, ScreenNames.PAYPALWEBVIEWSCREEN, {
           headerShown: false,
         })}
+        {_addScreen(NativeStack, ScreenNames.REPORTWAITINGCONTAINER, {
+          headerShown: false,
+        })}
 
         {/* 🔥 TRANSITION ENTRY */}
         <NativeStack.Screen

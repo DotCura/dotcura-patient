@@ -29,13 +29,14 @@
 // };
 
 // export default CustomButton;
-import { Image, Text, TouchableOpacity, View, Animated } from 'react-native';
+import { Image, Text, TouchableOpacity, View, Animated, ActivityIndicator } from 'react-native';
 import React, { useRef } from 'react';
 import { styles } from './styles';
 import { activityOpacity, activityOpacitybtn } from '../../constants/GConstant';
+import { Colors } from '../../constants/Colors';
 
 const CustomButton = (props: any) => {
-  const { style, textStyle, imgstyle } = props;
+  const { style, textStyle, imgstyle, isLoading, disabled } = props;
 
   // 👇 Scale value
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -69,11 +70,12 @@ const CustomButton = (props: any) => {
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         activeOpacity={activityOpacitybtn}
+        disabled={disabled || isLoading}
         style={[styles.btn, style]}
       >
         <View style={styles.vwBtn}>
           <View>
-          {props.btnicon && (
+          {props.btnicon && !isLoading && (
             <Image
               source={props.btnImage}
               style={[styles.imgIcon, imgstyle]}
@@ -81,9 +83,13 @@ const CustomButton = (props: any) => {
           )}
           </View>
 
-          <Text numberOfLines={1} style={[styles.lblTitle, textStyle]}>
-            {props.btnTitle}
-          </Text>
+          {isLoading ? (
+            <ActivityIndicator size="small" color={textStyle?.color || Colors.white} />
+          ) : (
+            <Text numberOfLines={1} style={[styles.lblTitle, textStyle]}>
+              {props.btnTitle}
+            </Text>
+          )}
         </View>
       </TouchableOpacity>
     </Animated.View>

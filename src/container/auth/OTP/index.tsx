@@ -142,9 +142,11 @@ const OTPContainer = ({ navigation, route }: any) => {
 
     if (fullOtp.toString().length !== 6) {
       flashMessageWarning(getTranslation('errorMessageOtp'));
-    } else if (fullOtp != validateOtp) {
+    }
+     else if (fullOtp != validateOtp) {
       flashMessageWarning(getTranslation('errorMessageInvalidOtp'));
-    } else {
+    }
+     else {
       await _verifyOTPApi();
     }
   };

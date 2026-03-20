@@ -102,8 +102,8 @@ export const images = {
   imgTestRedShadow: require('../assets/images/TestRedShadow.png'),
   imgTestYellowShadow: require('../assets/images/TestYellowShadow.png'),
   imgTopShadow: require('../assets/images/topshadow.png'),
-  imgTopShadowBlue:require('../assets/images/imgTopShadowBlue.png'),
-  imgTopShadowRed:require('../assets/images/imgTopShadowRed.png'),
+  imgTopShadowBlue: require('../assets/images/imgTopShadowBlue.png'),
+  imgTopShadowRed: require('../assets/images/imgTopShadowRed.png'),
   imgTopRedShadow: require('../assets/images/redShadowHome.png'),
   imgTopBlueShadow: require('../assets/images/blueShadowHome.png'),
   imgfavblack: require('../assets/images/fav-filled-black.png'),
@@ -115,13 +115,13 @@ export const images = {
   imgDeleteAddress: require('../assets/images/deleteIcon.png'),
   imgEditAddress: require('../assets/images/editaddress.png'),
   imgNoDataFoundAddress: require('../assets/images/nodatefoundaddress.png'),
+  imgTestTube: require('../assets/images/testtube.png'),
 
   imgvisitconfirmstepper: require('../assets/images/visitconfirmstepper.png'),
   imgstartvisitstepper: require('../assets/images/startvisitstepper.png'),
   imgcanclevisitstepper: require('../assets/images/visitcanclestepper.png'),
   imgeditorderstepper: require('../assets/images/editorderstepper.png'),
   imgnursearrivedstepper: require('../assets/images/nurseArrived.png'),
-  
 
   splashvideo: require('../assets/videos/SplashScreen.mp4'),
 

@@ -79,6 +79,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const [selectedAddress, setSelectedAddress] = useState<any>(null);
   const [manageAddress, setManageAddress] = useState('');
   const [cancleOrderVisible, setCancleOrderVisible] = useState(false);
+  const [isCancelLoading, setIsCancelLoading] = useState(false);
   const [editAnlitiPopupVisible, setEditAnalitiPopupVisible] = useState(false);
   const [showIsModifyOrder, setShowIsModifyOrder] = useState(false);
   const [cartLoaded, setCartLoaded] = useState(false);
@@ -1846,11 +1847,13 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
   const _cancleOrder = async () => {
     try {
+      setIsCancelLoading(true);
       const params = {
         booking_id: booking_order_id,
       };
 
       const callback = async (responseData: any) => {
+        setIsCancelLoading(false);
         if (responseData.code === StatusCode.SUCCESS) {
           setCancleOrderVisible(false);
           if (isPlatformiOS) {
@@ -1891,8 +1894,10 @@ const EditOrderContainer = ({ navigation, route }: any) => {
         apiEndPoint: ApiEndPoints.ORDER.CANCLEORDER,
         callback,
         params,
+        showLoader: false,
       });
     } catch (error) {
+      setIsCancelLoading(false);
       console.log('cancle Order error:', error);
     }
   };
@@ -2016,6 +2021,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       //CancleModel
       cancleOrderVisible={cancleOrderVisible}
       setCancleOrderVisible={setCancleOrderVisible}
+      isCancelLoading={isCancelLoading}
       funOpenCancleOrder={funOpenCancleOrder}
       funCloseCancleOrder={funCloseCancleOrder}
       handleNavigateHome={handleNavigateHome}

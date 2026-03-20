@@ -14,13 +14,12 @@ export const AppStates = {
 
 export const NotificationTypes = {
   ADMIN_NOTIFICATIONS: 'admin-notification',
-  REPORT_NOTIFICATIONS:'report_notification',
-  BOOKING_CANCLE:'booking_cancelled',
-  BOOKING_ACCEPT:'booking_accepted',
-  BOOKING_STARTED:'booking_started',
-  PAYMNET_CAPTURED:'payment_captured',
-  SAMPLE_DELIVERED:'samples_delivered',
-
+  REPORT_NOTIFICATIONS: 'report_notification',
+  BOOKING_CANCLE: 'booking_cancelled',
+  BOOKING_ACCEPT: 'booking_accepted',
+  BOOKING_STARTED: 'booking_started',
+  PAYMNET_CAPTURED: 'payment_captured',
+  SAMPLE_DELIVERED: 'samples_delivered',
 };
 
 // <============================== Screen Name ==============================>
@@ -28,7 +27,7 @@ export const NotificationTypes = {
 export const ScreenNames = {
   //auth
   ONBOARDINGCONTAINER: 'OnBoardingContainer',
-  CMSPAGECONTAINER:"CMSPagesContainer",
+  CMSPAGECONTAINER: 'CMSPagesContainer',
   LOGINCONTAINER: 'LoginContainer',
   OTPCONTAINER: 'OTPContainer',
   COMPLETEPROFILECONTAINER: 'CompleteProfileContainer',
@@ -41,9 +40,9 @@ export const ScreenNames = {
   ACCESSCONTAINER: 'AccessContainer',
   NOTIFICATIONSWITCHCONTAINER: 'NotificationSwitchContainer',
   PAYMENTMETHODCONTAINER: 'PaymentMethodContainer',
-  ADDRESSLISTCONTAINER:"AddressListContainer",
-  FAVOURITESCONTAINER:"FavouritesContainer",
-  CUSTOMSPLASHCONTAINER:"CustomSplashContainer",
+  ADDRESSLISTCONTAINER: 'AddressListContainer',
+  FAVOURITESCONTAINER: 'FavouritesContainer',
+  CUSTOMSPLASHCONTAINER: 'CustomSplashContainer',
 
   //BOTTOMTAB
   HOMECONTAINER: 'HomeContainer',
@@ -51,22 +50,22 @@ export const ScreenNames = {
   YOURPROFILECONAINER: 'YourProfileContainer',
   BOTTOMTABNAVIGATION: 'BottomTabsNavigation',
 
-  HOME:getTranslation('home'),
-  GETTESTED:getTranslation('gettested'),
-  YOURPROFILE:getTranslation('yourprofile'),
+  HOME: getTranslation('home'),
+  GETTESTED: getTranslation('gettested'),
+  YOURPROFILE: getTranslation('yourprofile'),
 
   KITDETAILSCONTAINER: 'KitDetailsContainer',
   CHECKOUTCONTAINER: 'CheckoutContainer',
   HISTORICALANALYSISCONTAINER: 'HistoricalAnalysisContainer',
   KITANALYSISCONTAINER: 'KitAnalysisContainer',
   TESTDETAILSCONTAINER: 'TestDetailsContainer',
-  ANALITIDETAILSCONTAINER:"AnalitiDetailsContainer",
-  ANALITITESTDETAILSCONTAINER:"AnalitiTestDetailContainer",
-  ORDERHISTORYCONTAINER:"OrderHistoryContainer",
-  NOTIFICATIONLISTCONTAINER:"NotificationListContainer",
-  RATEANDREVIEWCONTAINER:"RateAndReviewContainer",
-  EDITORDERCONTAINER:"EditOrderContainer",
-  CONTACTUSCONTAINER:"ContactUsContainer",
+  ANALITIDETAILSCONTAINER: 'AnalitiDetailsContainer',
+  ANALITITESTDETAILSCONTAINER: 'AnalitiTestDetailContainer',
+  ORDERHISTORYCONTAINER: 'OrderHistoryContainer',
+  NOTIFICATIONLISTCONTAINER: 'NotificationListContainer',
+  RATEANDREVIEWCONTAINER: 'RateAndReviewContainer',
+  EDITORDERCONTAINER: 'EditOrderContainer',
+  CONTACTUSCONTAINER: 'ContactUsContainer',
 
   //FAMILY
   CONFIRMIDENTITYCONTAINER: 'ConfrimIdentityContainer',
@@ -80,7 +79,8 @@ export const ScreenNames = {
   ADDFAMILYMEMBERSCONTAINER: 'AddFamilyMemberContainer',
   RESULTOPENUPCONTAINER: 'ResultOpenUpContainers',
 
-  PAYPALWEBVIEWSCREEN:"PayPalWebViewScreen",
+  PAYPALWEBVIEWSCREEN: 'PayPalWebViewScreen',
+  REPORTWAITINGCONTAINER: 'ReportWaitingContainer',
 };
 
 // <============================== IOS Condition ==============================>

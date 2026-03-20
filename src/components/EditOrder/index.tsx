@@ -1188,6 +1188,8 @@ const EditOrderComponent = (props: any) => {
                   btnPress={props._cancleOrder}
                   style={{ backgroundColor: Colors.redFC }}
                   textStyle={{ color: Colors.red8C }}
+                  isLoading={props.isCancelLoading}
+                  disabled={props.isCancelLoading}
                 />
 
                 <CustomButton

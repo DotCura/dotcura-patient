@@ -307,7 +307,7 @@
 
 //with apple pay above is payment sheet code
 
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, ScrollView, Platform } from 'react-native';
 import Modal from 'react-native-modal';
 import { usePaymentStore } from '../../store/PaymentStore/PaymentStore';
@@ -345,6 +345,7 @@ export const PaymentPendingModal = () => {
   } = usePaymentStore();
 
   const { confirmPlatformPayPayment, isPlatformPaySupported } = useStripe();
+  const [isPaymentLoading, setIsPaymentLoading] = useState(false);
 
   console.log('💳 PaymentPendingModal Render:', status, orderDetails);
 
@@ -434,6 +435,7 @@ export const PaymentPendingModal = () => {
 
     if (!isSupported) {
       flashMessageWarning('Apple Pay not supported on this device');
+      setIsPaymentLoading(false);
       return;
     }
 
@@ -444,6 +446,7 @@ export const PaymentPendingModal = () => {
       };
 
       const callback = async (responseData: any) => {
+        setIsPaymentLoading(false);
         if (responseData.code === StatusCode.SUCCESS) {
           const { paymentIntent } = responseData.data;
           const isIOS = Platform.OS === 'ios';
@@ -494,8 +497,10 @@ export const PaymentPendingModal = () => {
         apiEndPoint: ApiEndPoints.PAYMENT.CREATEPAYMENTINTENT,
         params,
         callback,
+        showLoader: false,
       });
     } catch (err) {
+      setIsPaymentLoading(false);
       console.log('Apple Pay error:', err);
     }
   };
@@ -507,6 +512,7 @@ export const PaymentPendingModal = () => {
       };
 
       const callback = async (responseData: any) => {
+        setIsPaymentLoading(false);
         if (responseData.code !== StatusCode.SUCCESS) {
           flashMessageWarning(responseData.message);
           return;
@@ -526,8 +532,10 @@ export const PaymentPendingModal = () => {
         apiEndPoint: ApiEndPoints.PAYMENT.PAYPALCHECKOUTSESSION,
         params,
         callback,
+        showLoader: false,
       });
     } catch (err) {
+      setIsPaymentLoading(false);
       console.log('PayPal error:', err);
     }
   };
@@ -539,6 +547,7 @@ export const PaymentPendingModal = () => {
       };
 
       const callback = async (responseData: any) => {
+        setIsPaymentLoading(false);
         if (responseData.code !== StatusCode.SUCCESS) {
           flashMessageWarning(responseData.message);
           return;
@@ -576,8 +585,10 @@ export const PaymentPendingModal = () => {
         apiEndPoint: ApiEndPoints.PAYMENT.KLARNACHECKOUTSESSION,
         params,
         callback,
+        showLoader: false,
       });
     } catch (err) {
+      setIsPaymentLoading(false);
       console.log('Klarna error:', err);
     }
   };
@@ -591,17 +602,20 @@ export const PaymentPendingModal = () => {
     const paymentMethod = orderDetails?.default_payment_method;
 
     if (paymentMethod === '1') {
-      handleApplePay();
+      setIsPaymentLoading(true);
+      await handleApplePay();
       return;
     }
 
     if (paymentMethod === '2') {
-      handleKlarna();
+      setIsPaymentLoading(true);
+      await handleKlarna();
       return;
     }
 
     if (paymentMethod === '3') {
-      handlePayPal();
+      setIsPaymentLoading(true);
+      await handlePayPal();
       return;
     }
   };
@@ -733,6 +747,8 @@ export const PaymentPendingModal = () => {
             btnTitle={getTranslation('finishorder')}
             btnicon={false}
             btnPress={handleFinishOrder}
+            isLoading={isPaymentLoading}
+            disabled={isPaymentLoading}
           />
           <CustomButton
             btnTitle={getTranslation('contactuspaymentmodel')}

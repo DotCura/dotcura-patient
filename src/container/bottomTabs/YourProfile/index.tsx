@@ -67,10 +67,16 @@ const YourProfileContainer = ({ navigation }: any) => {
         key={index}
         style={styles.vwReportDate}
         onPress={() => {
-          if (item?.is_report_available === false) {
-            flashMessageWarning(getTranslation('reportnotavailableprofile'));
-          } else {
+          if (
+            item?.is_report_available === false &&
+            item?.status === 'ReportPending'
+          ) {
+            // flashMessageWarning(getTranslation('reportnotavailableprofile'));
+            navigation.navigate(ScreenNames.REPORTWAITINGCONTAINER);
+          } else if (item?.is_report_available === true) {
             hanldeNavigateKitAnalysis(item?.booking_id);
+          } else {
+            return;
           }
         }}
       >

@@ -311,9 +311,19 @@ const OrderHistoryContainer = ({ navigation }: any) => {
         activeOpacity={activityOpacity}
         style={styles.btnOrderHistory}
         onPress={() => {
-          navigation.navigate(ScreenNames.KITANALYSISCONTAINER, {
-            booking_id: item?.booking_id,
-          });
+          if (
+            item?.is_report_available === false &&
+            item?.status === 'ReportPending'
+          ) {
+            // flashMessageWarning(getTranslation('reportnotavailableprofile'));
+            navigation.navigate(ScreenNames.REPORTWAITINGCONTAINER);
+          } else if (item?.is_report_available === true) {
+            navigation.navigate(ScreenNames.KITANALYSISCONTAINER, {
+              booking_id: item?.booking_id,
+            });
+          } else {
+            return;
+          }
         }}
       >
         {/* orderDetailsView */}
