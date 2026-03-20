@@ -434,7 +434,11 @@ const HistoricalAnalysisContainer = ({ navigation, route }: any) => {
         onPress={() => {
           if (
             item?.is_report_available === false &&
-            item?.status === 'ReportPending'
+            (item?.agenda_status === 'ReportPending' ||
+              item?.agenda_status === 'complete_visit' ||
+              item?.agenda_status === 'start_delivery' ||
+              item?.agenda_status === 'complete_delivery' ||
+              item?.agenda_status === 'Completed')
           ) {
             // flashMessageWarning(getTranslation('reportnotavailableprofile'));
             navigation.navigate(ScreenNames.REPORTWAITINGCONTAINER);
