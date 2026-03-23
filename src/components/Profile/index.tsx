@@ -1,5 +1,6 @@
 import {
   Image,
+  Switch,
   Text,
   View,
   FlatList,
@@ -18,6 +19,7 @@ import {
   getInitialsTwoDigit,
 } from '../../constants/GConstant';
 import { fontSize } from '../../constants/FontSizes';
+import { fontsfamily } from '../../constants/FontFamily';
 import { constnatStyles } from '../../constants/Styles';
 import { ScreenNames } from '../../constants/AppConstants';
 import AppHeader from '../../global/Header';
@@ -118,8 +120,6 @@ const ProfileComponent = (props: any) => {
           </TouchableOpacity>
         </View>
 
-       
-
         {/* container */}
         <View style={styles.container}>
           <FlatList
@@ -129,6 +129,39 @@ const ProfileComponent = (props: any) => {
             keyExtractor={item => item.id}
             renderItem={({ item }) => <Item item={item} onPress={() => {}} />}
           />
+          {/* Biometric Toggle Row */}
+          <View style={styles.itemContainer}>
+            <View
+              style={{ flexDirection: 'row', flex: 1, alignItems: 'center' }}
+            >
+              <Image
+                source={images.imgWarningProfile}
+                style={{ alignSelf: 'center', marginTop: 1 }}
+              />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.title}>
+                  {getTranslation('accessbiomatric')}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: fontSize.size13,
+                    fontFamily: fontsfamily.gregular,
+                    color: Colors.gray75,
+                    marginLeft: getWidth(8),
+                    marginTop: 2,
+                  }}
+                >
+                  {getTranslation('faceidunlockwithfaceid')}
+                </Text>
+              </View>
+            </View>
+            <Switch
+              value={props.biometricEnabled}
+              onValueChange={props.onToggleBiometric}
+              trackColor={{ false: Colors.grayD8, true: Colors.blue002 }}
+              thumbColor={Colors.white}
+            />
+          </View>
         </View>
 
         <View style={styles.container}>
@@ -177,7 +210,8 @@ const ProfileComponent = (props: any) => {
             { marginBottom: props.insets.bottom + getHeight(15) },
           ]}
         >
-         {getTranslation("versionname")}: v{DeviceInfo.getVersion()}{" ("+DeviceInfo.getBuildNumber()+")"}
+          {getTranslation('versionname')}: v{DeviceInfo.getVersion()}
+          {' (' + DeviceInfo.getBuildNumber() + ')'}
         </Text>
       </ScrollView>
     </>

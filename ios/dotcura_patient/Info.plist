@@ -46,6 +46,8 @@
 	<string>$(PRODUCT_NAME) need to access in order to load songs.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>La aplicación Doctura necesita acceso a la cámara para tomar fotos.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Usa Face ID per accedere in modo sicuro all'app dotcura.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We use your location to automatically detect your address and provide accurate location-based services.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

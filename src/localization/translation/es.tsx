@@ -609,4 +609,11 @@ export default {
   waitingreportsubtitle: 'Ti avviseremo appena i risultati saranno pronti.',
   waitingreportbtn: 'Torna allo storico',
   confirmandbook: 'Conferma e Prenota',
+  accessbiomatric:"Accesso biometrico",
+  faceidunlockwithfaceid:" ID viso / Sblocco col sorriso",
+  verifyidentity:"Verifica identità",
+  faceid:"ID viso",
+  faceunlock:"Sblocco facciale",
+  facelockdes1:"Usa",
+  facelockdes2:"per accedere all'app",
 };

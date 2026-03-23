@@ -12,6 +12,7 @@ export const MmkvManager = {
     userDetails: 'userDetails',
     fcmToken: 'fcmToken',
     notificationPermission: 'notificationPermission',
+    biometricEnabled: 'biometricEnabled',
   },
 
   getData: (

@@ -5,7 +5,10 @@ import AppHeader from '../../global/Header';
 import ProfileComponent from '../../components/Profile';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { Alert } from 'react-native';
-import { appName, flashMessageSucess } from '../../constants/GConstant';
+import { appName, flashMessageSucess, flashMessageWarning } from '../../constants/GConstant';
+import ReactNativeBiometrics from 'react-native-biometrics';
+
+const rnBiometrics = new ReactNativeBiometrics({ allowDeviceCredentials: true });
 
 import { ScreenNames } from '../../constants/AppConstants';
 import { MmkvManager } from '../../constants/utils/MmkvManager';
@@ -131,6 +134,30 @@ const ProfileContainer = ({ navigation, route }: any) => {
 
   const [fullName, setFullName] = useState('Giovanni Carnevale');
   const [memberSince, setMemberSince] = useState('2025');
+  const [biometricEnabled, setBiometricEnabled] = useState(false);
+
+  const handleToggleBiometric = async (value: boolean) => {
+    if (value) {
+      try {
+        const { success } = await rnBiometrics.simplePrompt({
+          promptMessage: 'Conferma per abilitare la biometria',
+          cancelButtonText: 'Annulla',
+          fallbackPromptMessage: 'Usa il codice',
+        });
+        if (success) {
+          MmkvManager.setData(MmkvManager.Keys.biometricEnabled, 'true');
+          setBiometricEnabled(true);
+          flashMessageSucess('Biometria abilitata');
+        }
+      } catch {
+        flashMessageWarning('Autenticazione annullata o non disponibile.');
+      }
+    } else {
+      MmkvManager.setData(MmkvManager.Keys.biometricEnabled, 'false');
+      setBiometricEnabled(false);
+      flashMessageSucess('Biometria disabilitata');
+    }
+  };
 
   const handleNavigation = () => {
     setOrderStatus('');
@@ -268,7 +295,9 @@ const ProfileContainer = ({ navigation, route }: any) => {
         const createdAt = value?.created_at;
         setMemberSince(String(new Date(createdAt).getFullYear()));
       });
-
+      MmkvManager.getData(MmkvManager.Keys.biometricEnabled, val => {
+        setBiometricEnabled(val === true || val === 'true');
+      });
       return () => {};
     }, []),
   );
@@ -286,6 +315,8 @@ const ProfileContainer = ({ navigation, route }: any) => {
       dataThree={dataThree}
       insets={insets}
       handleNavigateAddFamily={handleNavigateAddFamily}
+      biometricEnabled={biometricEnabled}
+      onToggleBiometric={handleToggleBiometric}
     />
   );
 };
