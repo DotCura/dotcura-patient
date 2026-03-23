@@ -219,7 +219,7 @@ const PaymentMethodComponent = (props: any) => {
                             </Text>
                           </View>
                         </View>
-                        <Image source={item.images} />
+                        <Image source={item.images} style={{width:getWidth(30),height:getHeight(30),resizeMode:'contain'}}/>
                       </View>
                     </TouchableOpacity>
                   );

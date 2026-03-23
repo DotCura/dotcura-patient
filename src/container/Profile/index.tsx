@@ -134,6 +134,8 @@ const ProfileContainer = ({ navigation, route }: any) => {
 
   const [fullName, setFullName] = useState('Giovanni Carnevale');
   const [memberSince, setMemberSince] = useState('2025');
+  const [countrycode, setCountryCode] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [biometricEnabled, setBiometricEnabled] = useState(false);
 
   const handleToggleBiometric = async (value: boolean) => {
@@ -292,6 +294,8 @@ const ProfileContainer = ({ navigation, route }: any) => {
       MmkvManager.getData(MmkvManager.Keys.userDetails, (value: any) => {
         console.log('Profile Data of user', value);
         setFullName(value.name);
+        setCountryCode(value.country_code);
+        setPhoneNumber(value.phone_number);
         const createdAt = value?.created_at;
         setMemberSince(String(new Date(createdAt).getFullYear()));
       });
@@ -310,6 +314,8 @@ const ProfileContainer = ({ navigation, route }: any) => {
       handlePressLogout={handlePressLogout}
       fullName={fullName}
       memberSince={memberSince}
+      countrycode= {countrycode}
+      phoneNumber={phoneNumber}
       data={data}
       dataTwo={dataTwo}
       dataThree={dataThree}

@@ -122,6 +122,7 @@ export const images = {
   imgcanclevisitstepper: require('../assets/images/visitcanclestepper.png'),
   imgeditorderstepper: require('../assets/images/editorderstepper.png'),
   imgnursearrivedstepper: require('../assets/images/nurseArrived.png'),
+  imggpay: require('../assets/images/gpay.png'),
 
   splashvideo: require('../assets/videos/SplashScreen.mp4'),
 

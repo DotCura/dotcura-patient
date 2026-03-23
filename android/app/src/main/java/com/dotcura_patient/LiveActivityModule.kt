@@ -12,27 +12,7 @@ class LiveActivityModule(private val reactContext: ReactApplicationContext) :
         return "LiveActivityModule"
     }
 
-    // @ReactMethod
-    // fun show(title: String, subtitle: String, status: String) {
-
-    //     val intent = Intent(reactContext, LiveActivityService::class.java)
-
-    //     intent.putExtra("title", title)
-    //     intent.putExtra("subtitle", subtitle)
-    //     intent.putExtra("status", status)
-
-    //     reactContext.startService(intent)
-    // }
-
-    // @ReactMethod
-    // fun stop() {
-
-    //     val intent = Intent(reactContext, LiveActivityService::class.java)
-
-    //     reactContext.stopService(intent)
-
-    //     LiveActivityHelper.stopLiveActivity(reactContext)
-    // }
+  
     @ReactMethod
 fun show(bookingId: String, title: String, subtitle: String, status: String){
 

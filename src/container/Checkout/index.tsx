@@ -4,6 +4,7 @@ import {
   ImageBackground,
   Keyboard,
   NativeModules,
+  Platform,
   Text,
   TextInput,
   TouchableOpacity,
@@ -118,8 +119,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const payList = [
     {
       id: 1,
-      title: 'Apple Pay',
-      images: images.imgapplepay,
+      title: isPlatformiOS?'Apple Pay':'Google Pay',
+      images: isPlatformiOS? images.imgapplepay:images.imggpay,
       apipasskey: 'applepay',
     },
     { id: 3, title: 'PayPal', images: images.imgpaypal, apipasskey: 'paypal' },
@@ -1690,7 +1691,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
             LiveActivityModule.show(
               String(responseData?.data?.data?.id),
               'Stiamo cercando un infermiere per te...',
-              'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
+              'Stiamo cercando un infermiere per te...',
               'Request',
             );
           }

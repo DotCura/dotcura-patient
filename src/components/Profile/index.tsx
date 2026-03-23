@@ -88,6 +88,10 @@ const ProfileComponent = (props: any) => {
           </View>
           <View style={styles.vwNameDate}>
             <Text style={styles.txtFullName}>{props.fullName}</Text>
+            <View style={{ flexDirection: 'row', gap: 3 }}>
+              <Text style={styles.txtMember}>+{props.countrycode}</Text>
+              <Text style={styles.txtMember}>{props.phoneNumber}</Text>
+            </View>
             <Text style={styles.txtMember}>
               {getTranslation('membersince') + ' ' + props.memberSince}
             </Text>

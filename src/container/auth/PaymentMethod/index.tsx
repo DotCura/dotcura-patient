@@ -5,7 +5,7 @@ import PaymentMethodComponent from '../../../components/auth/PaymentMethod';
 import AppHeader from '../../../global/Header';
 import { images } from '../../../constants/Images';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ScreenNames } from '../../../constants/AppConstants';
+import { isPlatformiOS, ScreenNames } from '../../../constants/AppConstants';
 import {
   flashMessageSucess,
   flashMessageWarning,
@@ -27,8 +27,8 @@ const PaymentMethodContainer = ({ navigation }: any) => {
   const payList = [
     {
       id: 1,
-      title: 'Apple Pay',
-      images: images.imgapplepay,
+      title: isPlatformiOS?'Apple Pay':'Google Pay',
+      images: isPlatformiOS? images.imgapplepay:images.imggpay,
       apipasskey: 'applepay',
     },
     // {
