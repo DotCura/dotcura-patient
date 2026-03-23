@@ -32,6 +32,7 @@ import Modal from 'react-native-modal';
 import PressScale from '../../global/PressScale';
 import { GlobalVar } from '../../constants/GlobalVar';
 import { CustomerSheet } from '@stripe/stripe-react-native';
+import ModalTitleSubtitle from '../../global/TitleSubtitleModel';
 
 const CheckoutComponent = (props: any) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -414,10 +415,9 @@ const CheckoutComponent = (props: any) => {
           merchantDisplayName="DotCura"
           onResult={(result: any) => {
             console.log('result', result);
-
+            props.setShowCustomerSheet(false);
             if (result.error) {
               console.log('CustomerSheet Error:', result.error);
-              props.setShowCustomerSheet(false);
               return;
             }
 
@@ -1203,6 +1203,260 @@ const CheckoutComponent = (props: any) => {
                   btnPress={props.funCloseCancleOrder}
                 />
               </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* PAYMENTMETHODMODEL */}
+      <Modal
+        statusBarTranslucent
+        useNativeDriverForBackdrop={true}
+        isVisible={props.showPaymentModal}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0.6}
+        onBackdropPress={() => props.setShowPaymentModal(false)}
+        onBackButtonPress={() => props.setShowPaymentModal(false)}
+        style={{ margin: 0 }}
+      >
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+          <View
+            style={{
+              backgroundColor: Colors.whiteF2,
+              borderTopLeftRadius: getHeight(20),
+              borderTopRightRadius: getHeight(20),
+              maxHeight: '92%',
+              paddingBottom: props.insets.bottom + getHeight(20),
+            }}
+          >
+            {/* Header */}
+            <View style={styles.vwHeadingLine} />
+
+            <View style={styles.vwMainModelHeader}>
+              <TouchableOpacity
+                style={styles.btnBack}
+                onPress={() => props.setShowPaymentModal(false)}
+              >
+                <Image source={images.imgLeftArrow} />
+              </TouchableOpacity>
+
+              <View>
+                <Text
+                  style={[
+                    constnatStyles.lblHeaderTitle,
+                    { letterSpacing: 0.2 },
+                  ]}
+                  numberOfLines={2}
+                >
+                  {getTranslation('paymentmethodtitle')}
+                </Text>
+              </View>
+
+              {/* Spacer */}
+              <Image source={images.imgDelete} style={{ opacity: 0 }} />
+            </View>
+
+            <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+              <View style={{ marginTop: getHeight(20) }}>
+                {props.cardData.length > 0 && (
+                  <View style={{ marginBottom: getHeight(10) }}>
+                    <ModalTitleSubtitle
+                      title={getTranslation('savedcards')}
+                      subtitle={getTranslation('savedcardssubtitle')}
+                    />
+                  </View>
+                )}
+                <FlatList
+                  data={props.cardData}
+                  keyExtractor={item => item.stripe_payment_method_id}
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{
+                    marginHorizontal: getWidth(16),
+                  }}
+                  renderItem={({ item }) => {
+                    const isSelected = item.is_default === 1;
+                    return (
+                      <TouchableOpacity
+                        style={[
+                          styles.itemBoxPayment,
+                          {
+                            borderColor: isSelected
+                              ? Colors.blue002
+                              : Colors.grayE7,
+                          },
+                        ]}
+                        activeOpacity={activityOpacity}
+                        onPress={() => {
+                          props._setDefaultCardApi(
+                            '4',
+                            item.card_id.toString(),
+                          );
+                        }}
+                      >
+                        <View
+                          style={{ flexDirection: 'row', alignItems: 'center' }}
+                        >
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              gap: getWidth(12),
+                              flex: 1,
+                            }}
+                          >
+                            <View>
+                              <Image
+                                source={
+                                  isSelected
+                                    ? images.imgSelectRadio
+                                    : images.imgUnselectRadio
+                                }
+                              />
+                            </View>
+                            <View style={{ flex: 1 }}>
+                              <Text
+                                style={styles.itemTitlePayment}
+                                numberOfLines={1}
+                              >
+                                •••• {item.last4}
+                              </Text>
+
+                              {item.brand ? (
+                                <Text
+                                  style={[
+                                    styles.itemSubtitlePayment,
+                                    {
+                                      color: isSelected
+                                        ? Colors.blue002
+                                        : Colors.gray75,
+                                    },
+                                  ]}
+                                >
+                                  {item.brand}
+                                </Text>
+                              ) : null}
+                            </View>
+                          </View>
+                          <TouchableOpacity
+                            activeOpacity={activityOpacity}
+                            onPress={() => {
+                              props._deleteCard(item.card_id);
+                            }}
+                          >
+                            {props.deletingCardId === item.card_id ? (
+                              <ActivityIndicator
+                                size={'small'}
+                                color={Colors.red40}
+                              />
+                            ) : (
+                              <Image source={images.imgDelete} />
+                            )}
+                          </TouchableOpacity>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  }}
+                />
+
+                <View style={{ marginTop: getHeight(15) }}>
+                  <ModalTitleSubtitle
+                    title={getTranslation('paymentmethodmodel')}
+                    subtitle={''}
+                  />
+                  <FlatList
+                    data={props.payData}
+                    keyExtractor={item => item.id.toString()}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                      marginHorizontal: getWidth(16),
+                      marginTop: getHeight(10),
+                    }}
+                    renderItem={({ item }) => {
+                      const isSelected =
+                        props.defaultType === item.id.toString();
+
+                      return (
+                        <TouchableOpacity
+                          activeOpacity={activityOpacity}
+                          style={[
+                            styles.itemBoxPayment,
+                            {
+                              borderColor: isSelected
+                                ? Colors.blue002
+                                : Colors.grayE7,
+                            },
+                          ]}
+                          onPress={() => {
+                            props._setDefaultCardApi(item.id.toString(), null);
+                          }}
+                        >
+                          <View style={{ flexDirection: 'row' }}>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                gap: getWidth(12),
+                                flex: 1,
+                              }}
+                            >
+                              <View>
+                                <Image
+                                  source={
+                                    isSelected
+                                      ? images.imgSelectRadio
+                                      : images.imgUnselectRadio
+                                  }
+                                />
+                              </View>
+                              <View style={{ flex: 1 }}>
+                                <Text
+                                  style={styles.itemTitlePayment}
+                                  numberOfLines={1}
+                                >
+                                  {item.title}
+                                </Text>
+                              </View>
+                            </View>
+                            <Image source={item.images} />
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    }}
+                  />
+                </View>
+              </View>
+            </ScrollView>
+
+            <View
+              style={{
+                marginHorizontal: getWidth(16),
+                marginTop: getHeight(20),
+              }}
+            >
+              <CustomButton
+                btnicon={true}
+                btnImage={images.imgPlusBlack}
+                imgstyle={{ tintColor: Colors.white }}
+                btnTitle={getTranslation('addcardtext')}
+                btnPress={() => {
+                  props.setShowPaymentModal(false);
+                  setTimeout(() => {
+                    props.openCustomerSheet();
+                  }, 500);
+                }}
+              />
+              {/* Wait, I need a direct way to open CustomerSheet in props */}
+              <CustomButton
+                btnTitle={getTranslation('confirmandbook')}
+                style={{ marginTop: getHeight(12) }}
+                btnPress={() => {
+                  props.setShowPaymentModal(false);
+                  setTimeout(() => {
+                    props._bookOrder();
+                  }, 500);
+                }}
+              />
             </View>
           </View>
         </View>

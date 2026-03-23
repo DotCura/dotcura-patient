@@ -108,9 +108,24 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const startTime = selectedTime.split(' - ')[0];
   console.log(startTime);
 
-  //MODELADDTIONSVARIABLES
   const [checkupcount, setCheckupCount] = useState(31);
   const [analiticount, setAnalitiCount] = useState(31);
+
+  //PAYMENTVARIABLES
+  const [cardData, setCardData] = useState([]);
+  const [defaultType, setDefaultType] = useState<string>('4');
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const payList = [
+    {
+      id: 1,
+      title: 'Apple Pay',
+      images: images.imgapplepay,
+      apipasskey: 'applepay',
+    },
+    { id: 3, title: 'PayPal', images: images.imgpaypal, apipasskey: 'paypal' },
+  ];
+  const [payData, setPayData] = useState(payList);
+  const [deletingCardId, setDeletingCardId] = useState<string | null>(null);
 
   //SUMAARY SECTION VARIABLES
   const homeServiceCharge = 20;
@@ -450,14 +465,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     const isValid = validateBeforeOrder();
     if (!isValid) return;
 
-    const paymentMethod = Number(testkitsData[0]?.default_payment_method);
-    const hasCard = Number(testkitsData[0]?.has_card);
-
-    if (paymentMethod === 4 && hasCard === 0) {
-      openCustomerSheet();
-    } else {
-      _bookOrder();
-    }
+    setShowPaymentModal(true);
   };
 
   const handleNavigateHome = () => {
@@ -1328,6 +1336,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   useEffect(() => {
     _getCartDetails();
+    _getCardList();
   }, []);
 
   //EDITANALITIAPI
@@ -1503,6 +1512,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const openCustomerSheet = async () => {
     try {
+      setShowCustomerSheet(false);
       const callback = async (responseData: any) => {
         if (responseData.code !== StatusCode.SUCCESS) {
           flashMessageWarning(responseData.message);
@@ -1537,7 +1547,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
       const callback = async (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
-          _bookOrder();
+          _getCardList();
+          setShowPaymentModal(true);
         } else {
           flashMessageWarning(responseData.message);
         }
@@ -1552,6 +1563,90 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       });
     } catch (error) {
       console.log('_addCardapi error:', error);
+    }
+  };
+
+  const _getCardList = async () => {
+    try {
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          const response = responseData?.data || [];
+          const defaultMethod = response[0]?.default_payment_method || null;
+          const onlyCards = response.filter((item: any) => item.card_id);
+
+          setCardData(onlyCards);
+          setDefaultType(defaultMethod);
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.GET,
+        apiEndPoint: ApiEndPoints.PAYMENT.CARDLIST,
+        callback,
+      });
+    } catch (error) {
+      console.log('card List error:', error);
+    }
+  };
+
+  const _setDefaultCardApi = async (type: string, card_id: string | null) => {
+    try {
+      const params = {
+        type,
+        card_id,
+      };
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          setDefaultType(type);
+          _getCardList();
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.PAYMENT.SETDEFAULTCARD,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('set default error:', error);
+    }
+  };
+
+  const _deleteCard = async (card_id_params: string) => {
+    try {
+      setDeletingCardId(card_id_params);
+      const params = {
+        card_id: card_id_params,
+      };
+
+      const callback = async (responseData: any) => {
+        setDeletingCardId(null);
+        if (responseData.code === StatusCode.SUCCESS) {
+          _getCardList();
+        } else {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.PAYMENT.DELETECARD,
+        showLoader: false, // 👈 KEY: Don't show global loader
+        callback,
+        params,
+      });
+    } catch (error) {
+      setDeletingCardId(null);
+      console.log('_deleteCard error:', error);
     }
   };
   const { LiveActivityModule } = NativeModules;
@@ -1589,9 +1684,9 @@ const CheckoutContainer = ({ navigation, route }: any) => {
               'Stiamo cercando un infermiere per te...',
               'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
               1,
-              JSON.stringify({ text: "In attesa" }) // 👈 REQUIRED
+              JSON.stringify({ text: 'In attesa' }), // 👈 REQUIRED
             );
-          }else{
+          } else {
             LiveActivityModule.show(
               String(responseData?.data?.data?.id),
               'Stiamo cercando un infermiere per te...',
@@ -1802,6 +1897,16 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       stripeEphemeralKey={stripeEphemeralKey}
       _bookOrder={_bookOrder}
       _addCardapi={_addCardapi}
+      _getCardList={_getCardList}
+      cardData={cardData}
+      defaultType={defaultType}
+      showPaymentModal={showPaymentModal}
+      setShowPaymentModal={setShowPaymentModal}
+      payData={payData}
+      _setDefaultCardApi={_setDefaultCardApi}
+      _deleteCard={_deleteCard}
+      openCustomerSheet={openCustomerSheet}
+      deletingCardId={deletingCardId}
     />
   );
 };

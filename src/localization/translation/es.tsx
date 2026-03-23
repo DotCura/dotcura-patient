@@ -608,4 +608,5 @@ export default {
   waitingreporttitle: 'Stiamo processando il tuo campione',
   waitingreportsubtitle: 'Ti avviseremo appena i risultati saranno pronti.',
   waitingreportbtn: 'Torna allo storico',
+  confirmandbook: 'Conferma e Prenota',
 };

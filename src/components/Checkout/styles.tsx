@@ -524,4 +524,25 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: getHeight(6),
   },
+  itemTitlePayment: {
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.gmedium,
+    color: Colors.gray0F,
+  },
+  itemSubtitlePayment: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.gregular,
+    color: Colors.gray75,
+    marginTop: getHeight(2),
+  },
+  itemBoxPayment: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 2,
+    paddingVertical: getHeight(12),
+    paddingHorizontal: getWidth(16),
+    borderRadius: 20,
+    marginBottom: getHeight(8),
+    backgroundColor: Colors.white,
+  },
 });
