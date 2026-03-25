@@ -1,5 +1,6 @@
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
+import moment from 'moment';
 import { styles } from './styles';
 import HomeComponent from '../../../components/bottomTabs/Home';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -55,8 +56,9 @@ const HomeContainer = ({ navigation }: any) => {
 
   const [expandedWaiting, setExpandedWaiting] = useState<any>({});
   const [expandedBooked, setExpandedBooked] = useState<any>({});
-  
+
   const [firstName, setFirstName] = useState('');
+  const [lastBookingDays, setLastBookingDays] = useState(0);
 
   const formatKits = (kits: any[]) => {
     if (!kits?.length) return '';
@@ -538,7 +540,7 @@ const HomeContainer = ({ navigation }: any) => {
         method: MethodType.POST,
         apiEndPoint: ApiEndPoints.FAMILY.FAMILYMEMBERREPORTDETAILS,
         callback,
-        showLoader:false,
+        showLoader: false,
         params,
       });
     } catch (error) {
@@ -595,6 +597,36 @@ const HomeContainer = ({ navigation }: any) => {
       console.log('cancle Edit Order details error:', error);
     }
   };
+  const _last_booking_details = async () => {
+    try {
+      const params = {};
+
+      const callback = async (responseData: any) => {
+        if (responseData.code === StatusCode.SUCCESS) {
+          const testDate = responseData?.data?.test_date;
+          if (testDate) {
+            const diffDays = moment().diff(moment(testDate), 'days');
+            setLastBookingDays(Math.abs(diffDays));
+          }
+        } else if (responseData.code === StatusCode.NO_DATA_FOUND) {
+          setLastBookingDays(0);
+        } else {
+          // flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation: navigation,
+        method: MethodType.GET,
+        showLoader: false,
+        apiEndPoint: ApiEndPoints.ORDER.LASTBOOKINGDETAILS,
+        callback,
+        params,
+      });
+    } catch (error) {
+      console.log('LASTBOOKINGDETAILS error:', error);
+    }
+  };
 
   useEffect(() => {
     _totalCount();
@@ -608,6 +640,7 @@ const HomeContainer = ({ navigation }: any) => {
         console.log('checking userdetails', value);
         setFirstName(value?.first_name || '');
       });
+      _last_booking_details();
       return () => {};
     }, []),
   );
@@ -636,6 +669,7 @@ const HomeContainer = ({ navigation }: any) => {
       refreshing={refreshing}
       cartCount={cartCount}
       AnalitiList={AnalitiList}
+      lastBookingDays={lastBookingDays}
     />
   );
 };

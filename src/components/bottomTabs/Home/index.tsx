@@ -22,26 +22,10 @@ import {
   ScreenDimensions,
 } from '../../../constants/utils/Dimensions';
 import { images } from '../../../constants/Images';
-import {
-  activityOpacity,
-  flashMessageWarning,
-  getInitials,
-} from '../../../constants/GConstant';
+import { activityOpacity, getInitials } from '../../../constants/GConstant';
 import BarChartComponent from '../../../global/BloodCountGraph';
 import { ZustandStores } from '../../../store';
 import PressScale from '../../../global/PressScale';
-import {
-  confirmPlatformPayPayment,
-  initPaymentSheet,
-  PlatformPay,
-  PlatformPayButton,
-  presentPaymentSheet,
-  retrievePaymentIntent,
-  useStripe,
-} from '@stripe/stripe-react-native';
-import { ApiEndPoints, MethodType, StatusCode } from '../../../api/APIConstant';
-import { APIManager } from '../../../api/APIManager';
-import { navigationRef } from '../../../constants/utils/navigationRef';
 
 const HomeComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
@@ -56,176 +40,6 @@ const HomeComponent = (props: any) => {
         </View>
       </PressScale>
     );
-  };
-
-  const { confirmPlatformPayPayment, isPlatformPaySupported } = useStripe();
-
-  const handleGooglePayTest = async () => {
-    try {
-      // ✅ 1. Check if Google Pay supported
-      const isSupported = await isPlatformPaySupported({
-        googlePay: { testEnv: true },
-      });
-
-      if (!isSupported) {
-        console.log('Google Pay not supported on this device');
-        flashMessageWarning('Google Pay not supported');
-        return;
-      }
-
-      // ✅ 2. Prepare params for backend
-      const params = {
-        booking_id: 497,
-        amount: 646.5,
-      };
-
-      const callback = async (responseData: any) => {
-        if (responseData.code === StatusCode.SUCCESS) {
-          // 🔥 This is your clientSecret
-          const clientSecret = responseData.data.paymentIntent;
-
-          // ✅ 3. Confirm Google Pay
-          const { error } = await confirmPlatformPayPayment(clientSecret, {
-            googlePay: {
-              merchantName: 'DotCura',
-              merchantCountryCode: 'RO', // or your Stripe account country
-              currencyCode: 'EUR',
-              testEnv: true,
-            },
-          });
-
-          if (error) {
-            console.log('Google Pay error:', error);
-            flashMessageWarning(error.message);
-          } else {
-            console.log('✅ Google Pay Success');
-          }
-        } else {
-          flashMessageWarning(responseData.message);
-        }
-      };
-
-      // ✅ 4. Call backend
-      await APIManager.makeRequest({
-        navigationRef,
-        method: MethodType.POST,
-        apiEndPoint: ApiEndPoints.PAYMENT.CREATEPAYMENTINTENT,
-        params,
-        callback,
-      });
-    } catch (err) {
-      console.log('Google Pay Exception:', err);
-    }
-  };
-
-  const handleApplePay = async () => {
-    try {
-      // ✅ For Apple Pay (iOS) — NO PARAMS
-      const isSupported = await isPlatformPaySupported();
-
-      if (!isSupported) {
-        flashMessageWarning('Apple Pay not supported on this device');
-        return;
-      }
-
-      const params = {
-        // booking_id: 496,
-        amount: 646.5,
-      };
-
-      const callback = async (responseData: any) => {
-        if (responseData.code === StatusCode.SUCCESS) {
-          const clientSecret = responseData.data.paymentIntent;
-
-          const { error, paymentIntent } = await confirmPlatformPayPayment(
-            clientSecret,
-            {
-              applePay: {
-                merchantCountryCode: 'RO', // your Stripe account country
-                currencyCode: 'EUR',
-                cartItems: [
-                  {
-                    label: 'Dotcura Service',
-                    amount: params.amount.toFixed(2),
-                    paymentType: PlatformPay.PaymentType.Immediate,
-                  },
-                ],
-              },
-            },
-          );
-
-          if (error) {
-            console.log('Apple Pay error:', error);
-            flashMessageWarning(error.message);
-          } else {
-            console.log('✅ Apple Pay Success', paymentIntent);
-          }
-        } else {
-          flashMessageWarning(responseData.message);
-        }
-      };
-
-      await APIManager.makeRequest({
-        navigationRef,
-        method: MethodType.POST,
-        apiEndPoint: ApiEndPoints.PAYMENT.CREATEPAYMENTINTENT,
-        params,
-        callback,
-      });
-    } catch (err) {
-      console.log('Apple Pay exception:', err);
-    }
-  };
-
-  const handleKlarnaPayment = async () => {
-    try {
-      const params = {
-        booking_id: 497,
-        amount: 646.5,
-      };
-
-      const callback = async (responseData: any) => {
-        if (responseData.code === StatusCode.SUCCESS) {
-          const clientSecret = responseData.data.paymentIntent;
-
-          // ✅ 1. Initialize PaymentSheet
-          const { error: initError } = await initPaymentSheet({
-            merchantDisplayName: 'DotCura',
-            paymentIntentClientSecret: clientSecret,
-            allowsDelayedPaymentMethods: true, // 🔥 REQUIRED for Klarna
-            returnURL: 'dotcura://stripe-redirect', // REQUIRED for redirect methods
-          });
-
-          if (initError) {
-            console.log('Init error:', initError);
-            flashMessageWarning(initError.message);
-            return;
-          }
-
-          // ✅ 2. Present PaymentSheet
-          const { error } = await presentPaymentSheet();
-
-          if (error) {
-            console.log('Klarna error:', error);
-            flashMessageWarning(error.message);
-          } else {
-            console.log('✅ Klarna Success');
-          }
-        } else {
-          flashMessageWarning(responseData.message);
-        }
-      };
-
-      await APIManager.makeRequest({
-        navigationRef,
-        method: MethodType.POST,
-        apiEndPoint: ApiEndPoints.PAYMENT.CREATEPAYMENTINTENT,
-        params,
-        callback,
-      });
-    } catch (err) {
-      console.log('Klarna exception:', err);
-    }
   };
 
   return (
@@ -308,7 +122,7 @@ const HomeComponent = (props: any) => {
           <View style={styles.vwDaysAndBook}>
             <View style={styles.vwInnerDays}>
               <Text style={styles.lblDaysText}>
-                45 {getTranslation('daystext')}
+                {props.lastBookingDays} {getTranslation('daystext')}
               </Text>
               <Text style={styles.lblSinceyourlastanlaysis}>
                 {getTranslation('sinceyourlastanalysis')}
@@ -324,27 +138,11 @@ const HomeComponent = (props: any) => {
           </View>
         </View>
 
-        {/* <PlatformPayButton
-          type={PlatformPay.ButtonType.Pay}
-          onPress={Platform.OS == 'ios' ? handleApplePay : handleGooglePayTest}
-          style={{
-            marginHorizontal: getWidth(26),
-            height: getHeight(50),
-          }}
-        />
-
-        <TouchableOpacity
-          onPress={handleKlarnaPayment}
-          style={{ marginTop: 30 }}
-        >
-          <Text>KLARNA</Text>
-        </TouchableOpacity> */}
-
         {props.isloadingshow && (
           <>
             {/* vwTestReports */}
             <View style={styles.vwTestReports}>
-              {props.testReportData.length === 0 ? (
+              {props.lastBookingDays > 0 ? (
                 <View style={styles.vwEmpty}>
                   <View
                     style={{ marginHorizontal: getWidth(7), gap: getHeight(2) }}
