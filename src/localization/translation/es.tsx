@@ -91,6 +91,9 @@ export default {
   //Welcome
   applyasnurse: 'Applica come infermiere',
   icantaccess: 'Non riesco ad accedere',
+  welcomefirstinfo1: 'Questo è un testo per spiegare i ',
+  andtextwelcome: 'E',
+  welcomelastinfo2: "del servizio + l'intera questione GDPR.",
   termsandconditiondisc:
     'Questo è un testo per spiegare i termini e le condizioni del servizio + tutta la questione del GDPR.',
   Enter: 'Entra',
@@ -609,11 +612,11 @@ export default {
   waitingreportsubtitle: 'Ti avviseremo appena i risultati saranno pronti.',
   waitingreportbtn: 'Torna allo storico',
   confirmandbook: 'Conferma e Prenota',
-  accessbiomatric:"Accesso biometrico",
-  faceidunlockwithfaceid:" ID viso / Sblocco col sorriso",
-  verifyidentity:"Verifica identità",
-  faceid:"ID viso",
-  faceunlock:"Sblocco facciale",
-  facelockdes1:"Usa",
-  facelockdes2:"per accedere all'app",
+  accessbiomatric: 'Accesso biometrico',
+  faceidunlockwithfaceid: ' ID viso / Sblocco col sorriso',
+  verifyidentity: 'Verifica identità',
+  faceid: 'ID viso',
+  faceunlock: 'Sblocco facciale',
+  facelockdes1: 'Usa',
+  facelockdes2: "per accedere all'app",
 };

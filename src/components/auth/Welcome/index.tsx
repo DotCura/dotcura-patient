@@ -67,7 +67,31 @@ const WelcomeComponent = (props: any) => {
           },
         ]}
       >
-        {getTranslation('termsandconditiondisc')}
+        {getTranslation('welcomefirstinfo1')}
+        <Text
+          onPress={props.handleNavigateTerms}
+          style={[
+            styles.lblDes,
+            {
+              textDecorationLine: 'underline',
+            },
+          ]}
+        >
+          {getTranslation('termsandconditions')}
+        </Text>{' '}
+        {getTranslation('andtextwelcome')}{' '}
+        <Text
+          onPress={props.handleNavigatePrivacy}
+          style={[
+            styles.lblDes,
+            {
+              textDecorationLine: 'underline',
+            },
+          ]}
+        >
+          {getTranslation('privacypolicy')}
+        </Text>{' '}
+        {getTranslation('welcomelastinfo2')}
       </Text>
     </View>
   );
