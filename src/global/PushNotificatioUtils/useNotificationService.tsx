@@ -165,6 +165,11 @@ const useNotificationService = () => {
         : notification.notification_tag;
     } else if (appState === AppStates.KILL) {
       notificationType = notification?.data?.notification_tag;
+      // notificationType = isPlatformiOS
+
+      //      ? notification.tag || notification?.data?.notification_tag
+
+      //      : notification.notification_tag;
     }
 
     console.log('notificationType', notificationType);
@@ -237,6 +242,23 @@ const useNotificationService = () => {
       messaging().onNotificationOpenedApp(() => null);
     };
   }, []);
+
+  // useEffect(() => {
+  //   async function checkInitialNotification() {
+  //     const initialNotification = await notifee.getInitialNotification();
+
+  //     if (initialNotification) {
+  //       console.log('🔥 Notifee initial notification:', initialNotification);
+
+  //       onNotificationPress(
+  //         initialNotification.notification?.data,
+  //         AppStates.KILL,
+  //       );
+  //     }
+  //   }
+
+  //   checkInitialNotification();
+  // }, []);
 };
 
 export default useNotificationService;
