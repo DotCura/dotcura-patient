@@ -35,6 +35,7 @@ export const ScreenNames = {
   ADDCARDCONTAINER: 'AddCardContainer',
   WELCOMECONTAINER: 'WelcomeContainer',
   ALLSETCONATINER: 'AllSetContainer',
+  FACELOCKSETUPCONTAINER: 'FaceLockSetupContainer',
   ADDCARDPROFILECONTAINER: 'AddCardProfileContainer',
   INTROCONTAINER: 'IntroContainer',
   ACCESSCONTAINER: 'AccessContainer',

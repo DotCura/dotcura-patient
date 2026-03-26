@@ -619,4 +619,9 @@ export default {
   faceunlock: 'Sblocco facciale',
   facelockdes1: 'Usa',
   facelockdes2: "per accedere all'app",
+
+  facelockallsettitle:"Abilita",
+  facelockallsetsubtitle:"Vuoi proteggere l'accesso all'app con",
+  facelockallsetsubtitle2:"Potrai modificarlo in qualsiasi momento dal tuo profilo.",
+  skipfacelock:"Non ora",
 };
