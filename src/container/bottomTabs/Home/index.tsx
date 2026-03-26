@@ -58,7 +58,7 @@ const HomeContainer = ({ navigation }: any) => {
   const [expandedBooked, setExpandedBooked] = useState<any>({});
 
   const [firstName, setFirstName] = useState('');
-  const [lastBookingDays, setLastBookingDays] = useState(0);
+  const [lastBookingDays, setLastBookingDays] = useState<any>(0);
 
   const formatKits = (kits: any[]) => {
     if (!kits?.length) return '';
@@ -607,9 +607,11 @@ const HomeContainer = ({ navigation }: any) => {
           if (testDate) {
             const diffDays = moment().diff(moment(testDate), 'days');
             setLastBookingDays(Math.abs(diffDays));
+          } else {
+            setLastBookingDays(null);
           }
         } else if (responseData.code === StatusCode.NO_DATA_FOUND) {
-          setLastBookingDays(0);
+          setLastBookingDays(null);
         } else {
           // flashMessageWarning(responseData.message);
         }

@@ -142,7 +142,7 @@ const HomeComponent = (props: any) => {
           <>
             {/* vwTestReports */}
             <View style={styles.vwTestReports}>
-              {props.lastBookingDays > 0 ? (
+              {props.lastBookingDays === null ? (
                 <View style={styles.vwEmpty}>
                   <View
                     style={{ marginHorizontal: getWidth(7), gap: getHeight(2) }}
