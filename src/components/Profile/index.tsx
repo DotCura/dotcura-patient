@@ -151,7 +151,7 @@ const ProfileComponent = (props: any) => {
                     fontSize: fontSize.size13,
                     fontFamily: fontsfamily.gregular,
                     color: Colors.gray75,
-                    marginLeft: getWidth(8),
+                    marginLeft: getWidth(5),
                     marginTop: 2,
                   }}
                 >
