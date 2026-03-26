@@ -33,7 +33,6 @@ export CheckoutContainer from "./container/Checkout";
 export KitAnalysisContainer from "./container/KitAnlaysis";
 export TestDetailsContainer from "./container/TestDetails";
 export AddFamilyContainer from "./container/AddFamily";
-export ConfrimIdentityContainer from "./container/ConfrimIdentity";
 export ProfileContainer from "./container/Profile";
 export AddAddressContainer from "./container/AddAddress";
 export CompleteAddressContainer from "./container/CompleteAddress";

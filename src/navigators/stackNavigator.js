@@ -369,9 +369,7 @@ const MainNavigation = props => {
         {_addScreen(NativeStack, ScreenNames.ADDFAMILYCONTAINER, {
           headerShown: false,
         })}
-        {_addScreen(NativeStack, ScreenNames.CONFIRMIDENTITYCONTAINER, {
-          headerShown: false,
-        })}
+
         {_addScreen(NativeStack, ScreenNames.ADDADDRESSCONTAINER, {
           headerShown: false,
         })}

@@ -68,7 +68,6 @@ export const ScreenNames = {
   CONTACTUSCONTAINER: 'ContactUsContainer',
 
   //FAMILY
-  CONFIRMIDENTITYCONTAINER: 'ConfrimIdentityContainer',
   ADDFAMILYCONTAINER: 'AddFamilyContainer',
   PROFILECONTAINER: 'ProfileContainer',
 
