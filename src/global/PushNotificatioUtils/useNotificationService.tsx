@@ -19,8 +19,6 @@ const useNotificationService = () => {
 
     let notification = isPlatformiOS ? remoteMessage.data : remoteMessage.data;
 
-    
-
     if (notification) {
       const { title, body } = notification;
       console.log('title', title);
@@ -149,6 +147,7 @@ const useNotificationService = () => {
 
     console.log(
       '🚀 ~ onNotificationPress ~ notification:',
+      notification?.data?.action_id || notification?.action_id,
       notification,
       appState,
       typeof notification,
@@ -209,10 +208,11 @@ const useNotificationService = () => {
 
       case NotificationTypes.REPORT_NOTIFICATIONS: {
         const currentRoute = navigationRef.getCurrentRoute();
-
+        const bookingId =
+          notification?.data?.action_id || notification?.action_id;
         if (currentRoute?.name !== ScreenNames.RESULTOPENUPCONTAINER) {
           navigateWhenReady(ScreenNames.RESULTOPENUPCONTAINER, {
-            booking_id: notification?.data?.action_id,
+            booking_id: bookingId,
           });
         }
 
