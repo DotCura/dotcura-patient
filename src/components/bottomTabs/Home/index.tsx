@@ -117,7 +117,7 @@ const HomeComponent = (props: any) => {
         nestedScrollEnabled={true}
       >
         {/* vwTotalDaysInfo */}
-        {props.lastBookingDays !== null && (
+        {props.lastBookingDays !== null && props.lastBookingDays !== undefined && (
           <View style={styles.vwTotalDaysInfo}>
             <Image source={images.imgCalenderBlue} />
             <View style={styles.vwDaysAndBook}>
@@ -140,7 +140,7 @@ const HomeComponent = (props: any) => {
           </View>
         )}
 
-        {props.isloadingshow && (
+        {props.isloadingshow && props.lastBookingDays !== undefined && (
           <>
             {/* vwTestReports */}
             <View style={styles.vwTestReports}>

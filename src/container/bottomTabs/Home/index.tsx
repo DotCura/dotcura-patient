@@ -58,7 +58,7 @@ const HomeContainer = ({ navigation }: any) => {
   const [expandedBooked, setExpandedBooked] = useState<any>({});
 
   const [firstName, setFirstName] = useState('');
-  const [lastBookingDays, setLastBookingDays] = useState<any>(0);
+  const [lastBookingDays, setLastBookingDays] = useState<any>(undefined);
 
   const formatKits = (kits: any[]) => {
     if (!kits?.length) return '';
