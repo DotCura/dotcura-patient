@@ -117,26 +117,28 @@ const HomeComponent = (props: any) => {
         nestedScrollEnabled={true}
       >
         {/* vwTotalDaysInfo */}
-        <View style={styles.vwTotalDaysInfo}>
-          <Image source={images.imgCalenderBlue} />
-          <View style={styles.vwDaysAndBook}>
-            <View style={styles.vwInnerDays}>
-              <Text style={styles.lblDaysText}>
-                {props.lastBookingDays} {getTranslation('daystext')}
-              </Text>
-              <Text style={styles.lblSinceyourlastanlaysis}>
-                {getTranslation('sinceyourlastanalysis')}
-              </Text>
-            </View>
-            <PressScale onPress={props.handleNavigateGetTested}>
-              <View style={styles.btnBookNow}>
-                <Text style={styles.lblBookNow}>
-                  {getTranslation('booknowtext')}
+        {props.lastBookingDays !== null && (
+          <View style={styles.vwTotalDaysInfo}>
+            <Image source={images.imgCalenderBlue} />
+            <View style={styles.vwDaysAndBook}>
+              <View style={styles.vwInnerDays}>
+                <Text style={styles.lblDaysText}>
+                  {props.lastBookingDays} {getTranslation('daystext')}
+                </Text>
+                <Text style={styles.lblSinceyourlastanlaysis}>
+                  {getTranslation('sinceyourlastanalysis')}
                 </Text>
               </View>
-            </PressScale>
+              <PressScale onPress={props.handleNavigateGetTested}>
+                <View style={styles.btnBookNow}>
+                  <Text style={styles.lblBookNow}>
+                    {getTranslation('booknowtext')}
+                  </Text>
+                </View>
+              </PressScale>
+            </View>
           </View>
-        </View>
+        )}
 
         {props.isloadingshow && (
           <>

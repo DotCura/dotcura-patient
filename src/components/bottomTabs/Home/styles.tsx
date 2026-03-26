@@ -229,8 +229,7 @@ export const styles = StyleSheet.create({
   vwEmpty: {
     flex: 1,
     justifyContent: 'center',
-    // alignItems: 'center',
-    marginTop: '30%',
+    marginTop: '50%',
     gap: getHeight(24),
   },
   vwMain: {
