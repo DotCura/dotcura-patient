@@ -40,33 +40,35 @@ const OTPContainer = ({ navigation, route }: any) => {
 
   const [countrycode, setCountryCode] = useState('+39');
   const [phoneNumber, setPhoneNumber] = useState('1234561234');
-  const [otpArray, setOtpArray] = useState<OtpArray[]>([
-    {
-      value: '',
-      ref: useRef<TextInput>(null),
-    },
-    {
-      value: '',
-      ref: useRef<TextInput>(null),
-    },
-    {
-      value: '',
-      ref: useRef<TextInput>(null),
-    },
-    {
-      value: '',
-      ref: useRef<TextInput>(null),
-    },
-    {
-      value: '',
-      ref: useRef<TextInput>(null),
-    },
-    {
-      value: '',
-      ref: useRef<TextInput>(null),
-    },
-  ]);
-  const [fullOtp, setFullOtp] = useState<string | number>('');
+  // const [otpArray, setOtpArray] = useState<OtpArray[]>([
+  //   {
+  //     value: '',
+  //     ref: useRef<TextInput>(null),
+  //   },
+  //   {
+  //     value: '',
+  //     ref: useRef<TextInput>(null),
+  //   },
+  //   {
+  //     value: '',
+  //     ref: useRef<TextInput>(null),
+  //   },
+  //   {
+  //     value: '',
+  //     ref: useRef<TextInput>(null),
+  //   },
+  //   {
+  //     value: '',
+  //     ref: useRef<TextInput>(null),
+  //   },
+  //   {
+  //     value: '',
+  //     ref: useRef<TextInput>(null),
+  //   },
+  // ]);
+  // const [fullOtp, setFullOtp] = useState<string | number>('');
+   const [OTP, setOTP] = useState('');
+   const otpRef = React.useRef<any>(null);
   const [otp, setOtp] = useState<number>(30);
 
   const [resendOtp, setResendOtp] = useState(true);
@@ -87,38 +89,38 @@ const OTPContainer = ({ navigation, route }: any) => {
     setLoginDataParams(route?.params?.LoginData);
   }, [route?.params?.LoginData]);
 
-  const handleOnChangeText = (text: string, index: number) => {
-    if (regex.number.test(text)) {
-      const updatedValue = [...otpArray];
-      updatedValue[index].value = text;
-      setOtpArray(updatedValue);
-      if (text?.length === 1) {
-        handleOnSubmit(index);
-      }
-    }
-  };
+  // const handleOnChangeText = (text: string, index: number) => {
+  //   if (regex.number.test(text)) {
+  //     const updatedValue = [...otpArray];
+  //     updatedValue[index].value = text;
+  //     setOtpArray(updatedValue);
+  //     if (text?.length === 1) {
+  //       handleOnSubmit(index);
+  //     }
+  //   }
+  // };
 
-  const handleOnSubmit = (index: number) => {
-    if (index === otpArray.length - 1) {
-      Keyboard.dismiss();
-    } else {
-      const updatedValue = [...otpArray];
-      updatedValue[index + 1].ref?.current?.focus();
-      setOtpArray(updatedValue);
-    }
-  };
+  // const handleOnSubmit = (index: number) => {
+  //   if (index === otpArray.length - 1) {
+  //     Keyboard.dismiss();
+  //   } else {
+  //     const updatedValue = [...otpArray];
+  //     updatedValue[index + 1].ref?.current?.focus();
+  //     setOtpArray(updatedValue);
+  //   }
+  // };
 
-  const handleOnKeyPress = ({ nativeEvent }: any, item: any, index: number) => {
-    if (nativeEvent.key === 'Backspace' && item.value === '') {
-      if (index > 0) {
-        otpArray[index - 1].ref?.current?.focus();
-      } else {
-        Keyboard.dismiss();
-      }
-    } else if (nativeEvent.key === 'Backspace') {
-      handleOnChangeText('', index);
-    }
-  };
+  // const handleOnKeyPress = ({ nativeEvent }: any, item: any, index: number) => {
+  //   if (nativeEvent.key === 'Backspace' && item.value === '') {
+  //     if (index > 0) {
+  //       otpArray[index - 1].ref?.current?.focus();
+  //     } else {
+  //       Keyboard.dismiss();
+  //     }
+  //   } else if (nativeEvent.key === 'Backspace') {
+  //     handleOnChangeText('', index);
+  //   }
+  // };
 
   const handleOnPressResendOtp = async () => {
     await _reSendOTPApi();
@@ -136,14 +138,14 @@ const OTPContainer = ({ navigation, route }: any) => {
   };
 
   const handleOnPressNext = async () => {
-    console.log('fullOtp !== validateOtp', fullOtp !== validateOtp);
-    console.log('fullOtp !== validateOtp', fullOtp);
+    // console.log('fullOtp !== validateOtp', fullOtp !== validateOtp);
+    // console.log('fullOtp !== validateOtp', fullOtp);
     console.log('fullOtp !== validateOtp', validateOtp);
 
-    if (fullOtp.toString().length !== 6) {
+    if (OTP.toString().length !== 6) {
       flashMessageWarning(getTranslation('errorMessageOtp'));
     }
-     else if (fullOtp != validateOtp) {
+     else if (OTP != validateOtp) {
       flashMessageWarning(getTranslation('errorMessageInvalidOtp'));
     }
      else {
@@ -168,14 +170,14 @@ const OTPContainer = ({ navigation, route }: any) => {
   };
 
   // For storing otp in another state
-  useEffect(() => {
-    const fullOtp = otpArray.map((item: any) => item?.value).join('');
-    if (fullOtp) {
-      setFullOtp(Number(fullOtp));
-    } else {
-      setFullOtp('');
-    }
-  }, [otpArray]);
+  // useEffect(() => {
+  //   const fullOtp = otpArray.map((item: any) => item?.value).join('');
+  //   if (fullOtp) {
+  //     setFullOtp(Number(fullOtp));
+  //   } else {
+  //     setFullOtp('');
+  //   }
+  // }, [otpArray]);
 
   useEffect(() => {
     handleResendOtpTimer();
@@ -205,12 +207,14 @@ const OTPContainer = ({ navigation, route }: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
           console.log(responseData, 'RESPONSE OTP');
           flashMessageSucess(responseData.message);
-          const clearedOtpArray = otpArray.map(item => ({
-            ...item,
-            value: '',
-          }));
-          setOtpArray(clearedOtpArray);
-          setFullOtp('');
+          // const clearedOtpArray = otpArray.map(item => ({
+          //   ...item,
+          //   value: '',
+          // }));
+          // setOtpArray(clearedOtpArray);
+          // setFullOtp('');
+           setOTP('');
+          otpRef.current?.clear(); // ✅ THIS IS THE FIX
           handleResendOtpTimer();
           setValidateOtp(responseData?.data?.otp);
         } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
@@ -336,19 +340,22 @@ const OTPContainer = ({ navigation, route }: any) => {
   return (
     <OTPComponent
       navigation={navigation}
-      otpArray={otpArray}
+      // otpArray={otpArray}
       countrycode={countrycode}
       phoneNumber={phoneNumber}
       insets={insets}
-      handleOnChangeText={handleOnChangeText}
-      handleOnSubmit={handleOnSubmit}
-      handleOnKeyPress={handleOnKeyPress}
+      // handleOnChangeText={handleOnChangeText}
+      // handleOnSubmit={handleOnSubmit}
+      // handleOnKeyPress={handleOnKeyPress}
       otp={otp}
       resendOtp={resendOtp}
       handleOnPressResendOtp={handleOnPressResendOtp}
       OTPTIMING={OTPTIMING}
       handleOnPressNext={handleOnPressNext}
       loginDataParams={loginDataParams}
+      OTP={OTP}
+      setOTP={setOTP}
+      otpRef={otpRef}
     />
   );
 };

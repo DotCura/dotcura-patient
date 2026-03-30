@@ -5,6 +5,31 @@ import { fontSize } from '../../../constants/FontSizes';
 import { Colors } from '../../../constants/Colors';
 
 export const styles = StyleSheet.create({
+  txtInputFocus: {
+    borderColor: Colors.blue002,
+    borderWidth: 2,
+  },
+  txtInputFocusfixed: {
+    borderColor: Colors.blue002,
+    borderWidth: 1,
+  },
+  txtInputotp: {
+    textAlign: 'center',
+    fontSize: fontSize.size26,
+    fontFamily: fontsfamily.gregular,
+    // height: getWidth(56),
+    // width: getWidth(56),
+  },
+  vwTxtInputotp: {
+    height: getWidth(56),
+    width: getWidth(56),
+    borderRadius: 12,
+    backgroundColor: Colors.white,
+    borderWidth: 2,
+    borderColor: Colors.grayD8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   vwOtpMain: {
     flexDirection: 'row',
     alignSelf: 'center',

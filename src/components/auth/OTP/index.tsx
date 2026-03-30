@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { styles } from './styles';
 import CustomButton from '../../../global/Buttons';
@@ -9,6 +9,7 @@ import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 import { Colors } from '../../../constants/Colors';
 import { activityOpacity } from '../../../constants/GConstant';
 import AppHeader from '../../../global/Header';
+import { OtpInput } from 'react-native-otp-entry';
 
 const OTPComponent = (props: any) => {
   const masked = props?.loginDataParams?.phone_number
@@ -49,7 +50,7 @@ const OTPComponent = (props: any) => {
           </View>
 
           {/* inputView */}
-          <View style={styles.vwOtpMain}>
+          {/* <View style={styles.vwOtpMain}>
             {props?.otpArray?.map((item: any, index: any) => {
               return (
                 <View style={styles.vwTxtInput} key={index}>
@@ -79,7 +80,35 @@ const OTPComponent = (props: any) => {
                 </View>
               );
             })}
-          </View>
+          </View> */}
+          <OtpInput
+            ref={props.otpRef}
+            numberOfDigits={6}
+            type="numeric"
+            autoFocus={true}
+            focusStickBlinkingDuration={500}
+            onTextChange={(text: any) => {
+              props.setOTP(text), text.length === 6 && Keyboard.dismiss();
+            }}
+            textInputProps={{
+              accessibilityLabel: 'One-Time Password',
+              caretHidden: props.OTP.length === 6,
+            }}
+            placeholder=""
+            textProps={{
+              accessibilityRole: 'text',
+              accessibilityLabel: 'OTP digit',
+              allowFontScaling: false,
+            }}
+            theme={{
+              containerStyle: styles.vwOtpMain,
+              pinCodeContainerStyle: styles.vwTxtInputotp,
+              pinCodeTextStyle: styles.txtInputotp,
+              focusedPinCodeContainerStyle: styles.txtInputFocus,
+              focusStickStyle: styles.txtInputFocusfixed,
+              // placeholderTextStyle: styles.placeholderText,
+            }}
+          />
           <Text style={styles.lblResendWarning}>
             {getTranslation('otpwarning1')} {props.OTPTIMING}{' '}
             {getTranslation('otpwarning2')}
