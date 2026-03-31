@@ -2,7 +2,7 @@ import { regex } from './Regex';
 
 // <============================== Validation Constant ==============================>
 export const ValidationConstant = {
-  maxMobileDigit: 12,
+  maxMobileDigit: 18,
   minMobileDigit: 8,
 
   minNameCharacters: 2,
@@ -77,13 +77,9 @@ export const isValidInput = (
 };
 
 export const formatPhoneNumber = (input: any) => {
-  // Remove all non-digit characters
   const cleaned = input?.replace(/\D/g, '');
+  const sliced = cleaned.slice(0, 15);
 
-  // Slice to at most 10 digits
-  const sliced = cleaned.slice(0, 18);
-
-  // Format the phone number as (XXX) XXX-XXXX
   let formatted = '';
   for (let i = 0; i < sliced.length; i++) {
     if (i === 3 || i === 6 || i === 10) {
