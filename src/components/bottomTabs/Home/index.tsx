@@ -117,34 +117,40 @@ const HomeComponent = (props: any) => {
         nestedScrollEnabled={true}
       >
         {/* vwTotalDaysInfo */}
-        {props.lastBookingDays !== null && props.lastBookingDays !== undefined && (
-          <View style={styles.vwTotalDaysInfo}>
-            <Image source={images.imgCalenderBlue} />
-            <View style={styles.vwDaysAndBook}>
-              <View style={styles.vwInnerDays}>
-                <Text style={styles.lblDaysText}>
-                  {props.lastBookingDays} {getTranslation('daystext')}
-                </Text>
-                <Text style={styles.lblSinceyourlastanlaysis}>
-                  {getTranslation('sinceyourlastanalysis')}
-                </Text>
-              </View>
-              <PressScale onPress={props.handleNavigateGetTested}>
-                <View style={styles.btnBookNow}>
-                  <Text style={styles.lblBookNow}>
-                    {getTranslation('booknowtext')}
+        {props.lastBookingDays !== undefined && (
+            <View style={styles.vwTotalDaysInfo}>
+              <Image source={images.imgCalenderBlue} />
+              <View style={styles.vwDaysAndBook}>
+                {props.lastBookingDays === null ? (
+                  <Text style={styles.lblSinceyourlastanlaysis}>
+                    {getTranslation('nodaysviewtext')}
                   </Text>
-                </View>
-              </PressScale>
+                ) : (
+                  <View style={styles.vwInnerDays}>
+                    <Text style={styles.lblDaysText}>
+                      {props.lastBookingDays} {getTranslation('daystext')}
+                    </Text>
+                    <Text style={styles.lblSinceyourlastanlaysis}>
+                      {getTranslation('sinceyourlastanalysis')}
+                    </Text>
+                  </View>
+                )}
+                <PressScale onPress={props.handleNavigateGetTested}>
+                  <View style={styles.btnBookNow}>
+                    <Text style={styles.lblBookNow}>
+                      {getTranslation('booknowtext')}
+                    </Text>
+                  </View>
+                </PressScale>
+              </View>
             </View>
-          </View>
-        )}
+          )}
 
         {props.isloadingshow && props.lastBookingDays !== undefined && (
           <>
             {/* vwTestReports */}
             <View style={styles.vwTestReports}>
-              {props.lastBookingDays === null ? (
+              {/* {props.lastBookingDays === null ? (
                 <View style={styles.vwEmpty}>
                   <View
                     style={{ marginHorizontal: getWidth(7), gap: getHeight(2) }}
@@ -164,24 +170,24 @@ const HomeComponent = (props: any) => {
                   />
                 </View>
               ) : (
-                <>
-                  <Text style={styles.lblMyHealth}>
-                    {getTranslation('myhealtthtext')}
-                  </Text>
+                <> */}
+              <Text style={styles.lblMyHealth}>
+                {getTranslation('myhealtthtext')}
+              </Text>
 
-                  <FlatList
-                    data={props.testReportData}
-                    renderItem={props.renderTestReportData}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={item => item.id.toString()}
-                    contentContainerStyle={{
-                      gap: getHeight(12),
-                      marginTop: getHeight(12),
-                    }}
-                    ListFooterComponent={renderListFooter}
-                  />
-                </>
-              )}
+              <FlatList
+                data={props.testReportData}
+                renderItem={props.renderTestReportData}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={item => item.id.toString()}
+                contentContainerStyle={{
+                  gap: getHeight(12),
+                  marginTop: getHeight(12),
+                }}
+                ListFooterComponent={renderListFooter}
+              />
+              {/* </> */}
+              {/* )} */}
             </View>
 
             {/* vwLatestValue */}

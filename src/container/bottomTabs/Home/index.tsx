@@ -136,7 +136,7 @@ const HomeContainer = ({ navigation }: any) => {
                       </View>
                     </View>
                     <TouchableOpacity>
-                      <Image source={images.imgRightBlack} />
+                      {/* <Image source={images.imgRightBlack} /> */}
                     </TouchableOpacity>
                   </View>
                   {/* tags */}
@@ -204,10 +204,10 @@ const HomeContainer = ({ navigation }: any) => {
                     {formatDateToSpanish(item.test_date)}
                   </Text>
                   <TouchableOpacity>
-                    <Image
+                    {/* <Image
                       source={images.imgRightBlack}
                       tintColor={Colors.white}
-                    />
+                    /> */}
                   </TouchableOpacity>
                 </View>
                 <Text style={styles.lblOrderDesBooked}>

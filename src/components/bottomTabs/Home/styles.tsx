@@ -66,6 +66,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   vwDaysAndBook: {
+    flex:1,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -89,6 +90,7 @@ export const styles = StyleSheet.create({
     fontFamily: fontsfamily.gmedium,
   },
   lblSinceyourlastanlaysis: {
+    flex:1,
     color: Colors.purple66,
     fontSize: fontSize.size16,
     fontFamily: fontsfamily.gregular,
