@@ -760,22 +760,24 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     if (searchAddress.trim() === '') {
       Alert.alert(getTranslation('emptysearchaddress') || '');
       return;
-    } else if (floor.trim() === '') {
-      setFloorError(getTranslation('emptyFloor'));
-      return;
-    } else if (!/^\d+$/.test(floor)) {
-      setFloorError(getTranslation('invalidFloor'));
-      return;
-    } else if (stairs.trim() === '') {
-      setStairsError(getTranslation('emptyStairs'));
-      return;
-    } else if (!/^[A-Za-z]+$/.test(stairs)) {
-      setFloorError(getTranslation('invalidStairs'));
-      return;
-    } else if (instructions.trim() == '') {
-      setInstructionNameError(getTranslation('emptyInstructions'));
-      return;
-    } else {
+    }
+    // else if (floor.trim() === '') {
+    //   setFloorError(getTranslation('emptyFloor'));
+    //   return;
+    // } else if (!/^\d+$/.test(floor)) {
+    //   setFloorError(getTranslation('invalidFloor'));
+    //   return;
+    // } else if (stairs.trim() === '') {
+    //   setStairsError(getTranslation('emptyStairs'));
+    //   return;
+    // } else if (!/^[A-Za-z]+$/.test(stairs)) {
+    //   setFloorError(getTranslation('invalidStairs'));
+    //   return;
+    // } else if (instructions.trim() == '') {
+    //   setInstructionNameError(getTranslation('emptyInstructions'));
+    //   return;
+    // }
+    else {
       if (addressMode == 'add') {
         _addAddressApi();
       } else {
@@ -1882,7 +1884,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
           SocketService.emit('patient_join_booking');
           console.log('after patient_join');
-          
+
           if (isPlatformiOS) {
             endLiveActivity(String(booking_order_id));
           } else {

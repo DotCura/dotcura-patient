@@ -105,25 +105,28 @@ const AddAddressContainer = ({ navigation, route }: any) => {
     if (searchAddress.trim() === '') {
       flashMessageWarning(getTranslation('emptysearchaddress'));
       return;
-    } else if (floor.trim() === '') {
-      setFloorError(getTranslation('emptyFloor'));
-      return;
-    } else if (!/^\d+$/.test(floor)) {
-      setFloorError(getTranslation('invalidFloor'));
-      return;
-    } else if (stairs.trim() === '') {
-      setStairsError(getTranslation('emptyStairs'));
-      return;
-    } else if (!/^[A-Za-z]+$/.test(stairs)) {
-      setFloorError(getTranslation('invalidStairs'));
-      return;
     }
+    // else if (floor.trim() === '') {
+    //   setFloorError(getTranslation('emptyFloor'));
+    //   return;
+    // }
+    // else if (!/^\d+$/.test(floor)) {
+    //   setFloorError(getTranslation('invalidFloor'));
+    //   return;
+    // } else if (stairs.trim() === '') {
+    //   setStairsError(getTranslation('emptyStairs'));
+    //   return;
+    // } else if (!/^[A-Za-z]+$/.test(stairs)) {
+    //   setFloorError(getTranslation('invalidStairs'));
+    //   return;
+    // }
 
-    // INSTRUCTION VALIDATION (optional, no limit)
-    else if (instructions.trim() == '') {
-      setInstructionNameError(getTranslation('emptyInstructions'));
-      return;
-    } else {
+    // // INSTRUCTION VALIDATION (optional, no limit)
+    // else if (instructions.trim() == '') {
+    //   setInstructionNameError(getTranslation('emptyInstructions'));
+    //   return;
+    // }
+    else {
       if (editAddress === true) {
         await _updateAddressApi();
         return;
