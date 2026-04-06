@@ -201,8 +201,12 @@ const EditOrderComponent = (props: any) => {
                   </Text>
                 </View>
                 <TouchableOpacity
-                  style={styles.btnAdd}
+                  style={[
+                    styles.btnAdd,
+                    !props.selectedAddress && { opacity: 0.4 },
+                  ]}
                   activeOpacity={activityOpacity}
+                  disabled={!props.selectedAddress}
                   onPress={() => props.setShowPicker(true)} // 👈 open picker modal
                 >
                   <Text style={styles.lblChnage}>
@@ -481,20 +485,34 @@ const EditOrderComponent = (props: any) => {
               onDateChange={props.setSelectedDate}
               onTimeChange={props.setSelectedTime}
               showPicker={props.showPicker}
+              availabilitySlots={props.availabilitySlots}
+              isLoadingSlots={props.isLoadingSlots}
             />
 
-            <View
-              style={{
-                marginTop: getHeight(32),
-                marginHorizontal: getWidth(16),
-                marginBottom: props.insets.bottom + getHeight(16),
-              }}
-            >
-              <CustomButton
-                btnTitle={getTranslation('confirmdata')}
-                btnPress={props.onBookSlot}
-              />
-            </View>
+            {(() => {
+              // Disable confirm if API returned data but selected date has no slots
+              const isNoSlotDate =
+                props.availabilitySlots?.length > 0 &&
+                !(props.availabilitySlots.find(
+                  (d: any) => d.day_name === props.selectedDate,
+                )?.slots?.length > 0);
+              return (
+                <View
+                  style={{
+                    marginTop: getHeight(32),
+                    marginHorizontal: getWidth(16),
+                    marginBottom: props.insets.bottom + getHeight(16),
+                  }}
+                >
+                  <CustomButton
+                    btnTitle={getTranslation('confirmdata')}
+                    btnPress={props.onBookSlot}
+                    disabled={isNoSlotDate}
+                    style={isNoSlotDate ? { opacity: 0.4 } : undefined}
+                  />
+                </View>
+              );
+            })()}
           </View>
         </View>
       </Modal>

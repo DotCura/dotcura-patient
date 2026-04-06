@@ -101,8 +101,21 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   } | null>(null);
   // console.log("selectedSlot",selectedSlot);
 
+  //AVAILABILITYSLOTSVARIABLES
+  type AvailabilitySlot = {
+    date: string;
+    day_name: string;
+    slots: string[];
+  };
+  const [availabilitySlots, setAvailabilitySlots] = useState<
+    AvailabilitySlot[]
+  >([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
+
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
+  console.log('selectedTime', selectedTime);
+  console.log('selectedDate', selectedDate);
 
   const [selectedTab, setSelectedTab] = useState('checkup'); // 'checkup' or 'analiti'
   const apiDate = formatTestDateForAPI(selectedDate);
@@ -823,6 +836,11 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     if (!tempSelectedAddress) {
       Alert.alert(getTranslation('selectaddress') || '');
       return;
+    }
+    // Reset slot when address changes
+    if (selectedAddress?.address_id !== item?.address_id) {
+      setSelectedSlot(null);
+      setAvailabilitySlots([]);
     }
     setSelectedAddress(item);
     setAddressPopupVisible(false);
@@ -1731,6 +1749,58 @@ const CheckoutContainer = ({ navigation, route }: any) => {
     }
   };
 
+  //AVAILABILITYBYADDRESSAPI
+  const _availabilityByAddressApi = async (address_id: string | number) => {
+    try {
+      setIsLoadingSlots(true);
+      setAvailabilitySlots([]);
+
+      const params = {
+        address_id: String(address_id),
+      };
+
+      const callback = (responseData: any) => {
+        setIsLoadingSlots(false);
+        if (responseData.code === StatusCode.SUCCESS) {
+          const data = responseData.data ?? [];
+          setAvailabilitySlots(data);
+          // Sync selectedDate/Time to the first API entry so the picker matches
+          if (data.length > 0) {
+            setSelectedDate(data[0].day_name);
+            if (data[0].slots.length > 0) {
+              setSelectedTime(data[0].slots[0]);
+            }
+          }
+        } else {
+          setAvailabilitySlots([]);
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.AVAILABILITYBYADDRESS,
+        params,
+        showLoader: false,
+        callback,
+      });
+    } catch (error) {
+      setIsLoadingSlots(false);
+      setAvailabilitySlots([]);
+      console.log('Availability by address error:', error);
+    }
+  };
+
+  // Fetch availability slots whenever selectedAddress changes
+  useEffect(() => {
+    if (selectedAddress?.address_id) {
+      _availabilityByAddressApi(selectedAddress.address_id);
+    } else {
+      setAvailabilitySlots([]);
+    }
+  }, [selectedAddress?.address_id]);
+
   const _checkCouponApi = async () => {
     if (!discountCode.trim()) {
       flashMessageWarning(getTranslation('errorcoupanscode'));
@@ -1910,6 +1980,9 @@ const CheckoutContainer = ({ navigation, route }: any) => {
       _deleteCard={_deleteCard}
       openCustomerSheet={openCustomerSheet}
       deletingCardId={deletingCardId}
+      // Availability slots
+      availabilitySlots={availabilitySlots}
+      isLoadingSlots={isLoadingSlots}
     />
   );
 };

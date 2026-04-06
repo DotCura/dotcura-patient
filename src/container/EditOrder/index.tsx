@@ -113,6 +113,19 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const apiDate = formatTestDateForAPI(selectedDate);
   const startTime = selectedTime.split(' - ')[0];
   const isBackendDate = (date: string) => /^\d{4}-\d{2}-\d{2}$/.test(date);
+
+  //AVAILABILITYSLOTSVARIABLES
+  type AvailabilitySlot = {
+    date: string;
+    day_name: string;
+    slots: string[];
+  };
+  const [availabilitySlots, setAvailabilitySlots] = useState<
+    AvailabilitySlot[]
+  >([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
+  // Tracks whether the user explicitly changed the address (vs. initial pre-fill)
+  const isUserChangedAddress = useRef(false);
   // console.log(startTime);
 
   //MODELADDTIONSVARIABLES
@@ -795,6 +808,12 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     if (!tempSelectedAddress) {
       Alert.alert(getTranslation('selectaddress') || '');
       return;
+    }
+    // Reset slot when address changes
+    if (selectedAddress?.address_id !== item?.address_id) {
+      setSelectedSlot(null);
+      setAvailabilitySlots([]);
+      isUserChangedAddress.current = true; // user explicitly changed address
     }
     setSelectedAddress(item);
     setAddressPopupVisible(false);
@@ -1851,6 +1870,60 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     }
   }, [subtotal]);
 
+  //AVAILABILITYBYADDRESSAPI
+  const _availabilityByAddressApi = async (address_id: string | number) => {
+    try {
+      setIsLoadingSlots(true);
+      setAvailabilitySlots([]);
+
+      const params = {
+        address_id: String(address_id),
+      };
+
+      const callback = (responseData: any) => {
+        setIsLoadingSlots(false);
+        if (responseData.code === StatusCode.SUCCESS) {
+          const data = responseData.data ?? [];
+          setAvailabilitySlots(data);
+          // Only sync date/time when user actively changed the address,
+          // NOT on the initial screen load pre-fill
+          if (isUserChangedAddress.current && data.length > 0) {
+            setSelectedDate(data[0].day_name);
+            if (data[0].slots.length > 0) {
+              setSelectedTime(data[0].slots[0]);
+            }
+          }
+          isUserChangedAddress.current = false; // reset after each API call
+        } else {
+          setAvailabilitySlots([]);
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.CHECKOUT.AVAILABILITYBYADDRESS,
+        params,
+        showLoader: false,
+        callback,
+      });
+    } catch (error) {
+      setIsLoadingSlots(false);
+      setAvailabilitySlots([]);
+      console.log('Availability by address error:', error);
+    }
+  };
+
+  // Fetch availability slots whenever selectedAddress changes
+  useEffect(() => {
+    if (selectedAddress?.address_id) {
+      _availabilityByAddressApi(selectedAddress.address_id);
+    } else {
+      setAvailabilitySlots([]);
+    }
+  }, [selectedAddress?.address_id]);
+
   const _cancleOrder = async () => {
     try {
       setIsCancelLoading(true);
@@ -2089,6 +2162,9 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       stripeEphemeralKey={stripeEphemeralKey}
       _editOrder={_editOrder}
       _addCardapi={_addCardapi}
+      // Availability slots
+      availabilitySlots={availabilitySlots}
+      isLoadingSlots={isLoadingSlots}
     />
   );
 };

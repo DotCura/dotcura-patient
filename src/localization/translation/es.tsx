@@ -628,4 +628,5 @@ export default {
   nodaysviewtext: 'Non hai ancora effettuato analisi',
 
   addcreditcard: 'Aggiungi carta di credito',
+  noslotavailble: 'Nessuno slot disponibile',
 };
