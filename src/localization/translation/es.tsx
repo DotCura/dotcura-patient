@@ -626,4 +626,6 @@ export default {
     'Potrai modificarlo in qualsiasi momento dal tuo profilo.',
   skipfacelock: 'Non ora',
   nodaysviewtext: 'Non hai ancora effettuato analisi',
+
+  addcreditcard: 'Aggiungi carta di credito',
 };

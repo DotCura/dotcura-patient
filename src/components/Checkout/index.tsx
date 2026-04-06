@@ -1445,7 +1445,7 @@ const CheckoutComponent = (props: any) => {
                 btnicon={true}
                 btnImage={images.imgPlusBlack}
                 imgstyle={{ tintColor: Colors.white }}
-                btnTitle={getTranslation('addcardtext')}
+                btnTitle={getTranslation('addcreditcard')}
                 btnPress={() => {
                   props.setShowPaymentModal(false);
                   setTimeout(() => {
