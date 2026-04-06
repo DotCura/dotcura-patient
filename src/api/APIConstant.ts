@@ -72,6 +72,7 @@ export const ApiEndPoints = {
     REMOVETOCART: `${PATIENT_PREFIX}removeCartItem`,
     BOOKORDER: `${PATIENT_PREFIX}bookOrder`,
     CHECKCOUPON: `${PATIENT_PREFIX}checkCoupon`,
+    AVAILABILITYBYADDRESS: `${PATIENT_PREFIX}availability-by-address`,
   },
   COUNT: {
     TOTALCOUNT: `${PATIENT_PREFIX}total_count`,
