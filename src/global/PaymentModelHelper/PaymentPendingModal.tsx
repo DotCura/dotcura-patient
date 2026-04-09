@@ -479,7 +479,9 @@ export const PaymentPendingModal = () => {
 
           if (error) {
             console.log('Apple Pay error:', error);
-            flashMessageWarning(error.message);
+            flashMessageWarning(
+              'Apple Pay error:' + JSON.stringify(error, null, 2),
+            );
           } else {
             console.log('✅ Apple Pay Success');
             flashMessageSucess(getTranslation('paymentsucessapplepay'));

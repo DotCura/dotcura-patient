@@ -153,8 +153,6 @@ const App = ({ navigation }: any) => {
   //notification service
   useNotificationService();
 
-  
-
   // Get orderStatus but DON'T cause re-render during splash
   const orderStatus = ZustandStores.OrderstatusStore(
     state => state.orderStatus,
@@ -247,7 +245,7 @@ const App = ({ navigation }: any) => {
     <StripeProvider
       publishableKey="pk_test_51SSEOACJL1MzBMMlLtkE5S91t0A9SfWFAPAI2PyPTuaXflMRIkfgT9sNee2uPPTBqxiSedyMDV4AFxlq6m63dyNS00zSzuaGdv"
       urlScheme="dotcura"
-      merchantIdentifier="merchant.com.dotcura.app" // required for Apple Pay this is parth sir key
+      merchantIdentifier="merchant.com.dotcura.patient.app" // required for Apple Pay this is parth sir key
       setReturnUrlSchemeOnAndroid={true}
     >
       <SafeAreaProvider>
