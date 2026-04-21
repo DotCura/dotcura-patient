@@ -14,6 +14,7 @@ export const ApiEndPoints = {
     RESENDOTP: `${PATIENT_PREFIX}resentOtp`,
     VERIFYOTP: `${PATIENT_PREFIX}verifyOtp`,
     COMPLETEPROFILE: `${PATIENT_PREFIX}update_patient`,
+    GETCONSENTLIST: `${PATIENT_PREFIX}get-consent-list`,
   },
   BOTTOMTAB: {
     KITLIST: `${PATIENT_PREFIX}getKitList`,

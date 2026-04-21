@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InformationConasantComponent from '../../../components/auth/InformationConasant';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenNames } from '../../../constants/AppConstants';
@@ -18,8 +18,48 @@ const InformationConasantContainer = ({ navigation }: any) => {
 
   const [headerArray, setHeaderArray] = useState([{ id: 1 }, { id: 2 }]);
 
-  const [isPrivacyAccepted, setIsPrivacyAccepted] = useState(false);
-  const [isOtherAccepted, setIsOtherAccepted] = useState(false);
+  const [consentList, setConsentList] = useState<any[]>([]);
+  const [selectedConsents, setSelectedConsents] = useState<number[]>([]);
+
+  useEffect(() => {
+    getConsentList();
+  }, []);
+
+  const getConsentList = async () => {
+    toggleLoader(true);
+    try {
+      const callback = (responseData: any) => {
+        toggleLoader(false);
+        if (responseData.code === StatusCode.SUCCESS) {
+          setConsentList(responseData.data?.items || []);
+        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+          flashMessageWarning(responseData.message);
+        }
+      };
+
+      await APIManager.makeRequest({
+        navigation,
+        method: MethodType.POST,
+        apiEndPoint: ApiEndPoints.AUTH.GETCONSENTLIST,
+        callback,
+      });
+    } catch (err) {
+      toggleLoader(false);
+      console.log('Error:', err);
+    }
+  };
+
+  const toggleConsent = (id: number) => {
+    setSelectedConsents(prev =>
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id],
+    );
+  };
+
+  const requiredConsents = consentList.filter(item => item.type === 'REQUIRED');
+  const isContinueDisabled =
+    requiredConsents.length > 0
+      ? !requiredConsents.every(item => selectedConsents.includes(item.id))
+      : false;
 
   const handlePressContinue = async () => {
     await _infoConstantApi();
@@ -31,7 +71,7 @@ const InformationConasantContainer = ({ navigation }: any) => {
     try {
       const params = {
         steps: '2',
-        terms: isOtherAccepted ? 1 : 0,
+        consent_ids: selectedConsents,
       };
 
       const callback = async (responseData: any) => {
@@ -66,10 +106,10 @@ const InformationConasantContainer = ({ navigation }: any) => {
     <InformationConasantComponent
       insets={insets}
       headerArray={headerArray}
-      isPrivacyAccepted={isPrivacyAccepted}
-      setIsPrivacyAccepted={setIsPrivacyAccepted}
-      isOtherAccepted={isOtherAccepted}
-      setIsOtherAccepted={setIsOtherAccepted}
+      consentList={consentList}
+      selectedConsents={selectedConsents}
+      toggleConsent={toggleConsent}
+      isContinueDisabled={isContinueDisabled}
       handlePressContinue={handlePressContinue}
       navigation={navigation}
     />

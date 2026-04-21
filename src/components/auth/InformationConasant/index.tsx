@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import { styles } from './styles';
@@ -48,53 +49,94 @@ const InformationConasantComponent = (props: any) => {
 
           {/* vwInfoConstant */}
           <View style={styles.optionContainer}>
-            <View style={styles.option}>
-              <TouchableOpacity
-                onPress={() =>
-                  props.setIsPrivacyAccepted(!props.isPrivacyAccepted)
-                }
-                style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
-              >
-                <Image
-                  source={
-                    props.isPrivacyAccepted
-                      ? images.imgSelectRadio
-                      : images.imgUnselectRadio
-                  }
-                />
-              </TouchableOpacity>
-              <Text style={styles.optionText}>
-                {getTranslation('constant1')}
-                <Text
-                  style={styles.lblHighlight}
-                  onPress={() =>
-                    props.navigation.navigate(ScreenNames.CMSPAGECONTAINER, {
-                      cmsUrl: GlobalVar.privacy_policy_es,
-                    })
-                  }
-                >
-                  {getTranslation('constant2')}
-                </Text>
-              </Text>
-            </View>
+            <FlatList
+              data={props.consentList}
+              keyExtractor={item => item.id.toString()}
+              scrollEnabled={false}
+              renderItem={({ item }) => {
+                const isSelected = props.selectedConsents.includes(item.id);
 
-            <View style={styles.option}>
-              <TouchableOpacity
-                onPress={() => props.setIsOtherAccepted(!props.isOtherAccepted)}
-                style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
-              >
-                <Image
-                  source={
-                    props.isOtherAccepted
-                      ? images.imgSelectRadio
-                      : images.imgUnselectRadio
-                  }
-                />
-              </TouchableOpacity>
-              <Text style={styles.optionText}>
-                {getTranslation('constant3')}
-              </Text>
-            </View>
+                const renderTextWithHighlights = (
+                  text: string,
+                  highlights: any[],
+                ) => {
+                  if (!highlights || highlights.length === 0) return text;
+
+                  let parts = [{ text: text, isHighlight: false, url: '' }];
+
+                  highlights.forEach(hl => {
+                    const newParts: any[] = [];
+                    parts.forEach(part => {
+                      if (part.isHighlight) {
+                        newParts.push(part);
+                      } else {
+                        const splitText = part.text.split(hl.text);
+                        for (let i = 0; i < splitText.length; i++) {
+                          newParts.push({
+                            text: splitText[i],
+                            isHighlight: false,
+                            url: '',
+                          });
+                          if (i < splitText.length - 1) {
+                            newParts.push({
+                              text: hl.text,
+                              isHighlight: true,
+                              url: hl.url,
+                            });
+                          }
+                        }
+                      }
+                    });
+                    parts = newParts;
+                  });
+
+                  return parts.map((part, index) => {
+                    if (part.isHighlight) {
+                      return (
+                        <Text
+                          key={index}
+                          style={styles.lblHighlight}
+                          onPress={() =>
+                            props.navigation.navigate(
+                              ScreenNames.CMSPAGECONTAINER,
+                              {
+                                cmsUrl: part.url,
+                              },
+                            )
+                          }
+                        >
+                          {part.text}
+                        </Text>
+                      );
+                    }
+                    return <Text key={index}>{part.text}</Text>;
+                  });
+                };
+
+                return (
+                  <View style={styles.option}>
+                    <TouchableOpacity
+                      onPress={() => props.toggleConsent(item.id)}
+                      style={{
+                        alignSelf: 'flex-start',
+                        marginTop: getHeight(2),
+                      }}
+                    >
+                      <Image
+                        source={
+                          isSelected
+                            ? images.imgSelectRadio
+                            : images.imgUnselectRadio
+                        }
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.optionText}>
+                      {renderTextWithHighlights(item.text, item.highlights)}
+                    </Text>
+                  </View>
+                );
+              }}
+            />
           </View>
         </View>
 
@@ -108,8 +150,8 @@ const InformationConasantComponent = (props: any) => {
           <CustomButton
             btnPress={props.handlePressContinue}
             btnTitle={getTranslation('continue')}
-            disabled={!props.isPrivacyAccepted}
-            style={{ opacity: props.isPrivacyAccepted ? 1 : 0.5 }}
+            disabled={props.isContinueDisabled}
+            style={{ opacity: props.isContinueDisabled ? 0.5 : 1 }}
           />
         </View>
       </KeyboardAwareScrollView>
