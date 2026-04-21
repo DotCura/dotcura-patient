@@ -404,6 +404,7 @@ const MainNavigation = props => {
         })}
         {_addScreen(NativeStack, ScreenNames.RATEANDREVIEWCONTAINER, {
           headerShown: false,
+          gestureEnabled: false,
         })}
         {_addScreen(NativeStack, ScreenNames.ANALITITESTDETAILSCONTAINER, {
           headerShown: false,

@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
-import { styles } from './styles';
 import RateAndReviewComponent from '../../components/RateAndReview';
 import { flashMessageWarning } from '../../constants/GConstant';
 import { APIManager } from '../../api/APIManager';
 import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
 import { getTranslation } from '../../localization/i18n/i18n.config';
+import { usePaymentStore } from '../../store/PaymentStore/PaymentStore';
 
-const RateAndReviewContainer = ({ navigation }: any) => {
+const RateAndReviewContainer = ({ navigation, route }: any) => {
   const [rate, setRate] = useState<number | null>(null);
+  const { activateNext, showModal, hideModal } = usePaymentStore();
 
   // =================== API ========================
 
@@ -18,16 +18,30 @@ const RateAndReviewContainer = ({ navigation }: any) => {
       return;
     }
     try {
+      const fallbackOrderDetails = usePaymentStore.getState().orderDetails;
+      const bookingId =
+        route?.params?.booking_id ?? fallbackOrderDetails?.booking_id;
+      const nurseId = route?.params?.nurse_id ?? fallbackOrderDetails?.nurse_id;
       const params = {
-        // nurse_id:,
-        // booking_id:,
-        // rate:,
+        nurse_id: nurseId,
+        booking_id: bookingId,
+        rate: rate,
       };
-
-      // console.log('params', params);
 
       const callback = (responseData: any) => {
         if (responseData.code === StatusCode.SUCCESS) {
+          activateNext();
+          const hasMorePendingPayments =
+            usePaymentStore.getState().pendingQueue.length > 0;
+
+          if (hasMorePendingPayments) {
+            setTimeout(() => {
+              showModal();
+            }, 250);
+          } else {
+            hideModal();
+          }
+          navigation.goBack();
         } else {
           flashMessageWarning(responseData.message);
         }
@@ -48,6 +62,7 @@ const RateAndReviewContainer = ({ navigation }: any) => {
   return (
     <RateAndReviewComponent
       rate={rate}
+      handlePressRateAndReview={_rateAndReview}
       handleOnPressRate={(index: any) => {
         setRate(index);
       }}

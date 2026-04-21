@@ -90,11 +90,16 @@ export const usePaymentStore = create<PaymentState>()(
         set(state => {
           const nextBookingId = ids[0] ?? null;
           const isSameBooking = state.activeBookingId === nextBookingId;
+          const hadPending = state.pendingQueue.length > 0;
+          const hasPendingNow = ids.length > 0;
+          const shouldReopenModal =
+            hasPendingNow && (!hadPending || !isSameBooking);
 
           return {
             pendingQueue: ids,
             activeBookingId: nextBookingId,
             status: ids.length ? 'pending' : 'idle',
+            isModalVisible: shouldReopenModal ? true : state.isModalVisible,
 
             // 🔥 DO NOT clear details if same booking
             orderDetails: isSameBooking ? state.orderDetails : null,
@@ -136,6 +141,7 @@ export const usePaymentStore = create<PaymentState>()(
           activeBookingId: null,
           status: 'idle',
           orderDetails: null,
+          isModalVisible: true,
         }),
     }),
     {

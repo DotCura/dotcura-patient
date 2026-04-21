@@ -8,11 +8,12 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { getTranslation } from '../../localization/i18n/i18n.config';
-import { getHeight } from '../../constants/utils/Dimensions';
+import { ScreenNames } from '../../constants/AppConstants';
 
 const PayPalWebViewScreen = ({ route, navigation }: any) => {
-  const { markPaymentSuccess, activateNext } = usePaymentStore();
+  const { markPaymentSuccess } = usePaymentStore();
   const { url } = route?.params;
+  const paymentOrderDetails = route?.params?.paymentOrderDetails;
   const insets = useSafeAreaInsets();
   const [paymentCompleted, setPaymentCompleted] = useState(false);
 
@@ -42,8 +43,11 @@ const PayPalWebViewScreen = ({ route, navigation }: any) => {
             flashMessageSucess(getTranslation('paymentsucesspaypal'));
             setPaymentCompleted(true);
             markPaymentSuccess();
-            activateNext();
-            navigation.goBack();
+            navigation.replace(ScreenNames.RATEANDREVIEWCONTAINER, {
+              booking_id: paymentOrderDetails?.booking_id,
+              nurse_id: paymentOrderDetails?.nurse_id,
+              booking_number: paymentOrderDetails?.booking_number,
+            });
           } else {
             flashMessageWarning('Payment failed');
             navigation.goBack();

@@ -339,7 +339,6 @@ export const PaymentPendingModal = () => {
     status,
     orderDetails,
     markPaymentSuccess,
-    activateNext,
     hideModal,
     isModalVisible,
   } = usePaymentStore();
@@ -352,8 +351,22 @@ export const PaymentPendingModal = () => {
   const currentRoute = useNavigationStore((s: any) => s.currentRoute);
   const isSplash = currentRoute === ScreenNames.CUSTOMSPLASHCONTAINER;
   if (isSplash) return null;
+  console.log("orderDetails", orderDetails);
+  console.log("isModalVisible", isModalVisible);
+  console.log("status", status);
+
 
   if (status !== 'pending' || !orderDetails || !isModalVisible) return null;
+
+ 
+  const navigateToRateAndReview = (paymentOrderDetails: any) => {
+    hideModal();
+    navigationRef.navigate(ScreenNames.RATEANDREVIEWCONTAINER, {
+      booking_id: paymentOrderDetails?.booking_id,
+      nurse_id: paymentOrderDetails?.nurse_id,
+      booking_number: paymentOrderDetails?.booking_number,
+    });
+  };
 
   // const handleFinishOrder = async () => {
   //   if (!orderDetails?.booking_id) {
@@ -486,7 +499,7 @@ export const PaymentPendingModal = () => {
             console.log('✅ Apple Pay Success');
             flashMessageSucess(getTranslation('paymentsucessapplepay'));
             markPaymentSuccess();
-            activateNext();
+            navigateToRateAndReview(orderDetails);
           }
         } else {
           flashMessageWarning(responseData.message);
@@ -525,6 +538,11 @@ export const PaymentPendingModal = () => {
 
         navigationRef.navigate(ScreenNames.PAYPALWEBVIEWSCREEN, {
           url: checkoutUrl,
+          paymentOrderDetails: {
+            booking_id: orderDetails?.booking_id,
+            nurse_id: orderDetails?.nurse_id,
+            booking_number: orderDetails?.booking_number,
+          },
         });
       };
 
@@ -576,7 +594,7 @@ export const PaymentPendingModal = () => {
 
           if (paymentIntent && paymentIntent.status === 'Succeeded') {
             markPaymentSuccess();
-            activateNext();
+            navigateToRateAndReview(orderDetails);
           }
         }
       };
