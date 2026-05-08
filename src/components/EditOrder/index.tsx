@@ -183,43 +183,13 @@ const EditOrderComponent = (props: any) => {
             </PressScale>
           </View>
 
-          {/* vwDateTime */}
-          <View style={{ marginTop: getHeight(24) }}>
-            <Text style={styles.lblHomeService}>
-              {getTranslation('homesevice')}
+          <Text style={[styles.lblHomeService,{
+            marginTop: getHeight(24),
+           }]}>
+              {getTranslation('selectthearea')}
             </Text>
-            <View style={styles.vwDateTimeMain}>
-              <View style={styles.vwDateTimeInner}>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.lblDateAndTime}>
-                    {getTranslation('dateandtime')}
-                  </Text>
-                  <Text style={styles.lblDateAndTimeValue}>
-                    {props.selectedSlot
-                      ? `${props.selectedSlot.day} ${props.selectedSlot.time}`
-                      : getTranslation('selecttimeslotcheckout')}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={[
-                    styles.btnAdd,
-                    !props.selectedAddress && { opacity: 0.4 },
-                  ]}
-                  activeOpacity={activityOpacity}
-                  disabled={!props.selectedAddress}
-                  onPress={() => props.setShowPicker(true)} // 👈 open picker modal
-                >
-                  <Text style={styles.lblChnage}>
-                    {' '}
-                    {getTranslation('change')}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-
-          {/* vwAddress */}
-          <ImageBackground
+            {/* vwAddress */}
+            <ImageBackground
             source={images.imgAddessManager}
             style={styles.vwImgBack}
           >
@@ -265,6 +235,43 @@ const EditOrderComponent = (props: any) => {
               </View>
             </View>
           </ImageBackground>
+
+          {/* vwDateTime */}
+          <View style={{ marginTop: getHeight(24) }}>
+            <Text style={styles.lblHomeService}>
+              {getTranslation('homesevice')}
+            </Text>
+            <View style={styles.vwDateTimeMain}>
+              <View style={styles.vwDateTimeInner}>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.lblDateAndTime}>
+                    {getTranslation('dateandtime')}
+                  </Text>
+                  <Text style={styles.lblDateAndTimeValue}>
+                    {props.selectedSlot
+                      ? `${props.selectedSlot.day} ${props.selectedSlot.time}`
+                      : getTranslation('selecttimeslotcheckout')}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={[
+                    styles.btnAdd,
+                    !props.selectedAddress && { opacity: 0.4 },
+                  ]}
+                  activeOpacity={activityOpacity}
+                  disabled={!props.selectedAddress}
+                  onPress={() => props.setShowPicker(true)} // 👈 open picker modal
+                >
+                  <Text style={styles.lblChnage}>
+                    {' '}
+                    {getTranslation('change')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
+        
 
           {/* ✅ Summary Section */}
           <View style={styles.summaryContainer}>

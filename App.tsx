@@ -105,13 +105,13 @@
 
 // export default App;
 
-import { AppState, LogBox } from 'react-native';
+import { Alert, AppState, LogBox } from 'react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import MainNavigation from './src/navigators/stackNavigator';
 import { ScreenNames } from './src/constants/AppConstants';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { I18nextProvider } from 'react-i18next';
-import i18n from './src/localization/i18n/i18n.config';
+import i18n, { getTranslation } from './src/localization/i18n/i18n.config';
 import FlashMessage from 'react-native-flash-message';
 import {
   bootstrapUser,
@@ -138,6 +138,9 @@ import { usePaymentInitializer } from './src/global/PaymentModelHelper/usePaymen
 import { PaymentPendingModal } from './src/global/PaymentModelHelper/PaymentPendingModal';
 import useNotificationService from './src/global/PushNotificatioUtils/useNotificationService';
 import { requestUserForNotificationPermission } from './src/global/PushNotificatioUtils/PushNotificationHelper';
+import { navigationRef } from './src/constants/utils/navigationRef';
+import NetInfo from '@react-native-community/netinfo';
+
 
 LogBox.ignoreAllLogs();
 
@@ -149,6 +152,8 @@ const App = ({ navigation }: any) => {
   const [initialRouteName] = useState<string>(
     ScreenNames.CUSTOMSPLASHCONTAINER,
   );
+
+  const isAlertShowing = useRef(false);
 
   //notification service
   useNotificationService();
@@ -239,6 +244,67 @@ const App = ({ navigation }: any) => {
   }, []);
 
   usePaymentInitializer(navigation);
+
+  useEffect(() => {
+    const showNoInternetAlert = () => {
+      if (isAlertShowing.current) return;
+  
+      isAlertShowing.current = true;
+  
+      Alert.alert(
+        getTranslation('noInternetConnection') || '',
+        getTranslation('pleaseTurnOnInternetAndRestart') || '',
+        [
+          {
+            text: getTranslation('tryAgain') || '',
+            onPress: async () => {
+              isAlertShowing.current = false;
+  
+              const state = await NetInfo.fetch();
+  
+              if (
+                state.isConnected === false ||
+                state.isInternetReachable === false
+              ) {
+                showNoInternetAlert();
+              } else {
+               
+  
+                const currentRoute =
+                  navigationRef.current?.getCurrentRoute();
+  
+                if (currentRoute) {
+                  navigationRef.current?.reset({
+                    index: 0,
+                    routes: [
+                      {
+                        name: currentRoute.name,
+                        params: currentRoute.params,
+                      },
+                    ],
+                  });
+                }
+              }
+            },
+          },
+        ],
+        { cancelable: false },
+      );
+    };
+  
+    const unsubscribe = NetInfo.addEventListener(state => {
+      if (
+        state.isConnected === false ||
+        state.isInternetReachable === false
+      ) {
+        showNoInternetAlert();
+      }
+    });
+  
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   //jayshaikey:pk_test_51SSFGhEHGGgg2T7x7trk2rIV2mIoZo2u3jERAm2PXCPVYCBmCyjVynjpursvu49ixVQeZ4LjyqkuwX02RkmnDuFc00EpCuEJjI
   return (

@@ -208,6 +208,7 @@ export default {
   savechnages: 'Salva modifiche',
   testincluded: 'Analisi incluse:',
   homesevice: 'Servizio a domicilio',
+  selectthearea:"Seleziona l'indirizzo",
   dateandtime: 'Data e ora',
   address: 'Indirizzo',
   additionalinstructions: 'Instruzioni aggiuntive',
@@ -629,4 +630,8 @@ export default {
 
   addcreditcard: 'Aggiungi carta di credito',
   noslotavailble: 'Nessuno slot disponibile',
+
+  noInternetConnection: 'Nessuna connessione a Internet',
+pleaseTurnOnInternetAndRestart: 'Attiva la connessione a Internet e riprova.',
+tryAgain: 'Riprova',
 };

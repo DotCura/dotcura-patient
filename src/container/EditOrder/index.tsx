@@ -412,15 +412,17 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       return false;
     }
 
+    if (!selectedAddress) {
+      flashMessageWarning(getTranslation('selectaddress'));
+      return false;
+    }
+
     if (!selectedSlot) {
       flashMessageWarning(getTranslation('selecttimeslot'));
       return false;
     }
 
-    if (!selectedAddress) {
-      flashMessageWarning(getTranslation('selectaddress'));
-      return false;
-    }
+    
 
     if (!testkitsData.length) {
       flashMessageWarning(getTranslation('cartempty'));
@@ -747,6 +749,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
 
   const handleSetAddressType = (item: any) => {
     setAddressTypeValue(item.value);
+    setAddressTypeItem(item.label);
   };
 
   const handleOnChangeText = (text: string, type: string) => {

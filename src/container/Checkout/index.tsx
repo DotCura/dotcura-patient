@@ -772,9 +772,15 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [addressTypeItem, setAddressTypeItem] = useState<string | null>(
     addressTypeData[0].label,
   );
+  console.log('addressTypeValue', addressTypeValue);
+  console.log('addressTypeItem', addressTypeItem);
+  console.log('addressTypeData', addressTypeData);
+  console.log('addressType', addressType);
+  console.log('addressType', addressType);
 
   const handleSetAddressType = (item: any) => {
     setAddressTypeValue(item.value);
+    setAddressTypeItem(item.label);
   };
 
   const handleOnChangeText = (text: string, type: string) => {

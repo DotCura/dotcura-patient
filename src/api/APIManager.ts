@@ -99,15 +99,15 @@ export const APIManager = {
     params,
   }: any) => {
     /* ---- Internet check ---- */
-    const netInfo = await NetInfo.fetch();
+    // const netInfo = await NetInfo.fetch();
 
-    if (!netInfo.isConnected) {
-      callback({
-        code: 97,
-        message: getTranslation('nointernetconnection'),
-      });
-      return;
-    }
+    // if (!netInfo.isConnected) {
+    //   callback({
+    //     code: 97,
+    //     message: getTranslation('nointernetconnection'),
+    //   });
+    //   return;
+    // }
     console.log('showLoader=================', showLoader);
 
     try {
