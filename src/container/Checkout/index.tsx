@@ -175,8 +175,8 @@ const CheckoutContainer = ({ navigation, route }: any) => {
           />
           <View style={{ flex: 1, marginRight: getWidth(25) }}>
             <Text style={styles.cardTitle}>
-              {item.kit_type === 'CHECKUP' &&
-                getTranslation('kitlabeltextcheckout')}
+              {/* {item.kit_type === 'CHECKUP' &&
+                getTranslation('kitlabeltextcheckout')} */}
               {item.name}{' '}
               {item.kit_type !== 'CHECKUP' && (
                 <Text style={styles.lblKitCount}>
