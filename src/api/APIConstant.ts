@@ -1,6 +1,17 @@
+export const isLive = false;
+
 // Base url
 export const ApiBaseURL = {
-  DEVELOPMENT: 'http://3.108.139.142:6013/api/v1/',
+  // DEVELOPMENT_DEMO: 'http://3.108.139.142:6013/api/v1/',
+  DEVELOPMENT_AUTH: isLive
+    ? 'https://auth-api.dotcura.com/api/v1/auth/'
+    : 'https://staging-auth-api.dotcura.com/api/v1/auth/',
+  DEVELOPMENT_PAYMENT: isLive
+    ? 'https://payment-api.dotcura.com/api/v1/booking/'
+    : 'https://staging-payment-api.dotcura.com/api/v1/booking/',
+  DEVELOPMENT_PATIENT: isLive
+    ? 'https://patient-api.dotcura.com/api/v1/'
+    : 'https://staging-patient-api.dotcura.com/api/v1/',
 };
 
 // export const socketUrl = '';
@@ -65,6 +76,7 @@ export const ApiEndPoints = {
   },
   OTHER: {
     GETRELATIONTYPE: `${PATIENT_PREFIX}OtherDetails`,
+    GET_PRESIGNED_URL: `${PATIENT_PREFIX}get_presigned_url`,
   },
   CHECKOUT: {
     ADDTOCART: `${PATIENT_PREFIX}addToCart`,
@@ -83,7 +95,7 @@ export const ApiEndPoints = {
   },
   REPORT: {
     GETREPORTDETAILS: `${PATIENT_PREFIX}getReportDetails`,
-    REORDER: `${PATIENT_PREFIX}reorder`,
+    REORDER: `${PATIENT_PREFIX}reOrder`,
     LIKEUNLIKEREPORT: `${PATIENT_PREFIX}likeUnlikeReport`,
     SAVEREPORT45DAYS: `${PATIENT_PREFIX}save_report`,
   },

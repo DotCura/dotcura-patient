@@ -126,6 +126,7 @@ import SplashScreen from 'react-native-splash-screen';
 import Loader from './src/api/Loader';
 import {
   ApiEndPoints,
+  isLive,
   MethodType,
   setLoaderRef,
   StatusCode,
@@ -140,7 +141,6 @@ import useNotificationService from './src/global/PushNotificatioUtils/useNotific
 import { requestUserForNotificationPermission } from './src/global/PushNotificatioUtils/PushNotificationHelper';
 import { navigationRef } from './src/constants/utils/navigationRef';
 import NetInfo from '@react-native-community/netinfo';
-
 
 LogBox.ignoreAllLogs();
 
@@ -248,9 +248,9 @@ const App = ({ navigation }: any) => {
   useEffect(() => {
     const showNoInternetAlert = () => {
       if (isAlertShowing.current) return;
-  
+
       isAlertShowing.current = true;
-  
+
       Alert.alert(
         getTranslation('noInternetConnection') || '',
         getTranslation('pleaseTurnOnInternetAndRestart') || '',
@@ -259,20 +259,17 @@ const App = ({ navigation }: any) => {
             text: getTranslation('tryAgain') || '',
             onPress: async () => {
               isAlertShowing.current = false;
-  
+
               const state = await NetInfo.fetch();
-  
+
               if (
                 state.isConnected === false ||
                 state.isInternetReachable === false
               ) {
                 showNoInternetAlert();
               } else {
-               
-  
-                const currentRoute =
-                  navigationRef.current?.getCurrentRoute();
-  
+                const currentRoute = navigationRef.current?.getCurrentRoute();
+
                 if (currentRoute) {
                   navigationRef.current?.reset({
                     index: 0,
@@ -291,16 +288,13 @@ const App = ({ navigation }: any) => {
         { cancelable: false },
       );
     };
-  
+
     const unsubscribe = NetInfo.addEventListener(state => {
-      if (
-        state.isConnected === false ||
-        state.isInternetReachable === false
-      ) {
+      if (state.isConnected === false || state.isInternetReachable === false) {
         showNoInternetAlert();
       }
     });
-  
+
     return () => {
       unsubscribe();
     };
@@ -309,7 +303,11 @@ const App = ({ navigation }: any) => {
   //jayshaikey:pk_test_51SSFGhEHGGgg2T7x7trk2rIV2mIoZo2u3jERAm2PXCPVYCBmCyjVynjpursvu49ixVQeZ4LjyqkuwX02RkmnDuFc00EpCuEJjI
   return (
     <StripeProvider
-      publishableKey="pk_test_51SSEOACJL1MzBMMlLtkE5S91t0A9SfWFAPAI2PyPTuaXflMRIkfgT9sNee2uPPTBqxiSedyMDV4AFxlq6m63dyNS00zSzuaGdv"
+      publishableKey={
+        isLive
+          ? 'pk_live_51SSEO1CS48NNUfFtSLM7VG6xonXjAUn5clNrWaUKkPgyMW0gjZA1BsuD4i0641M4uG44aqFdwIqbsTMJABy88HYX00Kh0jNsZv'
+          : 'pk_test_51SSEOACJL1MzBMMlLtkE5S91t0A9SfWFAPAI2PyPTuaXflMRIkfgT9sNee2uPPTBqxiSedyMDV4AFxlq6m63dyNS00zSzuaGdv'
+      }
       urlScheme="dotcura"
       merchantIdentifier="merchant.com.dotcura.patient.app" // required for Apple Pay this is parth sir key
       setReturnUrlSchemeOnAndroid={true}

@@ -5,10 +5,16 @@ import AppHeader from '../../global/Header';
 import ProfileComponent from '../../components/Profile';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { Alert } from 'react-native';
-import { appName, flashMessageSucess, flashMessageWarning } from '../../constants/GConstant';
+import {
+  appName,
+  flashMessageSucess,
+  flashMessageWarning,
+} from '../../constants/GConstant';
 import ReactNativeBiometrics from 'react-native-biometrics';
 
-const rnBiometrics = new ReactNativeBiometrics({ allowDeviceCredentials: true });
+const rnBiometrics = new ReactNativeBiometrics({
+  allowDeviceCredentials: true,
+});
 
 import { ScreenNames } from '../../constants/AppConstants';
 import { MmkvManager } from '../../constants/utils/MmkvManager';
@@ -314,7 +320,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       handlePressLogout={handlePressLogout}
       fullName={fullName}
       memberSince={memberSince}
-      countrycode= {countrycode}
+      countrycode={countrycode}
       phoneNumber={phoneNumber}
       data={data}
       dataTwo={dataTwo}

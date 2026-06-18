@@ -45,7 +45,6 @@ const CompleteProfileContainer = ({ navigation }: any) => {
   const emailRef = useRef<any>(null);
   const taxCodeRef = useRef<any>(null);
 
-
   //=== BackHandler ====
   useFocusEffect(
     useCallback(() => {
@@ -138,9 +137,9 @@ const CompleteProfileContainer = ({ navigation }: any) => {
         steps: '1',
         name: fullName + ' ' + surname,
         email: email,
-        first_name:fullName,
-        last_name:surname,
-        tax_code:taxCode,
+        first_name: fullName,
+        last_name: surname,
+        tax_code: taxCode,
         gender: selectedGender == 1 ? 'male' : 'female',
       };
 

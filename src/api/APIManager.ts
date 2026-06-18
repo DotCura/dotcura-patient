@@ -41,7 +41,88 @@ export const APIManager = {
      Base URL
   ======================= */
   getURL: (endPoint: string) => {
-    return ApiBaseURL.DEVELOPMENT + endPoint;
+    const authEndPoints = [
+      ApiEndPoints.AUTH.LOGIN,
+      ApiEndPoints.SETTINGS.PATIENTDETAILS,
+      ApiEndPoints.AUTH.VERIFYOTP,
+      ApiEndPoints.AUTH.RESENDOTP,
+      ApiEndPoints.AUTH.COMPLETEPROFILE,
+      ApiEndPoints.OTHER.GETRELATIONTYPE,
+      ApiEndPoints.SETTINGS.LOGOUT,
+      ApiEndPoints.SETTINGS.DELETEACCOUNT,
+    ];
+
+    const paymentEndPoints = [
+      ApiEndPoints.PAYMENT.ADDCARD,
+      ApiEndPoints.PAYMENT.CARDLIST,
+      ApiEndPoints.PAYMENT.SETDEFAULTCARD,
+      ApiEndPoints.PAYMENT.DELETECARD,
+      ApiEndPoints.CHECKOUT.ADDTOCART,
+      ApiEndPoints.CHECKOUT.GETCARTITEMDETAILS,
+      ApiEndPoints.CHECKOUT.UPDATETOCART,
+      ApiEndPoints.CHECKOUT.REMOVETOCART,
+      ApiEndPoints.CHECKOUT.BOOKORDER,
+      ApiEndPoints.CHECKOUT.CHECKCOUPON,
+      ApiEndPoints.ORDER.GETORDERHISTORY,
+      ApiEndPoints.ORDER.GETORDERDETAILS,
+      ApiEndPoints.ORDER.CANCLEORDER,
+      ApiEndPoints.REPORT.REORDER,
+      ApiEndPoints.ORDER.UPDATEORDERBOOKIN,
+      ApiEndPoints.REPORT.SAVEREPORT45DAYS,
+      ApiEndPoints.REPORT.GETREPORTDETAILS,
+      ApiEndPoints.REPORT.LIKEUNLIKEREPORT,
+      ApiEndPoints.SETTINGS.GETLIKEREPORTLIST,
+      ApiEndPoints.TEST.GETTESTREPORTDETAILS,
+      ApiEndPoints.PAYMENT.RATEANDREVIEW,
+      ApiEndPoints.FAMILY.FAMILYMEMBERREPORTDETAILS,
+      ApiEndPoints.COUNT.TOTALCOUNT,
+      ApiEndPoints.PAYMENT.CREATEPAYMENTINTENT,
+      ApiEndPoints.PAYMENT.CREATECUSTOMERCARDINTENT,
+      ApiEndPoints.PAYMENT.GETPAYMENTDETAILS,
+      ApiEndPoints.ORDER.CANCLEEDITORDER,
+      ApiEndPoints.PAYMENT.GET_PENDING_PAYMENT_LIST,
+      ApiEndPoints.PAYMENT.PAYPALCHECKOUTSESSION,
+      ApiEndPoints.PAYMENT.KLARNACHECKOUTSESSION,
+      ApiEndPoints.LIVEACTIVITYTOKEN.GETLIVEACTIVITYTOKEN,
+      ApiEndPoints.ORDER.LASTBOOKINGDETAILS,
+      ApiEndPoints.CHECKOUT.AVAILABILITYBYADDRESS,
+    ];
+
+    const patientEndPoints = [
+      ApiEndPoints.SETTINGS.GETNOTIFICATIONTYPE,
+      ApiEndPoints.SETTINGS.ADDUPDATENOTICATIONTYPE,
+      ApiEndPoints.BOTTOMTAB.KITLIST,
+      ApiEndPoints.BOTTOMTAB.KITDETAILS,
+      ApiEndPoints.MEDICAL.GETMEDICALHISTORY,
+      ApiEndPoints.FAMILY.ADDFAMILYMEMBER,
+      ApiEndPoints.FAMILY.GETFAMILYMEMBERLIST,
+      ApiEndPoints.FAMILY.GETFAMILYMEMBERDETAILS,
+      ApiEndPoints.FAMILY.DELETEFAMILYMEMBER,
+      ApiEndPoints.FAMILY.UPDATEFAMILYMEMBER,
+      ApiEndPoints.ADDRESS.ADDADDRESS,
+      ApiEndPoints.ADDRESS.GETADDRESS,
+      ApiEndPoints.ADDRESS.REMOVEADDRESS,
+      ApiEndPoints.ADDRESS.UPDATEADDRESS,
+      ApiEndPoints.SETTINGS.NOTIFICATIONLIST,
+      ApiEndPoints.HOME.GETANALITILIST,
+      ApiEndPoints.ANALITI.GETANALITIDETAILS,
+      ApiEndPoints.MEDICAL.ADDMEDICALHISTORY,
+      ApiEndPoints.MEDICAL.DELETEMEDICALHISTORY,
+      ApiEndPoints.OTHER.GET_PRESIGNED_URL,
+      ApiEndPoints.SETTINGS.GETCREDENTIAALS,
+      ApiEndPoints.AUTH.GETCONSENTLIST,
+    ];
+
+    if (authEndPoints.includes(endPoint)) {
+      return ApiBaseURL.DEVELOPMENT_AUTH + endPoint;
+    }
+    if (paymentEndPoints.includes(endPoint)) {
+      return ApiBaseURL.DEVELOPMENT_PAYMENT + endPoint;
+    }
+    if (patientEndPoints.includes(endPoint)) {
+      return ApiBaseURL.DEVELOPMENT_PATIENT + endPoint;
+    }
+    return ApiBaseURL.DEVELOPMENT_PATIENT + endPoint;
   },
 
   /* =======================

@@ -114,13 +114,13 @@ const CheckoutContainer = ({ navigation, route }: any) => {
 
   const [selectedDate, setSelectedDate] = useState('Oggi');
   const [selectedTime, setSelectedTime] = useState('16:00 - 17:00');
-  console.log('selectedTime', selectedTime);
-  console.log('selectedDate', selectedDate);
+  // console.log('selectedTime', selectedTime);
+  // console.log('selectedDate', selectedDate);
 
   const [selectedTab, setSelectedTab] = useState('checkup'); // 'checkup' or 'analiti'
   const apiDate = formatTestDateForAPI(selectedDate);
   const startTime = selectedTime.split(' - ')[0];
-  console.log(startTime);
+  // console.log(startTime);
 
   const [checkupcount, setCheckupCount] = useState(31);
   const [analiticount, setAnalitiCount] = useState(31);
@@ -772,11 +772,11 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [addressTypeItem, setAddressTypeItem] = useState<string | null>(
     addressTypeData[0].label,
   );
-  console.log('addressTypeValue', addressTypeValue);
-  console.log('addressTypeItem', addressTypeItem);
-  console.log('addressTypeData', addressTypeData);
-  console.log('addressType', addressType);
-  console.log('addressType', addressType);
+  // console.log('addressTypeValue', addressTypeValue);
+  // console.log('addressTypeItem', addressTypeItem);
+  // console.log('addressTypeData', addressTypeData);
+  // console.log('addressType', addressType);
+  // console.log('addressType', addressType);
 
   const handleSetAddressType = (item: any) => {
     setAddressTypeValue(item.value);

@@ -98,38 +98,65 @@ const AccountContainer = ({ navigation }: any) => {
     setTaxCodeError('');
     setSurnameError('');
     setPlaceOfBirthErrorError('');
+    console.log('below error ');
 
-    if (!fullName.trim()) {
+    const strFullName = fullName != null ? String(fullName).trim() : '';
+    const strSurname = surname != null ? String(surname).trim() : '';
+    const strEmail = email != null ? String(email).trim() : '';
+    const strPlaceOfBirth = placeOfBirth != null ? String(placeOfBirth).trim() : '';
+    const strFormattedDate = formattedDate != null ? String(formattedDate).trim() : '';
+    const strTaxCode = taxCode != null ? String(taxCode).trim() : '';
+
+    console.log('Validation debug - fields:', {
+      strFullName,
+      strSurname,
+      strEmail,
+      strPlaceOfBirth,
+      strFormattedDate,
+      strTaxCode,
+      formatedDateForApi
+    });
+
+    if (!strFullName) {
+      console.log('Validation failed: fullName is empty');
       setFullNameError(getTranslation('errorMessageFullNameRequired'));
       return;
-    } else if (fullName.trim().length < 2) {
+    } else if (strFullName.length < 2) {
+      console.log('Validation failed: fullName is too short');
       setFullNameError(getTranslation('errorMessageFullNameTooShort'));
       return;
-    } else if (!surname.trim()) {
+    } else if (!strSurname) {
+      console.log('Validation failed: surname is empty');
       setSurnameError(getTranslation('errorMessageSurnameRequired'));
       return;
-    } else if (!email.trim()) {
+    } else if (!strEmail) {
+      console.log('Validation failed: email is empty');
       setEmailError(getTranslation('errorMessageEmail'));
       return;
-    } else if (!regex.email.test(email.trim())) {
+    } else if (!regex.email.test(strEmail)) {
+      console.log('Validation failed: email format invalid');
       setEmailError(getTranslation('errorMessageValidEmail'));
       return;
-    } else if (placeOfBirth == null) {
+    } else if (!strPlaceOfBirth) {
+      console.log('Validation failed: placeOfBirth is null or empty');
       setPlaceOfBirthErrorError(
         getTranslation('errorMessagePlaceOfBirthRequired'),
       );
       return;
-    } else if (formattedDate === '') {
+    } else if (strFormattedDate === '') {
+      console.log('Validation failed: formattedDate is empty');
       flashMessageWarning(getTranslation('pleaseselectdateofbirth'));
       return;
-    } else if (!taxCode.trim()) {
+    } else if (!strTaxCode) {
+      console.log('Validation failed: taxCode is empty');
       setTaxCodeError(getTranslation('errorMessageTaxCodeRequired'));
       return;
-    } else if (taxCode.length !== 16) {
+    } else if (strTaxCode.length !== 16) {
+      console.log('Validation failed: taxCode length is not 16:', strTaxCode.length);
       setTaxCodeError(getTranslation('errorMessageTaxCodeValid'));
       return;
     } else {
-      console.log('✅ Profile completed successfully');
+      console.log('✅ Profile completed successfully, calling _updateProfileApi');
       await _updateProfileApi();
     }
   };
@@ -156,29 +183,29 @@ const AccountContainer = ({ navigation }: any) => {
     hideDatePicker();
   };
 
-  const header = () => {
-    navigation.setOptions({
-      header: () => (
-        <AppHeader
-          startBtnOnPress={() => {
-            navigation.pop();
-          }}
-          centerTitle={getTranslation('account')}
-          dontShowStartBtn={false}
-          showTitle={true}
-          showSubTitle={true}
-          centerSubTitle={`${fullName} (tu)`}
-          showEndBtn={true}
-          isSaveIcon={true}
-          onClickSave={handlePressContinue}
-        />
-      ),
-    });
-  };
+  // const header = () => {
+  //   navigation.setOptions({
+  //     header: () => (
+  //       <AppHeader
+  //         startBtnOnPress={() => {
+  //           navigation.pop();
+  //         }}
+  //         centerTitle={getTranslation('account')}
+  //         dontShowStartBtn={false}
+  //         showTitle={true}
+  //         showSubTitle={true}
+  //         centerSubTitle={`${fullName} (tu)`}
+  //         showEndBtn={true}
+  //         isSaveIcon={true}
+  //         onClickSave={handlePressContinue}
+  //       />
+  //     ),
+  //   });
+  // };
 
-  useEffect(() => {
-    header();
-  }, []);
+  // useEffect(() => {
+  //   header();
+  // }, []);
 
   //model
   const [patologie, setPatologie] = useState<any>([]);
@@ -229,8 +256,8 @@ const AccountContainer = ({ navigation }: any) => {
   };
 
   const handleSave = async (selected: any[]) => {
-    console.log("selected",selected);
-    
+    console.log('selected', selected);
+
     const medical_ids = selected.map(item => item.id);
     const type = getMedicalType(modalType); // 🔥 IMPORTANT
 
@@ -330,17 +357,17 @@ const AccountContainer = ({ navigation }: any) => {
           const value = responseData.data;
           console.log('Patient Details API Response:', value);
           const DEFAULT_DOB = '';
-          setFullName(value.first_name);
-          setSurname(value.last_name);
-          setEmail(value.email);
+          setFullName(value.first_name != null ? String(value.first_name) : '');
+          setSurname(value.last_name != null ? String(value.last_name) : '');
+          setEmail(value.email != null ? String(value.email) : '');
           setSelectedGender(value.gender === 'male' ? 1 : 2);
-          setTaxCode(value.tax_code);
+          setTaxCode(value.tax_code != null ? String(value.tax_code) : '');
           setFormattedDate(
             value?.dob && moment(value.dob).isValid()
               ? moment(value.dob).format('DD/MM/YYYY')
               : DEFAULT_DOB,
           );
-          setPlaceOfBirth(value.place_of_dob);
+          setPlaceOfBirth(value.place_of_dob != null ? String(value.place_of_dob) : '');
           setFormatedDateForApi(formatedDateForApi == null ? '' : value.dob);
 
           // 🔥 MEDICAL INFO MAPPING
@@ -419,8 +446,8 @@ const AccountContainer = ({ navigation }: any) => {
     medicalId: number,
     modalType: 'patologie' | 'medicazioni' | 'allergie',
   ) => {
-    console.log("medicalId",medicalId);
-    
+    console.log('medicalId', medicalId);
+
     try {
       const params: any = {
         id: medicalId,

@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { getHeight } from '../constants/utils/Dimensions';
 import { Colors } from '../constants/Colors';
+import FastImage from '@d11/react-native-fast-image';
+import { images } from '../constants/Images';
 export default class Loader extends Component {
   constructor(props: any) {
     super(props);

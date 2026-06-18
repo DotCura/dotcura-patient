@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { ApiHeaderKeyValue, toggleLoader } from '../api/APIConstant';
+import {
+  ApiEndPoints,
+  ApiHeaderKeyValue,
+  toggleLoader,
+} from '../api/APIConstant';
 import { MmkvManager } from '../constants/utils/MmkvManager';
 import { APIManager } from '../api/APIManager';
 
@@ -21,7 +25,7 @@ export const uploadFile = async (file: any): Promise<string> => {
     console.log('userToken:', userToken);
 
     const response = await axios.post(
-      'http://3.108.139.142:6013/api/v1/patient/get_presigned_url',
+      APIManager.getURL(ApiEndPoints.OTHER.GET_PRESIGNED_URL),
       { file_type: file.type, folder: 'document' },
       {
         headers: {
@@ -31,10 +35,13 @@ export const uploadFile = async (file: any): Promise<string> => {
         },
       },
     );
+    console.log(response, 'response ==========');
 
     // console.log('Presigned URL API response:', response.data);
 
     const responseData = APIManager.decryptText(response.data);
+    console.log(responseData, 'responseData ==========');
+
     const { url, file_name } = responseData.data;
 
     console.log('Upload URL:', url);

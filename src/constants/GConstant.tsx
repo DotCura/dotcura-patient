@@ -318,7 +318,7 @@ export const containsEmoji = (str: string): boolean => {
 
 // Short Name
 export const getInitialShortName = (name: string): string => {
-  const words = name.trim().split(' ');
+  const words = name?.trim().split(' ');
   const firstInitial = words[0]?.[0] || '';
   const secondInitial = words[1]?.[0] || '';
   return (firstInitial + secondInitial).toUpperCase();
@@ -373,7 +373,7 @@ export const formatDuration = (minutes: number): string => {
 };
 
 export const getInitials = (name: any) => {
-  const parts = name.trim().split(' ');
+  const parts = name?.trim().split(' ');
   const first = parts[0]?.charAt(0).toUpperCase() || '';
   return first;
 };

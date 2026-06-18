@@ -13,6 +13,8 @@ class SocketService {
   private config: SocketConfig | null = null;
 
   connect(config: SocketConfig) {
+    console.log('Socket config', config);
+
     if (this.socket?.connected) {
       console.log('Socket already connected');
       return;
@@ -25,7 +27,7 @@ class SocketService {
         user_id: config.userId,
         role: config.role,
       },
-      transports: ['websocket'],
+      transports: ['polling', 'websocket'],
       autoConnect: true,
       reconnection: true,
       reconnectionAttempts: 5,
@@ -49,9 +51,9 @@ class SocketService {
       console.log('📡 Connected to namespace/room');
     });
 
-    this.socket.on('disconnect', (reason) => {
+    this.socket.on('disconnect', reason => {
       console.log('❌ Socket disconnected:', reason);
-      
+
       // Auto-reconnect on certain disconnect reasons
       if (reason === 'io server disconnect') {
         // Server disconnected, manually reconnect
@@ -59,19 +61,19 @@ class SocketService {
       }
     });
 
-    this.socket.on('connect_error', (error) => {
-      console.log('🔴 Socket connection error:', error.message);
+    this.socket.on('connect_error', error => {
+      console.log('🔴 Socket connection error:', error);
     });
 
-    this.socket.on('reconnect', (attemptNumber) => {
+    this.socket.on('reconnect', attemptNumber => {
       console.log('🔄 Socket reconnected after', attemptNumber, 'attempts');
     });
 
-    this.socket.on('reconnect_attempt', (attemptNumber) => {
+    this.socket.on('reconnect_attempt', attemptNumber => {
       console.log('🔄 Attempting to reconnect...', attemptNumber);
     });
 
-    this.socket.on('reconnect_error', (error) => {
+    this.socket.on('reconnect_error', error => {
       console.log('🔴 Reconnection error:', error.message);
     });
 
@@ -87,7 +89,7 @@ class SocketService {
     }
 
     this.socket.on(event, callback as any);
-    
+
     // Store listener for cleanup
     const eventListeners = this.listeners.get(event) || [];
     eventListeners.push(callback);

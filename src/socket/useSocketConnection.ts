@@ -1,21 +1,21 @@
-
-
 import { useEffect, useRef } from 'react';
 import { ZustandStores } from '../store';
 import SocketService from './SocketService';
 import { usePaymentStore } from '../store/PaymentStore/PaymentStore';
 import { APIManager } from '../api/APIManager';
 import { navigationRef } from '../constants/utils/navigationRef';
-import { ApiEndPoints, MethodType } from '../api/APIConstant';
+import { ApiEndPoints, isLive, MethodType } from '../api/APIConstant';
 
-
-const SOCKET_URL = 'http://3.108.139.142:6013/booking';
+const SOCKET_URL = isLive
+  ? 'https://cron-api.dotcura.com/booking'
+  : 'https://staging-cron-api.dotcura.com/booking';
 
 export const useSocketConnection = (patientId?: string | null) => {
   const { setOrderData, clearOrderData } = ZustandStores.OrderstatusStore();
-  const hydrateQueue = usePaymentStore((s) => s.hydrateQueue);
+  const hydrateQueue = usePaymentStore(s => s.hydrateQueue);
 
-  
+  console.log('SOCKET_URL', SOCKET_URL);
+
   // 🔥 Prevent multiple connections
   const isConnecting = useRef(false);
   const lastPatientId = useRef<string | null>(null);
@@ -24,12 +24,12 @@ export const useSocketConnection = (patientId?: string | null) => {
     // 🔴 No patient → disconnect socket
     if (!patientId) {
       console.log('🔌 No patient ID - skipping socket connection');
-      
+
       if (SocketService.isConnected()) {
         console.log('🔌 Disconnecting socket (no patient)');
         SocketService.disconnect();
       }
-      
+
       clearOrderData();
       isConnecting.current = false;
       lastPatientId.current = null;
@@ -91,9 +91,9 @@ export const useSocketConnection = (patientId?: string | null) => {
 
     // const handleOrderComplete = (data: any) => {
     //   console.log('✅ Order completed:', data);
-    
+
     //   const { booking_id } = data;
-    
+
     //   // 🔒 Force payment modal
     //   setPendingPayment(booking_id);
     // };
@@ -114,7 +114,6 @@ export const useSocketConnection = (patientId?: string | null) => {
         },
       });
     };
-    
 
     // Register event listeners
     SocketService.on('booking_status', handleBookingStatus);
@@ -127,13 +126,13 @@ export const useSocketConnection = (patientId?: string | null) => {
     // 🧹 Cleanup on patient change / unmount
     return () => {
       console.log('🧹 Cleaning up socket listeners');
-      
+
       SocketService.off('booking_status', handleBookingStatus);
       SocketService.off('order_complete', refreshPayments);
 
       // SocketService.off('nurse_assigned', handleNurseAssigned);
       // SocketService.off('order_cancelled', handleOrderCancelled);
-      
+
       // Only disconnect if patient changed or component unmounted
       if (lastPatientId.current !== patientId) {
         SocketService.disconnect();
