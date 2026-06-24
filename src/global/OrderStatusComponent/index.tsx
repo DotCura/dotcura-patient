@@ -383,6 +383,7 @@
 
 import {
   Image,
+  Linking,
   Platform,
   StyleSheet,
   Text,
@@ -404,10 +405,14 @@ import { fontSize } from '../../constants/FontSizes';
 import { fontsfamily } from '../../constants/FontFamily';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
 import { getTranslation } from '../../localization/i18n/i18n.config';
-import { activityOpacity } from '../../constants/GConstant';
+import {
+  activityOpacity,
+  flashMessageWarning,
+} from '../../constants/GConstant';
 import { ZustandStores } from '../../store';
 import { isPlatformiOS, ScreenNames } from '../../constants/AppConstants';
 import { navigationRef } from '../../constants/utils/navigationRef';
+import { GlobalVar } from '../../constants/GlobalVar';
 
 interface OrderStatusComponentProps {
   orderStatus: string;
@@ -585,6 +590,24 @@ const OrderStatusComponent = memo(
 
     ProgressBar.displayName = 'ProgressBar';
 
+    const makePhoneCall = async (phone: string) => {
+      try {
+        const url = `tel:${phone}`;
+
+        const supported = await Linking.canOpenURL(url);
+
+        if (!supported) {
+          flashMessageWarning(getTranslation('phoneCallErrorHandle1'));
+          return;
+        }
+
+        await Linking.openURL(url);
+      } catch (error) {
+        console.log('Phone call error:', error);
+        flashMessageWarning(getTranslation('phoneCallErrorHandle2'));
+      }
+    };
+
     return (
       <Animated.View style={[styles.container, { paddingTop: insets.top }]}>
         <TouchableOpacity
@@ -682,7 +705,9 @@ const OrderStatusComponent = memo(
                 style={
                   orderStatus === 'arrived'
                     ? styles.progressImage2
-                    : isPlatformiOS?styles.progressImageIos: styles.progressImage
+                    : isPlatformiOS
+                    ? styles.progressImageIos
+                    : styles.progressImage
                 }
               />
 
@@ -701,6 +726,25 @@ const OrderStatusComponent = memo(
                   </Text>
                 </TouchableOpacity>
               )}
+              <TouchableOpacity
+                style={[
+                  styles.editButton,
+                  {
+                    marginTop: getHeight(10),
+                  },
+                ]}
+                onPress={() =>
+                  makePhoneCall(
+                    '+' +
+                      GlobalVar.support_country_code +
+                      GlobalVar.support_phone_number,
+                  )
+                }
+              >
+                <Text style={styles.lblEditOrder}>
+                  {getTranslation('contactSupport')}
+                </Text>
+              </TouchableOpacity>
             </Animated.View>
           </Animated.View>
         </TouchableOpacity>

@@ -208,7 +208,7 @@ export default {
   savechnages: 'Salva modifiche',
   testincluded: 'Analisi incluse:',
   homesevice: 'Servizio a domicilio',
-  selectthearea:"Seleziona l'indirizzo",
+  selectthearea: "Seleziona l'indirizzo",
   dateandtime: 'Data e ora',
   address: 'Indirizzo',
   additionalinstructions: 'Instruzioni aggiuntive',
@@ -632,6 +632,10 @@ export default {
   noslotavailble: 'Nessuno slot disponibile',
 
   noInternetConnection: 'Nessuna connessione a Internet',
-pleaseTurnOnInternetAndRestart: 'Attiva la connessione a Internet e riprova.',
-tryAgain: 'Riprova',
+  pleaseTurnOnInternetAndRestart: 'Attiva la connessione a Internet e riprova.',
+  tryAgain: 'Riprova',
+  contactSupport: 'Contatta support',
+  phoneCallErrorHandle1:
+    'Le chiamate telefoniche non sono supportate su questo dispositivo.',
+  phoneCallErrorHandle2: 'Impossibile effettuare la chiamata.',
 };

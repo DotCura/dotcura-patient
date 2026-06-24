@@ -192,6 +192,10 @@ const App = ({ navigation }: any) => {
             responseData?.data?.cms_urls?.terms_and_conditions?.en;
           GlobalVar.terms_and_conditions_es =
             responseData?.data?.cms_urls?.terms_and_conditions?.es;
+          GlobalVar.support_country_code =
+            responseData?.data?.cms_urls?.personal_info?.support_country_code;
+          GlobalVar.support_phone_number =
+            responseData?.data?.cms_urls?.personal_info?.support_phone_number;
         } else {
           console.log('error credential');
         }
@@ -300,7 +304,6 @@ const App = ({ navigation }: any) => {
     };
   }, []);
 
-  //jayshaikey:pk_test_51SSFGhEHGGgg2T7x7trk2rIV2mIoZo2u3jERAm2PXCPVYCBmCyjVynjpursvu49ixVQeZ4LjyqkuwX02RkmnDuFc00EpCuEJjI
   return (
     <StripeProvider
       publishableKey={

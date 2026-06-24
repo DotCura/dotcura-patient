@@ -7,4 +7,6 @@ export const GlobalVar = {
   privacy_policy_es: '',
   terms_and_conditions_en: '',
   terms_and_conditions_es: '',
+  support_country_code: '',
+  support_phone_number: '',
 };
