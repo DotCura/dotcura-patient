@@ -39,14 +39,14 @@ const WelcomeComponent = (props: any) => {
       <CustomButton
         textStyle={{ color: Colors.blue002 }}
         style={{
-          marginBottom: getHeight(8),
+          marginBottom: getWidth(42),
           backgroundColor: Colors.blueD1,
         }}
         btnPress={props.handleNavigateLogin}
         btnTitle={getTranslation('Enter')}
         btnicon={false}
       />
-      <CustomButton
+      {/* <CustomButton
         textStyle={{ color: Colors.gray0F }}
         style={{
           marginBottom: getWidth(42),
@@ -55,7 +55,7 @@ const WelcomeComponent = (props: any) => {
         btnPress={props.handleNavigateLogin}
         btnTitle={getTranslation('icantaccess')}
         btnicon={false}
-      />
+      /> */}
 
       <Text
         style={[

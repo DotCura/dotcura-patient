@@ -145,19 +145,19 @@ const PrimaryTitleMoblieNumber = ({
             <Image source={props.fieldIcon} style={styles.imgLeftIcon}></Image>
           )}
           <TouchableOpacity
-            onPress={() => setVisible(true)}
+            // onPress={() => setVisible(true)}
             style={styles.vwCountryCode}
             activeOpacity={activityOpacity}
           >
             <Text style={styles.lblCountryCode}>+{props.callingCode}</Text>
-            <Image
+            {/* <Image
               source={images.imgLeftArrow}
               style={{
                 transform: [{ rotate: '270deg' }],
                 tintColor: Colors.gray0F,
-                marginTop:2
+                marginTop: 2,
               }}
-            ></Image>
+            ></Image>*/}
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>

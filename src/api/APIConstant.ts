@@ -1,4 +1,4 @@
-export const isLive = false;
+export const isLive = true;
 
 // Base url
 export const ApiBaseURL = {
