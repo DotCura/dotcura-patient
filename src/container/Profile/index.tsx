@@ -4,7 +4,7 @@ import { images } from '../../constants/Images';
 import AppHeader from '../../global/Header';
 import ProfileComponent from '../../components/Profile';
 import { getTranslation } from '../../localization/i18n/i18n.config';
-import { Alert } from 'react-native';
+import { Alert, Linking, Platform } from 'react-native';
 import {
   appName,
   flashMessageSucess,
@@ -63,15 +63,15 @@ const ProfileContainer = ({ navigation, route }: any) => {
       },
       iscurv: true,
     },
-    {
-      id: '3',
-      title: getTranslation('access'),
-      image: images.imgWarningProfile,
-      onpressfun: () => {
-        navigation.navigate(ScreenNames.ACCESSCONTAINER);
-      },
-      iscurv: true,
-    },
+    // {
+    //   id: '3',
+    //   title: getTranslation('access'),
+    //   image: images.imgWarningProfile,
+    //   onpressfun: () => {
+    //     navigation.navigate(ScreenNames.ACCESSCONTAINER);
+    //   },
+    //   iscurv: true,
+    // },
     {
       id: '4',
       title: getTranslation('paymentmethod'),
@@ -117,6 +117,28 @@ const ProfileContainer = ({ navigation, route }: any) => {
     },
   ];
 
+  const handleRateApp = async () => {
+    const appId = '6759791247';
+    const packageName = 'com.dotcura.app';
+
+    try {
+      if (Platform.OS === 'ios') {
+        await Linking.openURL(
+          `itms-apps://itunes.apple.com/app/id${appId}?action=write-review`,
+        );
+      } else {
+        await Linking.openURL(`market://details?id=${packageName}`);
+      }
+    } catch (error) {
+      const fallbackUrl =
+        Platform.OS === 'ios'
+          ? `https://apps.apple.com/app/id${appId}`
+          : `https://play.google.com/store/apps/details?id=${packageName}`;
+
+      Linking.openURL(fallbackUrl);
+    }
+  };
+
   const dataThree = [
     {
       id: '1',
@@ -132,7 +154,7 @@ const ProfileContainer = ({ navigation, route }: any) => {
       title: getTranslation('rateapp'),
       image: images.imgShareProfile,
       onpressfun: () => {
-        console.log('rate');
+        handleRateApp();
       },
       iscurv: false,
     },

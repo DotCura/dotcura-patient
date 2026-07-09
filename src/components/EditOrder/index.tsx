@@ -23,7 +23,7 @@ import CustomDropdown from '../../global/DropDown/CustomDropDown';
 import CustomButton from '../../global/Buttons';
 import TimeSlotPicker from '../../global/TimeSlotPicker';
 import AddressModel from '../../global/AddressModel/AddressModel';
-import { isPlatformiOS } from '../../constants/AppConstants';
+import { isPlatformiOS, ScreenNames } from '../../constants/AppConstants';
 import TitleSubtitle from '../../global/TitleSubtitle';
 import { fontSize } from '../../constants/FontSizes';
 import GooglePlacesTextInput from 'react-native-google-places-textinput';
@@ -94,6 +94,9 @@ const EditOrderComponent = (props: any) => {
           <TouchableOpacity
             style={styles.vwHelp}
             activeOpacity={activityOpacity}
+            onPress={() => {
+              props.navigation.navigate(ScreenNames.CONTACTUSCONTAINER);
+            }}
           >
             <Image source={images.imgHelp} />
             <Text style={styles.lblHelp}>{getTranslation('help')}</Text>

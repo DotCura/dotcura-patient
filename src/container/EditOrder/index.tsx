@@ -422,8 +422,6 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       return false;
     }
 
-    
-
     if (!testkitsData.length) {
       flashMessageWarning(getTranslation('cartempty'));
       return false;
@@ -935,45 +933,45 @@ const EditOrderContainer = ({ navigation, route }: any) => {
     }, 500); // match animationOut duration
   };
 
-  const header = () => {
-    navigation.setOptions({
-      header: () => (
-        <View style={{}}>
-          <View
-            style={[
-              styles.vwMain,
-              {
-                paddingTop: orderStatus == '' ? insets.top + 10 : getHeight(25),
-              },
-            ]}
-          >
-            <View style={styles.vwHeaderLeft}>
-              <TouchableOpacity
-                activeOpacity={activityOpacity}
-                style={styles.btnBack}
-                onPress={() => {
-                  navigation.goBack();
-                }}
-              >
-                <Image source={images.imgLeftArrow} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.vwHelp}
-                activeOpacity={activityOpacity}
-              >
-                <Image source={images.imgHelp} />
-                <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      ),
-    });
-  };
+  // const header = () => {
+  //   navigation.setOptions({
+  //     header: () => (
+  //       <View style={{}}>
+  //         <View
+  //           style={[
+  //             styles.vwMain,
+  //             {
+  //               paddingTop: orderStatus == '' ? insets.top + 10 : getHeight(25),
+  //             },
+  //           ]}
+  //         >
+  //           <View style={styles.vwHeaderLeft}>
+  //             <TouchableOpacity
+  //               activeOpacity={activityOpacity}
+  //               style={styles.btnBack}
+  //               onPress={() => {
+  //                 navigation.goBack();
+  //               }}
+  //             >
+  //               <Image source={images.imgLeftArrow} />
+  //             </TouchableOpacity>
+  //             <TouchableOpacity
+  //               style={styles.vwHelp}
+  //               activeOpacity={activityOpacity}
+  //             >
+  //               <Image source={images.imgHelp} />
+  //               <Text style={styles.lblHelp}>{getTranslation('help')}</Text>
+  //             </TouchableOpacity>
+  //           </View>
+  //         </View>
+  //       </View>
+  //     ),
+  //   });
+  // };
 
-  useEffect(() => {
-    header();
-  }, []);
+  // useEffect(() => {
+  //   header();
+  // }, []);
 
   //================= API ==============================
 
