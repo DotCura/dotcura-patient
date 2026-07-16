@@ -1,10 +1,7 @@
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { styles } from './styles';
-import { getHeight, getWidth } from '../../constants/StylesConstants';
 
-import { ImageConstants } from '../../constants/ImageConstants';
-import { FontFamily } from '../../constants/FontFamily';
 import { Colors } from '../../constants/Colors';
 
 const PrimaryTitleSecurityTextInput = ({
@@ -34,15 +31,13 @@ const PrimaryTitleSecurityTextInput = ({
           multiline && styles.multilineContainer,
           multiline && {
             paddingVertical: getWidth(8),
-          }
+          },
         ]}
       >
         <View style={styles.vwTextInputAndIcon}>
           <Image source={props.fieldIcon} style={styles.imgLeftIcon}></Image>
         </View>
-        <View
-          style={styles.verticalLine}
-        ></View>
+        <View style={styles.verticalLine}></View>
         <View style={{ flex: 1 }}>
           <TextInput
             keyboardAppearance="dark"
@@ -59,8 +54,9 @@ const PrimaryTitleSecurityTextInput = ({
               styles.input,
               multiline && styles.multilineInput,
               {
-                fontFamily: value.length>0?FontFamily.Medium:FontFamily.Regular,
-                marginTop:!multiline && 4
+                fontFamily:
+                  value.length > 0 ? FontFamily.Medium : FontFamily.Regular,
+                marginTop: !multiline && 4,
               },
             ]}
             multiline={multiline}
@@ -69,11 +65,11 @@ const PrimaryTitleSecurityTextInput = ({
           />
         </View>
         <TouchableOpacity
-          style={{ alignSelf: 'center',marginLeft:getWidth(10) }}
+          style={{ alignSelf: 'center', marginLeft: getWidth(10) }}
           onPress={() => setIsPasswordVisible(prevState => !prevState)}
         >
           <Image
-            style={{ height: getHeight(25), aspectRatio:1 }}
+            style={{ height: getHeight(25), aspectRatio: 1 }}
             tintColor={Colors.black30}
             source={
               isPasswordVisible

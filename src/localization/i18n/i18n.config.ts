@@ -1,14 +1,13 @@
 import i18next from 'i18next';
-import {en,es} from '../translation';
-import {initReactI18next} from 'react-i18next';
-import * as RNLocalize from 'react-native-localize';
-import {MmkvManager, storage} from '../../constants/utils/MmkvManager';
-import {I18nManager} from 'react-native';
+import { en, es } from '../translation';
+import { initReactI18next } from 'react-i18next';
+import { MmkvManager, storage } from '../../constants/utils/MmkvManager';
+import { I18nManager } from 'react-native';
 import RNRestart from 'react-native-restart';
 
 const resources = {
-  en: {translation: en},
-  es: {translation: es},
+  en: { translation: en },
+  es: { translation: es },
 };
 
 export const initI18n = async () => {

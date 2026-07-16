@@ -1,5 +1,3 @@
-
-
 import React, { ReactNode, memo, useEffect, useRef } from 'react';
 import {
   NativeEventEmitter,
@@ -29,7 +27,7 @@ const AppLayout = memo(
 
     console.log('🔄 AppLayout render - orderStatus:', isOrderPlaced);
     console.log('📍 Current Route:', currentRouteName);
-    
+
     const { LiveActivityModule } = NativeModules;
     // Get order data from store
     const orderData: any = ZustandStores.OrderstatusStore(
@@ -46,70 +44,6 @@ const AppLayout = memo(
       currentRouteName === ScreenNames.CUSTOMSPLASHCONTAINER;
 
     const hasStartedLiveActivity = useRef(false);
-
-    //for android
-    // useEffect(() => {
-    //   if (Platform.OS !== 'android') return;
-
-    //   console.log(
-    //     '📱 Live Activity status update: android ',
-    //     orderData?.status,
-    //   );
-    //   console.log('📱 Live Activity status update:data android', orderData);
-
-    //   if (orderData?.status === 'Request' && !hasStartedLiveActivity.current) {
-    //     LiveActivityModule.show(
-
-    //       'Ordine inviato',
-    //       'La tua richiesta è stata registrata. Stiamo cercando un infermiere per te...',
-    //       'Request',
-    //     );
-
-    //     hasStartedLiveActivity.current = true;
-    //   }
-
-    //   if (orderData?.status === 'Accept') {
-    //     LiveActivityModule.show(
-    //       'Visita confermata',
-    //       'Ottime notizie! La visita è confermata per oggi alle.',
-    //       'Accept',
-    //     );
-    //   }
-
-    //   if (orderData?.status === 'Modified') {
-    //     LiveActivityModule.show(
-    //       'Visita modificata',
-    //       'L’infermiere ci ha comunicato che verrà a casa tua entro le',
-    //       'Modified',
-    //     );
-    //   }
-
-    //   if (orderData?.status === 'start_visit') {
-    //     LiveActivityModule.show(
-    //       orderData?.time || '20-30 minuti',
-    //       "L'infermiere ha iniziato la visita.",
-    //       'start_visit',
-    //     );
-    //   }
-
-    //   if (orderData?.status === 'arrived') {
-    //     LiveActivityModule.show(
-    //       `${orderData?.name || 'Nurse'} è qui.`,
-    //       'È il momento di farsi visitare.',
-    //       'arrived',
-    //     );
-    //   }
-
-    //   if (orderData?.status === 'Rejected') {
-    //     LiveActivityModule.stop();
-    //     hasStartedLiveActivity.current = false;
-    //   }
-
-    //   if (orderData?.status === '') {
-    //     LiveActivityModule.stop();
-    //     hasStartedLiveActivity.current = false;
-    //   }
-    // }, [orderData?.status, orderData]);
 
     useEffect(() => {
       if (Platform.OS !== 'ios') return;
