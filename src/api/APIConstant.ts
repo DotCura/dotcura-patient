@@ -2,7 +2,6 @@ export const isLive = true;
 
 // Base url
 export const ApiBaseURL = {
-  // DEVELOPMENT_DEMO: 'http://3.108.139.142:6013/api/v1/',
   DEVELOPMENT_AUTH: isLive
     ? 'https://auth-api.dotcura.com/api/v1/auth/'
     : 'https://staging-auth-api.dotcura.com/api/v1/auth/',
