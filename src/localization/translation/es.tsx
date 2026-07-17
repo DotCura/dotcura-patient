@@ -5,7 +5,7 @@ export default {
   //INTRO
   introtitle: 'Benvenuto in dotCura',
   introsubtitle:
-    'Nisl laoreet commodo pharetra senectus ipsum tempor at augue volutpat. Quisque sit aliquam integer aliquet.',
+    'Analizza i tuoi dati in modo semplice e intuitivo, ottenendo informazioni chiare e utili sul tuo stato di salute.',
 
   //ONBOARDING
   onboardingtitle1: 'Esami a domicilio, easy',
