@@ -10,7 +10,9 @@ import {
   setOpenedFromNotification,
 } from '../../constants/GConstant';
 
-const rnBiometrics = new ReactNativeBiometrics({ allowDeviceCredentials: true });
+const rnBiometrics = new ReactNativeBiometrics({
+  allowDeviceCredentials: true,
+});
 
 const CustomSplashContainer = ({ navigation }: any) => {
   const [showBiometricOverlay, setShowBiometricOverlay] = useState(false);
@@ -50,8 +52,13 @@ const CustomSplashContainer = ({ navigation }: any) => {
         msg.includes('dismissed') ||
         msg.includes('user cancel')
       ) {
-        setBiometricError('Autenticazione annullata. Premi il pulsante per riprovare.');
-      } else if (msg.includes('not available') || msg.includes('not enrolled')) {
+        setBiometricError(
+          'Autenticazione annullata. Premi il pulsante per riprovare.',
+        );
+      } else if (
+        msg.includes('not available') ||
+        msg.includes('not enrolled')
+      ) {
         setBiometricError(
           'Biometria non configurata. Abilita Face ID nelle Impostazioni.',
         );

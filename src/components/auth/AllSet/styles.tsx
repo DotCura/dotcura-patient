@@ -16,7 +16,6 @@ export const styles = StyleSheet.create({
     color: Colors.gray0F,
     fontSize: fontSize.size28,
     fontFamily: fontsfamily.gmedium,
-    marginTop: getHeight(40),
     textAlign: 'center',
   },
   lblMainSubtitle: {

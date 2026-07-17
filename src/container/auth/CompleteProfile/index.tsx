@@ -65,6 +65,10 @@ const CompleteProfileContainer = ({ navigation }: any) => {
     let newText = text.replace(/[0-9]/g, '');
     newText = newText.replace(/^\s+/, '');
     newText = newText.replace(/\s{2,}/g, ' ');
+    newText = newText
+      .split(' ')
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
     setFullName(newText);
   };
 
@@ -72,6 +76,10 @@ const CompleteProfileContainer = ({ navigation }: any) => {
     let newText = text.replace(/[0-9]/g, '');
     newText = newText.replace(/^\s+/, '');
     newText = newText.replace(/\s{2,}/g, ' ');
+    newText = newText
+      .split(' ')
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
     setSurname(newText);
   };
 

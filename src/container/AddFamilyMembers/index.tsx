@@ -26,10 +26,9 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const isEdit = route?.params?.editFamilyMember === true;
   const editData = route?.params?.editFamilyMemberData;
-  console.log("editData",editData);
-  console.log("Taxcode",editData?.tax_code);
-  
-  
+  console.log('editData', editData);
+  console.log('Taxcode', editData?.tax_code);
+
   const familyMemberId = route?.params?.familyMemberId;
 
   useEffect(() => {
@@ -144,6 +143,10 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
     let newText = text.replace(/[0-9]/g, '');
     newText = newText.replace(/^\s+/, '');
     newText = newText.replace(/\s{2,}/g, ' ');
+    newText = newText
+      .split(' ')
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
     setFullName(newText);
   };
 
@@ -151,6 +154,10 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
     let newText = text.replace(/[0-9]/g, '');
     newText = newText.replace(/^\s+/, '');
     newText = newText.replace(/\s{2,}/g, ' ');
+    newText = newText
+      .split(' ')
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
     setSurname(newText);
   };
 
@@ -410,21 +417,15 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
     console.log('id------', id);
 
     if (type === 'patologie') {
-      setPatologie((prev: any) =>
-        prev.filter((item: any) => item.id !== id)
-    );
+      setPatologie((prev: any) => prev.filter((item: any) => item.id !== id));
     }
 
     if (type === 'medicazioni') {
-      setMedicazioni((prev: any) =>
-        prev.filter((item: any) => item.id !== id)
-    );
+      setMedicazioni((prev: any) => prev.filter((item: any) => item.id !== id));
     }
 
     if (type === 'allergie') {
-      setAllergie((prev: any) =>
-        prev.filter((item: any) => item.id !== id)
-    );
+      setAllergie((prev: any) => prev.filter((item: any) => item.id !== id));
     }
   };
 

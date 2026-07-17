@@ -55,6 +55,10 @@ const AccountContainer = ({ navigation }: any) => {
     let newText = text.replace(/[0-9]/g, '');
     newText = newText.replace(/^\s+/, '');
     newText = newText.replace(/\s{2,}/g, ' ');
+    newText = newText
+      .split(' ')
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
     setFullName(newText);
   };
   const onChagePlaceOfBirth = (text: any) => {
@@ -68,6 +72,10 @@ const AccountContainer = ({ navigation }: any) => {
     let newText = text.replace(/[0-9]/g, '');
     newText = newText.replace(/^\s+/, '');
     newText = newText.replace(/\s{2,}/g, ' ');
+    newText = newText
+      .split(' ')
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
     setSurname(newText);
   };
 
@@ -103,8 +111,10 @@ const AccountContainer = ({ navigation }: any) => {
     const strFullName = fullName != null ? String(fullName).trim() : '';
     const strSurname = surname != null ? String(surname).trim() : '';
     const strEmail = email != null ? String(email).trim() : '';
-    const strPlaceOfBirth = placeOfBirth != null ? String(placeOfBirth).trim() : '';
-    const strFormattedDate = formattedDate != null ? String(formattedDate).trim() : '';
+    const strPlaceOfBirth =
+      placeOfBirth != null ? String(placeOfBirth).trim() : '';
+    const strFormattedDate =
+      formattedDate != null ? String(formattedDate).trim() : '';
     const strTaxCode = taxCode != null ? String(taxCode).trim() : '';
 
     console.log('Validation debug - fields:', {
@@ -114,7 +124,7 @@ const AccountContainer = ({ navigation }: any) => {
       strPlaceOfBirth,
       strFormattedDate,
       strTaxCode,
-      formatedDateForApi
+      formatedDateForApi,
     });
 
     if (!strFullName) {
@@ -152,11 +162,16 @@ const AccountContainer = ({ navigation }: any) => {
       setTaxCodeError(getTranslation('errorMessageTaxCodeRequired'));
       return;
     } else if (strTaxCode.length !== 16) {
-      console.log('Validation failed: taxCode length is not 16:', strTaxCode.length);
+      console.log(
+        'Validation failed: taxCode length is not 16:',
+        strTaxCode.length,
+      );
       setTaxCodeError(getTranslation('errorMessageTaxCodeValid'));
       return;
     } else {
-      console.log('✅ Profile completed successfully, calling _updateProfileApi');
+      console.log(
+        '✅ Profile completed successfully, calling _updateProfileApi',
+      );
       await _updateProfileApi();
     }
   };
@@ -367,7 +382,9 @@ const AccountContainer = ({ navigation }: any) => {
               ? moment(value.dob).format('DD/MM/YYYY')
               : DEFAULT_DOB,
           );
-          setPlaceOfBirth(value.place_of_dob != null ? String(value.place_of_dob) : '');
+          setPlaceOfBirth(
+            value.place_of_dob != null ? String(value.place_of_dob) : '',
+          );
           setFormatedDateForApi(formatedDateForApi == null ? '' : value.dob);
 
           // 🔥 MEDICAL INFO MAPPING

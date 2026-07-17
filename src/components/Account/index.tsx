@@ -139,7 +139,7 @@ const AccountComponent = (props: any) => {
               mode="date"
               onConfirm={props.handleConfirm}
               onCancel={props.hideDatePicker}
-              minimumDate={moment(today).subtract(18, 'years').toDate()}
+              maximumDate={moment(today).subtract(18, 'years').toDate()}
               date={
                 props.formattedDate && props.formattedDate !== ''
                   ? moment(props.formattedDate, 'DD/MM/YYYY').toDate()

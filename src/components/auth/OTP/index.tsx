@@ -1,4 +1,10 @@
-import { Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Keyboard,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import { styles } from './styles';
 import CustomButton from '../../../global/Buttons';
@@ -49,38 +55,6 @@ const OTPComponent = (props: any) => {
             </View>
           </View>
 
-          {/* inputView */}
-          {/* <View style={styles.vwOtpMain}>
-            {props?.otpArray?.map((item: any, index: any) => {
-              return (
-                <View style={styles.vwTxtInput} key={index}>
-                  <TextInput
-                    maxLength={1}
-                    placeholderTextColor={Colors.blue17}
-                    selectionColor={Colors.gray75}
-                    cursorColor={Colors.gray75}
-                    inputMode="numeric"
-                    style={styles.txtInput}
-                    value={item?.value}
-                    ref={item?.ref}
-                    blurOnSubmit={index == props?.otpArray?.length - 1}
-                    returnKeyType={
-                      index == props?.otpArray?.length - 1 ? 'default' : 'next'
-                    }
-                    onChangeText={text => {
-                      props.handleOnChangeText(text, index);
-                    }}
-                    onKeyPress={nativeEvent => {
-                      props.handleOnKeyPress(nativeEvent, item, index);
-                    }}
-                    onSubmitEditing={() => {
-                      props?.handleOnSubmit(index);
-                    }}
-                  />
-                </View>
-              );
-            })}
-          </View> */}
           <OtpInput
             ref={props.otpRef}
             numberOfDigits={6}
@@ -106,7 +80,6 @@ const OTPComponent = (props: any) => {
               pinCodeTextStyle: styles.txtInputotp,
               focusedPinCodeContainerStyle: styles.txtInputFocus,
               focusStickStyle: styles.txtInputFocusfixed,
-              // placeholderTextStyle: styles.placeholderText,
             }}
           />
           <Text style={styles.lblResendWarning}>
@@ -128,6 +101,8 @@ const OTPComponent = (props: any) => {
         <CustomButton
           btnPress={props.handleOnPressNext}
           btnTitle={getTranslation('next')}
+          disabled={(props.OTP?.length ?? 0) < 6}
+          style={{ opacity: (props.OTP?.length ?? 0) < 6 ? 0.5 : 1 }}
         />
         <TouchableOpacity
           activeOpacity={activityOpacity}
