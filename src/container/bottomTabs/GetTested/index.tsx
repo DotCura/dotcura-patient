@@ -437,6 +437,10 @@ const GetTestedContainer = ({ navigation }: any) => {
   useFocusEffect(
     useCallback(() => {
       checkup?.reset?.();
+      return () => {
+        setSearchVisible(false);
+        setSeachHistory('');
+      };
     }, []),
   );
 

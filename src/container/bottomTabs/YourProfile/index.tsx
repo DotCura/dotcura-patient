@@ -2,6 +2,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import YourProfileComponent from '../../../components/bottomTabs/YourProfile';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
 import { styles } from './styles';
 import {
   activityOpacity,
@@ -561,6 +562,15 @@ const YourProfileContainer = ({ navigation }: any) => {
       pendingOrder.reset();
     }
   }, [selectedFamilyId]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setSearchVisible(false);
+        setSeachHistory('');
+      };
+    }, []),
+  );
 
   const handleRefresh = () => {
     AnalitiList.refresh();

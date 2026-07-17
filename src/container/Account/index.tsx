@@ -106,6 +106,7 @@ const AccountContainer = ({ navigation }: any) => {
     setTaxCodeError('');
     setSurnameError('');
     setPlaceOfBirthErrorError('');
+    setDateError('');
     console.log('below error ');
 
     const strFullName = fullName != null ? String(fullName).trim() : '';
@@ -131,49 +132,66 @@ const AccountContainer = ({ navigation }: any) => {
       console.log('Validation failed: fullName is empty');
       setFullNameError(getTranslation('errorMessageFullNameRequired'));
       return;
-    } else if (strFullName.length < 2) {
+    }
+    if (strFullName.length < 2) {
       console.log('Validation failed: fullName is too short');
       setFullNameError(getTranslation('errorMessageFullNameTooShort'));
       return;
-    } else if (!strSurname) {
+    }
+    if (!strSurname) {
       console.log('Validation failed: surname is empty');
       setSurnameError(getTranslation('errorMessageSurnameRequired'));
       return;
-    } else if (!strEmail) {
+    }
+    if (!strEmail) {
       console.log('Validation failed: email is empty');
       setEmailError(getTranslation('errorMessageEmail'));
       return;
-    } else if (!regex.email.test(strEmail)) {
+    }
+    if (!regex.email.test(strEmail)) {
       console.log('Validation failed: email format invalid');
       setEmailError(getTranslation('errorMessageValidEmail'));
       return;
-    } else if (!strPlaceOfBirth) {
-      console.log('Validation failed: placeOfBirth is null or empty');
+    }
+    if (strPlaceOfBirth && strPlaceOfBirth.length < 2) {
+      console.log('Validation failed: placeOfBirth is too short');
       setPlaceOfBirthErrorError(
-        getTranslation('errorMessagePlaceOfBirthRequired'),
+        'Il luogo di nascita deve avere almeno 2 caratteri',
       );
       return;
-    } else if (strFormattedDate === '') {
-      console.log('Validation failed: formattedDate is empty');
-      flashMessageWarning(getTranslation('pleaseselectdateofbirth'));
-      return;
-    } else if (!strTaxCode) {
+    }
+    if (strFormattedDate !== '') {
+      const birthDate = moment(strFormattedDate, 'DD/MM/YYYY');
+      if (!birthDate.isValid()) {
+        console.log('Validation failed: formattedDate is invalid');
+        setDateError('Data di nascita non valida');
+        return;
+      }
+      const age = moment().diff(birthDate, 'years');
+      if (age < 18) {
+        console.log('Validation failed: age is under 18');
+        setDateError('Devi avere almeno 18 anni');
+        return;
+      }
+    }
+    if (!strTaxCode) {
       console.log('Validation failed: taxCode is empty');
       setTaxCodeError(getTranslation('errorMessageTaxCodeRequired'));
       return;
-    } else if (strTaxCode.length !== 16) {
+    }
+    if (strTaxCode.length !== 16) {
       console.log(
         'Validation failed: taxCode length is not 16:',
         strTaxCode.length,
       );
       setTaxCodeError(getTranslation('errorMessageTaxCodeValid'));
       return;
-    } else {
-      console.log(
-        '✅ Profile completed successfully, calling _updateProfileApi',
-      );
-      await _updateProfileApi();
     }
+
+    console.log(
+      '✅ Profile completed successfully, calling _updateProfileApi',
+    );
+    await _updateProfileApi();
   };
 
   const showDatePicker = () => {
@@ -194,6 +212,8 @@ const AccountContainer = ({ navigation }: any) => {
     const formatted = moment(date).format('DD/MM/YYYY');
     setFormattedDate(formatted);
     console.log(formatted);
+
+    setDateError('');
 
     hideDatePicker();
   };

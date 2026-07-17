@@ -2,6 +2,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  Keyboard,
   Modal,
   Pressable,
   Text,
@@ -35,12 +36,20 @@ const GetTestedComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
 
   const searchAnim = useSharedValue(0); // 0 = header, 1 = search
+  const searchInputRef = React.useRef<any>(null);
 
   React.useEffect(() => {
     searchAnim.value = withTiming(props.searchVisible ? 1 : 0, {
       duration: 300, // 0.3s
       easing: Easing.bezier(0.22, 0.68, 0.01, 0.99),
     });
+
+    if (props.searchVisible) {
+      const timer = setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
   }, [props.searchVisible]);
 
   const headerAnimStyle = useAnimatedStyle(() => ({
@@ -127,10 +136,10 @@ const GetTestedComponent = (props: any) => {
           <View style={styles.vwTextinputIcon}>
             <Image source={images.imgSearchBlack} />
             <TextInput
+              ref={searchInputRef}
               style={styles.textinputsearch}
               cursorColor={Colors.gray0F}
               selectionColor={Colors.gray0F}
-              autoFocus={props.searchVisible}
               value={props.searchHistory}
               onChangeText={(text: any) => {
                 props.setSeachHistory(text);
@@ -142,6 +151,7 @@ const GetTestedComponent = (props: any) => {
             onPress={() => {
               props.setSearchVisible(false);
               props.setSeachHistory('');
+              Keyboard.dismiss();
             }}
             style={styles.btnClose}
             activeOpacity={activityOpacity}
@@ -266,7 +276,7 @@ const GetTestedComponent = (props: any) => {
           contentContainerStyle={{
             gap: getWidth(12),
             marginTop: getHeight(20),
-            alignSelf: 'center',
+            paddingHorizontal: getWidth(24),
             paddingBottom: getHeight(150),
           }}
         />

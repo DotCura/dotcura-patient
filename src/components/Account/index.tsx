@@ -13,6 +13,7 @@ import { getHeight } from '../../constants/utils/Dimensions';
 import { activityOpacity } from '../../constants/GConstant';
 import AddItemModal from '../../global/AddItemModel/AddItemModal';
 import AppHeader from '../../global/Header';
+import { Colors } from '../../constants/Colors';
 
 const AccountComponent = (props: any) => {
   const today = new Date();
@@ -123,7 +124,15 @@ const AccountComponent = (props: any) => {
               <Text style={styles.txtDateOfBirth}>
                 {getTranslation('dateofbirth')}
               </Text>
-              <View style={styles.vwinsideDate}>
+              <View
+                style={[
+                  styles.vwinsideDate,
+                  props.dateError && {
+                    borderColor: Colors.red8C,
+                    backgroundColor: Colors.redFD,
+                  },
+                ]}
+              >
                 <Image source={images.imgCalenderDOB} />
                 <Text
                   style={[
@@ -138,6 +147,12 @@ const AccountComponent = (props: any) => {
                 </Text>
               </View>
             </TouchableOpacity>
+            {props.dateError && (
+              <View style={styles.vwError}>
+                <Image source={images.imgWarning} />
+                <Text style={styles.lablWarning}>{props.dateError}</Text>
+              </View>
+            )}
 
             <DateTimePickerModal
               locale="es"

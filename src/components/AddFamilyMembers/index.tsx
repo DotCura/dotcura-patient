@@ -117,7 +117,15 @@ const AddFamilyMemberComponent = (props: any) => {
               <Text style={styles.txtDateOfBirth}>
                 {getTranslation('dateofbirth')}
               </Text>
-              <View style={styles.vwinsideDate}>
+              <View
+                style={[
+                  styles.vwinsideDate,
+                  props.dateError && {
+                    borderColor: Colors.red8C,
+                    backgroundColor: Colors.redFD,
+                  },
+                ]}
+              >
                 <Text
                   style={[
                     props.formattedDate == ''
@@ -131,6 +139,12 @@ const AddFamilyMemberComponent = (props: any) => {
                 </Text>
               </View>
             </TouchableOpacity>
+            {props.dateError && (
+              <View style={styles.vwError}>
+                <Image source={images.imgWarning} />
+                <Text style={styles.lablWarning}>{props.dateError}</Text>
+              </View>
+            )}
 
             <DateTimePickerModal
               locale="es"

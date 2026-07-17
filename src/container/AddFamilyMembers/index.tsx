@@ -26,8 +26,6 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
   const insets = useSafeAreaInsets();
   const isEdit = route?.params?.editFamilyMember === true;
   const editData = route?.params?.editFamilyMemberData;
-  console.log('editData', editData);
-  console.log('Taxcode', editData?.tax_code);
 
   const familyMemberId = route?.params?.familyMemberId;
 
@@ -207,6 +205,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
     setFullNameError('');
     setTaxCodeError('');
     setSurnameError('');
+    setDateError('');
 
     if (appTypeValue == '') {
       flashMessageWarning(getTranslation('pleaseselecttypeofrelationship'));
@@ -220,7 +219,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
       setSurnameError(getTranslation('errorMessageSurnameRequired'));
       return;
     } else if (formattedDate == '') {
-      flashMessageWarning(getTranslation('pleaseselectdateofbirth'));
+      setDateError(getTranslation('pleaseselectdateofbirth'));
       return;
     } else if (!taxCode.trim()) {
       setTaxCodeError(getTranslation('errorMessageTaxCodeRequired'));
@@ -268,6 +267,8 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
     const formatted = moment(date).format('DD/MM/YYYY');
     setFormattedDate(formatted);
     console.log(formatted);
+
+    setDateError('');
 
     hideDatePicker();
   };

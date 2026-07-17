@@ -2,6 +2,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  Keyboard,
   Pressable,
   Text,
   TextInput,
@@ -34,12 +35,20 @@ const YourProfileComponent = (props: any) => {
   const { orderStatus } = ZustandStores.OrderstatusStore();
 
   const searchAnim = useSharedValue(0);
+  const searchInputRef = React.useRef<any>(null);
 
   React.useEffect(() => {
     searchAnim.value = withTiming(props.searchVisible ? 1 : 0, {
       duration: 300,
       easing: Easing.bezier(0.22, 0.68, 0.01, 0.99),
     });
+
+    if (props.searchVisible) {
+      const timer = setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
   }, [props.searchVisible]);
 
   const headerAnimStyle = useAnimatedStyle(() => ({
@@ -315,10 +324,10 @@ const YourProfileComponent = (props: any) => {
           <View style={styles.vwTextinputIcon}>
             <Image source={images.imgSearchBlack} />
             <TextInput
+              ref={searchInputRef}
               style={styles.textinputsearch}
               cursorColor={Colors.gray0F}
               selectionColor={Colors.gray0F}
-              autoFocus={props.searchVisible}
               value={props.searchHistory}
               onChangeText={(text: any) => {
                 props.setSeachHistory(text);
@@ -330,6 +339,7 @@ const YourProfileComponent = (props: any) => {
             onPress={() => {
               props.setSearchVisible(false);
               props.setSeachHistory('');
+              Keyboard.dismiss();
             }}
             style={styles.btnClose}
             activeOpacity={activityOpacity}
