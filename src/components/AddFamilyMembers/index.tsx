@@ -76,7 +76,10 @@ const AddFamilyMemberComponent = (props: any) => {
             keyaboardType={'default'}
             value={props.fullName}
             onChangeFun={props.onChangeFullName}
-            autoCapitalize={'none'}
+            autoCapitalize={'words'}
+            autoCorrect={false}
+            spellCheck={false}
+            style={{ textTransform: 'capitalize' }}
             errorMessage={props.fullNameError}
             setErrorMessage={props.setFullNameError} // ✅ Just pass this once
             maxlength={200}
@@ -94,7 +97,10 @@ const AddFamilyMemberComponent = (props: any) => {
             keyaboardType={'default'}
             value={props.surname}
             onChangeFun={props.onChangeSurname}
-            autoCapitalize={'none'}
+            autoCapitalize={'words'}
+            autoCorrect={false}
+            spellCheck={false}
+            style={{ textTransform: 'capitalize' }}
             errorMessage={props.surnameError}
             setErrorMessage={props.setSurnameError} // ✅ Just pass this once
             maxlength={200}
@@ -150,7 +156,10 @@ const AddFamilyMemberComponent = (props: any) => {
             keyaboardType={'default'}
             value={props.taxCode}
             onChangeFun={props.onChangeTaxCode}
-            autoCapitalize={'none'}
+            autoCapitalize={'characters'}
+            autoCorrect={false}
+            spellCheck={false}
+            style={{ textTransform: 'uppercase' }}
             errorMessage={props.taxCodeError}
             setErrorMessage={props.setTaxCodeError}
             maxlength={ValidationConstant.maxTaxCode}

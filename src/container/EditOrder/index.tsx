@@ -133,7 +133,12 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   const [analiticount, setAnalitiCount] = useState(31);
 
   //SUMAARY SECTION VARIABLES
-  const homeServiceCharge = 20;
+  const homeServiceCharge = useMemo(() => {
+    return testkitsData.reduce(
+      (max: number, item: any) => Math.max(max, Number(item.home_service || 0)),
+      0,
+    );
+  }, [testkitsData]);
   const subtotal = useMemo(() => {
     return testkitsData.reduce(
       (sum: number, item: any) => sum + Number(item.price),
@@ -142,7 +147,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
   }, [testkitsData]);
   const total = useMemo(() => {
     return subtotal + homeServiceCharge - discountValue;
-  }, [subtotal, discountValue]);
+  }, [subtotal, homeServiceCharge, discountValue]);
 
   //SCHEDULE
   const originalScheduleRef = useRef<{
@@ -1664,6 +1669,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       test_ids: k.test_ids,
       kit_type: k.kit?.kit_type, // or CHECKUP based on backend
       kit_image: k.kit?.kit_image_url,
+      home_service: k.home_service ?? k.kit?.home_service ?? '0',
     }));
 
     setTestsKitData(formattedKits);
@@ -1687,6 +1693,7 @@ const EditOrderContainer = ({ navigation, route }: any) => {
       test_ids: k.test_ids,
       kit_type: k.kit?.kit_type, // or CHECKUP based on backend
       kit_image: k.kit?.kit_image_url,
+      home_service: k.home_service ?? k.kit?.home_service ?? '0',
     }));
 
     setTestsKitData(formattedKits);

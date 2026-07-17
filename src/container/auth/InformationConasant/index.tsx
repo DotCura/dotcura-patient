@@ -20,6 +20,7 @@ const InformationConasantContainer = ({ navigation }: any) => {
 
   const [consentList, setConsentList] = useState<any[]>([]);
   const [selectedConsents, setSelectedConsents] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getConsentList();
@@ -27,13 +28,18 @@ const InformationConasantContainer = ({ navigation }: any) => {
 
   const getConsentList = async () => {
     toggleLoader(true);
+    setIsLoading(true);
     try {
       const callback = (responseData: any) => {
         toggleLoader(false);
+        setIsLoading(false);
         if (responseData.code === StatusCode.SUCCESS) {
           setConsentList(responseData.data?.items || []);
-        } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
-          flashMessageWarning(responseData.message);
+        } else {
+          setConsentList([]);
+          if (responseData.code === StatusCode.INVALID_OR_FAIL) {
+            flashMessageWarning(responseData.message);
+          }
         }
       };
 
@@ -45,6 +51,8 @@ const InformationConasantContainer = ({ navigation }: any) => {
       });
     } catch (err) {
       toggleLoader(false);
+      setIsLoading(false);
+      setConsentList([]);
       console.log('Error:', err);
     }
   };
@@ -112,6 +120,7 @@ const InformationConasantContainer = ({ navigation }: any) => {
       isContinueDisabled={isContinueDisabled}
       handlePressContinue={handlePressContinue}
       navigation={navigation}
+      isLoading={isLoading}
     />
   );
 };

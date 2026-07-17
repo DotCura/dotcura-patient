@@ -1,4 +1,4 @@
-import { Image, Text, TextInput, View } from 'react-native';
+import { Image, Text, TextInput, View, Platform } from 'react-native';
 import React, { useImperativeHandle, useRef, useState } from 'react';
 import { styles } from './styles';
 import { getHeight, getWidth } from '../../constants/utils/Dimensions';
@@ -22,6 +22,8 @@ const PrimaryTitleTextInput = ({
   setErrorMessage,
   onFocus,
   onBlur,
+  style,
+  autoCapitalize,
   ...props
 }: any) => {
   const [multiline, setMultiline] = useState(isMultiline);
@@ -119,11 +121,11 @@ const PrimaryTitleTextInput = ({
           <TextInput
             ref={inputRef}
             keyboardAppearance="dark"
-            selectionColor={Colors.blue002}
+            selectionColor={Platform.OS === 'ios' ? Colors.blue002 : Colors.blue002_90}
             cursorColor={Colors.blue002}
             editable={props.editable}
             keyboardType={props.keyaboardType}
-            autoCapitalize={props.autoCapitalize ? 'none' : 'sentences'}
+            autoCapitalize={autoCapitalize || 'sentences'}
             maxLength={props.maxlength}
             returnKeyType={focusnext ? 'next' : 'default'}
             blurOnSubmit={blur ? true : false}
@@ -135,7 +137,7 @@ const PrimaryTitleTextInput = ({
             onChangeText={handleChangeText}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            style={[styles.input, multiline && styles.multilineInput, {}]}
+            style={[styles.input, multiline && styles.multilineInput, style]}
             multiline={multiline}
             numberOfLines={multiline ? 0 : 4}
             secureTextEntry={isPassword && !isPasswordVisible}

@@ -35,4 +35,17 @@ export const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     color: Colors.gray0F,
   },
+  vwNoData: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: getHeight(40),
+    marginTop: '50%',
+  },
+  txtNoData: {
+    color: Colors.gray75,
+    fontSize: fontSize.size16,
+    fontFamily: fontsfamily.gregular,
+    textAlign: 'center',
+    letterSpacing: 0.2,
+  },
 });

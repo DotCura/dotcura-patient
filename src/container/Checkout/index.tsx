@@ -142,7 +142,12 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   const [deletingCardId, setDeletingCardId] = useState<string | null>(null);
 
   //SUMAARY SECTION VARIABLES
-  const homeServiceCharge = 20;
+  const homeServiceCharge = useMemo(() => {
+    return testkitsData.reduce(
+      (max: number, item: any) => Math.max(max, Number(item.home_service || 0)),
+      0,
+    );
+  }, [testkitsData]);
   const subtotal = useMemo(() => {
     return testkitsData.reduce(
       (sum: number, item: any) => sum + Number(item.price),
@@ -151,7 +156,7 @@ const CheckoutContainer = ({ navigation, route }: any) => {
   }, [testkitsData]);
   const total = useMemo(() => {
     return subtotal + homeServiceCharge - discountValue;
-  }, [subtotal, discountValue]);
+  }, [subtotal, homeServiceCharge, discountValue]);
 
   //CHECKOUTFUNCTIONS
   const renderItemTestKits = ({ item }: any) => {

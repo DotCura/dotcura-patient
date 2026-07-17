@@ -53,6 +53,17 @@ const InformationConasantComponent = (props: any) => {
               data={props.consentList}
               keyExtractor={item => item.id.toString()}
               scrollEnabled={false}
+              ListEmptyComponent={() => {
+                if (props.isLoading) return null;
+                return (
+                  <View style={styles.vwNoData}>
+                    <Text style={styles.txtNoData}>
+                      {getTranslation('noConsentDataFound') ||
+                        'Nessun modulo di consenso disponibile al momento.'}
+                    </Text>
+                  </View>
+                );
+              }}
               renderItem={({ item }) => {
                 const isSelected = props.selectedConsents.includes(item.id);
 

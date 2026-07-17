@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Platform,
 } from 'react-native';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { styles } from './styles';
@@ -163,7 +164,7 @@ const PrimaryTitleMoblieNumber = ({
         <View style={{ flex: 1 }}>
           <TextInput
             keyboardAppearance="dark"
-            selectionColor={Colors.blue002}
+            selectionColor={Platform.OS === 'ios' ? Colors.blue002 : Colors.blue002_90}
             cursorColor={Colors.blue002}
             returnKeyType={focusnext ? 'next' : 'default'}
             keyboardType="phone-pad"

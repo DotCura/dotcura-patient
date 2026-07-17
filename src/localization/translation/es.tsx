@@ -45,12 +45,12 @@ export default {
 
   //COMPLETEPROFILE
   completeprofiletitle: 'Completa il tuo profilo',
-  completeprofilesubtitle: 'Aggiungi il tuo nome e numero di telefono.',
+  completeprofilesubtitle: 'Inserisci il tuo nome e il tuo indirizzo e-mail.',
   continue: 'Continua',
   submit: 'Enviar',
   fullnameplaceholder: 'Giovanni',
   emailplaceholder: 'giovanni@email.com',
-  taxcodeplaceholder: '0000000000000000',
+  taxcodeplaceholder: 'EKTBBD00000000X',
   fullnametitle: 'Nome',
   emailtitle: 'Email',
   taxcodetitle: 'Codice fiscale',
@@ -67,6 +67,7 @@ export default {
   constant2: 'nell’informativa',
   constant3:
     'Acconsento a ricevere comunicazioni promozionali e aggiornamenti sui prodotti e servizi.',
+  noConsentDataFound: 'Nessun modulo di consenso disponibile al momento.',
 
   //ADDCARD
   addcardtitle: 'Aggiungi carta',

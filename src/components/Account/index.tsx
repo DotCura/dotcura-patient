@@ -51,7 +51,10 @@ const AccountComponent = (props: any) => {
             keyaboardType={'default'}
             value={props.fullName}
             onChangeFun={props.onChangeFullName}
-            autoCapitalize={'none'}
+            autoCapitalize={'words'}
+            autoCorrect={false}
+            spellCheck={false}
+            style={{ textTransform: 'capitalize' }}
             errorMessage={props.fullNameError}
             setErrorMessage={props.setFullNameError}
             maxlength={200}
@@ -68,7 +71,10 @@ const AccountComponent = (props: any) => {
             keyaboardType={'default'}
             value={props.surname}
             onChangeFun={props.onChangeSurname}
-            autoCapitalize={'none'}
+            autoCapitalize={'words'}
+            autoCorrect={false}
+            spellCheck={false}
+            style={{ textTransform: 'capitalize' }}
             errorMessage={props.surnameError}
             setErrorMessage={props.setSurnameError}
             maxlength={200}
@@ -156,7 +162,10 @@ const AccountComponent = (props: any) => {
             keyaboardType={'default'}
             value={props.taxCode}
             onChangeFun={props.onChangeTaxCode}
-            autoCapitalize={'none'}
+            autoCapitalize={'characters'}
+            autoCorrect={false}
+            spellCheck={false}
+            style={{ textTransform: 'uppercase' }}
             errorMessage={props.taxCodeError}
             setErrorMessage={props.setTaxCodeError}
             maxlength={ValidationConstant.maxTaxCode}
