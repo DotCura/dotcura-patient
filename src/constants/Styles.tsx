@@ -19,6 +19,7 @@ export const constnatStyles = StyleSheet.create({
   keyboardContainer: {
     flexGrow: 1,
     backgroundColor: Colors.whiteF2,
+    paddingHorizontal: getWidth(16),
   },
   vwContainer: {
     flex: 1,

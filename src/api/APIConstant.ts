@@ -1,16 +1,29 @@
-export const isLive = false;
+import {
+  API_LIVE,
+  AUTH_API_LIVE_URL,
+  AUTH_API_STAGING_URL,
+  PAYMENT_API_LIVE_URL,
+  PAYMENT_API_STAGING_URL,
+  PATIENT_API_LIVE_URL,
+  PATIENT_API_STAGING_URL,
+  SECRET_KEY,
+  SECRET_IV,
+  API_KEY_VALUE,
+} from '@env';
+
+export const isLive = API_LIVE === 'true';
 
 // Base url
 export const ApiBaseURL = {
   DEVELOPMENT_AUTH: isLive
-    ? 'https://auth-api.dotcura.com/api/v1/auth/'
-    : 'https://staging-auth-api.dotcura.com/api/v1/auth/',
+    ? AUTH_API_LIVE_URL
+    : AUTH_API_STAGING_URL,
   DEVELOPMENT_PAYMENT: isLive
-    ? 'https://payment-api.dotcura.com/api/v1/booking/'
-    : 'https://staging-payment-api.dotcura.com/api/v1/booking/',
+    ? PAYMENT_API_LIVE_URL
+    : PAYMENT_API_STAGING_URL,
   DEVELOPMENT_PATIENT: isLive
-    ? 'https://patient-api.dotcura.com/api/v1/'
-    : 'https://staging-patient-api.dotcura.com/api/v1/',
+    ? PATIENT_API_LIVE_URL
+    : PATIENT_API_STAGING_URL,
 };
 
 // export const socketUrl = '';
@@ -157,14 +170,14 @@ export const StatusCode = {
 
 // API keys
 export const ApiKeys = {
-  SECRET_KEY: 'xza548sa3vcr641b5ng5nhy9mlo64r6k',
-  IV: '5ng5nhy9mlo64r6k',
+  SECRET_KEY: SECRET_KEY,
+  IV: SECRET_IV,
 };
 
 // API Header key
 export const ApiHeaderKeyValue = {
   API_KEY: 'health_care_app_api_key',
-  API_KEY_VALUE: '4NX0qEJ8tGsMriZShOu62fK6l5/Cpev7i5+y6uLYBRg=',
+  API_KEY_VALUE: API_KEY_VALUE,
   ACCEPT_LANGUAGE: 'accept-language',
 };
 

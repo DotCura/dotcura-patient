@@ -1,6 +1,7 @@
 import { Alert, LogBox } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import MainNavigation from './src/navigators/stackNavigator';
+import { STRIPE_LIVE_KEY, STRIPE_STAGING_KEY } from '@env';
 import { ScreenNames } from './src/constants/AppConstants';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { I18nextProvider } from 'react-i18next';
@@ -199,11 +200,7 @@ const App = ({ navigation }: any) => {
 
   return (
     <StripeProvider
-      publishableKey={
-        isLive
-          ? 'pk_live_51SSEO1CS48NNUfFtSLM7VG6xonXjAUn5clNrWaUKkPgyMW0gjZA1BsuD4i0641M4uG44aqFdwIqbsTMJABy88HYX00Kh0jNsZv'
-          : 'pk_test_51SSEOACJL1MzBMMlLtkE5S91t0A9SfWFAPAI2PyPTuaXflMRIkfgT9sNee2uPPTBqxiSedyMDV4AFxlq6m63dyNS00zSzuaGdv'
-      }
+      publishableKey={isLive ? STRIPE_LIVE_KEY : STRIPE_STAGING_KEY}
       urlScheme="dotcura"
       merchantIdentifier="merchant.com.dotcura.patient.app" // required for Apple Pay this is parth sir key
       setReturnUrlSchemeOnAndroid={true}

@@ -1,10 +1,4 @@
-import {
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-  FlatList,
-} from 'react-native';
+import { Image, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import React from 'react';
 import { styles } from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
@@ -32,7 +26,10 @@ const ConsentListComponent = (props: any) => {
         showEndBtn={false}
       />
       <KeyboardAwareScrollView
-        contentContainerStyle={[constnatStyles.keyboardContainer]}
+        contentContainerStyle={[
+          constnatStyles.keyboardContainer,
+          { paddingHorizontal: 0 },
+        ]}
         keyboardShouldPersistTaps="handled"
         bounces={false}
         showsVerticalScrollIndicator={false}
