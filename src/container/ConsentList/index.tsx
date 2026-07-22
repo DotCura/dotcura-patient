@@ -36,12 +36,12 @@ const ConsentListContainer = ({ navigation }: any) => {
           const list = responseData.data?.consent_list || [];
           setConsentList(list);
 
-          const patientConsents = responseData.data?.patient_consent_data || [];
-          const acceptedIds = patientConsents
+          const acceptedIds = list
             .filter(
-              (pc: any) => pc.is_accepted === 1 || pc.is_accepted === true,
+              (item: any) =>
+                item.is_accepted === 1 || item.is_accepted === true,
             )
-            .map((pc: any) => Number(pc.consent_id));
+            .map((item: any) => Number(item.id));
 
           setSelectedConsents(acceptedIds);
         } else {
