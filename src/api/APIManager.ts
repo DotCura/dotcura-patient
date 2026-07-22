@@ -111,6 +111,8 @@ export const APIManager = {
       ApiEndPoints.OTHER.GET_PRESIGNED_URL,
       ApiEndPoints.SETTINGS.GETCREDENTIAALS,
       ApiEndPoints.AUTH.GETCONSENTLIST,
+      ApiEndPoints.SETTINGS.GETCONSENTLISTUSER,
+      ApiEndPoints.SETTINGS.UPDATECONSENT,
     ];
 
     if (authEndPoints.includes(endPoint)) {

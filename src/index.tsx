@@ -34,6 +34,7 @@ export KitAnalysisContainer from "./container/KitAnlaysis";
 export TestDetailsContainer from "./container/TestDetails";
 export AddFamilyContainer from "./container/AddFamily";
 export ProfileContainer from "./container/Profile";
+export ConsentListContainer from "./container/ConsentList";
 export AddAddressContainer from "./container/AddAddress";
 export CompleteAddressContainer from "./container/CompleteAddress";
 export AccountContainer from "./container/Account";

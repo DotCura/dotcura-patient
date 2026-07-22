@@ -412,6 +412,7 @@ export default {
   access: 'Accessi',
   paymentmethod: 'Metodi di pagamento',
   addresss: 'Indirizzi',
+  consentProfile: 'Consensi',
   rateapp: 'Valuta app',
   termsandconditions: 'Termini e condizioni',
   privacypolicy: 'Informativa sulla privacy',

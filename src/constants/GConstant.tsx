@@ -379,7 +379,7 @@ export const getInitials = (name: any) => {
 };
 
 export const getInitialsTwoDigit = (name: any) => {
-  const parts = name.trim().split(' ');
+  const parts = name?.trim()?.split(' ');
   const first = parts[0]?.charAt(0).toUpperCase() || '';
   const last = parts[parts.length - 1]?.charAt(0).toUpperCase() || '';
   return first + last;

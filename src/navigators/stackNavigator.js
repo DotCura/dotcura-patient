@@ -151,6 +151,9 @@ const MainNavigation = props => {
         {_addScreen(NativeStack, ScreenNames.ADDRESSLISTCONTAINER, {
           headerShown: false,
         })}
+        {_addScreen(NativeStack, ScreenNames.CONSENTLISTCONTAINER, {
+          headerShown: false,
+        })}
         {_addScreen(NativeStack, ScreenNames.ADDFAMILYCONTAINER, {
           headerShown: false,
         })}

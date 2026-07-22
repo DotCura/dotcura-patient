@@ -90,6 +90,15 @@ const ProfileContainer = ({ navigation, route }: any) => {
       },
       iscurv: true,
     },
+    {
+      id: '7',
+      title: getTranslation('consentProfile') || 'Consensi',
+      image: images.imgWarningProfile,
+      onpressfun: () => {
+        navigation.navigate(ScreenNames.CONSENTLISTCONTAINER);
+      },
+      iscurv: true,
+    },
   ];
 
   const dataTwo = [

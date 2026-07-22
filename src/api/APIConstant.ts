@@ -1,4 +1,4 @@
-export const isLive = true;
+export const isLive = false;
 
 // Base url
 export const ApiBaseURL = {
@@ -50,6 +50,8 @@ export const ApiEndPoints = {
     GETLIKEREPORTLIST: `${PATIENT_PREFIX}getLikeReportList`,
     GETCREDENTIAALS: `${PATIENT_PREFIX}credentials`,
     NOTIFICATIONLIST: `${PATIENT_PREFIX}getNotificationList`,
+    GETCONSENTLISTUSER: `${PATIENT_PREFIX}get-consent-list-user`,
+    UPDATECONSENT: `${PATIENT_PREFIX}update-consent`,
   },
   TEST: {
     GETTESTREPORTDETAILS: `${PATIENT_PREFIX}getTestReportHistory`,
