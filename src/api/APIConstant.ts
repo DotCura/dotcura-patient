@@ -65,6 +65,8 @@ export const ApiEndPoints = {
     NOTIFICATIONLIST: `${PATIENT_PREFIX}getNotificationList`,
     GETCONSENTLISTUSER: `${PATIENT_PREFIX}get-consent-list-user`,
     UPDATECONSENT: `${PATIENT_PREFIX}update-consent`,
+    DATA_EXPORT: `${PATIENT_PREFIX}me/data-export`,
+    DATA_EXPORT_LATEST: `${PATIENT_PREFIX}me/data-export/latest`,
   },
   TEST: {
     GETTESTREPORTDETAILS: `${PATIENT_PREFIX}getTestReportHistory`,

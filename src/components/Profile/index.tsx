@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React from 'react';
+import React, { memo } from 'react';
 import { styles } from './styles';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import { images } from '../../constants/Images';
@@ -25,27 +25,31 @@ import { ScreenNames } from '../../constants/AppConstants';
 import AppHeader from '../../global/Header';
 import DeviceInfo from 'react-native-device-info';
 
+const Item = memo(({ item }: any) => (
+  <TouchableOpacity style={styles.itemContainer} onPress={item.onpressfun}>
+    <View
+      style={{
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: 'center',
+      }}
+    >
+      <Image
+        source={item.image}
+        style={{ alignSelf: 'center', marginTop: 1 }}
+      />
+      <Text style={styles.title}>{item.title}</Text>
+    </View>
+    {item.iscurv == true && (
+      <Image source={images.imgRightCurve} style={{ alignSelf: 'center' }} />
+    )}
+  </TouchableOpacity>
+));
+
+const renderItem = ({ item }: any) => <Item item={item} />;
+
 const ProfileComponent = (props: any) => {
-  const Item = ({ item, onPress }: any) => (
-    <TouchableOpacity style={styles.itemContainer} onPress={item.onpressfun}>
-      <View
-        style={{
-          flexDirection: 'row',
-          flex: 1,
-          alignItems: 'center',
-        }}
-      >
-        <Image
-          source={item.image}
-          style={{ alignSelf: 'center', marginTop: 1 }}
-        />
-        <Text style={styles.title}>{item.title}</Text>
-      </View>
-      {item.iscurv == true && (
-        <Image source={images.imgRightCurve} style={{ alignSelf: 'center' }} />
-      )}
-    </TouchableOpacity>
-  );
+
 
   return (
     <>
@@ -131,7 +135,7 @@ const ProfileComponent = (props: any) => {
             data={props.data}
             contentContainerStyle={{ gap: getHeight(8) }}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => <Item item={item} onPress={() => {}} />}
+            renderItem={renderItem}
           />
           {/* Biometric Toggle Row */}
           <View style={styles.itemContainer}>
@@ -174,7 +178,7 @@ const ProfileComponent = (props: any) => {
             data={props.dataThree}
             contentContainerStyle={{ gap: getHeight(8) }}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => <Item item={item} onPress={() => {}} />}
+            renderItem={renderItem}
           />
         </View>
 
@@ -184,14 +188,56 @@ const ProfileComponent = (props: any) => {
             data={props.dataTwo}
             contentContainerStyle={{ gap: getHeight(8) }}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => <Item item={item} onPress={() => {}} />}
+            renderItem={renderItem}
           />
         </View>
 
         {/* btns */}
         <View style={{ marginHorizontal: getWidth(16) }}>
+          {/* Dynamic Data Export Button */}
+          {props.exportState === 'READY' ? (
+            <CustomButton
+              btnImage={images.imgfolder}
+              btnicon={false}
+              style={{
+                backgroundColor: Colors.blue002,
+                marginTop: getHeight(16),
+              }}
+              textStyle={{ color: Colors.white, fontSize: fontSize.size16 }}
+              btnPress={props.handleDownloadExport}
+              btnTitle={getTranslation('downloadData')}
+            />
+          ) : props.exportState === 'PROCESSING' ? (
+            <CustomButton
+              style={{
+                backgroundColor: Colors.grayD8,
+                marginTop: getHeight(16),
+              }}
+              textStyle={{ color: Colors.gray75, fontSize: fontSize.size16 }}
+              btnPress={() => {}}
+              disabled={true}
+              btnTitle={getTranslation('exportProcessing')}
+            />
+          ) : (
+            <CustomButton
+              btnImage={images.imgShareProfile}
+              btnicon={false}
+              style={{
+                backgroundColor: Colors.blueD1,
+                marginTop: getHeight(16),
+              }}
+              textStyle={{ color: Colors.blue002, fontSize: fontSize.size16 }}
+              btnPress={props.handleRequestExport}
+              btnTitle={
+                props.exportState === 'EXPIRED'
+                  ? getTranslation('requestNewExport')
+                  : getTranslation('requestDataExport')
+              }
+            />
+          )}
+
           <CustomButton
-            style={{ backgroundColor: Colors.blueD1, marginTop: getHeight(16) }}
+            style={{ backgroundColor: Colors.blueD1, marginTop: getHeight(10) }}
             textStyle={{ color: Colors.blue002, fontSize: fontSize.size16 }}
             btnPress={props.handlePressLogout}
             btnTitle={getTranslation('exit')}
@@ -222,4 +268,4 @@ const ProfileComponent = (props: any) => {
   );
 };
 
-export default ProfileComponent;
+export default memo(ProfileComponent);

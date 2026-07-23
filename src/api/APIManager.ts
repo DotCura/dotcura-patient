@@ -113,6 +113,8 @@ export const APIManager = {
       ApiEndPoints.AUTH.GETCONSENTLIST,
       ApiEndPoints.SETTINGS.GETCONSENTLISTUSER,
       ApiEndPoints.SETTINGS.UPDATECONSENT,
+      ApiEndPoints.SETTINGS.DATA_EXPORT,
+      ApiEndPoints.SETTINGS.DATA_EXPORT_LATEST,
     ];
 
     if (authEndPoints.includes(endPoint)) {
