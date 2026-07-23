@@ -6,6 +6,7 @@ import { getTranslation } from '../../localization/i18n/i18n.config';
 import {
   cameraPermission,
   checkPermission,
+  flashMessageSucess,
   flashMessageWarning,
   messages,
 } from '../../constants/GConstant';
@@ -201,6 +202,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
   };
 
   const handlePressContinue = async () => {
+    Keyboard.dismiss();
     // Reset previous errors
     setFullNameError('');
     setTaxCodeError('');
@@ -250,6 +252,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
   };
 
   const showDatePicker = () => {
+    Keyboard.dismiss();
     setDatePickerVisibility(true);
   };
 
@@ -572,6 +575,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
         toggleLoader(false);
         navigation.popTo(ScreenNames.ADDFAMILYCONTAINER);
         if (responseData.code === StatusCode.SUCCESS) {
+          flashMessageSucess(responseData.message);
         } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
           flashMessageWarning(responseData.message);
         }
@@ -619,6 +623,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
         toggleLoader(false);
         navigation.popTo(ScreenNames.ADDFAMILYCONTAINER);
         if (responseData.code === StatusCode.SUCCESS) {
+          flashMessageSucess(responseData.message);
         } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
           flashMessageWarning(responseData.message);
         }
@@ -651,6 +656,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
         toggleLoader(false);
         navigation.popTo(ScreenNames.ADDFAMILYCONTAINER);
         if (responseData.code === StatusCode.SUCCESS) {
+          flashMessageSucess(responseData.message);
         } else if (responseData.code === StatusCode.INVALID_OR_FAIL) {
           flashMessageWarning(responseData.message);
         }
