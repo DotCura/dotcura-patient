@@ -202,7 +202,7 @@ const App = ({ navigation }: any) => {
     <StripeProvider
       publishableKey={isLive ? STRIPE_LIVE_KEY : STRIPE_STAGING_KEY}
       urlScheme="dotcura"
-      merchantIdentifier="merchant.com.dotcura.patient.app" // required for Apple Pay this is parth sir key
+      merchantIdentifier="merchant.com.dotcura.patient.app"
       setReturnUrlSchemeOnAndroid={true}
     >
       <SafeAreaProvider>

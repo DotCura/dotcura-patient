@@ -351,14 +351,12 @@ export const PaymentPendingModal = () => {
   const currentRoute = useNavigationStore((s: any) => s.currentRoute);
   const isSplash = currentRoute === ScreenNames.CUSTOMSPLASHCONTAINER;
   if (isSplash) return null;
-  console.log("orderDetails", orderDetails);
-  console.log("isModalVisible", isModalVisible);
-  console.log("status", status);
-
+  console.log('orderDetails', orderDetails);
+  console.log('isModalVisible', isModalVisible);
+  console.log('status', status);
 
   if (status !== 'pending' || !orderDetails || !isModalVisible) return null;
 
- 
   const navigateToRateAndReview = (paymentOrderDetails: any) => {
     hideModal();
     navigationRef.navigate(ScreenNames.RATEANDREVIEWCONTAINER, {

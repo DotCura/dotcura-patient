@@ -108,43 +108,30 @@ const KitDetailsComponent = (props: any) => {
                 marginBottom: props.insets.bottom + getHeight(100),
               }}
             >
-              <View style={styles.vwInfo1}>
-                <View style={styles.vwInBank}>
-                  <Text style={styles.txtBankDetails} numberOfLines={1}>
-                    {getTranslation('usefullif')}
-                  </Text>
-                  <Text style={styles.txtinfo1Subtitle} numberOfLines={5}>
-                    {getTranslation('usefullifsubtitle1')}{' '}
-                    <Text style={styles.txtinfo1SubtitleBold}>
-                      {getTranslation('usefullifsubtitle2')},
-                      {getTranslation('usefullifsubtitle3')}
-                    </Text>{' '}
-                    {getTranslation('usefullifsubtitle4')}{' '}
-                    <Text style={styles.txtinfo1SubtitleBold}>
-                      {getTranslation('usefullifsubtitle5')}
+              {props?.kitsArrayData?.useful_to_know && (
+                <View style={styles.vwInfo1}>
+                  <View style={styles.vwInBank}>
+                    <Text style={styles.txtBankDetails} numberOfLines={1}>
+                      {getTranslation('usefullif')}
                     </Text>
-                    {getTranslation('usefullifsubtitle6')}
-                  </Text>
+                    <Text style={styles.txtinfo1Subtitle}>
+                      {props?.kitsArrayData?.useful_to_know}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              <View style={styles.vwInfo2}>
-                <View style={styles.vwInBank}>
-                  <Text style={styles.txtBankDetails} numberOfLines={1}>
-                    {getTranslation('howtoprepare')}
-                  </Text>
-                  <Text style={styles.txtlablinfo2} numberOfLines={5}>
-                    {getTranslation('howtopreparesubtitle1')}
-                    <Text style={styles.txtinfo1SubtitleBold}>
-                      {getTranslation('howtopreparesubtitle2')}
+              )}
+              {props?.kitsArrayData?.how_to_prepare && (
+                <View style={styles.vwInfo2}>
+                  <View style={styles.vwInBank}>
+                    <Text style={styles.txtBankDetails} numberOfLines={1}>
+                      {getTranslation('howtoprepare')}
                     </Text>
-                    {getTranslation('howtopreparesubtitle3')}{' '}
-                    <Text style={styles.txtinfo1SubtitleBold}>
-                      {getTranslation('howtopreparesubtitle4')}
+                    <Text style={styles.txtlablinfo2}>
+                      {props?.kitsArrayData?.how_to_prepare}
                     </Text>
-                    {getTranslation('howtopreparesubtitle5')}
-                  </Text>
+                  </View>
                 </View>
-              </View>
+              )}
             </View>
           </ScrollView>
 
