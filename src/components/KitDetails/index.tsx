@@ -55,7 +55,7 @@ const KitDetailsComponent = (props: any) => {
             </ImageBackground>
 
             {/* vwwarning */}
-            <View style={styles.vwwarningDetails}>
+            {/* <View style={styles.vwwarningDetails}>
               <View
                 style={{ alignSelf: 'flex-start', marginTop: getHeight(2) }}
               >
@@ -72,7 +72,7 @@ const KitDetailsComponent = (props: any) => {
                   {getTranslation('betterinmorningsubtitle')}
                 </Text>
               </View>
-            </View>
+            </View> */}
 
             {/* vwTestList */}
             <View style={{ marginTop: getHeight(24) }}>
