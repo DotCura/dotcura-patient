@@ -35,10 +35,17 @@ import useNotificationService from './src/global/PushNotificatioUtils/useNotific
 import { requestUserForNotificationPermission } from './src/global/PushNotificatioUtils/PushNotificationHelper';
 import { navigationRef } from './src/constants/utils/navigationRef';
 import NetInfo from '@react-native-community/netinfo';
+import {
+  UpdateRequiredModal,
+  useUpdateCheck,
+} from './src/global/UpdateRequiredModal';
+
 
 LogBox.ignoreAllLogs();
 
 const App = ({ navigation }: any) => {
+  const { updateRequired, checkForUpdate, handleUpdateNow } = useUpdateCheck();
+
   // 🔥 CRITICAL: Prevent re-renders by using ref for initialization
   const isAppInitialized = useRef(false);
   const hasHiddenSplash = useRef(false);
@@ -116,7 +123,8 @@ const App = ({ navigation }: any) => {
       console.log('🚀 Initializing app...');
 
       // Run all initialization tasks
-      await Promise.all([bootstrapUser(), _getCredentials()]);
+      await Promise.all([bootstrapUser(), _getCredentials(), checkForUpdate()]);
+
 
       isAppInitialized.current = true;
 
@@ -211,6 +219,10 @@ const App = ({ navigation }: any) => {
             <AppLayout isOrderPlaced={orderStatus}>
               <MainNavigation initialRouteName={initialRouteName} />
               <PaymentPendingModal />
+              <UpdateRequiredModal
+                visible={updateRequired}
+                onUpdate={handleUpdateNow}
+              />
             </AppLayout>
             <Loader ref={ref => setLoaderRef(ref)} />
             <FlashMessage

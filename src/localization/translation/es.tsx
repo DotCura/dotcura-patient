@@ -654,4 +654,10 @@ export default {
   phoneCallErrorHandle1:
     'Le chiamate telefoniche non sono supportate su questo dispositivo.',
   phoneCallErrorHandle2: 'Impossibile effettuare la chiamata.',
+
+  // UPDATE REQUIRED MODAL
+  updateRequiredTitle: 'Aggiornamento richiesto',
+  updateRequiredDescription:
+    'È disponibile una nuova versione dell’app. Aggiorna ora per continuare ad utilizzare DotCura.',
+  updateNowButton: 'Aggiorna ora',
 };

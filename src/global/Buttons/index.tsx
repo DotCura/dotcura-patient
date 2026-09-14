@@ -61,9 +61,12 @@ const CustomButton = (props: any) => {
 
   return (
     <Animated.View
-      style={{
-        transform: [{ scale: scaleAnim }],
-      }}
+      style={[
+        {
+          transform: [{ scale: scaleAnim }],
+        },
+        props.containerStyle,
+      ]}
     >
       <TouchableOpacity
         onPress={props.btnPress}

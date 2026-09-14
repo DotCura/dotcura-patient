@@ -175,7 +175,7 @@ const ProfileContainer = ({ navigation }: any) => {
   }, []);
 
   const handleRateApp = useCallback(async () => {
-    const appId = '6759791247';
+    const appId = '6810602050';
     const packageName = 'com.dotcura.app';
 
     try {

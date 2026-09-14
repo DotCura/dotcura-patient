@@ -87,3 +87,11 @@ export const ScreenNames = {
 // <============================== IOS Condition ==============================>
 
 export const isPlatformiOS = Platform.OS === 'ios';
+
+// <============================== Store URLs ==============================>
+
+export const STORE_URLS = {
+  IOS: 'https://apps.apple.com/app/id6810602050',
+  ANDROID: 'https://play.google.com/store/apps/details?id=com.dotcura.app',
+};
+
