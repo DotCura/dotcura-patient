@@ -23,10 +23,10 @@
 		5D44D89B2F5EC6F200F734BD /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D44D88C2F5EC6F200F734BD /* LiveActivityManager.swift */; };
 		5D44D89C2F5EC6F200F734BD /* OrderStatusAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D44D88D2F5EC6F200F734BD /* OrderStatusAttributes.swift */; };
 		5D44D89E2F5ED53200F734BD /* OrderStatusLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5D80EE752F5EA207000E596F /* OrderStatusLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5D70052B3052AAC6009B9155 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D70052A3052AAC6009B9155 /* GoogleService-Info.plist */; };
 		5D80EE772F5EA208000E596F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D80EE762F5EA208000E596F /* WidgetKit.framework */; };
 		5D80EE792F5EA208000E596F /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D80EE782F5EA208000E596F /* SwiftUI.framework */; };
 		5D80EE962F5EACAA000E596F /* LiveActivityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D80EE952F5EACAA000E596F /* LiveActivityManager.m */; };
-		5D8852CB2F4C86B300B21260 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D8852CA2F4C86B200B21260 /* GoogleService-Info.plist */; };
 		6DA078B04E144E58A2EADA60 /* SFProDisplay-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = DBD4EF85D09943CD904E6CC6 /* SFProDisplay-Ultralight.otf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -74,12 +74,12 @@
 		5709B34CF0A7D63546082F79 /* Pods-dotcura_patient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dotcura_patient.release.xcconfig"; path = "Target Support Files/Pods-dotcura_patient/Pods-dotcura_patient.release.xcconfig"; sourceTree = "<group>"; };
 		5D44D88C2F5EC6F200F734BD /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
 		5D44D88D2F5EC6F200F734BD /* OrderStatusAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStatusAttributes.swift; sourceTree = "<group>"; };
+		5D70052A3052AAC6009B9155 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5D80EE752F5EA207000E596F /* OrderStatusLiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OrderStatusLiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D80EE762F5EA208000E596F /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		5D80EE782F5EA208000E596F /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		5D80EE942F5EACAA000E596F /* dotcura_patient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dotcura_patient-Bridging-Header.h"; sourceTree = "<group>"; };
 		5D80EE952F5EACAA000E596F /* LiveActivityManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveActivityManager.m; sourceTree = "<group>"; };
-		5D8852CA2F4C86B200B21260 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5DAEF87D2F3DA79600E3A214 /* dotcura_patient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = dotcura_patient.entitlements; path = dotcura_patient/dotcura_patient.entitlements; sourceTree = "<group>"; };
 		6799FEFF7C9041728DBCB043 /* Geist-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Geist-Thin.ttf"; path = "../src/assets/fonts/Geist-Thin.ttf"; sourceTree = "<group>"; };
 		7502109B347A4E0EA97F715D /* SFProDisplay-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProDisplay-Medium.otf"; path = "../src/assets/fonts/SFProDisplay-Medium.otf"; sourceTree = "<group>"; };
@@ -143,9 +143,9 @@
 		13B07FAE1A68108700A75B9A /* dotcura_patient */ = {
 			isa = PBXGroup;
 			children = (
+				5D70052A3052AAC6009B9155 /* GoogleService-Info.plist */,
 				5D44D88D2F5EC6F200F734BD /* OrderStatusAttributes.swift */,
 				5D44D88C2F5EC6F200F734BD /* LiveActivityManager.swift */,
-				5D8852CA2F4C86B200B21260 /* GoogleService-Info.plist */,
 				5DAEF87D2F3DA79600E3A214 /* dotcura_patient.entitlements */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
@@ -341,7 +341,7 @@
 				24ACB4AF2B024096908AC812 /* Geist-Black.ttf in Resources */,
 				CE234835AD854E19B49B3B3B /* Geist-Bold.ttf in Resources */,
 				E173098E15BE44D0A63D84D3 /* Geist-ExtraBold.ttf in Resources */,
-				5D8852CB2F4C86B300B21260 /* GoogleService-Info.plist in Resources */,
+				5D70052B3052AAC6009B9155 /* GoogleService-Info.plist in Resources */,
 				308D47E49CC04ECC97F33094 /* Geist-ExtraLight.ttf in Resources */,
 				DFD738F1B2674788B2DE3036 /* Geist-Light.ttf in Resources */,
 				33069AB425784C32ADE32BC1 /* Geist-Medium.ttf in Resources */,
@@ -490,9 +490,9 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CY28PTNJ5W;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BLW8QX63B3;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = dotcura_patient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -506,10 +506,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dotcura.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dotcura.doctor.app;
 				PRODUCT_NAME = dotcura_patient;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = DevelopmentProvProfile;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Dotcura Patient Development Profile";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -532,9 +532,9 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CY28PTNJ5W;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BLW8QX63B3;
 				INFOPLIST_FILE = dotcura_patient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -547,10 +547,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dotcura.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dotcura.doctor.app;
 				PRODUCT_NAME = dotcura_patient;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = DistributionProvisionProfile;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Dotcura Patient AppStore Profile";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -580,7 +580,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CY28PTNJ5W;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BLW8QX63B3;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -597,10 +597,10 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dotcura.app.activity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dotcura.doctor.app.activity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = DotcuraPatientAppActivityDevelopment;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Dotcura Activity Extension Development Profile";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -632,7 +632,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = CY28PTNJ5W;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BLW8QX63B3;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -648,10 +648,10 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dotcura.app.activity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dotcura.doctor.app.activity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = DotcuraPatientAppActivityDistribution;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Dotcura Activity Extension AppStore Profile";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;

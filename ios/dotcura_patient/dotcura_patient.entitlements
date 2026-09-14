@@ -6,11 +6,11 @@
 	<string>development</string>
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
-		<string>merchant.com.dotcura.patient.app</string>
+		<string>merchant.com.dotcura.doctor.patient.app</string>
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.dotcura.app.liveactivity</string>
+		<string>group.com.dotcura.doctor.app.liveactivity</string>
 	</array>
 </dict>
 </plist>

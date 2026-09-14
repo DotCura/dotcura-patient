@@ -13,16 +13,24 @@ const ImagePickerSelectionOptions = {
   GALLERY: 2,
 };
 
-// ✅ ANDROID CAMERA PERMISSION REQUIRED
+// ✅ ANDROID CAMERA PERMISSION REQUIRED (ONLY WHEN OPENING CAMERA)
 async function requestCameraPermission() {
   if (Platform.OS !== 'android') return true;
 
   try {
+    const hasPermission = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+    );
+    if (hasPermission) {
+      console.log('📸 CAMERA PERMISSION ALREADY GRANTED');
+      return true;
+    }
+
     const result = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.CAMERA,
       {
         title: 'Camera Permission',
-        message: 'This app needs access to your camera.',
+        message: 'This app needs access to your camera to capture photos.',
         buttonPositive: 'OK',
       },
     );
@@ -84,14 +92,14 @@ export const ImagePickerManager = {
 
           if (mediaRes?.didCancel) {
             console.log('⚠️ User cancelled picker.');
-            reject('User cancelled');
+            resolve(null);
             return;
           }
 
           if (mediaRes?.errorCode) {
             console.log('❌ Picker Error Code:', mediaRes.errorCode);
             console.log('❌ Picker Error Message:', mediaRes.errorMessage);
-            reject(mediaRes.errorMessage);
+            resolve(null);
             return;
           }
 
@@ -99,7 +107,7 @@ export const ImagePickerManager = {
 
           if (!assets || assets.length === 0) {
             console.log('⚠️ No media returned.');
-            reject('No media selected');
+            resolve(null);
             return;
           }
 
@@ -160,7 +168,7 @@ export const ImagePickerManager = {
               style: 'destructive',
               onPress: () => {
                 console.log('❌ User cancelled picker');
-                reject('User cancelled');
+                resolve(null);
               },
             },
             {
@@ -177,7 +185,7 @@ export const ImagePickerManager = {
                   resolve(result);
                 } catch (e) {
                   console.log('🔥 CAMERA Error:', e);
-                  reject(e);
+                  resolve(null);
                 }
               },
             },
@@ -195,7 +203,7 @@ export const ImagePickerManager = {
                   resolve(result);
                 } catch (e) {
                   console.log('🔥 GALLERY Error:', e);
-                  reject(e);
+                  resolve(null);
                 }
               },
             },
@@ -215,7 +223,7 @@ export const ImagePickerManager = {
                   resolve(result);
                 } catch (e) {
                   console.log('🔥 CAMERA Error:', e);
-                  reject(e);
+                  resolve(null);
                 }
               },
             },
@@ -233,7 +241,7 @@ export const ImagePickerManager = {
                   resolve(result);
                 } catch (e) {
                   console.log('🔥 GALLERY Error:', e);
-                  reject(e);
+                  resolve(null);
                 }
               },
             },
@@ -242,7 +250,7 @@ export const ImagePickerManager = {
               style: 'destructive',
               onPress: () => {
                 console.log('❌ User cancelled picker');
-                reject('User cancelled');
+                resolve(null);
               },
             },
           ],

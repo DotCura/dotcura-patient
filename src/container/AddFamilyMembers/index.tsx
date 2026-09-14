@@ -4,8 +4,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment';
 import { getTranslation } from '../../localization/i18n/i18n.config';
 import {
-  cameraPermission,
-  checkPermission,
   flashMessageSucess,
   flashMessageWarning,
   messages,
@@ -279,25 +277,13 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
   const pickImage = () => {
     Keyboard.dismiss();
 
-    checkPermission(cameraPermission, messages.cameraPermission)
-      .then(isCameraAllow => {
-        if (!isCameraAllow) {
-          return;
-        }
-
-        return ImagePickerManager.choosePickerOptions('photo');
-      })
+    ImagePickerManager.choosePickerOptions('photo')
       .then(async (result: any) => {
         if (!result) return;
 
         const uri = result[0]?.uri;
         if (!uri) return;
 
-        // const fileName: any = await uploadFile(result[0]);
-        // console.log('Uploaded file name:', fileName);
-        // setFrontUrl(fileName);
-        // setFrontSide(uri);
-        // setFrontImageAdd(true);
         // Store the file object and URI, but don't upload yet
         setFrontImageFile(result[0]);
         setFrontSide(uri);
@@ -311,14 +297,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
   const pickBackImage = () => {
     Keyboard.dismiss();
 
-    checkPermission(cameraPermission, messages.cameraPermission)
-      .then(isCameraAllow => {
-        if (!isCameraAllow) {
-          return;
-        }
-
-        return ImagePickerManager.choosePickerOptions('photo');
-      })
+    ImagePickerManager.choosePickerOptions('photo')
       .then(async (result: any) => {
         if (!result) return;
 
@@ -328,11 +307,9 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
         setBackImageFile(result[0]);
         setBackSide(uri);
         setBackImageAdd(true);
-
-        console.log('Front image selected:', uri);
       })
       .catch(error => {
-        console.log('🔥 Error in pickImage():', error);
+        console.log('🔥 Error in pickBackImage():', error);
       });
   };
 
@@ -444,14 +421,14 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
       };
 
       // ✅ Add search ONLY if not empty
-      if (search.trim().length > 0) {
+      if (search && search.trim().length > 0) {
         params.search = search.trim();
       }
 
       const callback = async (responseData: any) => {
-        if (responseData.code === StatusCode.SUCCESS) {
-          setMedicalList(responseData.data);
-        } else {
+        if (responseData?.code === StatusCode.SUCCESS) {
+          setMedicalList(Array.isArray(responseData?.data) ? responseData.data : []);
+        } else if (responseData?.message) {
           flashMessageWarning(responseData.message);
         }
       };
@@ -461,7 +438,7 @@ const AddFamilyMemberContainer = ({ navigation, route }: any) => {
         method: MethodType.POST,
         apiEndPoint: ApiEndPoints.MEDICAL.GETMEDICALHISTORY,
         callback,
-        showLoader: search.trim().length === 0,
+        showLoader: (search || '').trim().length === 0,
         params,
       });
     } catch (error) {

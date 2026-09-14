@@ -202,11 +202,11 @@ const App = ({ navigation }: any) => {
     <StripeProvider
       publishableKey={isLive ? STRIPE_LIVE_KEY : STRIPE_STAGING_KEY}
       urlScheme="dotcura"
-      merchantIdentifier="merchant.com.dotcura.patient.app"
+      merchantIdentifier="merchant.com.dotcura.doctor.patient.app" //old merchant.com.dotcura.patient.app
       setReturnUrlSchemeOnAndroid={true}
     >
       <SafeAreaProvider>
-        <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
+        <KeyboardProvider statusBarTranslucent>
           <I18nextProvider i18n={i18n}>
             <AppLayout isOrderPlaced={orderStatus}>
               <MainNavigation initialRouteName={initialRouteName} />
