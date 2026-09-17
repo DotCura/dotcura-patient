@@ -1,16 +1,18 @@
 import React, { useRef } from 'react';
-import { Animated, Pressable } from 'react-native';
+import { Animated, TouchableOpacity, ViewStyle } from 'react-native';
 
 interface PressScaleProps {
   children: React.ReactNode;
   onPress?: () => void;
   scaleTo?: number;
+  style?: ViewStyle | ViewStyle[];
 }
 
 const PressScale = ({
   children,
   onPress,
   scaleTo = 0.85,
+  style,
 }: PressScaleProps) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
@@ -33,14 +35,19 @@ const PressScale = ({
   };
 
   return (
-    <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-      <Pressable
+    <Animated.View
+      pointerEvents="box-none"
+      style={[style, { transform: [{ scale: scaleAnim }] }]}
+    >
+      <TouchableOpacity
+        activeOpacity={1}
         onPress={onPress}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
+        style={{ flex: 1 }}
       >
         {children}
-      </Pressable>
+      </TouchableOpacity>
     </Animated.View>
   );
 };

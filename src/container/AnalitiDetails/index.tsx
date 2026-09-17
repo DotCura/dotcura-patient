@@ -155,6 +155,7 @@ const AnalitiDetailsContainer = ({ navigation, route }: any) => {
   };
 
   const handleNavigateCheckout = () => {
+    console.log('CLick analiti');
     if (!selectedTests.length) {
       flashMessageWarning(getTranslation('atleastoneselected'));
       return;

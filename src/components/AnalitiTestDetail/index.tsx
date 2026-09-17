@@ -1,5 +1,5 @@
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 import { constnatStyles } from '../../constants/Styles';
 import { Colors } from '../../constants/Colors';
 import { images } from '../../constants/Images';
@@ -16,6 +16,7 @@ import BarChartComponent from '../../global/BloodCountGraph';
 import AppHeader from '../../global/Header';
 
 const AnalitiTestDetailComponent = (props: any) => {
+  const [isExpanded, setIsExpanded] = useState(false);
   const total = props?.AnalitiTestDetailsData?.total_tests;
   const analyzed = props?.AnalitiTestDetailsData?.completed_tests;
 
@@ -57,9 +58,20 @@ const AnalitiTestDetailComponent = (props: any) => {
             />
           </View>
         </View>
-        <Text style={styles.lblQuotes}>
-          {getTranslation('desanalititestdetails')}
+        <Text
+          style={styles.lblQuotes}
+          numberOfLines={isExpanded ? undefined : 3}
+        >
+          {props?.AnalitiTestDetailsData?.description}
         </Text>
+        <TouchableOpacity
+          onPress={() => setIsExpanded(prev => !prev)}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.lblReadMore}>
+            {isExpanded ? 'Leggi di meno' : 'Leggi di più'}
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   };

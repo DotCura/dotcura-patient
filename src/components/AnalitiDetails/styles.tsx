@@ -68,6 +68,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: getWidth(16),
     backgroundColor: Colors.blue002,
     flexDirection: 'row',
+    zIndex: 10,
+    elevation: 10,
   },
   vwInBank: { gap: getHeight(2), flex: 1 },
   btnSelectAll: {

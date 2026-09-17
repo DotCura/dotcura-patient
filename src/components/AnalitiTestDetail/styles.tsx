@@ -11,7 +11,14 @@ export const styles = StyleSheet.create({
     fontFamily: fontsfamily.gregular,
     color: Colors.gray55,
     letterSpacing: 0.2,
-    marginBottom: getHeight(22),
+    marginBottom: getHeight(4),
+  },
+  lblReadMore: {
+    fontSize: fontSize.size14,
+    fontFamily: fontsfamily.gmedium,
+    color: Colors.blue002,
+    letterSpacing: 0.1,
+    marginBottom: getHeight(18),
   },
   imgTest: {
     height: getHeight(64),

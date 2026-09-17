@@ -1,10 +1,4 @@
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import { FlatList, Image, ScrollView, Text, View } from 'react-native';
 import React from 'react';
 import { constnatStyles } from '../../constants/Styles';
 import { getTranslation } from '../../localization/i18n/i18n.config';
@@ -12,7 +6,7 @@ import { styles } from './styles';
 import { images } from '../../constants/Images';
 import { Colors } from '../../constants/Colors';
 import { getHeight } from '../../constants/utils/Dimensions';
-import {  currency } from '../../constants/GConstant';
+import { currency } from '../../constants/GConstant';
 import AppHeader from '../../global/Header';
 import PressScale from '../../global/PressScale';
 
@@ -112,14 +106,21 @@ const AnalitiDetailsComponent = (props: any) => {
           </ScrollView>
 
           {/* vwGotoCart */}
-          <PressScale onPress={props.handleNavigateCheckout}>
+          <PressScale
+            onPress={props.handleNavigateCheckout}
+            style={[
+              styles.vwGoToCart,
+              {
+                bottom: getHeight(30),
+              },
+            ]}
+          >
             <View
-              style={[
-                styles.vwGoToCart,
-                {
-                  bottom: getHeight(30),
-                },
-              ]}
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
             >
               <View style={styles.vwCartImage}>
                 <Image source={images.imgCartHome} tintColor={Colors.white} />

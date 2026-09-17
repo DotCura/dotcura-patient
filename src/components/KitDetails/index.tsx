@@ -136,15 +136,16 @@ const KitDetailsComponent = (props: any) => {
           </ScrollView>
 
           {/* vwGotoCart */}
-          <PressScale onPress={props.handleNavigateCheckout}>
-            <View
-              style={[
-                styles.vwGoToCart,
-                {
-                  bottom: getHeight(30),
-                },
-              ]}
-            >
+          <PressScale
+            onPress={props.handleNavigateCheckout}
+            style={[
+              styles.vwGoToCart,
+              {
+                bottom: getHeight(30),
+              },
+            ]}
+          >
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
               <View style={styles.vwCartImage}>
                 <Image source={images.imgCartHome} tintColor={Colors.white} />
                 <Text style={styles.lblGoToCart}>
