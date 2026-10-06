@@ -118,33 +118,33 @@ const HomeComponent = (props: any) => {
       >
         {/* vwTotalDaysInfo */}
         {props.lastBookingDays !== undefined && (
-            <View style={styles.vwTotalDaysInfo}>
-              <Image source={images.imgCalenderBlue} />
-              <View style={styles.vwDaysAndBook}>
-                {props.lastBookingDays === null ? (
-                  <Text style={styles.lblSinceyourlastanlaysis}>
-                    {getTranslation('nodaysviewtext')}
+          <View style={styles.vwTotalDaysInfo}>
+            <Image source={images.imgCalenderBlue} />
+            <View style={styles.vwDaysAndBook}>
+              {props.lastBookingDays === null ? (
+                <Text style={styles.lblSinceyourlastanlaysis}>
+                  {getTranslation('nodaysviewtext')}
+                </Text>
+              ) : (
+                <View style={styles.vwInnerDays}>
+                  <Text style={styles.lblDaysText}>
+                    {props.lastBookingDays} {getTranslation('daystext')}
                   </Text>
-                ) : (
-                  <View style={styles.vwInnerDays}>
-                    <Text style={styles.lblDaysText}>
-                      {props.lastBookingDays} {getTranslation('daystext')}
-                    </Text>
-                    <Text style={styles.lblSinceyourlastanlaysis}>
-                      {getTranslation('sinceyourlastanalysis')}
-                    </Text>
-                  </View>
-                )}
-                <PressScale onPress={props.handleNavigateGetTested}>
-                  <View style={styles.btnBookNow}>
-                    <Text style={styles.lblBookNow}>
-                      {getTranslation('booknowtext')}
-                    </Text>
-                  </View>
-                </PressScale>
-              </View>
+                  <Text style={styles.lblSinceyourlastanlaysis}>
+                    {getTranslation('sinceyourlastanalysis')}
+                  </Text>
+                </View>
+              )}
+              <PressScale onPress={props.handleNavigateGetTested}>
+                <View style={styles.btnBookNow}>
+                  <Text style={styles.lblBookNow}>
+                    {getTranslation('booknowtext')}
+                  </Text>
+                </View>
+              </PressScale>
             </View>
-          )}
+          </View>
+        )}
 
         {props.isloadingshow && props.lastBookingDays !== undefined && (
           <>

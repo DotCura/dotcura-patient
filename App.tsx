@@ -40,7 +40,6 @@ import {
   useUpdateCheck,
 } from './src/global/UpdateRequiredModal';
 
-
 LogBox.ignoreAllLogs();
 
 const App = ({ navigation }: any) => {
@@ -124,7 +123,6 @@ const App = ({ navigation }: any) => {
 
       // Run all initialization tasks
       await Promise.all([bootstrapUser(), _getCredentials(), checkForUpdate()]);
-
 
       isAppInitialized.current = true;
 

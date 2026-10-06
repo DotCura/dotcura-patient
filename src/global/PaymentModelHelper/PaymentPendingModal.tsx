@@ -323,7 +323,7 @@ import {
 import { fontsfamily } from '../../constants/FontFamily';
 import CustomButton from '../Buttons';
 import { images } from '../../constants/Images';
-import { ScreenNames } from '../../constants/AppConstants';
+import { isPlatformiOS, ScreenNames } from '../../constants/AppConstants';
 import { navigationRef } from '../../constants/utils/navigationRef';
 import { useNavigationStore } from '../../store/NavigationStore';
 import {
@@ -332,7 +332,12 @@ import {
   confirmPayment,
 } from '@stripe/stripe-react-native';
 import { APIManager } from '../../api/APIManager';
-import { ApiEndPoints, MethodType, StatusCode } from '../../api/APIConstant';
+import {
+  ApiEndPoints,
+  isLive,
+  MethodType,
+  StatusCode,
+} from '../../api/APIConstant';
 
 export const PaymentPendingModal = () => {
   const {
@@ -442,13 +447,18 @@ export const PaymentPendingModal = () => {
   // };
 
   const handleApplePay = async () => {
-    const isSupported = await isPlatformPaySupported();
+    // const isSupported = await isPlatformPaySupported();
+    // const isSupported = await isPlatformPaySupported(
+    //   isPlatformiOS
+    //     ? undefined
+    //     : { googlePay: { testEnv: isLive ? false : true } },
+    // );
 
-    if (!isSupported) {
-      flashMessageWarning('Apple Pay not supported on this device');
-      setIsPaymentLoading(false);
-      return;
-    }
+    // if (!isSupported) {
+    //   flashMessageWarning('Apple Pay not supported on this device');
+    //   setIsPaymentLoading(false);
+    //   return;
+    // }
 
     try {
       const params = {
@@ -480,7 +490,7 @@ export const PaymentPendingModal = () => {
                 }
               : {
                   googlePay: {
-                    testEnv: true,
+                    testEnv: isLive ? false : true,
                     merchantName: 'Dotcura',
                     merchantCountryCode: 'IT',
                     currencyCode: 'EUR',

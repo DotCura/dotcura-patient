@@ -5,10 +5,13 @@ import { fontSize } from '../../../constants/FontSizes';
 import { getHeight, getWidth } from '../../../constants/utils/Dimensions';
 
 export const styles = StyleSheet.create({
-  imganaliti:{
-    height:getHeight(25),
-    width:getWidth(25),
-    borderRadius:100,
+  imganaliti: {
+    height: getHeight(25),
+    aspectRatio: 1,
+    // width: getWidth(25),
+    padding: 10,
+    borderRadius: 10,
+    // backgroundColor: 'red',
   },
   vwCurrencyPrice: {
     flexDirection: 'row',
@@ -59,7 +62,7 @@ export const styles = StyleSheet.create({
     height: getHeight(36),
     aspectRatio: 1,
     borderRadius: 20,
-   
+
     position: 'absolute',
     left: getWidth(8),
     top: getHeight(8),
@@ -84,7 +87,7 @@ export const styles = StyleSheet.create({
     color: Colors.gray0F,
     fontFamily: fontsfamily.gbold,
     fontSize: fontSize.size16,
-    flex:1,
+    flex: 1,
   },
   lblReportTitle: {
     color: Colors.gray0F,

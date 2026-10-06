@@ -59,10 +59,26 @@ const RateAndReviewContainer = ({ navigation, route }: any) => {
     }
   };
 
+  const _handleSkip = () => {
+    activateNext();
+    const hasMorePendingPayments =
+      usePaymentStore.getState().pendingQueue.length > 0;
+
+    if (hasMorePendingPayments) {
+      setTimeout(() => {
+        showModal();
+      }, 250);
+    } else {
+      hideModal();
+    }
+    navigation.goBack();
+  };
+
   return (
     <RateAndReviewComponent
       rate={rate}
       handlePressRateAndReview={_rateAndReview}
+      handlePressSkip={_handleSkip}
       handleOnPressRate={(index: any) => {
         setRate(index);
       }}

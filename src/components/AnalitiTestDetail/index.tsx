@@ -1,4 +1,11 @@
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, { useState } from 'react';
 import { constnatStyles } from '../../constants/Styles';
 import { Colors } from '../../constants/Colors';
@@ -17,6 +24,7 @@ import AppHeader from '../../global/Header';
 
 const AnalitiTestDetailComponent = (props: any) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isTextLong, setIsTextLong] = useState(false);
   const total = props?.AnalitiTestDetailsData?.total_tests;
   const analyzed = props?.AnalitiTestDetailsData?.completed_tests;
 
@@ -58,20 +66,35 @@ const AnalitiTestDetailComponent = (props: any) => {
             />
           </View>
         </View>
+        {/* Hidden text with no line limit — used only to measure real line count */}
+        <View style={{ height: 0, overflow: 'hidden' }}>
+          <Text
+            style={styles.lblQuotes}
+            onTextLayout={e => {
+              setIsTextLong(e.nativeEvent.lines.length > 4);
+            }}
+          >
+            {props?.AnalitiTestDetailsData?.description}
+          </Text>
+        </View>
+
+        {/* Visible clamped text */}
         <Text
           style={styles.lblQuotes}
-          numberOfLines={isExpanded ? undefined : 3}
+          numberOfLines={isExpanded ? undefined : 4}
         >
           {props?.AnalitiTestDetailsData?.description}
         </Text>
-        <TouchableOpacity
-          onPress={() => setIsExpanded(prev => !prev)}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.lblReadMore}>
-            {isExpanded ? 'Leggi di meno' : 'Leggi di più'}
-          </Text>
-        </TouchableOpacity>
+        {isTextLong && (
+          <TouchableOpacity
+            onPress={() => setIsExpanded(prev => !prev)}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.lblReadMore}>
+              {isExpanded ? 'Leggi di meno' : 'Leggi di più'}
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   };

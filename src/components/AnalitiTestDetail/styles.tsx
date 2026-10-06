@@ -21,11 +21,11 @@ export const styles = StyleSheet.create({
     marginBottom: getHeight(18),
   },
   imgTest: {
-    height: getHeight(64),
-    width: getWidth(50),
-    aspectRatio:1,
-    borderRadius: 100,
-    resizeMode: 'center',
+    height: getHeight(50),
+    // width: getHeight(50),
+    aspectRatio: 1,
+    // borderRadius: 0,
+    // resizeMode: 'center',
     overflow: 'hidden',
   },
   lblAnalyses: {

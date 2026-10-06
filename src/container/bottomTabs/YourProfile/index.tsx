@@ -99,13 +99,21 @@ const YourProfileContainer = ({ navigation }: any) => {
     );
   };
 
+  const handleNavigateAnlitiItem = (item: any) => {
+    if (item?.completed_tests === 0) {
+      handleNavigateAnlitiDetails(item?.id);
+    } else {
+      handleNavigateAnalitiTestDetails(item?.id);
+    }
+  };
+
   const renderTestReportData = ({ item, index }: any) => {
     return (
       <TouchableOpacity
         activeOpacity={activityOpacity}
         style={styles.btnTestReport}
         onPress={() => {
-          handleNavigateAnalitiTestDetails(item?.id);
+          handleNavigateAnlitiItem(item);
         }}
       >
         <View style={styles.lblTestImage}>
@@ -389,6 +397,13 @@ const YourProfileContainer = ({ navigation }: any) => {
       params: {
         family_memeber_id: selectedFamilyId,
       },
+    });
+  };
+
+  const handleNavigateAnlitiDetails = (analiti_id: any) => {
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.ANALITIDETAILSCONTAINER,
+      params: { analitiId: analiti_id },
     });
   };
 

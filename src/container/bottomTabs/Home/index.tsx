@@ -360,7 +360,7 @@ const HomeContainer = ({ navigation }: any) => {
         activeOpacity={activityOpacity}
         style={styles.btnTestReport}
         onPress={() => {
-          handleNavigateAnlitiTestDetails(item?.id);
+          handleNavigateAnlitiItem(item);
         }}
       >
         <View style={styles.lblTestImage}>
@@ -369,7 +369,12 @@ const HomeContainer = ({ navigation }: any) => {
           </Text>
           <Image
             source={{ uri: item?.kit_image_url }}
-            style={{ height: getHeight(30), aspectRatio: 1, borderRadius: 100 }}
+            style={{
+              height: getHeight(45),
+              padding: 6,
+              aspectRatio: 1,
+              borderRadius: 50,
+            }}
           />
         </View>
         <View>
@@ -421,10 +426,25 @@ const HomeContainer = ({ navigation }: any) => {
     navigation.jumpTo(ScreenNames.YOURPROFILECONAINER);
   };
 
+  const handleNavigateAnlitiDetails = (analiti_id: any) => {
+    navigation.navigate('TransitionFlow', {
+      screen: ScreenNames.ANALITIDETAILSCONTAINER,
+      params: { analitiId: analiti_id },
+    });
+  };
+
   const handleNavigateAnlitiTestDetails = (analiti_id: any) => {
     navigation.navigate(ScreenNames.ANALITITESTDETAILSCONTAINER, {
       analitiId: analiti_id,
     });
+  };
+
+  const handleNavigateAnlitiItem = (item: any) => {
+    if (item?.completed_tests === 0) {
+      handleNavigateAnlitiDetails(item?.id);
+    } else {
+      handleNavigateAnlitiTestDetails(item?.id);
+    }
   };
 
   const handleNavigateGetTested = () => {
@@ -597,7 +617,7 @@ const HomeContainer = ({ navigation }: any) => {
       console.log('cancle Edit Order details error:', error);
     }
   };
-  
+
   const _last_booking_details = async () => {
     try {
       const params = {};

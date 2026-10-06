@@ -32,7 +32,7 @@ export default {
   otptitle: 'Codice a 6 cifre',
   otpsubtitle1: 'Codice inviato al numero',
   otpsubtitle2: 'Inseriscilo qui per verificare il tuo accoun.',
-  otpResendSuccessfully: 'OTP reenviado con éxito',
+  otpResendSuccessfully: 'Codice OTP reinviato con successo',
   resendcode: 'Reinvia codice',
   ifYouDidntReceiveCodeTitle: 'If you don’t received code',
   otpwarning1: 'Rinvio codice possibile tra',
@@ -47,7 +47,7 @@ export default {
   completeprofiletitle: 'Completa il tuo profilo',
   completeprofilesubtitle: 'Inserisci il tuo nome e il tuo indirizzo e-mail.',
   continue: 'Continua',
-  submit: 'Enviar',
+  submit: 'Invia',
   fullnameplaceholder: 'Giovanni',
   emailplaceholder: 'giovanni@email.com',
   taxcodeplaceholder: 'EKTBBD00000000X',
@@ -108,10 +108,10 @@ export default {
   //PERMISSIONS
   allowTitle: 'Permitir',
   allowSubtitleForCamera:
-    '¿usar tu cámara para tu foto de perfil y documentos?',
+    'Usare la tua fotocamera per la foto profilo e i documenti?',
   allowSubtitleForGallery:
-    '¿usar tu galería para tu foto de perfil y documentos?',
-  allowSubtitleForDocuments: '¿usar tus documentos?',
+    'Usare la tua galleria per la foto profilo e i documenti?',
+  allowSubtitleForDocuments: 'Usare i tuoi documenti?',
 
   //BOOTOMTAB
   home: 'Home',
@@ -224,7 +224,7 @@ export default {
   placholdercoupans: 'AA00000',
   whoshoulddotest: 'Chi deve fare le analisi?',
   selectfamilymember: 'Seleziona chi deve eseguire i test.',
-  canclebooking: 'cancelar reserva',
+  canclebooking: 'Cancella prenotazione',
   selected: 'selezionato',
   modifyorder: 'Modifica ordine',
   inthecart: 'Nel carrello',
@@ -250,8 +250,8 @@ export default {
   resultopentitle: 'Le analisi sono arrivate.',
   resultopenupsubtitle:
     'Continuando, accetti di salvare i tuoi dati personali all’interndo di DotCura; altrimenti verranno cancellate entro 45 giorni.',
-  iunderstand: 'Entiendo',
-  continuewithoutsaving: 'Continuar sin guardar',
+  iunderstand: 'Ho capito',
+  continuewithoutsaving: 'Continua senza salvare',
   saveopenupbtn: 'Salva e visualizza analisi',
   continueopenup: 'Continua senza salvare',
   discoverourprivacypolicy: 'Scopri le nostre policy sulla privacy',
@@ -337,7 +337,7 @@ export default {
   addaddresssubtitle:
     'Questo indirizzo sarà salvato e disponibile per future visite a domicilio.',
   editaddresssubtitle:
-    'Esta información se editará y estará disponible para futuras visitas domiciliarias',
+    'Queste informazioni verranno modificate e saranno disponibili per future visite a domicilio',
   deleteaddresssbtn: 'Elimina questo indirizzo',
   searchaddress: 'Cerca indirizzo',
   addaddressplacholder: 'Via, piazza, strada...',
@@ -371,9 +371,9 @@ export default {
   emptyInstructions: 'Per favore, inserisci le istruzioni.',
 
   //LOGOUT
-  logoutText: '¿Estás seguro de que deseas cerrar sesión?',
+  logoutText: 'Sei sicuro di voler effettuare il logout?',
   deleteText:
-    'Esta acción es irreversible. ¿Realmente deseas eliminar tu cuenta?',
+    'Questa azione è irreversibile. Vuoi davvero eliminare il tuo account?',
 
   //ACCOUNT
   dateofbirth: 'Data di nascita',
@@ -414,9 +414,10 @@ export default {
   exportError: 'Errore durante il download.',
   permissionDenied: 'Permesso di archiviazione negato.',
   downloadLinkNotReady: 'Link di download non pronto',
-  exportDownloading: 'Download dell\'esportazione dei dati in corso...',
+  exportDownloading: "Download dell'esportazione dei dati in corso...",
   permissionTitle: 'Autorizzazione archiviazione richiesta',
-  permissionMessage: 'Questa app richiede l\'accesso alla memoria per scaricare i file.',
+  permissionMessage:
+    "Questa app richiede l'accesso alla memoria per scaricare i file.",
   buttonNeutral: 'Chiedimelo più tardi',
   buttonNegative: 'Annulla',
   buttonPositive: 'OK',
@@ -466,7 +467,7 @@ export default {
   enteryourdetails: 'Inserisci i tuoi dati professionali',
   atecocode: 'Codice ATECO',
   document: 'Documento',
-  selectdocument: 'Seleccionar documento',
+  selectdocument: 'Seleziona documento',
   passport: 'Passaporto',
   electronicsidcard: "Carta d'identità",
   uploadfronsidedoc: 'Carica la parte frontale del documento',
@@ -480,7 +481,7 @@ export default {
   addfamilymembersubtitle:
     'Aggiungi le informazioni della persona che vuoi aggiungere alla tua famiglia',
   typeofrelationship: 'Tipo di relazione',
-  typeofrelationshipplaceholder: 'Seleccione el tipo de relación',
+  typeofrelationshipplaceholder: 'Seleziona il tipo di relazione',
   pleaseselecttypeofrelationship: 'Per favore, seleziona il tipo di relazione.',
   addfavouriteaddresslabel: 'Rendi indirizzo preferito',
   saveaddress: 'Salva indirizzo',
@@ -511,37 +512,36 @@ export default {
   errorMessageFullNameTooShort: 'Il nome deve avere almeno 2 caratteri',
   errorMessageSurnameRequired: 'Per favore, inserisci il cognome.',
   errorMessagePlaceOfBirthRequired: 'Per favore, inserisci il luogo di nascita',
-  errorMessageDescription: 'Por favor, introduzca la descripción',
+  errorMessageDescription: 'Per favore, inserisci la descrizione',
   errorMessageBlockHouseNumberRequired:
-    'Por favor, introduzca el número de bloque/número de casa',
+    'Per favore, inserisci il numero civico',
   errorMessageBuildingNameRequired:
-    'Por favor, introduzca el nombre del edificio',
-  errorMessageAreaStreetRequired: 'Por favor, introduzca el área/calle',
-  errorMessageStateRequired: 'Por favor, introduzca el estado',
+    "Per favore, inserisci il nome dell'edificio",
+  errorMessageAreaStreetRequired: 'Per favore, inserisci la zona/via',
+  errorMessageStateRequired: 'Per favore, inserisci lo stato/provincia',
   errorMessageAccountHolder:
-    'Por favor, introduzca el nombre del titular de la cuenta.',
+    "Per favore, inserisci il nome dell'intestatario del conto.",
   errorMessageAccountHolderValid:
-    'El nombre del titular de la cuenta debe tener al menos 3 caracteres.',
-  errorMessageAccountNumber: 'Por favor, introduzca el número de cuenta.',
+    "Il nome dell'intestatario del conto deve contenere almeno 3 caratteri.",
+  errorMessageAccountNumber: 'Per favore, inserisci il numero di conto.',
   errorMessageAccountValid:
-    'El número de cuenta debe tener entre 9 y 18 dígitos.',
-  errorMessageIFSC: 'Por favor, introduzca el código IFSC.',
+    'Il numero di conto deve contenere tra 9 e 18 cifre.',
+  errorMessageIFSC: 'Per favore, inserisci il codice IFSC.',
   errorMessageIFSCValid:
-    'Por favor, introduzca un código IFSC válido (por ejemplo, HDFC0001234).',
+    'Per favore, inserisci un codice IFSC valido (es. HDFC0001234).',
 
-  emptyCardNumber: 'Por favor, introduzca el número de la tarjeta',
-  invalidCardNumber: 'Por favor, introduzca un número de tarjeta válido',
-  emptyCardHolderName:
-    'Por favor, introduzca el nombre del titular de la tarjeta',
-  emptyExpiryDate: 'Por favor, introduzca la fecha de vencimiento',
-  invalidExpiryMonth: 'Por favor, introduzca un mes de vencimiento válido',
-  invalidExpiryYear: 'Por favor, introduzca un año de vencimiento válido',
-  invalidExpiryDate: 'Por favor, introduzca una fecha de vencimiento válida',
-  emptyCVV: 'Por favor, introduzca el CVV',
-  invalidCVV: 'Por favor, introduzca un CVV válido',
-  emptyPostalCode: 'Por favor, introduzca el código postal',
-  invalidPostalCode: 'Por favor, introduzca un código postal válido',
-  cardNumberZero: 'El número de la tarjeta no debe ser cero',
+  emptyCardNumber: 'Per favore, inserisci il numero della carta',
+  invalidCardNumber: 'Per favore, inserisci un numero di carta valido',
+  emptyCardHolderName: 'Per favore, inserisci il nome del titolare della carta',
+  emptyExpiryDate: 'Per favore, inserisci la data di scadenza',
+  invalidExpiryMonth: 'Per favore, inserisci un mese di scadenza valido',
+  invalidExpiryYear: 'Per favore, inserisci un anno di scadenza valido',
+  invalidExpiryDate: 'Per favore, inserisci una data di scadenza valida',
+  emptyCVV: 'Per favore, inserisci il CVV',
+  invalidCVV: 'Per favore, inserisci un CVV valido',
+  emptyPostalCode: 'Per favore, inserisci il codice postale',
+  invalidPostalCode: 'Per favore, inserisci un codice postale valido',
+  cardNumberZero: 'Il numero della carta non deve essere zero',
   pleaseselectdocument: 'Per favore, seleziona il documento.',
   pleaseuploadfrontandbackside:
     'Per favore, carica le foto del tuo documento su entrambi i lati (fronte e retro).',
@@ -605,7 +605,7 @@ export default {
     'L’infermiere ci ha comunicato che verrà a casa tua entro le',
   canclevisitsubtitle:
     'Non aspettare! Puoi richiedere immediatamente una nuova visita.',
-  ratingvalidation: 'Seleccione una calificación antes de enviar su reseña.',
+  ratingvalidation: 'Seleziona una valutazione prima di inviare la recensione.',
 
   supporttitle: 'Serve supporto?',
   whattapptitle: 'Chatta su WhatsApp',

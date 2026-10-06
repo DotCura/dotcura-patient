@@ -71,8 +71,7 @@ const RateAndReviewComponent = (props: any) => {
       </View>
       <View
         style={{
-          marginBottom:
-            insets.bottom + getHeight(10),
+          marginBottom: insets.bottom,
         }}
       >
         <CustomButton
@@ -81,6 +80,16 @@ const RateAndReviewComponent = (props: any) => {
           textStyle={{ color: Colors.black, fontSize: fontSize.size16 }}
           btnPress={props.handlePressRateAndReview}
           btnTitle={getTranslation('submit')}
+        />
+        <CustomButton
+          btnicon={false}
+          style={{ backgroundColor: 'transparent' }}
+          textStyle={{
+            color: Colors.white,
+            fontSize: fontSize.size16,
+          }}
+          btnPress={props.handlePressSkip}
+          btnTitle={getTranslation('skip')}
         />
       </View>
     </View>
