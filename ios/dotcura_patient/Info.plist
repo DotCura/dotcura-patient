@@ -3,9 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Dotcura</string>
+	<key>CFBundleLocalizations</key>
+<array>
+	<string>it</string>
+</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconName</key>
@@ -47,19 +51,19 @@
 		<true/>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>$(PRODUCT_NAME) need to access in order to load songs.</string>
+<string>L'app Dotcura ha bisogno di accedere alla tua libreria musicale.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>La aplicación Doctura necesita acceso a la cámara para tomar fotos.</string>
+<string>L'app Dotcura ha bisogno di accedere alla fotocamera per scattare foto.</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Usa Face ID per accedere in modo sicuro all'app dotcura.</string>
+	<string>Usa Face ID per accedere in modo sicuro all'app Dotcura.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We use your location to automatically detect your address and provide accurate location-based services.</string>
+	<string>Utilizziamo la tua posizione per rilevare automaticamente il tuo indirizzo e fornire servizi basati sulla posizione.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>La aplicación Doctura necesita acceso a tu ubicación mientras la usas.</string>
+	<string>L'app Dotcura ha bisogno della tua posizione mentre la utilizzi.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>La aplicación Doctura necesita permiso para guardar fotos en tu biblioteca.</string>
+	<string>L'app Dotcura ha bisogno del permesso per salvare le foto nella tua libreria.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>La aplicación Doctura necesita acceso a tu biblioteca de fotos.</string>
+	<string>L'app Dotcura ha bisogno di accedere alla tua libreria foto.</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>NSSupportsLiveActivitiesFrequentUpdates</key>
