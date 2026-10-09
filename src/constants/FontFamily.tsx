@@ -3,12 +3,10 @@ export const fontsfamily = {
   medium: 'SFProDisplay-Medium',
   semiBold: 'SFProDisplay-Semibold',
   bold: 'SFProDisplay-Bold',
-  heavy:"SFProDisplay-Heavy",
+  heavy: 'SFProDisplay-Heavy',
   gregular: 'Geist-Regular',
   gmedium: 'Geist-Medium',
   gsemiBold: 'Geist-SemiBold',
   gbold: 'Geist-Bold',
-  gextrabold:"Geist-ExtraBold",
-  
+  gextrabold: 'Geist-ExtraBold',
 };
-

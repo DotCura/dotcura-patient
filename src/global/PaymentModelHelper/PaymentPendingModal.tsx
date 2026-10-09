@@ -499,12 +499,10 @@ export const PaymentPendingModal = () => {
           );
 
           if (error) {
-            console.log('Apple Pay error:', error);
-            flashMessageWarning(
-              'Apple Pay error:' + JSON.stringify(error, null, 2),
-            );
+            console.log('Pay error:', error);
+            flashMessageWarning('Pay error:' + JSON.stringify(error, null, 2));
           } else {
-            console.log('✅ Apple Pay Success');
+            console.log('✅ Pay Success');
             flashMessageSucess(getTranslation('paymentsucessapplepay'));
             markPaymentSuccess();
             navigateToRateAndReview(orderDetails);
@@ -524,7 +522,7 @@ export const PaymentPendingModal = () => {
       });
     } catch (err) {
       setIsPaymentLoading(false);
-      console.log('Apple Pay error:', err);
+      console.log('Error', err);
     }
   };
 
